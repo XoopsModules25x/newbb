@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteRule ^([a-z]+)-([0-9]+)(/(.+))? modules/newbb/seo.php?seoOp=$1&seoArg=$2&seoOther=$4&%{QUERY_STRING} [L]
+#RewriteRule ^(.*)$ $1 [L]

@@ -1,0 +1,40 @@
+date: 2012-08-25
+================================================
+1- Extra new lines removed from php files.
+newbb/votepolls.php, newbb/include/notification.inc.php, newbb/class/permission.forum.php, newbb/admin/admin_groupmod.php
+
+2- Apply Alfred Id in the head of php files:
+newbb/class/xoopsformloader.php, newbb/votepolls.php, newbb/class/tree.php, newbb/topicmanager.php, newbb/class/readtopic.php
+newbb/class/readforum.php, newbb/class/read.php, newbb/ratethread.php, newbb/class/rate.php, newbb/class/newbbtree.php
+newbb/blocks/newbb_block_tag.php, newbb/index.php, newbb/admin/*.php,
+newbb/include/sitemap.plugin.php, newbb/include/search.inc.php, newbb/include/notification.inc.php, newbb/include/functions.user.php, 
+newbb/include/module.v100.php, newbb/include/module.v220.php, newbb/include/module.php, newbb/include/functions.ini.php
+newbb/include/form.forum.php,
+newbb/notification_update.php, newbb/report.php, newbb/reply.php
+
+3- Change the status of module to RC4.
+newbb/xoops_version.php
+
+4- Solve SEO (replace files from Alfred)
+newbb/viewpost.php, newbb/viewtopic.php, newbb/blocks/newbb_block.php
+
+5- Add do_latestedit config to display the latest edit (do_latestedit=0) or all edit (do_latestedit=1) by Alfred
+newbb/class/post.php, newbb/include/plugin.php
+
+6- Replace files from Alfred (better code, bug fixes, merge and develop):
+newbb/class/permission.php, newbb/class/forum.php, newbb/sql/mysql.400.sql, newbb/rss.php, newbb/admin/admin_permissions.php
+newbb/include/functions.image.php, newbb/include/form.post.php, newbb/viewforum.php
+newbb/seo.php, newbb/post.php, newbb/search.php, newbb/docs/changelog.txt, newbb/language/german/*.php
+
+7- Add new language definitions.
+newbb/language/english/admin.php, newbb/language/english/main.php, newbb/language/persian/admin.php, newbb/language/persian/main.php, 
+newbb/docs/lang_diff.txt
+
+8- Fix Undefined variable: pseudo_height (Cesag/irmtfan)
+in newbb/include/functions.image.php line 86
+
+9- Change the default syncOnUpdate value to false. It is dangerous because it will delete all pending and deleted posts/topics/forums from database on update.
+newbb/include/plugin.php
+
+10- easier group getting - reduce queries - use Xoops API instead of directly access to db (irmtfan)
+newbb/class/user.php
