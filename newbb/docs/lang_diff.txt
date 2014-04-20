@@ -1,0 +1,116 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Version 4.3 rev.9992
+----------------
+admin.php
+----------
+remove:
+define("_AM_NEWBB_ALLOWSIGNATURES","Allow Signatures:");
+
+revise:
+define("_AM_NEWBB_CAN_SIGNATURE","Can use and disable/enable signature. Default is set in profile module.");
+define("_AM_NEWBB_CAN_HTML","Can use and disable/enable HTML");
+define('_AM_NEWBB_AUTHOR_WORD_EXTRA',"Extra words by module Author");
+
+added in V 4.3
+define('_AM_NEWBB_UPLOAD','max. Upload each file :');
+define('_AM_NEWBB_MEMLIMITTOLARGE','Attention! Value \'memory_limit\' to PHP.INI less than \'post_max_size\'');
+define('_AM_NEWBB_MEMLIMITOK','Files can be uploaded with a maximum of %s.');
+
+modinfo.php
+----------
+revise:
+define("_MI_USERMODERATE_DESC","Forum moderator can suspend a specific user for a specific time period in the forum");
+define("_MI_SUBFORUM_DISPLAY_DESC","Choose one of the methods to display subforums");
+define("_MI_STATISTIK_ENABLE_DESC","The stats will be shown in your forum at the bottom of each forum/topic");
+
+main.php
+---------
+revise:
+define("_MD_EDITEDMSG","Reason:");
+
+added:
+define('_MD_NEWBB_MAXPIC','Images at the max. Size %s X %s pixels.');
+define('_MD_NEWBB_SEARCHDISABLED','The search is disabled and can not be used.');
+
+Version 4.3 rev.10109
+----------------
+main.php
+---------
+revise:
+define('_MD_NEWBB_SEEUSERDATA','See User information');
+added:
+define('_MD_NEWBB_HIDEUSERDATA','Hide User information');
+define('_MD_NEWBB_HIDE','Hide');
+define('_MD_NEWBB_SEE','See');
+
+define('_MD_RESTORETOPIC','Restore this topic');
+define('_MD_TOPICRESTORE','The topic has been restored.');
+define('_MD_DESC_RESTORE','Once you press the restore button at the bottom of this form the topic you have selected, and all its related posts, will be restored.');
+
+define('_MD_POLL_NOOPTION','You must choose an option !!');
+
+define("_MI_SINCE_OPTIONS","'Since' options for creating a selection box in 'viewform.php', 'list.topic.php'and 'search.php'");
+define("_MI_SINCE_OPTIONS_DESC","Positive value for days and negative value for hours. Use ',' as delimiter for multi-options. (0=From the beginning) (365=From the last year)");
+define("_MI_SINCE_DEFAULT","'Since' default value in selection box");
+define("_MI_SINCE_DEFAULT_DESC","Default value in the selection box if not specified by users. Positive value for days and negative value for hours. (0=From the beginning) (365=From the last year)");
+
+add:
+define('_MD_SEARCHTOPIC','Search Topic');
+define('_MD_SHOWSEARCH','Show results:');
+define('_MD_SEARCHPOSTTEXT','posts text');
+define('_MD_SELECT_STARTLAG','Start lag of selected text');
+define('_MD_SELECT_STARTLAG_DESC','Select text from X characters before the first keyword');
+define('_MD_SELECT_LENGTH','Length of selected text');
+define('_MD_SELECT_HTML','Strip all html from result?');
+define('_MD_SELECT_EXCLUDE','Exclude these tags:');
+define('_MD_SELECT_TAG','Tag');
+define("_MD_CAN_PDF","You <strong>can</strong> create pdf.<br />");
+define("_MD_CANNOT_PDF","You <strong>cannot</strong> create pdf.<br />");
+define("_MD_CAN_PRINT","You <strong>can</strong> get print page.<br />");
+define("_MD_CANNOT_PRINT","You <strong>cannot</strong> get print page.<br />");
+define('_MD_NORIGHTTOPDF','You don\'t have the right to create pdf in this forum.');
+define('_MD_NORIGHTTOPRINT','You don\'t have the right to get print in this forum.');
+define('_MD_TOPICHASNOTPOLL','Topic hasnot poll');
+define('_MD_VOTED','Voted topics');
+define('_MD_UNVOTED','Unvoted topics');
+define('_MD_VIEWED','Viewed topics');
+define('_MD_UNVIEWED','Unviewed topics');
+define('_MD_REPLIED','Replied topics');
+define('_MD_READ','Read topics');
+define('_MD_POLL_POLL','Poll');
+define("_MD_PAGENAV_DISPLAY","Display of navigation");
+
+admin.php
+---------
+define('_AM_NEWBB_REPORTSAVE','Selected Reports have been processed successfully');
+define('_AM_NEWBB_REPORTDELETE','Selected Reports have been deleted from database successfully');
+define('_AM_NEWBB_REPORTNOTSELECT','No Report is selected!');
+define("_AM_NEWBB_SYNC_TYPE_READ","Read Data");
+define("_AM_NEWBB_DATABASEUPDATED","Database Updated Successfully!");
+define("_AM_NEWBB_CAN_PDF","Can create pdf files");
+define("_AM_NEWBB_CAN_PRINT","Can get print page");
+
+modinfo.php
+-----------
+revise:
+define("_MI_NEWBB_BLOCK_TOPIC_POST","Recent Replied Topics. It Will drop (use advance topic renderer block)"); // irmtfan
+define("_MI_NEWBB_BLOCK_TOPIC","Recent Topics. It Will drop (use advance topic renderer block)"); // irmtfan
+
+add:
+define("_MI_NEWBB_BLOCK_LIST_TOPIC","Render a list of topics");
+
+
+blocks.php
+-----------
+add:
+define("_MB_NEWBB_CRITERIA_DESC","you can select multiple criterias and they parsed in WHERE claus by AND. eg: sticky AND unreplied topics. null = all ");
+define("_MB_NEWBB_CRITERIA_SORT_DESC","Note: Newest/Oldest Most/Least should be set in Order by");
+define("_MB_NEWBB_DISPLAYMODE_DESC","Display selected items of topic in block IF topic has them AND user has the right access");
+define("_MB_NEWBB_CRITERIA_ORDER","Order by");
+define("_MB_NEWBB_TITLE_LENGTH_DESC","Length of topic title excerpt in block. 0 for show the whole title and no excerpt.");
+define("_MB_NEWBB_POST_EXCERPT","Post text excerpt in block");
+define("_MB_NEWBB_POST_EXCERPT_DESC","Length of post text excerpt by mouse over on topic title in block. 0 for dont show post text.");

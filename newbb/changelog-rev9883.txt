@@ -1,0 +1,87 @@
+Changelog from rev.9883
+
+date: 2012-08-15
+================================================
+1- minor fix: double slash fixed in rpg url
+in newbb/class/user.php
+
+2- hardcode removed in rpg image alignment - align="left -> class="icon_left"
+in newbb/class/user.php
+
+3- some english/persian language definitions has been revised. All extra spaces/newlines have been removed.
+All changed to end method windows(CR+LF).See docs/lang_diff.txt for detail. 
+in newbb/language/english/*.php, newbb/language/persian/*.php
+
+4- add lang_diff.txt
+in newbb/docs/lang_diff.txt
+
+5- expand readme.txt add guides to get a backup from old images before update, introduce Image customization and some FAQ
+in newbb/docs/readme.txt
+
+6- makepdf.php from black_beard - add RTL - remove unneeded TCPDF config language requirements - add multi-lang EMLH by GIJ and Xlanguage by phppp DJ.
+Add Forum Index - cat - forum - sub forum - topic names to the pdf header.
+in newbb/makepdf.php
+
+7- add local stylesheet (xoops_header) in print.php
+in newbb/print.php
+
+date: 2012-08-06
+================================================
+1- hardcode fix: using header php command instead of redirect_header XOOPS function (deka87/irmtfan)
+in newbb/search.php
+(Also hardcoded in latest core in xoops2.5.5/htdocs/search.php)
+
+2- hardcode fix: icon_path smarty variable was hardcoded in viewtopic and viewpost and is not defined in class/forum.php  (irmtfan)
+in newbb/viewtopic.php, newbb/viewpost.php, newbb/class/forum.php
+
+3- hardcode icons and some hardcodes has been solved in templates:
+in newbb/templates/newbb_thread.html, newbb/templates/newbb_index.html, newbb/templates/newbb_viewforum_subforum.html
+
+4- add readme.txt for install and upgrade
+in docs/readme.txt
+
+5- a poll class misses in english style.css
+in newbb/templates/images/language/english/style.css
+ 
+date: 2012-08-04
+================================================
+1- bug fixed: error in newbb/polls.php when the strtotime is not defined in XoopsLocal class (irmtfan)
+solution: replace XoopsLocal::strtotime($end_time) by method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time)
+in newbb/polls.php
+2- more hardcodes in newbb/templates has been removed
+
+date: 2012-08-01
+================================================
+1- localization: input date localized (for other date systems like hegira) by replacing strtotime by XoopsLocal::strtotime
+in newbb/polls.php
+
+2- customization&localization: newbb style.css is fully localized and customized and is not hard-coded anymore.
+in newbb/header.php
+file changes: 
+-- deleted newbb/templates/style.css
+-- added   newbb/templates/images/language/english/style.css
+-- added   newbb/templates/images/language/persian/style.css
+priorities:
+if exist in themes/YOUR_THEME/modules/newbb/images/language/YOUR_LANG/style.css take it
+else if exist in themes/default/modules/newbb/images/language/YOUR_LANG/style.css take it
+else if exist in modules/newbb/templates/images/language/YOUR_LANG/style.css take it
+else if exist in modules/newbb/templates/images/language/english/style.css take it
+else if exist in modules/newbb/templates/style.css take it (for backward compatibility)
+
+3- many hardcodes in newbb/templates and style.css has been removed
+ 
+date: 2012-07-30
+================================================
+1- bug fix: edit not displayed when the reason is not filled (irmtfan)
+2- bug fix: only the last edit is recorded. (irmtfan/alfred)
+in newbb/class/post.php
+3- bug fix: 'noapprove' permission incorrectly recorded in database. (irmtfan)
+in newbb/class/permission.php
+4- bug fix: load user ranks has been hardcoded. it works in old/upgraded websites but not works in new installed websites. a new getting rank introduced. (black_beard/irmtfan)
+in newbb/class/user.php, newbb/templates/newbb_thread.html
+5- minor bug fix: mysql 5.1 was incorrectly needed (irmtfan)
+in newbb/xoops_version.php
+6- hardcode: some style.css color hardcodes has been removed. (irmtfan)
+in newbb/templates/style.css
+7- feature added: text links instead of buttons. (deka87/irmtfan)
+in newbb/class/icon.php , newbb/include/functions.render.php , newbb/include/plugin.php
