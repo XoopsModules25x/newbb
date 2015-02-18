@@ -1,5 +1,5 @@
 <?php
-// $Id: main.php 17 2007-11-18 14:22:36Z LupusC $
+// $Id: main.php 12504 2014-04-26 01:01:06Z beckmi $
 if(defined('MAIN_DEFINED')) return;
 define('MAIN_DEFINED', true);
 define('_MD_ERROR', "Error");
@@ -499,4 +499,3 @@ define('_MD_REPLIED', "Replied topics");
 define('_MD_READ', "Read topics");
 define('_MD_POLL_POLL', "Poll");
 define('_MD_PAGENAV_DISPLAY', "Display of navigation");
-?>

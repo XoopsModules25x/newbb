@@ -3,7 +3,7 @@
  * Newbb module
  *
  * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code 
+ * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,7 +17,7 @@
  * @version         $Id: post.php 62 2012-08-17 10:15:26Z alfred $
  */
 
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 
 foreach (array(
             'forum',
@@ -36,7 +36,6 @@ $op = isset($_POST['op']) ? $_POST['op'] : '';
 $viewmode = (isset($_POST['viewmode']) && $_POST['viewmode'] != 'flat') ? 'thread' : 'flat';
 if ( empty($forum) ) {
     redirect_header("index.php", 2, _MD_ERRORFORUM);
-    exit();
 }
 
 $forum_handler = xoops_getmodulehandler('forum', 'newbb');
@@ -54,7 +53,6 @@ $forum_id = ($topic_id) ? $topic_obj->getVar("forum_id") : $forum;
 $forum_obj = $forum_handler->get($forum_id);
 if (!$forum_handler->getPermission($forum_obj)) {
     redirect_header("index.php", 2, _NOPERM);
-    exit();
 }
 
 if ($xoopsModuleConfig['wol_enabled']) {
@@ -130,9 +128,8 @@ if ( !empty($_POST['contents_submit']) ) {
 if ( !empty($_POST['contents_submit']) ) {
     $message =  $_POST['message'];
     if (empty($message)) {
-		// irmtfan - issue with javascript:history.go(-1) - add error message
+        // irmtfan - issue with javascript:history.go(-1) - add error message
         redirect_header($_SERVER['HTTP_REFERER'], 1, _MD_ERROR_BACK);
-        exit();
     }
     if ( !empty($isedit) && $post_id > 0 ) {
 
@@ -141,10 +138,8 @@ if ( !empty($_POST['contents_submit']) ) {
         $topic_status = $topic_obj->getVar('topic_status');
         if ( $topic_handler->getPermission($forum_obj, $topic_status, 'edit')
             && ( $isadmin || ( $post_obj->checkTimelimit('edit_timelimit') && $post_obj->checkIdentity() ))
-            ) {}
-        else {
+            ) {} else {
             redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NORIGHTTOEDIT);
-            exit();
         }
 
         $delete_attach = isset($_POST['delete_attach']) ? $_POST['delete_attach'] : array();
@@ -156,13 +151,11 @@ if ( !empty($_POST['contents_submit']) ) {
             $topic_status = $topic_obj->getVar('topic_status');
             if (!$topic_handler->getPermission($forum_obj, $topic_status, 'reply')) {
                 redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NORIGHTTOREPLY);
-                exit();
             }
         } else {
             $topic_status = 0;
             if (!$topic_handler->getPermission($forum_obj, $topic_status, 'post')) {
                 redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum={$forum_id}", 2, _MD_NORIGHTTOPOST);
-                exit();
             }
         }
 
@@ -244,51 +237,51 @@ if ( !empty($_POST['contents_submit']) ) {
         require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/class/uploader.php';
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir = XOOPS_CACHE_PATH;
-      
-		$uploader = new newbb_uploader(
+
+        $uploader = new newbb_uploader(
             $uploaddir,
             $forum_obj->getVar('attach_ext'),
             intval($maxfilesize),
-			intval($xoopsModuleConfig['max_img_width']),
-			intval($xoopsModuleConfig['max_img_height'])
+            intval($xoopsModuleConfig['max_img_width']),
+            intval($xoopsModuleConfig['max_img_height'])
         );
 
-		if ( $_FILES['userfile']['error'] > 0 ) {
-			switch ($_FILES['userfile']['error']) {
-				case 1:
-					$error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
-					break;
-				case 2:
-					$error_message[] = sprintf(_MD_NEWBB_MAXKB,$forum_obj->getVar('attach_maxkb'));
-					break;
-				default:
-					$error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
-					break;
-			}
-		} else {
-			$uploader->setCheckMediaTypeByExt();
+        if ($_FILES['userfile']['error'] > 0) {
+            switch ($_FILES['userfile']['error']) {
+                case 1:
+                    $error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
+                    break;
+                case 2:
+                    $error_message[] = sprintf(_MD_NEWBB_MAXKB,$forum_obj->getVar('attach_maxkb'));
+                    break;
+                default:
+                    $error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
+                    break;
+            }
+        } else {
+            $uploader->setCheckMediaTypeByExt();
 
-			if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][0]) ) {
-				$prefix = is_object($xoopsUser) ? strval($xoopsUser->uid()) . '_' : 'newbb_';
-				$uploader->setPrefix($prefix);
-				if ( !$uploader->upload() ) {
-					$error_message[] = $error_upload = $uploader->getErrors();
-				} else {
-					if ( is_file( $uploader->getSavedDestination() )) {
-						if (rename(XOOPS_CACHE_PATH . "/" . $uploader->getSavedFileName(), XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['dir_attachments'] . "/" . $uploader->getSavedFileName())) {
-							$post_obj->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
-						}						
-					}
-				}
-			} else {
-				$error_message[] = $error_upload = $uploader->getErrors();
-			}
-		}
+            if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][0]) ) {
+                $prefix = is_object($xoopsUser) ? strval($xoopsUser->uid()) . '_' : 'newbb_';
+                $uploader->setPrefix($prefix);
+                if ( !$uploader->upload() ) {
+                    $error_message[] = $error_upload = $uploader->getErrors();
+                } else {
+                    if ( is_file( $uploader->getSavedDestination() )) {
+                        if (rename(XOOPS_CACHE_PATH . "/" . $uploader->getSavedFileName(), XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['dir_attachments'] . "/" . $uploader->getSavedFileName())) {
+                            $post_obj->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
+                        }
+                    }
+                }
+            } else {
+                $error_message[] = $error_upload = $uploader->getErrors();
+            }
+        }
     }
 
     $postid = $post_handler->insert($post_obj);
 
-    if ( !$postid ) {
+    if (!$postid) {
         include_once XOOPS_ROOT_PATH . '/header.php';
         xoops_error($post_obj->getErrors());
         include_once XOOPS_ROOT_PATH . '/footer.php';
@@ -304,12 +297,12 @@ if ( !empty($_POST['contents_submit']) ) {
     ) {
         $topic_obj->setVar("type_id", @$_POST["type_id"]);
     }
-    
+
     if (!empty($xoopsModuleConfig['do_tag']) && $post_obj->isTopic()) {
         $topic_obj->setVar("topic_tags", @$_POST["topic_tags"]);
     }
     $topic_handler->insert($topic_obj);
-  
+
     // Set read mark
     if (!empty($isnew)) {
         require_once XOOPS_ROOT_PATH . "/modules/newbb/include/functions.read.php";
@@ -318,9 +311,9 @@ if ( !empty($_POST['contents_submit']) ) {
             newbb_setRead("forum", $forum_obj->getVar('forum_id'), $postid);
         }
     }
-    
+
     $post_obj->loadFilters(empty($isnew) ? "update" : "insert");
-    
+
     // Define tags for notification message
     if ($approved && !empty($xoopsModuleConfig['notification_enabled']) && !empty($isnew)) {
         $tags = array();
@@ -370,47 +363,45 @@ if ( !empty($_POST['contents_submit']) ) {
         // Update user
         if ($uid > 0) {
             $sql =	"SELECT count(*)".
-                    "	FROM " . $xoopsDB->prefix("bb_topics") . 
+                    "	FROM " . $xoopsDB->prefix("bb_topics") .
                     "	WHERE approved=1 AND topic_poster =" . $uid;
-	        $ret = $xoopsDB->query($sql);
-	        list($topics) = $xoopsDB->fetchRow($ret);
-	        
-	        $sql =	"	SELECT count(*)".
-	        		"	FROM " . $xoopsDB->prefix("bb_topics") . 
-	        		"	WHERE approved=1 AND topic_digest > 0 AND topic_poster =" . $uid;
-	        $ret = $xoopsDB->query($sql);
-	        list($digests) = $xoopsDB->fetchRow($ret);
-	        
-	        $sql =	"	SELECT count(*), MAX(post_time)".
-	        		"	FROM " . $xoopsDB->prefix("bb_posts") . 
-	        		"	WHERE approved=1 AND uid =" . $uid;
-	        $ret = $xoopsDB->query($sql);
-	        list($posts, $lastpost) = $xoopsDB->fetchRow($ret);
-	        
-	        $xoopsDB->queryF(
-	        		"	REPLACE INTO " . $xoopsDB->prefix("bb_user_stats") .
-	        		" 	SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'"
-	        		); 
+            $ret = $xoopsDB->query($sql);
+            list($topics) = $xoopsDB->fetchRow($ret);
+
+            $sql =	"	SELECT count(*)".
+                    "	FROM " . $xoopsDB->prefix("bb_topics") .
+                    "	WHERE approved=1 AND topic_digest > 0 AND topic_poster =" . $uid;
+            $ret = $xoopsDB->query($sql);
+            list($digests) = $xoopsDB->fetchRow($ret);
+
+            $sql =	"	SELECT count(*), MAX(post_time)".
+                    "	FROM " . $xoopsDB->prefix("bb_posts") .
+                    "	WHERE approved=1 AND uid =" . $uid;
+            $ret = $xoopsDB->query($sql);
+            list($posts, $lastpost) = $xoopsDB->fetchRow($ret);
+
+            $xoopsDB->queryF(
+                    "	REPLACE INTO " . $xoopsDB->prefix("bb_user_stats") .
+                    " 	SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'"
+                    );
         }
-        
-        $redirect = XOOPS_URL."/modules/newbb/viewtopic.php?post_id=" . $postid ; 
+
+        $redirect = XOOPS_URL."/modules/newbb/viewtopic.php?post_id=" . $postid ;
         $message = _MD_THANKSSUBMIT . "<br />" . $error_upload;
-        
+
     } else {
         $redirect = XOOPS_URL."/modules/newbb/viewforum.php?forum=" . $post_obj->getVar('forum_id');
         $message = _MD_THANKSSUBMIT . "<br />" . _MD_WAITFORAPPROVAL . "<br />" . $error_upload;
     }
 
-    if ( $op == "add" ) {
+    if ($op == "add") {
         redirect_header(XOOPS_URL."/modules/newbb/polls.php?op=add&amp;forum=" . $post_obj->getVar('forum_id') . "&amp;topic_id=" . $post_obj->getVar('topic_id'), 1, _MD_ADDPOLL);
-        exit();
     } else {
         redirect_header($redirect, 2, $message);
-        exit();
     }
 }
 
-$xoopsOption['template_main'] =  'newbb_edit_post.html';
+$xoopsOption['template_main'] =  'newbb_edit_post.tpl';
 $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
@@ -433,48 +424,48 @@ if ( !empty($_POST['contents_upload']) ) {
     $error_upload = '';
     if ( isset($_FILES['userfile']['name']) && $_FILES['userfile']['name']!='' ) {
         require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/class/uploader.php';
-		$maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
+        $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir = XOOPS_CACHE_PATH;
-        
-		$uploader = new newbb_uploader(
+
+        $uploader = new newbb_uploader(
             $uploaddir,
             $forum_obj->getVar('attach_ext'),
             intval($maxfilesize),
             intval($xoopsModuleConfig['max_img_width']),
-			intval($xoopsModuleConfig['max_img_height'])
+            intval($xoopsModuleConfig['max_img_height'])
         );
-		if ( $_FILES['userfile']['error'] > 0 ) {
-			switch ($_FILES['userfile']['error']) {
-				case 1:
-					$error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
-					break;
-				case 2:
-					$error_message[] = sprintf(_MD_NEWBB_MAXKB,$forum_obj->getVar('attach_maxkb'));
-					break;
-				default:
-					$error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
-					break;
-			}
-		} else {
-			$uploader->setCheckMediaTypeByExt();
-			if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][0]) ) {
-				$prefix = is_object($xoopsUser) ? strval($xoopsUser->uid()) . '_' : 'newbb_';
-				$uploader->setPrefix($prefix);
-				if ( !$uploader->upload() ) {
-					$error_message[] = $error_upload = $uploader->getErrors();
-				} else {
-					if ( is_file( $uploader->getSavedDestination() )) {
-						$attachments_tmp[strval(time())]=array(
-							$uploader->getSavedFileName(),
-							$uploader->getMediaName(),
-							$uploader->getMediaType()
+        if ($_FILES['userfile']['error'] > 0) {
+            switch ($_FILES['userfile']['error']) {
+                case 1:
+                    $error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
+                    break;
+                case 2:
+                    $error_message[] = sprintf(_MD_NEWBB_MAXKB,$forum_obj->getVar('attach_maxkb'));
+                    break;
+                default:
+                    $error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
+                    break;
+            }
+        } else {
+            $uploader->setCheckMediaTypeByExt();
+            if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][0]) ) {
+                $prefix = is_object($xoopsUser) ? strval($xoopsUser->uid()) . '_' : 'newbb_';
+                $uploader->setPrefix($prefix);
+                if ( !$uploader->upload() ) {
+                    $error_message[] = $error_upload = $uploader->getErrors();
+                } else {
+                    if ( is_file( $uploader->getSavedDestination() )) {
+                        $attachments_tmp[strval(time())]=array(
+                            $uploader->getSavedFileName(),
+                            $uploader->getMediaName(),
+                            $uploader->getMediaType()
                         );
-					}
-				}
-			} else {
-				$error_message[] = $error_upload = $uploader->getErrors();
-			}
-		}
+                    }
+                }
+            } else {
+                $error_message[] = $error_upload = $uploader->getErrors();
+            }
+        }
    }
 }
 
@@ -504,7 +495,7 @@ if ( !empty($_POST['contents_preview']) || !empty($_GET['contents_preview']) ) {
     if (empty($p_name)) {
         $p_name = empty($_POST['poster_name']) ? htmlspecialchars($xoopsConfig['anonymous']) : htmlSpecialChars($myts->stripSlashesGPC($_POST['poster_name']));
     }
-    
+
     $post_preview = array(
                         "subject"   => $p_subject,
                         "meta"      => _MD_BY . " " . $p_name . " " . _MD_ON . " " . $p_date,
@@ -535,10 +526,9 @@ if ( !empty($_POST['contents_upload']) || !empty($_POST['contents_preview']) || 
     if (empty($_POST['contents_upload'])) $contents_preview = 1;
     $attachments = $post_obj->getAttachment();
     $xoopsTpl->assign("error_message", implode("<br />", $error_message));
-    
-    include 'include/form.post.php';
+
+    include __DIR__ . '/include/form.post.php';
 }
 // irmtfan move to footer.php
-include_once dirname(__FILE__) . "/footer.php";
+include_once __DIR__ . "/footer.php";
 include XOOPS_ROOT_PATH . '/footer.php';
-?>

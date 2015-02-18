@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php,v 2.3 2012/02/08 16:20:00 dhcst Exp $
+// $Id: modinfo.php 12504 2014-04-26 01:01:06Z beckmi $
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) return;
 define('NEWBB_MODINO_DEFINED', true);
@@ -55,7 +55,7 @@ define('_MI_IMAGELIB', "Select the Image library to use");
 define('_MI_IMAGELIB_DESC', "Select which Image library to use for creating Thumbnails. Leave AUTO for automatic choice.");
 define('_MI_MAX_IMG_WIDTH', "Maximum Image Width");
 define('_MI_MAX_IMG_WIDTH_DESC', "Sets the maximum allowed <strong>Width</strong> size of an uploaded image otherwise thumbnail will be used. <br >Input 0 if you do not want to create thumbnails.");
-define('_MI_MAX_IMG_HEIGHT', "Maximum height of an image");	 
+define('_MI_MAX_IMG_HEIGHT', "Maximum height of an image");
 define('_MI_MAX_IMG_HEIGHT_DESC', "Sets the maximum allowed height of an uploaded image.");
 define('_MI_MAX_IMAGE_WIDTH', "Maximum Image Width for creating thumbnail");
 define('_MI_MAX_IMAGE_WIDTH_DESC', "Sets the maximum width of an uploaded image to create thumbnail. <br >Image with width larger than the value will not use thumbnail.");
@@ -209,11 +209,11 @@ define('_MI_NEWBB_INSTALL_FORUM_NAME', "Forum Test");
 define('_MI_NEWBB_INSTALL_FORUM_DESC', "Forum for test.");
 define('_MI_NEWBB_INSTALL_POST_SUBJECT', "Congratulations! The forum is working.");
 define('_MI_NEWBB_INSTALL_POST_TEXT', "
-	Welcome to ".(htmlspecialchars($GLOBALS["xoopsConfig"]['sitename'], ENT_QUOTES))." forum.
-	Feel free to register and login to start your topics.
-	
-	If you have any question concerning NewBB usage, plz visit your local support site or [url=http://www.simple-xoops.de/forum/]NewBB Module Site[/url].
-	");
+    Welcome to ".(htmlspecialchars($GLOBALS["xoopsConfig"]['sitename'], ENT_QUOTES))." forum.
+    Feel free to register and login to start your topics.
+
+    If you have any question concerning NewBB usage, plz visit your local support site or [url=http://www.xoops.org/newbb/]XOOPS NewBB Module Site[/url].
+    ");
 define('_MI_NEWBB_ADMENU_GROUPMOD', "Group moderate");
 define('_MI_SUBJECT_PREFIX', "Add a prefix to the topic subject");
 define('_MI_SUBJECT_PREFIX_DESC', "Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ',' as the separator. NONE is no prefix.");
@@ -247,4 +247,3 @@ define('_MI_USERATTACH_ENABLE', "Display attachments only for registered users")
 define('_MI_USERATTACH_DESC', "shows attachments in the forum only after logging in.");
 // 4.3
 define('_MI_NEWBB_BLOCK_LIST_TOPIC', "Render a list of topics");// irmtfan
-?>

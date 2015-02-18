@@ -31,16 +31,16 @@
 
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
- 
-include_once dirname(__FILE__) . "/header.php";
+
+include_once __DIR__ . "/header.php";
 
 $forum 		= isset($_GET['forum']) ? intval($_GET['forum']) : 0;
 $topic_id 	= isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
 $post_id 	= !empty($_GET['post_id']) ? intval($_GET['post_id']) : 0;
-if (!is_file(XOOPS_ROOT_PATH.'/Frameworks/tcpdf/tcpdf.php')) {
+if (!is_file(XOOPS_PATH.'/vendor/tcpdf/tcpdf.php')) {
 	redirect_header(XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/viewtopic.php?topic_id='.$topic_id,3,'TCPF for Xoops not installed');
 }
- 
+
 if ( empty($post_id) )  die(_MD_ERRORTOPIC);
 
 $post_handler = xoops_getmodulehandler('post', 'newbb');
@@ -48,7 +48,7 @@ $post = $post_handler->get($post_id);
 if(!$approved = $post->getVar('approved'))    die(_MD_NORIGHTTOVIEW);
 
 $post_data = $post_handler->getPostForPDF($post);
-//$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records  
+//$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
 $topic_handler = xoops_getmodulehandler('topic', 'newbb');
 $forumtopic = $topic_handler->getByPost($post_id);
 $topic_id = $forumtopic->getVar('topic_id');
@@ -60,9 +60,9 @@ $viewtopic_forum = $forum_handler->get($forum);
 $parent_forums = $forum_handler->getParents($viewtopic_forum);
 $pf_title='';
 if ($parent_forums) {
-	foreach ($parent_forums as $p_f) {
-		$pf_title .= $p_f['forum_name'].' - ';
-	}
+    foreach ($parent_forums as $p_f) {
+        $pf_title .= $p_f['forum_name'].' - ';
+    }
 }
 
 if (!$forum_handler->getPermission($viewtopic_forum))    die(_MD_NORIGHTTOACCESS);
@@ -75,7 +75,6 @@ $cat = $viewtopic_forum->getVar('cat_id');
 $viewtopic_cat = $category_handler->get($cat);
 
 $GLOBALS["xoopsOption"]["pdf_cache"] = 0;
-
 $pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
 $pdf_data['title'] = $myts->undoHtmlSpecialChars($post_data['subject']);
 $content = '';
@@ -89,24 +88,30 @@ $pdf_data['topic_title']=$forumtopic->getVar('topic_title');
 $pdf_data['forum_title']= $pf_title.$viewtopic_forum->getVar('forum_name');
 $pdf_data['cat_title']=$viewtopic_cat->getVar('cat_title');
 $pdf_data['subject']=NEWBB_PDF_SUBJECT.': '.$pdf_data['topic_title'];
-$pdf_data['keywords']=XOOPS_URL . ', '.'SIMPLE-XOOPS, '.$pdf_data['topic_title'];
+$pdf_data['keywords']=XOOPS_URL . ', '.'XOOPS Project, '.$pdf_data['topic_title'];
 $pdf_data['HeadFirstLine']=$xoopsConfig['sitename'].' - '.$xoopsConfig['slogan'];
 $pdf_data['HeadSecondLine']=_MD_FORUMHOME.' - '.$pdf_data['cat_title'].' - '.$pdf_data['forum_title'].' - '.$pdf_data['topic_title'];
 
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {
-	$pdf_data = easiestml($pdf_data);
+    $pdf_data = easiestml($pdf_data);
 // END irmtfan to implement EMLH by GIJ
 // START irmtfan to implement Xlanguage by phppp(DJ)
 } elseif (function_exists('xlanguage_ml')) {
-	$pdf_data = xlanguage_ml($pdf_data);
+    $pdf_data = xlanguage_ml($pdf_data);
 }
 // END irmtfan to implement Xlanguage by phppp(DJ)
 
-require_once (XOOPS_ROOT_PATH.'/Frameworks/tcpdf/tcpdf.php');
+require_once (XOOPS_PATH.'/vendor/tcpdf/tcpdf.php');
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
+// load $localLanguageOptions array with language specific definitions and apply
+if (is_file(XOOPS_PATH.'/vendor/tcpdf/config/lang/'.$xoopsConfig['language'].'.php')) {
+	require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/'.$xoopsConfig['language'].'.php');
+} else {
+	require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/english.php');
+}
+$pdf->setLanguageArray($localLanguageOptions);
 
-//create the A4-PDF...
-$pdf=new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // START irmtfan hack to add RTL-LTR local
 // until _RTL added to core 2.6.0
 if (!defined('_RTL')) {
@@ -122,10 +127,12 @@ $pdf->SetTitle($pdf_data['forum_title'].' - '.$pdf_data['subject']);
 $pdf->SetSubject($pdf_data['subject']);
 $pdf->SetKeywords($pdf_data['keywords']);
 
-$pdf->SetHeaderData('', '5', $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine']);
+//$pdf->SetHeaderData('', '5', $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine']);
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine'], array(0,64,255), array(0,64,128));
 
 //set margins
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP , PDF_MARGIN_RIGHT);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 //set auto page breaks
 $pdf->SetAutoPageBreak(true, 25);
@@ -139,4 +146,3 @@ $pdf->AddPage();
 $pdf->SetFont(PDF_FONT_NAME_MAIN,PDF_FONT_STYLE_MAIN, PDF_FONT_SIZE_MAIN);
 $pdf->writeHTML($pdf_data['content'], true, 0);
 $pdf->Output($pdf_data['topic_title'].'_'.$post_id.'.pdf','I');
-?>

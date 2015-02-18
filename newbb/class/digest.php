@@ -9,8 +9,9 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-class Digest extends XoopsObject {
+
+class Digest extends XoopsObject
+{
     var $digest_id;
     var $digest_time;
     var $digest_content;
@@ -18,12 +19,12 @@ class Digest extends XoopsObject {
     var $items;
     var $isHtml = false;
     var $isSummary = true;
-    
+
     function Digest()
     {
         $this->__construct();
     }
-          
+
     function __construct()
     {
         $this->XoopsObject();
@@ -71,7 +72,7 @@ class Digest extends XoopsObject {
         $content = "";
         if ($digest_count > 0) {
             $linebreak = ($isHtml) ? "<br />" : "\n";
-            for($i = 0;$i < $digest_count;$i++) {
+            for ($i = 0;$i < $digest_count;++$i) {
                 if ($isHtml) {
                     $content .= ($i + 1) . ". <a href=" . $this->items[$i]['link'] . ">" . $this->items[$i]['title'] . "</a>";
                 } else {
@@ -84,11 +85,13 @@ class Digest extends XoopsObject {
             }
         }
         $this->setVar('digest_content', $content);
+
         return true;
     }
 }
 
-class NewbbDigestHandler extends XoopsObjectHandler {
+class NewbbDigestHandler extends XoopsObjectHandler
+{
     var $last_digest;
 
     function &create($isNew = true)
@@ -97,22 +100,24 @@ class NewbbDigestHandler extends XoopsObjectHandler {
         if ($isNew) {
             $digest->setNew();
         }
+
         return $digest;
     }
 
     function &get($id)
     {
-	    $digest = null;
-	    $id = intval($id);
+        $digest = null;
+        $id = intval($id);
         if (!$id) {
-	        return $digest;
+            return $digest;
         }
         $sql = 'SELECT * FROM ' . $this->db->prefix('bb_digest') . ' WHERE digest_id=' . $id;
         if ($array = $this->db->fetchArray($this->db->query($sql))) {
-	        if ($var) return $array[$var];
-	        $digest =& $this->create(false);
-	        $digest->assignVars($array);
+            if ($var) return $array[$var];
+            $digest =& $this->create(false);
+            $digest->assignVars($array);
         }
+
         return $digest;
     }
 
@@ -140,6 +145,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
         $tags['DIGEST_ID'] = $digest->getVar('digest_id');
         $tags['DIGEST_CONTENT'] = $digest->getVar('digest_content', 'E');
         $notification_handler->triggerEvent('global', 0, 'digest', $tags);
+
         return true;
     }
 
@@ -156,6 +162,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
+
         return $ret;
     }
 
@@ -167,6 +174,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
             return 0;
         } else {
             $array = $this->db->fetchArray($result);
+
             return $array['count'];
         }
     }
@@ -190,6 +198,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
         if (!isset($this->last_digest)) $this->getLastDigest();
         $deadline = ($xoopsModuleConfig['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
+
         return $time_diff - $deadline;
     }
 
@@ -208,6 +217,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
             $id = $this->db->getInsertId();
         }
         $digest->setVar('digest_id', $id);
+
         return true;
     }
 
@@ -221,6 +231,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
+
         return true;
     }
 
@@ -283,8 +294,7 @@ class NewbbDigestHandler extends XoopsObjectHandler {
             $digest->addItem($title, $link, $author, $summary);
         }
         $digest->buildContent();
+
         return true;
     }
 }
-
-?>

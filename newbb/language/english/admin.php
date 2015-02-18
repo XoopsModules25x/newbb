@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
+// $Id: admin.php 12504 2014-04-26 01:01:06Z beckmi $
 if(defined('NEWBB_ADMIN_DEFINED')) return;
 else define('NEWBB_ADMIN_DEFINED', true);
 //%%%%%%	File Name  index.php   	%%%%%
@@ -291,4 +291,3 @@ define('_AM_NEWBB_SYNC_TYPE_READ', "Read Data");
 define('_AM_NEWBB_DATABASEUPDATED', "Database Updated Successfully!");
 define('_AM_NEWBB_CAN_PDF', "Can create pdf files");
 define('_AM_NEWBB_CAN_PRINT', "Can get print page");
-?>

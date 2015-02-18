@@ -9,10 +9,8 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
-}
+
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
 mod_loadFunctions("session", "newbb");
 // irmtfan include user functions for newbb_getIP
@@ -20,17 +18,17 @@ mod_loadFunctions("user", "newbb");
 
 // NewBB cookie structure
 /* NewBB cookie storage
-	Long term cookie: (configurable, generally one month)
-		LV - Last Visit
-		M - Menu mode
-		V - View mode
-		G - Toggle
-	Short term cookie: (same as session life time)
-		ST - Stored Topic IDs for mark
-		LP - Last Post
-		LF - Forum Last view
-		LT - Topic Last read
-		LVT - Last Visit Temp
+    Long term cookie: (configurable, generally one month)
+        LV - Last Visit
+        M - Menu mode
+        V - View mode
+        G - Toggle
+    Short term cookie: (same as session life time)
+        ST - Stored Topic IDs for mark
+        LP - Last Post
+        LF - Forum Last view
+        LT - Topic Last read
+        LVT - Last Visit Temp
 */
 
 /* -- Cookie settings -- */
@@ -46,16 +44,13 @@ $last_visit = newbb_getsession("LV");
 $last_visit = ($last_visit)? $last_visit : newbb_getcookie("LV");
 $last_visit = ($last_visit) ? $last_visit : time();
 
-
 // update LastVisit cookie.
 newbb_setcookie("LV", time(), $forumCookie['expire']); // set cookie life time to one month
 newbb_setsession("LV", $last_visit);
 
 // include customized variables
 if ( is_object($GLOBALS["xoopsModule"]) && "newbb" == $GLOBALS["xoopsModule"]->getVar("dirname", "n") ) {
-	$GLOBALS["xoopsModuleConfig"] = newbb_load_config();
+    $GLOBALS["xoopsModuleConfig"] = newbb_load_config();
 }
 
 newbb_load_object();
-
-?>

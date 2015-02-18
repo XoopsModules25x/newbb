@@ -6,8 +6,8 @@
     <div id="<{$forum_post_prefix}>0"></div>
 <{/if}>
 <!-- END irmtfan assign forum_post_prefix smarty -->
-<!-- irmtfan removed  
-<{if $post_id == $topic_post.post_id}><div id="aktuell"></div><{/if}>
+<!-- irmtfan removed
+<{*<{if $post_id == $topic_post.post_id}><div id="aktuell"></div><{/if}>*}>
 -->
 <table class="outer" cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="border-bottom-width: 0px;">
     <tr>
@@ -22,7 +22,7 @@
 <!-- irmtfan hardcode removed style="float: right;" -->
             <div class="ThreadTitle">
 				<{if $topic_post.post_id > 0}>
-                    <!-- irmtfan add id for each post -->  
+                    <!-- irmtfan add id for each post -->
 					<a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>
 				<{/if}>
             </div>
@@ -42,7 +42,7 @@
 <!-- irmtfan remove icon_path -->
 					<br /><{$anonym_avatar}>
 				<{/if}>
-				<br />		
+				<br />
 				<{if $infobox.show}>
 					<!-- irmtfan simplify onclick method (this.children[0] for IE7&8) - remove hardcode style="padding:2px;"-->
 					<span class="pointer" onclick="ToggleBlockCategory('<{$topic_post.post_id}>',(this.firstElementChild || this.children[0]) , '<{$infobox.icon.expand}>', '<{$infobox.icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDEUSERDATA|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEEUSERDATA|escape:'quotes'}>')">
@@ -60,7 +60,7 @@
 							</div>
 						<{/if}>
 						<div class="comUserStat">
-							<span class="comUserStatCaption"><{$smarty.const._MD_POSTS}>:</span> 
+							<span class="comUserStatCaption"><{$smarty.const._MD_POSTS}>:</span>
 							<{if $topic_post.poster.posts gt 0}>
 								<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>" target="_self"><{$topic_post.poster.posts}></a>
 							<{else}>
@@ -81,7 +81,7 @@
 			<{else}>
 				<div class="comUserRankText"><{$anonymous_prefix}><{$topic_post.poster.name}></div>
 			<{/if}>
-		</td>	
+		</td>
 
 		<td colspan="2" class="even">
 		<{else}>
@@ -137,7 +137,7 @@
 						<{if $topic_post.thread_action}>
 							<{foreachq item=btn from=$topic_post.thread_action}>
 							 <!--  irmtfan add alt key -->
-								<a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>> <{$btn.image}></a> 
+								<a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>> <{$btn.image}></a>
 							<{/foreach}>
 						<{/if}>
 					</td>
@@ -145,15 +145,15 @@
 					<td class="right">
 						<!--  irmtfan if the post is not advertise -->
 						<{if $mode gt 1 && $topic_post.poster.uid gt -1}>
-							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self" title="<{$smarty.const._MD_SPLIT_ONE}>"><{$smarty.const._MD_SPLIT_ONE}></a> | 
-							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self" title="<{$smarty.const._MD_SPLIT_TREE}>"><{$smarty.const._MD_SPLIT_TREE}></a> | 
-							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_SPLIT_ALL}>"><{$smarty.const._MD_SPLIT_ALL}></a> | 
+							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self" title="<{$smarty.const._MD_SPLIT_ONE}>"><{$smarty.const._MD_SPLIT_ONE}></a> |
+							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self" title="<{$smarty.const._MD_SPLIT_TREE}>"><{$smarty.const._MD_SPLIT_TREE}></a> |
+							<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_SPLIT_ALL}>"><{$smarty.const._MD_SPLIT_ALL}></a> |
 							<input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>" />
 						<{else}>
 							<{if $topic_post.thread_buttons}>
 								<{foreachq item=btn from=$topic_post.thread_buttons}>
 							 <!--  irmtfan add alt key -->
-									<a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>"> <{$btn.image}></a> 
+									<a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>"> <{$btn.image}></a>
 								<{/foreach}>
 							<{/if}>
 						<{/if}>

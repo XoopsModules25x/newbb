@@ -28,18 +28,17 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
+
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
 newbb_load_object();
 
-class Nrate extends ArtObject {
+class Nrate extends ArtObject
+{
     function Nrate()
     {
-	    $this->ArtObject("bb_votedata");
+        $this->ArtObject("bb_votedata");
         $this->initVar('ratingid', XOBJ_DTYPE_INT);
         $this->initVar('topic_id', XOBJ_DTYPE_INT);
         $this->initVar('ratinguser', XOBJ_DTYPE_INT);
@@ -49,26 +48,25 @@ class Nrate extends ArtObject {
     }
 }
 
-class NewbbRateHandler extends ArtObjectHandler 
+class NewbbRateHandler extends ArtObjectHandler
 {
-    function NewbbRateHandler(&$db) {
+    function NewbbRateHandler(&$db)
+    {
         $this->ArtObjectHandler($db, 'bb_votedata', 'Nrate', 'ratingid');
     }
-    
-	function synchronization()
+
+    function synchronization()
     {
-		return;
-	}
+        return;
+    }
 
     /**
      * clean orphan items from database
-     * 
-     * @return 	bool	true on success
+     *
+     * @return bool true on success
      */
     function cleanOrphan()
     {
-	    return parent::cleanOrphan($this->db->prefix("bb_topics"), "topic_id");
+        return parent::cleanOrphan($this->db->prefix("bb_topics"), "topic_id");
     }
 }
-
-?>

@@ -4,7 +4,7 @@
         <hr class="align_left" />
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
         <{if $parent_forum}>
-           <span class="delimiter">&raquo;</span>  
+           <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
@@ -15,7 +15,7 @@
         <{if $current}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$current.link}>"><{$current.title}></a>
-        <{/if}>  
+        <{/if}>
     </div>
 </div>
 <div class="clear"></div>
@@ -27,7 +27,7 @@
 <{if $viewer_level gt 1}>
     <div class="pagenav" id="admin">
         <{if $mode gt 1}>
-            <{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" /> 
+            <{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" />
             <select name="op">
 	            <option value="0"><{$smarty.const._SELECT}></option>
 	            <option value="delete"><{$smarty.const._DELETE}></option>
@@ -39,14 +39,14 @@
 	            <{else}>
 		            <option value="move"><{$smarty.const._MD_MOVE}></option>
 	            <{/if}>
-            </select>  
+            </select>
             <input type="hidden" name="forum_id" value="<{$forum_id}>" />
-            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> | 
+            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
         <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> | 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> | 
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
         <{/if}>
     </div>
@@ -72,7 +72,7 @@
 		<option value="">--------</option>
 		<{foreach item=filter from=$types}>
 		    <option value="<{$filter.link}>"><{$filter.title}></option>
-		<{/foreach}>		
+		<{/foreach}>
 	</select>
 <{elseif $menumode eq 1}>
 	<div id="topicoption" class="menu">
@@ -99,7 +99,7 @@
 	                    <div class="item floatleft"><a href="<{$digest_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_DIGEST}></a></div>
 	                    <div class="item floatleft"><a href="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREPLIED}></a></div>
 	                    <div class="item _col_end"><a href="<{$unread_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREAD}></a></div>
-                        <div class="clear"></div>                            
+                        <div class="clear"></div>
 				    </li>
 				</ul>
 			</li>
@@ -118,14 +118,14 @@
     <div class="head align_center">
         <div class="topic_folder floatleft">
             <{if $mode gt 1}>
-	    		<{$smarty.const._ALL}>: 
+	    		<{$smarty.const._ALL}>:
 	        <{else}>
 	            &nbsp;
 	        <{/if}>
 	    </div>
         <div class="topic_icon floatleft">
             <{if $mode gt 1}>
-	    		<input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" /> 
+	    		<input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" />
  	        <{else}>
 	            &nbsp;
 	        <{/if}>
@@ -152,7 +152,7 @@
         <div class="topic_name floatleft left">
             &nbsp;
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-                <{$topic.topic_title}> 
+                <{$topic.topic_title}>
             </a>
             <{$topic.attachment}><{$topic.topic_page_jump}>
 			<br />
@@ -160,7 +160,7 @@
 				<{$headers.publish.title}>: <{$topic.topic_time}>
 			</span>
 			<{if $rating_enable && $topic.votes}>
-				|&nbsp;			
+				|&nbsp;
 				<span>
 					<{$headers.votes.title}>: <{$topic.votes}>&nbsp;<{$topic.rating_img}>
 				</span>
@@ -226,7 +226,7 @@
 		[<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
 	</form><br />
     <!-- START irmtfan add forum selection box -->
-    <{if $forum_jumpbox }> 
+    <{if $forum_jumpbox }>
         <form method="get" action="<{$selection.action}>">
             <{$selection.forum}>&nbsp;
             <{foreach item=hidval key=hidvar from=$selection.vars}>
@@ -243,6 +243,6 @@
 <div class="clear"></div>
 <br />
 </div>
-<{if $online}><{includeq file="db:newbb_online.html"}><{/if}>
-<{includeq file='db:newbb_notification_select.html'}>
+<{if $online}><{includeq file="db:newbb_online.tpl"}><{/if}>
+<{includeq file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

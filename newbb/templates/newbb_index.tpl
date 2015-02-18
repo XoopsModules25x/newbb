@@ -1,44 +1,44 @@
 <div class="forum_header">
 <!-- irmtfan hardcode remove style="float: left;" -->
     <div class="forum_title">
-        <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$index_title}></a></h2>		
+        <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$index_title}></a></h2>
 <!-- irmtfan hardcode remove align="left" -->
         <hr class="align_left" width="50%" size="1" />
-    	<{$index_desc}>    	
+    	<{$index_desc}>
     </div>
 </div>
 <div style="clear:both;"></div>
 
-<{if $viewer_level gt 1}> 
+<{if $viewer_level gt 1}>
 	<br />
-	<div class="forum_stats">  
+	<div class="forum_stats">
 		<div class="forum_stats_left">
-            <{$smarty.const._MD_TOPIC}>: 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(<font color="red"><b><{$wait_new_topic}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> | 
+            <{$smarty.const._MD_TOPIC}>:
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(<font color="red"><b><{$wait_new_topic}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(<font color="red"><b><{$delete_topic}></b></font>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br />
-            <{$smarty.const._MD_POST2}>: 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(<font color="red"><b><{$wait_new_post}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> | 
+            <{$smarty.const._MD_POST2}>:
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(<font color="red"><b><{$wait_new_post}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_post}>(<font color="red"><b><{$delete_post}></b></font>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a>
         </div>
         <div class="forum_stats_right">
-            <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>             
-            <br /><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> | 
+            <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
+            <br /><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_ADMINCP}>"><{$smarty.const._MD_ADMINCP}></a>
-        </div>        
-        <div style="clear:both;"></div>    
-	</div>	
+        </div>
+        <div style="clear:both;"></div>
+	</div>
 <{/if}>
 <br style="clear: both;" />
 <div class="dropdown">
-    <{includeq file="db:newbb_index_menu.html"}>
+    <{includeq file="db:newbb_index_menu.tpl"}>
 </div>
 <br style="clear: both;" />
 <br />
 
 <!-- start forum categories -->
-<div class="index_category">   
+<div class="index_category">
 	<!-- start forum categories -->
 	<{foreachq item=category from=$categories}>
 		<table class="index_category" cellspacing="0" width="100%">
@@ -116,7 +116,7 @@
 <!-- irmtfan hardcode removed align="right" -->
 							<td class="even" class="align_right" valign="middle">
 								<{if $forum.forum_lastpost_subject}>
-									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br /> 			
+									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br />
 									<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
 										<{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
 <!-- irmtfan remove icon_path -->
@@ -124,18 +124,18 @@
 									</a>
 								<{else}>
 									<{$smarty.const._AM_NEWBB_NOTOPIC}>
-								<{/if}>		      		      	
+								<{/if}>
 							</td>
 						</tr>
 
 						<{if $forum.subforum}>
 							<tr class="head" >
-								<td width="5%">&nbsp;</td>		
+								<td width="5%">&nbsp;</td>
 								<td width="5%" align="center"><{$img_subforum}>&nbsp;</td>
 								<td width="32%" align="center"><{$smarty.const._MD_SUBFORUMS}>&nbsp;</td>
 								<td width="9%" nowrap="nowrap">&nbsp;</td>
 								<td width="9%" nowrap="nowrap">&nbsp;</td>
-								<td width="40%" nowrap="nowrap">&nbsp;</td>	
+								<td width="40%" nowrap="nowrap">&nbsp;</td>
 							</tr>
 							<{foreachq item=subforum from=$forum.subforum}>
 								<tr>
@@ -169,7 +169,7 @@
 
 									<td class="even" width="40%" class="align_right" valign="middle">
 										<{if $subforum.forum_lastpost_subject}>
-											<{$subforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$subforum.forum_lastpost_user}><br /> 			
+											<{$subforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$subforum.forum_lastpost_user}><br />
 											<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$subforum.forum_lastpost_id}>">
 												<{$subforum.forum_lastpost_subject}>&nbsp;&nbsp;
 <!-- irmtfan remove icon_path -->
@@ -177,7 +177,7 @@
 											</a>
 										<{else}>
 											<{$smarty.const._AM_NEWBB_NOTOPIC}>
-										<{/if}>		  
+										<{/if}>
 									</td>
 								</tr>
 							<{/foreach}>
@@ -220,7 +220,7 @@
 <!-- irmtfan hardcode removed align="right" -->
 							<td class="even" class="align_right" valign="middle">
 								<{if $forum.forum_lastpost_subject}>
-									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br /> 			
+									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br />
 									<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
 										<{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
 <!-- irmtfan remove icon_path -->
@@ -228,7 +228,7 @@
 									</a>
 								<{else}>
 									<{$smarty.const._AM_NEWBB_NOTOPIC}>
-								<{/if}>	    	
+								<{/if}>
 							</td>
 						</tr>
 
@@ -277,7 +277,7 @@
 <!-- irmtfan hardcode removed align="right" -->
 							<td class="even" class="align_right" valign="middle">
 								<{if $forum.forum_lastpost_subject}>
-									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br /> 			
+									<{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}><br />
 									<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
 										<{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
 <!-- irmtfan remove icon_path -->
@@ -285,7 +285,7 @@
 									</a>
 								<{else}>
 									<{$smarty.const._AM_NEWBB_NOTOPIC}>
-								<{/if}>	  
+								<{/if}>
 							</td>
 						</tr>
 					<{/foreach}>
@@ -301,7 +301,7 @@
 <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
 <div class="icon_left">
 	<{$img_forum_new}> = <{$smarty.const._MD_NEWPOSTS}><br />
-	<{$img_forum}> = <{$smarty.const._MD_NONEWPOSTS}><br />	
+	<{$img_forum}> = <{$smarty.const._MD_NONEWPOSTS}><br />
 </div>
 <br style="clear:both;"/>
 <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
@@ -321,20 +321,20 @@
 		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
 			<{$rss_button}>
 		</a>
-		<br /><font size="0.7em;"><a href="http://www.simple-xoops.de">NewBB Version  <{$version/100}></a></font>
+		<br /><font size="0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></font>
 		<br />
-	<{/if}>	
+	<{/if}>
 </div>
 <br style="clear: both;" />
-<{if $currenttime}> 
+<{if $currenttime}>
 	<div>
 		<div class="even" style="padding: 5px; line-height: 150%;">
 			<span style="padding: 2px;"><{$online.statistik}></span>
 			<strong><{$smarty.const._MD_NEWBB_STATS}></strong>
 		</div>
-        
+
 		<div class="forum_stats odd" style="padding: 5px; line-height: 150%;">
-			<div class="forum_stats_left odd">			
+			<div class="forum_stats_left odd">
 				<{$currenttime}><br />
                 <!-- irmtfan add lastvisit smarty variable for all users -->
                 <{$lastvisit}><br />
@@ -344,28 +344,28 @@
 				<{if $stats[0].digest.total}>
 					| <{$smarty.const._MD_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
 				<{/if}>
-				<{if $userstats}> 
+				<{if $userstats}>
 					<br /><br />
-                    <!-- irmtfan userstats.lastvisit should be removed because it is for anon users too  -->                  
+                    <!-- irmtfan userstats.lastvisit should be removed because it is for anon users too  -->
 					<{*$userstats.lastvisit*}><br /><{$userstats.lastpost}>
 				<{/if}>
 			</div>
-			<div class="forum_stats_right odd"> 
+			<div class="forum_stats_right odd">
 				<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new" title="<{$smarty.const._MD_VIEW_NEWPOSTS}>"><{$smarty.const._MD_VIEW_NEWPOSTS}></a><br />
 				<{$smarty.const._MD_TODAYTOPICSC}><strong><{$stats[0].topic.day|default:0}></strong>
 				| <{$smarty.const._MD_TODAYPOSTSC}><strong><{$stats[0].post.day|default:0}></strong>
-				<{if $userstats}> 
+				<{if $userstats}>
 					<br /><br />
 					<{$userstats.topics}> | <{$userstats.posts}><{if $userstats.digests}><br /><{$userstats.digests}><{/if}>
 				<{/if}>
-			</div>			
+			</div>
 		</div>
 	</div>
 	<br style="clear:both;"/>
 <{/if}>
 <br style="clear: both;" />
-<{if $online}>	
-	<{includeq file="db:newbb_online.html"}>
+<{if $online}>
+	<{includeq file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.html'}>
+<{includeq file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

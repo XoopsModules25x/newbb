@@ -10,11 +10,10 @@
  * @package		module::newbb
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include dirname(__FILE__)."/functions.ini.php";
+defined("NEWBB_FUNCTIONS_INI") || include __DIR__."/functions.ini.php";
 define("NEWBB_FUNCTIONS_TOPIC_LOADED", TRUE);
-
 
 if (!defined("NEWBB_FUNCTIONS_TOPIC")):
 define("NEWBB_FUNCTIONS_TOPIC", 1);
@@ -32,11 +31,10 @@ function newbb_getTopicTitle($topic_title, $prefix_name = null, $prefix_color = 
 
 function getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null)
 {
-	if (empty($prefix_name)) return $topic_title;
-	$topic_prefix = $prefix_color? "<em style=\"font-style: normal; color: ".$prefix_color.";\">[".$prefix_name."]</em> ":"[".$prefix_name."] ";
-	
-	return $topic_prefix.$topic_title;
+    if (empty($prefix_name)) return $topic_title;
+    $topic_prefix = $prefix_color? "<em style=\"font-style: normal; color: ".$prefix_color.";\">[".$prefix_name."]</em> ":"[".$prefix_name."] ";
+
+    return $topic_prefix.$topic_title;
 }
 
 ENDIF;
-?>

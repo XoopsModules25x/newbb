@@ -47,7 +47,7 @@ border-color: black;
 		-o-transition-property: all;
         -o-transition-duration: 1s;
         -o-transition-timing-function: ease-in-out;
-        -o-transition-delay: 0s;	
+        -o-transition-delay: 0s;
     transition: all 1s ease-in-out 0s;
 }
 
@@ -105,7 +105,7 @@ padding: 5px;
 	border: 0px;
     border-top-width:1px;
     border-top-style: solid;
-    border-top-color: #000000;	
+    border-top-color: #000000;
 }
 
 .thread_edit {
@@ -122,18 +122,18 @@ padding: 5px;
      padding: 5px;
      margin-top: 5px;
 }
-/* END newbb_thread.html */
+/* END newbb_thread.tpl */
 
 /* -- general css classes -- */
 .forum_header {
 	overflow: hidden;
     border		: 1px solid #aaaaaa;
 	margin: 5px;
-}  
+}
 
 .forum_title {
-    float		: left; 
-    text-align	: left; 
+    float		: left;
+    text-align	: left;
     padding		: 5px;
     width: 100%;
 }
@@ -150,7 +150,7 @@ height: 1px;
 }
 
 .forum_stats_col {
-    width:45%;    
+    width:45%;
 }
 .index_stat_foot {
 padding: 5px; line-height: 150%;
@@ -356,7 +356,7 @@ span.digest
 .left { text-align: left; }
 .right { text-align: right; }
 .floatleft { float: left;}
-.floatright { float: right;} 
+.floatright { float: right;}
 .icon_left {
     float: left; text-align: left;
 }
@@ -453,10 +453,10 @@ vertical-align: middle;
  * From http://www.positioniseverything.net/easyclearing.html
  */
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 .clear {display: inline-table;}

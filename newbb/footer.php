@@ -19,7 +19,7 @@
  * @version         $Id: footer.php 1.11 2012-09-23 20:24:01
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 global $xoopsConfig, $xoTheme;
 
@@ -36,12 +36,11 @@ $js_rel_path=$icon_handler->getPath("language/" . $xoopsConfig['language'], "new
 xoops_load('XoopsLists');
 $allfiles = XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH . $js_rel_path);
 foreach ($allfiles as $jsfile) {
-	if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
-		$xoTheme->addScript($js_rel_path . '/' . $jsfile);
-	}
+    if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
+        $xoTheme->addScript($js_rel_path . '/' . $jsfile);
+    }
 }
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
 // add toggle script
 $toggle_script="var toggle_cookie=\"" . $forumCookie["prefix"] . "G" . "\";";
-$xoTheme->addScript( null, array ('type' => 'text/javascript'), $toggle_script); 
-?>
+$xoTheme->addScript( null, array ('type' => 'text/javascript'), $toggle_script);

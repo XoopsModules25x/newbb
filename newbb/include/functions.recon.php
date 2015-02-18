@@ -10,9 +10,9 @@
  * @package		module::newbb
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include dirname(__FILE__)."/functions.ini.php";
+defined("NEWBB_FUNCTIONS_INI") || include __DIR__."/functions.ini.php";
 define("NEWBB_FUNCTIONS_RECON_LOADED", TRUE);
 
 if (!defined("NEWBB_FUNCTIONS_RECON")):
@@ -20,26 +20,26 @@ define("NEWBB_FUNCTIONS_RECON", 1);
 
 function newbb_synchronization($type = null)
 {
-	$allTypes = array("category", "forum", "topic", "post", "report", "rate", "moderate", "readtopic", "readforum", "stats");
-	$type = empty($type) ? $allTypes : (is_array($type) ? $type : array($type));
-	foreach ($type as $item) {
-		$handler = xoops_getmodulehandler($item, "newbb");
-		if($item != "stats") {
-		    $handler->synchronization();
-		} else {
-			$handler->reset();
-		}
-		
-		if(method_exists($handler,"cleanExpires")) {
-			$handler->cleanExpires();
-		}
-		if(method_exists($handler,"clearGarbage")) {
-			$handler->clearGarbage();
-		}
-		unset($handler);
-	}
-	return true;
+    $allTypes = array("category", "forum", "topic", "post", "report", "rate", "moderate", "readtopic", "readforum", "stats");
+    $type = empty($type) ? $allTypes : (is_array($type) ? $type : array($type));
+    foreach ($type as $item) {
+        $handler = xoops_getmodulehandler($item, "newbb");
+        if ($item != "stats") {
+            $handler->synchronization();
+        } else {
+            $handler->reset();
+        }
+
+        if (method_exists($handler,"cleanExpires")) {
+            $handler->cleanExpires();
+        }
+        if (method_exists($handler,"clearGarbage")) {
+            $handler->clearGarbage();
+        }
+        unset($handler);
+    }
+
+    return true;
 }
 
 endif;
-?>

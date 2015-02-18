@@ -9,43 +9,41 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
+
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 include_once XOOPS_ROOT_PATH . "/class/uploader.php";
 
-class newbb_uploader extends XoopsMediaUploader {
-
+class newbb_uploader extends XoopsMediaUploader
+{
     /**
      * No admin check for uploads
      */
     /**
      * Constructor
      *
-     * @param string 	$uploadDir
-     * @param array 	$allowedMimeTypes
-     * @param int 		$maxFileSize
-     * @param int 		$maxWidth
-     * @param int 		$maxHeight
+     * @param string $uploadDir
+     * @param array  $allowedMimeTypes
+     * @param int    $maxFileSize
+     * @param int    $maxWidth
+     * @param int    $maxHeight
      */
     function newbb_uploader($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
     {
         if (!is_array($allowedMimeTypes)) {
-	        if (empty($allowedMimeTypes) || $allowedMimeTypes == "*") {
+            if (empty($allowedMimeTypes) || $allowedMimeTypes == "*") {
                 $allowedMimeTypes = array();
-	        } else {
-	            $allowedMimeTypes = array_filter(array_map("trim", explode("|", strtolower($allowedMimeTypes))));
+            } else {
+                $allowedMimeTypes = array_filter(array_map("trim", explode("|", strtolower($allowedMimeTypes))));
             }
         }
         $_allowedMimeTypes = array();
-		$extensionToMime = include $GLOBALS['xoops']->path('/include/mimetypes.inc.php');
+        $extensionToMime = include $GLOBALS['xoops']->path('/include/mimetypes.inc.php');
         foreach ($allowedMimeTypes as $type) {
             if (isset($extensionToMime[$type])) {
-	            $_allowedMimeTypes[] = $extensionToMime[$type];
+                $_allowedMimeTypes[] = $extensionToMime[$type];
             } else {
-	            $_allowedMimeTypes[] = $type;
+                $_allowedMimeTypes[] = $type;
             }
         }
         $this->XoopsMediaUploader($uploadDir, $_allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
@@ -89,8 +87,7 @@ class newbb_uploader extends XoopsMediaUploader {
     function getExt()
     {
         $this->ext = strtolower(ltrim(strrchr($this->getMediaName(), '.'), '.'));
+
         return $this->ext;
     }
 }
-
-?>

@@ -24,7 +24,7 @@
 // along with this program; if not, write to the Free Software              //
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
-include("admin_header.php");
+include_once __DIR__ . '/admin_header.php';
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php";
 
 xoops_cp_header();
@@ -43,7 +43,7 @@ if (!empty($_POST['submit'])) {
     $topics_number   = 0;
     $posts_number    = 0;
     $selected_forums = '';
-	// irmtfan fix if it is array
+    // irmtfan fix if it is array
     if (empty($_POST["forums"]) || empty($_POST["forums"][0])) {
         redirect_header("./admin_forum_prune.php", 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
     } elseif (is_array($_POST["forums"])) {
@@ -59,14 +59,14 @@ if (!empty($_POST['submit'])) {
     $digest      = $myts->addSlashes($_POST["digest"]);
     $lock        = $myts->addSlashes($_POST["lock"]);
     $hot         = $myts->addSlashes($_POST["hot"]);
-	$store = null; //irmtfan define to fix
+    $store = null; //irmtfan define to fix
     if (!empty($_POST["store"])) {
         $store = $myts->addSlashes($_POST["store"]);
     }
 
     $sql = "SELECT t.topic_id FROM " . $xoopsDB->prefix("bb_topics") . " t, " . $xoopsDB->prefix("bb_posts") . "  p
-					WHERE t.forum_id IN (" . $selected_forums . ")
-					AND p.post_id =t.topic_last_post_id ";
+                    WHERE t.forum_id IN (" . $selected_forums . ")
+                    AND p.post_id =t.topic_last_post_id ";
 
     if ($sticky) {
         $sql .= " AND t.topic_sticky <> 1 ";
@@ -96,7 +96,7 @@ if (!empty($_POST['submit'])) {
 
     if ($topic_list != null) {
         $sql = "SELECT post_id FROM " . $xoopsDB->prefix("bb_posts") . "
-					WHERE topic_id IN (" . $topic_list . ")";
+                    WHERE topic_id IN (" . $topic_list . ")";
 
         $posts = array();
         if (!$result = $xoopsDB->query($sql)) {
@@ -167,8 +167,8 @@ if (!empty($_POST['submit'])) {
     $sform->setExtra('enctype="multipart/form-data"');
 
     /* Let User select the number of days
-	$sform->addElement( new XoopsFormText(_AM_NEWBB_PRUNE_DAYS , 'days', 5, 10,100 ), true );
-	*/
+    $sform->addElement( new XoopsFormText(_AM_NEWBB_PRUNE_DAYS , 'days', 5, 10,100 ), true );
+    */
     // $sql="SELECT p.topic_id, p.post_id t.post_text FROM ".$xoopsDB->prefix("bb_posts")." p, ".$xoopsDB->prefix("bb_posts_text")." t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id";
     // $result = $xoopsDB->query();
     // Days selected by selbox (better error control :lol:)
@@ -185,17 +185,17 @@ if (!empty($_POST['submit'])) {
         )
     );
     $sform->addElement($days);
-	// START irmtfan remove hardcode db access
-	include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/footer.php"; // to include js files
-	mod_loadFunctions("forum", "newbb");
-	$forumSelMulti = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
-	$forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
+    // START irmtfan remove hardcode db access
+    include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/footer.php"; // to include js files
+    mod_loadFunctions("forum", "newbb");
+    $forumSelMulti = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
+    $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox ="<option value = 0 >-- "._AM_NEWBB_PERM_FORUMS." --</option>";
     $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$access_forums = nothing, $permission = "access", $delimitor_category = false
-    $forumSelBox .= "</select>";	
+    $forumSelBox .= "</select>";
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
-	$storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
-	/* irmtfan remove hardcode
+    $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
+    /* irmtfan remove hardcode
     $checkbox = new XoopsFormCheckBox(_AM_NEWBB_PRUNE_FORUMS, 'forums');
     $radiobox = new XoopsFormRadio(_AM_NEWBB_PRUNE_STORE, 'store');
     // PUAJJ I HATE IT, please tidy up
@@ -212,9 +212,9 @@ if (!empty($_POST['submit'])) {
     } else {
         echo "DB ERROR";
     }
-	*/
-	// END irmtfan remove hardcode db access
-	
+    */
+    // END irmtfan remove hardcode db access
+
     $sform->addElement(/*$checkbox*/ $forumEle); // irmtfan
 
     $sticky_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_STICKY, 'sticky', 1);
@@ -264,5 +264,3 @@ if (!empty($_POST['submit'])) {
 echo"</td></tr></table>";
 echo "</fieldset>";
 xoops_cp_footer();
-
-?>

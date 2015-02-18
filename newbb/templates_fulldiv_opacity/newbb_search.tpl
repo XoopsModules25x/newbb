@@ -1,10 +1,10 @@
 <div class="forum_header">
 	<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a>
-    <span class="delimiter">&raquo;</span>        
+    <span class="delimiter">&raquo;</span>
 	<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a>
 </div>
 <{if $search_info}>
-	<{includeq file="db:newbb_searchresults.html" results=$results}>
+	<{includeq file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 <form name="Search" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
 <div class="outer">

@@ -1,5 +1,5 @@
 <?php
-// $Id: functions.ini.php 62 2012-08-17 10:15:26Z alfred $
+// $Id: functions.ini.php 12504 2014-04-26 01:01:06Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,49 +28,47 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-
-if (defined("NEWBB_FUNCTIONS_INI")) return; 
+if (defined("NEWBB_FUNCTIONS_INI")) return;
 define("NEWBB_FUNCTIONS_INI",1);
 
 include_once(XOOPS_ROOT_PATH."/Frameworks/art/functions.ini.php");
 
 function newbb_load_object()
 {
-	return load_object();
+    return load_object();
 }
 
 function &newbb_load_config()
 {
-	static $moduleConfig;
-	if (isset($moduleConfig)) {
-		return $moduleConfig;
-	}
-	
-	load_functions("config");
-	$moduleConfig = mod_loadConfig("newbb");
-	// irmtfan - change the read_mode = 2 (db) to read_mode = 1 (cookie) for anonymous users
-	if (!is_object($GLOBALS["xoopsUser"]) && $moduleConfig["read_mode_db_to_cookie_for_anon"] && 2 == $moduleConfig["read_mode"]) {
-		$moduleConfig["read_mode"] = 1;
-	}
+    static $moduleConfig;
+    if (isset($moduleConfig)) {
+        return $moduleConfig;
+    }
+
+    load_functions("config");
+    $moduleConfig = mod_loadConfig("newbb");
+    // irmtfan - change the read_mode = 2 (db) to read_mode = 1 (cookie) for anonymous users
+    if (!is_object($GLOBALS["xoopsUser"]) && $moduleConfig["read_mode_db_to_cookie_for_anon"] && 2 == $moduleConfig["read_mode"]) {
+        $moduleConfig["read_mode"] = 1;
+    }
+
     return $moduleConfig;
 }
-
 
 // Backword compatible
 function newbb_load_lang_file( $filename, $module = '', $default = 'english' )
 {
-	if (function_exists("xoops_load_lang_file")) {
-		return xoops_load_lang_file($filename, $module, $default);
-	}
-	
-	$lang = $GLOBALS['xoopsConfig']['language'];
-	$path = XOOPS_ROOT_PATH . ( empty($module) ? '/' : "/modules/$module/" ) . 'language';
-	if ( !( $ret = @include_once( "$path/$lang/$filename.php" ) ) ) {
-		$ret = @include_once( "$path/$default/$filename.php" );
-	}
-	return $ret;
-}
+    if (function_exists("xoops_load_lang_file")) {
+        return xoops_load_lang_file($filename, $module, $default);
+    }
 
-?>
+    $lang = $GLOBALS['xoopsConfig']['language'];
+    $path = XOOPS_ROOT_PATH . ( empty($module) ? '/' : "/modules/$module/" ) . 'language';
+    if ( !( $ret = @include_once( "$path/$lang/$filename.php" ) ) ) {
+        $ret = @include_once( "$path/$default/$filename.php" );
+    }
+
+    return $ret;
+}

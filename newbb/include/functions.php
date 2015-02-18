@@ -10,9 +10,9 @@
  * @package		module::newbb
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include dirname(__FILE__)."/functions.ini.php";
+defined("NEWBB_FUNCTIONS_INI") || include __DIR__."/functions.ini.php";
 define("NEWBB_FUNCTIONS_LOADED", TRUE);
 
 IF (!defined("NEWBB_FUNCTIONS")):
@@ -27,4 +27,3 @@ mod_loadFunctions("session", "newbb");
 mod_loadFunctions("stats", "newbb");
 
 endif;
-?>

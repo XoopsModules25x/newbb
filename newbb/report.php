@@ -1,5 +1,5 @@
 <?php
-// $Id: report.php 62 2012-08-17 10:15:26Z alfred $
+// $Id: report.php 12504 2014-04-26 01:01:06Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,12 +28,12 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 
 if ( isset($_POST['submit']) ) {
-	$GPC = "_POST";
+    $GPC = "_POST";
 } else {
-	$GPC = "_GET";
+    $GPC = "_GET";
 }
 
 foreach (array('post_id', 'order','forum','topic_id') as $getint) {
@@ -43,12 +43,11 @@ $viewmode = (isset(${$GPC}['viewmode']) && ${$GPC}['viewmode'] != 'flat') ? 'thr
 
 if ( empty($post_id) ) {
     redirect_header("index.php", 2, _MD_ERRORPOST);
-    exit();
 }
 
 if ($xoopsModuleConfig['wol_enabled']) {
-	$online_handler =& xoops_getmodulehandler('online', 'newbb');
-	$online_handler->init($forum);
+    $online_handler =& xoops_getmodulehandler('online', 'newbb');
+    $online_handler->init($forum);
 }
 
 $myts = MyTextSanitizer::getInstance();
@@ -69,7 +68,7 @@ if ( !empty($_POST['submit']) ) {
     }
     if ($error_message!='') {
        xoops_error($error_message);
-    
+
     } else {
         $report_handler =& xoops_getmodulehandler('report', 'newbb');
         $report =& $report_handler->create();
@@ -84,10 +83,10 @@ if ( !empty($_POST['submit']) ) {
         if ($report_id = $report_handler->insert($report)) {
             $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
             if (empty($forum)) {
-            
+
             }
             $forum_obj =& $forum_handler->get($forum);
-            
+
             if (is_object($forum_obj)) {
                 $mods = $forum_obj->getVar('forum_moderator');
                 $emails=array();
@@ -114,12 +113,11 @@ if ( !empty($_POST['submit']) ) {
             $message = _MD_REPORT_ERROR;
         }
         redirect_header("viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;order=$order&amp;viewmode=$viewmode",2,$message);
-        exit();
-    }   
-} 
+    }
+}
 
 $report_form = new XoopsThemeForm('', 'reportform', 'report.php');
-$report_form->addElement(new XoopsFormText(_MD_REPORT_TEXT, 'report_text', 80, 255,@$_POST['report_text']), true); 
+$report_form->addElement(new XoopsFormText(_MD_REPORT_TEXT, 'report_text', 80, 255,@$_POST['report_text']), true);
 if (!is_object($xoopsUser)) {
     $report_form->addElement( new XoopsFormCaptcha() );
 }
@@ -145,7 +143,6 @@ $button_tray->addElement($cancel_button);
 $report_form->addElement($button_tray);
 $report_form->display();
 
-
 $r_subject=$post_obj->getVar('subject', "E");
 if ( $xoopsModuleConfig['enable_karma'] && $post_obj->getVar('post_karma') > 0 ) {
     $r_message = sprintf(_MD_KARMA_REQUIREMENT, "***", $post_obj->getVar('post_karma'))."</div>";
@@ -160,7 +157,7 @@ if ($post_obj->getVar('uid')) {
     $r_name =newbb_getUnameFromId( $post_obj->getVar('uid'), $xoopsModuleConfig['show_realname']);
 } else {
     $poster_name = $post_obj->getVar('poster_name');
-   	$r_name = (empty($poster_name))?$xoopsConfig['anonymous']:$myts->htmlSpecialChars($poster_name);
+    $r_name = (empty($poster_name))?$xoopsConfig['anonymous']:$myts->htmlSpecialChars($poster_name);
 }
 $r_content = _MD_SUBJECTC." ".$r_subject."<br />";
 $r_content .= _MD_BY." ".$r_name." "._MD_ON." ".$r_date."<br /><br />";
@@ -170,4 +167,3 @@ echo "<br /><table cellpadding='4' cellspacing='1' width='98%' class='outer'><tr
 echo "<tr><td><br />".$r_content."<br /></td></tr></table>";
 
 include XOOPS_ROOT_PATH.'/footer.php';
-?>

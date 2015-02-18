@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id: newbbtree.php 62 2012-08-17 10:15:26Z alfred $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
@@ -28,13 +28,12 @@
 // URL: http://xoopsforge.com, http://xoops.org.cn                          //
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
+
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 include_once XOOPS_ROOT_PATH . "/class/xoopstree.php";
 
-class NewBBTree extends XoopsTree {
+class NewBBTree extends XoopsTree
+{
     var $prefix = '&nbsp;&nbsp;';
     var $increment = '&nbsp;&nbsp;';
     var $postArray = '';
@@ -42,23 +41,23 @@ class NewBBTree extends XoopsTree {
     function NewBBTree($table_name, $id_name = "post_id", $pid_name = "pid")
     {
         $this->XoopsTree($table_name, $id_name, $pid_name);
-    } 
+    }
 
     function setPrefix($val = '')
     {
         $this->prefix = $val;
         $this->increment = $val;
-    } 
+    }
 
     function getAllPostArray($sel_id, $order = '')
     {
         $this->postArray = $this->getAllChild($sel_id, $order);
-    } 
+    }
 
     function setPostArray($postArray)
     {
         $this->postArray = &$postArray;
-    } 
+    }
     // returns an array of first child objects for a given id($sel_id)
     function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
     {
@@ -80,13 +79,11 @@ class NewBBTree extends XoopsTree {
                 $this->getPostTree($postTree_array, $post->getVar('post_id'), $prefix);
             } else {
                 $newPostArray[] = $post;
-            } 
-        } 
+            }
+        }
         $this->postArray = $newPostArray;
         unset($newPostArray);
 
         return true;
-    } 
-} 
-
-?>
+    }
+}

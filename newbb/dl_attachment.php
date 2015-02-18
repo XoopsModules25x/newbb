@@ -11,7 +11,7 @@
  */
 
 ob_start();
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 include XOOPS_ROOT_PATH.'/header.php';
 
 $attach_id = isset($_GET['attachid']) ? strval($_GET['attachid']) : '';
@@ -37,7 +37,7 @@ if (!$attach) die(_MD_NO_SUCH_FILE);
 $file_saved = XOOPS_ROOT_PATH.'/'.$xoopsModuleConfig['dir_attachments'].'/'.$attach['name_saved'];
 if (!file_exists($file_saved)) die(_MD_NO_SUCH_FILE);
 if ($down = $forumpost->incrementDownload($attach_id)) {
-	$forumpost->saveAttachment();
+    $forumpost->saveAttachment();
 }
 unset($forumpost);
 $msg = ob_get_contents();
@@ -47,9 +47,9 @@ $xoopsLogger->activated = false;
 if (!empty($GLOBALS["xoopsModuleConfig"]["download_direct"])):
 
 header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: post-check=0, pre-check=0", false); 
-header("Pragma: no-cache"); 
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("location: ".XOOPS_URL.'/'.$xoopsModuleConfig['dir_attachments'].'/'.$attach['name_saved']);
 
@@ -58,22 +58,22 @@ $file_display = $attach['name_display'];
 //$mimetype = $attach['mimetype'];
 
 if (ini_get('zlib.output_compression')) {
-	@ini_set('zlib.output_compression', 'Off');
+    @ini_set('zlib.output_compression', 'Off');
 }
 
 if (function_exists('mb_http_output')) {
-	mb_http_output('pass');
+    mb_http_output('pass');
 }
 header('Expires: 0');
 //header('Content-Type: '.$mimetype);
 header('Content-Type: application/octet-stream');
 if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER["HTTP_USER_AGENT"])) {
-	header('Content-Disposition: attachment; filename="'.$file_display.'"');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
+    header('Content-Disposition: attachment; filename="'.$file_display.'"');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
 } else {
-	header('Content-Disposition: attachment; filename="'.$file_display.'"');
-	header('Pragma: no-cache');
+    header('Content-Disposition: attachment; filename="'.$file_display.'"');
+    header('Pragma: no-cache');
 }
 header("Content-Type: application/force-download");
 header("Content-Transfer-Encoding: binary");
@@ -86,4 +86,3 @@ while (!feof($handle)) {
 fclose($handle);
 
 endif;
-?>

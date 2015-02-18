@@ -3,7 +3,7 @@
  * Newbb module
  *
  * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code 
+ * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,12 +14,10 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: form.post.php 2170 2008-09-23 13:40:23Z phppp $
+ * @version         $Id: form.post.php 12504 2014-04-26 01:01:06Z beckmi $
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    exit();
-}
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
 
@@ -40,7 +38,7 @@ if ($moderate_handler->verifyUser($moderated_id, $moderated_ip,$moderated_forum)
     $criteria->setSort('mod_end');
     $criteria->setOrder('DESC');
     $mod = $moderate_handler->getObjects($criteria,false,false);
-    $tage = ($mod[0]['mod_end'] - $mod[0]['mod_start']) / 60 / 60 / 24;    
+    $tage = ($mod[0]['mod_end'] - $mod[0]['mod_start']) / 60 / 60 / 24;
     $msg = $myts->displayTarea(sprintf( _MD_SUSPEND_TEXT,newbb_getUnameFromId($moderated_id), intval($tage),$mod[0]['mod_desc'],formatTimestamp($mod[0]['mod_end']) ),1);
     xoops_error($msg, _MD_SUSPEND_NOACCESS);
     include XOOPS_ROOT_PATH.'/footer.php';
@@ -50,12 +48,12 @@ if ($moderate_handler->verifyUser($moderated_id, $moderated_ip,$moderated_forum)
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
 $xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
 $xoopsTpl->assign(array(
-    'forum_id'      => $forum_obj->getVar('forum_id'), 
-    'forum_name'    => $forum_obj->getVar('forum_name'), 
+    'forum_id'      => $forum_obj->getVar('forum_id'),
+    'forum_name'    => $forum_obj->getVar('forum_name'),
     ));
 
-if (!is_object($topic_obj))  $topic_obj = $topic_handler->create();   
-    
+if (!is_object($topic_obj))  $topic_obj = $topic_handler->create();
+
 $editby = false;
 if ($topic_obj->isNew()) {
     $form_title = _MD_POSTNEW;
@@ -92,7 +90,6 @@ foreach (array(
     ${$getstr} = isset($_GET[$getstr]) ? $_GET[$getstr] : ( (!empty(${$getstr})) ? ${$getstr} : '' );
 }
 
-
 $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
 $topic_status = $topic_handler->get(@$topic_id,'topic_status');
 
@@ -117,7 +114,7 @@ if ( newbb_isAdmin($forum_obj)
     $type_handler =& xoops_getmodulehandler('type', 'newbb');
     $types = $type_handler->getByForum($forum_obj->getVar("forum_id"));
     if (!empty($types)) {
-		$type_element = new XoopsFormSelect(_MD_NEWBB_TYPE, 'type_id', $type_id);
+        $type_element = new XoopsFormSelect(_MD_NEWBB_TYPE, 'type_id', $type_id);
         //$type_element = new XoopsFormRadio(_MD_NEWBB_TYPE, 'type_id', $type_id);
         $type_element->addOption(0, _NONE);
         foreach ($types as $key => $type) {
@@ -156,10 +153,8 @@ if (!empty($_POST['editor'])) {
       $editor =@ $xoopsModuleConfig["editor_default"];
     }
 }
-if (count( @$xoopsModuleConfig["editor_allowed"] ) > 0) 
-{
-    if (!in_array($editor,$xoopsModuleConfig["editor_allowed"]))
-    {
+if (count( @$xoopsModuleConfig["editor_allowed"] ) > 0) {
+    if (!in_array($editor,$xoopsModuleConfig["editor_allowed"])) {
         $editor = $xoopsModuleConfig["editor_allowed"][0];
         newbb_setcookie("editor",$editor);
     }
@@ -186,7 +181,7 @@ if (!empty($xoopsModuleConfig['do_tag']) && (empty($post_obj) || $post_obj->isTo
         $topic_tags = $topic_handler->get($topic_id,'topic_tags');
     }
     if (@include_once XOOPS_ROOT_PATH . "/modules/tag/include/formtag.php") {
-        $forum_form->addElement(new XoopsFormTag("topic_tags", 60, 255, $topic_tags));
+        $forum_form->addElement(new TagFormTag("topic_tags", 60, 255, $topic_tags));
     }
 }
 
@@ -215,9 +210,9 @@ $xcode_checkbox->addOption(1, _MD_DOXCODE);
 $options_tray->addElement($xcode_checkbox);
 
 if (!$nohtml) {
-	$br_checkbox = new XoopsFormCheckBox('', 'dobr', $dobr);
-	$br_checkbox->addOption(1, _MD_DOBR);
-	$options_tray->addElement($br_checkbox);
+    $br_checkbox = new XoopsFormCheckBox('', 'dobr', $dobr);
+    $br_checkbox->addOption(1, _MD_DOBR);
+    $options_tray->addElement($br_checkbox);
 } else {
     $forum_form->addElement(new XoopsFormHidden('dobr', 1));
 }
@@ -256,7 +251,7 @@ if ($topic_handler->getPermission($forum_obj, $topic_status, 'attach')) {
     $extensions = trim(str_replace('|',' ',$forum_obj->getVar('attach_ext')));
     $extensions = (empty($extensions) || $extensions == "*") ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ":", $extensions));
-	$upload_tray->addElement(new XoopsFormLabel("<br />".sprintf(_MD_NEWBB_MAXPIC,$xoopsModuleConfig['max_img_height'],$xoopsModuleConfig['max_img_width'])));
+    $upload_tray->addElement(new XoopsFormLabel("<br />".sprintf(_MD_NEWBB_MAXPIC,$xoopsModuleConfig['max_img_height'],$xoopsModuleConfig['max_img_width'])));
     $forum_form->addElement($upload_tray);
 }
 
@@ -354,4 +349,3 @@ $forum_form->addElement($button_tray);
 
 //$forum_form->display();
 $forum_form->assign($xoopsTpl);
-?>

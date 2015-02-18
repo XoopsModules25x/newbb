@@ -1,10 +1,10 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></h2>
-        <hr class="align_left" /> 
+        <hr class="align_left" />
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
         <{if $category}>
-            <span class="delimiter">&raquo;</span>        
+            <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{/if}>
         <{if $parentforum}>
@@ -17,7 +17,7 @@
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
         <{/if}>
-        <span class="delimiter">&raquo;</span> 
+        <span class="delimiter">&raquo;</span>
         <strong><{$lang_title}></strong>
     </div>
 </div>
@@ -26,7 +26,7 @@
 		<{if $mode gt 1}>
         <!-- START admin form -->
 			<form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="javascript: if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-				<{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');" /> 
+				<{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');" />
 				<select name="op">
 					<option value="0"><{$smarty.const._SELECT}></option>
 					<option value="delete"><{$smarty.const._DELETE}></option>
@@ -36,12 +36,12 @@
 						<option value="restore"><{$smarty.const._MD_RESTORE}></option>
 					<{/if}>
 				</select>
-				<input type="hidden" name="uid" value="<{$uid}>" /> | 
-				<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> | 
+				<input type="hidden" name="uid" value="<{$uid}>" /> |
+				<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> |
 				<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
 		<{else}>
-			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> | 
+			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
 			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
 		<{/if}>
 	</div>
@@ -80,7 +80,7 @@
 <br />
 <br />
 <{foreachq item=post from=$posts}>
-	<{includeq file="db:newbb_thread.html" topic_post=$post}>
+	<{includeq file="db:newbb_thread.tpl" topic_post=$post}>
 	<div class="icon_right">
 		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_VIEWTOPIC}></strong></a>
 		<{if !$forum_name }>
@@ -126,6 +126,6 @@
 <br />
 <{if $online}>
 	<br />
-	<{includeq file="db:newbb_online.html"}>
+	<{includeq file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.html'}>
+<{includeq file='db:newbb_notification_select.tpl'}>

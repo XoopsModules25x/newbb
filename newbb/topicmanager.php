@@ -1,5 +1,5 @@
 <?php
-// $Id: topicmanager.php 62 2012-08-17 10:15:26Z alfred $
+// $Id: topicmanager.php 12504 2014-04-26 01:01:06Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,7 +28,7 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 
 if ( isset($_POST['submit']) ) {
     foreach (array('forum', 'newforum', 'newtopic') as $getint) {
@@ -44,41 +44,39 @@ if ( isset($_POST['submit']) ) {
     }
 }
 
-if ( !$topic_id ) {
-	$redirect = empty($forum_id)? "index.php" : "viewforum.php?forum={$forum}";
-	$redirect = XOOPS_URL . "/modules/newbb/" . $redirect;
+if (!$topic_id) {
+    $redirect = empty($forum_id)? "index.php" : "viewforum.php?forum={$forum}";
+    $redirect = XOOPS_URL . "/modules/newbb/" . $redirect;
     redirect_header($redirect, 2, _MD_ERRORTOPIC);
-	exit();
 }
 
 $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
 $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
 
-if ( !$forum ) {
-	$topic_obj =& $topic_handler->get(intval($topic_id));	
-	if (is_object($topic_obj)) {
-		$forum = $topic_obj->getVar("forum_id");
-	} else {
-		$redirect = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id;
-		redirect_header($redirect, 2, _MD_FORUMNOEXIST);
-		exit();
-	}
-	unset($topic_obj);
+if (!$forum) {
+    $topic_obj =& $topic_handler->get(intval($topic_id));
+    if (is_object($topic_obj)) {
+        $forum = $topic_obj->getVar("forum_id");
+    } else {
+        $redirect = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id;
+        redirect_header($redirect, 2, _MD_FORUMNOEXIST);
+    }
+    unset($topic_obj);
 }
 
 if ($xoopsModuleConfig['wol_enabled']) {
-	$online_handler =& xoops_getmodulehandler('online', 'newbb');
-	$online_handler->init($forum);
+    $online_handler =& xoops_getmodulehandler('online', 'newbb');
+    $online_handler->init($forum);
 }
 // irmtfan add restore to viewtopic
 $action_array = array('merge', 'delete','restore', 'move','lock','unlock','sticky','unsticky','digest','undigest');
 foreach ($action_array as $_action) {
     $action[$_action] = array(
-	    "name"		=> $_action,
-	    "desc" 		=> constant(strtoupper("_MD_DESC_{$_action}")),
-	    "submit"	=> constant(strtoupper("_MD_{$_action}")),
-	    'sql' 		=> "topic_{$_action}=1",
-	    'msg' 		=> constant(strtoupper("_MD_TOPIC{$_action}"))
+        "name"		=> $_action,
+        "desc" 		=> constant(strtoupper("_MD_DESC_{$_action}")),
+        "submit"	=> constant(strtoupper("_MD_{$_action}")),
+        'sql' 		=> "topic_{$_action}=1",
+        'msg' 		=> constant(strtoupper("_MD_TOPIC{$_action}"))
     );
 }
 $action['lock']['sql']		= 'topic_status = 1';
@@ -93,14 +91,14 @@ $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;
 include_once XOOPS_ROOT_PATH.'/header.php';
 
 if ( isset($_POST['submit']) ) {
-	$mode = $_POST['mode'];
+    $mode = $_POST['mode'];
 
-	if ('delete' == $mode) {  
-		foreach ($topic_id as $tid) {
+    if ('delete' == $mode) {
+        foreach ($topic_id as $tid) {
             $topic_obj =& $topic_handler->get($tid);
             $topic_handler->delete($topic_obj,false);
             // irmtfan - sync topic after delete
-   			$topic_handler->synchronization($topic_obj);
+            $topic_handler->synchronization($topic_obj);
             $forum_handler->synchronization($forum);
             //$topic_obj->loadFilters("delete");
             //sync($topic_id, "topic");
@@ -108,111 +106,110 @@ if ( isset($_POST['submit']) ) {
         }
         // irmtfan full URL
         echo $action[$mode]['msg']."<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewforum.php?forum=$forum'>"._MD_RETURNTOTHEFORUM."</a></p><p><a href='index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
-	} elseif ('restore' == $mode) {  
-		//$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
+    } elseif ('restore' == $mode) {
+        //$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
         $forums = array();
         $topics_obj =& $topic_handler->getAll(new Criteria("topic_id", "(".implode(",", $topic_id).")", "IN"));
-		foreach (array_keys($topics_obj) as $id) {
-			$topic_obj =& $topics_obj[$id];
-			$topic_handler->approve($topic_obj);            
-			$topic_handler->synchronization($topic_obj);
-			$forums[$topic_obj->getVar("forum_id")] = 1;   
-		}
-		//irmtfan remove - no need to approve posts manually - see class/post.php approve function      
-		$criteria_forum = new Criteria("forum_id", "(".implode(",", array_keys($forums)).")", "IN");
-		$forums_obj =& $forum_handler->getAll($criteria_forum);
+        foreach (array_keys($topics_obj) as $id) {
+            $topic_obj =& $topics_obj[$id];
+            $topic_handler->approve($topic_obj);
+            $topic_handler->synchronization($topic_obj);
+            $forums[$topic_obj->getVar("forum_id")] = 1;
+        }
+        //irmtfan remove - no need to approve posts manually - see class/post.php approve function
+        $criteria_forum = new Criteria("forum_id", "(".implode(",", array_keys($forums)).")", "IN");
+        $forums_obj =& $forum_handler->getAll($criteria_forum);
         foreach (array_keys($forums_obj) as $id) {
-			$forum_handler->synchronization($forums_obj[$id]);
-		}
-		unset($topics_obj, $forums_obj);
-		// irmtfan add restore to viewtopic
-		$restoretopic_id=$topic_obj->getVar("topic_id");
-		// irmtfan / missing in URL
+            $forum_handler->synchronization($forums_obj[$id]);
+        }
+        unset($topics_obj, $forums_obj);
+        // irmtfan add restore to viewtopic
+        $restoretopic_id=$topic_obj->getVar("topic_id");
+        // irmtfan / missing in URL
         echo $action[$mode]['msg'].
-   		"<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$restoretopic_id'>"._MD_VIEWTHETOPIC."</a></p>".
+        "<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$restoretopic_id'>"._MD_VIEWTHETOPIC."</a></p>".
         "<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewforum.php?forum=$forum'>"._MD_RETURNTOTHEFORUM."</a></p>".
         "<p><a href='index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
-	
+
     } elseif ('merge' == $mode) {
-		$post_handler =& xoops_getmodulehandler('post', 'newbb');
-		$rate_handler =& xoops_getmodulehandler('rate', 'newbb');
-		
-		foreach ($topic_id as $tid) {
+        $post_handler =& xoops_getmodulehandler('post', 'newbb');
+        $rate_handler =& xoops_getmodulehandler('rate', 'newbb');
+
+        foreach ($topic_id as $tid) {
             $topic_obj =& $topic_handler->get($tid);
             $newtopic_obj =& $topic_handler->get($newtopic);
-			
+
             /* return false if destination topic is not existing */
-			// irmtfan bug fix: the old topic will be deleted if user input a not exist new topic
+            // irmtfan bug fix: the old topic will be deleted if user input a not exist new topic
             if (!is_object($newtopic_obj)) {
-				$redirect = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $tid;
+                $redirect = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $tid;
                 redirect_header($redirect, 2, _MD_ERRORTOPIC);
-                exit();
             }
             $criteria_topic = new Criteria("topic_id", $tid);
             $criteria = new CriteriaCompo($criteria_topic);
             $criteria->add(new Criteria('pid', 0));
-			// irmtfan OR change to this for less query?:
-			// $post_handler->updateAll("pid", $newtopic_obj->getVar("topic_last_post_id"), $criteria, true);
+            // irmtfan OR change to this for less query?:
+            // $post_handler->updateAll("pid", $newtopic_obj->getVar("topic_last_post_id"), $criteria, true);
             $post_handler->updateAll("pid", $topic_handler->getTopPostId($newtopic), $criteria, true);
             $post_handler->updateAll("topic_id", $newtopic, $criteria_topic, true);
-			// irmtfan update vote data instead of deleting them
+            // irmtfan update vote data instead of deleting them
             $rate_handler->updateAll("topic_id", $newtopic, $criteria_topic, true);
-        
+
             $topic_views =  $topic_obj->getVar("topic_views") + $newtopic_obj->getVar("topic_views");
-			// irmtfan better method to update topic_views in new topic
+            // irmtfan better method to update topic_views in new topic
             //$criteria_newtopic = new Criteria("topic_id", $newtopic);
             //$topic_handler->updateAll("topic_views", $topic_views, $criteria_newtopic, true);
-			$newtopic_obj->setVar("topic_views", $topic_views);
-			// START irmtfan poll_module and rewrite the method
- 			// irmtfan only move poll in old topic to new topic if new topic has not a poll
-			$poll_id = $topic_obj->getVar("poll_id");		
-			if ( ($newtopic_obj->getVar("poll_id") == 0) && $poll_id>0 ) {
-				$newtopic_obj->setVar("topic_haspoll", 1);
-				$newtopic_obj->setVar("poll_id", $poll_id);
-				$poll_id = 0;// set to not delete the poll
-				$topic_obj->setVar("topic_haspoll", 0); // set to not delete the poll
-				$topic_obj->setVar("poll_id", 0);// set to not delete the poll
-			}	
-			//update and sync newtopic after merge
+            $newtopic_obj->setVar("topic_views", $topic_views);
+            // START irmtfan poll_module and rewrite the method
+            // irmtfan only move poll in old topic to new topic if new topic has not a poll
+            $poll_id = $topic_obj->getVar("poll_id");
+            if ( ($newtopic_obj->getVar("poll_id") == 0) && $poll_id>0 ) {
+                $newtopic_obj->setVar("topic_haspoll", 1);
+                $newtopic_obj->setVar("poll_id", $poll_id);
+                $poll_id = 0;// set to not delete the poll
+                $topic_obj->setVar("topic_haspoll", 0); // set to not delete the poll
+                $topic_obj->setVar("poll_id", 0);// set to not delete the poll
+            }
+            //update and sync newtopic after merge
             //$topic_handler->insert($newtopic_obj, true);
             $topic_handler->synchronization($newtopic_obj); // very important: only use object
-			//sync newforum after merge
-			$newforum = $newtopic_obj->getVar("forum_id");
+            //sync newforum after merge
+            $newforum = $newtopic_obj->getVar("forum_id");
             $forum_handler->synchronization($newforum);
-			//hardcode remove force to delete old topic from database			
+            //hardcode remove force to delete old topic from database
             //$topic_handler->delete($topic_obj,true); // cannot use this
             $topic_handler->deleteAll($criteria_topic, true); // $force = true
-			//delete poll if old topic had a poll
-			$topic_obj->deletePoll($poll_id);
+            //delete poll if old topic had a poll
+            $topic_obj->deletePoll($poll_id);
             //sync forum after delete old topic
             $forum_handler->synchronization($forum);
-			// END irmtfan poll_module and rewrite the method
-	    }
+            // END irmtfan poll_module and rewrite the method
+        }
         echo $action[$mode]['msg'].
-        	// irmtfan full URL
-        		"<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$newtopic'>"._MD_VIEWTHETOPIC."</a></p>".
-        		"<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewforum.php?forum=$forum'>"._MD_RETURNTOTHEFORUM."</a></p>".
-        		"<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
-	} elseif ('move' == $mode) {
+            // irmtfan full URL
+                "<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$newtopic'>"._MD_VIEWTHETOPIC."</a></p>".
+                "<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewforum.php?forum=$forum'>"._MD_RETURNTOTHEFORUM."</a></p>".
+                "<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
+    } elseif ('move' == $mode) {
         if ($newforum > 0) {
             $topic_id = $topic_id[0];
-			$topic_obj = $topic_handler->get($topic_id);
-			$topic_obj->loadFilters("update");
-			$topic_obj->setVar("forum_id", $newforum, true);
-			$topic_handler->insert($topic_obj, true);
-			$topic_obj->loadFilters("update");
-			
+            $topic_obj = $topic_handler->get($topic_id);
+            $topic_obj->loadFilters("update");
+            $topic_obj->setVar("forum_id", $newforum, true);
+            $topic_handler->insert($topic_obj, true);
+            $topic_obj->loadFilters("update");
+
             $sql = sprintf("UPDATE %s SET forum_id = %u WHERE topic_id = %u", $xoopsDB->prefix("bb_posts"), $newforum, $topic_id);
             if ( !$r = $xoopsDB->query($sql) ) {
-	            return false;
+                return false;
             }
-			$forum_handler->synchronization($forum);
-			$forum_handler->synchronization($newforum);
+            $forum_handler->synchronization($forum);
+            $forum_handler->synchronization($newforum);
 // irmtfan full URL
-        	echo $action[$mode]['msg']."<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$topic_id&amp;forum=$newforum'>"._MD_GOTONEWFORUM."</a></p><p><a href='".XOOPS_URL."/modules/newbb/index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
+            echo $action[$mode]['msg']."<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$topic_id&amp;forum=$newforum'>"._MD_GOTONEWFORUM."</a></p><p><a href='".XOOPS_URL."/modules/newbb/index.php'>"._MD_RETURNFORUMINDEX."</a></p>";
         } else {
-       		// irmtfan - issue with javascript:history.go(-1)
-    		redirect_header($_SERVER['HTTP_REFERER'],2,_MD_ERRORFORUM);
+               // irmtfan - issue with javascript:history.go(-1)
+            redirect_header($_SERVER['HTTP_REFERER'],2,_MD_ERRORFORUM);
         }
     } else {
         $topic_id = $topic_id[0];
@@ -224,29 +221,26 @@ if ( isset($_POST['submit']) ) {
             || (!empty($newforum) && !$forum_handler->getPermission($newforum, 'post')) // The forum to be moved to
         ) {
             redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id",2,_NOPERM);
-            exit();
         }
-		
-		if (!empty($action[$mode]['sql'])) {
-			$sql = sprintf("UPDATE %s SET ".$action[$mode]['sql']." WHERE topic_id = %u", $xoopsDB->prefix("bb_topics"), $topic_id);
-			if ( !$r = $xoopsDB->query($sql) ) {
-				redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode", 2, _MD_ERROR_BACK.'<br />sql:'.$sql);
-				exit();
-			}
+
+        if (!empty($action[$mode]['sql'])) {
+            $sql = sprintf("UPDATE %s SET ".$action[$mode]['sql']." WHERE topic_id = %u", $xoopsDB->prefix("bb_topics"), $topic_id);
+            if ( !$r = $xoopsDB->query($sql) ) {
+                redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode", 2, _MD_ERROR_BACK.'<br />sql:'.$sql);
+            }
         } else {
-			redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
-			exit();
-		}
+            redirect_header(XOOPS_URL."/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
+        }
         if ('digest' == $mode && $xoopsDB->getAffectedRows()) {
-	    	$topic_obj =& $topic_handler->get($topic_id);
+            $topic_obj =& $topic_handler->get($topic_id);
             $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
-			$stats_handler->update($topic_obj->getVar("forum_id"), "digest");
-            $userstats_handler =& xoops_getmodulehandler('userstats', 'newbb');            
-			if ($user_stat = $userstats_handler->get($topic_obj->getVar("topic_poster"))) { 
-                $z = $user_stat->getVar("user_digests") + 1 ;  
-				$user_stat->setVar("user_digests", intval($z));
-				$userstats_handler->insert($user_stat);
-			}
+            $stats_handler->update($topic_obj->getVar("forum_id"), "digest");
+            $userstats_handler =& xoops_getmodulehandler('userstats', 'newbb');
+            if ($user_stat = $userstats_handler->get($topic_obj->getVar("topic_poster"))) {
+                $z = $user_stat->getVar("user_digests") + 1 ;
+                $user_stat->setVar("user_digests", intval($z));
+                $userstats_handler->insert($user_stat);
+            }
         }
 // irmtfan full URL
         echo $action[$mode]['msg']."<p><a href='".XOOPS_URL."/modules/".$xoopsModule->getVar("dirname")."/viewtopic.php?topic_id=$topic_id&amp;forum=$forum'>"._MD_VIEWTHETOPIC."</a></p><p><a href='".XOOPS_URL."/modules/newbb/viewforum.php?forum=$forum'>"._MD_RETURNFORUMINDEX."</a></p>";
@@ -260,34 +254,34 @@ if ( isset($_POST['submit']) ) {
     echo "<tr class='bg3' align='left'>";
     echo "<td colspan='2' align='center'>".$action[$mode]['desc']."</td></tr>";
 
-    if ( $mode == 'move' ) {
+    if ($mode == 'move') {
         echo '<tr><td class="bg3">'._MD_MOVETOPICTO.'</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
-		$category_handler =& xoops_getmodulehandler('category', 'newbb');
-	    $categories = $category_handler->getByPermission('access');
-	    $forums = $forum_handler->getForumsByCategory(array_keys($categories), 'post', false);
-	
-		if (count($categories) > 0 && count($forums) > 0) {
-			foreach (array_keys($forums) as $key) {
-	            $box .= "<option value='-1'>[".$categories[$key]->getVar('cat_title')."]</option>";
-	            foreach ($forums[$key] as $forumid=>$_forum) {
-	                $box .= "<option value='".$forumid."'>-- ".$_forum['title']."</option>";
-					if ( !isset($_forum["sub"])) continue; 
-		            foreach (array_keys($_forum["sub"]) as $fid) {
-		                $box .= "<option value='".$fid."'>---- ".$_forum["sub"][$fid]['title']."</option>";
-	                }
-	            }
-			}
-	    } else {
-	        $box .= "<option value='-1'>"._MD_NOFORUMINDB."</option>";
-	    }
-    	unset($forums, $categories);
-          
-    	echo $box;      
+        $category_handler =& xoops_getmodulehandler('category', 'newbb');
+        $categories = $category_handler->getByPermission('access');
+        $forums = $forum_handler->getForumsByCategory(array_keys($categories), 'post', false);
+
+        if (count($categories) > 0 && count($forums) > 0) {
+            foreach (array_keys($forums) as $key) {
+                $box .= "<option value='-1'>[".$categories[$key]->getVar('cat_title')."]</option>";
+                foreach ($forums[$key] as $forumid=>$_forum) {
+                    $box .= "<option value='".$forumid."'>-- ".$_forum['title']."</option>";
+                    if ( !isset($_forum["sub"])) continue;
+                    foreach (array_keys($_forum["sub"]) as $fid) {
+                        $box .= "<option value='".$fid."'>---- ".$_forum["sub"][$fid]['title']."</option>";
+                    }
+                }
+            }
+        } else {
+            $box .= "<option value='-1'>"._MD_NOFORUMINDB."</option>";
+        }
+        unset($forums, $categories);
+
+        echo $box;
         echo '</select></td></tr>';
     }
-    if ( $mode == 'merge' ) {
+    if ($mode == 'merge') {
         echo '<tr><td class="bg3">'._MD_MERGETOPICTO.'</td><td class="bg1">';
         echo _MD_TOPIC."ID-$topic_id -> ID: <input name='newtopic' value='' />";
         echo '</td></tr>';
@@ -300,6 +294,5 @@ if ( isset($_POST['submit']) ) {
     echo "</td></tr></form></table></td></tr></table>";
 }
 // irmtfan move to footer.php
-include_once dirname(__FILE__) . "/footer.php";
+include_once __DIR__ . "/footer.php";
 include XOOPS_ROOT_PATH.'/footer.php';
-?>

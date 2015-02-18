@@ -10,27 +10,25 @@
  * @package		module::newbb
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include_once dirname(__FILE__)."/functions.ini.php";
+defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__."/functions.ini.php";
 define("NEWBB_FUNCTIONS_LANGUAGE_LOADED", TRUE);
-
 
 if (!defined("NEWBB_FUNCTIONS_LANGUAGE")):
 define("NEWBB_FUNCTIONS_LANGUAGE", 1);
 
 function newbb_load_language($page, $dirname = "newbb")
 {
-	global $xoopsConfig;
-	$page = str_replace("..", "", $page);
-	if (!@include_once XOOPS_ROOT_PATH."/modules/{$dirname}/{$xoopsConfig['language']}/{$language}.php") {
-		if (!@include_once XOOPS_ROOT_PATH."/modules/{$dirname}/language/{$language}.php") {
-			return false;
-		}
-	}
-	
-	return true;
+    global $xoopsConfig;
+    $page = str_replace("..", "", $page);
+    if (!@include_once XOOPS_ROOT_PATH."/modules/{$dirname}/{$xoopsConfig['language']}/{$language}.php") {
+        if (!@include_once XOOPS_ROOT_PATH."/modules/{$dirname}/language/{$language}.php") {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 ENDIF;
-?>

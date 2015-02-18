@@ -17,13 +17,13 @@
         <{if $forum_topicstatus}> [<{$forum_topicstatus}>]
         <{else}> [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_DIGEST}>"><{$smarty.const._MD_DIGEST}></a>]
         <{/if}>
-    </div>    
+    </div>
 	<div class="clear"></div>
-</div>    
+</div>
 <br />
 
 <{if $subforum}>
-	<{includeq file="db:newbb_viewforum_subforum.html"}>
+	<{includeq file="db:newbb_viewforum_subforum.tpl"}>
 	<br />
 <{/if}>
 
@@ -37,7 +37,7 @@
 	</div>
 	<div class="_col_end right">
 	<{if $mode gt 1}>
-		<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" /> 
+		<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" />
 		<select name="op">
 			<option value="0"><{$smarty.const._SELECT}></option>
 			<option value="delete"><{$smarty.const._DELETE}></option>
@@ -49,14 +49,14 @@
 			<{else}>
 				<option value="move"><{$smarty.const._MD_MOVE}></option>
 			<{/if}>
-		</select>  
+		</select>
 		<input type="hidden" name="forum_id" value="<{$forum_id}>" />
-		<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> | 
-		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a> 
+		<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> |
+		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
 	<{else}>
-		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> | 
-		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> | 
+		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> |
 		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
 	<{/if}>
 	</div>
@@ -70,26 +70,26 @@
 
 <div>
 	<div class="dropdown floatleft">
-		<{includeq file="db:newbb_viewforum_menu.html"}>
+		<{includeq file="db:newbb_viewforum_menu.tpl"}>
 	</div>
 	<div class="pagenav">
 		<{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>
-	<div class="clear"></div>	
+	<div class="clear"></div>
 </div>
 <br />
 <div class="topic_list outer">
 	<div class="head">
 		<div class="topic_folder floatleft align_center">
             <{if $mode gt 1}>
-	    		<{$smarty.const._ALL}>: 
+	    		<{$smarty.const._ALL}>:
 	        <{else}>
 	            &nbsp;
 	        <{/if}>
         </div>
         <div class="topic_icon floatleft align_center">
 		    <{if $mode gt 1}>
-		    	<input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" /> 
+		    	<input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" />
 		    <{else}>
 		    	&nbsp;
 		    <{/if}>
@@ -106,7 +106,7 @@
 		<div class="topic_publish floatleft align_center"><strong><a href="<{$h_publish_link}>"><{$smarty.const._MD_TOPICTIME}></a></strong></div>
 		<div class="topic_reply floatleft align_center"><strong><a href="<{$h_reply_link}>"><{$smarty.const._MD_REPLIES}></a></strong></div>
 		<div class="topic_view floatleft align_center"><strong><a href="<{$h_views_link}>"><{$smarty.const._MD_VIEWS}></a></strong></div>
-        <div class="topic_rate floatleft align_center">        
+        <div class="topic_rate floatleft align_center">
 		<{if $rating_enable}>
 			<strong><a href="<{$h_rating_link}>"><{$smarty.const._MD_RATINGS}></a></strong>
 		<{/if}>
@@ -125,7 +125,7 @@
                     <strong><{$smarty.const._MD_NOTIMTOPICS}></strong>
                 </div>
                 <div class="clear"></div>
-	        </div>	
+	        </div>
 	    <{/if}>
 	<div class="<{cycle values="even,odd"}>">
         <div class="topic_folder floatleft <{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}> align_center"><{$topic.topic_folder}></div>
@@ -147,7 +147,7 @@
 		<div class="topic_publish floatleft align_center"><{$topic.topic_time}></div>
 		<div class="topic_reply floatleft align_center"><{$topic.topic_replies}></div>
 		<div class="topic_view floatleft align_center"><{$topic.topic_views}></div>
-        <div class="topic_rate floatleft align_center">        
+        <div class="topic_rate floatleft align_center">
 		<{if $rating_enable}>
 		    <{$topic.rating_img}>
 		<{/if}>
@@ -161,7 +161,7 @@
 	<{/foreach}>
 
 	<!-- end forum topic -->
-	
+
 	<{if $mode gt 1}>
 	    </form>
 	<{/if}>
@@ -213,10 +213,10 @@
 			<br />
 			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
 				<{$rss_button}>
-			</a>	
-			<font size="0.7em;"><a href="http://www.simple-xoops.de">NewBB Version  <{$version/100}></a></font>
+			</a>
+			<font size="0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></font>
 			<div class="clear"></div>
-		<{/if}>	
+		<{/if}>
 		<{$forum_jumpbox}>
 	</div>
 </div>
@@ -234,7 +234,7 @@
 <br />
 <{if $online}>
 	<br />
-	<{includeq file="db:newbb_online.html"}>
+	<{includeq file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.html'}>
+<{includeq file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

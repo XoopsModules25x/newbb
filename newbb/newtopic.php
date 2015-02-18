@@ -10,45 +10,41 @@
  * @package		module::newbb
  */
 
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 
 if ( !$forum = intval(@$_GET["forum"]) ) {
     redirect_header("index.php", 2, _MD_ERRORFORUM);
-    exit();
 }
 
 $forum_handler =& xoops_getmodulehandler('forum');
 $forum_obj = $forum_handler->get($forum);
 if (!$forum_handler->getPermission($forum_obj)) {
     redirect_header("index.php", 2, _NOPERM);
-    exit();
 }
 
 $topic_handler =& xoops_getmodulehandler('topic');
 $topic_obj = $topic_handler->create();
 $topic_obj->setVar("forum_id", $forum);
 if (!$topic_handler->getPermission($forum_obj, 0, 'post')) {
-	/*
-	 * Build the page query
-	 */
-	$query_vars = array("forum", "order", "mode", "viewmode");
-	$query_array = array();
-	foreach ($query_vars as $var) {
-		if (!empty($_GET[$var])) $query_array[$var] = "{$var}={$_GET[$var]}";
-	}
-	$page_query = htmlspecialchars(implode("&", array_values($query_array)));
-	unset($query_array);
+    /*
+     * Build the page query
+     */
+    $query_vars = array("forum", "order", "mode", "viewmode");
+    $query_array = array();
+    foreach ($query_vars as $var) {
+        if (!empty($_GET[$var])) $query_array[$var] = "{$var}={$_GET[$var]}";
+    }
+    $page_query = htmlspecialchars(implode("&", array_values($query_array)));
+    unset($query_array);
     redirect_header(XOOPS_URL."/modules/newbb/viewforum.php?{$page_query}", 2, _MD_NORIGHTTOPOST);
-    exit();
 }
 
 if ($xoopsModuleConfig['wol_enabled']) {
-	$online_handler =& xoops_getmodulehandler('online');
-	$online_handler->init($forum_obj);
+    $online_handler =& xoops_getmodulehandler('online');
+    $online_handler->init($forum_obj);
 }
 
-
-$xoopsOption['template_main'] =  'newbb_edit_post.html';
+$xoopsOption['template_main'] =  'newbb_edit_post.tpl';
 $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0; // Disable cache
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
@@ -64,18 +60,17 @@ $category_obj =& $category_handler->get($forum_obj->getVar("cat_id"), array("cat
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
 $xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
 $xoopsTpl->assign(array(
-	'forum_id' 			=> $forum_obj->getVar('forum_id'), 
-	'forum_name' 		=> $forum_obj->getVar('forum_name'), 
-	));
+    'forum_id' 			=> $forum_obj->getVar('forum_id'),
+    'forum_name' 		=> $forum_obj->getVar('forum_name'),
+    ));
 
 $form_title = _MD_POSTNEW;
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ($xoopsModuleConfig['disc_show'] == 1 || $xoopsModuleConfig['disc_show'] == 3 ) {
-	$xoopsTpl->assign("disclaimer", $xoopsModuleConfig['disclaimer']);
+if ($xoopsModuleConfig['disc_show'] == 1 || $xoopsModuleConfig['disc_show'] == 3) {
+    $xoopsTpl->assign("disclaimer", $xoopsModuleConfig['disclaimer']);
 }
-
 
 $subject = "";
 $message = "";
@@ -89,8 +84,7 @@ $require_reply = 0;
 $attachsig = (is_object($xoopsUser) && $xoopsUser->getVar('attachsig')) ? 1 : 0;
 $post_id = 0;
 $topic_id = 0;
-include 'include/form.post.php';
+include __DIR__ . '/include/form.post.php';
 // irmtfan move to footer.php
-include_once dirname(__FILE__) . "/footer.php";
+include_once __DIR__ . "/footer.php";
 include XOOPS_ROOT_PATH.'/footer.php';
-?>

@@ -10,29 +10,27 @@
  * @package		module::newbb
  */
 
-if (!defined('XOOPS_ROOT_PATH')) { exit(); }
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include_once dirname(__FILE__)."/functions.ini.php";
+defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__."/functions.ini.php";
 define("NEWBB_FUNCTIONS_CONFIG_LOADED", TRUE);
-
 
 IF (!defined("NEWBB_FUNCTIONS_CONFIG")):
 define("NEWBB_FUNCTIONS_CONFIG", 1);
 
 function newbb_load_config($category = "", $dirname = "newbb")
 {
-	global $xoopsModuleConfig;
-	static $configs;
-	
-	if ( isset($configs[""]) || isset($configs[$category]) ) return true;
-	$config_handler = xoops_getmodulehandler("config", $dirname);
-	if ($configs_data = $config_handler->getByCategory($category)) {
-		$GLOBALS["xoopsModuleConfig"] = array_merge($GLOBALS["xoopsModuleConfig"], $configs_data);
-	}
-	$configs[$category] = 1;
-	
-	return true;
+    global $xoopsModuleConfig;
+    static $configs;
+
+    if ( isset($configs[""]) || isset($configs[$category]) ) return true;
+    $config_handler = xoops_getmodulehandler("config", $dirname);
+    if ($configs_data = $config_handler->getByCategory($category)) {
+        $GLOBALS["xoopsModuleConfig"] = array_merge($GLOBALS["xoopsModuleConfig"], $configs_data);
+    }
+    $configs[$category] = 1;
+
+    return true;
 }
 
 ENDIF;
-?>

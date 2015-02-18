@@ -9,18 +9,17 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
+
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
 newbb_load_object();
 
-class Report extends ArtObject {
+class Report extends ArtObject
+{
     function Report()
     {
-	    $this->ArtObject("bb_report");
+        $this->ArtObject("bb_report");
         $this->initVar('report_id', XOBJ_DTYPE_INT);
         $this->initVar('post_id', XOBJ_DTYPE_INT);
         $this->initVar('reporter_uid', XOBJ_DTYPE_INT);
@@ -32,23 +31,25 @@ class Report extends ArtObject {
     }
 }
 
-class NewbbReportHandler extends ArtObjectHandler 
+class NewbbReportHandler extends ArtObjectHandler
 {
-    function NewbbReportHandler(&$db) {
+    function NewbbReportHandler(&$db)
+    {
         $this->ArtObjectHandler($db, 'bb_report', 'Report', 'report_id');
     }
     function &getByPost($posts)
     {
-	    $ret = array();
+        $ret = array();
         if (!$posts) {
-	        return $ret;
+            return $ret;
         }
         if (!is_array($posts)) $posts = array($posts);
         $post_criteria = new Criteria("post_id", "(" . implode(", ", $posts) . ")", "IN");
-		$ret =& $this->getAll($post_criteria);
+        $ret =& $this->getAll($post_criteria);
+
         return $ret;
     }
-    
+
     function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
     {
         if ($order == "DESC") {
@@ -69,7 +70,7 @@ class NewbbReportHandler extends ArtObjectHandler
 
         if (!$forums) {
             $forum_criteria = '';
-        } else if (!is_array($forums)) {
+        } elseif (!is_array($forums)) {
             $forums = array($forums);
             $forum_criteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
         }
@@ -89,23 +90,22 @@ class NewbbReportHandler extends ArtObjectHandler
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
+
         return $ret;
     }
 
-	function synchronization()
+    function synchronization()
     {
-		return;
-	}
-    
+        return;
+    }
+
     /**
      * clean orphan items from database
-     * 
-     * @return 	bool	true on success
+     *
+     * @return bool true on success
      */
     function cleanOrphan()
     {
-	    return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
+        return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
     }
 }
-
-?>

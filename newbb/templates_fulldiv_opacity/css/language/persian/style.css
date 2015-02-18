@@ -1,0 +1,73 @@
+@import url('../english/style.css');
+.pagenav {
+     float: /*irmtfan right*/ left;
+     text-align: /*irmtfan right*/ left;
+}
+.align_left {
+    direction: rtl;
+    margin-left: auto;
+    margin-right: 0;
+    text-align: right;
+}
+.align_right{
+    direction: rtl;
+    margin-right: auto;
+    margin-left: 0;
+    text-align: left;
+}
+.poll {
+    direction: rtl;
+}
+.forum_title {
+    float		: /*irmtfan left*/ right; 
+    text-align	: /*irmtfan left*/ right; 
+
+}
+
+.forum_title a {
+    font-weight: bold;
+}
+
+
+.forum_stats {
+    text-align:/*irmtfan left*/right; 
+}
+
+.icon_left {
+    float: /*irmtfan left*/ right; text-align: /*irmtfan left*/ right; 
+}
+
+.icon_right {
+    float: /*irmtfan right*/ left; text-align: /*irmtfan right*/ left;
+}
+
+
+.left { text-align: /*irmtfan left*/ right; }
+.right { text-align: /*irmtfan right*/ left; }
+.floatleft { float: /*irmtfan left*/ right;}
+.floatright { float: /*irmtfan right*/ left;} 
+
+
+.index_category .desc, .index_category .desc a{
+	/* irmtfan padding-left: 0; */ padding-right: 0;
+}
+
+#index_forum span.extra{
+	float: /*irmtfan right*/ left;
+	text-align: /*irmtfan left*/ right;
+}
+
+
+/* -- user level -- */
+table.userlevel{
+	text-align: /*irmtfan left*/ right;
+}
+/* to mirror (flip) right left images for RTL */
+img#next, img#previous, img#admin_move, img#lastposticon, img#post, img#subforum {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}

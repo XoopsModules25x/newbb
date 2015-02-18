@@ -28,17 +28,16 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once dirname(__FILE__) . "/header.php";
+include_once __DIR__ . "/header.php";
 xoops_loadLanguage("search");
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if ($xoopsConfigSearch['enable_search'] != 1) {
     redirect_header(XOOPS_URL.'/modules/newbb/index.php',2,_MD_NEWBB_SEARCHDISABLED);
-    exit();
 }
 
 $xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
-$xoopsOption['template_main']= 'newbb_search.html';
+$xoopsOption['template_main']= 'newbb_search.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once XOOPS_ROOT_PATH.'/header.php';
 
@@ -74,57 +73,56 @@ $show_search = "post_text";
 $search_username = trim($uname);
 
 if ($xoopsModuleConfig['wol_enabled']) {
-	$online_handler =& xoops_getmodulehandler('online', 'newbb');
-	$online_handler->init(0);
+    $online_handler =& xoops_getmodulehandler('online', 'newbb');
+    $online_handler->init(0);
 }
 
 $xoopsTpl->assign("forumindex", sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
 //$xoopsTpl->assign("img_folder", newbb_displayImage($forumImage['topic']));
 
 if ( !empty($_REQUEST['submit']) || !empty($uname) || !empty($term)) {
-	// irmtfan filter positive numbers
-	$selectstartlag = !empty($selectstartlag) ? abs($selectstartlag) : 100;
-	$selectlength = !empty($selectlength) ? abs($selectlength) : 200;
-	// irmtfan add select parameters for next search
-	$next_search['selectstartlag'] = $selectstartlag;
-	$next_search['selectlength'] = $selectlength;
-	$next_search['selecthtml'] = $selecthtml;
-	$next_search['selectexclude'] = implode(", ", $selectexclude);
+    // irmtfan filter positive numbers
+    $selectstartlag = !empty($selectstartlag) ? abs($selectstartlag) : 100;
+    $selectlength = !empty($selectlength) ? abs($selectlength) : 200;
+    // irmtfan add select parameters for next search
+    $next_search['selectstartlag'] = $selectstartlag;
+    $next_search['selectlength'] = $selectlength;
+    $next_search['selecthtml'] = $selecthtml;
+    $next_search['selectexclude'] = implode(", ", $selectexclude);
 
     $start = isset($_GET['start']) ? $_GET['start'] : 0;
     $forum = isset($_POST['forum']) ? $_POST['forum'] : (isset($_GET['forum']) ? $_GET['forum'] : null);
-    if (empty($forum) or $forum == 'all' or (is_array($forum) and in_array('all', $forum))) {
+    if (empty($forum) || $forum == 'all' or (is_array($forum) and in_array('all', $forum))) {
        $forum = array();
     } elseif (!is_array($forum)) {
        $forum = array_map("intval",explode("|", $forum));
     }
     $next_search['forum'] = implode("|", $forum);
-	// START irmtfan topic search
+    // START irmtfan topic search
     $topic = isset($_POST['topic']) ? $_POST['topic'] : (isset($_GET['topic']) ? $_GET['topic'] : null);
     $next_search['topic'] = $topic;
-	// END irmtfan topic search
-	// START irmtfan add show search
+    // END irmtfan topic search
+    // START irmtfan add show search
     $show_search = isset($_POST['show_search']) ? $_POST['show_search'] : (isset($_GET['show_search']) ? $_GET['show_search'] : 'post_text');
     $next_search['show_search'] = $show_search;
-	// START irmtfan add show search
+    // START irmtfan add show search
 
     $addterms = isset($_POST['andor']) ? $_POST['andor'] : (isset($_GET['andor']) ? $_GET['andor'] : "");
     $next_search['andor'] = $addterms;
-	if ( !in_array(strtolower($addterms), array("or", "and", "exact"))) {
-		// irmtfan change default to AND
-	    $andor = "AND";
-	} else {
-	    $andor = strtoupper($addterms);
-	}
+    if ( !in_array(strtolower($addterms), array("or", "and", "exact"))) {
+        // irmtfan change default to AND
+        $andor = "AND";
+    } else {
+        $andor = strtoupper($addterms);
+    }
 
     $uname_required = false;
     $next_search['uname'] = $search_username;
     if ( !empty($search_username) ) {
-	    $uname_required = true;
+        $uname_required = true;
         $search_username = $myts->addSlashes($search_username);
         if ( !$result = $xoopsDB->query("SELECT uid FROM ".$xoopsDB->prefix("users")." WHERE uname LIKE '%$search_username%'") ) {
             redirect_header('search.php',1,_MD_ERROROCCURED);
-            exit();
         }
         $uid = array();
         while ($row = $xoopsDB->fetchArray($result)) {
@@ -137,7 +135,7 @@ if ( !empty($_REQUEST['submit']) || !empty($uname) || !empty($term)) {
     $next_search['term'] = $term;
     $query = trim($term);
 
-    if ( $andor != "EXACT" ) {
+    if ($andor != "EXACT") {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
         $temp_queries = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
@@ -150,13 +148,11 @@ if ( !empty($_REQUEST['submit']) || !empty($uname) || !empty($term)) {
         }
         if (!$uname_required && count($queries) == 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
         }
     } else {
         //$query = trim($query);
         if (!$uname_required && (strlen($query) < $xoopsConfigSearch['keyword_min'])) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
         }
         $queries = array($myts->addSlashes($query));
     }
@@ -164,111 +160,109 @@ if ( !empty($_REQUEST['submit']) || !empty($uname) || !empty($term)) {
     // entries must be lowercase
     $allowed = array('p.post_time', 'p.subject'); // irmtfan just post time and subject
 
-	
     $sortby = isset($_POST['sortby']) ? $_POST['sortby'] : (isset($_GET['sortby']) ? $_GET['sortby'] : null);
     $next_search['sortby'] = $sortby;
     //$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  't.topic_last_post_id';
-	$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  'p.post_time';
+    $sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  'p.post_time';
     $searchin = isset($_POST['searchin']) ? $_POST['searchin'] : (isset($_GET['searchin']) ? $_GET['searchin'] : 'both');
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
-	if (!empty($since)) {
+    if (!empty($since)) {
         $criteriaExtra->add(new Criteria('p.post_time', (time() - newbb_getSinceTime($since)), '>='), 'OR');
     }
-	if (is_numeric($topic) && !empty($topic)) {
+    if (is_numeric($topic) && !empty($topic)) {
         $criteriaExtra->add(new Criteria('p.topic_id', $topic), 'OR');
-	}		
+    }
     // END irmtfan use criteria -  add since and topic search
-    
-	if ($uname_required&&(!$uid||count($uid)<1)) $results = array(); // irmtfan bug fix array()
+
+    if ($uname_required&&(!$uid||count($uid)<1)) $results = array(); // irmtfan bug fix array()
     else $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra); // irmtfan $criteriaExtra
-    
+
     // add newbb_highlightText function to keywords
     $search_info_keywords=newbb_highlightText($myts->htmlSpecialChars($term), $queries);
     // add number of results
     $num_results = count($results);
-    if ( $num_results < 1 ) {
+    if ($num_results < 1) {
         $xoopsTpl->assign("lang_nomatch", _SR_NOMATCH);
-    }
-    else {
-    	// START irmtfan add show search post_text, skip the result if both (post text) and (post subject) are empty
-    	$skipresults = 0;
+    } else {
+        // START irmtfan add show search post_text, skip the result if both (post text) and (post subject) are empty
+        $skipresults = 0;
         foreach ($results as $row) {
-        	$post_text = "";
-        	$post_text_select = "have text";
-        	$post_subject_select = "have text";
-        	if ($show_search == 'post_text') {
-        		$post_text = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode("",$selectexclude)); // strip html tags = $selecthtml
-				$post_text_select = $post_text;
-        		$post_text = newbb_highlightText($post_text, $queries);
-        	} elseif ( "title" != $searchin && !empty($selecthtml) ) { // find if there is any query left after strip html tags
-        		$post_text_select = newbb_selectText($row['post_text'], $queries, 100, 30000, true, implode("",$selectexclude)); // strip html tags = true
-        	}
-        	if ("text" != $searchin) {
-        		$post_subject_select = newbb_selectText($row['title'], $queries, 100, 400, true);// strip html tags = true
-        	}
-        	// if no text remained after select text continue
-        	if (empty($post_text_select) && empty($post_subject_select)) {
-        		$skipresults = $skipresults + 1;
-        		continue;
-        	}
-       		// add newbb_highlightText function to subject - add post_text
+            $post_text = "";
+            $post_text_select = "have text";
+            $post_subject_select = "have text";
+            if ($show_search == 'post_text') {
+                $post_text = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode("",$selectexclude)); // strip html tags = $selecthtml
+                $post_text_select = $post_text;
+                $post_text = newbb_highlightText($post_text, $queries);
+            } elseif ( "title" != $searchin && !empty($selecthtml) ) { // find if there is any query left after strip html tags
+                $post_text_select = newbb_selectText($row['post_text'], $queries, 100, 30000, true, implode("",$selectexclude)); // strip html tags = true
+            }
+            if ("text" != $searchin) {
+                $post_subject_select = newbb_selectText($row['title'], $queries, 100, 400, true);// strip html tags = true
+            }
+            // if no text remained after select text continue
+            if (empty($post_text_select) && empty($post_subject_select)) {
+                $skipresults = $skipresults + 1;
+                continue;
+            }
+               // add newbb_highlightText function to subject - add post_text
             $xoopsTpl->append('results', array('forum_name' => $row['forum_name'], 'forum_link' => $row['forum_link'], 'link' => $row['link'], 'title' => newbb_highlightText($row['title'],$queries), 'poster' => $row['poster'], 'post_time' => formatTimestamp($row['time'], "m"), 'post_text' => $post_text));
         }
-    	// END irmtfan add show search post_text
+        // END irmtfan add show search post_text
         unset($results);
 
         if (count($next_search)>0) {
-	        $items = array();
-	        foreach ($next_search as $para => $val) {
-		        if (!empty($val) || $para == "selecthtml") $items[] = "{$para}={$val}";// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
-	        }
-	        if (count($items)>0) $paras = implode("&",$items);
-	        unset($next_search);
-	        unset($items);
+            $items = array();
+            foreach ($next_search as $para => $val) {
+                if (!empty($val) || $para == "selecthtml") $items[] = "{$para}={$val}";// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
+            }
+            if (count($items)>0) $paras = implode("&",$items);
+            unset($next_search);
+            unset($items);
         }
-      	$search_url = XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname')."/search.php?".$paras;
-      	// irmtfan remove to have just one query and appropriate next and prev links
-       	//$next_results = newbb_search($queries, $andor, 1, $start + $limit, $uid, $forum, $sortby, $searchin, $subquery);
+          $search_url = XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname')."/search.php?".$paras;
+          // irmtfan remove to have just one query and appropriate next and prev links
+           //$next_results = newbb_search($queries, $andor, 1, $start + $limit, $uid, $forum, $sortby, $searchin, $subquery);
         //$next_count = count($next_results);
         //$has_next = false;
         //if (is_array($next_results) && $next_count >0) {
             //$has_next = true;
         //}
         // irmtfan if $results < $limit => it is impossible to have next
-       	if ($num_results == $limit) {
+           if ($num_results == $limit) {
             $next = $start + $limit;
             $queries = implode(',',$queries);
             $search_url_next = $search_url."&direction=next&start={$next}"; // irmtfan add { and } direction=next
             $search_next = '<a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a>';
-			$xoopsTpl->assign("search_next", $search_next);
+            $xoopsTpl->assign("search_next", $search_next);
         }
-        if ( $start > 0 ) {
+        if ($start > 0) {
             $prev = $start - $limit;
             $search_url_prev = $search_url."&direction=previous&start={$prev}"; // irmtfan add { and } and direction=previous
             $search_prev = '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a>';
-			$xoopsTpl->assign("search_prev", $search_prev);
+            $xoopsTpl->assign("search_prev", $search_prev);
         }
         // irmtfan if all results skipped then redirect to the next/previous page
-		if ( $num_results == $skipresults ) {
-			$direction = isset($_POST['direction']) ? $_POST['direction'] : (isset($_GET['direction']) ? $_GET['direction'] : 'next');
-			$search_url_redirect = (strtolower($direction) == "next") ? $search_url_next : $search_url_prev;
-			redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
-		}
+        if ($num_results == $skipresults) {
+            $direction = isset($_POST['direction']) ? $_POST['direction'] : (isset($_GET['direction']) ? $_GET['direction'] : 'next');
+            $search_url_redirect = (strtolower($direction) == "next") ? $search_url_next : $search_url_prev;
+            redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
+        }
     }
-	// irmtfan add newbb_highlightText function
-	$search_info = _SR_KEYWORDS.": ".$search_info_keywords;
+    // irmtfan add newbb_highlightText function
+    $search_info = _SR_KEYWORDS.": ".$search_info_keywords;
     if ($uname_required) {
-	    if ($search_info) $search_info .= "<br />";
-	    $search_info .= _MD_USERNAME.": ".$myts->htmlSpecialChars($search_username);
-	}
-	// add num_results
-	$search_info .= "<br />" . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
-	// if any result skip show the counter
-	if (!empty($skipresults)) {
-		$search_info .= " - " . sprintf(_SR_FOUND, $num_results - $skipresults);
-	}	
-	$xoopsTpl->assign("search_info", $search_info);
+        if ($search_info) $search_info .= "<br />";
+        $search_info .= _MD_USERNAME.": ".$myts->htmlSpecialChars($search_username);
+    }
+    // add num_results
+    $search_info .= "<br />" . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
+    // if any result skip show the counter
+    if (!empty($skipresults)) {
+        $search_info .= " - " . sprintf(_SR_FOUND, $num_results - $skipresults);
+    }
+    $xoopsTpl->assign("search_info", $search_info);
 }
 //  START irmtfan - assign template vars for search
 /* term */
@@ -380,9 +374,8 @@ $select_since = newbb_sinceSelectBox($since);
 $xoopsTpl->assign_by_ref("since_selection_box", $select_since);
 
 if ($xoopsConfigSearch['keyword_min'] > 0) {
-	$xoopsTpl->assign("search_rule", sprintf(_SR_KEYIGNORE, $xoopsConfigSearch['keyword_min']));
+    $xoopsTpl->assign("search_rule", sprintf(_SR_KEYIGNORE, $xoopsConfigSearch['keyword_min']));
 }
 // irmtfan move to footer.php
-include_once dirname(__FILE__) . "/footer.php";
+include_once __DIR__ . "/footer.php";
 include XOOPS_ROOT_PATH.'/footer.php';
-?>

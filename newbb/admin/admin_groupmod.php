@@ -28,13 +28,13 @@
 // URL: http://www.mymyxoops.org/, http://simple-xoops.de/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-include('admin_header.php');
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 echo "<fieldset>";
 include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/class/xoopsformloader.php";
 if (!$newXoopsModuleGui) {
-	//loadModuleAdminMenu(10,_AM_NEWBB_GROUPMOD_TITLE);
-	echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_GROUPMOD_TITLE . "</legend>";
+    //loadModuleAdminMenu(10,_AM_NEWBB_GROUPMOD_TITLE);
+    echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_GROUPMOD_TITLE . "</legend>";
 } else echo $indexAdmin->addNavigation('admin_groupmod.php');
 $member_handler =& xoops_gethandler('member');
 $forum_handler = &xoops_getmodulehandler('forum', 'newbb');
@@ -49,7 +49,7 @@ if (!empty($_POST['submit'])) {
                 foreach ($gg as $f) {
                     if (!in_array($f,$fuser)) $fuser[]=$f;
                 }
-            }        
+            }
         }
         if ($fforum == -1) { // alle Foren
             $sql = "UPDATE ".$xoopsDB->prefix('bb_forums')." SET forum_moderator='".serialize($fuser)."'";
@@ -60,10 +60,10 @@ if (!empty($_POST['submit'])) {
             $mess = _AM_NEWBB_GROUPMOD_ADDMOD;
         } else {
             $mess = _AM_NEWBB_GROUPMOD_ERRMOD."<br /><small>( ".$sql . " )</small>";
-        } 
+        }
         echo '<div class="confirmMsg">'.$mess.'</div><br /><br />';
     }
-} 
+}
 
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo"<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>"
@@ -96,4 +96,3 @@ echo "<form name='reorder' method='post'>";
 echo "</form></fieldset>";
 echo "</fieldset>";
 xoops_cp_footer();
-?>

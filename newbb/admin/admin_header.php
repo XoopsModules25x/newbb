@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_header.php 62 2012-08-17 10:15:26Z alfred $
+// $Id: admin_header.php 12504 2014-04-26 01:01:06Z beckmi $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
@@ -38,13 +38,12 @@ include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.admin.php";
 xoops_loadLanguage('main','newbb');
 xoops_loadLanguage('modinfo','newbb');
 $newXoopsModuleGui = false;
-if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))){
+if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
     $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-	$pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
-	$pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
-	$newXoopsModuleGui = true;
-	$indexAdmin = new ModuleAdmin();
+    $pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
+    $pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
+    $newXoopsModuleGui = true;
+    $indexAdmin = new ModuleAdmin();
 }
 $myts = &MyTextSanitizer::getInstance();
-?>

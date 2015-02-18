@@ -9,10 +9,8 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
+
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
 load_functions("locale");
@@ -24,8 +22,8 @@ load_functions("locale");
  * @return type description
  * @link
  */
-class Xmlrss {
-
+class Xmlrss
+{
     var $xml_version;
     var $rss_version;
     var $xml_encoding;
@@ -33,12 +31,12 @@ class Xmlrss {
     var $channel_title;
     var $channel_link;
     var $channel_desc;
-	var $channel_lastbuild;
-	var $channel_webmaster;
-	var $channel_editor;
-	var $channel_category;
-	var $channel_generator;
-	var $channel_language;
+    var $channel_lastbuild;
+    var $channel_webmaster;
+    var $channel_editor;
+    var $channel_category;
+    var $channel_generator;
+    var $channel_language;
 
     var $image_title;
     var $image_url;
@@ -53,7 +51,7 @@ class Xmlrss {
 
     function Xmlrss()
     {
-	    global $xoopsModuleConfig;
+        global $xoopsModuleConfig;
 
         $this->xml_version = '1.0';
         $this->xml_encoding = empty($xoopsModuleConfig['rss_utf8'])?_CHARSET:'UTF-8';
@@ -87,16 +85,17 @@ class Xmlrss {
             $pubdate = $this->cleanup($pubdate);
             $this->items[] = array('title' => $title, 'link' => $link, 'guid' => $link, 'description' => $description, 'pubdate'=>$pubdate);
         }
+
         return true;
     }
 
     function cleanup($text, $trim = 0)
     {
         if (strtolower($this->xml_encoding) == "utf-8" && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
-        	$text = XoopsLocal::convert_encoding($text, "utf-8");
-    	}
+            $text = XoopsLocal::convert_encoding($text, "utf-8");
+        }
         if (!empty($trim)) {
-	        $text = xoops_substr($text, 0, intval($trim));
+            $text = xoops_substr($text, 0, intval($trim));
         }
         $text = htmlspecialchars($text, ENT_QUOTES);
 
@@ -109,34 +108,33 @@ class NewbbXmlrssHandler
     function &create()
     {
         $xmlrss = new Xmlrss();
+
         return $xmlrss;
     }
 
     function &get(&$rss)
     {
-	    $rss_array = array();
-		$rss_array['xml_version'] = $rss->xml_version;
-		$rss_array['xml_encoding'] = $rss->xml_encoding;
-		$rss_array['rss_version'] = $rss->rss_version;
-		$rss_array['channel_title'] = $rss->channel_title;
-		$rss_array['channel_link'] = $rss->channel_link;
-		$rss_array['channel_desc'] = $rss->channel_desc;
-		$rss_array['channel_lastbuild'] = $rss->channel_lastbuild;
-		$rss_array['channel_webmaster'] = $rss->channel_webmaster;
-		$rss_array['channel_editor'] = $rss->channel_editor;
-		$rss_array['channel_category'] = $rss->channel_category;
-		$rss_array['channel_generator'] = $rss->channel_generator;
-		$rss_array['channel_language'] = $rss->channel_language;
-		$rss_array['image_title'] = $rss->channel_title;
-		$rss_array['image_url'] = $rss->image_url;
-		$rss_array['image_link'] = $rss->channel_link;
-		$rss_array['image_width'] = $rss->image_width;
-		$rss_array['image_height'] = $rss->image_height;
-		$rss_array['items'] = $rss->items;
+        $rss_array = array();
+        $rss_array['xml_version'] = $rss->xml_version;
+        $rss_array['xml_encoding'] = $rss->xml_encoding;
+        $rss_array['rss_version'] = $rss->rss_version;
+        $rss_array['channel_title'] = $rss->channel_title;
+        $rss_array['channel_link'] = $rss->channel_link;
+        $rss_array['channel_desc'] = $rss->channel_desc;
+        $rss_array['channel_lastbuild'] = $rss->channel_lastbuild;
+        $rss_array['channel_webmaster'] = $rss->channel_webmaster;
+        $rss_array['channel_editor'] = $rss->channel_editor;
+        $rss_array['channel_category'] = $rss->channel_category;
+        $rss_array['channel_generator'] = $rss->channel_generator;
+        $rss_array['channel_language'] = $rss->channel_language;
+        $rss_array['image_title'] = $rss->channel_title;
+        $rss_array['image_url'] = $rss->image_url;
+        $rss_array['image_link'] = $rss->channel_link;
+        $rss_array['image_width'] = $rss->image_width;
+        $rss_array['image_height'] = $rss->image_height;
+        $rss_array['items'] = $rss->items;
 
-		return $rss_array;
+        return $rss_array;
     }
 
 }
-
-?>

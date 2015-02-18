@@ -9,8 +9,9 @@
  * @version		$Id $
  * @package		module::newbb
  */
- 
-class NewbbKarmaHandler {
+
+class NewbbKarmaHandler
+{
     var $user;
 
     function getUserKarma($user = null)
@@ -28,19 +29,17 @@ class NewbbKarmaHandler {
         if (!is_object($user)) $user_karma = 0;
         else $user_karma = $user->getVar('posts') * 50;
         return $user_karma;
-    } 
+    }
 
     function updateUserKarma()
     {
-    } 
+    }
 
     function writeUserKarma()
     {
-    } 
+    }
 
     function readUserKarma()
     {
-    } 
-} 
-
-?>
+    }
+}

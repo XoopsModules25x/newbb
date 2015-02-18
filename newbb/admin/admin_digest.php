@@ -29,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 
-include('admin_header.php');
+include_once __DIR__ . '/admin_header.php';
 include_once XOOPS_ROOT_PATH."/class/pagenav.php";
 
 $op = !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
@@ -39,55 +39,53 @@ $start = (isset($_GET['start']))?$_GET['start']:0;
 //$report_handler =& xoops_getmodulehandler('report', 'newbb');
 
 xoops_cp_header();
-switch($op) {
-	case "delete":
-		$digest_ids = $_POST['digest_id'];
-		$digest_handler =& xoops_getmodulehandler('digest', 'newbb');
-		foreach ($digest_ids as $did => $value) {
-			$digest_handler->delete($did);
-		}
-		redirect_header( "admin_digest.php", 1);
-		break;
+switch ($op) {
+    case "delete":
+        $digest_ids = $_POST['digest_id'];
+        $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
+        foreach ($digest_ids as $did => $value) {
+            $digest_handler->delete($did);
+        }
+        redirect_header( "admin_digest.php", 1);
+        break;
 
-	default:
-		include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/class/xoopsformloader.php";
-		echo "<fieldset>";		
-		$limit = 5;
-		if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_digest.php') ;
-		//if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
-		//	else echo $indexAdmin->addNavigation('admin_digest.php') ;
-		echo '<form action="'.xoops_getenv('PHP_SELF').'" method="post">';
-		echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
-		echo "<tr align='center'>";
-		echo "<td class='bg3'>"._AM_NEWBB_DIGESTCONTENT."</td>";
-		echo "<td class='bg3' width='2%'>"._DELETE."</td>";
-		echo "</tr>";
+    default:
+        include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/class/xoopsformloader.php";
+        echo "<fieldset>";
+        $limit = 5;
+        if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_digest.php') ;
+        //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
+        //	else echo $indexAdmin->addNavigation('admin_digest.php') ;
+        echo '<form action="'.xoops_getenv('PHP_SELF').'" method="post">';
+        echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
+        echo "<tr align='center'>";
+        echo "<td class='bg3'>"._AM_NEWBB_DIGESTCONTENT."</td>";
+        echo "<td class='bg3' width='2%'>"._DELETE."</td>";
+        echo "</tr>";
 
-		$digest_handler =& xoops_getmodulehandler('digest', 'newbb');
-		$digests =& $digest_handler->getAllDigests($start, $limit);
-		foreach ($digests as $digest) {
-			echo "<tr class='odd' align='left'>";
-			echo "<td><strong>#".$digest['digest_id'].' @ '. formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n","<br />",$digest['digest_content']) . "</td>";
-			echo "<td align='center' ><input type='checkbox' name='digest_id[".$digest['digest_id']."]' value='1' /></td>";
-			echo "</tr>";
-			echo "<tr colspan='2'><td height='2'></td></tr>";
-		}
-		$submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
-		echo "<tr colspan='2'><td align='center'>".$submit->render()."</td></tr>";
-		$hidden = new XoopsFormHidden('op', 'delete');
-		echo $hidden->render();
-		$hidden = new XoopsFormHidden('item', $item);
-		echo $hidden->render()."</form>";
+        $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
+        $digests =& $digest_handler->getAllDigests($start, $limit);
+        foreach ($digests as $digest) {
+            echo "<tr class='odd' align='left'>";
+            echo "<td><strong>#".$digest['digest_id'].' @ '. formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n","<br />",$digest['digest_content']) . "</td>";
+            echo "<td align='center' ><input type='checkbox' name='digest_id[".$digest['digest_id']."]' value='1' /></td>";
+            echo "</tr>";
+            echo "<tr colspan='2'><td height='2'></td></tr>";
+        }
+        $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+        echo "<tr colspan='2'><td align='center'>".$submit->render()."</td></tr>";
+        $hidden = new XoopsFormHidden('op', 'delete');
+        echo $hidden->render();
+        $hidden = new XoopsFormHidden('item', $item);
+        echo $hidden->render()."</form>";
 
-		echo "</table>";
+        echo "</table>";
 
-		$nav = new XoopsPageNav($digest_handler->getDigestCount(), $limit, $start, "start");
-		echo $nav->renderNav(4);
+        $nav = new XoopsPageNav($digest_handler->getDigestCount(), $limit, $start, "start");
+        echo $nav->renderNav(4);
 
-		echo "</fieldset>";
+        echo "</fieldset>";
 
-		break;
+        break;
 }
 xoops_cp_footer();
-
-?>

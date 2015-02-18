@@ -5,7 +5,7 @@
 </div>
 
 <{if $search_info}>
-<{includeq file="db:newbb_searchresults.html" results=$results}>
+<{includeq file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 <form name="Search" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
   <table class="outer" border="0" cellpadding="1" cellspacing="0" align="center" width="95%">

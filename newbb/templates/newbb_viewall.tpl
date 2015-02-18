@@ -5,7 +5,7 @@
         <hr class="align_left" width="50%" size="1" />
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
         <{if $parent_forum}>
-           <span class="delimiter">&raquo;</span>  
+           <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
@@ -16,7 +16,7 @@
         <{if $current}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$current.link}>"><{$current.title}></a>
-        <{/if}>  
+        <{/if}>
     </div>
 </div>
 <div class="clear"></div>
@@ -29,7 +29,7 @@
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav" id="admin">
 <{if $mode gt 1}>
-<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" /> 
+<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');" />
 <select name="op">
 	<option value="0"><{$smarty.const._SELECT}></option>
 	<option value="delete"><{$smarty.const._DELETE}></option>
@@ -41,15 +41,15 @@
 	<{else}>
 		<option value="move"><{$smarty.const._MD_MOVE}></option>
 	<{/if}>
-</select>  
+</select>
 <input type="hidden" name="forum_id" value="<{$forum_id}>" />
-<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> | 
+<input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>" /> |
 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
 <!-- irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading -->
 <{else}>
-<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> | 
-<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> | 
-<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> | 
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a> |
 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
 <!-- irmtfan remove < { else } > no need for mode=1
 < { else } >
@@ -83,7 +83,7 @@
 		<option value="">--------</option>
 		<{foreach item=filter from=$types}>
 		<option value="<{$filter.link}>"><{$filter.title}></option>
-		<{/foreach}>		
+		<{/foreach}>
 	</select>
 
 <{elseif $menumode eq 1}>
@@ -95,7 +95,7 @@
 		<a class="item" href="<{$digest_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_DIGEST}></a>
 		<a class="item" href="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREPLIED}></a>
 		<a class="item" href="<{$unread_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREAD}></a>
-		
+
 	</td></tr></table>
 	</div>
 	<script type="text/javascript">document.getElementById("topicoption").onmouseout = closeMenu;</script>
@@ -114,7 +114,7 @@
 	                <div class="item"><a href="<{$digest_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_DIGEST}></a></div>
 	                <div class="item"><a href="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREPLIED}></a></div>
 	                <div class="item"><a href="<{$unread_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREAD}></a></div>
-					
+
 				</td></tr></table></li>
 				</ul>
 			</li>
@@ -137,7 +137,7 @@
     <tr class="head" class="align_left">
 	      <td  width="5%" colspan="2">
 	      <{if $mode gt 1}>
-			<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" /> 
+			<{$smarty.const._ALL}>: <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');" />
 	      <{else}>
 	      &nbsp;
 	      <{/if}>
@@ -177,7 +177,7 @@
 			<{$headers.publish.title}>: <{$topic.topic_time}>
 		</span>
 		<{if $rating_enable && $topic.votes}>
-			|&nbsp;			
+			|&nbsp;
 			<span>
 				<{$headers.votes.title}>: <{$topic.votes}>&nbsp;<{$topic.rating_img}>
 			</span>
@@ -195,7 +195,7 @@
   </tr>
 <{/foreach}>
   <!-- end forum topic -->
-	
+
 	<{if $mode gt 1}>
 	</form>
 	<{/if}>
@@ -253,7 +253,7 @@
 		[<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
 	</form><br />
     <!-- START irmtfan add forum selection box -->
-    <{if $forum_jumpbox }> 
+    <{if $forum_jumpbox }>
         <form method="get" action="<{$selection.action}>">
             <{$selection.forum}>&nbsp;
             <{foreach item=hidval key=hidvar from=$selection.vars}>
@@ -271,6 +271,6 @@
 <div class="clear"></div>
 <br />
 
-<{if $online}><{includeq file="db:newbb_online.html"}><{/if}>
-<{includeq file='db:newbb_notification_select.html'}>
+<{if $online}><{includeq file="db:newbb_online.tpl"}><{/if}>
+<{includeq file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->
