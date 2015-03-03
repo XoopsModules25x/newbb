@@ -108,8 +108,8 @@ if ($xoopsModuleConfig['disc_show'] == 2 or $xoopsModuleConfig['disc_show'] == 3
 $xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
 
 $xoopsTpl->assign(array(
-    'forum_id' 			=> $forum_obj->getVar('forum_id'),
-    'forum_name' 		=> $forum_obj->getVar('forum_name'),
+    'forum_id'            => $forum_obj->getVar('forum_id'),
+    'forum_name'        => $forum_obj->getVar('forum_name'),
     ));
 
 if ($post_parent_obj->getVar('uid')) {
@@ -185,9 +185,9 @@ foreach ($posts_context_obj as $post_context_obj) {
     $p_subject = $post_context_obj->getVar('subject');
 
     $posts_context[] = array(
-                                "subject"	=> $p_subject,
-                                "meta"		=> _MD_BY." ".$p_name." "._MD_ON." ".$p_date,
-                                "content"	=> $p_message,
+                                "subject"    => $p_subject,
+                                "meta"        => _MD_BY." ".$p_name." "._MD_ON." ".$p_date,
+                                "content"    => $p_message,
                                 );
 }
 $xoopsTpl->assign_by_ref("posts_context", $posts_context);

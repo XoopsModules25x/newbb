@@ -152,10 +152,10 @@ switch ($action) {
         $op_select = new XoopsFormSelect("", 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
         $op_select->addOptionArray(array(
-            "no"		=> _SELECT,
-            "template"	=> _AM_NEWBB_PERM_TEMPLATE,
-            "apply"		=> _AM_NEWBB_PERM_TEMPLATEAPP,
-            "default"	=> _AM_NEWBB_PERM_SETBYGROUP
+            "no"        => _SELECT,
+            "template"    => _AM_NEWBB_PERM_TEMPLATE,
+            "apply"        => _AM_NEWBB_PERM_TEMPLATEAPP,
+            "default"    => _AM_NEWBB_PERM_SETBYGROUP
             ));
         $opform->addElement($op_select);
         $opform->display();

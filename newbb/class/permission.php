@@ -98,6 +98,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         if ( !$allowed_groups = $this->getGroups("{$type}_{$gperm_name}", $id) ) return false;
 
         if ( count(array_intersect($allowed_groups, $groups)) > 0) return true;
+
         return false;
     }
 
@@ -122,7 +123,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         $ret = array();
 
         $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-        if (count($groups) < 1)	return $ret;
+        if (count($groups) < 1)    return $ret;
 
         if (!$_cachedPerms = $this->loadPermData($perm_name, $type)) {
             return $ret;

@@ -225,7 +225,7 @@ class NewbbOnlineHandler
         /* for MySQL 4.1+ */
         if ($mysql_version >= "4.1"):
 
-        $sql = 	"DELETE FROM ".$this->db->prefix('bb_online').
+        $sql =    "DELETE FROM ".$this->db->prefix('bb_online').
                 " WHERE".
                 " ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM ".$this->db->prefix('online')." WHERE online_module =".$xoopsModule->getVar('mid')." ) )".
                 " OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM ".$this->db->prefix('online')." WHERE online_module =".$xoopsModule->getVar('mid')." AND online_uid = 0 ) )";
@@ -236,11 +236,11 @@ class NewbbOnlineHandler
             //xoops_error($this->db->error());
             return false;
         } else:
-        $sql = 	"DELETE ".$this->db->prefix('bb_online')." FROM ".$this->db->prefix('bb_online').
+        $sql =    "DELETE ".$this->db->prefix('bb_online')." FROM ".$this->db->prefix('bb_online').
                 " LEFT JOIN ".$this->db->prefix('online')." AS aa ".
                 " ON ".$this->db->prefix('bb_online').".online_uid = aa.online_uid WHERE ".$this->db->prefix('bb_online').".online_uid > 0 AND aa.online_uid IS NULL";
         $result = $this->db->queryF($sql);
-        $sql = 	"DELETE ".$this->db->prefix('bb_online')." FROM ".$this->db->prefix('bb_online').
+        $sql =    "DELETE ".$this->db->prefix('bb_online')." FROM ".$this->db->prefix('bb_online').
                 " LEFT JOIN ".$this->db->prefix('online')." AS aa ".
                 " ON ".$this->db->prefix('bb_online').".online_ip = aa.online_ip WHERE ".$this->db->prefix('bb_online').".online_uid = 0 AND aa.online_ip IS NULL";
         $result = $this->db->queryF($sql);

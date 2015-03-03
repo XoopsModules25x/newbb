@@ -135,6 +135,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!$status) return 3;
         $status = $this->notify($digest);
         if (!$status) return 4;
+
         return 0;
     }
 

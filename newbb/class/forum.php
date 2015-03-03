@@ -813,7 +813,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $forum =& $forums[$id];
 
             $_forum_data = array();
-            $_forum_data["forum_order"]	= $forum['forum_order'];
+            $_forum_data["forum_order"]    = $forum['forum_order'];
             $_forum_data["forum_id"]    = $id;
             $_forum_data["forum_cid"]   = $forum['cat_id'];
             $_forum_data["forum_name"]  = $forum['forum_name'];

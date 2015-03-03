@@ -75,6 +75,7 @@ class Post extends ArtObject
         $attachment = $this->getVar('attachment');
         if (empty($attachment)) $this->attachment_array = null;
         else $this->attachment_array = @unserialize(base64_decode($attachment));
+
         return $this->attachment_array;
     }
 
@@ -318,6 +319,7 @@ class Post extends ArtObject
     {
         $newbb_config = newbb_load_config();
         if ( empty($newbb_config["edit_timelimit"]) ) return true;
+
         return ($this->getVar('post_time') > time() - $newbb_config[$action_tag] * 60);
     }
 
@@ -408,9 +410,9 @@ class Post extends ArtObject
         } else {
              $name = ($post_name = $this->getVar('poster_name')) ? $post_name : $name_anonymous;
              $poster =  array(
-                    'poster_uid'	=> 0,
-                    'name'			=> $name,
-                    'link'			=> $name
+                    'poster_uid'    => 0,
+                    'name'            => $name,
+                    'link'            => $name
                 );
         }
 
@@ -559,21 +561,21 @@ class Post extends ArtObject
         }
 
         $post = array(
-                    'post_id' 			=> $post_id,
-                    'post_parent_id' 	=> $this->getVar('pid'),
-                    'post_date' 		=> newbb_formatTimestamp($this->getVar('post_time')),
-                    'post_image'		=> $post_image,
-                    'post_title' 		=> $post_title, 		// irmtfan $post_title to add highlight keywords
-                    'post_text' 		=> $post_text,
-                    'post_attachment' 	=> $post_attachment,
-                    'post_edit' 		=> $this->displayPostEdit(),
-                    'post_no' 			=> $post_no,
-                    'post_signature' 	=> ($this->getVar('attachsig')) ? @$poster["signature"] : "",
-                    'poster_ip' 		=> ($isadmin && $xoopsModuleConfig['show_ip']) ? long2ip($this->getVar('poster_ip')) : "",
-                    'thread_action' 	=> $thread_action,
-                    'thread_buttons' 	=> $thread_buttons,
-                    'mod_buttons' 		=> $mod_buttons,
-                    'poster' 			=> $poster,
+                    'post_id'            => $post_id,
+                    'post_parent_id'    => $this->getVar('pid'),
+                    'post_date'        => newbb_formatTimestamp($this->getVar('post_time')),
+                    'post_image'        => $post_image,
+                    'post_title'        => $post_title,        // irmtfan $post_title to add highlight keywords
+                    'post_text'        => $post_text,
+                    'post_attachment'    => $post_attachment,
+                    'post_edit'        => $this->displayPostEdit(),
+                    'post_no'            => $post_no,
+                    'post_signature'    => ($this->getVar('attachsig')) ? @$poster["signature"] : "",
+                    'poster_ip'        => ($isadmin && $xoopsModuleConfig['show_ip']) ? long2ip($this->getVar('poster_ip')) : "",
+                    'thread_action'    => $thread_action,
+                    'thread_buttons'    => $thread_buttons,
+                    'mod_buttons'        => $mod_buttons,
+                    'poster'            => $poster,
                     'post_permalink'    => '<a href="'.XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id='.$post_id.'"></a>'
         );
 
@@ -1015,7 +1017,7 @@ class NewbbPostHandler extends ArtObjectHandler
         else:
         // for 4.0+
         /* */
-        $sql = 	"DELETE ".$this->db->prefix("bb_posts_text")." FROM ".$this->db->prefix("bb_posts_text").
+        $sql =    "DELETE ".$this->db->prefix("bb_posts_text")." FROM ".$this->db->prefix("bb_posts_text").
                 " LEFT JOIN ".$this->table." AS aa ON ".$this->db->prefix("bb_posts_text").".post_id = aa.post_id ".
                 " WHERE (aa.post_id IS NULL)";
         /* */

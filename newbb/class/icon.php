@@ -110,13 +110,13 @@ class NewbbIconHandler
         } else {
             $path = is_dir($theme_path."/{$rel_dir}/{$type}/")
                         ? $theme_path."/{$rel_dir}/{$type}"
-                        :	( is_dir($theme_path."/{$rel_dir}/{$default}/")
+                        :    ( is_dir($theme_path."/{$rel_dir}/{$default}/")
                                 ? $theme_path."/{$rel_dir}/{$default}"
-                                :	( is_dir(XOOPS_THEME_PATH."/default/{$rel_dir}/{$type}/")
+                                :    ( is_dir(XOOPS_THEME_PATH."/default/{$rel_dir}/{$type}/")
                                         ? XOOPS_THEME_PATH."/default/{$rel_dir}/{$type}"
-                                        :	( is_dir(XOOPS_THEME_PATH."/default/{$rel_dir}/{$default}/")
+                                        :    ( is_dir(XOOPS_THEME_PATH."/default/{$rel_dir}/{$default}/")
                                                 ? XOOPS_THEME_PATH."/default/{$rel_dir}/{$default}"
-                                                :	( is_dir(XOOPS_ROOT_PATH."/modules/{$dirname}/templates/{$end_dir}/{$type}/")
+                                                :    ( is_dir(XOOPS_ROOT_PATH."/modules/{$dirname}/templates/{$end_dir}/{$type}/")
                                                         ? XOOPS_ROOT_PATH."/modules/{$dirname}/templates/{$end_dir}/{$type}"
                                                         : XOOPS_ROOT_PATH."/modules/{$dirname}/templates/{$end_dir}/{$default}"
                                                 ) // XOOPS_ROOT_PATH

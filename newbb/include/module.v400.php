@@ -64,7 +64,7 @@ function xoops_module_update_newbb_v400(&$module)
             );
     */
 
-    $sql =		"	UPDATE ".$GLOBALS['xoopsDB']->prefix("bb_posts_text"). " AS t, ". $GLOBALS['xoopsDB']->prefix("bb_posts"). " AS p".
+    $sql =        "	UPDATE ".$GLOBALS['xoopsDB']->prefix("bb_posts_text"). " AS t, ". $GLOBALS['xoopsDB']->prefix("bb_posts"). " AS p".
                 "	SET t.dohtml = p.dohtml, ".
                 "		t.dosmiley = p.dosmiley, ".
                 "		t.doxcode = p.doxcode, ".
@@ -72,7 +72,7 @@ function xoops_module_update_newbb_v400(&$module)
                 "		t.dobr = p.dobr".
                 "	WHERE p.post_id =t.post_id ";
     if ( $GLOBALS['xoopsDB']->queryF($sql) ) {
-        $sql =	"	ALTER TABLE ".$GLOBALS['xoopsDB']->prefix("bb_posts").
+        $sql =    "	ALTER TABLE ".$GLOBALS['xoopsDB']->prefix("bb_posts").
                 "		DROP `dohtml`,".
                 "		DROP `dosmiley`,".
                 "		DROP `doxcode`,".
@@ -87,7 +87,7 @@ function xoops_module_update_newbb_v400(&$module)
     if ( function_exists("tag_getTagHandler") && $tag_handler =& tag_getTagHandler() ) {
         $table_topic = $GLOBALS['xoopsDB']->prefix("bb_topics");
 
-        $sql =	"	SELECT topic_id, topic_tags".
+        $sql =    "	SELECT topic_id, topic_tags".
                 "	FROM {$table_topic}";
         if ( ($result = $GLOBALS['xoopsDB']->query($sql)) == false) {
             xoops_error($GLOBALS['xoopsDB']->error());

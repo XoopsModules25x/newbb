@@ -72,9 +72,9 @@ $customConfig["length_title_index"] = 255;
 // MENU handler
 /* You could remove anyone by commenting out in order to disable it */
 $valid_menumodes = array(
-    0 => _MD_MENU_SELECT,	// for selectbox
-    1 => _MD_MENU_CLICK,	// for "click to expand"
-    2 => _MD_MENU_HOVER		// for "mouse hover to expand"
+    0 => _MD_MENU_SELECT,    // for selectbox
+    1 => _MD_MENU_CLICK,    // for "click to expand"
+    2 => _MD_MENU_HOVER        // for "mouse hover to expand"
     );
 
 return $customConfig;

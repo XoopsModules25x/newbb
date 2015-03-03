@@ -93,20 +93,20 @@ $xoopsTpl->assign(array(
     ));
 */
 
-$dohtml 		= $post_obj->getVar('dohtml');
-$dosmiley 		= $post_obj->getVar('dosmiley');
-$doxcode 		= $post_obj->getVar('doxcode');
-$dobr 			= $post_obj->getVar('dobr');
-$icon 			= $post_obj->getVar('icon');
-$attachsig 		= $post_obj->getVar('attachsig');
-$istopic 		= ( $post_obj->istopic() )?1:0;
-$isedit 		= 1;
-$subject		= $post_obj->getVar('subject', "E");
-$message		= $post_obj->getVar('post_text', "E");
-$poster_name	= $post_obj->getVar('poster_name', "E");
-$attachments	= $post_obj->getAttachment();
-$post_karma		= $post_obj->getVar('post_karma');
-$require_reply	= $post_obj->getVar('require_reply');
+$dohtml        = $post_obj->getVar('dohtml');
+$dosmiley        = $post_obj->getVar('dosmiley');
+$doxcode        = $post_obj->getVar('doxcode');
+$dobr            = $post_obj->getVar('dobr');
+$icon            = $post_obj->getVar('icon');
+$attachsig        = $post_obj->getVar('attachsig');
+$istopic        = ( $post_obj->istopic() )?1:0;
+$isedit        = 1;
+$subject        = $post_obj->getVar('subject', "E");
+$message        = $post_obj->getVar('post_text', "E");
+$poster_name    = $post_obj->getVar('poster_name', "E");
+$attachments    = $post_obj->getAttachment();
+$post_karma        = $post_obj->getVar('post_karma');
+$require_reply    = $post_obj->getVar('require_reply');
 
 $xoopsTpl->assign("error_message", _MD_EDITEDBY . " " . $xoopsUser->uname() );
 include __DIR__ . '/include/form.post.php';
@@ -135,9 +135,9 @@ foreach ($posts_context_obj as $post_context_obj) {
     $p_subject = $post_context_obj->getVar('subject');
 
     $posts_context[] = array(
-                                "subject"	=> $p_subject,
-                                "meta"		=> _MD_BY." ".$p_name." "._MD_ON." ".$p_date,
-                                "content"	=> $p_message,
+                                "subject"    => $p_subject,
+                                "meta"        => _MD_BY." ".$p_name." "._MD_ON." ".$p_date,
+                                "content"    => $p_message,
                                 );
 }
 $xoopsTpl->assign_by_ref("posts_context", $posts_context);

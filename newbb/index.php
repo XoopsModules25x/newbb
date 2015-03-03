@@ -100,10 +100,10 @@ if (empty($forums_top) || $xoopsModuleConfig['subforum_display'] == "hidden") {
 /* Fetch forum data */
 $forums_available = array_merge($forums_top, $forums_sub);
 $forums_array = array();
-$newtopics		= 0;
-$deletetopics	= 0;
-$newposts		= 0;
-$deleteposts	= 0;
+$newtopics        = 0;
+$deletetopics    = 0;
+$newposts        = 0;
+$deleteposts    = 0;
 if (!empty($forums_available)) {
     $crit_forum = new Criteria("forum_id", "(".implode(", ", $forums_available).")", "IN");
     $crit_forum->setSort("cat_id ASC, parent_forum ASC, forum_order");
@@ -120,10 +120,10 @@ if (!empty($forums_available)) {
     $newposts = $post_handler->getCount($crit);
 }
 
-if ($newtopics		> 0) $xoopsTpl->assign('wait_new_topic',$newtopics);
-if ($deletetopics	> 0) $xoopsTpl->assign('delete_topic',$deletetopics);
-if ($newposts		> 0) $xoopsTpl->assign('wait_new_post',$newposts);
-if ($deleteposts	> 0) $xoopsTpl->assign('delete_post',$deleteposts);
+if ($newtopics        > 0) $xoopsTpl->assign('wait_new_topic',$newtopics);
+if ($deletetopics    > 0) $xoopsTpl->assign('delete_topic',$deletetopics);
+if ($newposts        > 0) $xoopsTpl->assign('wait_new_post',$newposts);
+if ($deleteposts    > 0) $xoopsTpl->assign('delete_post',$deleteposts);
 
 $report_handler = xoops_getmodulehandler('report', 'newbb');
 $reported = $report_handler->getCount(new Criteria("report_result", 0));
@@ -142,8 +142,8 @@ $category_array = array();
 $toggles = newbb_getcookie('G', true);
 $icon_handler = newbb_getIconHandler();
 $category_icon = array(
-    "expand"	=> $icon_handler->getImageSource("minus"),
-    "collapse"	=> $icon_handler->getImageSource("plus"))
+    "expand"    => $icon_handler->getImageSource("minus"),
+    "collapse"    => $icon_handler->getImageSource("plus"))
     ;
 
 foreach (array_keys($categories) as $id) {
@@ -154,11 +154,11 @@ foreach (array_keys($categories) as $id) {
     $expand = (count($toggles) > 0) ? ( (in_array($cat_element_id, $toggles)) ? false : true ) : true;
     // START irmtfan to improve newbb_displayImage
     if ($expand) {
-        $cat_display = 'block'; 		//irmtfan move semicolon
+        $cat_display = 'block';        //irmtfan move semicolon
         $cat_icon_display  = "minus";
         $cat_alt = _MD_NEWBB_HIDE;
     } else {
-        $cat_display = 'none'; 		//irmtfan move semicolon
+        $cat_display = 'none';        //irmtfan move semicolon
         $cat_icon_display  = "plus";
         $cat_alt = _MD_NEWBB_SEE;
     }
@@ -180,15 +180,15 @@ foreach (array_keys($categories) as $id) {
         $cat_image = "";
     }
     $category_array[] = array(
-        'cat_id'			=> $onecat['cat_id'],
-        'cat_title'			=> $myts->displayTarea($onecat['cat_title'],1),
-        'cat_image'			=> $cat_image,
-        'cat_sponsor'		=> $cat_sponsor,
-        'cat_description'	=> $myts->displayTarea($onecat['cat_description'],1),
-        'cat_element_id'	=> $cat_element_id,
-        'cat_display'		=> $cat_display,
-        'cat_displayImage'	=> $cat_displayImage,
-        'forums'			=> $forums
+        'cat_id'            => $onecat['cat_id'],
+        'cat_title'            => $myts->displayTarea($onecat['cat_title'],1),
+        'cat_image'            => $cat_image,
+        'cat_sponsor'        => $cat_sponsor,
+        'cat_description'    => $myts->displayTarea($onecat['cat_description'],1),
+        'cat_element_id'    => $cat_element_id,
+        'cat_display'        => $cat_display,
+        'cat_displayImage'    => $cat_displayImage,
+        'forums'            => $forums
         );
 }
 
@@ -198,8 +198,8 @@ $xoopsTpl->assign_by_ref("categories", $category_array);
 $xoopsTpl->assign("notifyicon", $category_icon);
 
 $xoopsTpl->assign(array(
-    "index_title"		=> sprintf(_MD_WELCOME, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)),
-    "index_desc"		=> _MD_TOSTART,
+    "index_title"        => sprintf(_MD_WELCOME, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)),
+    "index_desc"        => _MD_TOSTART,
     ));
 
 /* display user stats */
@@ -207,13 +207,13 @@ if (!empty($xoopsModuleConfig['statistik_enabled'])) {
     $userstats = array();
     if (is_object($xoopsUser)) {
         $userstats_handler =& xoops_getmodulehandler('userstats');
-        $userstats_row 				= $userstats_handler->getStats($xoopsUser->getVar("uid"));
-        $userstats["topics"] 		= sprintf(_MD_USER_TOPICS, intval( @$userstats_row["user_topics"] ));
-        $userstats["posts"] 		= sprintf(_MD_USER_POSTS, intval( @$userstats_row["user_posts"] ));
-        $userstats["digests"] 		= sprintf(_MD_USER_DIGESTS, intval( @$userstats_row["user_digests"] ));
-        $userstats["currenttime"] 	= sprintf(_MD_TIMENOW, formatTimestamp(time(), "s")); // irmtfan should be removed because it is for anon users too
-        $userstats["lastvisit"] 	= sprintf(_MD_USER_LASTVISIT, formatTimestamp($last_visit, "s")); // irmtfan should be removed because it is for anon users too
-        $userstats["lastpost"] 		= empty($userstats_row["user_lastpost"]) ? _MD_USER_NOLASTPOST : sprintf(_MD_USER_LASTPOST, formatTimestamp($userstats_row["user_lastpost"], "s"));
+        $userstats_row                = $userstats_handler->getStats($xoopsUser->getVar("uid"));
+        $userstats["topics"]        = sprintf(_MD_USER_TOPICS, intval( @$userstats_row["user_topics"] ));
+        $userstats["posts"]        = sprintf(_MD_USER_POSTS, intval( @$userstats_row["user_posts"] ));
+        $userstats["digests"]        = sprintf(_MD_USER_DIGESTS, intval( @$userstats_row["user_digests"] ));
+        $userstats["currenttime"]    = sprintf(_MD_TIMENOW, formatTimestamp(time(), "s")); // irmtfan should be removed because it is for anon users too
+        $userstats["lastvisit"]    = sprintf(_MD_USER_LASTVISIT, formatTimestamp($last_visit, "s")); // irmtfan should be removed because it is for anon users too
+        $userstats["lastpost"]        = empty($userstats_row["user_lastpost"]) ? _MD_USER_NOLASTPOST : sprintf(_MD_USER_LASTPOST, formatTimestamp($userstats_row["user_lastpost"], "s"));
     }
     $xoopsTpl->assign_by_ref("userstats", $userstats);
     // irmtfan add lastvisit smarty variable for all users

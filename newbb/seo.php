@@ -5,9 +5,9 @@
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
-$seoOp 		= $_GET['seoOp'] = checker ( $_GET['seoOp'] );
-$seoArg 	= (int) $_GET['seoArg'];
-$seoOther 	= $_GET['seoOther'] = checker ( $_GET['seoOther'] );
+$seoOp        = $_GET['seoOp'] = checker ( $_GET['seoOp'] );
+$seoArg    = (int) $_GET['seoArg'];
+$seoOther    = $_GET['seoOther'] = checker ( $_GET['seoOther'] );
 
 $seos=array('c','f','t','p','rc','rf','v','pr','pdf');
 
@@ -18,8 +18,8 @@ $seoMap = array(
     'p'     => 'viewtopic.php',
     'rc'    => 'rss.php',
     'rf'    => 'rss.php',
-    'pr'	=> 'print.php',
-    'pdf'	=> 'makepdf.php'
+    'pr'    => 'print.php',
+    'pdf'    => 'makepdf.php'
 );
 
 if (! empty($seoOp) && ! empty($seoMap[$seoOp]) && in_array($seoOp,$seos) ) {
@@ -28,9 +28,9 @@ if (! empty($seoOp) && ! empty($seoMap[$seoOp]) && in_array($seoOp,$seos) ) {
     $ori_self = $_SERVER['PHP_SELF'];
     $ori_self = explode("modules/newbb", $ori_self);
     $newUrl = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
-    $_ENV['PHP_SELF'] 		= $newUrl;
+    $_ENV['PHP_SELF']        = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
-    $_SERVER['PHP_SELF'] 	= $newUrl;
+    $_SERVER['PHP_SELF']    = $newUrl;
     switch ($seoOp) {
         case 'c':
             $_SERVER['REQUEST_URI'] = $newUrl . '?cat=' . $seoArg;
@@ -97,5 +97,6 @@ function checker(&$value)
     //pruefe auf externe
     $str = strstr( $value , '://' ) ;
     if ( strstr($value , '://') !== false ) $value = '';
+
     return $value;
 }

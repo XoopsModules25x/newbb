@@ -28,6 +28,7 @@ class NewbbKarmaHandler
     {
         if (!is_object($user)) $user_karma = 0;
         else $user_karma = $user->getVar('posts') * 50;
+
         return $user_karma;
     }
 

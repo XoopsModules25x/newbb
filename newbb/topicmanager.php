@@ -72,18 +72,18 @@ if ($xoopsModuleConfig['wol_enabled']) {
 $action_array = array('merge', 'delete','restore', 'move','lock','unlock','sticky','unsticky','digest','undigest');
 foreach ($action_array as $_action) {
     $action[$_action] = array(
-        "name"		=> $_action,
-        "desc" 		=> constant(strtoupper("_MD_DESC_{$_action}")),
-        "submit"	=> constant(strtoupper("_MD_{$_action}")),
-        'sql' 		=> "topic_{$_action}=1",
-        'msg' 		=> constant(strtoupper("_MD_TOPIC{$_action}"))
+        "name"        => $_action,
+        "desc"        => constant(strtoupper("_MD_DESC_{$_action}")),
+        "submit"    => constant(strtoupper("_MD_{$_action}")),
+        'sql'        => "topic_{$_action}=1",
+        'msg'        => constant(strtoupper("_MD_TOPIC{$_action}"))
     );
 }
-$action['lock']['sql']		= 'topic_status = 1';
-$action['unlock']['sql']	= 'topic_status = 0';
-$action['unsticky']['sql']	= 'topic_sticky = 0';
-$action['undigest']['sql']	= 'topic_digest = 0';
-$action['digest']['sql']	= 'topic_digest = 1, digest_time = '.time();
+$action['lock']['sql']        = 'topic_status = 1';
+$action['unlock']['sql']    = 'topic_status = 0';
+$action['unsticky']['sql']    = 'topic_sticky = 0';
+$action['undigest']['sql']    = 'topic_digest = 0';
+$action['digest']['sql']    = 'topic_digest = 1, digest_time = '.time();
 
 // Disable cache
 $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;

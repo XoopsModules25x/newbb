@@ -97,12 +97,12 @@ switch ($op) {
             $forum_dest =& $forum_handler->get($_POST['dest_forum']);
             if (is_object($forum_dest)) {
                 $cid = $forum_dest->getVar("cat_id");
-                $sql = 	"	UPDATE " . $xoopsDB->prefix('bb_posts') .
+                $sql =    "	UPDATE " . $xoopsDB->prefix('bb_posts') .
                         "	SET forum_id=" . intval($_POST['dest_forum']) .
                         "	WHERE forum_id=$forum_id";
                 $result_post = $xoopsDB->queryF($sql);
 
-                $sql =	"	UPDATE " . $xoopsDB->prefix('bb_topics') .
+                $sql =    "	UPDATE " . $xoopsDB->prefix('bb_topics') .
                         "	SET forum_id=" . intval($_POST['dest_forum']) .
                         "	WHERE forum_id=$forum_id";
                 $result_topic = $xoopsDB->queryF($sql);

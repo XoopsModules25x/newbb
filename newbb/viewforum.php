@@ -195,22 +195,22 @@ list($allTopics, $sticky) = $forum_handler->getAllTopics($forum_obj, $criteria_t
 
 $xoopsTpl->assign_by_ref('topics', $allTopics);
 $xoopsTpl->assign('sticky', $sticky);
-$xoopsTpl->assign('rating_enable', 	$xoopsModuleConfig['rating_enabled']);
-$xoopsTpl->assign('img_newposts', 	newbb_displayImage('topic_new',_MD_NEWPOSTS));
+$xoopsTpl->assign('rating_enable',    $xoopsModuleConfig['rating_enabled']);
+$xoopsTpl->assign('img_newposts',    newbb_displayImage('topic_new',_MD_NEWPOSTS));
 $xoopsTpl->assign('img_hotnewposts',newbb_displayImage('topic_hot_new',_MD_MORETHAN));
-$xoopsTpl->assign('img_folder', 	newbb_displayImage('topic',_MD_NONEWPOSTS));
-$xoopsTpl->assign('img_hotfolder', 	newbb_displayImage('topic_hot',_MD_MORETHAN2));
-$xoopsTpl->assign('img_locked', 	newbb_displayImage('topic_locked',_MD_TOPICLOCKED));
+$xoopsTpl->assign('img_folder',    newbb_displayImage('topic',_MD_NONEWPOSTS));
+$xoopsTpl->assign('img_hotfolder',    newbb_displayImage('topic_hot',_MD_MORETHAN2));
+$xoopsTpl->assign('img_locked',    newbb_displayImage('topic_locked',_MD_TOPICLOCKED));
 
-$xoopsTpl->assign('img_sticky', 	newbb_displayImage('topic_sticky',_MD_TOPICSTICKY));
-$xoopsTpl->assign('img_digest', 	newbb_displayImage('topic_digest',_MD_TOPICDIGEST));
-$xoopsTpl->assign('img_poll', 		newbb_displayImage('poll',_MD_TOPICHASPOLL));
+$xoopsTpl->assign('img_sticky',    newbb_displayImage('topic_sticky',_MD_TOPICSTICKY));
+$xoopsTpl->assign('img_digest',    newbb_displayImage('topic_digest',_MD_TOPICDIGEST));
+$xoopsTpl->assign('img_poll',        newbb_displayImage('poll',_MD_TOPICHASPOLL));
 
-$xoopsTpl->assign('mark_read', 		XOOPS_URL."/modules/newbb/viewforum.php?mark=1&amp;{$page_query}");
-$xoopsTpl->assign('mark_unread', 	XOOPS_URL."/modules/newbb/viewforum.php?mark=2&amp;{$page_query}");
+$xoopsTpl->assign('mark_read',        XOOPS_URL."/modules/newbb/viewforum.php?mark=1&amp;{$page_query}");
+$xoopsTpl->assign('mark_unread',    XOOPS_URL."/modules/newbb/viewforum.php?mark=2&amp;{$page_query}");
 
-$xoopsTpl->assign('post_link', 		XOOPS_URL."/modules/newbb/viewpost.php?forum=".$forum_id);
-$xoopsTpl->assign('newpost_link', 	XOOPS_URL."/modules/newbb/viewpost.php?status=new&amp;forum=".$forum_id);
+$xoopsTpl->assign('post_link',        XOOPS_URL."/modules/newbb/viewpost.php?forum=".$forum_id);
+$xoopsTpl->assign('newpost_link',    XOOPS_URL."/modules/newbb/viewpost.php?status=new&amp;forum=".$forum_id);
 
 $query_type = $query_array;
 unset($query_type["type"]);

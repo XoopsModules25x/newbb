@@ -77,7 +77,6 @@ class NewbbTopicRenderer
         $this->handler = xoops_getModuleHandler("topic", "newbb");
     }
 
-
     /**
      * Access the only instance of this class
      *
@@ -428,83 +427,83 @@ class NewbbTopicRenderer
     function getSort($header = null, $var = null)
     {
         $headers = array(
-            "topic"		=> array(
-                            "title"	=> _MD_TOPICS,
-                            "sort"	=> "t.topic_title",
+            "topic"        => array(
+                            "title"    => _MD_TOPICS,
+                            "sort"    => "t.topic_title",
                             ),
-            "forum"		=> array(
-                            "title"	=> _MD_FORUM,
-                            "sort"	=> "t.forum_id",
+            "forum"        => array(
+                            "title"    => _MD_FORUM,
+                            "sort"    => "t.forum_id",
                             ),
-            "poster"	=> array(
-                            "title"	=> _MD_TOPICPOSTER, /*irmtfan _MD_POSTER to _MD_TOPICPOSTER*/
-                            "sort"	=> "t.topic_poster",
+            "poster"    => array(
+                            "title"    => _MD_TOPICPOSTER, /*irmtfan _MD_POSTER to _MD_TOPICPOSTER*/
+                            "sort"    => "t.topic_poster",
                             ),
-            "replies"	=> array(
-                            "title"	=> _MD_REPLIES,
-                            "sort"	=> "t.topic_replies",
+            "replies"    => array(
+                            "title"    => _MD_REPLIES,
+                            "sort"    => "t.topic_replies",
                             ),
-            "views"		=> array(
-                            "title"	=> _MD_VIEWS,
-                            "sort"	=> "t.topic_views",
+            "views"        => array(
+                            "title"    => _MD_VIEWS,
+                            "sort"    => "t.topic_views",
                             ),
-            "lastpost"	=> array( // irmtfan show topic_page_jump_icon smarty
-                            "title"	=> _MD_LASTPOST, /*irmtfan _MD_DATE to _MD_LASTPOSTTIME again change to _MD_LASTPOST*/
-                            "sort"	=> "t.topic_last_post_id",
+            "lastpost"    => array( // irmtfan show topic_page_jump_icon smarty
+                            "title"    => _MD_LASTPOST, /*irmtfan _MD_DATE to _MD_LASTPOSTTIME again change to _MD_LASTPOST*/
+                            "sort"    => "t.topic_last_post_id",
                             ),
         // START irmtfan add more sorts
-            "lastposttime"	=> array( // irmtfan same as lastpost
-                            "title"	=> _MD_LASTPOSTTIME,
-                            "sort"	=> "t.topic_last_post_id",
+            "lastposttime"    => array( // irmtfan same as lastpost
+                            "title"    => _MD_LASTPOSTTIME,
+                            "sort"    => "t.topic_last_post_id",
                             ),
-            "lastposter"	=> array( // irmtfan
-                            "title"	=> _MD_POSTER,
-                            "sort"	=> "p.uid", // poster uid
+            "lastposter"    => array( // irmtfan
+                            "title"    => _MD_POSTER,
+                            "sort"    => "p.uid", // poster uid
                             ),
-            "lastpostmsgicon"	=> array( // irmtfan
-                            "title"	=> _MD_MESSAGEICON,
-                            "sort"	=> "p.icon", // post message icon
+            "lastpostmsgicon"    => array( // irmtfan
+                            "title"    => _MD_MESSAGEICON,
+                            "sort"    => "p.icon", // post message icon
                             ),
-            "ratings"	=> array(
-                            "title"	=> _MD_RATINGS,
-                            "sort"	=> "t.rating", // irmtfan t.topic_rating to t.rating
+            "ratings"    => array(
+                            "title"    => _MD_RATINGS,
+                            "sort"    => "t.rating", // irmtfan t.topic_rating to t.rating
                             ),
-            "votes"	=> array(
-                            "title"	=> _MD_VOTES,
-                            "sort"	=> "t.votes",
+            "votes"    => array(
+                            "title"    => _MD_VOTES,
+                            "sort"    => "t.votes",
                             ),
-            "publish"	=> array(
-                            "title"	=> _MD_TOPICTIME,
-                            "sort"	=> "t.topic_id",
+            "publish"    => array(
+                            "title"    => _MD_TOPICTIME,
+                            "sort"    => "t.topic_id",
                             ),
-            "digest"	=> array(
-                            "title"	=> _MD_DIGEST,
-                            "sort"	=> "t.digest_time",
+            "digest"    => array(
+                            "title"    => _MD_DIGEST,
+                            "sort"    => "t.digest_time",
                             ),
-            "sticky"	=> array(
-                            "title"	=> _MD_STICKY,
-                            "sort"	=> "t.topic_sticky",
+            "sticky"    => array(
+                            "title"    => _MD_STICKY,
+                            "sort"    => "t.topic_sticky",
                             ),
-            "lock"	=> array(
-                            "title"	=> _MD_LOCK,
-                            "sort"	=> "t.topic_status",
+            "lock"    => array(
+                            "title"    => _MD_LOCK,
+                            "sort"    => "t.topic_status",
                             ),
-            "poll"	=> array(
-                            "title"	=> _MD_POLL_POLL,
-                            "sort"	=> "t.poll_id",
+            "poll"    => array(
+                            "title"    => _MD_POLL_POLL,
+                            "sort"    => "t.poll_id",
                             ),
             );
         $types = $this->getTypes();
         if (!empty($types)) {
             $headers["type"] =  array(
-                            "title"	=> _MD_NEWBB_TYPE,
-                            "sort"	=> "t.type_id",
+                            "title"    => _MD_NEWBB_TYPE,
+                            "sort"    => "t.type_id",
                             );
         }
         if ($this->userlevel == 2) {
             $headers["approve"] =  array(
-                            "title"	=> _MD_APPROVE,
-                            "sort"	=> "t.approved",
+                            "title"    => _MD_APPROVE,
+                            "sort"    => "t.approved",
                             );
         }
         // END irmtfan add more sorts
@@ -530,9 +529,9 @@ class NewbbTopicRenderer
         $headersSort = $this -> getSort("", "title");
         // additional headers - important: those cannot be in sort anyway
         $headers = array_merge($headersSort, array(
-            "attachment"	=> _MD_TOPICSHASATT, // show attachment smarty
-            "read"	=> _MD_MARK_UNREAD.'|'._MD_MARK_READ, // read/unread show topic_folder smarty
-            "pagenav"	=> _MD_PAGENAV_DISPLAY, // show topic_page_jump smarty - sort by topic_replies?
+            "attachment"    => _MD_TOPICSHASATT, // show attachment smarty
+            "read"    => _MD_MARK_UNREAD.'|'._MD_MARK_READ, // read/unread show topic_folder smarty
+            "pagenav"    => _MD_PAGENAV_DISPLAY, // show topic_page_jump smarty - sort by topic_replies?
             ));
 
         return $this->getFromKeys($headers, $header);
@@ -542,29 +541,29 @@ class NewbbTopicRenderer
     {
         $links = array(
             //""			=> "", /* irmtfan remove empty array */
-            "all"		=> _ALL,
-            "digest"	=> _MD_DIGEST,
-            "undigest" 	=> _MD_UNDIGEST, // irmtfan add
-            "sticky"	=> _MD_STICKY, // irmtfan add
-            "unsticky"	=> _MD_UNSTICKY, // irmtfan add
-            "lock"		=> _MD_LOCK, // irmtfan add
-            "unlock"	=> _MD_UNLOCK, // irmtfan add
-            "poll"		=> _MD_TOPICHASPOLL, // irmtfan add
-            "unpoll"	=> _MD_TOPICHASNOTPOLL, // irmtfan add
-            "voted"		=> _MD_VOTED, // irmtfan add
-            "unvoted"	=> _MD_UNVOTED, // irmtfan add
-            "viewed"	=> _MD_VIEWED, // irmtfan add
-            "unviewed"	=> _MD_UNVIEWED, // irmtfan add
-            "replied"	=> _MD_REPLIED, // irmtfan add
-            "unreplied"	=> _MD_UNREPLIED,
-            "read"		=> _MD_READ, // irmtfan add
-            "unread"	=> _MD_UNREAD,
+            "all"        => _ALL,
+            "digest"    => _MD_DIGEST,
+            "undigest"    => _MD_UNDIGEST, // irmtfan add
+            "sticky"    => _MD_STICKY, // irmtfan add
+            "unsticky"    => _MD_UNSTICKY, // irmtfan add
+            "lock"        => _MD_LOCK, // irmtfan add
+            "unlock"    => _MD_UNLOCK, // irmtfan add
+            "poll"        => _MD_TOPICHASPOLL, // irmtfan add
+            "unpoll"    => _MD_TOPICHASNOTPOLL, // irmtfan add
+            "voted"        => _MD_VOTED, // irmtfan add
+            "unvoted"    => _MD_UNVOTED, // irmtfan add
+            "viewed"    => _MD_VIEWED, // irmtfan add
+            "unviewed"    => _MD_UNVIEWED, // irmtfan add
+            "replied"    => _MD_REPLIED, // irmtfan add
+            "unreplied"    => _MD_UNREPLIED,
+            "read"        => _MD_READ, // irmtfan add
+            "unread"    => _MD_UNREAD,
             );
         $links_admin = array(
             //" "			=> "", /* irmtfan remove empty array */
-            "active"	=> _MD_TYPE_ADMIN,
-            "pending"	=> _MD_TYPE_PENDING,
-            "deleted"	=> _MD_TYPE_DELETED,
+            "active"    => _MD_TYPE_ADMIN,
+            "pending"    => _MD_TYPE_PENDING,
+            "deleted"    => _MD_TYPE_DELETED,
             );
 
         // all status, for admin
@@ -667,6 +666,7 @@ class NewbbTopicRenderer
         }
 
         if (empty($type_id)) return $types;
+
         return @$types[$type_id];
     }
 
@@ -750,8 +750,7 @@ class NewbbTopicRenderer
         $joins[] = 'LEFT JOIN ' . $this->handler->db->prefix('bb_posts') . ' AS p ON p.post_id = t.topic_last_post_id';
         $wheres[] = "1 = 1";
 
-
-        $sql = 	'	SELECT '.implode(", ", $selects).
+        $sql =    '	SELECT '.implode(", ", $selects).
                 ' 	FROM '.implode(", ", $froms).
                 '		'.implode(" ", $joins).
                 (!empty($this->query["join"]) ? '		'.implode(" ", $this->query["join"]) : ''). // irmtfan bug fix: Undefined index: join when post_excerpt = 0
@@ -803,7 +802,7 @@ class NewbbTopicRenderer
         }
         //if (empty($this->query["sort"])) $this->query["sort"][] = 't.topic_last_post_id DESC'; // irmtfan commented no need
 
-        $sql = 	'	SELECT '.implode(", ", $selects).
+        $sql =    '	SELECT '.implode(", ", $selects).
                 ' 	FROM '.implode(", ", $froms).
                 '		'.implode(" ", $joins).
                 (!empty($this->query["join"]) ? '		'.implode(" ", $this->query["join"]) : ''). // irmtfan bug fix: Undefined index join when post_excerpt = 0
@@ -909,32 +908,32 @@ class NewbbTopicRenderer
             }
 
             $topics[$myrow['topic_id']] = array(
-                'topic_id'		=> $myrow['topic_id'],
-                'topic_icon'	=> $topic_icon,
-                'type_id'		=> $myrow['type_id'],
-                'topic_title_excerpt'	=> $topic_title_excerpt, //irmtfan use topic_title_excerpt
+                'topic_id'        => $myrow['topic_id'],
+                'topic_icon'    => $topic_icon,
+                'type_id'        => $myrow['type_id'],
+                'topic_title_excerpt'    => $topic_title_excerpt, //irmtfan use topic_title_excerpt
                 //'topic_link'	=> XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'], // . '&amp;forum=' . $myrow['forum_id'], // irmtfan comment
                 'topic_link'                => 'viewtopic.php?topic_id=' . $myrow['topic_id'], // irmtfan remove hardcode link
-                'rating_img'	=> $rating_img,
-                'votes'			=> $myrow['votes'], //irmtfan added
-                'topic_page_jump'		=> $topic_page_jump,
-                'topic_page_jump_icon'	=> $topic_page_jump_icon,
-                'topic_replies'			=> $myrow['topic_replies'],
-                'topic_poster_uid'		=> $myrow['topic_poster'],
-                'topic_poster_name'		=> !empty($myrow['poster_name']) ? $myts->htmlSpecialChars($myrow['poster_name']) : $anonymous,
-                'topic_views'			=> $myrow['topic_views'],
-                'topic_time'			=> newbb_formatTimestamp($myrow['topic_time']),
-                'topic_last_post_id'		=> $myrow['topic_last_post_id'], //irmtfan added
-                'topic_last_posttime'		=> newbb_formatTimestamp($myrow['last_post_time']),
-                'topic_last_poster_uid'		=> $myrow['uid'],
-                'topic_last_poster_name'	=> !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars( $myrow['last_poster_name'] ) : $anonymous,
-                'topic_forum'			=> $myrow['forum_id'],
-                'topic_excerpt'			=> $topic_excerpt,
-                'sticky' 				=> $myrow['topic_sticky'] ? newbb_displayImage('topic_sticky', _MD_TOPICSTICKY) : '', // irmtfan bug fixed
-                'lock' 					=> $myrow['topic_status'] ? newbb_displayImage('topic_locked', _MD_TOPICLOCK) : '', //irmtfan added
-                'digest'				=> $myrow['topic_digest'] ? newbb_displayImage('topic_digest', _MD_TOPICDIGEST) : '', //irmtfan added
-                'poll'					=> $myrow['topic_haspoll'] ? newbb_displayImage('poll', _MD_TOPICHASPOLL) : '', //irmtfan added
-                'approve'				=> $myrow['approved'], //irmtfan added
+                'rating_img'    => $rating_img,
+                'votes'            => $myrow['votes'], //irmtfan added
+                'topic_page_jump'        => $topic_page_jump,
+                'topic_page_jump_icon'    => $topic_page_jump_icon,
+                'topic_replies'            => $myrow['topic_replies'],
+                'topic_poster_uid'        => $myrow['topic_poster'],
+                'topic_poster_name'        => !empty($myrow['poster_name']) ? $myts->htmlSpecialChars($myrow['poster_name']) : $anonymous,
+                'topic_views'            => $myrow['topic_views'],
+                'topic_time'            => newbb_formatTimestamp($myrow['topic_time']),
+                'topic_last_post_id'        => $myrow['topic_last_post_id'], //irmtfan added
+                'topic_last_posttime'        => newbb_formatTimestamp($myrow['last_post_time']),
+                'topic_last_poster_uid'        => $myrow['uid'],
+                'topic_last_poster_name'    => !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars( $myrow['last_poster_name'] ) : $anonymous,
+                'topic_forum'            => $myrow['forum_id'],
+                'topic_excerpt'            => $topic_excerpt,
+                'sticky'                => $myrow['topic_sticky'] ? newbb_displayImage('topic_sticky', _MD_TOPICSTICKY) : '', // irmtfan bug fixed
+                'lock'                    => $myrow['topic_status'] ? newbb_displayImage('topic_locked', _MD_TOPICLOCK) : '', //irmtfan added
+                'digest'                => $myrow['topic_digest'] ? newbb_displayImage('topic_digest', _MD_TOPICDIGEST) : '', //irmtfan added
+                'poll'                    => $myrow['topic_haspoll'] ? newbb_displayImage('poll', _MD_TOPICHASPOLL) : '', //irmtfan added
+                'approve'                => $myrow['approved'], //irmtfan added
                 );
 
             /* users */

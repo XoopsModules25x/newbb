@@ -61,24 +61,24 @@ if ($newXoopsModuleGui) $form .= $indexAdmin->addNavigation('admin_synchronizati
         if ($start >= ($count = $user_handler->getCount()) ) {
             break;
         }
-        $sql =	"	SELECT uid".
+        $sql =    "	SELECT uid".
                 "	FROM " . $xoopsDB->prefix("users");
         $result = $xoopsDB->query($sql, $limit, $start);
         while ( list($uid) = $xoopsDB->fetchRow($result) ) {
             // irmtfan approved=1 AND
-            $sql =	"	SELECT count(*)".
+            $sql =    "	SELECT count(*)".
                     "	FROM " . $xoopsDB->prefix("bb_topics") .
                     "	WHERE topic_poster = {$uid}";
             $ret = $xoopsDB->query($sql);
             list($topics) = $xoopsDB->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql =	"	SELECT count(*)".
+            $sql =    "	SELECT count(*)".
                     "	FROM " . $xoopsDB->prefix("bb_topics") .
                     "	WHERE topic_digest > 0 AND topic_poster = {$uid}";
             $ret = $xoopsDB->query($sql);
             list($digests) = $xoopsDB->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql =	"	SELECT count(*), MAX(post_time)".
+            $sql =    "	SELECT count(*), MAX(post_time)".
                     "	FROM " . $xoopsDB->prefix("bb_posts") .
                     "	WHERE uid = {$uid}";
             $ret = $xoopsDB->query($sql);

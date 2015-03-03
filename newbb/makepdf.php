@@ -34,11 +34,11 @@ error_reporting(0);
 
 include_once __DIR__ . "/header.php";
 
-$forum 		= isset($_GET['forum']) ? intval($_GET['forum']) : 0;
-$topic_id 	= isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
-$post_id 	= !empty($_GET['post_id']) ? intval($_GET['post_id']) : 0;
+$forum        = isset($_GET['forum']) ? intval($_GET['forum']) : 0;
+$topic_id    = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
+$post_id    = !empty($_GET['post_id']) ? intval($_GET['post_id']) : 0;
 if (!is_file(XOOPS_PATH.'/vendor/tcpdf/tcpdf.php')) {
-	redirect_header(XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/viewtopic.php?topic_id='.$topic_id,3,'TCPF for Xoops not installed');
+    redirect_header(XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/viewtopic.php?topic_id='.$topic_id,3,'TCPF for Xoops not installed');
 }
 
 if ( empty($post_id) )  die(_MD_ERRORTOPIC);
@@ -106,9 +106,9 @@ require_once (XOOPS_PATH.'/vendor/tcpdf/tcpdf.php');
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // load $localLanguageOptions array with language specific definitions and apply
 if (is_file(XOOPS_PATH.'/vendor/tcpdf/config/lang/'.$xoopsConfig['language'].'.php')) {
-	require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/'.$xoopsConfig['language'].'.php');
+    require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/'.$xoopsConfig['language'].'.php');
 } else {
-	require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/english.php');
+    require_once( XOOPS_PATH.'/vendor/tcpdf/config/lang/english.php');
 }
 $pdf->setLanguageArray($localLanguageOptions);
 

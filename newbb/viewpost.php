@@ -330,21 +330,21 @@ foreach (array_keys($posts) as $id) {
 
     $xoopsTpl->append('posts',
             array(
-                'post_id' 		=> $post->getVar('post_id'),
-                'topic_id' 		=> $post->getVar('topic_id'),
-                'forum_id' 		=> $post->getVar('forum_id'),
-                'post_date' 	=> newbb_formatTimestamp($post->getVar('post_time')),
-                'post_image' 	=> $post_image,
-                'post_title' 	=> $post_title,
-                'post_text' 	=> $post_text,
-                'post_attachment'	=> $post_attachment,
-                'post_edit'			=> $post->displayPostEdit(),
-                'post_no' 			=> $start+$pn,
-                'post_signature'	=> ($post->getVar('attachsig'))?@$poster["signature"]:"",
-                'poster_ip' 		=> ($isadmin && $xoopsModuleConfig['show_ip'])?long2ip($post->getVar('poster_ip')):"",
-                'thread_action' 	=> $thread_action,
-                'thread_buttons' 	=> $thread_buttons,
-                'poster' 			=> $poster
+                'post_id'        => $post->getVar('post_id'),
+                'topic_id'        => $post->getVar('topic_id'),
+                'forum_id'        => $post->getVar('forum_id'),
+                'post_date'    => newbb_formatTimestamp($post->getVar('post_time')),
+                'post_image'    => $post_image,
+                'post_title'    => $post_title,
+                'post_text'    => $post_text,
+                'post_attachment'    => $post_attachment,
+                'post_edit'            => $post->displayPostEdit(),
+                'post_no'            => $start+$pn,
+                'post_signature'    => ($post->getVar('attachsig'))?@$poster["signature"]:"",
+                'poster_ip'        => ($isadmin && $xoopsModuleConfig['show_ip'])?long2ip($post->getVar('poster_ip')):"",
+                'thread_action'    => $thread_action,
+                'thread_buttons'    => $thread_buttons,
+                'poster'            => $poster
                )
     );
 

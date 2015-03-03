@@ -22,12 +22,12 @@ class Category extends XoopsObject
     function __construct()
     {
         $this->XoopsObject();
-        $this->initVar('cat_id',			XOBJ_DTYPE_INT);
-        $this->initVar('cat_title',			XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_image',			XOBJ_DTYPE_SOURCE, "blank.gif");
-        $this->initVar('cat_description',	XOBJ_DTYPE_TXTAREA);
-        $this->initVar('cat_order', 		XOBJ_DTYPE_INT, 99);
-        $this->initVar('cat_url', 			XOBJ_DTYPE_URL);
+        $this->initVar('cat_id',            XOBJ_DTYPE_INT);
+        $this->initVar('cat_title',            XOBJ_DTYPE_TXTBOX);
+        $this->initVar('cat_image',            XOBJ_DTYPE_SOURCE, "blank.gif");
+        $this->initVar('cat_description',    XOBJ_DTYPE_TXTAREA);
+        $this->initVar('cat_order',        XOBJ_DTYPE_INT, 99);
+        $this->initVar('cat_url',            XOBJ_DTYPE_URL);
     }
 }
 

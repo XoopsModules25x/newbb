@@ -50,12 +50,12 @@ function newbb_tag_iteminfo(&$items)
                 continue;
             }
             $items[$cat_id][$item_id] = array(
-                "title"		=> $item_obj->getVar("topic_title"),
-                "uid"		=> $item_obj->getVar("topic_poster"),
-                "link"		=> "viewtopic.php?topic_id={$item_id}",
-                "time"		=> $item_obj->getVar("topic_time"),
-                "tags"		=> tag_parse_tag($item_obj->getVar("topic_tags", "n")),
-                "content"	=> "",
+                "title"        => $item_obj->getVar("topic_title"),
+                "uid"        => $item_obj->getVar("topic_poster"),
+                "link"        => "viewtopic.php?topic_id={$item_id}",
+                "time"        => $item_obj->getVar("topic_time"),
+                "tags"        => tag_parse_tag($item_obj->getVar("topic_tags", "n")),
+                "content"    => "",
                 );
         }
     }
@@ -75,7 +75,7 @@ function newbb_tag_synchronization($mid)
 
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4):
-    $sql =	"	DELETE FROM {$link_handler->table}".
+    $sql =    "	DELETE FROM {$link_handler->table}".
             "	WHERE ".
             "		tag_modid = {$mid}".
             "		AND ".
@@ -86,7 +86,7 @@ function newbb_tag_synchronization($mid)
             "			) ".
             "		)";
     else:
-    $sql = 	"	DELETE {$link_handler->table} FROM {$link_handler->table}".
+    $sql =    "	DELETE {$link_handler->table} FROM {$link_handler->table}".
             "	LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} ".
             "	WHERE ".
             "		tag_modid = {$mid}".

@@ -362,19 +362,19 @@ if ( !empty($_POST['contents_submit']) ) {
         }
         // Update user
         if ($uid > 0) {
-            $sql =	"SELECT count(*)".
+            $sql =    "SELECT count(*)".
                     "	FROM " . $xoopsDB->prefix("bb_topics") .
                     "	WHERE approved=1 AND topic_poster =" . $uid;
             $ret = $xoopsDB->query($sql);
             list($topics) = $xoopsDB->fetchRow($ret);
 
-            $sql =	"	SELECT count(*)".
+            $sql =    "	SELECT count(*)".
                     "	FROM " . $xoopsDB->prefix("bb_topics") .
                     "	WHERE approved=1 AND topic_digest > 0 AND topic_poster =" . $uid;
             $ret = $xoopsDB->query($sql);
             list($digests) = $xoopsDB->fetchRow($ret);
 
-            $sql =	"	SELECT count(*), MAX(post_time)".
+            $sql =    "	SELECT count(*), MAX(post_time)".
                     "	FROM " . $xoopsDB->prefix("bb_posts") .
                     "	WHERE approved=1 AND uid =" . $uid;
             $ret = $xoopsDB->query($sql);

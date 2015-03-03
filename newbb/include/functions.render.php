@@ -53,7 +53,7 @@ function &newbb_displayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image 
     if ($br != 0) {
         $text = $myts->nl2Br($text);
     }
-    $text = $myts->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+    $text = $myts->codeConv($text, $xcode, $image);    // Ryuji_edit(2003-11-18)
 
     return $text;
 }

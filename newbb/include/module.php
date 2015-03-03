@@ -85,7 +85,7 @@ function xoops_module_update_newbb(&$module, $oldversion = null)
     }
 
     if ($oldversion < 403) {
-        $sql =	"	ALTER TABLE ".$GLOBALS['xoopsDB']->prefix("bb_posts").
+        $sql =    "	ALTER TABLE ".$GLOBALS['xoopsDB']->prefix("bb_posts").
                 " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
         $GLOBALS['xoopsDB']->queryF( $sql );
     }

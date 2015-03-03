@@ -62,7 +62,7 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
             case "viewtopic.php":
                 $topic_handler = xoops_getmodulehandler('topic', "newbb");
                 $post_id = !empty($_REQUEST["post_id"]) ? intval($_REQUEST["post_id"]) : 0;
-                $move	= isset($_GET['move'])? strtolower($_GET['move']) : '';
+                $move    = isset($_GET['move'])? strtolower($_GET['move']) : '';
                 $topic_id = !empty($_REQUEST["topic_id"]) ? intval($_REQUEST["topic_id"]) : 0;
                 if ( !empty($post_id) ) {
                     $topic_obj = $topic_handler->getByPost($post_id);

@@ -38,7 +38,6 @@ if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/
     $newModuleGui = true;
 }
 
-
 $adminmenu[] = array(
     'title' => _AM_MODULEADMIN_HOME,
     'link'  => 'admin/index.php',
@@ -111,7 +110,6 @@ $adminmenu[] = array(
     'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/groupmod.png' : "assets/images/menu/groupmod.png"
 );
 
-
 if (!$newModuleGui) {
     $adminmenu[] = array(
         'title' => _MI_NEWBB_ADMENU_BLOCK,
@@ -119,7 +117,6 @@ if (!$newModuleGui) {
         'icon'  => "assets/images/menu/blocks.png"
     );
 }
-
 
 $adminmenu[] = array(
     'title' => _MI_NEWBB_ADMENU_SYNC,

@@ -86,7 +86,6 @@ function newbb_list_topic_show($options)
     return $block;
 }
 
-
 function newbb_list_topic_edit($options)
 {
     // include_once XOOPS_ROOT_PATH . "/class/blockform.php"; //reserve for 2.6

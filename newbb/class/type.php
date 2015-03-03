@@ -32,10 +32,10 @@ class NewbbType extends XoopsObject
     function __construct()
     {
         $this->XoopsObject();
-        $this->initVar('type_id', 			XOBJ_DTYPE_INT);
-        $this->initVar('type_name', 		XOBJ_DTYPE_TXTBOX,	"");
-        $this->initVar('type_color', 		XOBJ_DTYPE_SOURCE,	"");
-        $this->initVar('type_description', 	XOBJ_DTYPE_TXTBOX,	"");
+        $this->initVar('type_id',            XOBJ_DTYPE_INT);
+        $this->initVar('type_name',        XOBJ_DTYPE_TXTBOX,    "");
+        $this->initVar('type_color',        XOBJ_DTYPE_SOURCE,    "");
+        $this->initVar('type_description',    XOBJ_DTYPE_TXTBOX,    "");
     }
 }
 
@@ -93,10 +93,10 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
 
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[$myrow[$this->keyName]] = array(
-                "type_id"		=> $myrow[$this->keyName],
-                "type_order"	=> $myrow["type_order"],
-                "type_name"		=> htmlspecialchars($myrow["type_name"]),
-                "type_color"	=> htmlspecialchars($myrow["type_color"]),
+                "type_id"        => $myrow[$this->keyName],
+                "type_order"    => $myrow["type_order"],
+                "type_name"        => htmlspecialchars($myrow["type_name"]),
+                "type_color"    => htmlspecialchars($myrow["type_color"]),
                 );
         }
 
@@ -115,10 +115,10 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         $forum_id = intval($forum_id);
         if (empty($forum_id)) return false;
 
-        $types_existing	= $this->getByForum($forum_id);
-        $types_valid 	= array();
-        $types_add 		= array();
-        $types_update 	= array();
+        $types_existing    = $this->getByForum($forum_id);
+        $types_valid    = array();
+        $types_add        = array();
+        $types_update    = array();
         foreach (array_keys($types_existing) as $key) {
             if (empty($types[$key])) {
                 continue;
@@ -133,9 +133,9 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 $types_add[] = $key;
             }
         }
-        $types_valid 	= array_filter( $types_valid );
-        $types_add 		= array_filter( $types_add );
-        $types_update 	= array_filter( $types_update );
+        $types_valid    = array_filter( $types_valid );
+        $types_add        = array_filter( $types_add );
+        $types_update    = array_filter( $types_update );
 
         if (!empty($types_valid)) {
             $sql = "DELETE FROM " . $this->db->prefix("bb_type_forum").
@@ -225,7 +225,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         $sql = "DELETE FROM ".$this->db->prefix("bb_type_forum").
                 " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
         else:
-        $sql = 	"DELETE ".$this->db->prefix("bb_type_forum")." FROM ".$this->db->prefix("bb_type_forum").
+        $sql =    "DELETE ".$this->db->prefix("bb_type_forum")." FROM ".$this->db->prefix("bb_type_forum").
                 " LEFT JOIN {$this->table} AS aa ON ".$this->db->prefix("bb_type_forum").".{$this->keyName} = aa.{$this->keyName} ".
                 " WHERE (aa.{$this->keyName} IS NULL)";
         endif;
@@ -239,7 +239,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 " SET {$this->keyName} = 0" .
                 " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
         else:
-        $sql = 	"UPATE ".$this->db->prefix("bb_topics")." FROM ".$this->db->prefix("bb_type_forum").
+        $sql =    "UPATE ".$this->db->prefix("bb_topics")." FROM ".$this->db->prefix("bb_type_forum").
                 " SET ". $this->db->prefix("bb_topics") . ".{$this->keyName} = 0" .
                 " LEFT JOIN {$this->table} AS aa ON ".$this->db->prefix("bb_topics").".{$this->keyName} = aa.{$this->keyName} ".
                 " WHERE (aa.{$this->keyName} IS NULL)";

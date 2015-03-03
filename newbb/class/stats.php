@@ -14,15 +14,15 @@
 
 defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__."/functions.ini.php";
 
-define("NEWBB_STATS_TYPE_TOPIC",	1);
-define("NEWBB_STATS_TYPE_POST",		2);
-define("NEWBB_STATS_TYPE_DIGEST",	3);
-define("NEWBB_STATS_TYPE_VIEW",		4);
+define("NEWBB_STATS_TYPE_TOPIC",    1);
+define("NEWBB_STATS_TYPE_POST",        2);
+define("NEWBB_STATS_TYPE_DIGEST",    3);
+define("NEWBB_STATS_TYPE_VIEW",        4);
 
-define("NEWBB_STATS_PERIOD_TOTAL",		1);
-define("NEWBB_STATS_PERIOD_DAY",		2);
-define("NEWBB_STATS_PERIOD_WEEK",		3);
-define("NEWBB_STATS_PERIOD_MONTH",		4);
+define("NEWBB_STATS_PERIOD_TOTAL",        1);
+define("NEWBB_STATS_PERIOD_DAY",        2);
+define("NEWBB_STATS_PERIOD_WEEK",        3);
+define("NEWBB_STATS_PERIOD_MONTH",        4);
 
 /**
  * Stats for forum
@@ -33,8 +33,8 @@ class NewbbStatsHandler
     var $db;
     var $table;
     var $param = array (
-            "type"		=> array("topic", "post", "digest", "view"),
-            "period"	=> array("total", "day", "week", "month"),
+            "type"        => array("topic", "post", "digest", "view"),
+            "period"    => array("total", "day", "week", "month"),
         );
 
     function NewbbStatsHandler($db = null)
@@ -59,14 +59,14 @@ class NewbbStatsHandler
 
     function update($id, $type, $increment = 1)
     {
-        $id			= intval($id);
-        $increment	= intval($increment);
+        $id            = intval($id);
+        $increment    = intval($increment);
 
         if (empty($increment) || false === ( $type = array_search($type, $this->param["type"]) )) {
             return false;
         }
 
-        $sql =	"	UPDATE {$this->table}".
+        $sql =    "	UPDATE {$this->table}".
                 "	SET stats_value = CASE ".
                 "					WHEN time_format = '' OR DATE_FORMAT(time_update, time_format) = DATE_FORMAT(NOW(), time_format)  THEN stats_value + '{$increment}' ".
                 "					ELSE '{$increment}' ".
@@ -79,24 +79,24 @@ class NewbbStatsHandler
         $result = $this->db->queryF($sql);
         $rows = $this->db->getAffectedRows();
         if ($rows == 0) {
-            $sql =	"	INSERT INTO {$this->table}".
+            $sql =    "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('0', '{$increment}', '{$type}', '".array_search("total", $this->param["period"]).	"', NOW(), ''), ".
-                    "		('0', '{$increment}', '{$type}', '".array_search("day", $this->param["period"]).	"', NOW(), '%Y%j'), ".
-                    "		('0', '{$increment}', '{$type}', '".array_search("week", $this->param["period"]).	"', NOW(), '%Y%u'), ".
-                    "		('0', '{$increment}', '{$type}', '".array_search("month", $this->param["period"]).	"', NOW(), '%Y%m')"
+                    "		('0', '{$increment}', '{$type}', '".array_search("total", $this->param["period"]).    "', NOW(), ''), ".
+                    "		('0', '{$increment}', '{$type}', '".array_search("day", $this->param["period"]).    "', NOW(), '%Y%j'), ".
+                    "		('0', '{$increment}', '{$type}', '".array_search("week", $this->param["period"]).    "', NOW(), '%Y%u'), ".
+                    "		('0', '{$increment}', '{$type}', '".array_search("month", $this->param["period"]).    "', NOW(), '%Y%m')"
                     ;
             $result = $this->db->queryF($sql);
         }
         if ($rows < 2 * count($this->param["period"]) && !empty($id)) {
-            $sql =	"	INSERT INTO {$this->table}".
+            $sql =    "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('{$id}', '{$increment}', '{$type}', '".array_search("total", $this->param["period"]).	"', NOW(), ''), ".
-                    "		('{$id}', '{$increment}', '{$type}', '".array_search("day", $this->param["period"]).	"', NOW(), '%Y%j'), ".
-                    "		('{$id}', '{$increment}', '{$type}', '".array_search("week", $this->param["period"]).	"', NOW(), '%Y%u'), ".
-                    "		('{$id}', '{$increment}', '{$type}', '".array_search("month", $this->param["period"]).	"', NOW(), '%Y%m')"
+                    "		('{$id}', '{$increment}', '{$type}', '".array_search("total", $this->param["period"]).    "', NOW(), ''), ".
+                    "		('{$id}', '{$increment}', '{$type}', '".array_search("day", $this->param["period"]).    "', NOW(), '%Y%j'), ".
+                    "		('{$id}', '{$increment}', '{$type}', '".array_search("week", $this->param["period"]).    "', NOW(), '%Y%u'), ".
+                    "		('{$id}', '{$increment}', '{$type}', '".array_search("month", $this->param["period"]).    "', NOW(), '%Y%m')"
                     ;
             $result = $this->db->queryF($sql);
         }
@@ -121,7 +121,7 @@ class NewbbStatsHandler
         foreach ($periods as $period) {
             $_periods[] = array_search($period, $this->param["period"]);
         }
-        $sql =	"	SELECT stats_id, stats_value, stats_type, stats_period ".
+        $sql =    "	SELECT stats_id, stats_value, stats_type, stats_period ".
                 "	FROM {$this->table} ".
                 "	WHERE ".
                 "		( time_format = '' OR DATE_FORMAT(time_update, time_format) = DATE_FORMAT(NOW(), time_format) ) ".
@@ -143,17 +143,17 @@ class NewbbStatsHandler
         $this->db->queryF("TRUNCATE TABLE " . $this->table);
         $now = time();
         $time_start = array(
-                            "day"	=> "%Y%j",
-                            "week"	=> "%Y%u",
-                            "month"	=> "%Y%m",
+                            "day"    => "%Y%j",
+                            "week"    => "%Y%u",
+                            "month"    => "%Y%m",
                             );
         $counts = array();
 
-        $sql =	"	SELECT forum_id".
+        $sql =    "	SELECT forum_id".
                 "	FROM " . $this->db->prefix("bb_forums");
         $ret = $this->db->query($sql);
         while ( list($forum_id) = $this->db->fetchRow($ret) ) {
-            $sql =	"	SELECT COUNT(*), SUM(topic_views)".
+            $sql =    "	SELECT COUNT(*), SUM(topic_views)".
                     "	FROM " . $this->db->prefix("bb_topics") .
                     "	WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
@@ -161,14 +161,14 @@ class NewbbStatsHandler
             $this->update($forum_id, "topic", $topics);
             $this->update($forum_id, "view", $views);
 
-            $sql =	"	SELECT COUNT(*)".
+            $sql =    "	SELECT COUNT(*)".
                     "	FROM " . $this->db->prefix("bb_topics") .
                     "	WHERE approved=1 AND topic_digest >0 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
             list($digests) = $this->db->fetchRow($result);
             $this->update($forum_id, "digest", $digests);
 
-            $sql =	"	SELECT COUNT(*)".
+            $sql =    "	SELECT COUNT(*)".
                     "	FROM " . $this->db->prefix("bb_posts") .
                     "	WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
@@ -176,7 +176,7 @@ class NewbbStatsHandler
             $this->update($forum_id, "post", $posts);
 
             foreach ($time_start as $period => $format) {
-                $sql =	"	SELECT COUNT(*), SUM(topic_views)".
+                $sql =    "	SELECT COUNT(*), SUM(topic_views)".
                         "	FROM " . $this->db->prefix("bb_topics") .
                         "	WHERE approved=1 AND forum_id = {$forum_id}".
                         "		AND FROM_UNIXTIME(topic_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
@@ -186,18 +186,18 @@ class NewbbStatsHandler
                     "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('{$forum_id}', '{$topics}', '".array_search("topic", $this->param["type"]).	"', '".array_search($period, $this->param["period"]).	"', NOW(), '{$format}')"
+                    "		('{$forum_id}', '{$topics}', '".array_search("topic", $this->param["type"]).    "', '".array_search($period, $this->param["period"]).    "', NOW(), '{$format}')"
                     );
                 $this->db->queryF(
                     "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('{$forum_id}', '{$views}', '".array_search("view", $this->param["type"]).	"', '".array_search($period, $this->param["period"]).	"', NOW(), '{$format}')"
+                    "		('{$forum_id}', '{$views}', '".array_search("view", $this->param["type"]).    "', '".array_search($period, $this->param["period"]).    "', NOW(), '{$format}')"
                     );
                 @$counts["topic"][$period] += $topics;
                 @$counts["view"][$period] += $views;
 
-                $sql =	"	SELECT COUNT(*)".
+                $sql =    "	SELECT COUNT(*)".
                         "	FROM " . $this->db->prefix("bb_topics") .
                         "	WHERE approved=1 AND topic_digest >0 AND forum_id = {$forum_id}".
                         "		AND FROM_UNIXTIME(digest_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
@@ -207,11 +207,11 @@ class NewbbStatsHandler
                     "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('{$forum_id}', '{$digests}', '".array_search("digest", $this->param["type"]).	"', '".array_search($period, $this->param["period"]).	"', NOW(), '{$format}')"
+                    "		('{$forum_id}', '{$digests}', '".array_search("digest", $this->param["type"]).    "', '".array_search($period, $this->param["period"]).    "', NOW(), '{$format}')"
                     );
                 @$counts["digest"][$period] += $digests;
 
-                $sql =	"	SELECT COUNT(*)".
+                $sql =    "	SELECT COUNT(*)".
                         "	FROM " . $this->db->prefix("bb_posts") .
                         "	WHERE approved=1 AND forum_id = {$forum_id}".
                         "		AND FROM_UNIXTIME(post_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
@@ -221,7 +221,7 @@ class NewbbStatsHandler
                     "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('{$forum_id}', '{$posts}', '".array_search("post", $this->param["type"]).	"', '".array_search($period, $this->param["period"]).	"', NOW(), '{$format}')"
+                    "		('{$forum_id}', '{$posts}', '".array_search("post", $this->param["type"]).    "', '".array_search($period, $this->param["period"]).    "', NOW(), '{$format}')"
                     );
                 @$counts["post"][$period] += $posts;
             }
@@ -237,7 +237,7 @@ class NewbbStatsHandler
                     "	INSERT INTO {$this->table}".
                     "		(`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ".
                     "	VALUES ".
-                    "		('0', '{$counts[$type][$period]}', '".array_search($type, $this->param["type"]).	"', '".array_search($period, $this->param["period"]).	"', NOW(), '{$format}')"
+                    "		('0', '{$counts[$type][$period]}', '".array_search($type, $this->param["type"]).    "', '".array_search($period, $this->param["period"]).    "', NOW(), '{$format}')"
                     );
             }
         }

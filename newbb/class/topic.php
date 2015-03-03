@@ -25,26 +25,26 @@ class Topic extends ArtObject
     function __construct()
     {
         $this->ArtObject("bb_topics");
-        $this->initVar('topic_id', 				XOBJ_DTYPE_INT);
-        $this->initVar('topic_title', 			XOBJ_DTYPE_TXTBOX);
-        $this->initVar('topic_poster', 			XOBJ_DTYPE_INT);
-        $this->initVar('topic_time', 			XOBJ_DTYPE_INT);
-        $this->initVar('topic_views', 			XOBJ_DTYPE_INT);
-        $this->initVar('topic_replies', 		XOBJ_DTYPE_INT);
-        $this->initVar('topic_last_post_id', 	XOBJ_DTYPE_INT);
-        $this->initVar('forum_id', 				XOBJ_DTYPE_INT);
-        $this->initVar('topic_status', 			XOBJ_DTYPE_INT);
-        $this->initVar('type_id', 				XOBJ_DTYPE_INT);
-        $this->initVar('topic_sticky', 			XOBJ_DTYPE_INT);
-        $this->initVar('topic_digest', 			XOBJ_DTYPE_INT);
-        $this->initVar('digest_time', 			XOBJ_DTYPE_INT);
-        $this->initVar('approved', 				XOBJ_DTYPE_INT);
-        $this->initVar('poster_name', 			XOBJ_DTYPE_TXTBOX);
-        $this->initVar('rating', 				XOBJ_DTYPE_OTHER);
-        $this->initVar('votes', 				XOBJ_DTYPE_INT);
-        $this->initVar('topic_haspoll', 		XOBJ_DTYPE_INT);
-        $this->initVar('poll_id', 				XOBJ_DTYPE_INT);
-        $this->initVar('topic_tags', 			XOBJ_DTYPE_SOURCE);
+        $this->initVar('topic_id',                XOBJ_DTYPE_INT);
+        $this->initVar('topic_title',            XOBJ_DTYPE_TXTBOX);
+        $this->initVar('topic_poster',            XOBJ_DTYPE_INT);
+        $this->initVar('topic_time',            XOBJ_DTYPE_INT);
+        $this->initVar('topic_views',            XOBJ_DTYPE_INT);
+        $this->initVar('topic_replies',        XOBJ_DTYPE_INT);
+        $this->initVar('topic_last_post_id',    XOBJ_DTYPE_INT);
+        $this->initVar('forum_id',                XOBJ_DTYPE_INT);
+        $this->initVar('topic_status',            XOBJ_DTYPE_INT);
+        $this->initVar('type_id',                XOBJ_DTYPE_INT);
+        $this->initVar('topic_sticky',            XOBJ_DTYPE_INT);
+        $this->initVar('topic_digest',            XOBJ_DTYPE_INT);
+        $this->initVar('digest_time',            XOBJ_DTYPE_INT);
+        $this->initVar('approved',                XOBJ_DTYPE_INT);
+        $this->initVar('poster_name',            XOBJ_DTYPE_TXTBOX);
+        $this->initVar('rating',                XOBJ_DTYPE_OTHER);
+        $this->initVar('votes',                XOBJ_DTYPE_INT);
+        $this->initVar('topic_haspoll',        XOBJ_DTYPE_INT);
+        $this->initVar('poll_id',                XOBJ_DTYPE_INT);
+        $this->initVar('topic_tags',            XOBJ_DTYPE_SOURCE);
     }
     // irmtfan add LAST_INSERT_ID to enhance the mysql performances
     function incrementCounter()

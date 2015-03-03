@@ -20,11 +20,11 @@ class NewbbUserstats extends ArtObject
     function NewbbUserstats()
     {
         $this->ArtObject("bb_user_stats");
-        $this->initVar('uid', 				XOBJ_DTYPE_INT);
-        $this->initVar('user_topics', 		XOBJ_DTYPE_INT);
-        $this->initVar('user_digests', 		XOBJ_DTYPE_INT);
-        $this->initVar('user_posts', 		XOBJ_DTYPE_INT);
-        $this->initVar('user_lastpost', 	XOBJ_DTYPE_INT);
+        $this->initVar('uid',                XOBJ_DTYPE_INT);
+        $this->initVar('user_topics',        XOBJ_DTYPE_INT);
+        $this->initVar('user_digests',        XOBJ_DTYPE_INT);
+        $this->initVar('user_posts',        XOBJ_DTYPE_INT);
+        $this->initVar('user_lastpost',    XOBJ_DTYPE_INT);
     }
 }
 
