@@ -114,7 +114,7 @@ class NewbbOnlineHandler
         }
         $num_anonymous           = $num_total - $num_user;
         $online                  = array();
-        $online['image']         = newbb_displayImage('whosonline');
+        $online['image']         = newbbDisplayImage('whosonline');
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;
@@ -174,8 +174,8 @@ class NewbbOnlineHandler
         }
         $num_anonymous           = $num_total - $num_user;
         $online                  = array();
-        $online['image']         = newbb_displayImage('whosonline');
-        $online['statistik']     = newbb_displayImage('statistik');
+        $online['image']         = newbbDisplayImage('whosonline');
+        $online['statistik']     = newbbDisplayImage('statistik');
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;

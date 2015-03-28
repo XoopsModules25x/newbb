@@ -49,7 +49,7 @@ mod_loadFunctions("user", "newbb");
  */
 function newbb_list_topic_show($options)
 {
-    $newbbConfig = newbb_load_config(); // load all newbb configs
+    $newbbConfig = newbbLoadConfig(); // load all newbb configs
 
     $topicRenderer            = new NewbbTopicRenderer();
     $topicRenderer->userlevel = $GLOBALS["xoopsUserIsAdmin"] ? 2 : is_object($GLOBALS["xoopsUser"]); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin

@@ -31,7 +31,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function NewbbPermissionForumHandler(&$db)
     {
-        $this->NewbbPermissionHandler($db);
+//        $this->NewbbPermissionHandler($db);
+        parent::__construct($db);
     }
 
     /**

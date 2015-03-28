@@ -24,7 +24,7 @@
 global $xoopsConfig, $xoTheme;
 
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
-$icon_handler = newbb_getIconHandler();
+$icon_handler = newbbGetIconHandler();
 //  get css rel path from setted language
 $css_rel_path = $icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "css");
 // add local stylesheet

@@ -25,7 +25,7 @@ if (!defined("NEWBB_FUNCTIONS_RPC")) {
      */
     function newbb_trackback_response($error = 0, $error_message = '')
     {
-        $moduleConfig = newbb_load_config();
+        $moduleConfig = newbbLoadConfig();
 
         if (!empty($moduleConfig["rss_utf8"])) {
             $charset       = "utf-8";

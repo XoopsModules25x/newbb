@@ -82,7 +82,7 @@ class newbb_XoopsGroupPermForm extends XoopsGroupPermForm
         foreach (array_keys($glist) as $i) {
             // get selected item id(s) for each group
             $selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
-            $ele      = new newbb_XoopsGroupFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
+            $ele      = new newbbXoopsGroupFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
             $ele->setOptionTree($this->_itemTree);
             $this->addElement($ele);
             unset($ele);
@@ -116,9 +116,9 @@ class newbb_XoopsGroupPermForm extends XoopsGroupPermForm
 }
 
 /**
- * Class newbb_XoopsGroupFormCheckBox
+ * Class newbbXoopsGroupFormCheckBox
  */
-class newbb_XoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
+class newbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 {
     /**
      * @param $caption
@@ -126,7 +126,7 @@ class newbb_XoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
      * @param $groupId
      * @param null $values
      */
-    public function newbb_XoopsGroupFormCheckBox($caption, $name, $groupId, $values = null)
+    public function __construct($caption, $name, $groupId, $values = null)
     {
         $this->XoopsGroupFormCheckBox($caption, $name, $groupId, $values);
     }

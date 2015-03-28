@@ -66,7 +66,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     public function NewbbReadtopicHandler(&$db)
     {
         $this->NewbbReadHandler($db, "topic");
-        $newbbConfig           = newbb_load_config();
+        $newbbConfig           = newbbLoadConfig();
         $this->items_per_forum = isset($newbbConfig["read_items"]) ? intval($newbbConfig["read_items"]) : 100;
     }
 

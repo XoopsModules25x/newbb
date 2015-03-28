@@ -30,7 +30,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     global $myts;
     // irmtfan - in XOOPSCORE/search.php $xoopsModuleConfig is not set
     if (!isset($GLOBALS["xoopsModuleConfig"])) {
-        $GLOBALS["xoopsModuleConfig"] = newbb_load_config();
+        $GLOBALS["xoopsModuleConfig"] = newbbLoadConfig();
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
     if (!is_object($GLOBALS["xoopsModule"]) && is_object($GLOBALS["module"]) && $GLOBALS["module"]->getVar("dirname") == "newbb") {

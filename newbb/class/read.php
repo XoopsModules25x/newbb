@@ -49,6 +49,7 @@ class Read extends ArtObject
      */
     public function Read($type)
     {
+//        parent::__construct("bb_reads_" . $type);
         $this->ArtObject("bb_reads_" . $type);
         $this->initVar('read_id', XOBJ_DTYPE_INT);
         $this->initVar('uid', XOBJ_DTYPE_INT);
@@ -109,7 +110,7 @@ class NewbbReadHandler extends ArtObjectHandler
         $type = ("forum" == $type) ? "forum" : "topic";
         $this->ArtObjectHandler($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
         $this->type  = $type;
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
         $this->lifetime = isset($newbbConfig["read_expire"]) ? intval($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
         $this->mode     = isset($newbbConfig["read_mode"]) ? $newbbConfig["read_mode"] : 2;

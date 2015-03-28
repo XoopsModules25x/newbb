@@ -150,7 +150,7 @@ if (count($forums_array) > 0) {
 
 $category_array = array();
 $toggles        = newbb_getcookie('G', true);
-$icon_handler   = newbb_getIconHandler();
+$icon_handler   = newbbGetIconHandler();
 $category_icon  = array(
     "expand"   => $icon_handler->getImageSource("minus"),
     "collapse" => $icon_handler->getImageSource("plus"));
@@ -161,7 +161,7 @@ foreach (array_keys($categories) as $id) {
 
     $cat_element_id = "cat_" . $onecat['cat_id'];
     $expand         = (count($toggles) > 0) ? ((in_array($cat_element_id, $toggles)) ? false : true) : true;
-    // START irmtfan to improve newbb_displayImage
+    // START irmtfan to improve newbbDisplayImage
     if ($expand) {
         $cat_display      = 'block';        //irmtfan move semicolon
         $cat_icon_display = "minus";
@@ -171,7 +171,7 @@ foreach (array_keys($categories) as $id) {
         $cat_icon_display = "plus";
         $cat_alt          = _MD_NEWBB_SEE;
     }
-    $cat_displayImage = newbb_displayImage($cat_icon_display, $cat_alt);
+    $cat_displayImage = newbbDisplayImage($cat_icon_display, $cat_alt);
 
     if (isset($forumsByCat[$onecat['cat_id']])) {
         $forums = $forumsByCat[$onecat['cat_id']];
@@ -266,12 +266,12 @@ if ($isadmin) {
 
 if ($xoopsModuleConfig['rss_enable'] == 1) {
     $xoopsTpl->assign("rss_enable", 1);
-    $xoopsTpl->assign("rss_button", newbb_displayImage('rss', 'RSS feed'));
+    $xoopsTpl->assign("rss_button", newbbDisplayImage('rss', 'RSS feed'));
 }
 $xoopsTpl->assign(array(
-                      "img_forum_new" => newbb_displayImage('forum_new', _MD_NEWPOSTS),
-                      "img_forum"     => newbb_displayImage('forum', _MD_NONEWPOSTS),
-                      'img_subforum'  => newbb_displayImage('subforum')));
+                      "img_forum_new" => newbbDisplayImage('forum_new', _MD_NEWPOSTS),
+                      "img_forum"     => newbbDisplayImage('forum', _MD_NONEWPOSTS),
+                      'img_subforum'  => newbbDisplayImage('subforum')));
 
 // irmtfan move to footer.php
 include_once __DIR__ . "/footer.php";

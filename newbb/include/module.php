@@ -57,7 +57,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
     load_functions("config");
     mod_clearConfg($module->getVar("dirname", "n"));
 
-    $newbbConfig = newbb_load_config();
+    $newbbConfig = newbbLoadConfig();
 
     //$oldversion = $module->getVar('version');
     //$oldconfig = $module->getVar('hasconfig');

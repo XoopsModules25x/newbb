@@ -20,11 +20,6 @@ class Digest extends XoopsObject
     public $isHtml    = false;
     public $isSummary = true;
 
-    public function Digest()
-    {
-        $this->__construct();
-    }
-
     /**
      *
      */

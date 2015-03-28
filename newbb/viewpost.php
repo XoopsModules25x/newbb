@@ -188,7 +188,7 @@ if (!empty($forum_id)) {
         $xoopsTpl->assign_by_ref("parentforum", $parentforum);
     }
     $xoopsTpl->assign('forum_name', $forum_obj->getVar('forum_name'));
-    $xoopsTpl->assign('forum_moderators', $forum_obj->disp_forumModerators());
+    $xoopsTpl->assign('forum_moderators', $forum_obj->dispForumModerators());
 
     $xoops_pagetitle = $forum_obj->getVar('forum_name') . ' - ' . _MD_VIEWALLPOSTS . ' [' . $xoopsModule->getVar('name') . ']';
     $xoopsTpl->assign("forum_id", $forum_obj->getVar('forum_id'));
@@ -206,8 +206,8 @@ if (!empty($forum_id)) {
 // irmtfan remove and move to footer.php
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
-// irmtfan - remove icon_path and use newbb_displayImage
-$xoopsTpl->assign("anonym_avatar", newbb_displayImage('anonym'));
+// irmtfan - remove icon_path and use newbbDisplayImage
+$xoopsTpl->assign("anonym_avatar", newbbDisplayImage('anonym'));
 $userid_array = array();
 if (count($poster_array) > 0) {
     $member_handler =& xoops_gethandler('member');
@@ -289,40 +289,40 @@ foreach (array_keys($posts) as $id) {
         if ((!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('delete_timelimit'))
             || $isadmin
         ) {
-            $thread_buttons['delete']['image'] = newbb_displayImage('p_delete', _DELETE);
+            $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
             $thread_buttons['delete']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
             $thread_buttons['delete']['name']  = _DELETE;
         }
         if (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit')
             || $isadmin
         ) {
-            $thread_buttons['edit']['image'] = newbb_displayImage('p_edit', _EDIT);
+            $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
             $thread_buttons['edit']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/edit.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
             $thread_buttons['edit']['name']  = _EDIT;
         }
         if (!$suspension[$post->getVar('forum_id')] && is_object($xoopsUser)) {
-            $thread_buttons['reply']['image'] = newbb_displayImage('p_reply', _MD_REPLY);
+            $thread_buttons['reply']['image'] = newbbDisplayImage('p_reply', _MD_REPLY);
             $thread_buttons['reply']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
             $thread_buttons['reply']['name']  = _MD_REPLY;
 
-            $thread_buttons['quote']['image'] = newbb_displayImage('p_quote', _MD_QUOTE);
+            $thread_buttons['quote']['image'] = newbbDisplayImage('p_quote', _MD_QUOTE);
             $thread_buttons['quote']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id') . "&amp;quotedac=1";
             $thread_buttons['quote']['name']  = _MD_QUOTE;
         }
     } else {
-        $thread_buttons['delete']['image'] = newbb_displayImage('p_delete', _DELETE);
+        $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
         $thread_buttons['delete']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
         $thread_buttons['delete']['name']  = _DELETE;
-        $thread_buttons['edit']['image']   = newbb_displayImage('p_edit', _EDIT);
+        $thread_buttons['edit']['image']   = newbbDisplayImage('p_edit', _EDIT);
         $thread_buttons['edit']['link']    = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/edit.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
         $thread_buttons['edit']['name']    = _EDIT;
-        $thread_buttons['reply']['image']  = newbb_displayImage('p_reply', _MD_REPLY);
+        $thread_buttons['reply']['image']  = newbbDisplayImage('p_reply', _MD_REPLY);
         $thread_buttons['reply']['link']   = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
         $thread_buttons['reply']['name']   = _MD_REPLY;
     }
 
     if (!$isadmin && $xoopsModuleConfig['reportmod_enabled']) {
-        $thread_buttons['report']['image'] = newbb_displayImage('p_report', _MD_REPORT);
+        $thread_buttons['report']['image'] = newbbDisplayImage('p_report', _MD_REPORT);
         $thread_buttons['report']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/report.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
         $thread_buttons['report']['name']  = _MD_REPORT;
     }
@@ -400,10 +400,10 @@ if ($uid > 0) {
 }
 $xoopsTpl->assign('lang_title', $lang_title);
 // irmtfan up to p_up
-$xoopsTpl->assign('p_up', newbb_displayImage('up', _MD_TOP));
+$xoopsTpl->assign('p_up', newbbDisplayImage('up', _MD_TOP));
 $xoopsTpl->assign('groupbar_enable', $xoopsModuleConfig['groupbar_enabled']);
 $xoopsTpl->assign('anonymous_prefix', $xoopsModuleConfig['anonymous_prefix']);
-$xoopsTpl->assign('down', newbb_displayImage('down', _MD_BOTTOM));
+$xoopsTpl->assign('down', newbbDisplayImage('down', _MD_BOTTOM));
 
 $all_link       = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewpost.php?forum=" . $forum_id . "&amp;start=$start";
 $post_link      = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewpost.php?forum=" . $forum_id;

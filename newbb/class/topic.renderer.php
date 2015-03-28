@@ -40,7 +40,7 @@ class NewbbTopicRenderer
     /**
      * query variables
      */
-    var $args = array("forum", "uid", "lastposter", "type", "status", "mode", "sort", "order", "start", "since");// irmtfan add multi lastposter
+    public $args = array("forum", "uid", "lastposter", "type", "status", "mode", "sort", "order", "start", "since");// irmtfan add multi lastposter
     public $vars = array();
 
     /**
@@ -71,7 +71,8 @@ class NewbbTopicRenderer
     /**
      * Constructor
      */
-    public function NewbbTopicRenderer()
+    //    public function NewbbTopicRenderer()
+    public function __construct()
     {
         $this->handler = xoops_getModuleHandler("topic", "newbb");
     }
@@ -951,9 +952,9 @@ class NewbbTopicRenderer
             $rating = number_format($myrow['rating'] / 2, 0);
             // irmtfan - add alt key for rating
             if ($rating < 1) {
-                $rating_img = newbb_displayImage('blank');
+                $rating_img = newbbDisplayImage('blank');
             } else {
-                $rating_img = newbb_displayImage('rate' . $rating, constant('_MD_RATE' . $rating));
+                $rating_img = newbbDisplayImage('rate' . $rating, constant('_MD_RATE' . $rating));
             }
 
             // ------------------------------------------------------
@@ -973,12 +974,12 @@ class NewbbTopicRenderer
                     } else {
                         $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $this->config['posts_per_page']) . '">' . $i . '</a>]';
                         // irmtfan remove here and move
-                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $myrow['topic_id'] . "&amp;start=" . (($i - 1) * $this->config['posts_per_page']) . "" . "'>" . newbb_displayImage('document',_MD_NEWBB_GOTOLASTPOST) . "</a>";
+                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $myrow['topic_id'] . "&amp;start=" . (($i - 1) * $this->config['posts_per_page']) . "" . "'>" . newbbDisplayImage('document',_MD_NEWBB_GOTOLASTPOST) . "</a>";
                     }
                 }
             }
             // irmtfan - move here for both topics with and without pages - change topic_id to post_id
-            $topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['topic_last_post_id'] . "" . "'>" . newbb_displayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . "</a>";
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['topic_last_post_id'] . "" . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . "</a>";
 
             // ------------------------------------------------------
             // => topic array
@@ -1026,10 +1027,10 @@ class NewbbTopicRenderer
                 'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars($myrow['last_poster_name']) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
                 'topic_excerpt'          => $topic_excerpt,
-                'sticky'                 => $myrow['topic_sticky'] ? newbb_displayImage('topic_sticky', _MD_TOPICSTICKY) : '', // irmtfan bug fixed
-                'lock'                   => $myrow['topic_status'] ? newbb_displayImage('topic_locked', _MD_TOPICLOCK) : '', //irmtfan added
-                'digest'                 => $myrow['topic_digest'] ? newbb_displayImage('topic_digest', _MD_TOPICDIGEST) : '', //irmtfan added
-                'poll'                   => $myrow['topic_haspoll'] ? newbb_displayImage('poll', _MD_TOPICHASPOLL) : '', //irmtfan added
+                'sticky'                 => $myrow['topic_sticky'] ? newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY) : '', // irmtfan bug fixed
+                'lock'                   => $myrow['topic_status'] ? newbbDisplayImage('topic_locked', _MD_TOPICLOCK) : '', //irmtfan added
+                'digest'                 => $myrow['topic_digest'] ? newbbDisplayImage('topic_digest', _MD_TOPICDIGEST) : '', //irmtfan added
+                'poll'                   => $myrow['topic_haspoll'] ? newbbDisplayImage('poll', _MD_TOPICHASPOLL) : '', //irmtfan added
                 'approve'                => $myrow['approved'], //irmtfan added
             );
 
@@ -1102,7 +1103,7 @@ class NewbbTopicRenderer
             }
             //}
             // END irmtfan remove hardcodes from topic_folder smarty
-            $topics[$id]['topic_folder'] = newbb_displayImage($topic_folder, $topic_folder_text);
+            $topics[$id]['topic_folder'] = newbbDisplayImage($topic_folder, $topic_folder_text);
             // END irmtfan - add topic_folder_text for alt
 
             unset($topics[$id]["topic_poster_name"], $topics[$id]["topic_last_poster_name"]);// irmtfan remove $topics[$id]["stats"] because it is not exist now
@@ -1114,7 +1115,7 @@ class NewbbTopicRenderer
                    " AND topic_id IN (" . implode(',', array_keys($topics)) . ")";
             if ($result = $this->handler->db->query($sql)) {
                 while (list($topic_id) = $this->handler->db->fetchRow($result)) {
-                    $topics[$topic_id]['attachment'] = '&nbsp;' . newbb_displayImage('attachment', _MD_TOPICSHASATT);
+                    $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_TOPICSHASATT);
                 }
             }
         }

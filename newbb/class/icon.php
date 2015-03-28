@@ -65,7 +65,7 @@ class NewbbIconHandler
     /**
      * Constructor
      */
-    public function NewbbIconHandler()
+    public function __construct()
     {
     }
 
@@ -88,28 +88,28 @@ class NewbbIconHandler
      * @param $type
      * @param string $dirname
      * @param string $default
-     * @param string $end_dir
+     * @param string $endDir
      * @return
      */
-    // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $end_dir
+    // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir
     public function getPath(/*$set, */
-        $type, $dirname = "newbb", $default = "", $end_dir = "images")
+        $type, $dirname = "newbb", $default = "", $endDir = "images")
     {
         global $xoopsConfig;
         static $paths;
-        if (isset($paths[$end_dir . '/' . $type])) {
-            return $paths[$end_dir . '/' . $type];
+        if (isset($paths[$endDir . '/' . $type])) {
+            return $paths[$endDir . '/' . $type];
         }
 
         $theme_path = $this->template->currentTheme->path;
-        $rel_dir    = "modules/{$dirname}/{$end_dir}";
+        $rel_dir    = "modules/{$dirname}/{$endDir}";
         // START irmtfan add default for all pathes
         if (empty($default)) {
             $path = is_dir($theme_path . "/{$rel_dir}/{$type}/")
                 ? $theme_path . "/{$rel_dir}/{$type}"
                 : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/")
                     ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}"
-                    : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$end_dir}/{$type}"));
+                    : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}"));
         } else {
             $path = is_dir($theme_path . "/{$rel_dir}/{$type}/")
                 ? $theme_path . "/{$rel_dir}/{$type}"
@@ -119,21 +119,21 @@ class NewbbIconHandler
                         ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}"
                         : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}/")
                             ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}"
-                            : (is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$end_dir}/{$type}/"))
-                                ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$end_dir}/{$type}")
-                                : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$end_dir}/{$default}")
+                            : (is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/"))
+                                ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}")
+                                : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$default}")
                             ) // XOOPS_ROOT_PATH
                         ) // XOOPS_THEME_PATH {$default}
                     ) // XOOPS_THEME_PATH
                 ); // $theme_path {$default}
         }
         // END irmtfan add default for all pathes
-        $paths[$end_dir . '/' . $type] = str_replace(XOOPS_ROOT_PATH, "", str_replace('\\', '/', $path));
+        $paths[$endDir . '/' . $type] = str_replace(XOOPS_ROOT_PATH, "", str_replace('\\', '/', $path));
 
-        return $paths[$end_dir . '/' . $type];
+        return $paths[$endDir . '/' . $type];
     }
 
-    // END irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $end_dir
+    // END irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir
 
     /**
      * @param string $language
@@ -158,9 +158,9 @@ class NewbbIconHandler
     public function setImage($image, $alt = "", $extra = "")
     {
         if (!isset($this->images[$image])) {
-            $image_src = $this->getImageSource($image);
+            $imageSource = $this->getImageSource($image);
             // irmtfan add id={$image}
-            $this->images[$image] = "<img src=\"{$image_src}\" alt=\"{$alt}\" title=\"{$alt}\" align=\"middle\" {$extra} id={$image} />";
+            $this->images[$image] = "<img src=\"{$imageSource}\" alt=\"{$alt}\" title=\"{$alt}\" align=\"middle\" {$extra} id={$image} />";
         }
     }
 
@@ -211,8 +211,8 @@ class NewbbIconHandler
      */
     public function assignImages($images)
     {
-        foreach ($images as $_image) {
-            list($image, $alt, $extra) = $_image;
+        foreach ($images as $myImage) {
+            list($image, $alt, $extra) = $myImage;
             $this->assignImage($image, $alt, $extra);
         }
     }

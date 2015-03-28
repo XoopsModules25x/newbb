@@ -28,7 +28,7 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
     function newbb_formatTimestamp($time, $format = "c", $timeoffset = "")
     {
         load_functions("locale");
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
 
         $format = strtolower($format);
         if ($format == "reg" || $format == "") {
@@ -47,7 +47,7 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
      */
     function newbb_sinceSelectBox($selected = 100)
     {
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
         // irmtfan - new method to get user inputs
         preg_match_all('/-?[0-9]+/', $newbbConfig['since_options'], $match);
         $select_array = array_unique($match[0]);

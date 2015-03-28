@@ -41,7 +41,7 @@ $start = XoopsRequest::getInt('start', 0, 'GET');
 xoops_cp_header();
 switch ($op) {
     case "delete":
-        $digest_ids     = XoopsRequest::geArray('digest_id', '', 'POST');
+        $digest_ids     = XoopsRequest::getArray('digest_id', '', 'POST');
         $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
         if ($digest_ids != '') {
             foreach ($digest_ids as $did => $value) {

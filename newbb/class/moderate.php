@@ -50,13 +50,6 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, 'bb_moderates', 'Moderate', 'mod_id', 'uid');
     }
 
-    /**
-     * @param $db
-     */
-    public function NewbbModerateHandler(&$db)
-    {
-        $this->__construct($db);
-    }
 
     /**
      * Clear garbage

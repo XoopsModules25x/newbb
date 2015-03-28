@@ -48,7 +48,7 @@ function newbb_load_object()
 /**
  * @return array
  */
-function &newbb_load_config()
+function &newbbLoadConfig()
 {
     static $moduleConfig;
     if (isset($moduleConfig)) {

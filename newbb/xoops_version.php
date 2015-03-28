@@ -706,6 +706,7 @@ $modversion['config'][] = array(
     'valuetype'   => 'text',
     'default'     => _MI_DISCLAIMER_TEXT);
 
+xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
 if ($isModuleAction && "update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
     $forum_handler =& xoops_getmodulehandler('forum', 'newbb', true);
@@ -766,7 +767,6 @@ $isPref = (
 );
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' != 0
-xoops_load('XoopsRequest');
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $hModConfig = xoops_gethandler('config');
     $criteria   = new CriteriaCompo();

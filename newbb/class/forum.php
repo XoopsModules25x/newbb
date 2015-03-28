@@ -21,11 +21,6 @@
 class Forum extends XoopsObject
 {
 
-    public function Forum()
-    {
-        $this->__construct();
-    }
-
     /**
      *
      */
@@ -51,7 +46,7 @@ class Forum extends XoopsObject
     /**
      * @return string
      */
-    public function disp_forumModerators()
+    public function dispForumModerators()
     {
         global $xoopsModuleConfig;
 
@@ -79,14 +74,6 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     public function __construct(&$db)
     {
         parent::__construct($db, "bb_forums", 'Forum', 'forum_id', 'forum_name');
-    }
-
-    /**
-     * @param $db
-     */
-    public function NewbbForumHandler(&$db)
-    {
-        $this->__construct($db);
     }
 
     /**
@@ -359,12 +346,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             if ($myrow['topic_haspoll']) {
                 if ($myrow['topic_sticky']) {
-                    $topic_icon = newbb_displayImage('topic_sticky', _MD_TOPICSTICKY) . '<br />' . newbb_displayImage('poll', _MD_TOPICHASPOLL);
+                    $topic_icon = newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY) . '<br />' . newbbDisplayImage('poll', _MD_TOPICHASPOLL);
                 } else {
-                    $topic_icon = newbb_displayImage('poll', _MD_TOPICHASPOLL);
+                    $topic_icon = newbbDisplayImage('poll', _MD_TOPICHASPOLL);
                 }
             } elseif ($myrow['topic_sticky']) {
-                $topic_icon = newbb_displayImage('topic_sticky', _MD_TOPICSTICKY);
+                $topic_icon = newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY);
             } elseif (!empty($myrow['icon'])) {
                 $topic_icon = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon']) . '" alt="" />';
             } else {
@@ -376,9 +363,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $rating = number_format($myrow['rating'] / 2, 0);
             // irmtfan - add alt key for rating
             if ($rating < 1) {
-                $rating_img = newbb_displayImage('blank');
+                $rating_img = newbbDisplayImage('blank');
             } else {
-                $rating_img = newbb_displayImage('rate' . $rating, constant('_MD_RATE' . $rating));
+                $rating_img = newbbDisplayImage('rate' . $rating, constant('_MD_RATE' . $rating));
             }
             // ------------------------------------------------------
             // topic_page_jump
@@ -397,12 +384,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     } else {
                         $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $xoopsModuleConfig['posts_per_page']) . '">' . $i . '</a>]';
                         // irmtfan remove here and move
-                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $xoopsModuleConfig['posts_per_page']) . "'>" . newbb_displayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . "</a>";
+                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $xoopsModuleConfig['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . "</a>";
                     }
                 }
             }
             // irmtfan - move here for both topics with and without pages
-            $topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "'>" . newbb_displayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . "</a>";
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . "</a>";
 
             // ------------------------------------------------------
             // => topic array
@@ -455,7 +442,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 "stats"                  => array($myrow['topic_status'], $myrow['topic_digest'], $myrow['topic_replies']),/* irmtfan uncomment use ib the for loop*/
                 //"topic_poster"              => $topic_poster,/*irmtfan remove here and move to for loop*/
                 //"topic_last_poster"         => $topic_last_poster,/*irmtfan remove here and move to for loop*/
-                //"topic_folder"              => newbb_displayImage($topic_folder,$topic_folder_text),/*irmtfan remove here and move to for loop*/
+                //"topic_folder"              => newbbDisplayImage($topic_folder,$topic_folder_text),/*irmtfan remove here and move to for loop*/
             );
             // END irmtfan move here
             /* users */
@@ -502,7 +489,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWPOSTS : _MD_NONEWPOSTS;
                 }
             }
-            $topics[$id]['topic_folder'] = newbb_displayImage($topic_folder, $topic_folder_text);
+            $topics[$id]['topic_folder'] = newbbDisplayImage($topic_folder, $topic_folder_text);
             unset($topics[$id]["topic_poster_name"], $topics[$id]["topic_last_poster_name"], $topics[$id]["stats"]);
         } // irmtfan end for loop
         // END irmtfan move to a for loop
@@ -512,7 +499,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                    " AND topic_id IN (" . implode(',', array_keys($topics)) . ")";
             if ($result = $this->db->query($sql)) {
                 while (list($topic_id) = $this->db->fetchRow($result)) {
-                    $topics[$topic_id]['attachment'] = '&nbsp;' . newbb_displayImage('attachment', _MD_TOPICSHASATT);
+                    $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_TOPICSHASATT);
                 }
             }
         }
@@ -955,14 +942,14 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     }
                     $_forum_data['forum_lastpost_subject'] = $subject;
                 }
-                // irmtfan - remove icon_path and use newbb_displayImage
-                $_forum_data['forum_lastpost_icon'] = newbb_displayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
+                // irmtfan - remove icon_path and use newbbDisplayImage
+                $_forum_data['forum_lastpost_icon'] = newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
                 // START irmtfan change the method to add read smarty
                 if (empty($forum_isread[$id])) {
-                    $_forum_data['forum_folder'] = newbb_displayImage('forum_new', _MD_NEWPOSTS);
+                    $_forum_data['forum_folder'] = newbbDisplayImage('forum_new', _MD_NEWPOSTS);
                     $_forum_data['forum_read']   = 0; // irmtfan add forum-read/forum-new smarty variable
                 } else {
-                    $_forum_data['forum_folder'] = newbb_displayImage('forum', _MD_NONEWPOSTS);
+                    $_forum_data['forum_folder'] = newbbDisplayImage('forum', _MD_NONEWPOSTS);
                     $_forum_data['forum_read']   = 1; // irmtfan add forum-read/forum-new smarty variable
                 }
                 // END irmtfan change the method to add read smarty

@@ -262,9 +262,9 @@ switch ($op) {
             $category       = $categories[$c];
             $cat_id         = $c;
             $cat_link       = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/index.php?viewcat=" . $cat_id . "\">" . $category . "</a>";
-            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&amp;cat_id=" . $cat_id . "\">" . newbb_displayImage('admin_edit', _EDIT) . "</a>";
-            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&amp;cat_id=" . $cat_id . "\">" . newbb_displayImage('admin_delete', _DELETE) . "</a>";
-            $forum_add_link = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $cat_id . "\">" . newbb_displayImage('new_forum') . "</a>";
+            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_edit', _EDIT) . "</a>";
+            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_delete', _DELETE) . "</a>";
+            $forum_add_link = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('new_forum') . "</a>";
             $echo .= "<tr class='even' align='left'>";
             $echo .= "<td width='100%' colspan='2'><strong>" . $cat_link . "</strong></td>";
             $echo .= "<td align='center'>" . $cat_edit_link . "</td>";
@@ -280,11 +280,11 @@ switch ($op) {
             foreach (array_keys($forums[$c]) as $f) {
                 $forum        = $forums[$c][$f];
                 $f_link       = $forum["prefix"] . "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/viewforum.php?forum=" . $f . "\">" . $forum["forum_name"] . "</a>";
-                $f_edit_link  = "<a href=\"admin_forum_manager.php?op=mod&amp;forum=" . $f . "\">" . newbb_displayImage('admin_edit', _AM_NEWBB_EDIT) . "</a>";
-                $f_del_link   = "<a href=\"admin_forum_manager.php?op=del&amp;forum=" . $f . "\">" . newbb_displayImage('admin_delete', _AM_NEWBB_DELETE) . "</a>";
-                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . "&forum=" . $f . "\">" . newbb_displayImage('new_forum', _AM_NEWBB_CREATEFORUM) . "</a>";
-                $f_move_link  = "<a href=\"admin_forum_manager.php?op=moveforum&amp;forum=" . $f . "\">" . newbb_displayImage('admin_move', _AM_NEWBB_MOVE) . "</a>";
-                $f_merge_link = "<a href=\"admin_forum_manager.php?op=mergeforum&amp;forum=" . $f . "\">" . newbb_displayImage('admin_merge', _AM_NEWBB_MERGE) . "</a>";
+                $f_edit_link  = "<a href=\"admin_forum_manager.php?op=mod&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_edit', _AM_NEWBB_EDIT) . "</a>";
+                $f_del_link   = "<a href=\"admin_forum_manager.php?op=del&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_delete', _AM_NEWBB_DELETE) . "</a>";
+                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . "&forum=" . $f . "\">" . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . "</a>";
+                $f_move_link  = "<a href=\"admin_forum_manager.php?op=moveforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_move', _AM_NEWBB_MOVE) . "</a>";
+                $f_merge_link = "<a href=\"admin_forum_manager.php?op=mergeforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . "</a>";
 
                 $class = (($i++) % 2) ? "odd" : "even";
                 $echo .= "<tr class='" . $class . "' align='left'><td></td>";

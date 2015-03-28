@@ -38,9 +38,9 @@ if (!class_exists("newbbObjectTree")) {
          * @param $objectArr
          * @param null $rootId
          */
-        public function newbbObjectTree(&$objectArr, $rootId = null)
+        public function __construct(&$objectArr, $rootId = null)
         {
-            $this->XoopsObjectTree($objectArr, "forum_id", "parent_forum", $rootId);
+            parent::__construct($objectArr, "forum_id", "parent_forum", $rootId);
         }
 
         /**

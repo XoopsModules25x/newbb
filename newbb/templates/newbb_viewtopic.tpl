@@ -186,7 +186,7 @@
 <br/>
 <br/>
 <{foreachelse}>
-<div style="align:center;width:100%;text-align:center;font-size:1.5em;padding:5px;"><{$smarty.const._MD_ERRORPOST}></div>
+<div style="text-align: center;width:100%;font-size:1.5em;padding:5px;"><{$smarty.const._MD_ERRORPOST}></div>
 <{/foreach}>
 
 <{if $mode gt 1}>

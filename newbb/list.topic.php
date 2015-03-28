@@ -70,15 +70,15 @@ $topic_renderer->buildSelection($xoopsTpl);
 
 $xoopsTpl->assign('rating_enable', $xoopsModuleConfig['rating_enabled']);
 
-$xoopsTpl->assign('img_newposts', newbb_displayImage('topic_new'));
-$xoopsTpl->assign('img_hotnewposts', newbb_displayImage('topic_hot_new'));
-$xoopsTpl->assign('img_folder', newbb_displayImage('topic'));
-$xoopsTpl->assign('img_hotfolder', newbb_displayImage('topic_hot'));
-$xoopsTpl->assign('img_locked', newbb_displayImage('topic_locked'));
+$xoopsTpl->assign('img_newposts', newbbDisplayImage('topic_new'));
+$xoopsTpl->assign('img_hotnewposts', newbbDisplayImage('topic_hot_new'));
+$xoopsTpl->assign('img_folder', newbbDisplayImage('topic'));
+$xoopsTpl->assign('img_hotfolder', newbbDisplayImage('topic_hot'));
+$xoopsTpl->assign('img_locked', newbbDisplayImage('topic_locked'));
 
-$xoopsTpl->assign('img_sticky', newbb_displayImage('topic_sticky', _MD_TOPICSTICKY));
-$xoopsTpl->assign('img_digest', newbb_displayImage('topic_digest', _MD_TOPICDIGEST));
-$xoopsTpl->assign('img_poll', newbb_displayImage('poll', _MD_TOPICHASPOLL));
+$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY));
+$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_TOPICDIGEST));
+$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_TOPICHASPOLL));
 
 $xoopsTpl->assign('post_link', "viewpost.php");
 $xoopsTpl->assign('newpost_link', "viewpost.php?status=new");

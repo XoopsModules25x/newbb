@@ -125,7 +125,7 @@ switch ($op) {
         <td class='even' align='left'><a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id . "' target='topic'>" . $myts->htmlSpecialChars($down_array['topic_title']) . "</a></td>\n
         <td class='even' align='center'>$rating</td>\n
         <td class='even' align='center'>$formatted_date</td>\n
-        <td class='even' align='center'><strong><a href='admin_votedata.php?op=delvotes&amp;topic_id=$topic_id&amp;rid=$ratingid'>" . newbb_displayImage('p_delete', _DELETE) . "</a></strong></td>\n
+        <td class='even' align='center'><strong><a href='admin_votedata.php?op=delvotes&amp;topic_id=$topic_id&amp;rid=$ratingid'>" . newbbDisplayImage('p_delete', _DELETE) . "</a></strong></td>\n
         </tr>\n";
         }
         echo "</table>";

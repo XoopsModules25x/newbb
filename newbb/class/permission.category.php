@@ -20,9 +20,10 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
     /**
      * @param $db
      */
-    public function NewbbPermissionCategoryHandler(&$db)
+    public function __construct(&$db)
     {
-        $this->NewbbPermissionHandler($db);
+//        $this->NewbbPermissionHandler($db);
+        parent::__construct($db);
     }
 
     /**

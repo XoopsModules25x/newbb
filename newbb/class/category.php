@@ -13,10 +13,6 @@
 
 class Category extends XoopsObject
 {
-    public function Category()
-    {
-        $this->__construct();
-    }
 
     /**
      *
@@ -46,13 +42,6 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, "bb_categories", 'Category', 'cat_id', 'cat_title');
     }
 
-    /**
-     * @param $db
-     */
-    public function NewbbCategoryHandler(&$db)
-    {
-        $this->__construct($db);
-    }
 
     /**
      * @param string $perm

@@ -52,7 +52,7 @@
     <table class="index_category" cellspacing="0" width="100%">
         <tr class="head">
             <td width="3%" valign="middle" align="center">
-                <!-- irmtfan simplify onclick method and use newbb_displayImage(this.children[0] for IE7&8) - add alt and title"-->
+                <!-- irmtfan simplify onclick method and use newbbDisplayImage(this.children[0] for IE7&8) - add alt and title"-->
                 <div class="pointer"
                      onclick="ToggleBlockCategory('<{$category.cat_element_id}>',(this.firstElementChild || this.children[0]) , '<{$category_icon.expand}>', '<{$category_icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDE|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEE|escape:'quotes'}>')">
                     <{$category.cat_displayImage}>

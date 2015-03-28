@@ -163,18 +163,18 @@ if ($xoopsModuleConfig['wol_enabled']) {
     $xoopsTpl->assign('online', $online_handler->show_online());
 }
 $xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
-// irmtfan - remove icon_path and use newbb_displayImage
-$xoopsTpl->assign("anonym_avatar", newbb_displayImage('anonym'));
+// irmtfan - remove icon_path and use newbbDisplayImage
+$xoopsTpl->assign("anonym_avatar", newbbDisplayImage('anonym'));
 
 // START irmtfan improve infobox
 $infobox         = array();
 $infobox['show'] = intval($xoopsModuleConfig['show_infobox']); //4.05
 // irmtfan removed then define after array
 //$xoopsTpl->assign('infobox', $infobox); //4.05
-$icon_handler = newbb_getIconHandler(); // can be use in the follwing codes in this file
+$icon_handler = newbbGetIconHandler(); // can be use in the follwing codes in this file
 
 if ($infobox['show'] > 0) {
-    // irmtfan - remove icon_path and use newbb_displayImage
+    // irmtfan - remove icon_path and use newbbDisplayImage
     $infobox['icon'] = array(
         "expand"   => $icon_handler->getImageSource("less"),
         "collapse" => $icon_handler->getImageSource("more"));
@@ -187,7 +187,7 @@ if ($infobox['show'] > 0) {
         $infobox['alt']   = _MD_NEWBB_HIDEUSERDATA;
         $infobox['src']   = "less";
     }
-    $infobox['displayImage'] = newbb_displayImage($infobox['src'], $infobox['alt']);
+    $infobox['displayImage'] = newbbDisplayImage($infobox['src'], $infobox['alt']);
 }
 $xoopsTpl->assign('infobox', $infobox);
 // END irmtfan improve infobox
@@ -211,8 +211,8 @@ $xoopsTpl->assign('forum_id', $forum_id);
 $order_current = ($order == 'DESC') ? 'DESC' : 'ASC';
 $xoopsTpl->assign('order_current', $order_current);
 
-$t_new   = newbb_displayImage('t_new', _MD_POSTNEW);
-$t_reply = newbb_displayImage('t_reply', _MD_REPLY);
+$t_new   = newbbDisplayImage('t_new', _MD_POSTNEW);
+$t_reply = newbbDisplayImage('t_reply', _MD_REPLY);
 // irmtfan show topic status if show reg is 0 and revise forum_post_or_register
 if ($topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "post")) {
     $xoopsTpl->assign('forum_post', "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname", "n") . "/newtopic.php?forum=" . $forum_id . "\">" . $t_new . "</a>");
@@ -312,7 +312,9 @@ foreach ($postsArray as $eachpost) {
 }
 
 if ($total_posts > $xoopsModuleConfig['posts_per_page']) {
-    include $GLOBALS['xoops']->path('class/pagenav.php');
+
+//    include $GLOBALS['xoops']->path('class/pagenav.php');
+
     $nav = new XoopsPageNav($total_posts, $xoopsModuleConfig['posts_per_page'], $start, "start", 'topic_id=' . $topic_id . '&amp;order=' . $order . '&amp;status=' . $status . "&amp;mode=" . $mode);
     //if (isset($xoopsModuleConfig['do_rewrite']) && $xoopsModuleConfig['do_rewrite'] == 1) $nav->url = XOOPS_URL . $nav->url;
     if ($xoopsModuleConfig['pagenav_display'] == 'select') {
@@ -566,7 +568,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     if ($pollAdd) {
         if (!$topic_obj->getVar('topic_haspoll')) {
             if (is_object($xoopsUser) && $xoopsUser->getVar("uid") == $topic_obj->getVar("topic_poster")) {
-                $t_poll = newbb_displayImage('t_poll', _MD_ADDPOLL);
+                $t_poll = newbbDisplayImage('t_poll', _MD_ADDPOLL);
                 $xoopsTpl->assign('forum_addpoll', "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname", "n") . "/polls.php?op=add&amp;topic_id=" . $topic_id . "\">" . $t_poll . "</a>");
             }
         } elseif ($isadmin || (is_object($poll_obj) && is_object($xoopsUser) && $xoopsUser->getVar("uid") == $poll_obj->getVar("user_id"))) {
@@ -603,31 +605,31 @@ if (isset($poll_obj)) {
 }
 // END irmtfan poll_module
 
-$xoopsTpl->assign('p_up', newbb_displayImage('up', _MD_TOP));
+$xoopsTpl->assign('p_up', newbbDisplayImage('up', _MD_TOP));
 $xoopsTpl->assign('rating_enable', $xoopsModuleConfig['rating_enabled']);
 $xoopsTpl->assign('groupbar_enable', $xoopsModuleConfig['groupbar_enabled']);
 $xoopsTpl->assign('anonymous_prefix', $xoopsModuleConfig['anonymous_prefix']);
 // irmtfan add alt for prev next and down icons.
-$xoopsTpl->assign('previous', newbb_displayImage('previous', _MD_PREVTOPIC));
-$xoopsTpl->assign('next', newbb_displayImage('next', _MD_NEXTTOPIC));
-$xoopsTpl->assign('down', newbb_displayImage('down', _MD_BOTTOM));
-$xoopsTpl->assign('post_content', newbb_displayImage('post'));
+$xoopsTpl->assign('previous', newbbDisplayImage('previous', _MD_PREVTOPIC));
+$xoopsTpl->assign('next', newbbDisplayImage('next', _MD_NEXTTOPIC));
+$xoopsTpl->assign('down', newbbDisplayImage('down', _MD_BOTTOM));
+$xoopsTpl->assign('post_content', newbbDisplayImage('post'));
 
 if (!empty($xoopsModuleConfig['rating_enabled'])) {
     $xoopsTpl->assign('votes', $topic_obj->getVar('votes'));
     $rating = number_format($topic_obj->getVar('rating') / 2, 0);
     if ($rating < 1) {
-        $rating_img = newbb_displayImage('blank');
+        $rating_img = newbbDisplayImage('blank');
     } else {
         // irmtfan - add alt key for rating
-        $rating_img = newbb_displayImage('rate' . $rating, constant('_MD_RATE' . $rating));
+        $rating_img = newbbDisplayImage('rate' . $rating, constant('_MD_RATE' . $rating));
     }
     $xoopsTpl->assign('rating_img', $rating_img);
-    $xoopsTpl->assign('rate1', newbb_displayImage('rate1', _MD_RATE1));
-    $xoopsTpl->assign('rate2', newbb_displayImage('rate2', _MD_RATE2));
-    $xoopsTpl->assign('rate3', newbb_displayImage('rate3', _MD_RATE3));
-    $xoopsTpl->assign('rate4', newbb_displayImage('rate4', _MD_RATE4));
-    $xoopsTpl->assign('rate5', newbb_displayImage('rate5', _MD_RATE5));
+    $xoopsTpl->assign('rate1', newbbDisplayImage('rate1', _MD_RATE1));
+    $xoopsTpl->assign('rate2', newbbDisplayImage('rate2', _MD_RATE2));
+    $xoopsTpl->assign('rate3', newbbDisplayImage('rate3', _MD_RATE3));
+    $xoopsTpl->assign('rate4', newbbDisplayImage('rate4', _MD_RATE4));
+    $xoopsTpl->assign('rate5', newbbDisplayImage('rate5', _MD_RATE5));
 }
 
 // create jump box
@@ -757,7 +759,7 @@ if (!empty($xoopsModuleConfig['quickreply_enabled'])
         $quickreply_icon_display = $qr_collapse;
         $quickreply_alt          = _MD_NEWBB_SEE . ' ' . _MD_QUICKREPLY;
     }
-    $quickreply['displayImage'] = newbb_displayImage($quickreply_icon_display, $quickreply_alt);
+    $quickreply['displayImage'] = newbbDisplayImage($quickreply_icon_display, $quickreply_alt);
     $quickreply['form']         = $forum_form->render();
     $xoopsTpl->assign('quickreply', $quickreply);
     // END irmtfan improve quickreply smarty variable

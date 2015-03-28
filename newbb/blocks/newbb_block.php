@@ -101,7 +101,7 @@ function b_newbb_show($options)
     $forum_criteria   = ' AND t.forum_id IN (' . implode(',', $allowed_forums) . ')';
     $approve_criteria = ' AND t.approved = 1';
 
-    $newbbConfig = newbb_load_config();
+    $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         include_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
     } else {
@@ -157,7 +157,7 @@ function b_newbb_show($options)
     foreach ($rows as $arr) {
         // irmtfan add lastposticon - load main lang
         xoops_loadLanguage("main", "newbb");
-        $topic_page_jump        = newbb_displayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
+        $topic_page_jump        = newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
         $topic['topic_subject'] = empty($type_list[$arr["type_id"]]) ? "" : "[" . $type_list[$arr["type_id"]] . "]";
 
         $topic['post_id']      = $arr['post_id'];
@@ -262,7 +262,7 @@ function b_newbb_topic_show($options)
             break;
     }
 
-    $newbbConfig = newbb_load_config();
+    $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         include_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
     } else {
@@ -430,7 +430,7 @@ function b_newbb_post_show($options)
         }
     }
 
-    $newbbConfig = newbb_load_config();
+    $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         include_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
     } else {

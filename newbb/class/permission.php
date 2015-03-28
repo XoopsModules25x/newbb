@@ -38,14 +38,6 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param $db
-     */
-    public function NewbbPermissionHandler(&$db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * @param $name
      * @return mixed
      */

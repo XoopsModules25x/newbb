@@ -157,7 +157,7 @@ class newbbUser
         if ($xoopsModuleConfig['user_level'] == 2) {
             static $rpg_images;
             if (!isset($rpg_images)) {
-                $icon_handler = newbb_getIconHandler();
+                $icon_handler = newbbGetIconHandler();
                 $rpg_path     = $icon_handler->getPath("rpg");
                 foreach (array("img_left", "img_backing", "img_right", "blue", "green", "orange") as $img) {
                     // irmtfan fix: double "/" removed
@@ -289,8 +289,8 @@ class NewbbUserHandler
             return;
         }
         mod_loadFunctions("render", "newbb");
-        $image_online  = newbb_displayImage('online', _MD_ONLINE);
-        $image_offline = newbb_displayImage('offline', _MD_OFFLINE);
+        $image_online  = newbbDisplayImage('online', _MD_ONLINE);
+        $image_offline = newbbDisplayImage('offline', _MD_OFFLINE);
 
         $online_handler =& xoops_getmodulehandler('online', 'newbb');
         $onlines        = $online_handler->checkStatus(array_keys($this->users));

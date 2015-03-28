@@ -79,7 +79,7 @@ if ($xoopsModuleConfig['wol_enabled']) {
 }
 
 $xoopsTpl->assign("forumindex", sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
-//$xoopsTpl->assign("img_folder", newbb_displayImage($forumImage['topic']));
+//$xoopsTpl->assign("img_folder", newbbDisplayImage($forumImage['topic']));
 
 if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     // irmtfan filter positive numbers

@@ -20,10 +20,6 @@ newbb_load_object();
  */
 class Topic extends ArtObject
 {
-    public function Topic()
-    {
-        $this->__construct();
-    }
 
     /**
      *
@@ -96,7 +92,7 @@ class Topic extends ArtObject
         if ($classPoll && empty($pollModule)) {
             return $classPoll;
         }
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
         if (!empty($pollModule)) {
             $newbbConfig["poll_module"] = $pollModule;
         }
@@ -131,7 +127,7 @@ class Topic extends ArtObject
             return false;
         }
         $module_handler    = &xoops_gethandler('module');
-        $newbbConfig       = newbb_load_config();
+        $newbbConfig       = newbbLoadConfig();
         $pollModuleHandler =& $module_handler->getByDirname($newbbConfig["poll_module"]);
         if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
             return false;
@@ -178,7 +174,7 @@ class Topic extends ArtObject
             return false;
         }
         $module_handler = &xoops_gethandler('module');
-        $newbbConfig    = newbb_load_config();
+        $newbbConfig    = newbbLoadConfig();
         if (!empty($pollModule)) {
             $newbbConfig["poll_module"] = $pollModule;
         }
@@ -254,7 +250,7 @@ class NewbbTopicHandler extends ArtObjectHandler
             return $object->getVar("topic_id");
         }
 
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
             if ($tag_handler = tag_getTagHandler()) {
                 $tag_handler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), "newbb");
@@ -574,7 +570,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         $post_handler =& xoops_getmodulehandler('post', 'newbb');
         $post_handler->delete($post_obj, false, $force);
 
-        $newbbConfig = newbb_load_config();
+        $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) && $tag_handler = @xoops_getmodulehandler('tag', 'tag', true)) {
             $tag_handler->updateByItem(array(), $topic_id, "newbb");
         }
@@ -639,7 +635,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     {
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
-            $newbbConfig = newbb_load_config();
+            $newbbConfig = newbbLoadConfig();
             $expire      = isset($newbbConfig["pending_expire"]) ? intval($newbbConfig["pending_expire"]) : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }

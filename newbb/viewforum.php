@@ -103,9 +103,9 @@ if ($xoopsModuleConfig['wol_enabled']) {
 
 if ($forum_handler->getPermission($forum_obj, "post")) {
     // irmtfan full URL
-    $xoopsTpl->assign('forum_post_or_register', "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/newtopic.php?forum={$forum_id}\">" . newbb_displayImage('t_new', _MD_POSTNEW) . "</a>");
+    $xoopsTpl->assign('forum_post_or_register', "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/newtopic.php?forum={$forum_id}\">" . newbbDisplayImage('t_new', _MD_POSTNEW) . "</a>");
     if ($forum_handler->getPermission($forum_obj, "addpoll") && $pollmodules) {
-        $t_poll = newbb_displayImage('t_poll', _MD_ADDPOLL);
+        $t_poll = newbbDisplayImage('t_poll', _MD_ADDPOLL);
         $xoopsTpl->assign('forum_addpoll', "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/newtopic.php?op=add&amp;forum={$forum_id}\">{$t_poll}</a>");
     }
 } else {
@@ -138,7 +138,7 @@ $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title
 
 $xoopsTpl->assign('forum_index_title', sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
 $xoopsTpl->assign('forum_name', $forum_obj->getVar('forum_name'));
-$xoopsTpl->assign('forum_moderators', $forum_obj->disp_forumModerators());
+$xoopsTpl->assign('forum_moderators', $forum_obj->dispForumModerators());
 
 // irmtfan - add and edit: u.uname => t.topic_poster | t.topic_time => t.topic_id | "t.rating"=>_MD_RATINGS, | p.post_time => t.topic_last_post_id
 $sel_sort_array = array("t.topic_title" => _MD_TOPICTITLE, "t.topic_poster" => _MD_TOPICPOSTER, "t.topic_id" => _MD_TOPICTIME, "t.topic_replies" => _MD_NUMBERREPLIES, "t.topic_views" => _MD_VIEWS, "t.rating" => _MD_RATINGS, "t.topic_last_post_id" => _MD_LASTPOSTTIME);
@@ -199,15 +199,15 @@ list($allTopics, $sticky) = $forum_handler->getAllTopics($forum_obj, $criteria_t
 $xoopsTpl->assign_by_ref('topics', $allTopics);
 $xoopsTpl->assign('sticky', $sticky);
 $xoopsTpl->assign('rating_enable', $xoopsModuleConfig['rating_enabled']);
-$xoopsTpl->assign('img_newposts', newbb_displayImage('topic_new', _MD_NEWPOSTS));
-$xoopsTpl->assign('img_hotnewposts', newbb_displayImage('topic_hot_new', _MD_MORETHAN));
-$xoopsTpl->assign('img_folder', newbb_displayImage('topic', _MD_NONEWPOSTS));
-$xoopsTpl->assign('img_hotfolder', newbb_displayImage('topic_hot', _MD_MORETHAN2));
-$xoopsTpl->assign('img_locked', newbb_displayImage('topic_locked', _MD_TOPICLOCKED));
+$xoopsTpl->assign('img_newposts', newbbDisplayImage('topic_new', _MD_NEWPOSTS));
+$xoopsTpl->assign('img_hotnewposts', newbbDisplayImage('topic_hot_new', _MD_MORETHAN));
+$xoopsTpl->assign('img_folder', newbbDisplayImage('topic', _MD_NONEWPOSTS));
+$xoopsTpl->assign('img_hotfolder', newbbDisplayImage('topic_hot', _MD_MORETHAN2));
+$xoopsTpl->assign('img_locked', newbbDisplayImage('topic_locked', _MD_TOPICLOCKED));
 
-$xoopsTpl->assign('img_sticky', newbb_displayImage('topic_sticky', _MD_TOPICSTICKY));
-$xoopsTpl->assign('img_digest', newbb_displayImage('topic_digest', _MD_TOPICDIGEST));
-$xoopsTpl->assign('img_poll', newbb_displayImage('poll', _MD_TOPICHASPOLL));
+$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY));
+$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_TOPICDIGEST));
+$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_TOPICHASPOLL));
 
 $xoopsTpl->assign('mark_read', XOOPS_URL . "/modules/newbb/viewforum.php?mark=1&amp;{$page_query}");
 $xoopsTpl->assign('mark_unread', XOOPS_URL . "/modules/newbb/viewforum.php?mark=2&amp;{$page_query}");
@@ -301,7 +301,7 @@ if ($xoopsModuleConfig['show_permissiontable']) {
 }
 
 if ($xoopsModuleConfig['rss_enable'] == 1) {
-    $xoopsTpl->assign("rss_button", "<div align='right'><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->dirname() . "/rss.php?f=" . $forum_id . "' title='RSS feed' target='_blank'>" . newbb_displayImage('rss', 'RSS feed') . "</a></div>");
+    $xoopsTpl->assign("rss_button", "<div align='right'><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->dirname() . "/rss.php?f=" . $forum_id . "' title='RSS feed' target='_blank'>" . newbbDisplayImage('rss', 'RSS feed') . "</a></div>");
 }
 // irmtfan move to footer.php
 include_once __DIR__ . "/footer.php";

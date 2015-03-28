@@ -40,11 +40,11 @@ newbb_load_object();
 class Post extends ArtObject
 {
 //class Post extends XoopsObject {
-    public $attachment_array = array();
+    public $attachmentArray = array();
 
-    public function Post()
+    public function __construct()
     {
-        $this->ArtObject("bb_posts");
+        parent::__construct("bb_posts");
         //$this->XoopsObject();
         $this->initVar('post_id', XOBJ_DTYPE_INT);
         $this->initVar('topic_id', XOBJ_DTYPE_INT, 0, true);
@@ -77,31 +77,31 @@ class Post extends ArtObject
      */
     public function getAttachment()
     {
-        if (count($this->attachment_array)) {
-            return $this->attachment_array;
+        if (count($this->attachmentArray)) {
+            return $this->attachmentArray;
         }
         $attachment = $this->getVar('attachment');
         if (empty($attachment)) {
-            $this->attachment_array = null;
+            $this->attachmentArray = null;
         } else {
-            $this->attachment_array = @unserialize(base64_decode($attachment));
+            $this->attachmentArray = @unserialize(base64_decode($attachment));
         }
 
-        return $this->attachment_array;
+        return $this->attachmentArray;
     }
 
     /**
-     * @param $attach_key
+     * @param $attachKey
      * @return bool
      */
-    public function incrementDownload($attach_key)
+    public function incrementDownload($attachKey)
     {
-        if (!$attach_key) {
+        if (!$attachKey) {
             return false;
         }
-        $this->attachment_array[strval($attach_key)]['num_download']++;
+        $this->attachmentArray[strval($attachKey)]['numDownload']++;
 
-        return $this->attachment_array[strval($attach_key)]['num_download'];
+        return $this->attachmentArray[strval($attachKey)]['numDownload'];
     }
 
     /**
@@ -109,13 +109,13 @@ class Post extends ArtObject
      */
     public function saveAttachment()
     {
-        if (is_array($this->attachment_array) && count($this->attachment_array) > 0) {
-            $attachment_save = base64_encode(serialize($this->attachment_array));
+        if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
+            $attachmentSave = base64_encode(serialize($this->attachmentArray));
         } else {
-            $attachment_save = '';
+            $attachmentSave = '';
         }
-        $this->setVar('attachment', $attachment_save);
-        $sql = "UPDATE " . $GLOBALS["xoopsDB"]->prefix("bb_posts") . " SET attachment=" . $GLOBALS["xoopsDB"]->quoteString($attachment_save) . " WHERE post_id = " . $this->getVar('post_id');
+        $this->setVar('attachment', $attachmentSave);
+        $sql = "UPDATE " . $GLOBALS["xoopsDB"]->prefix("bb_posts") . " SET attachment=" . $GLOBALS["xoopsDB"]->quoteString($attachmentSave) . " WHERE post_id = " . $this->getVar('post_id');
         if (!$result = $GLOBALS["xoopsDB"]->queryF($sql)) {
             //xoops_error($GLOBALS["xoopsDB"]->error());
             return false;
@@ -125,69 +125,69 @@ class Post extends ArtObject
     }
 
     /**
-     * @param null $attach_array
+     * @param null $attachArray
      * @return bool
      */
-    public function deleteAttachment($attach_array = null)
+    public function deleteAttachment($attachArray = null)
     {
         global $xoopsModuleConfig;
 
-        $attach_old = $this->getAttachment();
-        if (!is_array($attach_old) || count($attach_old) < 1) {
+        $attachOld = $this->getAttachment();
+        if (!is_array($attachOld) || count($attach_old) < 1) {
             return true;
         }
-        $this->attachment_array = array();
+        $this->attachmentArray = array();
 
-        if ($attach_array === null) {
-            $attach_array = array_keys($attach_old);
+        if ($attachArray === null) {
+            $attachArray = array_keys($attach_old);
         } // to delete all!
-        if (!is_array($attach_array)) {
-            $attach_array = array($attach_array);
+        if (!is_array($attachArray)) {
+            $attachArray = array($attachArray);
         }
 
         foreach ($attach_old as $key => $attach) {
-            if (in_array($key, $attach_array)) {
+            if (in_array($key, $attachArray)) {
                 @unlink($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/' . $attach['name_saved']));
                 @unlink($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
                 continue;
             }
-            $this->attachment_array[$key] = $attach;
+            $this->attachmentArray[$key] = $attach;
         }
-        if (is_array($this->attachment_array) && count($this->attachment_array) > 0) {
-            $attachment_save = base64_encode(serialize($this->attachment_array));
+        if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
+            $attachmentSave = base64_encode(serialize($this->attachmentArray));
         } else {
-            $attachment_save = '';
+            $attachmentSave = '';
         }
-        $this->setVar('attachment', $attachment_save);
+        $this->setVar('attachment', $attachmentSave);
 
         return true;
     }
 
     /**
      * @param string $name_saved
-     * @param string $name_display
+     * @param string $nameDisplay
      * @param string $mimetype
-     * @param int $num_download
+     * @param int $numDownload
      * @return bool
      */
-    public function setAttachment($name_saved = '', $name_display = '', $mimetype = '', $num_download = 0)
+    public function setAttachment($name_saved = '', $nameDisplay = '', $mimetype = '', $numDownload = 0)
     {
         static $counter = 0;
-        $this->attachment_array = $this->getAttachment();
+        $this->attachmentArray = $this->getAttachment();
         if ($name_saved) {
             $key                          = strval(time() + $counter++);
-            $this->attachment_array[$key] = array('name_saved'   => $name_saved,
-                                                  'name_display' => isset($name_display) ? $name_display : $name_saved,
+            $this->attachmentArray[$key] = array('name_saved'   => $name_saved,
+                                                  'nameDisplay' => isset($nameDisplay) ? $nameDisplay : $name_saved,
                                                   'mimetype'     => $mimetype,
-                                                  'num_download' => isset($num_download) ? intval($num_download) : 0
+                                                  'numDownload' => isset($numDownload) ? intval($numDownload) : 0
             );
         }
-        if (is_array($this->attachment_array)) {
-            $attachment_save = base64_encode(serialize($this->attachment_array));
+        if (is_array($this->attachmentArray)) {
+            $attachmentSave = base64_encode(serialize($this->attachmentArray));
         } else {
-            $attachment_save = null;
+            $attachmentSave = null;
         }
-        $this->setVar('attachment', $attachment_save);
+        $this->setVar('attachment', $attachmentSave);
 
         return true;
     }
@@ -204,7 +204,7 @@ class Post extends ArtObject
         $post_attachment = '';
         $attachments     = $this->getAttachment();
         if (is_array($attachments) && count($attachments) > 0) {
-            $icon_handler = newbb_getIconHandler();
+            $icon_handler = newbbGetIconHandler();
             $mime_path    = $icon_handler->getPath("mime");
             include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname", "n") . '/include/functions.image.php');
             $image_extensions = array("jpg", "jpeg", "gif", "png", "bmp"); // need improve !!!
@@ -221,15 +221,15 @@ class Post extends ArtObject
                 $file_size = @filesize($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = number_format($file_size / 1024, 2) . " KB";
                 if (in_array(strtolower($file_extension), $image_extensions) && $xoopsModuleConfig['media_allowed']) {
-                    $post_attachment .= '<br /><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['name_display'] . '</strong> <small>(' . $file_size . ')</small>';
+                    $post_attachment .= '<br /><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br />' . newbb_attachmentImage($att['name_saved']);
                     $isDisplayed = true;
                 } else {
                     global $xoopsUser;
                     if (empty($xoopsModuleConfig['show_userattach'])) {
-                        $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['name_display'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['num_download'];
+                        $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
                     } elseif (($xoopsUser && $xoopsUser->uid() > 0 && $xoopsUser->isactive())) {
-                        $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['name_display'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['num_download'];
+                        $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
                     } else {
                         $post_attachment .= _MD_NEWBB_SEENOTGUEST;
                     }
@@ -334,7 +334,7 @@ class Post extends ArtObject
     public function &getPostBody()
     {
         global $xoopsConfig, $xoopsUser, $myts;
-        $xoopsModuleConfig = newbb_load_config(); // irmtfan  load all newbb configs - newbb config in blocks activated in some modules like profile
+        $xoopsModuleConfig = newbbLoadConfig(); // irmtfan  load all newbb configs - newbb config in blocks activated in some modules like profile
         mod_loadFunctions("user", "newbb");
         mod_loadFunctions("render", "newbb");
 
@@ -388,7 +388,7 @@ class Post extends ArtObject
      */
     public function checkTimelimit($action_tag = 'edit_timelimit')
     {
-        $newbb_config = newbb_load_config();
+        $newbb_config = newbbLoadConfig();
         if (empty($newbb_config["edit_timelimit"])) {
             return true;
         }
@@ -513,10 +513,10 @@ class Post extends ArtObject
         $mod_buttons    = array();
 
         if ($isadmin && ($xoopsUser && $xoopsUser->getVar('uid') != $this->getVar('uid')) && $this->getVar('uid') > 0) {
-            $mod_buttons['bann']['image']    = newbb_displayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
+            $mod_buttons['bann']['image']    = newbbDisplayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
             $mod_buttons['bann']['link']     = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/moderate.php?forum=" . $forum_id . "&amp;fuid=" . $this->getVar('uid');
             $mod_buttons['bann']['name']     = _MD_SUSPEND_MANAGEMENT;
-            $thread_buttons['bann']['image'] = newbb_displayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
+            $thread_buttons['bann']['image'] = newbbDisplayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
             $thread_buttons['bann']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/moderate.php?forum=" . $forum_id . "&amp;fuid=" . $this->getVar('uid');
             $thread_buttons['bann']['name']  = _MD_SUSPEND_MANAGEMENT;
         }
@@ -528,10 +528,10 @@ class Post extends ArtObject
                 $edit_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('edit_timelimit')));
 
                 if ($edit_ok) {
-                    $thread_buttons['edit']['image'] = newbb_displayImage('p_edit', _EDIT);
+                    $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
                     $thread_buttons['edit']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/edit.php?{$page_query}";
                     $thread_buttons['edit']['name']  = _EDIT;
-                    $mod_buttons['edit']['image']    = newbb_displayImage('p_edit', _EDIT);
+                    $mod_buttons['edit']['image']    = newbbDisplayImage('p_edit', _EDIT);
                     $mod_buttons['edit']['link']     = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/edit.php?{$page_query}";
                     $mod_buttons['edit']['name']     = _EDIT;
                 }
@@ -541,39 +541,39 @@ class Post extends ArtObject
                 $delete_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('delete_timelimit')));
 
                 if ($delete_ok) {
-                    $thread_buttons['delete']['image'] = newbb_displayImage('p_delete', _DELETE);
+                    $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
                     $thread_buttons['delete']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?{$page_query}";
                     $thread_buttons['delete']['name']  = _DELETE;
-                    $mod_buttons['delete']['image']    = newbb_displayImage('p_delete', _DELETE);
+                    $mod_buttons['delete']['image']    = newbbDisplayImage('p_delete', _DELETE);
                     $mod_buttons['delete']['link']     = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?{$page_query}";
                     $mod_buttons['delete']['name']     = _DELETE;
                 }
             }
             if ($topic_handler->getPermission($forum_id, $topic_status, "reply")) {
-                $thread_buttons['reply']['image'] = newbb_displayImage('p_reply', _MD_REPLY);
+                $thread_buttons['reply']['image'] = newbbDisplayImage('p_reply', _MD_REPLY);
                 $thread_buttons['reply']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?{$page_query}";
                 $thread_buttons['reply']['name']  = _MD_REPLY;
 
-                $thread_buttons['quote']['image'] = newbb_displayImage('p_quote', _MD_QUOTE);
+                $thread_buttons['quote']['image'] = newbbDisplayImage('p_quote', _MD_QUOTE);
                 $thread_buttons['quote']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?{$page_query}&amp;quotedac=1";
                 $thread_buttons['quote']['name']  = _MD_QUOTE;
             }
         } else {
-            $mod_buttons['edit']['image'] = newbb_displayImage('p_edit', _EDIT);
+            $mod_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
             $mod_buttons['edit']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/edit.php?{$page_query}";
             $mod_buttons['edit']['name']  = _EDIT;
 
-            $mod_buttons['delete']['image'] = newbb_displayImage('p_delete', _DELETE);
+            $mod_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
             $mod_buttons['delete']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?{$page_query}";
             $mod_buttons['delete']['name']  = _DELETE;
 
-            $thread_buttons['reply']['image'] = newbb_displayImage('p_reply', _MD_REPLY);
+            $thread_buttons['reply']['image'] = newbbDisplayImage('p_reply', _MD_REPLY);
             $thread_buttons['reply']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?{$page_query}";
             $thread_buttons['reply']['name']  = _MD_REPLY;
         }
 
         if (!$isadmin && $xoopsModuleConfig['reportmod_enabled']) {
-            $thread_buttons['report']['image'] = newbb_displayImage('p_report', _MD_REPORT);
+            $thread_buttons['report']['image'] = newbbDisplayImage('p_report', _MD_REPORT);
             $thread_buttons['report']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/report.php?{$page_query}";
             $thread_buttons['report']['name']  = _MD_REPORT;
         }
@@ -581,14 +581,14 @@ class Post extends ArtObject
         $thread_action = array();
         // irmtfan add pdf permission
         if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php') && $topic_handler->getPermission($forum_id, $topic_status, "pdf")) {
-            $thread_action['pdf']['image']  = newbb_displayImage('pdf', _MD_PDF);
+            $thread_action['pdf']['image']  = newbbDisplayImage('pdf', _MD_PDF);
             $thread_action['pdf']['link']   = XOOPS_URL . "/modules/newbb/makepdf.php?type=post&amp;pageid=0";
             $thread_action['pdf']['name']   = _MD_PDF;
             $thread_action['pdf']['target'] = '_blank';
         }
         // irmtfan add print permission
         if ($topic_handler->getPermission($forum_id, $topic_status, "print")) {
-            $thread_action['print']['image']  = newbb_displayImage('printer', _MD_PRINT);
+            $thread_action['print']['image']  = newbbDisplayImage('printer', _MD_PRINT);
             $thread_action['print']['link']   = XOOPS_URL . "/modules/newbb/print.php?form=2&amp;forum=" . $forum_id . "&amp;topic_id=" . $topic_id;
             $thread_action['print']['name']   = _MD_PRINT;
             $thread_action['print']['target'] = '_blank';
@@ -599,42 +599,42 @@ class Post extends ArtObject
             $clean_title = preg_replace('/[^A-Za-z0-9-]+/', '+', $this->getVar('subject'));
             $full_link   = XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $post_id;
 
-            $thread_action['social_twitter']['image']  = newbb_displayImage('twitter', _MD_SHARE_TWITTER);
+            $thread_action['social_twitter']['image']  = newbbDisplayImage('twitter', _MD_SHARE_TWITTER);
             $thread_action['social_twitter']['link']   = "http://twitter.com/share?text=" . $clean_title . "&amp;url=" . $full_link;
             $thread_action['social_twitter']['name']   = _MD_SHARE_TWITTER;
             $thread_action['social_twitter']['target'] = '_blank';
 
-            $thread_action['social_facebook']['image']  = newbb_displayImage('facebook', _MD_SHARE_FACEBOOK);
+            $thread_action['social_facebook']['image']  = newbbDisplayImage('facebook', _MD_SHARE_FACEBOOK);
             $thread_action['social_facebook']['link']   = "http://www.facebook.com/sharer.php?u=" . $full_link;
             $thread_action['social_facebook']['name']   = _MD_SHARE_FACEBOOK;
             $thread_action['social_facebook']['target'] = '_blank';
 
-            $thread_action['social_gplus']['image']  = newbb_displayImage('googleplus', _MD_SHARE_GOOGLEPLUS);
+            $thread_action['social_gplus']['image']  = newbbDisplayImage('googleplus', _MD_SHARE_GOOGLEPLUS);
             $thread_action['social_gplus']['link']   = "https://plusone.google.com/_/+1/confirm?hl=en&url=" . $full_link;
             $thread_action['social_gplus']['name']   = _MD_SHARE_GOOGLEPLUS;
             $thread_action['social_gplus']['target'] = '_blank';
 
-            $thread_action['social_linkedin']['image']  = newbb_displayImage('linkedin', _MD_SHARE_LINKEDIN);
+            $thread_action['social_linkedin']['image']  = newbbDisplayImage('linkedin', _MD_SHARE_LINKEDIN);
             $thread_action['social_linkedin']['link']   = "http://www.linkedin.com/shareArticle?mini=true&amp;title=" . $full_title . "&amp;url=" . $full_link;
             $thread_action['social_linkedin']['name']   = _MD_SHARE_LINKEDIN;
             $thread_action['social_linkedin']['target'] = '_blank';
 
-            $thread_action['social_delicious']['image']  = newbb_displayImage('delicious', _MD_SHARE_DELICIOUS);
+            $thread_action['social_delicious']['image']  = newbbDisplayImage('delicious', _MD_SHARE_DELICIOUS);
             $thread_action['social_delicious']['link']   = "http://del.icio.us/post?title=" . $full_title . "&amp;url=" . $full_link;
             $thread_action['social_delicious']['name']   = _MD_SHARE_DELICIOUS;
             $thread_action['social_delicious']['target'] = '_blank';
 
-            $thread_action['social_digg']['image']  = newbb_displayImage('digg', _MD_SHARE_DIGG);
+            $thread_action['social_digg']['image']  = newbbDisplayImage('digg', _MD_SHARE_DIGG);
             $thread_action['social_digg']['link']   = "http://digg.com/submit?phase=2&amp;title=" . $full_title . "&amp;url=" . $full_link;
             $thread_action['social_digg']['name']   = _MD_SHARE_DIGG;
             $thread_action['social_digg']['target'] = '_blank';
 
-            $thread_action['social_reddit']['image']  = newbb_displayImage('reddit', _MD_SHARE_REDDIT);
+            $thread_action['social_reddit']['image']  = newbbDisplayImage('reddit', _MD_SHARE_REDDIT);
             $thread_action['social_reddit']['link']   = "http://reddit.com/submit?title=" . $full_title . "&amp;url=" . $full_link;
             $thread_action['social_reddit']['name']   = _MD_SHARE_REDDIT;
             $thread_action['social_reddit']['target'] = '_blank';
 
-            $thread_action['social_wong']['image']  = newbb_displayImage('wong', _MD_SHARE_MRWONG);
+            $thread_action['social_wong']['image']  = newbbDisplayImage('wong', _MD_SHARE_MRWONG);
             $thread_action['social_wong']['link']   = "http://www.mister-wong.de/index.php?action=addurl&bm_url=" . $full_link;
             $thread_action['social_wong']['name']   = _MD_SHARE_MRWONG;
             $thread_action['social_wong']['target'] = '_blank';
@@ -679,14 +679,6 @@ class NewbbPostHandler extends ArtObjectHandler
     public function __construct(&$db)
     {
         parent::__construct($db, 'bb_posts', 'Post', 'post_id', 'subject');
-    }
-
-    /**
-     * @param $db
-     */
-    public function NewbbPostHandler(&$db)
-    {
-        $this->__construct($db);
     }
 
     /**
@@ -1194,7 +1186,7 @@ class NewbbPostHandler extends ArtObjectHandler
     {
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
-            $newbbConfig = newbb_load_config();
+            $newbbConfig = newbbLoadConfig();
             $expire      = isset($newbbConfig["pending_expire"]) ? intval($newbbConfig["pending_expire"]) : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }

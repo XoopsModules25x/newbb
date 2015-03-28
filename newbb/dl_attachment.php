@@ -66,7 +66,7 @@ if (!empty($GLOBALS["xoopsModuleConfig"]["download_direct"])) {
     header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
     header("location: " . XOOPS_URL . '/' . $xoopsModuleConfig['dir_attachments'] . '/' . $attach['name_saved']);
 } else {
-    $file_display = $attach['name_display'];
+    $file_display = $attach['nameDisplay'];
 //$mimetype = $attach['mimetype'];
 
     if (ini_get('zlib.output_compression')) {

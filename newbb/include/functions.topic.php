@@ -21,30 +21,30 @@ if (!defined("NEWBB_FUNCTIONS_TOPIC")) {
     /**
      * Create full title of a topic
      *
-     * the title is composed of [type_name] if type_id is greater than 0 plus topic_title
-     * @param $topic_title
-     * @param null $prefix_name
-     * @param null $prefix_color
+     * the title is composed of [type_name] if type_id is greater than 0 plus topic Title
+     * @param $topicTitle
+     * @param null $prefixName
+     * @param null $prefixColor
      * @return string
      */
-    function newbb_getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null)
+    function newbb_getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)
     {
-        return getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null);
+        return getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null);
     }
 
     /**
-     * @param $topic_title
-     * @param null $prefix_name
-     * @param null $prefix_color
+     * @param $topicTitle
+     * @param null $prefixName
+     * @param null $prefixColor
      * @return string
      */
-    function getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null)
+    function getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)
     {
-        if (empty($prefix_name)) {
-            return $topic_title;
+        if (empty($prefixName)) {
+            return $topicTitle;
         }
-        $topic_prefix = $prefix_color ? "<em style=\"font-style: normal; color: " . $prefix_color . ";\">[" . $prefix_name . "]</em> " : "[" . $prefix_name . "] ";
+        $topicPrefix = $prefixColor ? "<em style=\"font-style: normal; color: " . $prefixColor . ";\">[" . $prefixName . "]</em> " : "[" . $prefixName . "] ";
 
-        return $topic_prefix . $topic_title;
+        return $topicPrefix . $topicTitle;
     }
 }

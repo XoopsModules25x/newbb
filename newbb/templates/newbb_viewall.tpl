@@ -22,7 +22,7 @@
 <div class="clear"></div>
 
 <{if $mode gt 1}>
-    <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="javascript: if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
+    <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
 <{/if}>
 
 <{if $viewer_level gt 1}>
@@ -70,7 +70,7 @@
 	<select
 		name="topicoption" id="topicoption"
 		class="menu"
-		onchange="javascript: if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}"
+		onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}"
 	>
 		<option value=""><{$smarty.const._MD_TOPICOPTION}></option>
 		<option value="<{$post_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_ALLPOSTS}></option>

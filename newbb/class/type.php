@@ -24,11 +24,6 @@
 class NewbbType extends XoopsObject
 {
 
-    public function NewbbType()
-    {
-        $this->__construct();
-    }
-
     /**
      *
      */
@@ -54,13 +49,6 @@ class NewbbType extends XoopsObject
  */
 class NewbbTypeHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * @param $db
-     */
-    public function NewbbTypeHandler(&$db)
-    {
-        $this->__construct($db);
-    }
 
     /**
      * @param null|object $db

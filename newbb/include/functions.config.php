@@ -23,7 +23,7 @@ if (!defined("NEWBB_FUNCTIONS_CONFIG")) {
      * @param string $dirname
      * @return bool
      */
-    function newbb_load_config($category = "", $dirname = "newbb")
+    function newbbLoadConfig($category = "", $dirname = "newbb")
     {
 //        global $xoopsModuleConfig;
         static $configs;

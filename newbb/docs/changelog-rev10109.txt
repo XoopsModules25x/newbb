@@ -581,7 +581,7 @@ newbb/language/english/main.php, newbb/docs/lang_diff.txt
 2- improve ToggleBlockCategory js to recognize a IMG tag
 newbb/include/js/newbb_toggle.js
 
-3- change all toggles in newbb to use ToggleBlockCategory - use newbb_displayImage function for all toggles - alt and title and text links supported
+3- change all toggles in newbb to use ToggleBlockCategory - use newbbDisplayImage function for all toggles - alt and title and text links supported
 newbb/viewtopic.php, newbb/templates/newbb_viewtopic.html, newbb/templates/newbb_thread.html
 newbb/index.php, newbb/templates/newbb_index.html
 
@@ -606,10 +606,10 @@ newbb/viewtopic.php, newbb/templates/newbb_viewtopic.html
 
 date: 2012-08-27
 ================================================
-1- remove icon_path and use newbb_displayImage
+1- remove icon_path and use newbbDisplayImage
 newbb/class/forum.php, newbb/templates/newbb_index.html, newbb/templates/newbb_viewforum_subforum.html
 
-2- remove icon_path and define anonym icon and use newbb_displayImage
+2- remove icon_path and define anonym icon and use newbbDisplayImage
 newbb/viewpost.php, newbb/viewtopic.php, newbb/include/images.php, newbb/templates/newbb_thread.html
 
 3- simplyify infobox and add alt and title show/hide definitions and alt key

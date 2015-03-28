@@ -88,7 +88,7 @@ if (!empty($xoopsModuleConfig['pngforie_enabled'])) {
 }
 // START hacked by irmtfan to add localization/customization for newbb style.css
 mod_loadFunctions("render", $dirname);
-$icon_handler = newbb_getIconHandler();
+$icon_handler = newbbGetIconHandler();
 //  get from setted language
 $rel_path=$icon_handler->getPath("language/" . $xoopsConfig['language'], $dirname ,"language/english");
 if (!file_exists(XOOPS_ROOT_PATH . $rel_path . '/style.css')) {

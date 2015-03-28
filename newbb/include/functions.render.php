@@ -96,7 +96,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
     function newbb_getButton($link, $button, $alt = "", $asImage = true, $extra = "class='forum_button'")
     {
         if (empty($asImage)) {
-            $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbb_displayImage($button, $alt, true) . "</a>";
+            $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbbDisplayImage($button, $alt, true) . "</a>";
         } else {
             $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
         }
@@ -113,9 +113,9 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      * @param  string $extra extra attribute for the image
      * @return mixed
      */
-    function newbb_displayImage($image, $alt = "", $display = true, $extra = "class='forum_icon'")
+    function newbbDisplayImage($image, $alt = "", $display = true, $extra = "class='forum_icon'")
     {
-        $icon_handler = newbb_getIconHandler();
+        $icon_handler = newbbGetIconHandler();
         // START hacked by irmtfan
         // to show text links instead of buttons - func_num_args()==2 => only when $image, $alt is set and optional $display not set
         global $xoopsModuleConfig;
@@ -140,7 +140,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
     /**
      * @return NewbbIconHandler
      */
-    function newbb_getIconHandler()
+    function newbbGetIconHandler()
     {
         global $xoTheme, $xoopsConfig;
         static $icon_handler;
