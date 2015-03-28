@@ -652,7 +652,7 @@ switch ($op) {
             $poll_obj->setVar("end_time", time() + $default_poll_duration);
         }
 
-        if (!empty(XoopsRequest::getInt('notify', 0, 'POST') && ($end_time > time())) {
+        if (!empty(XoopsRequest::getInt('notify', 0, 'POST')) && ($end_time > time())) {
             // if notify, set mail status to "not mailed"
             $poll_obj->setVar("mail_status", $poll_not_mailed);
         } else {

@@ -29,7 +29,7 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . "/header.php";nt -nt snt s
+include_once __DIR__ . "/header.php";
 
 foreach (array('forum', 'topic_id', 'post_id', 'order', 'start') as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');
