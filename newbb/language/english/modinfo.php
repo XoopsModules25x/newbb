@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: modinfo.php,v 2.3 2012/02/08 16:20:00 dhcst Exp $
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) return;
 define('NEWBB_MODINO_DEFINED', true);
@@ -37,7 +37,7 @@ define('_MI_DO_REWRITE_DESC', "rewrites the URL, you need mod_rewrite and a. hta
 define('_MI_IMG_SET', "Image Set");
 define('_MI_IMG_SET_DESC', "Select the Image Set to use");
 define('_MI_THEMESET', "Theme set");
-define('_MI_THEMESET_DESC', "Module-wide, select '"._NONE."' will use site-wide theme");
+define('_MI_THEMESET_DESC', "Module-wide, select '" . _NONE . "' will use site-wide theme");
 define('_MI_DIR_ATTACHMENT', "Attachments physical path.");
 define('_MI_DIR_ATTACHMENT_DESC', "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'");
 define('_MI_PATH_MAGICK', "Path for ImageMagick");
@@ -81,7 +81,7 @@ define('_MI_RSS_ENABLE_DESC', "Enable RSS Feed, edit options below for maximum I
 define('_MI_RSS_MAX_ITEMS', "RSS Max. Items");
 define('_MI_RSS_MAX_DESCRIPTION', "RSS Max. Description Length");
 define('_MI_RSS_UTF8', "RSS Encoding with UTF-8");
-define('_MI_RSS_UTF8_DESCRIPTION', "'UTF-8' will be used if enabled otherwise '"._CHARSET."' will be used.");
+define('_MI_RSS_UTF8_DESCRIPTION', "'UTF-8' will be used if enabled otherwise '" . _CHARSET . "' will be used.");
 define('_MI_RSS_CACHETIME', "RSS Feed cache time");
 define('_MI_RSS_CACHETIME_DESCRIPTION', "Cache time for re-generating RSS feed, in minutes.");
 define('_MI_MEDIA_ENABLE', "Enable Media Features");
@@ -209,15 +209,15 @@ define('_MI_NEWBB_INSTALL_FORUM_NAME', "Forum Test");
 define('_MI_NEWBB_INSTALL_FORUM_DESC', "Forum for test.");
 define('_MI_NEWBB_INSTALL_POST_SUBJECT', "Congratulations! The forum is working.");
 define('_MI_NEWBB_INSTALL_POST_TEXT', "
-    Welcome to ".(htmlspecialchars($GLOBALS["xoopsConfig"]['sitename'], ENT_QUOTES))." forum.
+    Welcome to " . (htmlspecialchars($GLOBALS["xoopsConfig"]['sitename'], ENT_QUOTES)) . " forum.
     Feel free to register and login to start your topics.
 
-    If you have any question concerning NewBB usage, plz visit your local support site or [url=http://www.xoops.org/newbb/]XOOPS NewBB Module Site[/url].
+    If you have any question concerning NewBB usage, plz visit your local support site or [url=http://www.simple-xoops.de/forum/]NewBB Module Site[/url].
     ");
 define('_MI_NEWBB_ADMENU_GROUPMOD', "Group moderate");
 define('_MI_SUBJECT_PREFIX', "Add a prefix to the topic subject");
 define('_MI_SUBJECT_PREFIX_DESC', "Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ',' as the separator. NONE is no prefix.");
-define('_MI_SUBJECT_PREFIX_DEFAULT', '<font color="#00CC00"> [solved] </ font> <font color="#00CC00"> [done] </ font> <font color="#FF0000"> [request] </ font> , <font color="#FF0000"> [bug report] </ font> <font color="#FF0000"> [unsolved] </ font>');
+define('_MI_SUBJECT_PREFIX_DEFAULT', '<span style="color:#00CC00"> [solved] </span> <span style="color:#00CC00"> [done] </span> <font color="#FF0000"> [request] </ font> , <span style="color:#FF0000"> [bug report] </span> <span style="color:#FF0000"> [unsolved] </span>');
 define('_MI_SUBJECT_PREFIX_LEVEL', "Permissions for use of prefixes");
 define('_MI_SUBJECT_PREFIX_LEVEL_DESC', "The group (s) select the prefixes to use it.");
 define('_MI_SPL_DISABLE', "disabled");

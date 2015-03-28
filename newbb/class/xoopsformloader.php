@@ -1,7 +1,7 @@
 <?php
-// $Id: xoopsformloader.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: xoopsformloader.php 62 2012-08-17 10:15:26Z alfred $
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-if (!@include_once XOOPS_ROOT_PATH."/Frameworks/compat/class/xoopsformloader.php") {
-    include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+if (!@include_once $GLOBALS['xoops']->path('Frameworks/compat/class/xoopsformloader.php')) {
+    include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 }

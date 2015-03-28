@@ -2,28 +2,28 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include __DIR__."/functions.ini.php";
-define("NEWBB_FUNCTIONS_LOADED", TRUE);
+defined("NEWBB_FUNCTIONS_INI") || include __DIR__ . "/functions.ini.php";
+define("NEWBB_FUNCTIONS_LOADED", true);
 
-IF (!defined("NEWBB_FUNCTIONS")):
-define("NEWBB_FUNCTIONS", 1);
+IF (!defined("NEWBB_FUNCTIONS")) {
+    define("NEWBB_FUNCTIONS", 1);
 
-load_functions();
-mod_loadFunctions("image", "newbb");
-mod_loadFunctions("user", "newbb");
-mod_loadFunctions("render", "newbb");
-mod_loadFunctions("forum", "newbb");
-mod_loadFunctions("session", "newbb");
-mod_loadFunctions("stats", "newbb");
+    load_functions();
+    mod_loadFunctions("image", "newbb");
+    mod_loadFunctions("user", "newbb");
+    mod_loadFunctions("render", "newbb");
+    mod_loadFunctions("forum", "newbb");
+    mod_loadFunctions("session", "newbb");
+    mod_loadFunctions("stats", "newbb");
 
-endif;
+}

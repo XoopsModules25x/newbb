@@ -1,6 +1,6 @@
 <?php
-// $Id: admin.php 12504 2014-04-26 01:01:06Z beckmi $
-if(defined('NEWBB_ADMIN_DEFINED')) return;
+// $Id: admin.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
+if (defined('NEWBB_ADMIN_DEFINED')) return;
 else define('NEWBB_ADMIN_DEFINED', true);
 //%%%%%%	File Name  index.php   	%%%%%
 define('_AM_NEWBB_FORUMCONF', "Forum Configuration");

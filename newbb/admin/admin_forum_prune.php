@@ -25,7 +25,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 include_once __DIR__ . '/admin_header.php';
-include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php";
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
 
 xoops_cp_header();
 echo "<fieldset>";
@@ -37,31 +37,31 @@ if ($newXoopsModuleGui) {
 
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 
-if (!empty($_POST['submit'])) {
+if (XoopsRequest::getString('submit', '', 'POST')) {
     $post_list       = null;
     $topic_list      = null;
     $topics_number   = 0;
     $posts_number    = 0;
     $selected_forums = '';
     // irmtfan fix if it is array
-    if (empty($_POST["forums"]) || empty($_POST["forums"][0])) {
+    if (!XoopsRequest::getArray('forums',0, 'POST') || !XoopsRequest::getArray('forums'[0], 0, 'POST')) {
         redirect_header("./admin_forum_prune.php", 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
-    } elseif (is_array($_POST["forums"])) {
-        $selected_forums = implode(",", $_POST["forums"]);
+    } elseif (is_array(XoopsRequest::getArray('forums', '', 'POST'))) {
+        $selected_forums = implode(",", XoopsRequest::getArray('forums', array(), 'POST'));
     } else {
-        $selected_forums = $_POST["forums"];
+        $selected_forums = XoopsRequest::getArray('forums', '', 'POST');
     }
 
-    $prune_days  = $myts->addSlashes($_POST["days"]);
+    $prune_days  = $myts->addSlashes(XoopsRequest::getInt('days', 0, 'POST'));
     $prune_ddays = time() - $prune_days;
-    $archive     = $myts->addSlashes($_POST["archive"]);
-    $sticky      = $myts->addSlashes($_POST["sticky"]);
-    $digest      = $myts->addSlashes($_POST["digest"]);
-    $lock        = $myts->addSlashes($_POST["lock"]);
-    $hot         = $myts->addSlashes($_POST["hot"]);
-    $store = null; //irmtfan define to fix
-    if (!empty($_POST["store"])) {
-        $store = $myts->addSlashes($_POST["store"]);
+    $archive     = $myts->addSlashes(XoopsRequest::getInt('archive', 0, 'POST'));//$_POST["archive"]);
+    $sticky      = $myts->addSlashes(XoopsRequest::getInt('sticky', 0, 'POST'));//$_POST["sticky"]);
+    $digest      = $myts->addSlashes(XoopsRequest::getInt('digest', 0, 'POST'));//$_POST["digest"]);
+    $lock        = $myts->addSlashes(XoopsRequest::getInt('lock', 0, 'POST'));//$_POST["lock"]);
+    $hot         = $myts->addSlashes(XoopsRequest::getInt('hot', 0, 'POST'));//$_POST["hot"]);
+    $store       = null; //irmtfan define to fix
+    if (XoopsRequest::getInt('store', 0, 'POST')) {
+        $store = $myts->addSlashes(XoopsRequest::getInt('store', 0, 'POST'));
     }
 
     $sql = "SELECT t.topic_id FROM " . $xoopsDB->prefix("bb_topics") . " t, " . $xoopsDB->prefix("bb_posts") . "  p
@@ -127,7 +127,7 @@ if (!empty($_POST['submit'])) {
             if ($archive == 1) {
                 $result = $xoopsDB->query(
                     "SELECT p.topic_id, p.post_id, t.post_text FROM " . $xoopsDB->prefix("bb_posts") . " p, "
-                        . $xoopsDB->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
+                    . $xoopsDB->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
                 );
                 while (list($topic_id, $post_id, $post_text) = $xoopsDB->fetchRow($result)) {
                     $sql = $xoopsDB->query(
@@ -186,11 +186,11 @@ if (!empty($_POST['submit'])) {
     );
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
-    include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/footer.php"; // to include js files
+    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/footer.php"); // to include js files
     mod_loadFunctions("forum", "newbb");
-    $forumSelMulti = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
+    $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
-    $forumSelBox ="<option value = 0 >-- "._AM_NEWBB_PERM_FORUMS." --</option>";
+    $forumSelBox    = "<option value = 0 >-- " . _AM_NEWBB_PERM_FORUMS . " --</option>";
     $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$access_forums = nothing, $permission = "access", $delimitor_category = false
     $forumSelBox .= "</select>";
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
@@ -215,7 +215,8 @@ if (!empty($_POST['submit'])) {
     */
     // END irmtfan remove hardcode db access
 
-    $sform->addElement(/*$checkbox*/ $forumEle); // irmtfan
+    $sform->addElement(/*$checkbox*/
+        $forumEle); // irmtfan
 
     $sticky_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_STICKY, 'sticky', 1);
     $sticky_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
@@ -246,7 +247,8 @@ if (!empty($_POST['submit'])) {
     );
     $sform->addElement($hot_confirmation);
 
-    $sform->addElement(/*$radiobox*/$storeEle); // irmtfan
+    $sform->addElement(/*$radiobox*/
+        $storeEle); // irmtfan
 
     $archive_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_ARCHIVE, 'archive', 1);
     $archive_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
@@ -261,6 +263,6 @@ if (!empty($_POST['submit'])) {
     $sform->display();
 }
 
-echo"</td></tr></table>";
+echo "</td></tr></table>";
 echo "</fieldset>";
 xoops_cp_footer();

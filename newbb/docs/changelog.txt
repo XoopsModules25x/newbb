@@ -1,11 +1,14 @@
-4.33 RC 8                   NOT RELEASED
+4.33 RC 9                   NOT RELEASED
 ===========================================
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
 - removed closing php tags (mamba)
 - set min. PHP as 5.3.7 and min. XOOPS as 2.5.7 (mamba)
-- synched with Zyspec's XoopsPoll version (mamba)
-- removed duplicate "exit()" which is already in redirect_header() (mamba)
+- replaced dirname(__FILE__) with __DIR__ (mamba)
+- replaced $i++ with ++$i  (mamba)
+- replaced $_POST and $_GET with XoopsRequest (mamba)
+- replaced XOOPS_ROOT_PATH  with $GLOBALS['xoops']->path (mamba)
+- added/fixed phpDoc headers (mamba)
 
 
 4.33         11/20/2012 (changes by Irmtfan)

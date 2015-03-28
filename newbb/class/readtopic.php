@@ -1,5 +1,5 @@
 <?php
-// $Id: readtopic.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: readtopic.php 62 2012-08-17 10:15:26Z alfred $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,17 +28,16 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once __DIR__.'/read.php';
+include_once __DIR__ . '/read.php';
 
 /**
  * A handler for read/unread handling
  *
  * @package     newbb/cbb
  *
- * @author	    D.J. (phppp, http://xoopsforge.com)
- * @copyright	copyright (c) 2005 XOOPS.org
+ * @author        D.J. (phppp, http://xoopsforge.com)
+ * @copyright    copyright (c) 2005 XOOPS.org
  */
-
 class Readtopic extends Read
 {
     function Readtopic()
@@ -61,8 +60,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     function NewbbReadtopicHandler(&$db)
     {
         $this->NewbbReadHandler($db, "topic");
-        $newbbConfig = newbb_load_config();
-        $this->items_per_forum = isset($newbbConfig["read_items"])?intval($newbbConfig["read_items"]):100;
+        $newbbConfig           = newbb_load_config();
+        $this->items_per_forum = isset($newbbConfig["read_items"]) ? intval($newbbConfig["read_items"]) : 100;
     }
 
     /**
@@ -104,7 +103,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
         $item_handler =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria = new CriteriaCompo(new Criteria("forum_id", $forum_id));
+        $criteria     = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria->setSort("topic_last_post_id");
         $criteria->setOrder("DESC");
         $criteria->setLimit($this->items_per_forum);
@@ -132,7 +131,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             }
         }
 
-        $item_handler =& xoops_getmodulehandler('topic', 'newbb');
+        $item_handler   =& xoops_getmodulehandler('topic', 'newbb');
         $criteria_topic = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria_topic->setSort("topic_last_post_id");
         $criteria_topic->setOrder("DESC");
@@ -141,20 +140,20 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $criteria_sticky->add(new Criteria("topic_sticky", 1));
 
         if (empty($status)) {
-            $items_id = $item_handler->getIds($criteria_topic);
+            $items_id  = $item_handler->getIds($criteria_topic);
             $sticky_id = $item_handler->getIds($criteria_sticky);
-            $items =  $items_id+$sticky_id;
-            $criteria = new CriteriaCompo(new Criteria("uid", $uid));
-            $criteria->add(new Criteria("read_item", "(".implode(", ", $items).")", "IN"));
+            $items     = $items_id + $sticky_id;
+            $criteria  = new CriteriaCompo(new Criteria("uid", $uid));
+            $criteria->add(new Criteria("read_item", "(" . implode(", ", $items) . ")", "IN"));
             $this->deleteAll($criteria, true);
 
             return true;
         }
 
-        $items_obj =& $item_handler->getAll($criteria_topic, array("topic_last_post_id"));
+        $items_obj  =& $item_handler->getAll($criteria_topic, array("topic_last_post_id"));
         $sticky_obj =& $item_handler->getAll($criteria_sticky, array("topic_last_post_id"));
-        $items_obj = $items_obj + $sticky_obj;
-        $items = array();
+        $items_obj  = $items_obj + $sticky_obj;
+        $items      = array();
         foreach (array_keys($items_obj) as $key) {
             $items[$key] = $items_obj[$key]->getVar("topic_last_post_id");
         }

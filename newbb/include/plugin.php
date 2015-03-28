@@ -2,12 +2,12 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -49,7 +49,7 @@ $customConfig["editor_rows"] = 15;
 $customConfig["editor_cols"] = 40;
 
 // default value for editor width, height (string)
-$customConfig["editor_width"] = "100%";
+$customConfig["editor_width"]  = "100%";
 $customConfig["editor_height"] = "400px";
 
 // storage method for reading records: 0 - none; 1 - cookie; 2 - db
@@ -76,7 +76,7 @@ $customConfig["valid_menumodes"] = array(
     0 => _MD_MENU_SELECT,    // for selectbox
     //1 => _MD_MENU_CLICK,	// for "click to expand"
     //2 => _MD_MENU_HOVER		// for "mouse hover to expand"
-    );
+);
 
 // view latest edit
 // 1 - all / 0-latest
@@ -91,7 +91,7 @@ $customConfig["display_text_links"] = false;
 // This is for each link.
 // It means you can overwrite the above $customConfig["display_text_links"] overall value for each link one by one.
 // go to /modules/newbb/include/display.php to set for each link
-$customConfig["display_text_each_link"] = include XOOPS_ROOT_PATH."/modules/newbb/include/display.php";
+$customConfig["display_text_each_link"] = include $GLOBALS['xoops']->path('modules/newbb/include/display.php');
 // jump to last post read in the topic
 $customConfig["jump_to_topic_last_post_read_enabled"] = true;
 // highlight keywords in search

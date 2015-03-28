@@ -2,12 +2,12 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
@@ -17,10 +17,9 @@
  *
  * @package     newbb/cbb
  *
- * @author	    D.J. (phppp, http://xoopsforge.com)
- * @copyright	copyright (c) 2005 XOOPS.org
+ * @author        D.J. (phppp, http://xoopsforge.com)
+ * @copyright    copyright (c) 2005 XOOPS.org
  */
-
 //class Moderate extends ArtObject {
 class Moderate extends XoopsObject
 {
@@ -60,7 +59,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     function clearGarbage($expire = 0)
     {
         $expire = time() - intval($expire);
-        $sql = sprintf("DELETE FROM %s WHERE mod_end < %u", $this->db->prefix('bb_moderates'), $expire);
+        $sql    = sprintf("DELETE FROM %s WHERE mod_end < %u", $this->db->prefix('bb_moderates'), $expire);
         $this->db->queryF($sql);
     }
 
@@ -73,28 +72,28 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      */
     function verifyUser($uid = -1, $ip = "", $forum = 0)
     {
-        if(newbb_isAdmin($forum)) return false; // irmtfan - if user is admin do not suspend
+        if (newbb_isAdmin($forum)) return false; // irmtfan - if user is admin do not suspend
         if (!empty($GLOBALS["xoopsModuleConfig"]['cache_enabled'])) {
             $forums = $this->forumList($uid, $ip);
-            if(in_array(0, $forums)) return true; // irmtfan - if user is suspend in All forums
+            if (in_array(0, $forums)) return true; // irmtfan - if user is suspend in All forums
 
             return in_array($forum, $forums);
         }
-        $uid = ($uid < 0) ? ( is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0 ) : $uid;
+        $uid          = ($uid < 0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
         $uid_criteria = empty($uid) ? "uid=0" : "uid=" . intval($uid); // irmtfan - uid=0 for anons
-        $ip = empty($ip) ?  newbb_getIP(true) : $ip;
+        $ip           = empty($ip) ? newbb_getIP(true) : $ip;
         if (!empty($ip)) {
             $ip_segs = explode(".", $ip);
-            for ($i = 1 ; $i <= 4; ++$i) {
+            for ($i = 1; $i <= 4; ++$i) {
                 $ips[] = $this->db->quoteString(implode(".", array_slice($ip_segs, 0, $i)));
             }
-            $ip_criteria = "ip IN(".implode(",", $ips).")";
+            $ip_criteria = "ip IN(" . implode(",", $ips) . ")";
         } else {
             $ip_criteria = "1=1";
         }
-        $forum_criteria = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . intval($forum);
+        $forum_criteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . intval($forum);
         $expire_criteria = "mod_end > " . time();
-        $sql = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forum_criteria, $expire_criteria);
+        $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forum_criteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -114,13 +113,13 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     function forumList($uid = -1, $ip = "")
     {
         static $forums = array();
-        $uid = ($uid<0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
-        $ip = empty($ip) ? newbb_getIP(true) : $ip;
+        $uid = ($uid < 0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
+        $ip  = empty($ip) ? newbb_getIP(true) : $ip;
         if (isset($forums[$uid][$ip])) {
             return $forums[$uid][$ip];
         }
         if (!empty($GLOBALS["xoopsModuleConfig"]['cache_enabled'])) {
-            $forums[$uid][$ip] = newbb_getsession("sf".$uid."_".ip2long($ip), true);
+            $forums[$uid][$ip] = newbb_getsession("sf" . $uid . "_" . ip2long($ip), true);
             if (is_array($forums[$uid][$ip]) && count($forums[$uid][$ip])) {
                 return $forums[$uid][$ip];
             }
@@ -131,12 +130,12 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             for ($i = 1; $i <= 4; ++$i) {
                 $ips[] = $this->db->quoteString(implode(".", array_slice($ip_segs, 0, $i)));
             }
-            $ip_criteria = "ip IN(".implode(",", $ips).")";
+            $ip_criteria = "ip IN(" . implode(",", $ips) . ")";
         } else {
             $ip_criteria = "1=1";
         }
-        $expire_criteria = "mod_end > ".time();
-        $sql = sprintf("SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $expire_criteria);
+        $expire_criteria = "mod_end > " . time();
+        $sql             = sprintf("SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return $forums[$uid][$ip] = array();
         }
@@ -148,7 +147,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         }
         $forums[$uid][$ip] = count($_forums) ? array_keys($_forums) : array(-1);
         if (!empty($GLOBALS["xoopsModuleConfig"]['cache_enabled'])) {
-            newbb_setsession("sf".$uid."_".ip2long($ip), $forums[$uid][$ip]);
+            newbb_setsession("sf" . $uid . "_" . ip2long($ip), $forums[$uid][$ip]);
         }
 
         return $forums[$uid][$ip];
@@ -166,13 +165,13 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             $criteria = "uid =" . intval($item);
         } else {
             $ip_segs = explode(".", $item);
-            $segs = min(count($ip_segs), 4);
+            $segs    = min(count($ip_segs), 4);
             for ($i = 1; $i <= $segs; ++$i) {
                 $ips[] = $this->db->quoteString(implode(".", array_slice($ip_segs, 0, $i)));
             }
-            $criteria = "ip IN(".implode(",", $ips).")";
+            $criteria = "ip IN(" . implode(",", $ips) . ")";
         }
-        $sql = "SELECT MAX(mod_end) AS expire FROM ".$this->db->prefix('bb_moderates')." WHERE ".$criteria;
+        $sql = "SELECT MAX(mod_end) AS expire FROM " . $this->db->prefix('bb_moderates') . " WHERE " . $criteria;
         if (!$result = $this->db->query($sql)) {
             return -1;
         }
@@ -189,23 +188,23 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     function cleanOrphan()
     {
         /* for MySQL 4.1+ */
-        if ($this->mysql_major_version() >= 4):
-        $sql = "DELETE FROM ".$this->table.
-                " WHERE (forum_id >0 AND forum_id NOT IN ( SELECT DISTINCT forum_id FROM ".$this->db->prefix("bb_forums").") )";
-        else:
-        // for 4.0 +
-        /* */
-        $sql =    "DELETE ".$this->table." FROM ".$this->table.
-                " LEFT JOIN ".$this->db->prefix("bb_forums")." AS aa ON ".$this->table.".forum_id = aa.forum_id ".
-                " WHERE ".$this->table.".forum_id > 0 AND (aa.forum_id IS NULL)";
-        /* */
-        // for 4.1+
-        /*
-        $sql = 	"DELETE bb FROM ".$this->table." AS bb".
-                " LEFT JOIN ".$this->db->prefix("bb_forums")." AS aa ON bb.forum_id = aa.forum_id ".
-                " WHERE bb.forum_id > 0 AND (aa.forum_id IS NULL)";
-        */
-        endif;
+        if ($this->mysql_major_version() >= 4) {
+            $sql = "DELETE FROM " . $this->table .
+                   " WHERE (forum_id >0 AND forum_id NOT IN ( SELECT DISTINCT forum_id FROM " . $this->db->prefix("bb_forums") . ") )";
+        } else {
+            // for 4.0 +
+            /* */
+            $sql = "DELETE " . $this->table . " FROM " . $this->table .
+                   " LEFT JOIN " . $this->db->prefix("bb_forums") . " AS aa ON " . $this->table . ".forum_id = aa.forum_id " .
+                   " WHERE " . $this->table . ".forum_id > 0 AND (aa.forum_id IS NULL)";
+            /* */
+            // for 4.1+
+            /*
+            $sql = 	"DELETE bb FROM ".$this->table." AS bb".
+                    " LEFT JOIN ".$this->db->prefix("bb_forums")." AS aa ON bb.forum_id = aa.forum_id ".
+                    " WHERE bb.forum_id > 0 AND (aa.forum_id IS NULL)";
+            */
+        }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
             return false;

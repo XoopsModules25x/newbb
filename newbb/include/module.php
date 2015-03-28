@@ -1,5 +1,5 @@
 <?php
-// $Id: module.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: module.php 62 2012-08-17 10:15:26Z alfred $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -32,15 +32,15 @@
 if (defined("XOOPS_MODULE_NEWBB_FUCTIONS")) exit();
 define("XOOPS_MODULE_NEWBB_FUCTIONS", 1);
 
-include_once XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
+include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 newbb_load_object();
 
 function xoops_module_update_newbb(&$module, $oldversion = null)
 {
     //  START irmtfan to dont run update script if user has the latest version.
-    if ($oldversion == round( $module->getInfo("version") * 100, 2 )) {
-        $module->setErrors("You have the latest " . $module->getInfo("name") . " module (". $module->getInfo("dirname") . " version " . $module->getInfo("version") . ") and update is not necessary");
+    if ($oldversion == round($module->getInfo("version") * 100, 2)) {
+        $module->setErrors("You have the latest " . $module->getInfo("name") . " module (" . $module->getInfo("dirname") . " version " . $module->getInfo("version") . ") and update is not necessary");
         print_r($module->getErrors());
 
         return true;
@@ -57,7 +57,7 @@ function xoops_module_update_newbb(&$module, $oldversion = null)
     // NewBB 1.0 -- no config
     //if (empty($oldconfig)) {
     if ($oldversion == 100) {
-        include_once __DIR__."/module.v100.php";
+        include_once __DIR__ . "/module.v100.php";
         xoops_module_update_newbb_v100($module);
     }
 
@@ -65,33 +65,75 @@ function xoops_module_update_newbb(&$module, $oldversion = null)
     // change group permission name
     // change forum moderators
     if ($oldversion < 220) {
-        include_once __DIR__."/module.v220.php";
+        include_once __DIR__ . "/module.v220.php";
         xoops_module_update_newbb_v220($module);
     }
 
     if ($oldversion < 230) {
-        $GLOBALS['xoopsDB']->queryFromFile(XOOPS_ROOT_PATH."/modules/".$module->getVar("dirname", "n")."/sql/upgrade_230.sql");
+        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar("dirname", "n") . "/sql/upgrade_230.sql"));
         //$module->setErrors("bb_moderates table inserted");
     }
 
     if ($oldversion < 304) {
-        $GLOBALS['xoopsDB']->queryFromFile(XOOPS_ROOT_PATH."/modules/".$module->getVar("dirname", "n")."/sql/mysql.304.sql");
+        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar("dirname", "n") . "/sql/mysql.304.sql"));
     }
 
     if ($oldversion < 400) {
-        $GLOBALS['xoopsDB']->queryFromFile(XOOPS_ROOT_PATH."/modules/".$module->getVar("dirname", "n")."/sql/mysql.400.sql");
-        include __DIR__."/module.v400.php";
+        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar("dirname", "n") . "/sql/mysql.400.sql"));
+        include __DIR__ . "/module.v400.php";
         xoops_module_update_newbb_v400($module);
     }
 
     if ($oldversion < 403) {
-        $sql =    "	ALTER TABLE ".$GLOBALS['xoopsDB']->prefix("bb_posts").
-                " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
-        $GLOBALS['xoopsDB']->queryF( $sql );
+        $sql = "	ALTER TABLE " . $GLOBALS['xoopsDB']->prefix("bb_posts") .
+               " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
+        $GLOBALS['xoopsDB']->queryF($sql);
     }
 
     if ($oldversion < 431) {
-        $GLOBALS['xoopsDB']->queryFromFile(XOOPS_ROOT_PATH."/modules/".$module->getVar("dirname", "n")."/sql/mysql.430.sql");
+        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar("dirname", "n") . "/sql/mysql.430.sql"));
+    }
+
+    if ($oldversion < 434) {
+        // remove old html template files
+
+        // create an array with all folders, and then run this once
+
+        $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . "/templates/");
+        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        foreach ($template_list as $k => $v) {
+            $fileinfo = new SplFileInfo($templateDirectory . $v);
+            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+                @unlink($templateDirectory . $v);
+            }
+        }
+        $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . "/templates/blocks");
+        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        foreach ($template_list as $k => $v) {
+            $fileinfo = new SplFileInfo($templateDirectory . $v);
+            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+                @unlink($templateDirectory . $v);
+            }
+        }
+        // Load class XoopsFile
+        xoops_load('xoopsfile');
+        //remove /images directory
+        $imagesDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . "/images/");
+        $folderHandler   = XoopsFile::getHandler("folder", $imagesDirectory);
+        $folderHandler->delete($imagesDirectory);
+
+        //remove old changelogs
+
+        array_map('unlink', glob("some/dir/*.txt"));
+
+        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
+        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
+        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
+
+        if (is_file("$file")) {
+            unlink("$file");
+        }
+
     }
 
     if (!empty($newbbConfig["syncOnUpdate"])) {
@@ -111,7 +153,7 @@ function xoops_module_pre_install_newbb(&$module)
 {
     $mod_tables = $module->getInfo("tables");
     foreach ($mod_tables as $table) {
-        $GLOBALS["xoopsDB"]->queryF("DROP TABLE IF EXISTS ".$GLOBALS["xoopsDB"]->prefix($table).";");
+        $GLOBALS["xoopsDB"]->queryF("DROP TABLE IF EXISTS " . $GLOBALS["xoopsDB"]->prefix($table) . ";");
     }
 
     return newbb_setModuleConfig($module);
@@ -121,18 +163,18 @@ function xoops_module_install_newbb(&$module)
 {
     /* Create a test category */
     $category_handler = xoops_getmodulehandler('category', $module->getVar("dirname"));
-    $category = $category_handler->create();
+    $category         = $category_handler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', "", true);
     $category->setVar('cat_description', _MI_NEWBB_INSTALL_CAT_DESC, true);
-    $category->setVar('cat_url', "http://www.xoops.org XOOPS Project", true);
+    $category->setVar('cat_url', "http://www.simple-xoops.de SIMPLE-XOOPS", true);
     if (!$cat_id = $category_handler->insert($category)) {
         return true;
     }
 
     /* Create a forum for test */
     $forum_handler = xoops_getmodulehandler('forum', $module->getVar("dirname"));
-    $forum = $forum_handler->create();
+    $forum         = $forum_handler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
     $forum->setVar('forum_moderator', array());
@@ -144,10 +186,10 @@ function xoops_module_install_newbb(&$module)
     $forum_id = $forum_handler->insert($forum);
 
     /* Set corresponding permissions for the category and the forum */
-    $module_id = $module->getVar("mid") ;
+    $module_id     = $module->getVar("mid");
     $gperm_handler = xoops_gethandler("groupperm");
-    $groups_view = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-    $groups_post = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
+    $groups_view   = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+    $groups_post   = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
     $post_items = array('post', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove', 'type', 'html', 'signature', 'pdf', 'print');
     foreach ($groups_view as $group_id) {
@@ -157,14 +199,14 @@ function xoops_module_install_newbb(&$module)
     }
     foreach ($groups_post as $group_id) {
         foreach ($post_items as $item) {
-            $gperm_handler->addRight("forum_".$item, $forum_id, $group_id, $module_id);
+            $gperm_handler->addRight("forum_" . $item, $forum_id, $group_id, $module_id);
         }
     }
 
     /* Create a test post */
     mod_loadFunctions("user", "newbb");
     $post_handler = xoops_getmodulehandler('post', $module->getVar("dirname"));
-    $forumpost = $post_handler->create();
+    $forumpost    = $post_handler->create();
     $forumpost->setVar('poster_ip', newbb_getIP());
     $forumpost->setVar('uid', $GLOBALS["xoopsUser"]->getVar("uid"));
     $forumpost->setVar('approved', 1);

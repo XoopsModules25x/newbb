@@ -2,12 +2,12 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 include_once __DIR__ . "/header.php";
@@ -15,12 +15,12 @@ include_once __DIR__ . "/header.php";
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 $xoopsOption['template_main'] = 'newbb_viewall.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once XOOPS_ROOT_PATH."/header.php";
+include_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($xoopsModuleConfig['rss_enable'])) {
-    $xoopsTpl->assign("xoops_module_header",'
-    <link rel="alternate" type="application/xml+rss" title="'.$xoopsModule->getVar('name').'" href="'.XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname', 'n').'/rss.php" />
-    '. @$xoopsTpl->get_template_vars("xoops_module_header"));
+    $xoopsTpl->assign("xoops_module_header", '
+    <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/rss.php" />
+    ' . @$xoopsTpl->get_template_vars("xoops_module_header"));
 }
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
@@ -29,7 +29,7 @@ mod_loadFunctions("render", "newbb");
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
 require_once "./class/topic.renderer.php";
-$topic_renderer = NewbbTopicRenderer::instance();
+$topic_renderer            = NewbbTopicRenderer::instance();
 $topic_renderer->userlevel = $GLOBALS["xoopsUserIsAdmin"] ? 2 : is_object($xoopsUser);
 // irmtfan if list topic block is in the page then force to parse
 if (defined('LIST_TOPIC_DEFINED')) {
@@ -37,15 +37,15 @@ if (defined('LIST_TOPIC_DEFINED')) {
 }
 
 $topic_renderer->is_multiple = true;
-$topic_renderer->config =& $xoopsModuleConfig;
-$topic_renderer->setVars( @$_GET );
+$topic_renderer->config      =& $xoopsModuleConfig;
+$topic_renderer->setVars(@$_GET);
 
-$type = intval( @$_GET['type'] );
-$status = explode(",",$topic_renderer->vars["status"]); // irmtfan to accept multiple status
+$type   = XoopsRequest::getInt('type', 0, 'GET');
+$status = explode(",", $topic_renderer->vars["status"]); // irmtfan to accept multiple status
 //irmtfan parse status for rendering topic correctly - remove here and move to topic.renderer.php
 //$topic_renderer->parseVar('status',$status);
 // irmtfan to accept multiple status
-$mode = count(array_intersect($status, array("active", "pending", "deleted"))) > 0 ? 2 : (!empty($_GET['mode']) ? intval($_GET['mode']) : 0);
+$mode = count(array_intersect($status, array("active", "pending", "deleted"))) > 0 ? 2 : (XoopsRequest::getInt('mode', 0, 'GET'));
 
 //$isadmin = $GLOBALS["xoopsUserIsAdmin"];
 /* Only admin has access to admin mode */
@@ -92,7 +92,7 @@ $xoopsTpl->assign('menumode_other', $menumode_other);
 
 $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
-$xoopsTpl->assign('viewer_level', $topic_renderer->userlevel );// irmtfan use userlevel
+$xoopsTpl->assign('viewer_level', $topic_renderer->userlevel);// irmtfan use userlevel
 
 $pagetitle = sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
 $xoopsTpl->assign('forum_index_title', $pagetitle);
@@ -100,4 +100,4 @@ $xoopsTpl->assign('xoops_pagetitle', $pagetitle);
 
 // irmtfan move to footer.php
 include_once __DIR__ . "/footer.php";
-include XOOPS_ROOT_PATH."/footer.php";
+include $GLOBALS['xoops']->path('footer.php');

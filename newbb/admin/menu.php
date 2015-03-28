@@ -30,12 +30,12 @@
 // ------------------------------------------------------------------------- //
 
 $newModuleGui = false;
-if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
+if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     $module_handler =& xoops_gethandler('module');
-    $xoopsModule =& XoopsModule::getByDirname('newbb');
-    $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-    $pathIcon32 = $moduleInfo->getInfo('icons32');
-    $newModuleGui = true;
+    $xoopsModule    =& XoopsModule::getByDirname('newbb');
+    $moduleInfo     =& $module_handler->get($xoopsModule->getVar('mid'));
+    $pathIcon32     = $moduleInfo->getInfo('icons32');
+    $newModuleGui   = true;
 }
 
 $adminmenu[] = array(

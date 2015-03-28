@@ -25,8 +25,8 @@ if (!is_object($forum_obj)) {
     return;
 }
 
-require_once XOOPS_ROOT_PATH . "/class/xoopstree.php";
-include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+require_once $GLOBALS['xoops']->path('class/xoopstree.php');
+include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 // The forum instanciation
 $form_forum = new XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . " " . $forum_obj->getVar('forum_name'), "form_forum", xoops_getenv('PHP_SELF'));
@@ -62,7 +62,7 @@ $form_forum->addElement(new XoopsFormText(_AM_NEWBB_ALLOWED_EXTENSIONS, 'attach_
 $form_forum->addElement(new XoopsFormSelectUser(_AM_NEWBB_MODERATOR, 'forum_moderator', false, $forum_obj->getVar("forum_moderator"), 5, true));
 
 // Permission tray
-$perm_tray = new XoopsFormElementTray(_AM_NEWBB_PERMISSIONS_TO_THIS_FORUM, '');
+$perm_tray     = new XoopsFormElementTray(_AM_NEWBB_PERMISSIONS_TO_THIS_FORUM, '');
 $perm_checkbox = new XoopsFormCheckBox('', 'perm_template', $forum_obj->isNew());
 $perm_checkbox->addOption(1, _AM_NEWBB_PERM_TEMPLATEAPP);
 $perm_tray->addElement($perm_checkbox);

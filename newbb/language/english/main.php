@@ -1,6 +1,6 @@
 <?php
-// $Id: main.php 12504 2014-04-26 01:01:06Z beckmi $
-if(defined('MAIN_DEFINED')) return;
+// $Id: main.php 17 2007-11-18 14:22:36Z LupusC $
+if (defined('MAIN_DEFINED')) return;
 define('MAIN_DEFINED', true);
 define('_MD_ERROR', "Error");
 define('_MD_SELFORUM', "Select a Forum");

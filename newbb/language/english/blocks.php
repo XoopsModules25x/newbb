@@ -1,7 +1,7 @@
 <?php
-// $Id: blocks.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: blocks.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
 // Blocks
-if(defined('NEWBB_BLOCKS_DEFINED')) return;
+if (defined('NEWBB_BLOCKS_DEFINED')) return;
 else define('NEWBB_BLOCKS_DEFINED', true);
 define('_MB_NEWBB_FORUM', "Forum");
 define('_MB_NEWBB_TOPIC', "Topic");

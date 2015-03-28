@@ -2,17 +2,17 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
+defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
 class NewbbUserstats extends ArtObject
@@ -20,11 +20,11 @@ class NewbbUserstats extends ArtObject
     function NewbbUserstats()
     {
         $this->ArtObject("bb_user_stats");
-        $this->initVar('uid',                XOBJ_DTYPE_INT);
-        $this->initVar('user_topics',        XOBJ_DTYPE_INT);
-        $this->initVar('user_digests',        XOBJ_DTYPE_INT);
-        $this->initVar('user_posts',        XOBJ_DTYPE_INT);
-        $this->initVar('user_lastpost',    XOBJ_DTYPE_INT);
+        $this->initVar('uid', XOBJ_DTYPE_INT);
+        $this->initVar('user_topics', XOBJ_DTYPE_INT);
+        $this->initVar('user_digests', XOBJ_DTYPE_INT);
+        $this->initVar('user_posts', XOBJ_DTYPE_INT);
+        $this->initVar('user_lastpost', XOBJ_DTYPE_INT);
     }
 }
 
@@ -77,7 +77,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     function getStats($id)
     {
         if (empty($id)) return null;
-        $sql = "SELECT * FROM " . $this->table . " WHERE ".$this->keyName." = " . intval($id);
+        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . intval($id);
         if (!$result = $this->db->query($sql)) {
             return null;
         }
@@ -85,35 +85,35 @@ class NewbbUserstatsHandler extends ArtObjectHandler
 
         return $row;
     }
-/*
-    function insert(&$object, $force = true)
-    {
-        if (!$object->isDirty()) {
-            $object->setErrors("not isDirty");
+    /*
+        function insert(&$object, $force = true)
+        {
+            if (!$object->isDirty()) {
+                $object->setErrors("not isDirty");
+
+                return $object->getVar($this->keyName);
+            }
+            $this->_loadHandler("write");
+            if (!$changedVars = $this->_handler["write"]->cleanVars($object)) {
+                $object->setErrors("cleanVars failed");
+
+                return $object->getVar($this->keyName);
+            }
+            $queryFunc = empty($force) ? "query" : "queryF";
+
+            $keys = array();
+            foreach ($changedVars as $k => $v) {
+                $keys[] = " {$k} = {$v}";
+            }
+            $sql = "REPLACE INTO " . $this->table . " SET ".implode(",",$keys);
+            if (!$result = $this->db->{$queryFunc}($sql)) {
+                $object->setErrors("update object error:" . $sql);
+
+                return false;
+            }
+            unset($changedVars);
 
             return $object->getVar($this->keyName);
         }
-        $this->_loadHandler("write");
-        if (!$changedVars = $this->_handler["write"]->cleanVars($object)) {
-            $object->setErrors("cleanVars failed");
-
-            return $object->getVar($this->keyName);
-        }
-        $queryFunc = empty($force) ? "query" : "queryF";
-
-        $keys = array();
-        foreach ($changedVars as $k => $v) {
-            $keys[] = " {$k} = {$v}";
-        }
-        $sql = "REPLACE INTO " . $this->table . " SET ".implode(",",$keys);
-        if (!$result = $this->db->{$queryFunc}($sql)) {
-            $object->setErrors("update object error:" . $sql);
-
-            return false;
-        }
-        unset($changedVars);
-
-        return $object->getVar($this->keyName);
-    }
-*/
+    */
 }

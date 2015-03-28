@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_header.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: admin_header.php 62 2012-08-17 10:15:26Z alfred $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
@@ -28,22 +28,24 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+//include $GLOBALS['xoops']->path('include/cp_header.php');
 include("../../../include/cp_header.php");
-include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/include/vars.php";
-include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/include/functions.user.php";
-include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar("dirname")."/include/functions.render.php";
-include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.php";
-include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.admin.php";
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/vars.php");
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/functions.user.php");
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/functions.render.php");
+include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
+include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
+xoops_load('XoopsRequest');
 
-xoops_loadLanguage('main','newbb');
-xoops_loadLanguage('modinfo','newbb');
+xoops_loadLanguage('main', 'newbb');
+xoops_loadLanguage('modinfo', 'newbb');
 $newXoopsModuleGui = false;
-if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
-    include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-    $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-    $pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
-    $pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
+if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
+    include_once $GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
+    $moduleInfo        =& $module_handler->get($xoopsModule->getVar('mid'));
+    $pathIcon16        = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
+    $pathIcon32        = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
     $newXoopsModuleGui = true;
-    $indexAdmin = new ModuleAdmin();
+    $indexAdmin        = new ModuleAdmin();
 }
 $myts = &MyTextSanitizer::getInstance();

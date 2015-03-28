@@ -23,18 +23,18 @@
 
 global $xoopsConfig, $xoTheme;
 
-include_once XOOPS_ROOT_PATH . "/modules/newbb/include/functions.render.php";
+include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
 $icon_handler = newbb_getIconHandler();
 //  get css rel path from setted language
-$css_rel_path=$icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "css");
+$css_rel_path = $icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "css");
 // add local stylesheet
 $xoTheme->addStylesheet($css_rel_path . '/style.css');
 
 //  get js rel path from setted language
-$js_rel_path=$icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "js");
+$js_rel_path = $icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "js");
 // add all local js files inside js directory
 xoops_load('XoopsLists');
-$allfiles = XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH . $js_rel_path);
+$allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
     if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
@@ -42,5 +42,5 @@ foreach ($allfiles as $jsfile) {
 }
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
 // add toggle script
-$toggle_script="var toggle_cookie=\"" . $forumCookie["prefix"] . "G" . "\";";
-$xoTheme->addScript( null, array ('type' => 'text/javascript'), $toggle_script);
+$toggle_script = "var toggle_cookie=\"" . $forumCookie["prefix"] . "G" . "\";";
+$xoTheme->addScript(null, array('type' => 'text/javascript'), $toggle_script);

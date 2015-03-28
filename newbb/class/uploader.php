@@ -2,17 +2,17 @@
 /**
  * CBB, XOOPS forum module
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
-include_once XOOPS_ROOT_PATH . "/class/uploader.php";
+include_once $GLOBALS['xoops']->path('class/uploader.php');
 
 class newbb_uploader extends XoopsMediaUploader
 {
@@ -38,7 +38,7 @@ class newbb_uploader extends XoopsMediaUploader
             }
         }
         $_allowedMimeTypes = array();
-        $extensionToMime = include $GLOBALS['xoops']->path('/include/mimetypes.inc.php');
+        $extensionToMime   = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         foreach ($allowedMimeTypes as $type) {
             if (isset($extensionToMime[$type])) {
                 $_allowedMimeTypes[] = $extensionToMime[$type];

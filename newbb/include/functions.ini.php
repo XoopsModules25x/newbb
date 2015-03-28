@@ -1,5 +1,5 @@
 <?php
-// $Id: functions.ini.php 12504 2014-04-26 01:01:06Z beckmi $
+// $Id: functions.ini.php 62 2012-08-17 10:15:26Z alfred $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -31,9 +31,9 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 if (defined("NEWBB_FUNCTIONS_INI")) return;
-define("NEWBB_FUNCTIONS_INI",1);
+define("NEWBB_FUNCTIONS_INI", 1);
 
-include_once(XOOPS_ROOT_PATH."/Frameworks/art/functions.ini.php");
+include_once($GLOBALS['xoops']->path('Frameworks/art/functions.ini.php'));
 
 function newbb_load_object()
 {
@@ -58,16 +58,16 @@ function &newbb_load_config()
 }
 
 // Backword compatible
-function newbb_load_lang_file( $filename, $module = '', $default = 'english' )
+function newbb_load_lang_file($filename, $module = '', $default = 'english')
 {
     if (function_exists("xoops_load_lang_file")) {
         return xoops_load_lang_file($filename, $module, $default);
     }
 
     $lang = $GLOBALS['xoopsConfig']['language'];
-    $path = XOOPS_ROOT_PATH . ( empty($module) ? '/' : "/modules/$module/" ) . 'language';
-    if ( !( $ret = @include_once( "$path/$lang/$filename.php" ) ) ) {
-        $ret = @include_once( "$path/$default/$filename.php" );
+    $path = XOOPS_ROOT_PATH . (empty($module) ? '/' : "/modules/$module/") . 'language';
+    if (!($ret = @include_once("$path/$lang/$filename.php"))) {
+        $ret = @include_once("$path/$default/$filename.php");
     }
 
     return $ret;

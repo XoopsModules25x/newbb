@@ -31,9 +31,12 @@
 
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
-defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
+defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
+/**
+ * Class Nrate
+ */
 class Nrate extends ArtObject
 {
     function Nrate()
@@ -48,8 +51,14 @@ class Nrate extends ArtObject
     }
 }
 
+/**
+ * Class NewbbRateHandler
+ */
 class NewbbRateHandler extends ArtObjectHandler
 {
+    /**
+     * @param $db
+     */
     function NewbbRateHandler(&$db)
     {
         $this->ArtObjectHandler($db, 'bb_votedata', 'Nrate', 'ratingid');
