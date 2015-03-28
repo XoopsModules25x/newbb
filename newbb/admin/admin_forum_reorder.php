@@ -30,10 +30,18 @@
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
 
-if (XoopsRequest::getInt('cat_orders', 0, 'POST')) $cat_orders = XoopsRequest::getInt('cat_orders', 0, 'POST');
-if (XoopsRequest::getInt('orders', 0, 'POST')) $orders = XoopsRequest::getInt('orders', 0, 'POST');
-if (XoopsRequest::getInt('cat', 0, 'POST')) $cat = XoopsRequest::getInt('cat', 0, 'POST');
-if (XoopsRequest::getInt('forum', 0, 'POST')) $forum = XoopsRequest::getInt('forum', 0, 'POST');
+if (XoopsRequest::getInt('cat_orders', 0, 'POST')) {
+    $cat_orders = XoopsRequest::getInt('cat_orders', 0, 'POST');
+}
+if (XoopsRequest::getInt('orders', 0, 'POST')) {
+    $orders = XoopsRequest::getInt('orders', 0, 'POST');
+}
+if (XoopsRequest::getInt('cat', 0, 'POST')) {
+    $cat = XoopsRequest::getInt('cat', 0, 'POST');
+}
+if (XoopsRequest::getInt('forum', 0, 'POST')) {
+    $forum = XoopsRequest::getInt('forum', 0, 'POST');
+}
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $catOrdersCount = count($cat_orders);
@@ -65,7 +73,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         //loadModuleAdminMenu(4, _AM_NEWBB_SETFORUMORDER);
         echo "<fieldset>";
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_SETFORUMORDER . "</legend>";
-    } else echo $indexAdmin->addNavigation('admin_forum_reorder.php');
+    } else {
+        echo $indexAdmin->addNavigation('admin_forum_reorder.php');
+    }
 
     echo "<table width='100%' border='0' cellspacing='1' class='outer'>"
          . "<tr><td class='odd'>";
@@ -93,7 +103,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         echo "</td>";
         echo "</tr>";
 
-        if (!isset($forums[$c])) continue;
+        if (!isset($forums[$c])) {
+            continue;
+        }
         $i = 0;
         foreach ($forums[$c] as $key => $forum) {
             echo "<tr>";
@@ -114,6 +126,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo "</form>";
     echo "</td></tr></table>";
     echo "</fieldset>";
-    if (!$newXoopsModuleGui) echo "</fieldset>";
+    if (!$newXoopsModuleGui) {
+        echo "</fieldset>";
+    }
 }
 xoops_cp_footer();

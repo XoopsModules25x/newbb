@@ -18,6 +18,9 @@ define("NEWBB_FUNCTIONS_STATS_LOADED", true);
 if (!defined("NEWBB_FUNCTIONS_STATS")) {
     define("NEWBB_FUNCTIONS_STATS", 1);
 
+    /**
+     * @return mixed
+     */
     function newbb_get_stats()
     {
         $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
@@ -26,6 +29,12 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
         return $stats;
     }
 
+    /**
+     * @param $id
+     * @param $type
+     * @param int $increment
+     * @return mixed
+     */
     function newbb_update_stats($id, $type, $increment = 1)
     {
         $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
@@ -36,6 +45,10 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
     /*
     * Gets the total number of topics in a form
     */
+    /**
+     * @param string $forum_id
+     * @return mixed
+     */
     function get_total_topics($forum_id = "")
     {
         $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
@@ -51,16 +64,25 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
     * Returns the total number of posts in the whole system, a forum, or a topic
     * Also can return the number of users on the system.
     */
+    /**
+     * @param int $id
+     * @param string $type
+     * @return mixed
+     */
     function get_total_posts($id = 0, $type = "all")
     {
         $post_handler =& xoops_getmodulehandler('post', 'newbb');
         $criteria     = new CriteriaCompo(new Criteria("approved", 0, ">"));
         switch ($type) {
             case 'forum':
-                if ($id > 0) $criteria->add(new Criteria("forum_id", intval($id)));
+                if ($id > 0) {
+                    $criteria->add(new Criteria("forum_id", intval($id)));
+                }
                 break;
             case 'topic':
-                if ($id > 0) $criteria->add(new Criteria("topic_id", intval($id)));
+                if ($id > 0) {
+                    $criteria->add(new Criteria("topic_id", intval($id)));
+                }
                 break;
             case 'all':
             default:
@@ -70,6 +92,9 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
         return $post_handler->getCount($criteria);
     }
 
+    /**
+     * @return null
+     */
     function get_total_views()
     {
         global $xoopsDB;
@@ -77,9 +102,8 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
         if (!$result = $xoopsDB->query($sql)) {
             return null;
         }
-        list ($total) = $xoopsDB->fetchRow($result);
+        list($total) = $xoopsDB->fetchRow($result);
 
         return $total;
     }
-
 }

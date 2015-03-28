@@ -30,14 +30,17 @@ define("NEWBB_STATS_PERIOD_MONTH", 4);
  */
 class NewbbStatsHandler
 {
-    var $db;
-    var $table;
-    var $param = array(
+    public $db;
+    public $table;
+    public $param = array(
         "type"   => array("topic", "post", "digest", "view"),
         "period" => array("total", "day", "week", "month"),
     );
 
-    function NewbbStatsHandler($db = null)
+    /**
+     * @param null $db
+     */
+    public function NewbbStatsHandler($db = null)
     {
         if (!$db) {
             $this->db = $GLOBALS["xoopsDB"];
@@ -47,7 +50,11 @@ class NewbbStatsHandler
         $this->table = $this->db->prefix("bb_stats");
     }
 
-    function &instance($db = null)
+    /**
+     * @param null $db
+     * @return NewbbStatsHandler
+     */
+    public function &instance($db = null)
     {
         static $instance;
         if (!isset($instance)) {
@@ -57,7 +64,13 @@ class NewbbStatsHandler
         return $instance;
     }
 
-    function update($id, $type, $increment = 1)
+    /**
+     * @param $id
+     * @param $type
+     * @param int $increment
+     * @return bool
+     */
+    public function update($id, $type, $increment = 1)
     {
         $id        = intval($id);
         $increment = intval($increment);
@@ -102,11 +115,12 @@ class NewbbStatsHandler
     /**
      * Get stats of "Today"
      *
-     * @param array $ids     ID of forum: > 0, forum; 0 - global; empty - all
-     * @param array $types   type of stats items: 1 - topic; 2 - post; 3 - digest; 4 - click; empty - all
+     * @param array $ids ID of forum: > 0, forum; 0 - global; empty - all
+     * @param array $types type of stats items: 1 - topic; 2 - post; 3 - digest; 4 - click; empty - all
      * @param array $periods time period: 1 - all time; 2 - today; 3 - this week; 4 - this month; empty - all
+     * @return array
      */
-    function getStats($ids = array(), $types = array(), $periods = array())
+    public function getStats($ids = array(), $types = array(), $periods = array())
     {
         $ret = array();
 
@@ -134,7 +148,7 @@ class NewbbStatsHandler
         return $ret;
     }
 
-    function reset()
+    public function reset()
     {
         $this->db->queryF("TRUNCATE TABLE " . $this->table);
         $now        = time();

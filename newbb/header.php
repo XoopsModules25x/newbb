@@ -69,7 +69,9 @@ $menumode_other = array();
 $menu_url       = htmlSpecialChars(preg_replace("/&menumode=[^&]/", "", $_SERVER['REQUEST_URI']));
 $menu_url .= (false === strpos($menu_url, "?")) ? "?menumode=" : "&amp;menumode=";
 foreach ($xoopsModuleConfig["valid_menumodes"] as $key => $val) {
-    if ($key != $menumode) $menumode_other[] = array("title" => $val, "link" => $menu_url . $key);
+    if ($key != $menumode) {
+        $menumode_other[] = array("title" => $val, "link" => $menu_url . $key);
+    }
 }
 // irmtfan new method for add js scripts - commented and move to footer.php
 //global $xoopsTpl;

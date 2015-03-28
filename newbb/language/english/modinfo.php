@@ -1,7 +1,9 @@
 <?php
 // $Id: modinfo.php,v 2.3 2012/02/08 16:20:00 dhcst Exp $
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
-if (defined('NEWBB_MODINFO_DEFINED')) return;
+if (defined('NEWBB_MODINFO_DEFINED')) {
+    return;
+}
 define('NEWBB_MODINO_DEFINED', true);
 // Module Info
 // The name of this module
@@ -217,7 +219,7 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', "
 define('_MI_NEWBB_ADMENU_GROUPMOD', "Group moderate");
 define('_MI_SUBJECT_PREFIX', "Add a prefix to the topic subject");
 define('_MI_SUBJECT_PREFIX_DESC', "Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ',' as the separator. NONE is no prefix.");
-define('_MI_SUBJECT_PREFIX_DEFAULT', '<span style="color:#00CC00"> [solved] </span> <span style="color:#00CC00"> [done] </span> <font color="#FF0000"> [request] </ font> , <span style="color:#FF0000"> [bug report] </span> <span style="color:#FF0000"> [unsolved] </span>');
+define('_MI_SUBJECT_PREFIX_DEFAULT', '<span style="color:#00CC00"> [solved] </span> <span style="color:#00CC00"> [done] </span> <span style="color:#FF0000"> [request] </span> , <span style="color:#FF0000"> [bug report] </span> <span style="color:#FF0000"> [unsolved] </span>');
 define('_MI_SUBJECT_PREFIX_LEVEL', "Permissions for use of prefixes");
 define('_MI_SUBJECT_PREFIX_LEVEL_DESC', "The group (s) select the prefixes to use it.");
 define('_MI_SPL_DISABLE', "disabled");

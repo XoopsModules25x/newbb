@@ -44,7 +44,10 @@ newbb_load_object();
  */
 class Read extends ArtObject
 {
-    function Read($type)
+    /**
+     * @param $type
+     */
+    public function Read($type)
     {
         $this->ArtObject("bb_reads_" . $type);
         $this->initVar('read_id', XOBJ_DTYPE_INT);
@@ -55,6 +58,9 @@ class Read extends ArtObject
     }
 }
 
+/**
+ * Class NewbbReadHandler
+ */
 class NewbbReadHandler extends ArtObjectHandler
 {
     /**
@@ -66,7 +72,7 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var string
      */
-    var $type;
+    public $type;
 
     /**
      * seconds records will persist.
@@ -79,7 +85,7 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var integer
      */
-    var $lifetime;
+    public $lifetime;
 
     /**
      * storage mode for records.
@@ -92,9 +98,13 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var integer
      */
-    var $mode;
+    public $mode;
 
-    function NewbbReadHandler(&$db, $type)
+    /**
+     * @param $db
+     * @param $type
+     */
+    public function NewbbReadHandler(&$db, $type)
     {
         $type = ("forum" == $type) ? "forum" : "topic";
         $this->ArtObjectHandler($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
@@ -111,7 +121,7 @@ class NewbbReadHandler extends ArtObjectHandler
      * Delete all expired and duplicated records
      */
     // START irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
-    function clearGarbage()
+    public function clearGarbage()
     {
         // irmtfan clear duplicaed rows
         if (!$result = $this->clearDuplicate()) {
@@ -134,7 +144,9 @@ class NewbbReadHandler extends ArtObjectHandler
             return false;
         }
         // irmtfan if read_expire = 0 dont clean
-        if (empty($this->lifetime)) return true;
+        if (empty($this->lifetime)) {
+            return true;
+        }
         // irmtfan move here and rephrase
         $expire = time() - intval($this->lifetime);
         $sql    = "DELETE FROM " . $this->table . " WHERE read_time < " . $expire;
@@ -147,14 +159,28 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
-    function getRead($read_item, $uid = null)
+    /**
+     * @param $read_item
+     * @param null $uid
+     * @return bool|mixed|null
+     */
+    public function getRead($read_item, $uid = null)
     {
-        if (empty($this->mode)) return null;
-        if ($this->mode == 1) return $this->getRead_cookie($read_item);
-        else return $this->getRead_db($read_item, $uid);
+        if (empty($this->mode)) {
+            return null;
+        }
+        if (1 == $this->mode) {
+            return $this->getRead_cookie($read_item);
+        } else {
+            return $this->getRead_db($read_item, $uid);
+        }
     }
 
-    function getRead_cookie($item_id)
+    /**
+     * @param $item_id
+     * @return mixed
+     */
+    public function getRead_cookie($item_id)
     {
         $cookie_name = ($this->type == "forum") ? "LF" : "LT";
         $cookie_var  = $item_id;
@@ -164,7 +190,12 @@ class NewbbReadHandler extends ArtObjectHandler
         return @$lastview[$cookie_var];
     }
 
-    function getRead_db($read_item, $uid)
+    /**
+     * @param $read_item
+     * @param $uid
+     * @return bool|null
+     */
+    public function getRead_db($read_item, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS["xoopsUser"])) {
@@ -185,14 +216,29 @@ class NewbbReadHandler extends ArtObjectHandler
         return $post_id;
     }
 
-    function setRead($read_item, $post_id, $uid = null)
+    /**
+     * @param $read_item
+     * @param $post_id
+     * @param null $uid
+     * @return bool|mixed|void
+     */
+    public function setRead($read_item, $post_id, $uid = null)
     {
-        if (empty($this->mode)) return true;
-        if ($this->mode == 1) return $this->setRead_cookie($read_item, $post_id);
-        else return $this->setRead_db($read_item, $post_id, $uid);
+        if (empty($this->mode)) {
+            return true;
+        }
+        if (1 == $this->mode) {
+            return $this->setRead_cookie($read_item, $post_id);
+        } else {
+            return $this->setRead_db($read_item, $post_id, $uid);
+        }
     }
 
-    function setRead_cookie($read_item, $post_id)
+    /**
+     * @param $read_item
+     * @param $post_id
+     */
+    public function setRead_cookie($read_item, $post_id)
     {
         $cookie_name          = ($this->type == "forum") ? "LF" : "LT";
         $lastview             = newbb_getcookie($cookie_name, true);
@@ -200,7 +246,13 @@ class NewbbReadHandler extends ArtObjectHandler
         newbb_setcookie($cookie_name, $lastview);
     }
 
-    function setRead_db($read_item, $post_id, $uid)
+    /**
+     * @param $read_item
+     * @param $post_id
+     * @param $uid
+     * @return bool|mixed
+     */
+    public function setRead_db($read_item, $post_id, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS["xoopsUser"])) {
@@ -227,18 +279,32 @@ class NewbbReadHandler extends ArtObjectHandler
         return parent::insert($object);
     }
 
-    function isRead_items(&$items, $uid = null)
+    /**
+     * @param $items
+     * @param null $uid
+     * @return array|null
+     */
+    public function isRead_items(&$items, $uid = null)
     {
         $ret = null;
-        if (empty($this->mode)) return $ret;
+        if (empty($this->mode)) {
+            return $ret;
+        }
 
-        if ($this->mode == 1) $ret = $this->isRead_items_cookie($items);
-        else $ret = $this->isRead_items_db($items, $uid);
+        if (1 == $this->mode) {
+            $ret = $this->isRead_items_cookie($items);
+        } else {
+            $ret = $this->isRead_items_db($items, $uid);
+        }
 
         return $ret;
     }
 
-    function isRead_items_cookie(&$items)
+    /**
+     * @param $items
+     * @return array
+     */
+    public function isRead_items_cookie(&$items)
     {
         $cookie_name = ($this->type == "forum") ? "LF" : "LT";
         $cookie_vars = newbb_getcookie($cookie_name, true);
@@ -251,10 +317,17 @@ class NewbbReadHandler extends ArtObjectHandler
         return $ret;
     }
 
-    function isRead_items_db(&$items, $uid)
+    /**
+     * @param $items
+     * @param $uid
+     * @return array
+     */
+    public function isRead_items_db(&$items, $uid)
     {
         $ret = array();
-        if (empty($items)) return $ret;
+        if (empty($items)) {
+            return $ret;
+        }
 
         if (empty($uid)) {
             if (is_object($GLOBALS["xoopsUser"])) {
@@ -282,7 +355,10 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     // START irmtfan add clear duplicated rows function
-    function clearDuplicate()
+    /**
+     * @return bool
+     */
+    public function clearDuplicate()
     {
         $sql = "CREATE TABLE " . $this->table . "_duplicate like " . $this->table . "; ";
         if (!$result = $this->db->queryF($sql)) {

@@ -39,33 +39,33 @@ class NewbbIconHandler
     /**
      * reference to XOOPS template
      */
-    var $template;
+    public $template;
 
     /**
      * image set
      */
-    var $forumImage = array();
+    public $forumImage = array();
 
     /**
      * prefix
      */
-    var $prefix = "";
+    public $prefix = "";
 
     /**
      * postfix, including extension
      */
     //var $postfix = ".gif";
-    var $postfix = ".png";
+    public $postfix = ".png";
 
     /**
      * images to be assigned to template
      */
-    var $images = array();
+    public $images = array();
 
     /**
      * Constructor
      */
-    function NewbbIconHandler()
+    public function NewbbIconHandler()
     {
     }
 
@@ -73,7 +73,7 @@ class NewbbIconHandler
      * Access the only instance of this class
      * @return NewbbIconHandler
      */
-    static function &instance()
+    public static function &instance()
     {
         static $instance;
         if (!isset($instance)) {
@@ -92,7 +92,7 @@ class NewbbIconHandler
      * @return
      */
     // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $end_dir
-    function getPath( /*$set, */
+    public function getPath(/*$set, */
         $type, $dirname = "newbb", $default = "", $end_dir = "images")
     {
         global $xoopsConfig;
@@ -139,7 +139,7 @@ class NewbbIconHandler
      * @param string $language
      * @param string $dirname
      */
-    function init(/*$set = "default", */
+    public function init(/*$set = "default", */
         $language = "english", $dirname = "newbb")
     {
         $this->forumImage = include $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
@@ -155,7 +155,7 @@ class NewbbIconHandler
      * @param string $alt
      * @param string $extra
      */
-    function setImage($image, $alt = "", $extra = "")
+    public function setImage($image, $alt = "", $extra = "")
     {
         if (!isset($this->images[$image])) {
             $image_src = $this->getImageSource($image);
@@ -169,7 +169,7 @@ class NewbbIconHandler
      * @param $image
      * @return string
      */
-    function getImageSource($image)
+    public function getImageSource($image)
     {
         return $this->forumImage[$this->forumImage[$image]] . $this->prefix . $image . $this->postfix;
     }
@@ -180,7 +180,7 @@ class NewbbIconHandler
      * @param string $extra
      * @return mixed
      */
-    function getImage($image, $alt = "", $extra = "")
+    public function getImage($image, $alt = "", $extra = "")
     {
         $this->setImage($image, $alt, $extra);
 
@@ -193,7 +193,7 @@ class NewbbIconHandler
      * @param string $extra
      * @return string
      */
-    function assignImage($image, $alt = "", $extra = "")
+    public function assignImage($image, $alt = "", $extra = "")
     {
         $this->setImage($image, $alt, $extra);
         // START hacked by irmtfan - improve function to CSS3 buttons - add alt and title attributes - use span instead of button to support IE7&8
@@ -209,7 +209,7 @@ class NewbbIconHandler
     /**
      * @param $images
      */
-    function assignImages($images)
+    public function assignImages($images)
     {
         foreach ($images as $_image) {
             list($image, $alt, $extra) = $_image;
@@ -220,12 +220,11 @@ class NewbbIconHandler
     /**
      * @return int|void
      */
-    function render()
+    public function render()
     {
         //$this->template->assign_by_ref("image", $this->images);
         $this->template->assign($this->images);
 
         return count($this->images);
     }
-
 }

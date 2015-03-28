@@ -20,6 +20,10 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
 
     /**
      * Function to convert UNIX time to formatted time string
+     * @param $time
+     * @param string $format
+     * @param string $timeoffset
+     * @return string
      */
     function newbb_formatTimestamp($time, $format = "c", $timeoffset = "")
     {
@@ -37,6 +41,10 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
         return XoopsLocal::formatTimestamp($time, $format, $timeoffset);
     }
 
+    /**
+     * @param int $selected
+     * @return string
+     */
     function newbb_sinceSelectBox($selected = 100)
     {
         $newbbConfig = newbb_load_config();
@@ -96,12 +104,18 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
         return $forum_selection_since;
     }
 
+    /**
+     * @param int $since
+     * @return int
+     */
     function newbb_getSinceTime($since = 100)
     {
         // irmtfan bad coding
         //if ($since==1000) return 0;
-        if ($since > 0) return intval($since) * 24 * 3600;
-        else return intval(abs($since)) * 3600;
+        if ($since > 0) {
+            return intval($since) * 24 * 3600;
+        } else {
+            return intval(abs($since)) * 3600;
+        }
     }
-
 }

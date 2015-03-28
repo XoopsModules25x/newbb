@@ -24,12 +24,15 @@
 class NewbbType extends XoopsObject
 {
 
-    function NewbbType()
+    public function NewbbType()
     {
         $this->__construct();
     }
 
-    function __construct()
+    /**
+     *
+     */
+    public function __construct()
     {
         $this->XoopsObject();
         $this->initVar('type_id', XOBJ_DTYPE_INT);
@@ -51,12 +54,18 @@ class NewbbType extends XoopsObject
  */
 class NewbbTypeHandler extends XoopsPersistableObjectHandler
 {
-    function NewbbTypeHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbTypeHandler(&$db)
     {
         $this->__construct($db);
     }
 
-    function __construct(&$db)
+    /**
+     * @param null|object $db
+     */
+    public function __construct(&$db)
     {
         parent::__construct($db, 'bb_type', 'NewbbType', 'type_id', 'type_name');
     }
@@ -67,7 +76,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * @param  mixed $forums single forum ID or an array of forum IDs
      * @return array associative array of types (name, color, order)
      */
-    function getByForum($forums = null)
+    public function getByForum($forums = null)
     {
         $ret = array();
 
@@ -109,10 +118,12 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * @param  array   $types
      * @return boolean
      */
-    function updateByForum($forum_id, $types)
+    public function updateByForum($forum_id, $types)
     {
         $forum_id = intval($forum_id);
-        if (empty($forum_id)) return false;
+        if (empty($forum_id)) {
+            return false;
+        }
 
         $types_existing = $this->getByForum($forum_id);
         $types_valid    = array();
@@ -149,7 +160,9 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             $type_query = array();
             foreach ($types_update as $key) {
                 $order = $types[$key];
-                if ($types_existing[$key]["type_order"] == $order) continue;
+                if ($types_existing[$key]["type_order"] == $order) {
+                    continue;
+                }
                 $sql = "UPDATE " . $this->db->prefix("bb_type_forum") .
                        " SET type_order = {$order}" .
                        " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";
@@ -183,9 +196,11 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * @param  bool   $force  flag to force the query execution despite security settings
      * @return bool
      */
-    function delete(&$object, $force = true)
+    public function delete(&$object, $force = true)
     {
-        if (!is_object($object) || !$object->getVar($this->keyName)) return false;
+        if (!is_object($object) || !$object->getVar($this->keyName)) {
+            return false;
+        }
         $queryFunc = empty($force) ? "query" : "queryF";
 
         /*
@@ -217,7 +232,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         /* clear forum-type links */
         if ($this->mysql_major_version() >= 4) {

@@ -33,6 +33,11 @@ require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.php');
 if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
     define('NEWBB_NOTIFY_ITEMINFO', 1);
 
+    /**
+     * @param $category
+     * @param $item_id
+     * @return mixed
+     */
     function newbb_notify_iteminfo($category, $item_id)
     {
         $module_handler =& xoops_gethandler('module');
@@ -53,7 +58,6 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
             if (!$result = $xoopsDB->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . "index.php", 2, _MD_ERRORFORUM);
-
             }
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['forum_name'];

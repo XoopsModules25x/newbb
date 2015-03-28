@@ -25,63 +25,62 @@ class NewbbTopicRenderer
     /**
      * reference to an object handler
      */
-    var $handler;
+    public $handler;
 
     /**
      * reference to moduleConfig
      */
-    var $config;
+    public $config;
 
     /**
      * Requested page
      */
-    var $page = "list.topic.php";
+    public $page = "list.topic.php";
 
     /**
      * query variables
      */
     var $args = array("forum", "uid", "lastposter", "type", "status", "mode", "sort", "order", "start", "since");// irmtfan add multi lastposter
-    var $vars = array();
+    public $vars = array();
 
     /**
      * For multiple forums
      */
-    var $is_multiple = false;
+    public $is_multiple = false;
 
     /**
      * force to parse vars (run against static vars) irmtfan
      */
-    var $force = false;
+    public $force = false;
 
     /**
      * Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
      */
-    var $userlevel = 0;
+    public $userlevel = 0;
 
     /**
      * Current user has no access to current page
      */
-    var $noperm = false;
+    public $noperm = false;
 
     /**
      *
      */
-    var $query = array();
+    public $query = array();
 
     /**
      * Constructor
      */
-    function NewbbTopicRenderer()
+    public function NewbbTopicRenderer()
     {
         $this->handler = xoops_getModuleHandler("topic", "newbb");
     }
 
     /**
      * Access the only instance of this class
-     *
-     * @return
-     **/
-    function &instance()
+     * @return NewbbTopicRenderer
+     */
+    public function &instance()
     {
         static $instance;
         if (!isset($instance)) {
@@ -91,13 +90,18 @@ class NewbbTopicRenderer
         return $instance;
     }
 
-    function init()
+    public function init()
     {
         $this->noperm = false;
         $this->query  = array();
     }
 
-    function setVar($var, $val)
+    /**
+     * @param $var
+     * @param $val
+     * @return array|int|string
+     */
+    public function setVar($var, $val)
     {
         switch ($var) {
             case "forum":
@@ -140,18 +144,26 @@ class NewbbTopicRenderer
         return $val;
     }
 
-    function setVars($vars = array())
+    /**
+     * @param array $vars
+     */
+    public function setVars($vars = array())
     {
         $this->init();
 
         foreach ($vars as $var => $val) {
-            if (!in_array($var, $this->args)) continue;
+            if (!in_array($var, $this->args)) {
+                continue;
+            }
             $this->vars[$var] = $this->setVar($var, $val);
         }
         $this->parseVars();
     }
 
-    function _parseStatus($status = null)
+    /**
+     * @param null $status
+     */
+    public function _parseStatus($status = null)
     {
         switch ($status) {
             // START irmtfan to accept multiple status and add more status
@@ -238,7 +250,9 @@ class NewbbTopicRenderer
                         $topic_lastread = newbb_getcookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
-                                if ($time > $lastvisit) $topics[] = $id;
+                                if ($time > $lastvisit) {
+                                    $topics[] = $id;
+                                }
                             }
                         }
                         if (count($topics) > 0) {
@@ -278,7 +292,9 @@ class NewbbTopicRenderer
                         $topic_lastread = newbb_getcookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
-                                if ($time > $lastvisit) $topics[] = $id;
+                                if ($time > $lastvisit) {
+                                    $topics[] = $id;
+                                }
                             }
                         }
                         if (count($topics) > 0) {
@@ -316,7 +332,11 @@ class NewbbTopicRenderer
         }
     }
 
-    function parseVar($var, $val)
+    /**
+     * @param $var
+     * @param $val
+     */
+    public function parseVar($var, $val)
     {
         switch ($var) {
             case "forum":
@@ -358,8 +378,9 @@ class NewbbTopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbb_getSinceTime($val);
-                    if (in_array("unread", explode(",", $this->vars["status"])) && $this->config["read_mode"] == 1 && $GLOBALS['last_visit'] > $startdate)
+                    if (in_array("unread", explode(",", $this->vars["status"])) && $this->config["read_mode"] == 1 && $GLOBALS['last_visit'] > $startdate) {
                         break;
+                    }
                     // irmtfan digest_time | to accept multiple status
                     if (in_array("digest", explode(",", $this->vars["status"]))) {
                         $this->query["where"][] = "t.digest_time > " . $startdate;
@@ -402,28 +423,46 @@ class NewbbTopicRenderer
         }
     }
 
-    function parseVars()
+    /**
+     * @return bool
+     */
+    public function parseVars()
     {
         static $parsed;
         // irmtfan - force to parse vars (run against static vars)
-        if (isset($parsed) && !$this->force) return true;
+        if (isset($parsed) && !$this->force) {
+            return true;
+        }
 
-        if (!isset($this->vars["forum"])) $this->vars["forum"] = null;
+        if (!isset($this->vars["forum"])) {
+            $this->vars["forum"] = null;
+        }
         //irmtfan parse status for rendering topic correctly - if empty($_GET(status)) it will show all topics include deleted and pendings. "all" instead of all
-        if (!isset($this->vars["status"])) $this->vars["status"] = "all";
+        if (!isset($this->vars["status"])) {
+            $this->vars["status"] = "all";
+        }
         // irmtfan if sort is not set or is empty get a default sort- if empty($_GET(sort)) | if sort=null eg: /list.topic.php?sort=
-        if (empty($this->vars["sort"])) $this->vars["sort"] = "lastpost"; // use lastpost instead of sticky
+        if (empty($this->vars["sort"])) {
+            $this->vars["sort"] = "lastpost";
+        } // use lastpost instead of sticky
 
         foreach ($this->vars as $var => $val) {
             $this->parseVar($var, $val);
-            if (empty($val)) unset($this->vars[$var]);
+            if (empty($val)) {
+                unset($this->vars[$var]);
+            }
         }
         $parsed = true;
 
         return true;
     }
 
-    function getSort($header = null, $var = null)
+    /**
+     * @param null $header
+     * @param null $var
+     * @return array|null
+     */
+    public function getSort($header = null, $var = null)
     {
         $headers = array(
             "topic"           => array(
@@ -524,7 +563,11 @@ class NewbbTopicRenderer
     }
 
     // START irmtfan add Display topic headers function
-    function getHeader($header = null)
+    /**
+     * @param null $header
+     * @return array
+     */
+    public function getHeader($header = null)
     {
         $headersSort = $this->getSort("", "title");
         // additional headers - important: those cannot be in sort anyway
@@ -538,7 +581,12 @@ class NewbbTopicRenderer
     }
 
     // END irmtfan add Display topic headers function
-    function getStatus($type = null, $status = null)
+    /**
+     * @param null $type
+     * @param null $status
+     * @return array
+     */
+    public function getStatus($type = null, $status = null)
     {
         $links       = array(
             //""			=> "", /* irmtfan remove empty array */
@@ -575,7 +623,10 @@ class NewbbTopicRenderer
         return $this->getFromKeys($links, $status); // irmtfan to accept multiple status
     }
 
-    function buildSelection(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     */
+    public function buildSelection(Smarty &$xoopsTpl)
     {
         $selection         = array("action" => $this->page);
         $selection["vars"] = $this->vars;
@@ -609,7 +660,10 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('selection', $selection);
     }
 
-    function buildSearch(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     */
+    public function buildSearch(Smarty &$xoopsTpl)
     {
         $search             = array();
         $search["forum"]    = @$this->vars["forum"];
@@ -619,11 +673,16 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('search', $search);
     }
 
-    function buildHeaders(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     */
+    public function buildHeaders(Smarty &$xoopsTpl)
     {
         $args = array();
         foreach ($this->vars as $var => $val) {
-            if ($var == "sort" || $var == "order") continue;
+            if ($var == "sort" || $var == "order") {
+                continue;
+            }
             $args[] = "{$var}={$val}";
         }
 
@@ -639,11 +698,16 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('headers', $headers_data);
     }
 
-    function buildFilters(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     */
+    public function buildFilters(Smarty &$xoopsTpl)
     {
         $args = array();
         foreach ($this->vars as $var => $val) {
-            if ($var == "status") continue;
+            if ($var == "status") {
+                continue;
+            }
             $args[] = "{$var}={$val}";
         }
 
@@ -658,7 +722,11 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('filters', $status);
     }
 
-    function getTypes($type_id = null)
+    /**
+     * @param null $type_id
+     * @return mixed
+     */
+    public function getTypes($type_id = null)
     {
         static $types;
         if (!isset($types)) {
@@ -666,12 +734,18 @@ class NewbbTopicRenderer
             $types        = $type_handler->getByForum(explode("|", @$this->vars["forum"]));
         }
 
-        if (empty($type_id)) return $types;
+        if (empty($type_id)) {
+            return $types;
+        }
 
         return @$types[$type_id];
     }
 
-    function buildTypes(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     * @return bool
+     */
+    public function buildTypes(Smarty &$xoopsTpl)
     {
         if (!$types = $this->getTypes()) {
             return true;
@@ -679,7 +753,9 @@ class NewbbTopicRenderer
 
         $args = array();
         foreach ($this->vars as $var => $val) {
-            if ($var == "type") continue;
+            if ($var == "type") {
+                continue;
+            }
             $args[] = "{$var}={$val}";
         }
 
@@ -691,9 +767,15 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('types', $status);
     }
 
-    function buildCurrent(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     * @return bool
+     */
+    public function buildCurrent(Smarty &$xoopsTpl)
     {
-        if (empty($this->vars["status"]) && !$this->is_multiple) return true;
+        if (empty($this->vars["status"]) && !$this->is_multiple) {
+            return true;
+        }
 
         $args = array();
         foreach ($this->vars as $var => $val) {
@@ -708,33 +790,43 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('current', $status);
     }
 
-    function buildPagenav(Smarty &$xoopsTpl)
+    /**
+     * @param Smarty $xoopsTpl
+     */
+    public function buildPagenav(Smarty &$xoopsTpl)
     {
         $count_topic = $this->getCount();
         if ($count_topic > $this->config['topics_per_page']) {
             $args = array();
             foreach ($this->vars as $var => $val) {
-                if ($var == "start") continue;
+                if ($var == "start") {
+                    continue;
+                }
                 $args[] = "{$var}={$val}";
             }
             require_once $GLOBALS['xoops']->path('class/pagenav.php');
             $nav = new XoopsPageNav($count_topic, $this->config['topics_per_page'], @$this->vars["start"], "start", implode("&amp;", $args));
-            if (isset($xoopsModuleConfig['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
-            if ($this->config['pagenav_display'] == 'select')
+            if (isset($xoopsModuleConfig['do_rewrite'])) {
+                $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
+            }
+            if ($this->config['pagenav_display'] == 'select') {
                 $navi = $nav->renderSelect();
-            elseif ($this->config['pagenav_display'] == 'bild')
+            } elseif ($this->config['pagenav_display'] == 'bild') {
                 $navi = $nav->renderImageNav(4);
-            else
+            } else {
                 $navi = $nav->renderNav(4);
+            }
             $xoopsTpl->assign('pagenav', $navi);
         } else {
             $xoopsTpl->assign('pagenav', '');
         }
     }
 
-    function getCount()
+    /**
+     * @return int
+     */
+    public function getCount()
     {
-
         if ($this->noperm) {
             return 0;
         }
@@ -766,7 +858,11 @@ class NewbbTopicRenderer
         return $count;
     }
 
-    function renderTopics(Smarty $xoopsTpl = null)
+    /**
+     * @param Smarty $xoopsTpl
+     * @return array|void
+     */
+    public function renderTopics(Smarty $xoopsTpl = null)
     {
         $myts = MyTextSanitizer::getInstance(); // irmtfan Instanciate
 
@@ -963,10 +1059,11 @@ class NewbbTopicRenderer
         $type_list     = $this->getTypes();
         $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
 
-        if (count($forums) > 0)
+        if (count($forums) > 0) {
             $forum_list = $forum_handler->getAll(new Criteria("forum_id", "(" . implode(", ", array_keys($forums)) . ")", "IN"), array("forum_name", "hot_threshold"), false);
-        else
+        } else {
             $forum_list = $forum_handler->getAll();
+        }
 
         foreach (array_keys($topics) as $id) {
             $topics[$id]['topic_read']       = empty($topic_isRead[$id]) ? 0 : 1; // add topic-read/topic-new smarty variable
@@ -1033,9 +1130,16 @@ class NewbbTopicRenderer
     }
 
     // START irmtfan to create an array from selected keys of an array
-    function getFromKeys($array, $keys = null)
+    /**
+     * @param $array
+     * @param null $keys
+     * @return array
+     */
+    public function getFromKeys($array, $keys = null)
     {
-        if (empty($keys)) return $array; // all keys
+        if (empty($keys)) {
+            return $array;
+        } // all keys
         $keyarr = is_string($keys) ? explode(",", $keys) : $keys;
         $keyarr = array_intersect(array_keys($array), $keyarr); // keys should be in array
         $ret    = array();

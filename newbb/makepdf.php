@@ -44,18 +44,24 @@ if (!is_file(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php')) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPF for Xoops not installed');
 }
 
-if (empty($post_id)) die(_MD_ERRORTOPIC);
+if (empty($post_id)) {
+    die(_MD_ERRORTOPIC);
+}
 
 $post_handler = xoops_getmodulehandler('post', 'newbb');
 $post         = $post_handler->get($post_id);
-if (!$approved = $post->getVar('approved')) die(_MD_NORIGHTTOVIEW);
+if (!$approved = $post->getVar('approved')) {
+    die(_MD_NORIGHTTOVIEW);
+}
 
 $post_data = $post_handler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
 $topic_handler = xoops_getmodulehandler('topic', 'newbb');
 $forumtopic    = $topic_handler->getByPost($post_id);
 $topic_id      = $forumtopic->getVar('topic_id');
-if (!$approved = $forumtopic->getVar('approved')) die(_MD_NORIGHTTOVIEW);
+if (!$approved = $forumtopic->getVar('approved')) {
+    die(_MD_NORIGHTTOVIEW);
+}
 
 $forum_handler   = xoops_getmodulehandler('forum', 'newbb');
 $forum           = ($forum) ? $forum : $forumtopic->getVar('forum_id');
@@ -68,10 +74,16 @@ if ($parent_forums) {
     }
 }
 
-if (!$forum_handler->getPermission($viewtopic_forum)) die(_MD_NORIGHTTOACCESS);
-if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "view")) die(_MD_NORIGHTTOVIEW);
+if (!$forum_handler->getPermission($viewtopic_forum)) {
+    die(_MD_NORIGHTTOACCESS);
+}
+if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "view")) {
+    die(_MD_NORIGHTTOVIEW);
+}
 // irmtfan add pdf permission
-if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) die(_MD_NORIGHTTOPDF);
+if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) {
+    die(_MD_NORIGHTTOPDF);
+}
 
 $category_handler = xoops_getmodulehandler('category', 'newbb');
 $cat              = $viewtopic_forum->getVar('cat_id');
@@ -141,8 +153,8 @@ $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 //set auto page breaks
 $pdf->SetAutoPageBreak(true, 25);
 
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_SUB, '', PDF_FONT_SIZE_SUB));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+$pdf->setHeaderFont(array(PDF_FONT_NAME_SUB, '', PDF_FONT_SIZE_SUB));
+$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->setFooterData($tc = array(0, 64, 0), $lc = array(0, 64, 128));
 
 $pdf->Open();

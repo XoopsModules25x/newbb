@@ -40,15 +40,21 @@ include_once __DIR__ . '/read.php';
  */
 class Readforum extends Read
 {
-    function Readforum()
+    public function Readforum()
     {
         $this->Read("forum");
     }
 }
 
+/**
+ * Class NewbbReadforumHandler
+ */
 class NewbbReadforumHandler extends NewbbReadHandler
 {
-    function NewbbReadforumHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbReadforumHandler(&$db)
     {
         $this->NewbbReadHandler($db, "forum");
     }
@@ -58,22 +64,37 @@ class NewbbReadforumHandler extends NewbbReadHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
 
         return parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id", "read_item");
     }
 
-    function setRead_items($status = 0, $uid = null)
+    /**
+     * @param int $status
+     * @param null $uid
+     * @return bool
+     */
+    public function setRead_items($status = 0, $uid = null)
     {
-        if (empty($this->mode)) return true;
+        if (empty($this->mode)) {
+            return true;
+        }
 
-        if ($this->mode == 1) return $this->setRead_items_cookie($status);
-        else return $this->setRead_items_db($status, $uid);
+        if ($this->mode == 1) {
+            return $this->setRead_items_cookie($status);
+        } else {
+            return $this->setRead_items_db($status, $uid);
+        }
     }
 
-    function setRead_items_cookie($status, $items)
+    /**
+     * @param $status
+     * @param $items
+     * @return bool
+     */
+    public function setRead_items_cookie($status, $items)
     {
         $cookie_name = "LF";
         $items       = array();
@@ -89,7 +110,12 @@ class NewbbReadforumHandler extends NewbbReadHandler
         return true;
     }
 
-    function setRead_items_db($status, $uid)
+    /**
+     * @param $status
+     * @param $uid
+     * @return bool
+     */
+    public function setRead_items_db($status, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS["xoopsUser"])) {
@@ -114,7 +140,7 @@ class NewbbReadforumHandler extends NewbbReadHandler
         return true;
     }
 
-    function synchronization()
+    public function synchronization()
     {
         return;
     }

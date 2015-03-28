@@ -17,7 +17,9 @@ echo "<fieldset>";
 echo "<br />";
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
 
-if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_type_manager.php');
+if ($newXoopsModuleGui) {
+    echo $indexAdmin->addNavigation('admin_type_manager.php');
+}
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(9, _AM_NEWBB_TYPE_TEMPLATE);
 //	else echo $indexAdmin->addNavigation('admin_type_manager.php');
 
@@ -34,7 +36,9 @@ if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_type_manager.php'
  * </ol>
  */
 $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');// !empty($_GET['op'])? $_GET['op'] : ( !empty($_POST['op']) ? $_POST['op'] : "" );
-if (!in_array($op, array("save_type", "delete", "template", "save_template", "apply", "save_apply", "forum", "edit_forum", "save_forum", "add"))) $op = "";
+if (!in_array($op, array("save_type", "delete", "template", "save_template", "apply", "save_apply", "forum", "edit_forum", "save_forum", "add"))) {
+    $op = "";
+}
 
 $type_handler =& xoops_getmodulehandler('type', 'newbb');
 
@@ -111,7 +115,9 @@ switch ($op) {
         if ($templates = mod_loadCacheFile("type_template")) {
             arsort($templates);
             foreach ($templates as $order => $key) {
-                if (!isset($types_obj[$key])) continue;
+                if (!isset($types_obj[$key])) {
+                    continue;
+                }
                 $type_obj =& $types_obj[$key];
                 echo "<tr class='even' align='left'>";
                 echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' /></td>";
@@ -202,7 +208,9 @@ switch ($op) {
         $types_obj = $type_handler->getAll(new Criteria("type_id", "(" . implode(", ", array_values($templates)) . ")", "IN"));
         arsort($templates);
         foreach ($templates as $order => $key) {
-            if (!isset($types_obj[$key])) continue;
+            if (!isset($types_obj[$key])) {
+                continue;
+            }
             $type_obj =& $types_obj[$key];
             echo "<tr class='even' align='left'>";
             echo "<td><em style='color:" . $type_obj->getVar("type_color") . "'>" . $type_obj->getVar("type_name") . "</em></td>";
@@ -222,7 +230,9 @@ switch ($op) {
             redirect_header(xoops_getenv("PHP_SELF") . "?op=template", 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
         foreach (XoopsRequest::getArray('forums', array(), 'POST') as $forum) {
-            if ($forum < 1) continue;
+            if ($forum < 1) {
+                continue;
+            }
             $type_handler->updateByForum($forum, array_flip($templates));
         }
         redirect_header(xoops_getenv("PHP_SELF"), 2, _MD_DBUPDATED);
@@ -323,7 +333,9 @@ switch ($op) {
         }
         array_multisort($types_order, $types);
         foreach ($types as $key => $type) {
-            if (!isset($types_obj[$type["type_id"]])) continue;
+            if (!isset($types_obj[$type["type_id"]])) {
+                continue;
+            }
             $type_obj =& $types_obj[$type["type_id"]];
             echo "<tr class='even' align='left'>";
             echo "<td><input type='text' name='type_order[" . $type["type_id"] . "]' value='" . $type["type_order"] . "' size='10' /></td>";

@@ -39,7 +39,7 @@ newbb_load_object();
  */
 class Nrate extends ArtObject
 {
-    function Nrate()
+    public function Nrate()
     {
         $this->ArtObject("bb_votedata");
         $this->initVar('ratingid', XOBJ_DTYPE_INT);
@@ -59,12 +59,12 @@ class NewbbRateHandler extends ArtObjectHandler
     /**
      * @param $db
      */
-    function NewbbRateHandler(&$db)
+    public function NewbbRateHandler(&$db)
     {
         $this->ArtObjectHandler($db, 'bb_votedata', 'Nrate', 'ratingid');
     }
 
-    function synchronization()
+    public function synchronization()
     {
         return;
     }
@@ -74,7 +74,7 @@ class NewbbRateHandler extends ArtObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix("bb_topics"), "topic_id");
     }

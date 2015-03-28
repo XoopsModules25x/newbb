@@ -23,7 +23,7 @@
 //class Moderate extends ArtObject {
 class Moderate extends XoopsObject
 {
-    function Moderate()
+    public function Moderate()
     {
         $this->XoopsObject();
         $this->initVar('mod_id', XOBJ_DTYPE_INT);
@@ -37,14 +37,23 @@ class Moderate extends XoopsObject
 }
 
 //class NewbbModerateHandler extends ArtObjectHandler
+/**
+ * Class NewbbModerateHandler
+ */
 class NewbbModerateHandler extends XoopsPersistableObjectHandler
 {
-    function __construct(&$db)
+    /**
+     * @param null|object $db
+     */
+    public function __construct(&$db)
     {
         parent::__construct($db, 'bb_moderates', 'Moderate', 'mod_id', 'uid');
     }
 
-    function NewbbModerateHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbModerateHandler(&$db)
     {
         $this->__construct($db);
     }
@@ -56,7 +65,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      *
      * @param int $expire Expiration time in UNIX, 0 for time()
      */
-    function clearGarbage($expire = 0)
+    public function clearGarbage($expire = 0)
     {
         $expire = time() - intval($expire);
         $sql    = sprintf("DELETE FROM %s WHERE mod_end < %u", $this->db->prefix('bb_moderates'), $expire);
@@ -67,15 +76,21 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param int    $uid user id
-     * @param string $ip  user ip
+     * @param int $uid user id
+     * @param string $ip user ip
+     * @param int $forum
+     * @return bool
      */
-    function verifyUser($uid = -1, $ip = "", $forum = 0)
+    public function verifyUser($uid = -1, $ip = "", $forum = 0)
     {
-        if (newbb_isAdmin($forum)) return false; // irmtfan - if user is admin do not suspend
+        if (newbb_isAdmin($forum)) {
+            return false;
+        } // irmtfan - if user is admin do not suspend
         if (!empty($GLOBALS["xoopsModuleConfig"]['cache_enabled'])) {
             $forums = $this->forumList($uid, $ip);
-            if (in_array(0, $forums)) return true; // irmtfan - if user is suspend in All forums
+            if (in_array(0, $forums)) {
+                return true;
+            } // irmtfan - if user is suspend in All forums
 
             return in_array($forum, $forums);
         }
@@ -107,10 +122,11 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Store the list into session if module cache is enabled
      *
      *
-     * @param int    $uid user id
-     * @param string $ip  user ip
+     * @param int $uid user id
+     * @param string $ip user ip
+     * @return array
      */
-    function forumList($uid = -1, $ip = "")
+    public function forumList($uid = -1, $ip = "")
     {
         static $forums = array();
         $uid = ($uid < 0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
@@ -158,8 +174,10 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      *
      *
      * @param mix $item user id or ip
+     * @param bool $isUid
+     * @return int
      */
-    function getLatest($item, $isUid = true)
+    public function getLatest($item, $isUid = true)
     {
         if ($isUid) {
             $criteria = "uid =" . intval($item);
@@ -185,7 +203,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         /* for MySQL 4.1+ */
         if ($this->mysql_major_version() >= 4) {

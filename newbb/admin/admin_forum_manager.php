@@ -93,7 +93,6 @@ switch ($op) {
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
 
         if (XoopsRequest::getString('dest_forum', '', 'POST')) {
-
             $forum_dest =& $forum_handler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
             if (is_object($forum_dest)) {
                 $cid         = $forum_dest->getVar("cat_id");
@@ -126,7 +125,6 @@ switch ($op) {
                 redirect_header('./admin_forum_manager.php?op=manage', 2, _AM_NEWBB_MSG_ERR_FORUM_MOVED);
             }
         } else {
-
             $box = '<select name="dest_forum">';
             $box .= '<option value=0 selected>' . _SELECT . '</option>';
             $box .= newbb_forumSelectBox($forum_id, "all");
@@ -275,7 +273,9 @@ switch ($op) {
             $echo .= "<td></td>";
             $echo .= "<td></td>";
             $echo .= "</tr>";
-            if (!isset($forums[$c])) continue;
+            if (!isset($forums[$c])) {
+                continue;
+            }
             $i = 0;
             foreach (array_keys($forums[$c]) as $f) {
                 $forum        = $forums[$c][$f];

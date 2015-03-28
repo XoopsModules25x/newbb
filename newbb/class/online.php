@@ -14,15 +14,22 @@
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
+/**
+ * Class NewbbOnlineHandler
+ */
 class NewbbOnlineHandler
 {
-    var $db;
-    var $forum_id;
-    var $forum_object;
-    var $topic_id;
-    var $user_ids = array();
+    public $db;
+    public $forum_id;
+    public $forum_object;
+    public $topic_id;
+    public $user_ids = array();
 
-    function init($forum = null, $forumtopic = null)
+    /**
+     * @param null $forum
+     * @param null $forumtopic
+     */
+    public function init($forum = null, $forumtopic = null)
     {
         //$this->db = Database::getInstance();
         $this->db = $GLOBALS['xoopsDB'];
@@ -35,7 +42,9 @@ class NewbbOnlineHandler
         }
         if (is_object($forumtopic)) {
             $this->topic_id = $forumtopic->getVar('topic_id');
-            if (empty($this->forum_id)) $this->forum_id = $forumtopic->getVar('forum_id');
+            if (empty($this->forum_id)) {
+                $this->forum_id = $forumtopic->getVar('forum_id');
+            }
         } else {
             $this->topic_id = intval($forumtopic);
         }
@@ -43,7 +52,7 @@ class NewbbOnlineHandler
         $this->update();
     }
 
-    function update()
+    public function update()
     {
         global $xoopsUser, $xoopsModuleConfig, $xoopsModule;
 
@@ -72,7 +81,10 @@ class NewbbOnlineHandler
         $this->write($uid, $uname, time(), $this->forum_id, $_SERVER['REMOTE_ADDR'], $this->topic_id);
     }
 
-    function render(&$xoopsTpl)
+    /**
+     * @param $xoopsTpl
+     */
+    public function render(&$xoopsTpl)
     {
         mod_loadFunctions("render", "newbb");
         mod_loadFunctions("user", "newbb");
@@ -90,7 +102,9 @@ class NewbbOnlineHandler
         $users_id     = array();
         $users_online = array();
         for ($i = 0; $i < $num_total; ++$i) {
-            if (empty($users[$i]['online_uid'])) continue;
+            if (empty($users[$i]['online_uid'])) {
+                continue;
+            }
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
@@ -130,7 +144,7 @@ class NewbbOnlineHandler
     /**
      * Deprecated
      */
-    function &show_online()
+    public function &show_online()
     {
         mod_loadFunctions("render", "newbb");
         mod_loadFunctions("user", "newbb");
@@ -148,7 +162,9 @@ class NewbbOnlineHandler
         $users_id     = array();
         $users_online = array();
         for ($i = 0; $i < $num_total; ++$i) {
-            if (empty($users[$i]['online_uid'])) continue;
+            if (empty($users[$i]['online_uid'])) {
+                continue;
+            }
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
@@ -190,14 +206,16 @@ class NewbbOnlineHandler
     /**
      * Write online information to the database
      *
-     * @param  int    $uid       UID of the active user
-     * @param  string $uname     Username
-     * @param  string $timestamp
-     * @param  string $forum_id  Current forum_id
-     * @param  string $ip        User's IP adress
-     * @return bool   TRUE on success
+     * @param  int $uid UID of the active user
+     * @param  string $uname Username
+     * @param $time
+     * @param  string $forum_id Current forum_id
+     * @param  string $ip User's IP adress
+     * @param $topic_id
+     * @return bool TRUE on success
+     * @internal param string $timestamp
      */
-    function write($uid, $uname, $time, $forum_id, $ip, $topic_id)
+    public function write($uid, $uname, $time, $forum_id, $ip, $topic_id)
     {
         global $xoopsModule;
 
@@ -224,7 +242,6 @@ class NewbbOnlineHandler
         $mysql_version = substr(trim(mysql_get_server_info()), 0, 3);
         /* for MySQL 4.1+ */
         if ($mysql_version >= "4.1") {
-
             $sql = "DELETE FROM " . $this->db->prefix('bb_online') .
                    " WHERE" .
                    " ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM " . $this->db->prefix('online') . " WHERE online_module =" . $xoopsModule->getVar('mid') . " ) )" .
@@ -257,7 +274,7 @@ class NewbbOnlineHandler
      *
      * @param int $expire Expiration time in seconds
      */
-    function gc($expire)
+    public function gc($expire)
     {
         global $xoopsModule;
         $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - intval($expire));
@@ -273,7 +290,7 @@ class NewbbOnlineHandler
      * @param  object $criteria {@link CriteriaElement}
      * @return array  Array of associative arrays of online information
      */
-    function &getAll($criteria = null)
+    public function &getAll($criteria = null)
     {
         $ret   = array();
         $limit = $start = 0;
@@ -299,7 +316,11 @@ class NewbbOnlineHandler
         return $ret;
     }
 
-    function checkStatus($uids)
+    /**
+     * @param $uids
+     * @return array
+     */
+    public function checkStatus($uids)
     {
         $online_users = array();
         $ret          = array();
@@ -332,8 +353,9 @@ class NewbbOnlineHandler
      * Count the number of online users
      *
      * @param object $criteria {@link CriteriaElement}
+     * @return bool
      */
-    function getCount($criteria = null)
+    public function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('bb_online');
         if (is_object($criteria) && is_subclass_of($criteria, 'criteriaelement')) {

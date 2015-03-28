@@ -71,7 +71,9 @@ if ($xoopsModuleConfig['wol_enabled']) {
 
 if ($ok) {
     $isDeleteOne = (1 == $ok) ? true : false;
-    if ($post_obj->isTopic() && $topic->getVar("topic_replies") == 0) $isDeleteOne = false;
+    if ($post_obj->isTopic() && $topic->getVar("topic_replies") == 0) {
+        $isDeleteOne = false;
+    }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar("topic_replies") > 0) {
         //$post_handler->emptyTopic($post_obj);
         redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_POSTFIRSTWITHREPLYNODELETED);
@@ -83,16 +85,19 @@ if ($ok) {
             if ($senduser->getVar('notify_method') > 0) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
-                if ($senduser->getVar('notify_method') == 1)
+                if (1 == $senduser->getVar('notify_method')) {
                     $xoopsMailer->usePM();
-                else
+                } else {
                     $xoopsMailer->useMail();
+                }
                 $xoopsMailer->setHTML(true);
                 $xoopsMailer->setToUsers($senduser);
                 $xoopsMailer->setFromName($xoopsUser->getVar('uname'));
                 $xoopsMailer->setSubject(_MD_DELEDEDMSG_SUBJECT);
                 $forenurl = "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=" . $post_obj->getVar('topic_id') . "\">" . $post_obj->getVar('subject') . "</a>";
-                if (!empty($xoopsModuleConfig['do_rewrite'])) $forenurl = seo_urls($forenurl);
+                if (!empty($xoopsModuleConfig['do_rewrite'])) {
+                    $forenurl = seo_urls($forenurl);
+                }
                 $body = sprintf(_MD_DELEDEDMSG_BODY, $senduser->getVar('uname'), $forenurl, XoopsRequest::getString('post_text', '', 'POST'), $xoopsUser->getVar('uname'), $xoopsConfig['sitename'], XOOPS_URL . "/");
                 $body = $myts->nl2Br($body);
                 $xoopsMailer->setBody($body);

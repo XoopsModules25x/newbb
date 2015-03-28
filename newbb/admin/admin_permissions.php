@@ -61,7 +61,7 @@ class newbb_XoopsGroupPermForm extends XoopsGroupPermForm
      * @param $permdesc
      * @param string $url
      */
-    function newbb_XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url = "")
+    public function newbb_XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url = "")
     {
         $this->XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url);
     }
@@ -69,7 +69,7 @@ class newbb_XoopsGroupPermForm extends XoopsGroupPermForm
     /**
      * @return string
      */
-    function render()
+    public function render()
     {
         // load all child ids for javascript codes
         foreach (array_keys($this->_itemTree) as $item_id) {
@@ -126,7 +126,7 @@ class newbb_XoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
      * @param $groupId
      * @param null $values
      */
-    function newbb_XoopsGroupFormCheckBox($caption, $name, $groupId, $values = null)
+    public function newbb_XoopsGroupFormCheckBox($caption, $name, $groupId, $values = null)
     {
         $this->XoopsGroupFormCheckBox($caption, $name, $groupId, $values);
     }
@@ -137,12 +137,14 @@ class newbb_XoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
      * @param string $prefix
      * @param array  $parentIds
      */
-    function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
+    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         if ($option['id'] > 0) {
             $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
             foreach ($parentIds as $pid) {
-                if ($pid <= 0) continue;
+                if ($pid <= 0) {
+                    continue;
+                }
                 $parent_ele = $this->getName() . '[groups][' . $this->_groupId . '][' . $pid . ']';
                 $tree .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if (ele.checked != true) {ele.checked = this.checked;}";
             }
@@ -290,9 +292,13 @@ switch ($action) {
         break;
 
     case "apply_save":
-        if (!XoopsRequest::getArray('forums', '', 'POST')) break;
+        if (!XoopsRequest::getArray('forums', '', 'POST')) {
+            break;
+        }
         foreach (XoopsRequest::getArray('forums', '', 'POST') as $forum) {
-            if ($forum < 1) continue;
+            if ($forum < 1) {
+                continue;
+            }
             $newbbperm_handler->applyTemplate($forum, $module_id);
         }
         mod_clearCacheFile("permission", "newbb");

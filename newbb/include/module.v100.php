@@ -29,6 +29,10 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+/**
+ * @param $module
+ * @return bool
+ */
 function xoops_module_update_newbb_v100(&$module)
 {
     $result = $GLOBALS['xoopsDB']->queryF("CREATE TABLE " . $GLOBALS['xoopsDB']->prefix("bb_archive") . "(

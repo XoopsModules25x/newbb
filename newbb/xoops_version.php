@@ -707,13 +707,15 @@ $modversion['config'][] = array(
     'default'     => _MI_DISCLAIMER_TEXT);
 
 $forum_options = array(_NONE => 0);
-if ($isModuleAction && "update_ok" == XoopsRequest::getCmd('op','','POST')) {
+if ($isModuleAction && "update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
     $forum_handler =& xoops_getmodulehandler('forum', 'newbb', true);
     if ($forums = $forum_handler->getForumsByCategory(0, 'access', false, array("parent_forum", "cat_id", "forum_name"))) {
         foreach (array_keys($forums) as $c) {
             foreach (array_keys($forums[$c]) as $f) {
                 $forum_options[$forums[$c][$f]["title"]] = $f;
-                if (!isset($forums[$c][$f]["sub"])) continue;
+                if (!isset($forums[$c][$f]["sub"])) {
+                    continue;
+                }
                 foreach (array_keys($forums[$c][$f]["sub"]) as $s) {
                     $forum_options["-- " . $forums[$c][$f]["sub"][$s]["title"]] = $s;
                 }
@@ -742,7 +744,7 @@ if ($isModuleAction) {
     $dir_def = !empty($pollDirs) ? (!empty($pollDirs["xoopspoll"]) ? $pollDirs["xoopspoll"] : end($pollDirs))
         : 0;
     //Now check all topics and try to find the poll module
-    if ("update_ok" == XoopsRequest::getCmd('op','','POST')) {
+    if ("update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
         $dir_in_update = $topic_handler->findPollModule($pollDirs);
         if (!is_bool($dir_in_update)) {
             $dir_def = $dir_in_update;
@@ -765,7 +767,7 @@ $isPref = (
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' != 0
 xoops_load('XoopsRequest');
-if ($isPref && XoopsRequest::getInt('poll_module',0, 'POST')) {
+if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $hModConfig = xoops_gethandler('config');
     $criteria   = new CriteriaCompo();
     $criteria->add(new Criteria('conf_name', "poll_module", "="), "AND");

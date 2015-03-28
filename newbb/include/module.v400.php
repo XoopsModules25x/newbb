@@ -8,6 +8,8 @@
  * @since        4.00
  * @version        $Id $
  * @package        module::newbb
+ * @param XoopsModule $module
+ * @return bool
  */
 
 function xoops_module_update_newbb_v400(XoopsModule &$module)
@@ -93,7 +95,9 @@ function xoops_module_update_newbb_v400(XoopsModule &$module)
             xoops_error($GLOBALS['xoopsDB']->error());
         }
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            if (empty($myrow["topic_tags"])) continue;
+            if (empty($myrow["topic_tags"])) {
+                continue;
+            }
             $tag_handler->updateByItem($myrow["topic_tags"], $myrow["topic_id"], $module->getVar("mid"));
         }
     }

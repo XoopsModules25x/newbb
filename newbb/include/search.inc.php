@@ -13,6 +13,18 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
+/**
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ * @param int $forums
+ * @param int $sortby
+ * @param string $searchin
+ * @param string $criteriaExtra
+ * @return array
+ */
 function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = "both", $criteriaExtra = "")
 {
     global $myts;

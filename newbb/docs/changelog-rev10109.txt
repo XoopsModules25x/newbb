@@ -13,6 +13,7 @@ date 2013-05-28
 2- improve:  rewrite forum cleanOrphan function. add parent_forum and cat_id orphan check in newbb/class/forum.php
 3- enhance: rewrite admin > sync and recon functions. remove hard-codes access to db. in newbb/admin/admin_synchronization.php and newbb/include/functions.recon.php
 4- improve:  irmtfan - move cleanOrphan to synchronization function  in newbb/include/functions.recon.php and newbb/class/topic.php
+
 date 2013-05-25
 ===================================
 1- improve: add $formtype = "hidden" | "select" for poll_module config to be effect in Onupdate process. in newbb/xoops_version.php
@@ -62,8 +63,8 @@ date 2013-05-19
 date 2013-05-14
 ===================================
 1- add: itemId($item_name) plugin: any module can define a plugin to get its itemId based on item_name. now newbb:
-		In newbb > viewtopic.php the topic_id is not always in the URL $_REQUEST.
-		in newbb/class/plugin/userlog.php (2013/05/14)
+In newbb > viewtopic.php the topic_id is not always in the URL $_REQUEST.
+in newbb/class/plugin/userlog.php (2013/05/14)
 
 date 2013-04-23
 ===================================
@@ -87,14 +88,14 @@ date 2013-04-17
 date 2013-04-15
 ===================================
 1- improve: add anon users to topic poster and last poster in NewbbTopicRenderer class (used in block and list.topic.php)
-newbb/class/topic.renderer.php, newbb/xoops_version.php,
-newbb/list.topic.php, newbb/blocks/list_topic.php
+   newbb/class/topic.renderer.php, newbb/xoops_version.php,
+   newbb/list.topic.php, newbb/blocks/list_topic.php
 
 date 2013-02-11
 ===================================
 1- improve: add multi topic poster and multi last poster to NewbbTopicRenderer class (used in block and list.topic.php)
-newbb/class/topic.renderer.php, newbb/xoops_version.php,
-newbb/list.topic.php, newbb/blocks/list_topic.php
+   newbb/class/topic.renderer.php, newbb/xoops_version.php,
+   newbb/list.topic.php, newbb/blocks/list_topic.php
 
 2- improve and fix: multi status and multi display header in NewbbTopicRenderer class
 newbb/class/topic.renderer.php, newbb/list.topic.php, newbb/blocks/list_topic.php
@@ -102,15 +103,15 @@ newbb/class/topic.renderer.php, newbb/list.topic.php, newbb/blocks/list_topic.ph
 date 2013-02-07
 ===================================
 1- improve: enhance the advance block. add more sorts: lastposttime, lastposter, lastpostmsgicon . add more display mode: attachment, read, pagenav
-newbb/class/topic.renderer.php, newbb/xoops_version.php,
-	newbb/blocks/list_topic.php, newbb/templates/blocks/newbb_block_list_topic.html, newbb/templates_fulldiv_opacity/blocks/newbb_block_list_topic.html
-	newbb/language/LANG/main.php, newbb/docs/lang_diff.txt
+   newbb/class/topic.renderer.php, newbb/xoops_version.php,
+   newbb/blocks/list_topic.php, newbb/templates/blocks/newbb_block_list_topic.html, newbb/templates_fulldiv_opacity/blocks/newbb_block_list_topic.html
+   newbb/language/LANG/main.php, newbb/docs/lang_diff.txt
 
 2- change default from sticky to lastpost
-newbb/class/topic.renderer.php
+   newbb/class/topic.renderer.php
 
 3- bug fix: read status: read topics do not show for readmode = 1 in list.topic.php
-newbb/class/topic.renderer.php
+   newbb/class/topic.renderer.php
 
 date 2013-02-06
 ===================================
@@ -138,18 +139,18 @@ in newbb/class/topic.renderer.php
 in newbb/class/topic.renderer.php
 
 5- feature add: NewbbTopicRenderer class can accept multiple status. more status and sort is added.
-			status supproted: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin)
+status supproted: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin)
 in newbb/class/topic.renderer.php
 
 6- feature add: add "topic_title_excerpt" setting. render topics with the specific title length. 0 = dont excerpt and show the whole topic title.
-in newbb/include/plugin.php, newbb/class/topic.renderer.php
+   in newbb/include/plugin.php, newbb/class/topic.renderer.php
 
 7- feature add: a new block for topics using NewbbTopicRenderer class.
-			   users can drop old "Recent Topics" and "Recent Replied Topics" block and use this block instead.
+   users can drop old "Recent Topics" and "Recent Replied Topics" block and use this block instead.
 in newbb/xoops_version.php, newbb/language/LANG/main.php, newbb/language/LANG/blocks.php, newbb/language/LANG/modinfo.php, newbb/docs/lang_diff.txt
 newbb/list.topic.php,
 add: newbb/blocks/list_topic.php, newbb/templates/blocks/newbb_block_list_topic.html, newbb/templates/js/language/english/newbb_validation.js
-	 newbb/templates_fulldiv_opacity/blocks/newbb_block_list_topic.html, newbb/templates_fulldiv_opacity/js/language/english/newbb_validation.js
+     newbb/templates_fulldiv_opacity/blocks/newbb_block_list_topic.html, newbb/templates_fulldiv_opacity/js/language/english/newbb_validation.js
 
 8- fix: remove hardcoded items from topic_icon and topic_folder smarty and add sticky, digest, poll, lock, publish time and rating smarty 
 in newbb/templates_fulldiv_opacity/viewall.html, in newbb/templates/viewall.html

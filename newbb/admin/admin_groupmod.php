@@ -35,7 +35,9 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname"
 if (!$newXoopsModuleGui) {
     //loadModuleAdminMenu(10,_AM_NEWBB_GROUPMOD_TITLE);
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_GROUPMOD_TITLE . "</legend>";
-} else echo $indexAdmin->addNavigation('admin_groupmod.php');
+} else {
+    echo $indexAdmin->addNavigation('admin_groupmod.php');
+}
 $member_handler =& xoops_gethandler('member');
 $forum_handler  = &xoops_getmodulehandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
@@ -47,7 +49,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             foreach ($fgroups as $k) {
                 $gg = &$member_handler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
-                    if (!in_array($f, $fuser)) $fuser[] = $f;
+                    if (!in_array($f, $fuser)) {
+                        $fuser[] = $f;
+                    }
                 }
             }
         }
@@ -77,7 +81,9 @@ $forums     = $forum_handler->getTree(array_keys($categories), 0, 'all', "&nbsp;
 echo '<select name="forenid">';
 echo '<option value="-1">-- ' . _AM_NEWBB_GROUPMOD_ALLFORUMS . ' --</option>';
 foreach (array_keys($categories) as $c) {
-    if (!isset($forums[$c])) continue;
+    if (!isset($forums[$c])) {
+        continue;
+    }
     $i = 0;
     foreach ($forums[$c] as $key => $forum) {
         echo '<option value="' . $forum['forum_id'] . '"> ' . $categories[$c]->getVar("cat_title") . "::" . $forum['forum_name'] . '</option>';

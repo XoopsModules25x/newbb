@@ -15,7 +15,7 @@
 defined("NEWBB_FUNCTIONS_INI") || include __DIR__ . "/functions.ini.php";
 define("NEWBB_FUNCTIONS_LOADED", true);
 
-IF (!defined("NEWBB_FUNCTIONS")) {
+if (!defined("NEWBB_FUNCTIONS")) {
     define("NEWBB_FUNCTIONS", 1);
 
     load_functions();
@@ -25,5 +25,4 @@ IF (!defined("NEWBB_FUNCTIONS")) {
     mod_loadFunctions("forum", "newbb");
     mod_loadFunctions("session", "newbb");
     mod_loadFunctions("stats", "newbb");
-
 }

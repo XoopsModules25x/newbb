@@ -78,7 +78,9 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
                 $value = implode('<br />', array_values($value));
             }
 
-            if (empty($value)) continue;
+            if (empty($value)) {
+                continue;
+            }
             $categories[$catid]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
             $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? intval($fieldcats[$fields[$i]->getVar('fieldid')]['field_weight']) : 1;
         }
@@ -99,7 +101,9 @@ foreach ($categories as $category) {
     if (isset($category["fields"])) {
         $message .= "\n\n" . $category["cat_title"] . ":\n\n";
         foreach ($category["fields"] as $field) {
-            if (empty($field["value"])) continue;
+            if (empty($field["value"])) {
+                continue;
+            }
             $message .= $field["title"] . ": " . $field["value"] . "\n";
         }
     }

@@ -102,7 +102,7 @@ switch ($status) {
                 $join                 = ' LEFT JOIN ' . $xoopsDB->prefix('bb_reads_topic') . ' AS r ON r.read_item = p.topic_id AND r.uid = ' . $read_uid . ' '; // irmtfan corrected add AS
                 $criteria_status_post = new CriteriaCompo();// irmtfan new criteria
                 $criteria_status_post->add(new Criteria("p.post_id", "r.`post_id`", ">")); // irmtfan corrected - should use $value="r.``" to render in XOOPS/class/criteria.php
-                $criteria_status_post->add(new Criteria("r.read_id", NULL, "IS NULL"), "OR");// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
+                $criteria_status_post->add(new Criteria("r.read_id", null, "IS NULL"), "OR");// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
                 $criteria_post->add($criteria_status_post); // irmtfan add the status criteria to post criteria - move here
                 $criteria_count =& $criteria_post;// irmtfan criteria count is equal to criteria post - move here
             } else {
@@ -118,7 +118,9 @@ switch ($status) {
             $topic_lastread = newbb_getcookie('LT', true);
             if (count($topic_lastread) > 0) {
                 foreach ($topic_lastread as $id => $time) {
-                    if ($time > intval($last_visit)) $topics[] = $id;
+                    if ($time > intval($last_visit)) {
+                        $topics[] = $id;
+                    }
                 }
             }
             if (count($topics) > 0) {
@@ -148,15 +150,17 @@ if ('compact' == XoopsRequest::getString('viewmode', '', 'GET')) {
     newbb_setcookie("V", "compact", $forumCookie['expire']);
 }
 
-$viewmode = XoopsRequest::getString('viewmode', (!empty($viewmode_cookie) ? $viewmode_cookie : (@$valid_modes[$xoopsModuleConfig['view_mode'] - 1] )), 'GET');
+$viewmode = XoopsRequest::getString('viewmode', (!empty($viewmode_cookie) ? $viewmode_cookie : (@$valid_modes[$xoopsModuleConfig['view_mode'] - 1])), 'GET');
 $viewmode = in_array($viewmode, $valid_modes) ? $viewmode : $valid_modes[0];
 
 $postCount = $post_handler->getPostCount($criteria_count, $join);// irmtfan add join for read_mode = 2
 $posts     = $post_handler->getPostsByLimit($criteria_post, $post_perpage, $start, $join);// irmtfan add join for read_mode = 2
 
 $poster_array = array();
-if (count($posts) > 0) foreach (array_keys($posts) as $id) {
-    $poster_array[$posts[$id]->getVar('uid')] = 1;
+if (count($posts) > 0) {
+    foreach (array_keys($posts) as $id) {
+        $poster_array[$posts[$id]->getVar('uid')] = 1;
+    }
 }
 
 $xoops_pagetitle                = $xoopsModule->getVar('name') . ' - ' . _MD_VIEWALLPOSTS;
@@ -250,11 +254,13 @@ foreach (array_keys($posts) as $id) {
     }
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
-    } else $poster = array(
+    } else {
+        $poster = array(
         'uid'  => 0,
         'name' => $post->getVar('poster_name') ? $post->getVar('poster_name') : $myts->HtmlSpecialChars($xoopsConfig['anonymous']),
         'link' => $post->getVar('poster_name') ? $post->getVar('poster_name') : $myts->HtmlSpecialChars($xoopsConfig['anonymous'])
     );
+    }
     if ($isadmin || $post->checkIdentity()) {
         $post_text       = $post->getVar('post_text');
         $post_attachment = $post->displayAttachment();
@@ -275,7 +281,6 @@ foreach (array_keys($posts) as $id) {
     $thread_buttons = array();
 
     if ($GLOBALS["xoopsModuleConfig"]['enable_permcheck']) {
-
         if (!isset($suspension[$post->getVar('forum_id')])) {
             $moderate_handler                      =& xoops_getmodulehandler('moderate', 'newbb');
             $suspension[$post->getVar('forum_id')] = $moderate_handler->verifyUser(-1, "", $post->getVar('forum_id'));
@@ -303,9 +308,7 @@ foreach (array_keys($posts) as $id) {
             $thread_buttons['quote']['image'] = newbb_displayImage('p_quote', _MD_QUOTE);
             $thread_buttons['quote']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id') . "&amp;quotedac=1";
             $thread_buttons['quote']['name']  = _MD_QUOTE;
-
         }
-
     } else {
         $thread_buttons['delete']['image'] = newbb_displayImage('p_delete', _DELETE);
         $thread_buttons['delete']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/delete.php?forum=" . $post->getVar('forum_id') . "&amp;topic_id=" . $post->getVar('topic_id');
@@ -357,15 +360,16 @@ if (!empty($xoopsModuleConfig['show_jump'])) {
 }
 
 if ($postCount > $post_perpage) {
-//    include $GLOBALS['xoops']->path('class/pagenav.php');
+    //    include $GLOBALS['xoops']->path('class/pagenav.php');
     $nav = new XoopsPageNav($postCount, $post_perpage, $start, "start", 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . "&amp;mode=" . $mode);
     //if (isset($xoopsModuleConfig['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . $nav->url;
-    if ($xoopsModuleConfig['pagenav_display'] == 'select')
+    if ($xoopsModuleConfig['pagenav_display'] == 'select') {
         $navi = $nav->renderSelect();
-    elseif ($xoopsModuleConfig['pagenav_display'] == 'bild')
+    } elseif ($xoopsModuleConfig['pagenav_display'] == 'bild') {
         $navi = $nav->renderImageNav(4);
-    else
+    } else {
         $navi = $nav->renderNav(4);
+    }
 
     $xoopsTpl->assign('pagenav', $navi);
 } else {

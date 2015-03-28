@@ -58,7 +58,9 @@ if (!empty($error_msg)) {
     $query_vars  = array("topic_id", "post_id", "forum", "status", "order", "mode", "viewmode");
     $query_array = array();
     foreach ($query_vars as $var) {
-        if (XoopsRequest::getString($var, '', 'GET')) $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+        if (XoopsRequest::getString($var, '', 'GET')) {
+            $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+        }
     }
     $page_query = htmlspecialchars(implode("&", array_values($query_array)));
     unset($query_array);

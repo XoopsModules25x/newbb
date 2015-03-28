@@ -37,7 +37,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     foreach (array('topic_id') as $getint) {
         ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// intval(@$_POST[$getint]);
     }
-    if (!is_array($topic_id)) $topic_id = array($topic_id);
+    if (!is_array($topic_id)) {
+        $topic_id = array($topic_id);
+    }
 } else {
     foreach (array('forum', 'topic_id') as $getint) {
         ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');// intval(@$_GET[$getint]);
@@ -91,7 +93,7 @@ $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;
 include_once $GLOBALS['xoops']->path('header.php');
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
-    $mode = XoopsRequest::getString('mode','','POST');// $_POST['mode'];
+    $mode = XoopsRequest::getString('mode', '', 'POST');// $_POST['mode'];
 
     if ('delete' == $mode) {
         foreach ($topic_id as $tid) {
@@ -130,7 +132,6 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewtopic.php?topic_id=$restoretopic_id'>" . _MD_VIEWTHETOPIC . "</a></p>" .
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . "</a></p>" .
              "<p><a href='index.php'>" . _MD_RETURNFORUMINDEX . "</a></p>";
-
     } elseif ('merge' == $mode) {
         $post_handler =& xoops_getmodulehandler('post', 'newbb');
         $rate_handler =& xoops_getmodulehandler('rate', 'newbb');
@@ -246,7 +247,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewtopic.php?topic_id=$topic_id&amp;forum=$forum'>" . _MD_VIEWTHETOPIC . "</a></p><p><a href='" . XOOPS_URL . "/modules/newbb/viewforum.php?forum=$forum'>" . _MD_RETURNFORUMINDEX . "</a></p>";
     }
 } else {  // No submit
-    $mode = XoopsRequest::getString('mode','','GET'); //$_GET['mode'];
+    $mode = XoopsRequest::getString('mode', '', 'GET'); //$_GET['mode'];
     echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='post'>";
     echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
     echo "<tr><td class='bg2'>";
@@ -267,7 +268,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                 $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . "]</option>";
                 foreach ($forums[$key] as $forumid => $_forum) {
                     $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . "</option>";
-                    if (!isset($_forum["sub"])) continue;
+                    if (!isset($_forum["sub"])) {
+                        continue;
+                    }
                     foreach (array_keys($_forum["sub"]) as $fid) {
                         $box .= "<option value='" . $fid . "'>---- " . $_forum["sub"][$fid]['title'] . "</option>";
                     }

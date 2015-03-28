@@ -120,14 +120,24 @@ if (!empty($forums_available)) {
     $newposts = $post_handler->getCount($crit);
 }
 
-if ($newtopics > 0) $xoopsTpl->assign('wait_new_topic', $newtopics);
-if ($deletetopics > 0) $xoopsTpl->assign('delete_topic', $deletetopics);
-if ($newposts > 0) $xoopsTpl->assign('wait_new_post', $newposts);
-if ($deleteposts > 0) $xoopsTpl->assign('delete_post', $deleteposts);
+if ($newtopics > 0) {
+    $xoopsTpl->assign('wait_new_topic', $newtopics);
+}
+if ($deletetopics > 0) {
+    $xoopsTpl->assign('delete_topic', $deletetopics);
+}
+if ($newposts > 0) {
+    $xoopsTpl->assign('wait_new_post', $newposts);
+}
+if ($deleteposts > 0) {
+    $xoopsTpl->assign('delete_post', $deleteposts);
+}
 
 $report_handler = xoops_getmodulehandler('report', 'newbb');
 $reported       = $report_handler->getCount(new Criteria("report_result", 0));
-if ($reported > 0) $xoopsTpl->assign('report_post', sprintf(_MD_NEWBB_SEEWAITREPORT, $reported));
+if ($reported > 0) {
+    $xoopsTpl->assign('report_post', sprintf(_MD_NEWBB_SEEWAITREPORT, $reported));
+}
 
 if (count($forums_array) > 0) {
     foreach ($forums_array[0] as $parent => $forum) {
@@ -169,9 +179,13 @@ foreach (array_keys($categories) as $id) {
 
     $cat_sponsor = array();
     @list($url, $title) = array_map("trim", preg_split("/ /", $onecat['cat_url'], 2));
-    if (empty($title)) $title = $url;
+    if (empty($title)) {
+        $title = $url;
+    }
     $title = $myts->htmlSpecialChars($title);
-    if (!empty($url)) $cat_sponsor = array("title" => $title, "link" => formatURL($url));
+    if (!empty($url)) {
+        $cat_sponsor = array("title" => $title, "link" => formatURL($url));
+    }
     $cat_image = $onecat['cat_image'];
     if (!empty($cat_image) && $cat_image != "blank.gif") {
         $cat_image = XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname", "n") . "/assets/images/category/" . $cat_image;

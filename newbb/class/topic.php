@@ -15,14 +15,20 @@
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
+/**
+ * Class Topic
+ */
 class Topic extends ArtObject
 {
-    function Topic()
+    public function Topic()
     {
         $this->__construct();
     }
 
-    function __construct()
+    /**
+     *
+     */
+    public function __construct()
     {
         $this->ArtObject("bb_topics");
         $this->initVar('topic_id', XOBJ_DTYPE_INT);
@@ -48,7 +54,7 @@ class Topic extends ArtObject
     }
 
     // irmtfan add LAST_INSERT_ID to enhance the mysql performances
-    function incrementCounter()
+    public function incrementCounter()
     {
         $sql = 'UPDATE ' . $GLOBALS["xoopsDB"]->prefix('bb_topics') . ' SET topic_views = LAST_INSERT_ID(topic_views + 1) WHERE topic_id =' . $this->getVar('topic_id');
         $GLOBALS["xoopsDB"]->queryF($sql);
@@ -60,12 +66,16 @@ class Topic extends ArtObject
      * the title is composed of [type_name] if type_id is greater than 0 plus topic_title
      *
      */
-    function getFullTitle()
+    public function getFullTitle()
     {
         $topic_title = $this->getVar("topic_title");
-        if (!$this->getVar("type_id")) return $topic_title;
+        if (!$this->getVar("type_id")) {
+            return $topic_title;
+        }
         $type_handler =& xoops_getmodulehandler('type', 'newbb');
-        if (!$type_obj =& $type_handler->get($this->getVar("type_id"))) return $topic_title;
+        if (!$type_obj =& $type_handler->get($this->getVar("type_id"))) {
+            return $topic_title;
+        }
 
         mod_loadFunctions("topic", "newbb");
 
@@ -87,7 +97,9 @@ class Topic extends ArtObject
             return $classPoll;
         }
         $newbbConfig = newbb_load_config();
-        if (!empty($pollModule)) $newbbConfig["poll_module"] = $pollModule;
+        if (!empty($pollModule)) {
+            $newbbConfig["poll_module"] = $pollModule;
+        }
         $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig["poll_module"] . "/class/" . $newbbConfig["poll_module"]);
         include_once $relPath . ".php";
         include_once $relPath . "option.php";
@@ -115,11 +127,15 @@ class Topic extends ArtObject
      */
     public function deletePoll($poll_id)
     {
-        if (empty($poll_id)) return false;
+        if (empty($poll_id)) {
+            return false;
+        }
         $module_handler    = &xoops_gethandler('module');
         $newbbConfig       = newbb_load_config();
         $pollModuleHandler =& $module_handler->getByDirname($newbbConfig["poll_module"]);
-        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) return false;
+        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
+            return false;
+        }
         // new xoopspoll module
         if ($pollModuleHandler->getVar("version") >= 140) {
             $poll_handler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
@@ -158,13 +174,19 @@ class Topic extends ArtObject
      */
     public function getPoll($poll_id, $pollModule = null)
     {
-        if (empty($poll_id)) return false;
+        if (empty($poll_id)) {
+            return false;
+        }
         $module_handler = &xoops_gethandler('module');
         $newbbConfig    = newbb_load_config();
-        if (!empty($pollModule)) $newbbConfig["poll_module"] = $pollModule;
+        if (!empty($pollModule)) {
+            $newbbConfig["poll_module"] = $pollModule;
+        }
 
         $pollModuleHandler =& $module_handler->getByDirname($newbbConfig["poll_module"]);
-        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) return false;
+        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
+            return false;
+        }
         // new xoopspoll module
         if ($pollModuleHandler->getVar("version") >= 140) {
             $poll_handler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
@@ -180,14 +202,25 @@ class Topic extends ArtObject
     // END irmtfan add getPoll function
 }
 
+/**
+ * Class NewbbTopicHandler
+ */
 class NewbbTopicHandler extends ArtObjectHandler
 {
-    function NewbbTopicHandler($db)
+    /**
+     * @param $db
+     */
+    public function NewbbTopicHandler($db)
     {
         $this->ArtObjectHandler($db, 'bb_topics', 'Topic', 'topic_id', 'topic_title');
     }
 
-    function &get($id, $var = null)
+    /**
+     * @param mixed $id
+     * @param null $var
+     * @return mixed|null
+     */
+    public function &get($id, $var = null)
     {
         $ret = null;
         if (!empty($var) && is_string($var)) {
@@ -207,7 +240,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $ret;
     }
 
-    function insert(&$object, $force = true)
+    /**
+     * @param object $object
+     * @param bool $force
+     * @return mixed
+     */
+    public function insert(&$object, $force = true)
     {
         if (!$object->getVar("topic_time")) {
             $object->setVar("topic_time", time());
@@ -226,7 +264,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $object->getVar("topic_id");
     }
 
-    function approve(&$object, $force = false)
+    /**
+     * @param $object
+     * @param bool $force
+     * @return bool
+     */
+    public function approve(&$object, $force = false)
     {
         $topic_id = $object->getVar("topic_id");
         if ($force) {
@@ -266,8 +309,9 @@ class NewbbTopicHandler extends ArtObjectHandler
      *                          <li> <= 0: global </li>
      *                          </ul>
      * @access public
+     * @return mixed|null|object
      */
-    function &getByMove($topic_id, $action, $forum_id = 0)
+    public function &getByMove($topic_id, $action, $forum_id = 0)
     {
         $topic = null;
         if (!empty($action)) {
@@ -290,7 +334,11 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $topic;
     }
 
-    function &getByPost($post_id)
+    /**
+     * @param $post_id
+     * @return null|object
+     */
+    public function &getByPost($post_id)
     {
         $topic  = null;
         $sql    = "SELECT t.* FROM " . $this->db->prefix('bb_topics') . " t, " . $this->db->prefix('bb_posts') . " p
@@ -307,7 +355,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $topic;
     }
 
-    function getPostCount(&$topic, $type = "")
+    /**
+     * @param $topic
+     * @param string $type
+     * @return mixed
+     */
+    public function getPostCount(&$topic, $type = "")
     {
         switch ($type) {
             case "pending":
@@ -328,7 +381,11 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $count;
     }
 
-    function &getTopPost($topic_id)
+    /**
+     * @param $topic_id
+     * @return null
+     */
+    public function &getTopPost($topic_id)
     {
         $post = null;
         $sql  = "SELECT p.*, t.* FROM " . $this->db->prefix('bb_posts') . " p,
@@ -350,7 +407,11 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $post;
     }
 
-    function getTopPostId($topic_id)
+    /**
+     * @param $topic_id
+     * @return bool
+     */
+    public function getTopPostId($topic_id)
     {
         $sql    = "SELECT MIN(post_id) AS post_id FROM " . $this->db->prefix('bb_posts') . " WHERE topic_id = " . $topic_id . " AND pid = 0";
         $result = $this->db->query($sql);
@@ -363,7 +424,16 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $post_id;
     }
 
-    function &getAllPosts(&$topic, $order = "ASC", $perpage = 10, &$start, $post_id = 0, $type = "")
+    /**
+     * @param $topic
+     * @param string $order
+     * @param int $perpage
+     * @param $start
+     * @param int $post_id
+     * @param string $type
+     * @return array
+     */
+    public function &getAllPosts(&$topic, $order = "ASC", $perpage = 10, &$start, $post_id = 0, $type = "")
     {
         global $xoopsModuleConfig;
 
@@ -417,7 +487,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $ret;
     }
 
-    function &getPostTree(&$postArray, $pid = 0)
+    /**
+     * @param $postArray
+     * @param int $pid
+     * @return mixed
+     */
+    public function &getPostTree(&$postArray, $pid = 0)
     {
         include_once $GLOBALS['xoops']->path('modules/newbb/class/newbbtree.php');
         $NewBBTree = new NewBBTree('bb_posts');
@@ -428,7 +503,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $postsArray;
     }
 
-    function showTreeItem(&$topic, &$postArray)
+    /**
+     * @param $topic
+     * @param $postArray
+     * @return mixed
+     */
+    public function showTreeItem(&$topic, &$postArray)
     {
         global $xoopsConfig, $xoopsModuleConfig, $viewtopic_users, $myts;
 
@@ -445,8 +525,9 @@ class NewbbTopicHandler extends ArtObjectHandler
         $isActiveUser = false;
         if (isset($viewtopic_users[$postArray['uid']]['name'])) {
             $postArray['poster'] = $viewtopic_users[$postArray['uid']]['name'];
-            if ($postArray['uid'] > 0)
+            if ($postArray['uid'] > 0) {
                 $postArray['poster'] = "<a href=\"" . XOOPS_URL . "/userinfo.php?uid=" . $postArray['uid'] . "\">" . $viewtopic_users[$postArray['uid']]['name'] . "</a>";
+            }
         } else {
             $postArray['poster'] = (empty($postArray['poster_name'])) ? $myts->HtmlSpecialChars($xoopsConfig['anonymous']) : $postArray['poster_name'];
         }
@@ -454,10 +535,17 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $postArray;
     }
 
-    function &getAllPosters(&$topic, $isApproved = true)
+    /**
+     * @param $topic
+     * @param bool $isApproved
+     * @return array
+     */
+    public function &getAllPosters(&$topic, $isApproved = true)
     {
         $sql = 'SELECT DISTINCT uid FROM ' . $this->db->prefix('bb_posts') . "  WHERE topic_id=" . $topic->getVar('topic_id') . " AND uid>0";
-        if ($isApproved) $sql .= ' AND approved = 1';
+        if ($isApproved) {
+            $sql .= ' AND approved = 1';
+        }
         $result = $this->db->query($sql);
         if (!$result) {
             //xoops_error($this->db->error());
@@ -471,7 +559,12 @@ class NewbbTopicHandler extends ArtObjectHandler
         return $ret;
     }
 
-    function delete(&$topic, $force = true)
+    /**
+     * @param object $topic
+     * @param bool $force
+     * @return bool
+     */
+    public function delete(&$topic, $force = true)
     {
         $topic_id = is_object($topic) ? $topic->getVar("topic_id") : intval($topic);
         if (empty($topic_id)) {
@@ -492,20 +585,29 @@ class NewbbTopicHandler extends ArtObjectHandler
     // get permission
     // parameter: $type: 'post', 'view',  'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach'
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
-    function getPermission($forum, $topic_locked = 0, $type = "view")
+    /**
+     * @param $forum
+     * @param int $topic_locked
+     * @param string $type
+     * @return bool
+     */
+    public function getPermission($forum, $topic_locked = 0, $type = "view")
     {
         global $xoopsUser, $xoopsModule;
         static $_cachedTopicPerms;
         mod_loadFunctions("user", "newbb");
-        if (newbb_isAdmin($forum)) return true;
+        if (newbb_isAdmin($forum)) {
+            return true;
+        }
 
         $forum_id = is_object($forum) ? $forum->getVar('forum_id') : intval($forum);
-        if ($forum_id < 1) return false;
+        if ($forum_id < 1) {
+            return false;
+        }
 
         if ($topic_locked && 'view' != $type) {
             $permission = false;
         } else {
-
             $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
             $permission   = $perm_handler->getPermission("forum", $type, $forum_id);
         }
@@ -518,7 +620,7 @@ class NewbbTopicHandler extends ArtObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         $this->deleteAll(new Criteria("topic_time", 0), true, true);
         parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id");
@@ -533,7 +635,7 @@ class NewbbTopicHandler extends ArtObjectHandler
      * @param  int  $expire time limit for expiration
      * @return bool true on success
      */
-    function cleanExpires($expire = 0)
+    public function cleanExpires($expire = 0)
     {
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
@@ -541,7 +643,9 @@ class NewbbTopicHandler extends ArtObjectHandler
             $expire      = isset($newbbConfig["pending_expire"]) ? intval($newbbConfig["pending_expire"]) : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
-        if (empty($expire)) return false;
+        if (empty($expire)) {
+            return false;
+        }
         $crit_expire = new CriteriaCompo(new Criteria("approved", 0, "<="));
         $crit_expire->add(new Criteria("topic_time", time() - intval($expire), "<"));
 
@@ -549,19 +653,28 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     // START irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
-    function synchronization($object = NULL, $force = true)
+    /**
+     * @param null $object
+     * @param bool $force
+     * @return bool
+     */
+    public function synchronization($object = null, $force = true)
     {
         if (!is_object($object)) {
             $object =& $this->get(intval($object));
         }
-        if (!$object->getVar("topic_id")) return false;
+        if (!$object->getVar("topic_id")) {
+            return false;
+        }
 
         $post_handler =& xoops_getmodulehandler('post', 'newbb');
         $criteria     = new CriteriaCompo();
         $criteria->add(new criteria("topic_id", $object->getVar("topic_id")), "AND");
         $criteria->add(new criteria("approved", 1), "AND");
         $post_ids = $post_handler->getIds($criteria);
-        if (empty($post_ids)) return false;
+        if (empty($post_ids)) {
+            return false;
+        }
         $last_post     = max($post_ids);
         $top_post      = min($post_ids);
         $topic_replies = count($post_ids) - 1;
@@ -615,12 +728,18 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function findPollModule($pollDirs = array())
     {
-        if (empty($pollDirs)) $pollDirs = $this->getActivePolls();
-        if (empty($pollDirs)) return true;
+        if (empty($pollDirs)) {
+            $pollDirs = $this->getActivePolls();
+        }
+        if (empty($pollDirs)) {
+            return true;
+        }
         // if only one active poll module still we need to check!!!
         //if(count($pollDirs) == 1) return end($pollDirs);
         $topicPollObjs = $this->getAll(new Criteria("topic_haspoll", 1), array("topic_id", "poll_id"));
-        if (empty($topicPollObjs)) return true; // no poll or no topic!!!
+        if (empty($topicPollObjs)) {
+            return true;
+        } // no poll or no topic!!!
         foreach ($topicPollObjs as $tObj) {
             $poll_idInMod = 0;
             foreach ($pollDirs as $dirname) {

@@ -40,13 +40,16 @@ include_once __DIR__ . '/read.php';
  */
 class Readtopic extends Read
 {
-    function Readtopic()
+    public function Readtopic()
     {
         $this->Read("topic");
         //$this->initVar('forum_id', XOBJ_DTYPE_INT);
     }
 }
 
+/**
+ * Class NewbbReadtopicHandler
+ */
 class NewbbReadtopicHandler extends NewbbReadHandler
 {
     /**
@@ -55,9 +58,12 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      *
      * @var integer
      */
-    var $items_per_forum;
+    public $items_per_forum;
 
-    function NewbbReadtopicHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbReadtopicHandler(&$db)
     {
         $this->NewbbReadHandler($db, "topic");
         $newbbConfig           = newbb_load_config();
@@ -69,7 +75,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
 
@@ -81,7 +87,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      *
      * Delete all expired and duplicated records
      */
-    function clearGarbage()
+    public function clearGarbage()
     {
         parent::clearGarbage();
 
@@ -89,15 +95,31 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         return true;
     }
 
-    function setRead_items($status = 0, $forum_id = 0, $uid = null)
+    /**
+     * @param int $status
+     * @param int $forum_id
+     * @param null $uid
+     * @return bool
+     */
+    public function setRead_items($status = 0, $forum_id = 0, $uid = null)
     {
-        if (empty($this->mode)) return true;
+        if (empty($this->mode)) {
+            return true;
+        }
 
-        if ($this->mode == 1) return $this->setRead_items_cookie($status, $forum_id);
-        else return $this->setRead_items_db($status, $forum_id, $uid);
+        if ($this->mode == 1) {
+            return $this->setRead_items_cookie($status, $forum_id);
+        } else {
+            return $this->setRead_items_db($status, $forum_id, $uid);
+        }
     }
 
-    function setRead_items_cookie($status, $forum_id)
+    /**
+     * @param $status
+     * @param $forum_id
+     * @return bool
+     */
+    public function setRead_items_cookie($status, $forum_id)
     {
         $cookie_name = "LT";
         $cookie_vars = newbb_getcookie($cookie_name, true);
@@ -111,7 +133,9 @@ class NewbbReadtopicHandler extends NewbbReadHandler
 
         foreach ($items as $var) {
             if (empty($status)) {
-                if (isset($cookie_vars[$var])) unset($cookie_vars[$var]);
+                if (isset($cookie_vars[$var])) {
+                    unset($cookie_vars[$var]);
+                }
             } else {
                 $cookie_vars[$var] = time() /*$items[$var]*/;
             }
@@ -121,7 +145,13 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         return true;
     }
 
-    function setRead_items_db($status, $forum_id, $uid)
+    /**
+     * @param $status
+     * @param $forum_id
+     * @param $uid
+     * @return bool
+     */
+    public function setRead_items_db($status, $forum_id, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS["xoopsUser"])) {
@@ -165,7 +195,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         return true;
     }
 
-    function synchronization()
+    public function synchronization()
     {
         return;
     }

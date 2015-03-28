@@ -13,7 +13,9 @@
 
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
-if (defined('LIST_TOPIC_DEFINED')) return;
+if (defined('LIST_TOPIC_DEFINED')) {
+    return;
+}
 define('LIST_TOPIC_DEFINED', true);
 
 include_once dirname(__DIR__) . "/include/functions.ini.php";
@@ -41,6 +43,10 @@ mod_loadFunctions("user", "newbb");
 // options[11] - Post text Length: 0 - dont show post text - 200 by default
 // options[12] - SelectedForumIDs: multi-select ngative values for categories and positive values for forums: null for all(by default)
 
+/**
+ * @param $options
+ * @return array
+ */
 function newbb_list_topic_show($options)
 {
     $newbbConfig = newbb_load_config(); // load all newbb configs
@@ -86,6 +92,10 @@ function newbb_list_topic_show($options)
     return $block;
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function newbb_list_topic_edit($options)
 {
     // include_once $GLOBALS['xoops']->path('class/blockform.php'); //reserve for 2.6

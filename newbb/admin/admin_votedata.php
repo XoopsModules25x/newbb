@@ -80,11 +80,15 @@ switch ($op) {
 
         xoops_cp_header();
         echo "<fieldset>";
-        if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_votedata.php');
+        if ($newXoopsModuleGui) {
+            echo $indexAdmin->addNavigation('admin_votedata.php');
+        }
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(8, _AM_NEWBB_VOTE_RATINGINFOMATION);
         //	else echo $indexAdmin->addNavigation('admin_votedata.php') ;
 
-        if (!$newXoopsModuleGui) echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_VOTE_DISPLAYVOTES . "</legend>";
+        if (!$newXoopsModuleGui) {
+            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_VOTE_DISPLAYVOTES . "</legend>";
+        }
         echo "<div style='padding: 8px;'>\n
         <div><strong>" . _AM_NEWBB_VOTE_USERAVG . ": </strong>$useravgrating</div>\n
         <div><strong>" . _AM_NEWBB_VOTE_TOTALRATE . ": </strong>$uservotes</div>\n

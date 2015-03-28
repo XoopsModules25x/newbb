@@ -15,7 +15,9 @@ xoops_cp_header();
 mod_loadFunctions("recon", "newbb");
 $form = '<fieldset>';
 
-if ($newXoopsModuleGui) $form .= $indexAdmin->addNavigation('admin_synchronization.php');
+if ($newXoopsModuleGui) {
+    $form .= $indexAdmin->addNavigation('admin_synchronization.php');
+}
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(12, _AM_NEWBB_SYNCFORUM);
 //	else $form .= $indexAdmin->addNavigation('admin_synchronization.php');
 

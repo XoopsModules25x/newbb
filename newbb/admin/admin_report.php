@@ -41,14 +41,17 @@ xoops_cp_header();
 echo "<fieldset>";
 switch ($op) {
     case "save":
-        $report_ids = XoopsRequest::getArray('report_id','', 'POST');
+        $report_ids = XoopsRequest::getArray('report_id', '', 'POST');
 //        $report_ids = XoopsRequest::getInt('report_id', 0, 'POST'); //$_POST['report_id'];
         // irmtfan add error redirect header
-        if (empty($report_ids))
+        if (empty($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? "" : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
+        }
         $report_memos = XoopsRequest::getArray('report_memo', array(), 'POST'); // isset($_POST['report_memo']) ? $_POST['report_memo'] : array();
         foreach ($report_ids as $rid => $value) {
-            if (!$value) continue;
+            if (!$value) {
+                continue;
+            }
             $report_obj = $report_handler->get($rid);
             $report_obj->setVar("report_result", 1);
             $report_obj->setVar("report_memo", $report_memos[$rid]);
@@ -62,10 +65,13 @@ switch ($op) {
     case "delete":
         $report_ids = XoopsRequest::getArray('report_id', array(), 'POST');// $_POST['report_id'];
         // irmtfan add error redirect header
-        if (empty($report_ids))
+        if (empty($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? "" : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
+        }
         foreach ($report_ids as $rid => $value) {
-            if (!$value) continue;
+            if (!$value) {
+                continue;
+            }
             if ($report_obj = $report_handler->get($rid)) {
                 $report_handler->delete($report_obj);
             }
@@ -93,7 +99,9 @@ switch ($op) {
         }
 
         $limit = 10;
-        if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_report.php');
+        if ($newXoopsModuleGui) {
+            echo $indexAdmin->addNavigation('admin_report.php');
+        }
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //	else echo $indexAdmin->addNavigation('admin_report.php') ;
 

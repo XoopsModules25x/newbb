@@ -214,7 +214,7 @@
 			<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
 				<{$rss_button}>
 			</a>
-			<font size="0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></font>
+			<span style="font-size:0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></span>
 			<div class="clear"></div>
 		<{/if}>
 		<{$forum_jumpbox}>

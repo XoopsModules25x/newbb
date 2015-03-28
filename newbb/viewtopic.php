@@ -39,7 +39,9 @@ xoops_loadLanguage("user"); // irmtfan add last_login
 $query_vars  = array("post_id", "topic_id", "status", "order", "start", "move", "mode");
 $query_array = array();
 foreach ($query_vars as $var) {
-    if (XoopsRequest::getString($var, '', 'GET')) $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+    if (XoopsRequest::getString($var, '', 'GET')) {
+        $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+    }
 }
 $page_query = htmlspecialchars(implode("&", array_values($query_array)));
 unset($query_array);
@@ -234,8 +236,12 @@ if ($topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status')
 $poster_array  = array();
 $require_reply = false;
 foreach ($postsArray as $eachpost) {
-    if ($eachpost->getVar('uid') > 0) $poster_array[$eachpost->getVar('uid')] = 1;
-    if ($eachpost->getVar('require_reply') > 0) $require_reply = true;
+    if ($eachpost->getVar('uid') > 0) {
+        $poster_array[$eachpost->getVar('uid')] = 1;
+    }
+    if ($eachpost->getVar('require_reply') > 0) {
+        $require_reply = true;
+    }
 }
 
 $userid_array = array();
@@ -297,7 +303,9 @@ if ($xoopsModuleConfig['show_advertising']) {
 $i = 0;
 foreach ($postsArray as $eachpost) {
     if ($xoopsModuleConfig['show_advertising']) {
-        if ($i == 2) $xoopsTpl->append('topic_posts', $post_werbung);
+        if (2 == $i) {
+            $xoopsTpl->append('topic_posts', $post_werbung);
+        }
         ++$i;
     }
     $xoopsTpl->append('topic_posts', $eachpost->showPost($isadmin));
@@ -590,7 +598,9 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     }
     // END can add poll
 }
-if (isset($poll_obj)) unset($poll_obj);
+if (isset($poll_obj)) {
+    unset($poll_obj);
+}
 // END irmtfan poll_module
 
 $xoopsTpl->assign('p_up', newbb_displayImage('up', _MD_TOP));
@@ -677,7 +687,7 @@ if (!empty($xoopsModuleConfig['quickreply_enabled'])
     && $topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "reply")
     && !$moderate_handler->verifyUser(-1, "", $forum_obj->getVar('forum_id'))
 ) {
-// END irmtfan add verifyUser to quick reply
+    // END irmtfan add verifyUser to quick reply
     $forum_form = new XoopsThemeForm(_MD_POSTREPLY, 'quick_reply', XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname", "n") . "/post.php", 'post', true);
     if (!is_object($xoopsUser)) {
         //$config_handler =& xoops_gethandler('config');
@@ -752,7 +762,6 @@ if (!empty($xoopsModuleConfig['quickreply_enabled'])
     $xoopsTpl->assign('quickreply', $quickreply);
     // END irmtfan improve quickreply smarty variable
     unset($forum_form);
-
 } else {
     $xoopsTpl->assign('quickreply', array('show' => 0));
 }

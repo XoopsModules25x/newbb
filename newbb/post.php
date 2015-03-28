@@ -33,7 +33,7 @@ foreach (array(
 }
 
 $op       = XoopsRequest::getCmd('op', '', 'POST');
-$viewmode = ('flat' != XoopsRequest::getString('viewmode','','POST')) ? 'thread' : 'flat';
+$viewmode = ('flat' != XoopsRequest::getString('viewmode', '', 'POST')) ? 'thread' : 'flat';
 if (empty($forum)) {
     redirect_header("index.php", 2, _MD_ERRORFORUM);
 }
@@ -62,19 +62,18 @@ if ($xoopsModuleConfig['wol_enabled']) {
 
 $error_message = array();
 
-if (XoopsRequest::getString('contents_submit','','POST')) {
-
+if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     $token_valid = false;
     $token_valid = $GLOBALS['xoopsSecurity']->check();
 
     $captcha_invalid = false;
-    if (!is_object($xoopsUser) && XoopsRequest::getString('uname','','POST') && XoopsRequest::getString('pass','','POST')) {
-        $uname          = XoopsRequest::getString('uname','','POST');
-        $pass           = XoopsRequest::getString('pass','','POST');
+    if (!is_object($xoopsUser) && XoopsRequest::getString('uname', '', 'POST') && XoopsRequest::getString('pass', '', 'POST')) {
+        $uname          = XoopsRequest::getString('uname', '', 'POST');
+        $pass           = XoopsRequest::getString('pass', '', 'POST');
         $member_handler = xoops_gethandler('member');
         $user           = $member_handler->loginUser(addslashes($myts->stripSlashesGPC($uname)), addslashes($myts->stripSlashesGPC($pass)));
         if (is_object($user) && 0 < $user->getVar('level')) {
-            if (XoopsRequest::getString('login','','POST')) {
+            if (XoopsRequest::getString('login', '', 'POST')) {
                 $user->setVar('last_login', time());
                 if (!$member_handler->insertUser($user)) {
                 }
@@ -125,14 +124,13 @@ if (XoopsRequest::getString('contents_submit','','POST')) {
     }
 }
 
-if (XoopsRequest::getString('contents_submit','','POST')) {
-    $message = XoopsRequest::getString('message','','POST');
+if (XoopsRequest::getString('contents_submit', '', 'POST')) {
+    $message = XoopsRequest::getString('message', '', 'POST');
     if (empty($message)) {
         // irmtfan - issue with javascript:history.go(-1) - add error message
         redirect_header($_SERVER['HTTP_REFERER'], 1, _MD_ERROR_BACK);
     }
     if (!empty($isedit) && $post_id > 0) {
-
         $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
         $topic_status = $topic_obj->getVar('topic_status');
@@ -162,7 +160,7 @@ if (XoopsRequest::getString('contents_submit','','POST')) {
 
         $isreply = 0;
         $isnew   = 1;
-        if (!is_object($xoopsUser) || (XoopsRequest::getString('noname','','POST') && !empty($xoopsModuleConfig['allow_user_anonymous']))) {
+        if (!is_object($xoopsUser) || (XoopsRequest::getString('noname', '', 'POST') && !empty($xoopsModuleConfig['allow_user_anonymous']))) {
             $uid = 0;
         } else {
             $uid = $xoopsUser->getVar("uid");
@@ -193,11 +191,11 @@ if (XoopsRequest::getString('contents_submit','','POST')) {
     $dobr          = XoopsRequest::getInt('dobr', 0, 'POST') ? 1 : 0;
     $icon          = (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '', 'POST') : '');
     $attachsig     = XoopsRequest::getBool('attachsig', false, 'POST') && $topic_handler->getPermission($forum_obj, $topic_status, 'signature');
-    $view_require  = XoopsRequest::getString('view_require','','POST');
-    $post_karma    = ($view_require == 'require_karma') ?  XoopsRequest::getInt('post_karma',0, 'POST') : 0;
+    $view_require  = XoopsRequest::getString('view_require', '', 'POST');
+    $post_karma    = ($view_require == 'require_karma') ?  XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
     $require_reply = ($view_require == 'require_reply');
     $post_obj->setVar('subject', $subject);
-    $editwhy =  xoops_trim(XoopsRequest::getString('editwhy','','POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
+    $editwhy =  xoops_trim(XoopsRequest::getString('editwhy', '', 'POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
 
     if ($dohtml && !newbb_isAdmin($forum_obj)) {
         //$message=newbb_textFilter($message);
@@ -213,14 +211,16 @@ if (XoopsRequest::getString('contents_submit','','POST')) {
     $post_obj->setVar('icon', $icon);
     $post_obj->setVar('attachsig', $attachsig);
     $post_obj->setAttachment();
-    if (!empty($post_id)) $post_obj->setPostEdit($poster_name, $editwhy); // is reply
+    if (!empty($post_id)) {
+        $post_obj->setPostEdit($poster_name, $editwhy);
+    } // is reply
 
     $attachments_tmp = array();
 //    if (!empty($_POST["attachments_tmp"])) {
     if (XoopsRequest::getArray('attachments_tmp', '', 'POST')) {
-        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp','','POST')));
-        if (XoopsRequest::getArray('delete_tmp','','POST') && count(XoopsRequest::getArray('delete_tmp','','POST'))) {
-            foreach (XoopsRequest::getArray('delete_tmp','','POST') as $key) {
+        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp', '', 'POST')));
+        if (XoopsRequest::getArray('delete_tmp', '', 'POST') && count(XoopsRequest::getArray('delete_tmp', '', 'POST'))) {
+            foreach (XoopsRequest::getArray('delete_tmp', '', 'POST') as $key) {
                 unlink($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . "/" . $attachments_tmp[$key][0]));
                 unset($attachments_tmp[$key]);
             }
@@ -389,7 +389,6 @@ if (XoopsRequest::getString('contents_submit','','POST')) {
 
         $redirect = XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $postid;
         $message  = _MD_THANKSSUBMIT . "<br />" . $error_upload;
-
     } else {
         $redirect = XOOPS_URL . "/modules/newbb/viewforum.php?forum=" . $post_obj->getVar('forum_id');
         $message  = _MD_THANKSSUBMIT . "<br />" . _MD_WAITFORAPPROVAL . "<br />" . $error_upload;
@@ -410,12 +409,12 @@ $xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;
 include_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
-if (XoopsRequest::getString('contents_upload',null,'POST')) {
+if (XoopsRequest::getString('contents_upload', null, 'POST')) {
     $attachments_tmp = array();
-    if (XoopsRequest::getArray('attachments_tmp','','POST')) {
-        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp',array(),'POST')));
-        if (XoopsRequest::getArray('delete_tmp','','POST')  && count(XoopsRequest::getArray('delete_tmp','','POST'))) {
-            foreach (XoopsRequest::getArray('delete_tmp','','POST') as $key) {
+    if (XoopsRequest::getArray('attachments_tmp', '', 'POST')) {
+        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp', array(), 'POST')));
+        if (XoopsRequest::getArray('delete_tmp', '', 'POST')  && count(XoopsRequest::getArray('delete_tmp', '', 'POST'))) {
+            foreach (XoopsRequest::getArray('delete_tmp', '', 'POST') as $key) {
                 unlink($uploaddir = $GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . "/" . $attachments_tmp[$key][0]));
                 unset($attachments_tmp[$key]);
             }
@@ -471,8 +470,8 @@ if (XoopsRequest::getString('contents_upload',null,'POST')) {
 }
 
 if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('contents_preview', '', 'POST'), 'GET')) {
-    if (XoopsRequest::getString('attachments_tmp','','POST')) {
-        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp','','POST')));
+    if (XoopsRequest::getString('attachments_tmp', '', 'POST')) {
+        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp', '', 'POST')));
     }
 
     $p_subject = $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
@@ -494,7 +493,7 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
         $p_name = newbb_getUnameFromId($post_obj->getVar('uid'), $xoopsModuleConfig['show_realname']);
     }
     if (empty($p_name)) {
-        $p_name = XoopsRequest::getString('poster_name','','POST') ? htmlSpecialChars(XoopsRequest::getString('poster_name','','POST')) : htmlspecialchars($xoopsConfig['anonymous']);
+        $p_name = XoopsRequest::getString('poster_name', '', 'POST') ? htmlSpecialChars(XoopsRequest::getString('poster_name', '', 'POST')) : htmlspecialchars($xoopsConfig['anonymous']);
     }
 
     $post_preview = array(
@@ -505,7 +504,7 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
     $xoopsTpl->assign_by_ref("post_preview", $post_preview);
 }
 
-if (XoopsRequest::getString('contents_upload',null,'POST') || XoopsRequest::getString('contents_preview',null,'POST') ||  XoopsRequest::getString('contents_preview',null,'GET') || XoopsRequest::getString('editor', '', 'POST')) {
+if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'POST') ||  XoopsRequest::getString('contents_preview', null, 'GET') || XoopsRequest::getString('editor', '', 'POST')) {
     $editor        = XoopsRequest::getString('editor', '', 'POST');
     $dosmiley      = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml        = XoopsRequest::getInt('dohtml', 0, 'POST');
@@ -524,7 +523,9 @@ if (XoopsRequest::getString('contents_upload',null,'POST') || XoopsRequest::getS
     $post_karma    = (($view_require == 'require_karma') && !XoopsRequest::getInt('post_karma', 0, 'POST')) ? XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
     $require_reply = ($view_require == 'require_reply') ? 1 : 0;
 
-    if (!XoopsRequest::getString('contents_upload', '', 'POST')) $contents_preview = 1;
+    if (!XoopsRequest::getString('contents_upload', '', 'POST')) {
+        $contents_preview = 1;
+    }
     $attachments = $post_obj->getAttachment();
     $xoopsTpl->assign("error_message", implode("<br />", $error_message));
 

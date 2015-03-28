@@ -6,6 +6,9 @@
 
 // CBB/newbb2 plugin: D.J., http://xoops.org.cn
 
+/**
+ * @return array
+ */
 function b_sitemap_newbb()
 {
     global $sitemap_configs;
@@ -74,7 +77,9 @@ function b_sitemap_newbb()
             $cid                                            = $forum['cid'];
             $sitemap['parent'][$cid]['child'][$id]          = $forum;
             $sitemap['parent'][$cid]['child'][$id]['image'] = 2;
-            if (empty($forum['fchild'])) continue;
+            if (empty($forum['fchild'])) {
+                continue;
+            }
 
             foreach ($forum['fchild'] as $_id => $_forum) {
                 $sitemap['parent'][$cid]['child'][$_id]          = $_forum;
@@ -88,5 +93,4 @@ function b_sitemap_newbb()
     }
 
     return $sitemap;
-
 }

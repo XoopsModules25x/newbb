@@ -32,37 +32,63 @@
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 include_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
-class NewBBTree extends XoopsTree
+/**
+ * Class newbbtree
+ */
+class newbbtree extends XoopsTree
 {
-    var $prefix    = '&nbsp;&nbsp;';
-    var $increment = '&nbsp;&nbsp;';
-    var $postArray = '';
+    public $prefix    = '&nbsp;&nbsp;';
+    public $increment = '&nbsp;&nbsp;';
+    public $postArray = '';
 
-    function NewBBTree($table_name, $id_name = "post_id", $pid_name = "pid")
+    /**
+     * @param $table_name
+     * @param string $id_name
+     * @param string $pid_name
+     */
+    public function NewBBTree($table_name, $id_name = "post_id", $pid_name = "pid")
     {
         $this->XoopsTree($table_name, $id_name, $pid_name);
     }
 
-    function setPrefix($val = '')
+    /**
+     * @param string $val
+     */
+    public function setPrefix($val = '')
     {
         $this->prefix    = $val;
         $this->increment = $val;
     }
 
-    function getAllPostArray($sel_id, $order = '')
+    /**
+     * @param $sel_id
+     * @param string $order
+     */
+    public function getAllPostArray($sel_id, $order = '')
     {
         $this->postArray = $this->getAllChild($sel_id, $order);
     }
 
-    function setPostArray($postArray)
+    /**
+     * @param $postArray
+     */
+    public function setPostArray($postArray)
     {
         $this->postArray = &$postArray;
     }
 
     // returns an array of first child objects for a given id($sel_id)
-    function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
+    /**
+     * @param $postTree_array
+     * @param int $pid
+     * @param string $prefix
+     * @return bool
+     */
+    public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
     {
-        if (!is_array($postTree_array)) $postTree_array = array();
+        if (!is_array($postTree_array)) {
+            $postTree_array = array();
+        }
 
         $newPostArray = array();
         $prefix .= $this->increment;

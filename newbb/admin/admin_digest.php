@@ -55,7 +55,9 @@ switch ($op) {
         include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
         echo "<fieldset>";
         $limit = 5;
-        if ($newXoopsModuleGui) echo $indexAdmin->addNavigation('admin_digest.php');
+        if ($newXoopsModuleGui) {
+            echo $indexAdmin->addNavigation('admin_digest.php');
+        }
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
         //	else echo $indexAdmin->addNavigation('admin_digest.php') ;
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';

@@ -29,6 +29,10 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+/**
+ * @param XoopsModule $module
+ * @return bool
+ */
 function xoops_module_update_newbb_v220(XoopsModule &$module)
 {
     $perms = array('post', 'view', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove');

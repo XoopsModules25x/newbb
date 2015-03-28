@@ -1,8 +1,11 @@
 <?php
 // $Id: blocks.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
 // Blocks
-if (defined('NEWBB_BLOCKS_DEFINED')) return;
-else define('NEWBB_BLOCKS_DEFINED', true);
+if (defined('NEWBB_BLOCKS_DEFINED')) {
+    return;
+} else {
+    define('NEWBB_BLOCKS_DEFINED', true);
+}
 define('_MB_NEWBB_FORUM', "Forum");
 define('_MB_NEWBB_TOPIC', "Topic");
 define('_MB_NEWBB_RPLS', "Replies");

@@ -30,16 +30,24 @@
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-if (defined("NEWBB_FUNCTIONS_INI")) return;
+if (defined("NEWBB_FUNCTIONS_INI")) {
+    return;
+}
 define("NEWBB_FUNCTIONS_INI", 1);
 
 include_once($GLOBALS['xoops']->path('Frameworks/art/functions.ini.php'));
 
+/**
+ * @return bool
+ */
 function newbb_load_object()
 {
     return load_object();
 }
 
+/**
+ * @return array
+ */
 function &newbb_load_config()
 {
     static $moduleConfig;
@@ -58,6 +66,12 @@ function &newbb_load_config()
 }
 
 // Backword compatible
+/**
+ * @param $filename
+ * @param string $module
+ * @param string $default
+ * @return bool|mixed
+ */
 function newbb_load_lang_file($filename, $module = '', $default = 'english')
 {
     if (function_exists("xoops_load_lang_file")) {

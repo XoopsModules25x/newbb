@@ -32,6 +32,10 @@
 if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
     define("NEWBB_FUNCTIONS_IMAGE", true);
 
+    /**
+     * @param $source
+     * @return string
+     */
     function newbb_attachmentImage($source)
     {
         global $xoopsModuleConfig;
@@ -80,11 +84,18 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
             $attachmentImage .= '</a>';
         } elseif (file_exists($image)) {
             $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" />';
-        } else $attachmentImage = '';
+        } else {
+            $attachmentImage = '';
+        }
 
         return $attachmentImage;
     }
 
+    /**
+     * @param $source
+     * @param $thumb_width
+     * @return bool
+     */
     function newbb_createThumbnail($source, $thumb_width)
     {
         global $xoopsModuleConfig;
@@ -105,7 +116,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
 
         $imginfo = @getimagesize($src_file);
 
-        if (NULL == $imginfo) {
+        if (null == $imginfo) {
             return false;
         }
         if ($imginfo[0] < $thumb_width) {
@@ -152,17 +163,27 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
         $type            = $imginfo[2];
         $supported_types = array();
 
-        if (!extension_loaded('gd')) return false;
-        if (function_exists('imagegif')) $supported_types[] = 1;
-        if (function_exists('imagejpeg')) $supported_types[] = 2;
-        if (function_exists('imagepng')) $supported_types[] = 3;
+        if (!extension_loaded('gd')) {
+            return false;
+        }
+        if (function_exists('imagegif')) {
+            $supported_types[] = 1;
+        }
+        if (function_exists('imagejpeg')) {
+            $supported_types[] = 2;
+        }
+        if (function_exists('imagepng')) {
+            $supported_types[] = 3;
+        }
 
         $imageCreateFunction = (function_exists('imagecreatetruecolor')) ? "imagecreatetruecolor" : "imagecreate";
 
         if (in_array($type, $supported_types)) {
             switch ($type) {
                 case 1 :
-                    if (!function_exists('imagecreatefromgif')) return false;
+                    if (!function_exists('imagecreatefromgif')) {
+                        return false;
+                    }
                     $im     = imagecreatefromgif($src_file);
                     $new_im = imagecreate($newWidth, $newHeight);
                     imagecopyresized($new_im, $im, 0, 0, 0, 0, $newWidth, $newHeight, $imginfo[0], $imginfo[1]);
@@ -189,8 +210,10 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
             }
         }
 
-        if (file_exists($new_file)) return true;
-        else return false;
+        if (file_exists($new_file)) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
 }

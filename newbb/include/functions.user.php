@@ -21,7 +21,10 @@
 
 /**
  * Function to a list of user names associated with their user IDs
- *
+ * @param $uid
+ * @param int $usereal
+ * @param bool $linked
+ * @return array
  */
 function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
 {
@@ -31,6 +34,12 @@ function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
     return $ids;
 }
 
+/**
+ * @param $uid
+ * @param int $usereal
+ * @param bool $linked
+ * @return string
+ */
 function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
 {
     xoops_load("xoopsuserutility");
@@ -39,6 +48,10 @@ function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
 }
 
 // Adapted from PMA_getIp() [phpmyadmin project]
+/**
+ * @param bool $asString
+ * @return mixed
+ */
 function newbb_getIP($asString = false)
 {
     xoops_load("xoopsuserutility");
@@ -49,14 +62,20 @@ function newbb_getIP($asString = false)
 /**
  * Function to check if a user is an administrator of the module
  *
+ * @param int $user
+ * @param int $mid
  * @return bool
  */
 function newbb_isAdministrator($user = -1, $mid = 0)
 {
     global $xoopsUser, $xoopsModule;
 
-    if (is_numeric($user) && $user == -1) $user =& $xoopsUser;
-    if (!is_object($user) && intval($user) < 1) return false;
+    if (is_numeric($user) && $user == -1) {
+        $user =& $xoopsUser;
+    }
+    if (!is_object($user) && intval($user) < 1) {
+        return false;
+    }
     $uid = (is_object($user)) ? $user->getVar("uid") : intval($user);
 
     if (!$mid) {
@@ -85,6 +104,8 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 /**
  * Function to check if a user is a moderator of a forum
  *
+ * @param $forum
+ * @param int $user
  * @return bool
  */
 function newbb_isModerator(&$forum, $user = -1)
@@ -93,13 +114,19 @@ function newbb_isModerator(&$forum, $user = -1)
 
     if (!is_object($forum)) {
         $forum_id = intval($forum);
-        if ($forum_id == 0) return false;
+        if ($forum_id == 0) {
+            return false;
+        }
         $forum_handler =& xoops_getmodulehandler("forum", "newbb");
         $forum         =& $forum_handler->get($forum_id);
     }
 
-    if (is_numeric($user) && $user == -1) $user =& $xoopsUser;
-    if (!is_object($user) && intval($user) < 1) return false;
+    if (is_numeric($user) && $user == -1) {
+        $user =& $xoopsUser;
+    }
+    if (!is_object($user) && intval($user) < 1) {
+        return false;
+    }
     $uid = (is_object($user)) ? $user->getVar("uid", "n") : intval($user);
 
     return in_array($uid, $forum->getVar("forum_moderator"));
@@ -108,6 +135,7 @@ function newbb_isModerator(&$forum, $user = -1)
 /**
  * Function to check if a user has moderation permission over a forum
  *
+ * @param int $forum
  * @return bool
  */
 function newbb_isAdmin($forum = 0)
@@ -115,9 +143,13 @@ function newbb_isAdmin($forum = 0)
     global $xoopsUser, $xoopsModule;
     static $_cachedModerators;
 
-    if (empty($forum)) return $GLOBALS["xoopsUserIsAdmin"];
+    if (empty($forum)) {
+        return $GLOBALS["xoopsUserIsAdmin"];
+    }
 
-    if (!is_object($xoopsUser)) return false;
+    if (!is_object($xoopsUser)) {
+        return false;
+    }
 
     if ($GLOBALS["xoopsUserIsAdmin"] && $xoopsModule->getVar("dirname") == "newbb") {
         return true;
@@ -136,12 +168,18 @@ function newbb_isAdmin($forum = 0)
 }
 
 /* use hardcoded DB query to save queries */
+/**
+ * @param array $uid
+ * @return array
+ */
 function newbb_isModuleAdministrators($uid = array())
 {
     global $xoopsDB, $xoopsModule;
     $module_administrators = array();
 
-    if (empty($uid)) return $module_administrators;
+    if (empty($uid)) {
+        return $module_administrators;
+    }
     $mid = $xoopsModule->getVar("mid");
 
     $sql = "SELECT COUNT(l.groupid) AS count, l.uid FROM " . $xoopsDB->prefix('groups_users_link') . " AS l" .
@@ -161,17 +199,26 @@ function newbb_isModuleAdministrators($uid = array())
 }
 
 /* use hardcoded DB query to save queries */
+/**
+ * @param array $uid
+ * @param int $mid
+ * @return array
+ */
 function newbb_isForumModerators($uid = array(), $mid = 0)
 {
     global $xoopsDB;
     $forum_moderators = array();
 
-    if (empty($uid)) return $forum_moderators;
+    if (empty($uid)) {
+        return $forum_moderators;
+    }
 
     $sql = "SELECT forum_moderator FROM " . $xoopsDB->prefix('bb_forums');
     if ($result = $xoopsDB->query($sql)) {
         while ($myrow = $xoopsDB->fetchArray($result)) {
-            if (empty($myrow["forum_moderator"])) continue;
+            if (empty($myrow["forum_moderator"])) {
+                continue;
+            }
             $forum_moderators = array_merge($forum_moderators, unserialize($myrow["forum_moderator"]));
         }
     }

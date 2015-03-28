@@ -48,7 +48,9 @@ switch ($op) {
         $forums = array();
         foreach ($post_id as $post) {
             $post_obj =& $post_handler->get($post);
-            if ($post_obj->getVar("topic_id") < 1) continue;
+            if ($post_obj->getVar("topic_id") < 1) {
+                continue;
+            }
             $post_handler->approve($post_obj, true);
             $topics[$post_obj->getVar("topic_id")] = 1;
             $forums[$post_obj->getVar("forum_id")] = 1;
@@ -70,7 +72,9 @@ switch ($op) {
         $posts_obj =& $post_handler->getObjects($criteria, true);
         foreach ($post_id as $post) {
             $post_obj =& $posts_obj[$post];
-            if (!empty($topic_id) && $topic_id != $post_obj->getVar("topic_id")) continue;
+            if (!empty($topic_id) && $topic_id != $post_obj->getVar("topic_id")) {
+                continue;
+            }
             $post_handler->approve($post_obj);
             $topics[$post_obj->getVar("topic_id")] = $post;
             $forums[$post_obj->getVar("forum_id")] = 1;
@@ -82,7 +86,9 @@ switch ($op) {
             $forum_handler->synchronization($forum);
         }
 
-        if (empty($xoopsModuleConfig['notification_enabled'])) break;
+        if (empty($xoopsModuleConfig['notification_enabled'])) {
+            break;
+        }
 
         $criteria_topic = new Criteria("topic_id", "(" . implode(",", array_keys($topics)) . ")", "IN");
         $topic_list     =& $topic_handler->getList($criteria_topic, true);
@@ -115,7 +121,9 @@ switch ($op) {
         $forums = array();
         foreach ($post_id as $post) {
             $post_obj =& $post_handler->get($post);
-            if (!empty($topic_id) && $topic_id != $post_obj->getVar("topic_id")) continue;
+            if (!empty($topic_id) && $topic_id != $post_obj->getVar("topic_id")) {
+                continue;
+            }
             $topics[$post_obj->getVar("topic_id")] = 1;
             $forums[$post_obj->getVar("forum_id")] = 1;
             $post_handler->delete($post_obj, true);

@@ -15,9 +15,12 @@
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
+/**
+ * Class NewbbUserstats
+ */
 class NewbbUserstats extends ArtObject
 {
-    function NewbbUserstats()
+    public function NewbbUserstats()
     {
         $this->ArtObject("bb_user_stats");
         $this->initVar('uid', XOBJ_DTYPE_INT);
@@ -34,12 +37,19 @@ class NewbbUserstats extends ArtObject
  */
 class NewbbUserstatsHandler extends ArtObjectHandler
 {
-    function NewbbUserstatsHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbUserstatsHandler(&$db)
     {
         $this->ArtObjectHandler($db, 'bb_user_stats', 'NewbbUserstats', 'uid');
     }
 
-    function &instance($db = null)
+    /**
+     * @param null $db
+     * @return NewbbUserstatsHandler
+     */
+    public function &instance($db = null)
     {
         static $instance;
         if (!isset($instance)) {
@@ -49,7 +59,11 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         return $instance;
     }
 
-    function &get($id)
+    /**
+     * @param mixed $id
+     * @return null|object
+     */
+    public function &get($id)
     {
         $object = null;
         if (!$id = intval($id)) {
@@ -74,9 +88,15 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         return $object;
     }
 
-    function getStats($id)
+    /**
+     * @param $id
+     * @return null
+     */
+    public function getStats($id)
     {
-        if (empty($id)) return null;
+        if (empty($id)) {
+            return null;
+        }
         $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . intval($id);
         if (!$result = $this->db->query($sql)) {
             return null;

@@ -15,11 +15,13 @@
 defined("NEWBB_FUNCTIONS_INI") || include __DIR__ . "/functions.ini.php";
 define("NEWBB_FUNCTIONS_RPC_LOADED", true);
 
-IF (!defined("NEWBB_FUNCTIONS_RPC")) {
+if (!defined("NEWBB_FUNCTIONS_RPC")) {
     define("NEWBB_FUNCTIONS_RPC", 1);
 
     /**
      * Function to respond to a trackback
+     * @param int $error
+     * @param string $error_message
      */
     function newbb_trackback_response($error = 0, $error_message = '')
     {

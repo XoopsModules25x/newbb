@@ -14,6 +14,11 @@
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
+/**
+ * @param $RPG
+ * @param $RPGDIFF
+ * @return array|number
+ */
 function newbb_calculateLevel($RPG, $RPGDIFF)
 {
 
@@ -89,20 +94,28 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
     return $level;
 }
 
+/**
+ * Class newbbUser
+ */
 class newbbUser
 {
-    var $user = null;
+    public $user = null;
 
-    function User()
+    public function User()
     {
     }
 
-    function getUserbar()
+    /**
+     * @return array
+     */
+    public function getUserbar()
     {
         global $xoopsModuleConfig, $xoopsUser, $isadmin;
 
         $userbar = array();
-        if (empty($xoopsModuleConfig['userbar_enabled'])) return $userbar;
+        if (empty($xoopsModuleConfig['userbar_enabled'])) {
+            return $userbar;
+        }
 
         $user               = $this->user;
         $userbar["profile"] = array("link" => XOOPS_URL . "/userinfo.php?uid=" . $user->getVar("uid"), "name" => _PROFILE);
@@ -132,7 +145,10 @@ class newbbUser
         return $userbar;
     }
 
-    function getLevel()
+    /**
+     * @return string
+     */
+    public function getLevel()
     {
         global $xoopsModuleConfig, $forumUrl;
 
@@ -144,7 +160,7 @@ class newbbUser
                 $icon_handler = newbb_getIconHandler();
                 $rpg_path     = $icon_handler->getPath("rpg");
                 foreach (array("img_left", "img_backing", "img_right", "blue", "green", "orange") as $img) {
-// irmtfan fix: double "/" removed
+                    // irmtfan fix: double "/" removed
                     $rpg_images[$img] = XOOPS_URL . $rpg_path . '/' . $img . '.gif';
                 }
             }
@@ -166,7 +182,11 @@ class newbbUser
         return $info;
     }
 
-    function getInfo(&$user)
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function getInfo(&$user)
     {
         global $xoopsModuleConfig, $myts;
         static $name_anonymous;
@@ -228,22 +248,29 @@ class newbbUser
     }
 }
 
+/**
+ * Class NewbbUserHandler
+ */
 class NewbbUserHandler
 {
-    var $enableGroup;
-    var $enableOnline;
-    var $userlist = array();
-    var $users    = array();
+    public $enableGroup;
+    public $enableOnline;
+    public $userlist = array();
+    public $users    = array();
 
     //var $online = array();
 
-    function NewbbUserHandler($enableGroup = true, $enableOnline = true)
+    /**
+     * @param bool $enableGroup
+     * @param bool $enableOnline
+     */
+    public function NewbbUserHandler($enableGroup = true, $enableOnline = true)
     {
         $this->enableGroup  = $enableGroup;
         $this->enableOnline = $enableOnline;
     }
 
-    function loadUserInfo()
+    public function loadUserInfo()
     {
         @include_once $GLOBALS['xoops']->path('modules/' . $GLOBALS["xoopsModule"]->getVar("dirname", "n") . "/language/" . $GLOBALS["xoopsConfig"]["language"] . "/user.php");
         if (class_exists("User_language")) {
@@ -256,9 +283,11 @@ class NewbbUserHandler
         }
     }
 
-    function loadUserOnline()
+    public function loadUserOnline()
     {
-        if (empty($this->users) || !$this->enableOnline) return;
+        if (empty($this->users) || !$this->enableOnline) {
+            return;
+        }
         mod_loadFunctions("render", "newbb");
         $image_online  = newbb_displayImage('online', _MD_ONLINE);
         $image_offline = newbb_displayImage('offline', _MD_OFFLINE);
@@ -276,11 +305,13 @@ class NewbbUserHandler
 //		return true;
 //	}
 // END irmtfan remove function - no deprecated is needed because just use in this file
-    function loadUserDigest()
+    public function loadUserDigest()
     {
-        GLOBAL $xoopsDB;
+        global $xoopsDB;
 
-        if (empty($this->users)) return;
+        if (empty($this->users)) {
+            return;
+        }
 
         $sql    = 'SELECT user_digests, uid FROM ' . $xoopsDB->prefix('bb_user_stats') . " WHERE uid IN( " . implode(", ", array_keys($this->users)) . ")";
         $result = $xoopsDB->query($sql);
@@ -295,7 +326,10 @@ class NewbbUserHandler
 //	}
 // END irmtfan remove function
 
-    function getUsers()
+    /**
+     * @return array
+     */
+    public function getUsers()
     {
         $this->loadUserInfo();
         $this->loadUserOnline();

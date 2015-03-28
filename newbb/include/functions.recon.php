@@ -18,6 +18,10 @@ define("NEWBB_FUNCTIONS_RECON_LOADED", true);
 if (!defined("NEWBB_FUNCTIONS_RECON")) {
     define("NEWBB_FUNCTIONS_RECON", 1);
 
+    /**
+     * @param null $type
+     * @return bool
+     */
     function newbb_synchronization($type = null)
     {
         $allTypes = array("category", "forum", "topic", "post", "report", "rate", "moderate", "readtopic", "readforum", "stats");
@@ -41,5 +45,4 @@ if (!defined("NEWBB_FUNCTIONS_RECON")) {
 
         return true;
     }
-
 }

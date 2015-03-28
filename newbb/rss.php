@@ -33,7 +33,9 @@ include_once __DIR__ . "/header.php";
 include_once $GLOBALS['xoops']->path('class/template.php');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
 
-if (!empty($xoopsModuleConfig['do_rewrite'])) include_once "seo_url.php";
+if (!empty($xoopsModuleConfig['do_rewrite'])) {
+    include_once "seo_url.php";
+}
 /* for seo */
 
 error_reporting(0);
@@ -68,7 +70,9 @@ header('Content-Type:text/xml; charset=' . $charset);
 $tpl                 = new XoopsTpl();
 $tpl->caching        = 2;
 $tpl->cache_lifetime = $xoopsModuleConfig['rss_cachetime'] * 60;
-if (!empty($xoopsConfig['rewrite'])) $tpl->load_filter('output', 'xoRewriteModule');
+if (!empty($xoopsConfig['rewrite'])) {
+    $tpl->load_filter('output', 'xoRewriteModule');
+}
 
 mod_loadFunctions("cache");
 $xoopsCachedTemplateId = md5(mod_generateCacheId_byGroup() . str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']));
@@ -156,8 +160,12 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
 
     foreach ($rows as $topic) {
-        if ($xoopsModuleConfig['enable_karma'] && $topic['post_karma'] > 0) continue;
-        if ($xoopsModuleConfig['allow_require_reply'] && $topic['require_reply']) continue;
+        if ($xoopsModuleConfig['enable_karma'] && $topic['post_karma'] > 0) {
+            continue;
+        }
+        if ($xoopsModuleConfig['allow_require_reply'] && $topic['require_reply']) {
+            continue;
+        }
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
@@ -179,7 +187,9 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
             $link   = $newurl;
         }
         $title = $topic['subject'];
-        if (!$rss->addItem($title, $link, $description, $label, $time)) break;
+        if (!$rss->addItem($title, $link, $description, $label, $time)) {
+            break;
+        }
     }
 
     $rss_feed = $xmlrss_handler->get($rss);

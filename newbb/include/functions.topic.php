@@ -22,19 +22,29 @@ if (!defined("NEWBB_FUNCTIONS_TOPIC")) {
      * Create full title of a topic
      *
      * the title is composed of [type_name] if type_id is greater than 0 plus topic_title
-     *
+     * @param $topic_title
+     * @param null $prefix_name
+     * @param null $prefix_color
+     * @return string
      */
     function newbb_getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null)
     {
         return getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null);
     }
 
+    /**
+     * @param $topic_title
+     * @param null $prefix_name
+     * @param null $prefix_color
+     * @return string
+     */
     function getTopicTitle($topic_title, $prefix_name = null, $prefix_color = null)
     {
-        if (empty($prefix_name)) return $topic_title;
+        if (empty($prefix_name)) {
+            return $topic_title;
+        }
         $topic_prefix = $prefix_color ? "<em style=\"font-style: normal; color: " . $prefix_color . ";\">[" . $prefix_name . "]</em> " : "[" . $prefix_name . "] ";
 
         return $topic_prefix . $topic_title;
     }
-
 }

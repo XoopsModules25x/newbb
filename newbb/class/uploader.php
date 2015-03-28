@@ -14,6 +14,9 @@
 
 include_once $GLOBALS['xoops']->path('class/uploader.php');
 
+/**
+ * Class newbb_uploader
+ */
 class newbb_uploader extends XoopsMediaUploader
 {
     /**
@@ -23,12 +26,12 @@ class newbb_uploader extends XoopsMediaUploader
      * Constructor
      *
      * @param string $uploadDir
-     * @param array  $allowedMimeTypes
-     * @param int    $maxFileSize
-     * @param int    $maxWidth
-     * @param int    $maxHeight
+     * @param array|int $allowedMimeTypes
+     * @param int $maxFileSize
+     * @param int $maxWidth
+     * @param int $maxHeight
      */
-    function newbb_uploader($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
+    public function newbb_uploader($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
     {
         if (!is_array($allowedMimeTypes)) {
             if (empty($allowedMimeTypes) || $allowedMimeTypes == "*") {
@@ -53,9 +56,9 @@ class newbb_uploader extends XoopsMediaUploader
      * Set the CheckMediaTypeByExt
      * Deprecated
      *
-     * @param string $value
+     * @param bool|string $value
      */
-    function setCheckMediaTypeByExt($value = true)
+    public function setCheckMediaTypeByExt($value = true)
     {
     }
 
@@ -65,7 +68,7 @@ class newbb_uploader extends XoopsMediaUploader
      *
      * @param string $value
      */
-    function setImageSizeCheck($value)
+    public function setImageSizeCheck($value)
     {
     }
 
@@ -75,7 +78,7 @@ class newbb_uploader extends XoopsMediaUploader
      *
      * @param string $value
      */
-    function setFileSizeCheck($value)
+    public function setFileSizeCheck($value)
     {
     }
 
@@ -84,7 +87,7 @@ class newbb_uploader extends XoopsMediaUploader
      *
      * @return string
      */
-    function getExt()
+    public function getExt()
     {
         $this->ext = strtolower(ltrim(strrchr($this->getMediaName(), '.'), '.'));
 

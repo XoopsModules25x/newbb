@@ -12,12 +12,12 @@
 		<div class="forum_stats_col left floatleft">
             <{$smarty.const._MD_TOPIC}>:
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(<font color="red"><b><{$wait_new_topic}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(<font color="red"><b><{$delete_topic}></b></font>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br />
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(<span style="color:red"><b><{$wait_new_topic}></b></span>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(<span style="color:red"><b><{$delete_topic}></b></span>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br />
             <{$smarty.const._MD_POST2}>:
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(<font color="red"><b><{$wait_new_post}></b></font>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_post}>(<font color="red"><b><{$delete_post}></b></font>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(<span style="color:red"><b><{$wait_new_post}></b></span>) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_post}>(<span style="color:red"><b><{$delete_post}></b></span>) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a>
         </div>
         <div class="forum_stats_col right floatright">
             <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
@@ -202,7 +202,7 @@
 		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
 			<{$rss_button}>
 		</a>
-		<br /><font size="0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></font>
+		<br /><span style="font-size:0.7em;"><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></span>
 		<br />
 	<{/if}>
 </div>

@@ -32,7 +32,9 @@ if (!$topic_handler->getPermission($forum_obj, 0, 'post')) {
     $query_vars  = array("forum", "order", "mode", "viewmode");
     $query_array = array();
     foreach ($query_vars as $var) {
-        if (XoopsRequest::getString($var, '', 'GET')) $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET'}";
+        if (XoopsRequest::getString($var, '', 'GET')) {
+            $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET'}";
+        }
     }
     $page_query = htmlspecialchars(implode("&", array_values($query_array)));
     unset($query_array);

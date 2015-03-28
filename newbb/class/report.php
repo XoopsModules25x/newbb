@@ -15,9 +15,12 @@
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
+/**
+ * Class Report
+ */
 class Report extends ArtObject
 {
-    function Report()
+    public function Report()
     {
         $this->ArtObject("bb_report");
         $this->initVar('report_id', XOBJ_DTYPE_INT);
@@ -31,27 +34,48 @@ class Report extends ArtObject
     }
 }
 
+/**
+ * Class NewbbReportHandler
+ */
 class NewbbReportHandler extends ArtObjectHandler
 {
-    function NewbbReportHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbReportHandler(&$db)
     {
         $this->ArtObjectHandler($db, 'bb_report', 'Report', 'report_id');
     }
 
-    function &getByPost($posts)
+    /**
+     * @param $posts
+     * @return array
+     */
+    public function &getByPost($posts)
     {
         $ret = array();
         if (!$posts) {
             return $ret;
         }
-        if (!is_array($posts)) $posts = array($posts);
+        if (!is_array($posts)) {
+            $posts = array($posts);
+        }
         $post_criteria = new Criteria("post_id", "(" . implode(", ", $posts) . ")", "IN");
         $ret           =& $this->getAll($post_criteria);
 
         return $ret;
     }
 
-    function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
+    /**
+     * @param int $forums
+     * @param string $order
+     * @param int $perpage
+     * @param $start
+     * @param int $report_result
+     * @param int $report_id
+     * @return array
+     */
+    public function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
     {
         if ($order == "DESC") {
             $operator_for_position = '>';
@@ -79,7 +103,9 @@ class NewbbReportHandler extends ArtObjectHandler
 
         if ($report_id) {
             $result = $this->db->query("SELECT COUNT(*) as report_count" . $tables_criteria . $forum_criteria . $result_criteria . " AND report_id $operator_for_position $report_id" . $order_criteria);
-            if ($result) $row = $this->db->fetchArray($result);
+            if ($result) {
+                $row = $this->db->fetchArray($result);
+            }
             $position = $row['report_count'];
             $start    = intval($position / $perpage) * $perpage;
         }
@@ -95,7 +121,7 @@ class NewbbReportHandler extends ArtObjectHandler
         return $ret;
     }
 
-    function synchronization()
+    public function synchronization()
     {
         return;
     }
@@ -105,7 +131,7 @@ class NewbbReportHandler extends ArtObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
     }

@@ -29,13 +29,20 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-if (defined("XOOPS_MODULE_NEWBB_FUCTIONS")) exit();
+if (defined("XOOPS_MODULE_NEWBB_FUCTIONS")) {
+    exit();
+}
 define("XOOPS_MODULE_NEWBB_FUCTIONS", 1);
 
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 newbb_load_object();
 
+/**
+ * @param XoopsModule $module
+ * @param null $oldversion
+ * @return bool
+ */
 function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
 {
     //  START irmtfan to dont run update script if user has the latest version.
@@ -133,7 +140,6 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
         if (is_file("$file")) {
             unlink("$file");
         }
-
     }
 
     if (!empty($newbbConfig["syncOnUpdate"])) {
@@ -144,11 +150,19 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
     return true;
 }
 
+/**
+ * @param XoopsModule $module
+ * @return bool
+ */
 function xoops_module_pre_update_newbb(XoopsModule &$module)
 {
     return newbb_setModuleConfig($module, true);
 }
 
+/**
+ * @param XoopsModule $module
+ * @return bool
+ */
 function xoops_module_pre_install_newbb(XoopsModule &$module)
 {
     $mod_tables = $module->getInfo("tables");
@@ -159,6 +173,10 @@ function xoops_module_pre_install_newbb(XoopsModule &$module)
     return newbb_setModuleConfig($module);
 }
 
+/**
+ * @param XoopsModule $module
+ * @return bool
+ */
 function xoops_module_install_newbb(XoopsModule &$module)
 {
     /* Create a test category */
@@ -225,6 +243,11 @@ function xoops_module_install_newbb(XoopsModule &$module)
     return true;
 }
 
+/**
+ * @param $module
+ * @param bool $isUpdate
+ * @return bool
+ */
 function newbb_setModuleConfig(&$module, $isUpdate = false)
 {
     return true;

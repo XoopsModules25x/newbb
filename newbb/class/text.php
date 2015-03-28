@@ -15,9 +15,12 @@
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
+/**
+ * Class Ntext
+ */
 class Ntext extends ArtObject
 {
-    function Ntext()
+    public function Ntext()
     {
         $this->ArtObject("bb_posts_text");
         $this->initVar('post_id', XOBJ_DTYPE_INT);
@@ -26,9 +29,15 @@ class Ntext extends ArtObject
     }
 }
 
+/**
+ * Class NewbbTextHandler
+ */
 class NewbbTextHandler extends ArtObjectHandler
 {
-    function NewbbTextHandler(&$db)
+    /**
+     * @param $db
+     */
+    public function NewbbTextHandler(&$db)
     {
         $this->ArtObjectHandler($db, 'bb_posts_text', 'Ntext', 'post_id');
     }
@@ -38,7 +47,7 @@ class NewbbTextHandler extends ArtObjectHandler
      *
      * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
     }

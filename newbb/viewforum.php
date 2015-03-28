@@ -23,7 +23,9 @@ mod_loadFunctions("read");
 $query_vars  = array("forum", "type", "status", "sort", "order", "start", "since");
 $query_array = array();
 foreach ($query_vars as $var) {
-    if (XoopsRequest::getString($var, '', 'GET')) $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+    if (XoopsRequest::getString($var, '', 'GET')) {
+        $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+    }
 }
 $page_query = implode("&amp;", array_values($query_array));
 
@@ -162,7 +164,7 @@ $forum_selection_order .= '</select>';
 
 $xoopsTpl->assign_by_ref('forum_selection_order', $forum_selection_order);
 
-$since = XoopsRequest::getInt('since',$xoopsModuleConfig["since_default"], 'GET');
+$since = XoopsRequest::getInt('since', $xoopsModuleConfig["since_default"], 'GET');
 mod_loadFunctions("time", "newbb");
 $forum_selection_since = newbb_sinceSelectBox($since);
 $xoopsTpl->assign_by_ref('forum_selection_since', $forum_selection_since);
@@ -273,12 +275,13 @@ if ($all_topics > $xoopsModuleConfig['topics_per_page']) {
     $page_query_nav = implode("&amp;", array_values($query_nav));
     unset($query_nav);
     $nav = new XoopsPageNav($all_topics, $xoopsModuleConfig['topics_per_page'], $start, "start", $page_query_nav);
-    if ($xoopsModuleConfig['pagenav_display'] == 'select')
+    if ($xoopsModuleConfig['pagenav_display'] == 'select') {
         $navi = $nav->renderSelect();
-    elseif ($xoopsModuleConfig['pagenav_display'] == 'bild')
+    } elseif ($xoopsModuleConfig['pagenav_display'] == 'bild') {
         $navi = $nav->renderImageNav(4);
-    else
+    } else {
         $navi = $nav->renderNav(4);
+    }
 
     $xoopsTpl->assign('forum_pagenav', $navi);
 } else {

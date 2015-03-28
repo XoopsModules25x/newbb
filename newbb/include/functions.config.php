@@ -15,15 +15,22 @@
 defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
 define("NEWBB_FUNCTIONS_CONFIG_LOADED", true);
 
-IF (!defined("NEWBB_FUNCTIONS_CONFIG")) {
+if (!defined("NEWBB_FUNCTIONS_CONFIG")) {
     define("NEWBB_FUNCTIONS_CONFIG", 1);
 
+    /**
+     * @param string $category
+     * @param string $dirname
+     * @return bool
+     */
     function newbb_load_config($category = "", $dirname = "newbb")
     {
-        global $xoopsModuleConfig;
+//        global $xoopsModuleConfig;
         static $configs;
 
-        if (isset($configs[""]) || isset($configs[$category])) return true;
+        if (isset($configs[""]) || isset($configs[$category])) {
+            return true;
+        }
         $config_handler = xoops_getmodulehandler("config", $dirname);
         if ($configs_data = $config_handler->getByCategory($category)) {
             $GLOBALS["xoopsModuleConfig"] = array_merge($GLOBALS["xoopsModuleConfig"], $configs_data);

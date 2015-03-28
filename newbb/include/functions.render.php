@@ -21,11 +21,24 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
     /*
      * Sorry, we have to use the stupid solution unless there is an option in MyTextSanitizer:: htmlspecialchars();
      */
+    /**
+     * @param $text
+     * @return mixed
+     */
     function newbb_htmlSpecialChars($text)
     {
         return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text));
     }
 
+    /**
+     * @param $text
+     * @param int $html
+     * @param int $smiley
+     * @param int $xcode
+     * @param int $image
+     * @param int $br
+     * @return mixed
+     */
     function &newbb_displayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
         global $myts;
@@ -58,6 +71,10 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
         return $text;
     }
 
+    /**
+     * @param $document
+     * @return string
+     */
     function newbb_html2text($document)
     {
         $text = strip_tags($document);
@@ -68,11 +85,13 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
     /**
      * Display forrum button
      *
-     * @param  string $image image/button name, without extension
+     * @param $link
+     * @param $button
      * @param  string $alt alt message
      * @param  boolean $asImage true for image mode; false for text mode
      * @param  string $extra extra attribute for the button
      * @return mixed
+     * @internal param string $image image/button name, without extension
      */
     function newbb_getButton($link, $button, $alt = "", $asImage = true, $extra = "class='forum_button'")
     {
@@ -118,12 +137,17 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
         }
     }
 
+    /**
+     * @return NewbbIconHandler
+     */
     function newbb_getIconHandler()
     {
         global $xoTheme, $xoopsConfig;
         static $icon_handler;
 
-        if (isset($icon_handler)) return $icon_handler;
+        if (isset($icon_handler)) {
+            return $icon_handler;
+        }
 
         if (!class_exists("NewbbIconHandler")) {
             require_once dirname(__DIR__) . "/class/icon.php";
@@ -135,5 +159,4 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
 
         return $icon_handler;
     }
-
 }

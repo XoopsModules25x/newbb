@@ -14,6 +14,8 @@
 
 /**#@+
  * Function to display tag cloud
+ * @param $options
+ * @return array|null
  */
 function newbb_tag_block_cloud_show($options)
 {
@@ -25,6 +27,10 @@ function newbb_tag_block_cloud_show($options)
     return $block_content;
 }
 
+/**
+ * @param $options
+ * @return null|string
+ */
 function newbb_tag_block_cloud_edit($options)
 {
     if (!@include_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
@@ -37,6 +43,8 @@ function newbb_tag_block_cloud_edit($options)
 
 /**#@+
  * Function to display top tag list
+ * @param $options
+ * @return array|null
  */
 function newbb_tag_block_top_show($options)
 {
@@ -48,6 +56,10 @@ function newbb_tag_block_top_show($options)
     return $block_content;
 }
 
+/**
+ * @param $options
+ * @return null|string
+ */
 function newbb_tag_block_top_edit($options)
 {
     if (!@include_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {

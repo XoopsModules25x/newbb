@@ -52,7 +52,9 @@ $xoopsTpl->assign(array(
                       'forum_name' => $forum_obj->getVar('forum_name'),
                   ));
 
-if (!is_object($topic_obj)) $topic_obj = $topic_handler->create();
+if (!is_object($topic_obj)) {
+    $topic_obj = $topic_handler->create();
+}
 
 $editby = false;
 if ($topic_obj->isNew()) {
@@ -145,8 +147,8 @@ $forum_form->addElement($icons_radio);
 
 $nohtml = !$topic_handler->getPermission($forum_obj, $topic_status, 'html');
 
-if (XoopsRequest::getString('editor', '','POST')) {
-    $editor = trim(XoopsRequest::getString('editor', '','POST'));
+if (XoopsRequest::getString('editor', '', 'POST')) {
+    $editor = trim(XoopsRequest::getString('editor', '', 'POST'));
     newbb_setcookie("editor", $editor);
 } elseif (!$editor = newbb_getcookie("editor")) {
     if (empty($editor)) {
@@ -175,8 +177,8 @@ $forum_form->addElement($_editor, true);
 
 if (!empty($xoopsModuleConfig['do_tag']) && (empty($post_obj) || $post_obj->isTopic())) {
     $topic_tags = "";
-    if (XoopsRequest::getString('topic_tags','','POST')) {
-        $topic_tags = $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags','','POST')));
+    if (XoopsRequest::getString('topic_tags', '', 'POST')) {
+        $topic_tags = $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
     } elseif (!empty($topic_id)) {
         $topic_tags = $topic_handler->get($topic_id, 'topic_tags');
     }

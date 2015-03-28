@@ -64,7 +64,9 @@ switch ($op) {
             $forum_handler->synchronization($forums_obj[$id]);
         }
 
-        if (empty($xoopsModuleConfig['notification_enabled'])) break;
+        if (empty($xoopsModuleConfig['notification_enabled'])) {
+            break;
+        }
 
         include_once 'include/notification.inc.php';
         $notification_handler =& xoops_gethandler('notification');
@@ -130,7 +132,9 @@ switch ($op) {
                     $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . "]</option>";
                     foreach ($forums[$key] as $forumid => $_forum) {
                         $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . "</option>";
-                        if (!isset($_forum["sub"])) continue;
+                        if (!isset($_forum["sub"])) {
+                            continue;
+                        }
                         foreach (array_keys($_forum["sub"]) as $fid) {
                             $box .= "<option value='" . $fid . "'>---- " . $_forum["sub"][$fid]['title'] . "</option>";
                         }

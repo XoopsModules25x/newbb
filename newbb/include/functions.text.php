@@ -20,6 +20,13 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
      * function for select from a text where it have some keywords
      *
      * @param  text $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
+     * @param $queryarray
+     * @param int $selectstartlag
+     * @param int $selectlength
+     * @param bool $striptags
+     * @param string $excludetags
+     * @param string $start_trimmarker
+     * @param string $end_trimmarker
      * @return text $select_text
      */
 
@@ -42,7 +49,9 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
                     $pos = min($thispos, $pos);
                 }
             }
-            if ($pos == $endpos) break;
+            if ($pos == $endpos) {
+                break;
+            }
             $start  = max(($pos - $selectstartlag), ($startpos - $maxlengthquery), 0); // $startpos is the last position in the previous select text
             $length = $maxlengthquery + $selectlength; //xoops_local("strlen", $query) + 200;
             $select_text .= "<p>";
@@ -50,22 +59,26 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
             $select_text .= xoops_substr($sanitized_text, $start, $length + $lengthend_trimmarker + 1, " " . $end_trimmarker) . "</p>";
             $startpos = $start + $length + 1; // start searching from next position.
         }
-        if (empty($select_text)) return ''; // if no text return empty string
+        if (empty($select_text)) {
+            return '';
+        } // if no text return empty string
         return '<span class="newbb_select_text">' . $select_text . '</span>';
-
     }
 
     /**
      * function for highlight a text when it have some keywords
      *
      * @param  text $text , array text $queryarray
+     * @param $queryarray
      * @return text $highlight_text
      */
 
     function newbb_highlightText($text, $queryarray)
     {
         global $xoopsModuleConfig;
-        if (empty($xoopsModuleConfig['highlight_search_enable'])) return $text;
+        if (empty($xoopsModuleConfig['highlight_search_enable'])) {
+            return $text;
+        }
         $queryarray = newbb_str2array($queryarray);
         // if $queryarray is string
         $highlight_text = $text;
@@ -81,6 +94,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
      * function for highlighting search results
      *
      * @param  text $query , int $i
+     * @param $i
      * @return unknown
      */
     function newbb_highlighter($query, $i)

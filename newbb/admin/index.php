@@ -41,7 +41,9 @@ $folder      = array($attach_path, $thumb_path);
  */
 function newbb_admin_getPathStatus($path)
 {
-    if (empty($path)) return false;
+    if (empty($path)) {
+        return false;
+    }
     if (@is_writable($path)) {
         $path_status = "";
     } elseif (!@is_dir($path)) {
@@ -90,8 +92,9 @@ function newbb_getImageLibs()
         $path = empty($xoopsModuleConfig['path_magick']) ? "" : $xoopsModuleConfig['path_magick'] . "/";
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output)) {
-            if (preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches))
+            if (preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
                 $imageLibs['imagemagick'] = $matches[0];
+            }
         }
         unset($output, $status);
     }
@@ -99,8 +102,9 @@ function newbb_getImageLibs()
         $path = empty($xoopsModuleConfig['path_netpbm']) ? "" : $xoopsModuleConfig['path_netpbm'] . "/";
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output)) {
-            if (preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches))
+            if (preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
                 $imageLibs['netpbm'] = $matches[0];
+            }
         }
         unset($output, $status);
     }
@@ -116,10 +120,11 @@ function newbb_getImageLibs()
         $gdversion = $matches[2];
     }
     if ($GDfuncList) {
-        if (in_array('imagegd2', $GDfuncList))
+        if (in_array('imagegd2', $GDfuncList)) {
             $imageLibs['gd2'] = $gdversion;
-        else
+        } else {
             $imageLibs['gd1'] = $gdversion;
+        }
     }
 
     return $imageLibs;
@@ -162,8 +167,9 @@ switch ($op) {
         // START irmtfan add a poll_module config
         //XOOPS_POLL
         $xoopspoll = &$module_handler->getByDirname($xoopsModuleConfig['poll_module']);
-        if (is_object($xoopspoll))
+        if (is_object($xoopspoll)) {
             $isOK = $xoopspoll->getVar('isactive');
+        }
         /*
         else {
             //Umfrage
@@ -223,7 +229,6 @@ switch ($op) {
 
             echo $indexAdmin->addNavigation('index.php');
             echo $indexAdmin->renderIndex();
-
         } else {
 
             // loadModuleAdminMenu(0, _MI_NEWBB_ADMENU_INDEX);
@@ -234,26 +239,26 @@ switch ($op) {
 
             echo "<div style='padding: 12px;'>" . _AM_NEWBB_POLLMODULE . ": ";
 
-            echo ($isOK) ? _AM_NEWBB_AVAILABLE . ": (Modul: " . $xoopspoll->getVar('name') . ")" : _AM_NEWBB_NOTAVAILABLE;
+            echo($isOK) ? _AM_NEWBB_AVAILABLE . ": (Modul: " . $xoopspoll->getVar('name') . ")" : _AM_NEWBB_NOTAVAILABLE;
             echo "</div>";
             echo "<div style='padding: 8px;'>";
             echo "<a href='http://www.imagemagick.org' target='_blank'>" . _AM_NEWBB_IMAGEMAGICK . "&nbsp;</a>";
             if (array_key_exists('imagemagick', $imageLibs)) {
-                echo "<strong><span style='color:green'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] . "</span></strong>";
+                echo "<strong><span style='color:green;'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] . "</span></strong>";
             } else {
                 echo _AM_NEWBB_NOTAVAILABLE;
             }
             echo "<br />";
             echo "<a href='http://sourceforge.net/projects/netpbm' target='_blank'>NetPBM:&nbsp;</a>";
             if (array_key_exists('netpbm', $imageLibs)) {
-                echo "<strong><span style='color:green'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] . "</span></strong>";
+                echo "<strong><span style='color:green;'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] . "</span></strong>";
             } else {
                 echo _AM_NEWBB_NOTAVAILABLE;
             }
             echo "<br />";
             echo _AM_NEWBB_GDLIB1 . "&nbsp;";
             if (array_key_exists('gd1', $imageLibs)) {
-                echo "<strong><span style='color:green'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] . "</span></strong>";
+                echo "<strong><span style='color:green;'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] . "</span></strong>";
             } else {
                 echo _AM_NEWBB_NOTAVAILABLE;
             }
@@ -261,7 +266,7 @@ switch ($op) {
             echo "<br />";
             echo _AM_NEWBB_GDLIB2 . "&nbsp;";
             if (array_key_exists('gd2', $imageLibs)) {
-                echo "<strong><span style='color:green'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] . "</span></strong>";
+                echo "<strong><span style='color:green;'>" . _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] . "</span></strong>";
             } else {
                 echo _AM_NEWBB_NOTAVAILABLE;
             }
@@ -390,7 +395,6 @@ switch ($op) {
                 $moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
                 $moderate_handler->clearGarbage();
             }
-
         }
         echo "</fieldset>";
         xoops_cp_footer();

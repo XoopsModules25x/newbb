@@ -23,7 +23,9 @@ $is_administrator = $GLOBALS["xoopsUserIsAdmin"];
 $moderate_handler = xoops_getmodulehandler('moderate', 'newbb');
 
 if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expire', 0, 'POST')) {
-    if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) $_POST["ip"] = "";
+    if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) {
+        $_POST["ip"] = "";
+    }
     if (
         (XoopsRequest::getInt('uid', 0, 'POST') && $moderate_handler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
         ||
@@ -31,7 +33,6 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
         ||
         (!XoopsRequest::getInt('uid', 0, 'POST') && !XoopsRequest::getString('ip', '', 'POST'))
     ) {
-
     } else {
         $moderate_obj = $moderate_handler->create();
         $moderate_obj->setVar("uid", XoopsRequest::getInt('uid', 0, 'POST'));
@@ -207,7 +208,9 @@ if (!empty($moderate_count)) {
     if ($moderate_count > $xoopsModuleConfig['topics_per_page']) {
         include $GLOBALS['xoops']->path('class/pagenav.php');
         $nav = new XoopsPageNav($all_topics, $xoopsModuleConfig['topics_per_page'], $start, "start", 'forum=' . $forum_id . '&amp;sort=' . $sortname);
-        if (isset($xoopsModuleConfig['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
+        if (isset($xoopsModuleConfig['do_rewrite'])) {
+            $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
+        }
         echo '<tr><td colspan="6">' . $nav->renderNav(4) . '</td></tr>';
     }
 

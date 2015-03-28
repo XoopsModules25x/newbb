@@ -65,7 +65,7 @@ $uname                = XoopsRequest::getString('uname', XoopsRequest::getString
 // irmtfan add select parameters
 $selectstartlag = XoopsRequest::getInt('selectstartlag', 100, 'GET');
 $selectlength   = XoopsRequest::getInt('selectlength', 200, 'POST');
-$selecthtml = XoopsRequest::getInt('selecthtml','', 'GET') ? (XoopsRequest::getInt('selecthtml','', 'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
+$selecthtml = XoopsRequest::getInt('selecthtml', '', 'GET') ? (XoopsRequest::getInt('selecthtml', '', 'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
 
 $selectexclude  = XoopsRequest::getString('selectexclude', '', 'GET');
 $selectexclude  = newbb_str2array($selectexclude);
@@ -176,8 +176,12 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     }
     // END irmtfan use criteria -  add since and topic search
 
-    if ($uname_required && (!$uid || count($uid) < 1)) $results = array(); // irmtfan bug fix array()
-    else $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra); // irmtfan $criteriaExtra
+    if ($uname_required && (!$uid || count($uid) < 1)) {
+        $results = array();
+    } // irmtfan bug fix array()
+    else {
+        $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra);
+    } // irmtfan $criteriaExtra
 
     // add newbb_highlightText function to keywords
     $search_info_keywords = newbb_highlightText($myts->htmlSpecialChars($term), $queries);
@@ -216,9 +220,13 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
         if (count($next_search) > 0) {
             $items = array();
             foreach ($next_search as $para => $val) {
-                if (!empty($val) || $para == "selecthtml") $items[] = "{$para}={$val}";// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
+                if (!empty($val) || $para == "selecthtml") {
+                    $items[] = "{$para}={$val}";
+                }// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
             }
-            if (count($items) > 0) $paras = implode("&", $items);
+            if (count($items) > 0) {
+                $paras = implode("&", $items);
+            }
             unset($next_search);
             unset($items);
         }
@@ -254,7 +262,9 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     // irmtfan add newbb_highlightText function
     $search_info = _SR_KEYWORDS . ": " . $search_info_keywords;
     if ($uname_required) {
-        if ($search_info) $search_info .= "<br />";
+        if ($search_info) {
+            $search_info .= "<br />";
+        }
         $search_info .= _MD_USERNAME . ": " . $myts->htmlSpecialChars($search_username);
     }
     // add num_results
@@ -272,13 +282,19 @@ $xoopsTpl->assign("search_term", $term);
 /* andor */
 $andor_select = "<select name=\"andor\">";
 $andor_select .= "<option value=\"OR\"";
-if ("OR" == $andor) $andor_select .= " selected=\"selected\"";
+if ("OR" == $andor) {
+    $andor_select .= " selected=\"selected\"";
+}
 $andor_select .= ">" . _SR_ANY . "</option>";
 $andor_select .= "<option value=\"AND\"";
-if ("AND" == $andor || empty($andor)) $andor_select .= " selected=\"selected\"";
+if ("AND" == $andor || empty($andor)) {
+    $andor_select .= " selected=\"selected\"";
+}
 $andor_select .= ">" . _SR_ALL . "</option>";
 $andor_select .= "<option value=\"EXACT\"";
-if ("EXACT" == $andor) $andor_select .= " selected=\"selected\"";
+if ("EXACT" == $andor) {
+    $andor_select .= " selected=\"selected\"";
+}
 $andor_select .= ">" . _SR_EXACT . "</option>";
 $andor_select .= "</select>";
 $xoopsTpl->assign("andor_selection_box", $andor_select);
@@ -293,23 +309,33 @@ $xoopsTpl->assign_by_ref("forum_selection_box", $select_forum);
 /* searchin */
 $searchin_select = "";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"title\"";
-if ("title" == $searchin) $searchin_select .= " checked";
+if ("title" == $searchin) {
+    $searchin_select .= " checked";
+}
 $searchin_select .= " />" . _MD_SUBJECT . "&nbsp;&nbsp;";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"text\"";
-if ("text" == $searchin) $searchin_select .= " checked";
+if ("text" == $searchin) {
+    $searchin_select .= " checked";
+}
 $searchin_select .= " />" . _MD_BODY . "&nbsp;&nbsp;";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"both\"";
-if ("both" == $searchin || empty($searchin)) $searchin_select .= " checked";
+if ("both" == $searchin || empty($searchin)) {
+    $searchin_select .= " checked";
+}
 $searchin_select .= " />" . _MD_SUBJECT . " & " . _MD_BODY . "&nbsp;&nbsp;";
 $xoopsTpl->assign("searchin_radio", $searchin_select);
 
 /* show_search */
 $show_search_select = "";
 $show_search_select .= "<input type=\"radio\" name=\"show_search\" value=\"post\"";
-if ("post" == $show_search) $show_search_select .= " checked";
+if ("post" == $show_search) {
+    $show_search_select .= " checked";
+}
 $show_search_select .= " />" . _MD_POSTS . "&nbsp;&nbsp;";
 $show_search_select .= "<input type=\"radio\" name=\"show_search\" value=\"post_text\"";
-if ("post_text" == $show_search || empty($show_search)) $show_search_select .= " checked";
+if ("post_text" == $show_search || empty($show_search)) {
+    $show_search_select .= " checked";
+}
 $show_search_select .= " />" . _MD_SEARCHPOSTTEXT . "&nbsp;&nbsp;";
 $xoopsTpl->assign("show_search_radio", $show_search_select);
 
@@ -319,10 +345,14 @@ $xoopsTpl->assign("author_select", $search_username);
 /* sortby */
 $sortby_select = "<select name=\"sortby\">";
 $sortby_select .= "<option value=\"p.post_time\"";
-if ("p.post_time" == $sortby || empty($sortby)) $sortby_select .= " selected=\"selected\"";
+if ("p.post_time" == $sortby || empty($sortby)) {
+    $sortby_select .= " selected=\"selected\"";
+}
 $sortby_select .= ">" . _MD_DATE . "</option>";
 $sortby_select .= "<option value=\"p.subject\"";
-if ("p.subject" == $sortby) $sortby_select .= " selected=\"selected\"";
+if ("p.subject" == $sortby) {
+    $sortby_select .= " selected=\"selected\"";
+}
 $sortby_select .= ">" . _MD_TOPIC . "</option>";
 $sortby_select .= "</select>";
 $xoopsTpl->assign("sortby_selection_box", $sortby_select);
@@ -336,34 +366,52 @@ $xoopsTpl->assign("selectlength_select", $selectlength);
 /* selecthtml */
 $selecthtml_select = "";
 $selecthtml_select .= "<input type=\"radio\" name=\"selecthtml\" value=\"1\" onclick=\"javascript: {document.Search.selectexcludeset.disabled=false;}\"";
-if (!empty($selecthtml)) $selecthtml_select .= " checked";
+if (!empty($selecthtml)) {
+    $selecthtml_select .= " checked";
+}
 $selecthtml_select .= " />" . _YES . "&nbsp;&nbsp;";
 $selecthtml_select .= "<input type=\"radio\" name=\"selecthtml\" value=\"0\" onclick=\"javascript: {document.Search.selectexcludeset.disabled=true;}\"";
-if (empty($selecthtml)) $selecthtml_select .= " checked";
+if (empty($selecthtml)) {
+    $selecthtml_select .= " checked";
+}
 $selecthtml_select .= " />" . _NO . "&nbsp;&nbsp;";
 $xoopsTpl->assign("selecthtml_radio", $selecthtml_select);
 
 /* selectexclude */
 $selectexclude_select = "<fieldset name=\"selectexcludeset\"";
-if (empty($selecthtml)) $selectexclude_select .= " disabled";
+if (empty($selecthtml)) {
+    $selectexclude_select .= " disabled";
+}
 $selectexclude_select .= " />";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<p>\"";
-if (in_array("<p>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<p>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " p &nbsp;&nbsp;";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<br>\"";
-if (in_array("<br>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<br>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " br &nbsp;&nbsp;";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<a>\"";
-if (in_array("<a>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<a>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " a &nbsp;&nbsp;";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<div>\"";
-if (in_array("<div>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<div>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " div &nbsp;&nbsp;";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<img>\"";
-if (in_array("<img>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<img>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " img &nbsp;&nbsp;";
 $selectexclude_select .= "<input type=\"checkbox\" name=\"selectexclude[]\" value=\"<span>\"";
-if (in_array("<span>", $selectexclude)) $selectexclude_select .= " checked";
+if (in_array("<span>", $selectexclude)) {
+    $selectexclude_select .= " checked";
+}
 $selectexclude_select .= " /> " . _MD_SELECT_TAG . " span &nbsp;&nbsp;";
 $selectexclude_select .= "</fieldset>";
 $xoopsTpl->assign("selectexclude_check_box", $selectexclude_select);

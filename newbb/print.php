@@ -42,8 +42,7 @@ include_once __DIR__ . "/header.php";
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if (!XoopsRequest::getString('post_data','','POST')) {
-
+if (!XoopsRequest::getString('post_data', '', 'POST')) {
     $forum    = XoopsRequest::getInt('forum', 0, 'POST');
     $topic_id = XoopsRequest::getInt('topic_id', 0, 'POST');
     $post_id  = XoopsRequest::getInt('post_id', 0, 'POST');
@@ -96,16 +95,14 @@ if (!XoopsRequest::getString('post_data','','POST')) {
     if (!$topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "print")) {
         die(_MD_NORIGHTTOPRINT);
     }
-
 } else {
-    $post_data = unserialize(base64_decode(XoopsRequest::getString('post_data','','POST')));
+    $post_data = unserialize(base64_decode(XoopsRequest::getString('post_data', '', 'POST')));
     $isPost    = 1;
 }
 
 xoops_header(false);
 
 if (empty($isPost)) {
-
     echo "</head><body style='background-color:#ffffff; color:#000000;' onload='window.print()'>
             <div style='width: 750px; border: 1px solid #000; padding: 20px;'>
             <div style='text-align: center; display: block; margin: 0 0 6px 0;'>
@@ -114,7 +111,9 @@ if (empty($isPost)) {
 
     $postsArray = $topic_handler->getAllPosts($topic_obj);
     foreach ($postsArray as $post) {
-        if (!$post->getVar('approved')) continue;
+        if (!$post->getVar('approved')) {
+            continue;
+        }
         $post_data = $post_handler->getPostForPrint($post);
         echo "<h2 style='margin: 0;'>" . $post_data['subject'] . "</h2>
               <div align='center'>" . _POSTEDBY . "&nbsp;" . $post_data['author'] . "&nbsp;" . _ON . "&nbsp;" . formatTimestamp($post_data['date']) . "</div>
@@ -125,9 +124,7 @@ if (empty($isPost)) {
     echo "<p>" . _MD_COMEFROM . "&nbsp;" . XOOPS_URL . "/newbb/viewtopic.php?forum=" . $forum_id . "&amp;topic_id=" . $topic_id . "</p>";
     echo "</div></div>";
     echo "</body></html>";
-
 } else {
-
     echo "</head><body style='background-color:#ffffff; color:#000000;' onload='window.print()'>
             <div style='width: 750px; border: 1px solid #000; padding: 20px;'>
             <div style='text-align: center; display: block; margin: 0 0 6px 0;'>
