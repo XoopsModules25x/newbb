@@ -135,11 +135,11 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
 
         if ($xoopsModuleConfig['image_lib'] == 2 or $xoopsModuleConfig['image_lib'] == 0) {
             $path = empty($xoopsModuleConfig['path_netpbm']) ? "" : $xoopsModuleConfig['path_netpbm'] . "/";
-            if (eregi("\.png", $source)) {
+            if (preg_match("/\.png/", $source)) {
                 $cmd = $path . "pngtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "pnmtopng > $new_file";
-            } elseif (eregi("\.(jpg|jpeg)", $source)) {
+            } elseif (preg_match("/\.(jpg|jpeg)/", $source)) {
                 $cmd = $path . "jpegtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "ppmtojpeg -quality=90 > $new_file";
-            } elseif (eregi("\.gif", $source)) {
+            } elseif (preg_match("/\.gif/", $source)) {
                 $cmd = $path . "giftopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | ppmquant 256 | " . $path . "ppmtogif > $new_file";
             }
 

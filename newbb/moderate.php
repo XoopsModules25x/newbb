@@ -44,7 +44,7 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
         if (XoopsRequest::getInt('uid', 0, 'POST') > 0) {
             $online_handler = xoops_gethandler('online');
             $onlines        =& $online_handler->getAll(new Criteria("online_uid", XoopsRequest::getInt('uid', 0, 'POST')));
-            if (false != $onlines) {
+            if (false !== $onlines) {
                 $online_ip = $onlines[0]["online_ip"];
                 $sql       = sprintf('DELETE FROM %s WHERE sess_ip = %s', $xoopsDB->prefix('session'), $xoopsDB->quoteString($online_ip));
                 if (!$result = $xoopsDB->queryF($sql)) {

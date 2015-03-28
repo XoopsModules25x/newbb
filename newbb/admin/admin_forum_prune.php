@@ -94,7 +94,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $topics_number = count($topics);
     $topic_list    = implode(',', $topics);
 
-    if ($topic_list != null) {
+    if (null !== $topic_list) {
         $sql = "SELECT post_id FROM " . $xoopsDB->prefix("bb_posts") . "
                     WHERE topic_id IN (" . $topic_list . ")";
 
@@ -110,9 +110,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         $post_list    = implode(',', $posts);
     }
     // OKZ Now we have al posts id and topics id
-    if ($post_list != null) {
+    if (null !== $post_list) {
         // COPY POSTS TO OTHER FORUM
-        if ($store != null) {
+        if (null !== $store) {
             $sql = "UPDATE " . $xoopsDB->prefix("bb_posts") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
             if (!$result = $xoopsDB->query($sql)) {
                 return _AM_NEWBB_ERROR;

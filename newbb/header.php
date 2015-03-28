@@ -24,7 +24,7 @@ if (!empty($xoopsModuleConfig['do_rewrite'])) {
 
     if (((strpos(getenv('REQUEST_URI'), '.html') === false) && !empty($xoopsModuleConfig['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0))) {
         $redir = false;
-        if (strpos(getenv("REQUEST_URI"), "mark_read=") == true || strpos(getenv("REQUEST_URI"), "mark=") == true) {
+        if (strpos(getenv("REQUEST_URI"), "mark_read=") == true || strpos(getenv("REQUEST_URI"), "mark=") === true) {
             // Mark Forums
         } else {
             if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
@@ -40,7 +40,7 @@ if (!empty($xoopsModuleConfig['do_rewrite'])) {
             }
         }
 
-        if ($redir == true) {
+        if ($redir === true) {
             $s      = "http://" . getenv('HTTP_HOST') . getenv("REQUEST_URI");
             $s      = str_replace("/" . REAL_MODULE_NAME . "/", "/" . SEO_MODULE_NAME . "/", $s);
             $newurl = seo_urls('<a href="' . $s . '"></a>');

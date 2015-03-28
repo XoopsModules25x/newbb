@@ -111,7 +111,7 @@ if ($pollModuleHandler->getVar("version") >= 140) {
     } else {
         $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_ERROR_INVALID_POLLID");
     }
-    if (null != $url) {
+    if (null !== $url) {
         redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     } else {
         redirect_header($GLOBALS['xoops']->buildUrl("viewtopic.php", array('topic_id' => $topic_id)),

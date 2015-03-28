@@ -575,7 +575,7 @@ class NewbbTopicRenderer
         return $this->getFromKeys($links, $status); // irmtfan to accept multiple status
     }
 
-    function buildSelection(&$xoopsTpl)
+    function buildSelection(Smarty &$xoopsTpl)
     {
         $selection         = array("action" => $this->page);
         $selection["vars"] = $this->vars;
@@ -609,7 +609,7 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('selection', $selection);
     }
 
-    function buildSearch(&$xoopsTpl)
+    function buildSearch(Smarty &$xoopsTpl)
     {
         $search             = array();
         $search["forum"]    = @$this->vars["forum"];
@@ -619,7 +619,7 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('search', $search);
     }
 
-    function buildHeaders(&$xoopsTpl)
+    function buildHeaders(Smarty &$xoopsTpl)
     {
         $args = array();
         foreach ($this->vars as $var => $val) {
@@ -639,7 +639,7 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('headers', $headers_data);
     }
 
-    function buildFilters(&$xoopsTpl)
+    function buildFilters(Smarty &$xoopsTpl)
     {
         $args = array();
         foreach ($this->vars as $var => $val) {
@@ -671,7 +671,7 @@ class NewbbTopicRenderer
         return @$types[$type_id];
     }
 
-    function buildTypes(&$xoopsTpl)
+    function buildTypes(Smarty &$xoopsTpl)
     {
         if (!$types = $this->getTypes()) {
             return true;
@@ -691,7 +691,7 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('types', $status);
     }
 
-    function buildCurrent(&$xoopsTpl)
+    function buildCurrent(Smarty &$xoopsTpl)
     {
         if (empty($this->vars["status"]) && !$this->is_multiple) return true;
 
@@ -708,7 +708,7 @@ class NewbbTopicRenderer
         $xoopsTpl->assign_by_ref('current', $status);
     }
 
-    function buildPagenav(&$xoopsTpl)
+    function buildPagenav(Smarty &$xoopsTpl)
     {
         $count_topic = $this->getCount();
         if ($count_topic > $this->config['topics_per_page']) {
@@ -766,7 +766,7 @@ class NewbbTopicRenderer
         return $count;
     }
 
-    function renderTopics($xoopsTpl = null)
+    function renderTopics(Smarty $xoopsTpl = null)
     {
         $myts = MyTextSanitizer::getInstance(); // irmtfan Instanciate
 

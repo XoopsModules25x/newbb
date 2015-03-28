@@ -62,7 +62,7 @@ function newbb_admin_mkdir($target, $mode = 0777)
 {
     $target = str_replace("..", "", $target);
     // http://www.php.net/manual/en/function.mkdir.php
-    return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) and mkdir($target, $mode));
+    return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) && mkdir($target, $mode));
 }
 
 /**
@@ -406,7 +406,7 @@ mod_clearCacheFile("permission", "newbb");
  */
 function return_bytes($size_str, $b = false)
 {
-    if ($b == false) {
+    if ($b === false) {
         switch (substr($size_str, -1)) {
             case 'M':
             case 'm':

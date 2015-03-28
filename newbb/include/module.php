@@ -36,7 +36,7 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 newbb_load_object();
 
-function xoops_module_update_newbb(&$module, $oldversion = null)
+function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
 {
     //  START irmtfan to dont run update script if user has the latest version.
     if ($oldversion == round($module->getInfo("version") * 100, 2)) {
@@ -144,12 +144,12 @@ function xoops_module_update_newbb(&$module, $oldversion = null)
     return true;
 }
 
-function xoops_module_pre_update_newbb(&$module)
+function xoops_module_pre_update_newbb(XoopsModule &$module)
 {
     return newbb_setModuleConfig($module, true);
 }
 
-function xoops_module_pre_install_newbb(&$module)
+function xoops_module_pre_install_newbb(XoopsModule &$module)
 {
     $mod_tables = $module->getInfo("tables");
     foreach ($mod_tables as $table) {
@@ -159,7 +159,7 @@ function xoops_module_pre_install_newbb(&$module)
     return newbb_setModuleConfig($module);
 }
 
-function xoops_module_install_newbb(&$module)
+function xoops_module_install_newbb(XoopsModule &$module)
 {
     /* Create a test category */
     $category_handler = xoops_getmodulehandler('category', $module->getVar("dirname"));

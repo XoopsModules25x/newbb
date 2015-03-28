@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-function xoops_module_update_newbb_v400(&$module)
+function xoops_module_update_newbb_v400(XoopsModule &$module)
 {
     $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
 
@@ -89,7 +89,7 @@ function xoops_module_update_newbb_v400(&$module)
 
         $sql = "	SELECT topic_id, topic_tags" .
                "	FROM {$table_topic}";
-        if (($result = $GLOBALS['xoopsDB']->query($sql)) == false) {
+        if (($result = $GLOBALS['xoopsDB']->query($sql)) === false) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {

@@ -36,14 +36,15 @@ if (XoopsRequest::getInt('cat', 0, 'POST')) $cat = XoopsRequest::getInt('cat', 0
 if (XoopsRequest::getInt('forum', 0, 'POST')) $forum = XoopsRequest::getInt('forum', 0, 'POST');
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
-    for ($i = 0; $i < count($cat_orders); ++$i) {
+    $catOrdersCount = count($cat_orders);
+    for ($i = 0; $i < $catOrdersCount; ++$i) {
         $sql = "update " . $xoopsDB->prefix("bb_categories") . " set cat_order = " . $cat_orders[$i] . " WHERE cat_id=$cat[$i]";
         if (!$result = $xoopsDB->query($sql)) {
             redirect_header("admin_forum_reorder.php", 1, _AM_NEWBB_FORUM_ERROR);
         }
     }
-
-    for ($i = 0; $i < count($orders); ++$i) {
+    $ordersCount = count($orders);
+    for ($i = 0; $i < $ordersCount; ++$i) {
         $sql = "update " . $xoopsDB->prefix("bb_forums") . " set forum_order = " . $orders[$i] . " WHERE forum_id=" . $forum[$i];
         if (!$result = $xoopsDB->query($sql)) {
             redirect_header("admin_forum_reorder.php", 1, _AM_NEWBB_FORUM_ERROR);

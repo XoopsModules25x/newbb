@@ -134,7 +134,7 @@ class Topic extends ArtObject
         } else {
             $classPoll = $this->loadOldPoll();
             $poll      = new $classPoll($poll_id);
-            if ($poll->delete() != false) {
+            if (false !== $poll->delete()) {
                 $classOption = $classPoll . "Option";
                 $classOption::deleteByPollId($poll->getVar("poll_id"));
                 $classLog = $classPoll . "Log";

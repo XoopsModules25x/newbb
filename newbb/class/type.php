@@ -85,7 +85,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                " 	WHERE " .
                "		l.forum_id " . (empty($forums) ? "IS NOT NULL" : "IN (" . implode(", ", $forums) . ")") .
                " 		ORDER BY l.type_order ASC";
-        if (($result = $this->db->query($sql)) == false) {
+        if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             return $ret;
         }
@@ -141,7 +141,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                    " WHERE " .
                    " forum_id = " . $forum_id . " AND " . // irmtfan bug fix: delete other forums types when update the type for a specific forum
                    " 	{$this->keyName} NOT IN (" . implode(", ", $types_valid) . ")";
-            if (($result = $this->db->queryF($sql)) == false) {
+            if (($result = $this->db->queryF($sql)) === false) {
             }
         }
 
@@ -153,7 +153,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 $sql = "UPDATE " . $this->db->prefix("bb_type_forum") .
                        " SET type_order = {$order}" .
                        " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";
-                if (($result = $this->db->queryF($sql)) == false) {
+                if (($result = $this->db->queryF($sql)) === false) {
                 }
             }
         }
@@ -168,7 +168,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             $sql = "INSERT INTO " . $this->db->prefix("bb_type_forum") .
                    " (type_id, forum_id, type_order) " .
                    " VALUES " . implode(", ", $type_query);
-            if (($result = $this->db->queryF($sql)) == false) {
+            if (($result = $this->db->queryF($sql)) === false) {
                 //xoops_error($this->db->error());
             }
         }
@@ -194,7 +194,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         $sql = "DELETE" .
                " FROM " . $this->db->prefix("bb_type_forum") .
                " WHERE  " . $this->keyName . " = " . $object->getVar($this->keyName);
-        if (($result = $this->db->{$queryFunc}($sql)) == false) {
+        if (($result = $this->db->{$queryFunc}($sql)) === false) {
             // xoops_error($this->db->error());
         }
 
@@ -205,7 +205,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                " " . $this->db->prefix("bb_topics") .
                " SET " . $this->keyName . "=0" .
                " WHERE  " . $this->keyName . " = " . $object->getVar($this->keyName);
-        if (($result = $this->db->{$queryFunc}($sql)) == false) {
+        if (($result = $this->db->{$queryFunc}($sql)) === false) {
             //xoops_error($this->db->error());
         }
 
