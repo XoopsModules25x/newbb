@@ -23,19 +23,19 @@ To Upgrade from older newbb versions 1.x 2.x 3.0.x
 7- upload the newbb to htdocs/modules/newbb (upload the compressed file and decompressed via Cpanel is the best way to insure all files are correctly uploaded)
 8- go to your admin -> system -> modules -> newbb -> upgrade (important: wait until you see the report page)
 9- go to system -> maintenance -> clear all caches
-10- change the default settings to your desired in the module preferences and newbb/include/plugin.php and IF EXIST based on your old back-upped plugin.php. Set the permissions in newbb -> admin -> permission for all groups one by one. pay attention that webmasters group has all accesses regardless of permissions. using a non webmaster test account is recommended to test the permissions for each group. 
+10- change the default settings to your desired in the module preferences and newbb/include/plugin.php and IF EXIST based on your old back-upped plugin.php. Set the permissions in newbb -> admin -> permission for all groups one by one. pay attention that webmasters group has all accesses regardless of permissions. using a non webmaster test account is recommended to test the permissions for each group.
 11 - dont forget to open your website again.
 
 Image set Full customization
 ==========================
 In newbb 4.3 you can customize all images (like reply, edit, ... buttons and icons) for all themes or each theme one by one without touching the modules/newbb files.
 The priority for reading images are as below:
- * IF EXISTS XOOPS_ROOT/themes/YOUR_THEME/modules/newbb/images/, TAKE IT; 
- * ELSEIF EXISTS  XOOPS_ROOT/themes/default/modules/newbb/images/, TAKE IT; 
+ * IF EXISTS XOOPS_ROOT/themes/YOUR_THEME/modules/newbb/images/, TAKE IT;
+ * ELSEIF EXISTS  XOOPS_ROOT/themes/default/modules/newbb/assets/images/, TAKE IT;
  * ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/
 The above means, if you want to customize images for all of your themes you should not touch the modules/newbb/templates/images/ folder.
 Just upload the image set in XOOPS_ROOT/themes/default/modules/newbb/images and all of your themes will read it from default theme.
-Then if you want to customize it for another specific theme you can upload the new image set in XOOPS_ROOT/themes/YOUR_THEME/modules/newbb/images 
+Then if you want to customize it for another specific theme you can upload the new image set in XOOPS_ROOT/themes/YOUR_THEME/modules/newbb/images
 And you can follow the above for the other themes.
 
 FAQ:
@@ -70,12 +70,12 @@ In newbb/include/plugin.php
 
 5- Why i have not a JQuery redirect in some submits in newbb module like reply and new topic?
 Please find and remove any newline/space before <?php or after ?> in your whole xoops php files.
-Also find and remove any BOM in language utf-8 files in your whole xoops.  
+Also find and remove any BOM in language utf-8 files in your whole xoops.
 
 6- When i tried "Set permission directly by group" in newbb => admin => permissions i get a message "Sorry, you don't have the permission to access this area".
 it is because of max_input_vars php config.
 if you go to modules/system/admin in file error_log you can find this error:
- PHP Warning: Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini 
+ PHP Warning: Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini
 you should increase max_input_vars like this.
 creating a php.ini in the root of your website and enter this:
 max_input_vars = 10000

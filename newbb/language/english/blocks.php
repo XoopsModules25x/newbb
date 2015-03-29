@@ -1,8 +1,11 @@
 <?php
 // $Id: blocks.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
 // Blocks
-if(defined('NEWBB_BLOCKS_DEFINED')) return;
-else define('NEWBB_BLOCKS_DEFINED', true);
+if (defined('NEWBB_BLOCKS_DEFINED')) {
+    return;
+} else {
+    define('NEWBB_BLOCKS_DEFINED', true);
+}
 define('_MB_NEWBB_FORUM', "Forum");
 define('_MB_NEWBB_TOPIC', "Topic");
 define('_MB_NEWBB_RPLS', "Replies");
@@ -45,4 +48,3 @@ define('_MB_NEWBB_CRITERIA_ORDER', "Order by");
 define('_MB_NEWBB_TITLE_LENGTH_DESC', "Length of topic title excerpt in block. 0 for show the whole title and no excerpt.");
 define('_MB_NEWBB_POST_EXCERPT', "Post text excerpt in block");
 define('_MB_NEWBB_POST_EXCERPT_DESC', "Length of post text excerpt by mouse over on topic title in block. 0 for dont show post text.");
-?>

@@ -2,25 +2,27 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    The XOOPS Project http://xoops.sf.net
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
 
-defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+
+defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
-class Report extends ArtObject {
-    function Report()
+/**
+ * Class Report
+ */
+class Report extends ArtObject
+{
+    public function Report()
     {
-	    $this->ArtObject("bb_report");
+        $this->ArtObject("bb_report");
         $this->initVar('report_id', XOBJ_DTYPE_INT);
         $this->initVar('post_id', XOBJ_DTYPE_INT);
         $this->initVar('reporter_uid', XOBJ_DTYPE_INT);
@@ -32,30 +34,54 @@ class Report extends ArtObject {
     }
 }
 
-class NewbbReportHandler extends ArtObjectHandler 
+/**
+ * Class NewbbReportHandler
+ */
+class NewbbReportHandler extends ArtObjectHandler
 {
-    function NewbbReportHandler(&$db) {
+    /**
+     * @param $db
+     */
+    public function NewbbReportHandler(&$db)
+    {
         $this->ArtObjectHandler($db, 'bb_report', 'Report', 'report_id');
     }
-    function &getByPost($posts)
+
+    /**
+     * @param $posts
+     * @return array
+     */
+    public function &getByPost($posts)
     {
-	    $ret = array();
+        $ret = array();
         if (!$posts) {
-	        return $ret;
+            return $ret;
         }
-        if (!is_array($posts)) $posts = array($posts);
+        if (!is_array($posts)) {
+            $posts = array($posts);
+        }
         $post_criteria = new Criteria("post_id", "(" . implode(", ", $posts) . ")", "IN");
-		$ret =& $this->getAll($post_criteria);
+        $ret           =& $this->getAll($post_criteria);
+
         return $ret;
     }
-    
-    function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
+
+    /**
+     * @param int $forums
+     * @param string $order
+     * @param int $perpage
+     * @param $start
+     * @param int $report_result
+     * @param int $report_id
+     * @return array
+     */
+    public function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
     {
         if ($order == "DESC") {
-            $operator_for_position = '>' ;
+            $operator_for_position = '>';
         } else {
-            $order = "ASC" ;
-            $operator_for_position = '<' ;
+            $order                 = "ASC";
+            $operator_for_position = '<';
         }
         $order_criteria = " ORDER BY r.report_id $order";
 
@@ -69,43 +95,44 @@ class NewbbReportHandler extends ArtObjectHandler
 
         if (!$forums) {
             $forum_criteria = '';
-        } else if (!is_array($forums)) {
-            $forums = array($forums);
+        } elseif (!is_array($forums)) {
+            $forums         = array($forums);
             $forum_criteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
         }
         $tables_criteria = ' FROM ' . $this->db->prefix('bb_report') . ' r, ' . $this->db->prefix('bb_posts') . ' p WHERE r.post_id= p.post_id';
 
         if ($report_id) {
             $result = $this->db->query("SELECT COUNT(*) as report_count" . $tables_criteria . $forum_criteria . $result_criteria . " AND report_id $operator_for_position $report_id" . $order_criteria);
-            if ($result) $row = $this->db->fetchArray($result);
+            if ($result) {
+                $row = $this->db->fetchArray($result);
+            }
             $position = $row['report_count'];
-            $start = intval($position / $perpage) * $perpage;
+            $start    = intval($position / $perpage) * $perpage;
         }
 
-        $sql = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forum_criteria . $result_criteria . $order_criteria;
+        $sql    = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forum_criteria . $result_criteria . $order_criteria;
         $result = $this->db->query($sql, $perpage, $start);
-        $ret = array();
+        $ret    = array();
         //$report_handler = &xoops_getmodulehandler('report', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
+
         return $ret;
     }
 
-	function synchronization()
+    public function synchronization()
     {
-		return;
-	}
-    
+        return;
+    }
+
     /**
      * clean orphan items from database
-     * 
-     * @return 	bool	true on success
+     *
+     * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
-	    return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
+        return parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
     }
 }
-
-?>

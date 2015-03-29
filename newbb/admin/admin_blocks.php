@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id: admin_blocks.php 62 2012-08-17 10:15:26Z alfred $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
@@ -33,6 +33,5 @@
 // - XOOPS block admin for each modules -                     //
 // GIJOE <http://www.peak.ne.jp/>                   //
 // ------------------------------------------------------------------------- //
-include("admin_header.php");
+include_once __DIR__ . '/admin_header.php';
 header("Location: ".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&selmod=".$xoopsModule->getVar("mid"));
-?>

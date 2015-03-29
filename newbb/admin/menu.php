@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id: menu.php 62 2012-08-17 10:15:26Z alfred $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
@@ -30,57 +30,102 @@
 // ------------------------------------------------------------------------- //
 
 $newModuleGui = false;
-if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))){
+if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     $module_handler =& xoops_gethandler('module');
-	$xoopsModule =& XoopsModule::getByDirname('newbb');
-	$moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-	$pathIcon32 = $moduleInfo->getInfo('icons32');
-	$newModuleGui = true;
+    $xoopsModule    =& XoopsModule::getByDirname('newbb');
+    $moduleInfo     =& $module_handler->get($xoopsModule->getVar('mid'));
+    $pathIcon32     = $moduleInfo->getInfo('icons32');
+    $newModuleGui   = true;
 }
 
-$i=0;
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_INDEX;
-$adminmenu[$i]['link'] = "admin/index.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ?  '../../'.$pathIcon32.'/home.png' : "images/menu/home.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_CATEGORY;
-$adminmenu[$i]['link'] = "admin/admin_cat_manager.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/category.png' : "images/menu/cat.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_FORUM;
-$adminmenu[$i]['link'] = "admin/admin_forum_manager.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ?  '../../'.$pathIcon32.'/forums.png' : "images/menu/forum.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_PERMISSION;
-$adminmenu[$i]['link'] = "admin/admin_permissions.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ?  '../../'.$pathIcon32.'/permissions.png' : "images/menu/permissions.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_ORDER;
-$adminmenu[$i]['link'] = "admin/admin_forum_reorder.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/compfile.png' : "images/menu/order.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_PRUNE;
-$adminmenu[$i]['link'] = "admin/admin_forum_prune.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/update.png' : "images/menu/prune.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_REPORT;
-$adminmenu[$i]['link'] = "admin/admin_report.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/content.png' : "images/menu/report.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_DIGEST;
-$adminmenu[$i]['link'] = "admin/admin_digest.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/digest.png' : "images/menu/digest.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_VOTE;
-$adminmenu[$i]['link'] = "admin/admin_votedata.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/button_ok.png' : "images/menu/votedata.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_TYPE;
-$adminmenu[$i]['link'] = "admin/admin_type_manager.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/type.png' : "images/menu/type.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_GROUPMOD;
-$adminmenu[$i]['link'] = "admin/admin_groupmod.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/groupmod.png' : "images/menu/groupmod.png";
+$adminmenu[] = array(
+    'title' => _AM_MODULEADMIN_HOME,
+    'link'  => 'admin/index.php',
+    'icon'  => $pathIcon32 . '/home.png'
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_INDEX,
+    'link'  => "admin/index.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/home.png' : "assets/images/menu/home.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_CATEGORY,
+    'link'  => "admin/admin_cat_manager.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/category.png' : "assets/images/menu/cat.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_FORUM,
+    'link'  => "admin/admin_forum_manager.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/forums.png' : "assets/images/menu/forum.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_PERMISSION,
+    'link'  => "admin/admin_permissions.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/permissions.png' : "assets/images/menu/permissions.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_ORDER,
+    'link'  => "admin/admin_forum_reorder.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/compfile.png' : "assets/images/menu/order.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_PRUNE,
+    'link'  => "admin/admin_forum_prune.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/update.png' : "assets/images/menu/prune.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_REPORT,
+    'link'  => "admin/admin_report.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/content.png' : "assets/images/menu/report.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_DIGEST,
+    'link'  => "admin/admin_digest.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/digest.png' : "assets/images/menu/digest.png",
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_VOTE,
+    'link'  => "admin/admin_votedata.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/button_ok.png' : "assets/images/menu/votedata.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_TYPE,
+    'link'  => "admin/admin_type_manager.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/type.png' : "assets/images/menu/type.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_GROUPMOD,
+    'link'  => "admin/admin_groupmod.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/groupmod.png' : "assets/images/menu/groupmod.png"
+);
+
 if (!$newModuleGui) {
-	$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_BLOCK;
-	$adminmenu[$i]['link'] = "admin/admin_blocks.php";
-	$adminmenu[$i++]['icon'] = "images/menu/blocks.png";
+    $adminmenu[] = array(
+        'title' => _MI_NEWBB_ADMENU_BLOCK,
+        'link'  => "admin/admin_blocks.php",
+        'icon'  => "assets/images/menu/blocks.png"
+    );
 }
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_SYNC;
-$adminmenu[$i]['link'] = "admin/admin_synchronization.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/synchronized.png' : "images/menu/synchronization.png";
-$adminmenu[$i]['title'] = _MI_NEWBB_ADMENU_ABOUT;
-$adminmenu[$i]['link'] = "admin/about.php";
-$adminmenu[$i++]['icon'] = ($newModuleGui) ? '../../'.$pathIcon32.'/about.png' : "images/menu/about.png";
-?>
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_SYNC,
+    'link'  => "admin/admin_synchronization.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/synchronized.png' : "assets/images/menu/synchronization.png"
+);
+
+$adminmenu[] = array(
+    'title' => _MI_NEWBB_ADMENU_ABOUT,
+    'link'  => "admin/about.php",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/about.png' : "assets/images/menu/about.png"
+);

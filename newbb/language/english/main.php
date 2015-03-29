@@ -1,6 +1,8 @@
 <?php
 // $Id: main.php 17 2007-11-18 14:22:36Z LupusC $
-if(defined('MAIN_DEFINED')) return;
+if (defined('MAIN_DEFINED')) {
+    return;
+}
 define('MAIN_DEFINED', true);
 define('_MD_ERROR', "Error");
 define('_MD_SELFORUM', "Select a Forum");
@@ -413,7 +415,7 @@ define('_MD_SUSPEND_SCOPE', "Scope");
 define('_MD_SUSPEND_MANAGEMENT', "Moderation management");
 define('_MD_SUSPEND_NOACCESS', "Your ID or IP has been suspended");
 define('_MD_NEWBB_TYPE', "Topic type");
-define('_MD_NEWBB_SEENOTGUEST', "<font color=\"red\"><b>Link only for registered users</b></font>");
+define('_MD_NEWBB_SEENOTGUEST', '<span style="color:red"><strong>Link only for registered users</strong></span>');
 define('_MD_NEWBB_REPORTSUBJECT', "A contribution has been reported");
 define('_MD_NEWBB_GOTOLASTPOST', "Go to last post");
 define('_MD_EDITEDMSG', "Reason:");
@@ -435,7 +437,7 @@ Please do not reply to this message!
 %s
 %s");
 define('_MD_FORUMHOME', "Board index");
-define('_MD_NEWBB_SEEWAITREPORT', "There were <font color=\"red\"> <b>%s</b> Contributions reported </font>");
+define('_MD_NEWBB_SEEWAITREPORT', 'There were <span style="color:red"> <strong>%s</strong> Contributions reported </span>');
 define('NEWBB_PDF_SUBJECT', "Title: ");
 define('NEWBB_PDF_TOPIC', "Post: ");
 define('NEWBB_PDF_AUTHOR', "Author: ");
@@ -499,4 +501,3 @@ define('_MD_REPLIED', "Replied topics");
 define('_MD_READ', "Read topics");
 define('_MD_POLL_POLL', "Poll");
 define('_MD_PAGENAV_DISPLAY', "Display of navigation");
-?>

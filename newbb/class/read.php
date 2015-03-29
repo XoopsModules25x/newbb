@@ -28,28 +28,29 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
- 
-if (!defined("XOOPS_ROOT_PATH")) {
-	exit();
-}
 
-defined("NEWBB_FUNCTIONS_INI") || include XOOPS_ROOT_PATH.'/modules/newbb/include/functions.ini.php';
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+
+defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
 /**
  * A handler for read/unread handling
- * 
+ *
  * @package     newbb/cbb
- * 
- * @author	    D.J. (phppp, http://xoopsforge.com)
- * @copyright	copyright (c) 2005 XOOPS.org
+ *
+ * @author        D.J. (phppp, http://xoopsforge.com)
+ * @copyright    copyright (c) 2005 XOOPS.org
  */
-
-class Read extends ArtObject 
+class Read extends ArtObject
 {
-    function Read($type)
+    /**
+     * @param $type
+     */
+    public function Read($type)
     {
-        $this->ArtObject("bb_reads_".$type);
+//        parent::__construct("bb_reads_" . $type);
+        $this->ArtObject("bb_reads_" . $type);
         $this->initVar('read_id', XOBJ_DTYPE_INT);
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('read_item', XOBJ_DTYPE_INT);
@@ -58,6 +59,9 @@ class Read extends ArtObject
     }
 }
 
+/**
+ * Class NewbbReadHandler
+ */
 class NewbbReadHandler extends ArtObjectHandler
 {
     /**
@@ -69,8 +73,8 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var string
      */
-	var $type;
-	
+    public $type;
+
     /**
      * seconds records will persist.
      * assigned from $xoopsModuleConfig["read_expire"]
@@ -82,8 +86,8 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var integer
      */
-	var $lifetime;
-	
+    public $lifetime;
+
     /**
      * storage mode for records.
      * assigned from $xoopsModuleConfig["read_mode"]
@@ -95,223 +99,310 @@ class NewbbReadHandler extends ArtObjectHandler
      *
      * @var integer
      */
-	var $mode;
-	
-    function NewbbReadHandler(&$db, $type) {
-	    $type = ("forum" == $type) ? "forum" : "topic";
-        $this->ArtObjectHandler($db, 'bb_reads_'.$type, 'Read'.$type, 'read_id', 'post_id');
-        $this->type = $type;
-	    $newbbConfig = newbb_load_config();
-	    // irmtfan if read_expire = 0 dont clean
-        $this->lifetime = isset($newbbConfig["read_expire"]) ? intval($newbbConfig["read_expire"]) *24*3600 : 30*24*3600;
-        $this->mode = isset($newbbConfig["read_mode"]) ? $newbbConfig["read_mode"] : 2;
+    public $mode;
+
+    /**
+     * @param $db
+     * @param $type
+     */
+    public function NewbbReadHandler(&$db, $type)
+    {
+        $type = ("forum" == $type) ? "forum" : "topic";
+        $this->ArtObjectHandler($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
+        $this->type  = $type;
+        $newbbConfig = newbbLoadConfig();
+        // irmtfan if read_expire = 0 dont clean
+        $this->lifetime = isset($newbbConfig["read_expire"]) ? intval($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
+        $this->mode     = isset($newbbConfig["read_mode"]) ? $newbbConfig["read_mode"] : 2;
     }
 
     /**
      * Clear garbage
-     * 
+     *
      * Delete all expired and duplicated records
      */
-     // START irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
-    function clearGarbage() {
-    	// irmtfan clear duplicaed rows
-    	if(!$result = $this->clearDuplicate()) {
-    		return false;
-	    }
-	    
-    	/* for MySQL 4.1+ */
-    	if ($this->mysql_major_version() >= 4):
-        $sql = 	"DELETE bb FROM ".$this->table." AS bb".
-        		" LEFT JOIN ".$this->table." AS aa ON bb.read_item = aa.read_item ".
-        		" WHERE aa.post_id > bb.post_id";
-        else:
-        // for 4.0+
-        $sql = 	"DELETE ".$this->table." FROM ".$this->table.
-        		" LEFT JOIN ".$this->table." AS aa ON ".$this->table.".read_item = aa.read_item ".
-        		" WHERE aa.post_id > ".$this->table.".post_id";
-		endif;
+    // START irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
+    public function clearGarbage()
+    {
+        // irmtfan clear duplicaed rows
+        if (!$result = $this->clearDuplicate()) {
+            return false;
+        }
+
+        /* for MySQL 4.1+ */
+        if ($this->mysql_major_version() >= 4) {
+            $sql = "DELETE bb FROM " . $this->table . " AS bb" .
+                   " LEFT JOIN " . $this->table . " AS aa ON bb.read_item = aa.read_item " .
+                   " WHERE aa.post_id > bb.post_id";
+        } else {
+            // for 4.0+
+            $sql = "DELETE " . $this->table . " FROM " . $this->table .
+                   " LEFT JOIN " . $this->table . " AS aa ON " . $this->table . ".read_item = aa.read_item " .
+                   " WHERE aa.post_id > " . $this->table . ".post_id";
+        }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
             return false;
         }
-	    // irmtfan if read_expire = 0 dont clean
-	    if (empty($this->lifetime)) return true;
-	    // irmtfan move here and rephrase
-	    $expire = time() - intval($this->lifetime);
-		$sql = "DELETE FROM ".$this->table." WHERE read_time < ". $expire;
+        // irmtfan if read_expire = 0 dont clean
+        if (empty($this->lifetime)) {
+            return true;
+        }
+        // irmtfan move here and rephrase
+        $expire = time() - intval($this->lifetime);
+        $sql    = "DELETE FROM " . $this->table . " WHERE read_time < " . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
             return false;
         }
+
         return true;
     }
+
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
-    function getRead($read_item, $uid = null)
+    /**
+     * @param $read_item
+     * @param null $uid
+     * @return bool|mixed|null
+     */
+    public function getRead($read_item, $uid = null)
     {
-	    if (empty($this->mode)) return null;
-	    if ($this->mode == 1) return $this->getRead_cookie($read_item);
-	    else return $this->getRead_db($read_item, $uid);
+        if (empty($this->mode)) {
+            return null;
+        }
+        if (1 == $this->mode) {
+            return $this->getRead_cookie($read_item);
+        } else {
+            return $this->getRead_db($read_item, $uid);
+        }
     }
-        
-    function getRead_cookie($item_id)
+
+    /**
+     * @param $item_id
+     * @return mixed
+     */
+    public function getRead_cookie($item_id)
     {
-	    $cookie_name = ($this->type == "forum") ? "LF" : "LT";
-	    $cookie_var = $item_id;
-	    // irmtfan set true to return array
-		$lastview = newbb_getcookie($cookie_name, true);
-		return @$lastview[$cookie_var];
+        $cookie_name = ($this->type == "forum") ? "LF" : "LT";
+        $cookie_var  = $item_id;
+        // irmtfan set true to return array
+        $lastview = newbb_getcookie($cookie_name, true);
+
+        return @$lastview[$cookie_var];
     }
-    
-    function getRead_db($read_item, $uid)
+
+    /**
+     * @param $read_item
+     * @param $uid
+     * @return bool|null
+     */
+    public function getRead_db($read_item, $uid)
     {
-	    if (empty($uid)) {
-		    if (is_object($GLOBALS["xoopsUser"])) {
-			    $uid = $GLOBALS["xoopsUser"]->getVar("uid");
-		    } else {
-			    return false;
-		    }
-	    }
-	    $sql = "SELECT post_id ".
-	    		" FROM ".$this->table.
-	    		" WHERE read_item = ".intval($read_item).
-	    		" 	AND uid = ".intval($uid);
-	    if (!$result = $this->db->queryF($sql, 1)) {
-		    return null;
-	    }
-	    list($post_id) = $this->db->fetchRow($result);
-	    return $post_id;
+        if (empty($uid)) {
+            if (is_object($GLOBALS["xoopsUser"])) {
+                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            } else {
+                return false;
+            }
+        }
+        $sql = "SELECT post_id " .
+               " FROM " . $this->table .
+               " WHERE read_item = " . intval($read_item) .
+               " 	AND uid = " . intval($uid);
+        if (!$result = $this->db->queryF($sql, 1)) {
+            return null;
+        }
+        list($post_id) = $this->db->fetchRow($result);
+
+        return $post_id;
     }
-    
-    function setRead($read_item, $post_id, $uid = null)
+
+    /**
+     * @param $read_item
+     * @param $post_id
+     * @param null $uid
+     * @return bool|mixed|void
+     */
+    public function setRead($read_item, $post_id, $uid = null)
     {
-	    if (empty($this->mode)) return true;
-	    if ($this->mode == 1) return $this->setRead_cookie($read_item, $post_id);
-	    else return $this->setRead_db($read_item, $post_id, $uid);
+        if (empty($this->mode)) {
+            return true;
+        }
+        if (1 == $this->mode) {
+            return $this->setRead_cookie($read_item, $post_id);
+        } else {
+            return $this->setRead_db($read_item, $post_id, $uid);
+        }
     }
-        
-    function setRead_cookie($read_item, $post_id)
+
+    /**
+     * @param $read_item
+     * @param $post_id
+     */
+    public function setRead_cookie($read_item, $post_id)
     {
-	    $cookie_name = ($this->type == "forum") ? "LF" : "LT";
-		$lastview = newbb_getcookie($cookie_name, true);
-		$lastview[$read_item] = time();
-		newbb_setcookie($cookie_name, $lastview);
+        $cookie_name          = ($this->type == "forum") ? "LF" : "LT";
+        $lastview             = newbb_getcookie($cookie_name, true);
+        $lastview[$read_item] = time();
+        newbb_setcookie($cookie_name, $lastview);
     }
-    
-    function setRead_db($read_item, $post_id, $uid)
+
+    /**
+     * @param $read_item
+     * @param $post_id
+     * @param $uid
+     * @return bool|mixed
+     */
+    public function setRead_db($read_item, $post_id, $uid)
     {
-	    if (empty($uid)) {
-		    if (is_object($GLOBALS["xoopsUser"])) {
-			    $uid = $GLOBALS["xoopsUser"]->getVar("uid");
-		    } else {
-			    return false;
-		    }
-	    }
-	    
-	    $sql = "UPDATE ".$this->table.
-	    		" SET post_id = ".intval($post_id).",".
-	    		" 	read_time =".time().
-	    		" WHERE read_item = ".intval($read_item).
-	    		" 	AND uid = ".intval($uid);
-	    if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
-		    return true;
-	    }
-	    $object =& $this->create();
-	    $object->setVar("read_item", $read_item, true);
-	    $object->setVar("post_id", $post_id, true);
-	    $object->setVar("uid", $uid, true);
-	    $object->setVar("read_time", time(), true);
-	    return parent::insert($object);
+        if (empty($uid)) {
+            if (is_object($GLOBALS["xoopsUser"])) {
+                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            } else {
+                return false;
+            }
+        }
+
+        $sql = "UPDATE " . $this->table .
+               " SET post_id = " . intval($post_id) . "," .
+               " 	read_time =" . time() .
+               " WHERE read_item = " . intval($read_item) .
+               " 	AND uid = " . intval($uid);
+        if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
+            return true;
+        }
+        $object =& $this->create();
+        $object->setVar("read_item", $read_item, true);
+        $object->setVar("post_id", $post_id, true);
+        $object->setVar("uid", $uid, true);
+        $object->setVar("read_time", time(), true);
+
+        return parent::insert($object);
     }
-    
-    function isRead_items(&$items, $uid = null)
+
+    /**
+     * @param $items
+     * @param null $uid
+     * @return array|null
+     */
+    public function isRead_items(&$items, $uid = null)
     {
-	    $ret = null;
-	    if (empty($this->mode)) return $ret;
-	    
-	    if ($this->mode == 1) $ret = $this->isRead_items_cookie($items);
-	    else $ret = $this->isRead_items_db($items, $uid);
-	    return $ret;
+        $ret = null;
+        if (empty($this->mode)) {
+            return $ret;
+        }
+
+        if (1 == $this->mode) {
+            $ret = $this->isRead_items_cookie($items);
+        } else {
+            $ret = $this->isRead_items_db($items, $uid);
+        }
+
+        return $ret;
     }
-        
-    function isRead_items_cookie(&$items)
+
+    /**
+     * @param $items
+     * @return array
+     */
+    public function isRead_items_cookie(&$items)
     {
-	    $cookie_name = ($this->type == "forum")?"LF":"LT";
-	    $cookie_vars = newbb_getcookie($cookie_name, true);
-	    
-	    $ret = array();
-	    foreach ($items as $key => $last_update) {
+        $cookie_name = ($this->type == "forum") ? "LF" : "LT";
+        $cookie_vars = newbb_getcookie($cookie_name, true);
+
+        $ret = array();
+        foreach ($items as $key => $last_update) {
             $ret[$key] = (max(@$GLOBALS['last_visit'], @$cookie_vars[$key]) >= $last_update);
-	    }
-	    return $ret;
+        }
+
+        return $ret;
     }
-    
-    function isRead_items_db(&$items, $uid)
+
+    /**
+     * @param $items
+     * @param $uid
+     * @return array
+     */
+    public function isRead_items_db(&$items, $uid)
     {
-	    $ret = array();
-	    if (empty($items)) return $ret;
-	    
-	    if (empty($uid)) {
-		    if (is_object($GLOBALS["xoopsUser"])) {
-			    $uid = $GLOBALS["xoopsUser"]->getVar("uid");
-		    } else {
-			    return $ret;
-		    }
-	    }
-	    
-		$criteria = new CriteriaCompo(new Criteria("uid", $uid));
-		$criteria->add(new Criteria("read_item", "(".implode(", ", array_map("intval", array_keys($items))).")", "IN"));
-		$items_obj =& $this->getAll($criteria, array("read_item", "post_id"));
-	    
-		$items_list = array();
-	    foreach (array_keys($items_obj) as $key) {
+        $ret = array();
+        if (empty($items)) {
+            return $ret;
+        }
+
+        if (empty($uid)) {
+            if (is_object($GLOBALS["xoopsUser"])) {
+                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            } else {
+                return $ret;
+            }
+        }
+
+        $criteria = new CriteriaCompo(new Criteria("uid", $uid));
+        $criteria->add(new Criteria("read_item", "(" . implode(", ", array_map("intval", array_keys($items))) . ")", "IN"));
+        $items_obj =& $this->getAll($criteria, array("read_item", "post_id"));
+
+        $items_list = array();
+        foreach (array_keys($items_obj) as $key) {
             $items_list[$items_obj[$key]->getVar("read_item")] = $items_obj[$key]->getVar("post_id");
-	    }
-		unset($items_obj);
-	    
-	    foreach ($items as $key => $last_update) {
+        }
+        unset($items_obj);
+
+        foreach ($items as $key => $last_update) {
             $ret[$key] = (@$items_list[$key] >= $last_update);
-	    }
-		return $ret;
+        }
+
+        return $ret;
     }
-    // START irmtfan add clear duplicated rows function 
-    function clearDuplicate()
+
+    // START irmtfan add clear duplicated rows function
+    /**
+     * @return bool
+     */
+    public function clearDuplicate()
     {
-	   	$sql = "CREATE TABLE " . $this->table . "_duplicate like " . $this->table . "; ";
+        $sql = "CREATE TABLE " . $this->table . "_duplicate like " . $this->table . "; ";
         if (!$result = $this->db->queryF($sql)) {
-    		xoops_error($this->db->error().'<br />'.$sql);
-    		return false;
-    	}
-    	$sql = "INSERT " . $this->table . "_duplicate SELECT * FROM " . $this->table . " GROUP BY read_item, uid; ";
+            xoops_error($this->db->error() . '<br />' . $sql);
+
+            return false;
+        }
+        $sql = "INSERT " . $this->table . "_duplicate SELECT * FROM " . $this->table . " GROUP BY read_item, uid; ";
         if (!$result = $this->db->queryF($sql)) {
-    		xoops_error($this->db->error().'<br />'.$sql);
-    		return false;
-    	}
-    	$sql = "RENAME TABLE " . $this->table . " TO " . $this->table . "_with_duplicate; ";
+            xoops_error($this->db->error() . '<br />' . $sql);
+
+            return false;
+        }
+        $sql = "RENAME TABLE " . $this->table . " TO " . $this->table . "_with_duplicate; ";
         if (!$result = $this->db->queryF($sql)) {
-    		xoops_error($this->db->error().'<br />'.$sql);
-    		return false;
-    	}
-    	$sql = "RENAME TABLE " . $this->table . "_duplicate TO " . $this->table . "; ";
+            xoops_error($this->db->error() . '<br />' . $sql);
+
+            return false;
+        }
+        $sql = "RENAME TABLE " . $this->table . "_duplicate TO " . $this->table . "; ";
         if (!$result = $this->db->queryF($sql)) {
-    		xoops_error($this->db->error().'<br />'.$sql);
-    		return false;
-    	}
-		$sql = "SHOW INDEX FROM " . $this->table . " WHERE KEY_NAME = 'read_item_uid'";
-		$result = $this->db->queryF($sql);
-		if (empty($result)) {
-			$sql.= "ALTER TABLE " . $this->table . " ADD INDEX read_item_uid ( read_item, uid ); ";
-        	if (!$result = $this->db->queryF($sql)) {
-    			xoops_error($this->db->error().'<br />'.$sql);
-    			return false;
-   			}
-   		}
-    	$sql = "DROP TABLE " . $this->table . "_with_duplicate; ";
+            xoops_error($this->db->error() . '<br />' . $sql);
+
+            return false;
+        }
+        $sql    = "SHOW INDEX FROM " . $this->table . " WHERE KEY_NAME = 'read_item_uid'";
+        $result = $this->db->queryF($sql);
+        if (empty($result)) {
+            $sql .= "ALTER TABLE " . $this->table . " ADD INDEX read_item_uid ( read_item, uid ); ";
+            if (!$result = $this->db->queryF($sql)) {
+                xoops_error($this->db->error() . '<br />' . $sql);
+
+                return false;
+            }
+        }
+        $sql = "DROP TABLE " . $this->table . "_with_duplicate; ";
         if (!$result = $this->db->queryF($sql)) {
-    		xoops_error($this->db->error().'<br />'.$sql);
-    		return false;
-    	}
-	    return true;
-	}
-    // END irmtfan add clear duplicated rows function 
+            xoops_error($this->db->error() . '<br />' . $sql);
+
+            return false;
+        }
+
+        return true;
+    }
+    // END irmtfan add clear duplicated rows function
 }
-?>

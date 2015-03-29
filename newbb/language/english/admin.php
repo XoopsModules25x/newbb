@@ -1,7 +1,10 @@
 <?php
 // $Id: admin.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
-if(defined('NEWBB_ADMIN_DEFINED')) return;
-else define('NEWBB_ADMIN_DEFINED', true);
+if (defined('NEWBB_ADMIN_DEFINED')) {
+    return;
+} else {
+    define('NEWBB_ADMIN_DEFINED', true);
+}
 //%%%%%%	File Name  index.php   	%%%%%
 define('_AM_NEWBB_FORUMCONF', "Forum Configuration");
 define('_AM_NEWBB_ADDAFORUM', "Add a Forum");
@@ -51,8 +54,8 @@ define('_AM_NEWBB_GDLIB1', "GD1 library:");
 define('_AM_NEWBB_GDLIB2', "GD2 library:");
 define('_AM_NEWBB_AUTODETECTED', "Autodetected: ");
 define('_AM_NEWBB_AVAILABLE', "Available");
-define('_AM_NEWBB_NOTAVAILABLE', '<font color="red">is not available. </font>');
-define('_AM_NEWBB_NOTWRITABLE', '<font color="red">Not writable</font>');
+define('_AM_NEWBB_NOTAVAILABLE', '<span style="color:red">is not available. </span>');
+define('_AM_NEWBB_NOTWRITABLE', '<span style="color:red">Not writable</span>');
 define('_AM_NEWBB_IMAGEMAGICK', "ImageMagicK:");
 define('_AM_NEWBB_IMAGEMAGICK_NOTSET', "Not set");
 define('_AM_NEWBB_ATTACHPATH', "Path for attachment storage");
@@ -68,7 +71,7 @@ define('_AM_NEWBB_DIRNOTCREATED', "The directory can not be created");
 define('_AM_NEWBB_PERMSET', "The permission has been set");
 define('_AM_NEWBB_PERMNOTSET', "The permission can not be set");
 define('_AM_NEWBB_DIGEST', "Digest notification");
-define('_AM_NEWBB_DIGEST_PAST', '<font color="red">Should be sent out %d minutes ago</font>');
+define('_AM_NEWBB_DIGEST_PAST', '<span style="color:red">Should be sent out %d minutes ago</span>');
 define('_AM_NEWBB_DIGEST_NEXT', "Need to send out in %d minutes");
 define('_AM_NEWBB_DIGEST_ARCHIVE', "Digest archive");
 define('_AM_NEWBB_DIGEST_SENT', "Digest processed");
@@ -291,4 +294,3 @@ define('_AM_NEWBB_SYNC_TYPE_READ', "Read Data");
 define('_AM_NEWBB_DATABASEUPDATED', "Database Updated Successfully!");
 define('_AM_NEWBB_CAN_PDF', "Can create pdf files");
 define('_AM_NEWBB_CAN_PRINT', "Can get print page");
-?>

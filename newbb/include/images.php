@@ -14,61 +14,61 @@
  * Set image path
  *
  * Priority for path per types:
- * 	NEWBB_ROOT 	-	IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT; 
- *					ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/images/, TAKE IT; 
- *					ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/. 
+ * 	NEWBB_ROOT 	-	IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
+ *					ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
+ *					ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
  * 	types:
- *		button		- 	language specified; 
- *		indicator	-	language specified; 
- *		icon		-	universal; 
- *		mime		-	universal; 
+ *		button		- 	language specified;
+ *		indicator	-	language specified;
+ *		icon		-	universal;
+ *		mime		-	universal;
  */
 
 // Forum image type
 // irmtfan add anonym.png more.png and less.png icon
-$forumImage[''] = $forumImage['blank'] = 
+$forumImage[''] = $forumImage['blank'] =
 
-$forumImage['attachment'] = 
-$forumImage['whosonline'] = 
-$forumImage['statistik'] = 
-$forumImage['lastposticon'] = 
+$forumImage['attachment'] =
+$forumImage['whosonline'] =
+$forumImage['statistik'] =
+$forumImage['lastposticon'] =
 
-$forumImage['plus'] = 
-$forumImage['minus'] = 
+$forumImage['plus'] =
+$forumImage['minus'] =
 
-$forumImage['forum'] = 
-$forumImage['forum_new'] = 
+$forumImage['forum'] =
+$forumImage['forum_new'] =
 
-$forumImage['topic'] = 
-$forumImage['topic_hot'] = 
-$forumImage['topic_sticky'] = 
-$forumImage['topic_digest'] = 
-$forumImage['topic_locked'] = 
-$forumImage['topic_new'] = 
-$forumImage['topic_hot_new'] = 
-$forumImage['topic_my'] = 
+$forumImage['topic'] =
+$forumImage['topic_hot'] =
+$forumImage['topic_sticky'] =
+$forumImage['topic_digest'] =
+$forumImage['topic_locked'] =
+$forumImage['topic_new'] =
+$forumImage['topic_hot_new'] =
+$forumImage['topic_my'] =
 
-$forumImage['post'] = 
+$forumImage['post'] =
 
-$forumImage['poll'] = 
-$forumImage['rss'] = 
-$forumImage['pdf'] = 
-$forumImage['subforum'] = 
+$forumImage['poll'] =
+$forumImage['rss'] =
+$forumImage['pdf'] =
+$forumImage['subforum'] =
 
-$forumImage['admin_move'] = 
-$forumImage['admin_merge'] = 
-$forumImage['admin_edit'] = 
+$forumImage['admin_move'] =
+$forumImage['admin_merge'] =
+$forumImage['admin_edit'] =
 $forumImage['admin_delete'] =
 
-$forumImage['document'] = 
+$forumImage['document'] =
 
-$forumImage['previous'] = 
-$forumImage['next'] = 
-$forumImage['right'] = 
-$forumImage['down'] = 
-$forumImage['up'] = 
+$forumImage['previous'] =
+$forumImage['next'] =
+$forumImage['right'] =
+$forumImage['down'] =
+$forumImage['up'] =
 $forumImage['printer'] =
-$forumImage['new_forum']  = 
+$forumImage['new_forum']  =
 
 $forumImage['facebook'] =
 $forumImage['twitter'] =
@@ -86,32 +86,30 @@ $forumImage['more'] =
 $forumImage['less'] =
 "icon";
 
-for($i = 1; $i <= 5; $i++ ) {
-	$forumImage['rate'.$i] = "icon";
+for ($i = 1; $i <= 5; ++$i) {
+    $forumImage['rate'.$i] = "icon";
 }
 
+$forumImage['p_delete'] =
+$forumImage['p_reply'] =
+$forumImage['p_quote'] =
+$forumImage['p_edit'] =
+$forumImage['p_report'] =
 
-$forumImage['p_delete'] = 
-$forumImage['p_reply'] = 
-$forumImage['p_quote'] = 
-$forumImage['p_edit'] = 
-$forumImage['p_report'] = 
-
-$forumImage['t_new'] = 
-$forumImage['t_poll'] = 
+$forumImage['t_new'] =
+$forumImage['t_poll'] =
 $forumImage['t_qr'] =
-$forumImage['t_qr_expand'] = 
-$forumImage['t_reply'] = 
+$forumImage['t_qr_expand'] =
+$forumImage['t_reply'] =
 
-$forumImage['online'] = 
-$forumImage['offline'] = 
+$forumImage['online'] =
+$forumImage['offline'] =
 
-$forumImage['new_subforum'] = 
+$forumImage['new_subforum'] =
 
-$forumImage['p_bann'] = 
+$forumImage['p_bann'] =
 
 "language";
-
 
 /*
 $forumImage[''] = $forumImage['blank'] = $forumImage['icon']."blank";
@@ -142,7 +140,6 @@ $forumImage['admin_move'] = $forumImage['icon']."admin_move";
 $forumImage['admin_edit'] = $forumImage['icon']."admin_edit";
 $forumImage['admin_delete'] = $forumImage['icon']."admin_delete";
 
-
 $forumImage['document'] = $forumImage['icon']."document";
 
 $forumImage['previous'] = $forumImage['icon']."previous";
@@ -150,8 +147,8 @@ $forumImage['right'] = $forumImage['icon']."next";
 $forumImage['down'] = $forumImage['icon']."down";
 $forumImage['up'] = $forumImage['icon']."up";
 
-for($i = 1; $i <= 5; $i++ ) {
-	$forumImage['rate'.$i] = $forumImage['icon'].'/rate'.$i;
+for ($i = 1; $i <= 5; ++$i) {
+    $forumImage['rate'.$i] = $forumImage['icon'].'/rate'.$i;
 }
 
 $forumImage['p_delete'] = $forumImage['language']."p_delete";
@@ -173,4 +170,3 @@ $forumImage['new_subforum'] = $forumImage['language']."new_subforum";
 */
 
 return $forumImage;
-?>

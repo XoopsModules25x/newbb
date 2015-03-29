@@ -28,92 +28,120 @@
 //  URL: http://xoopsforge.com, http://xoops.org.cn                          //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once dirname(__FILE__).'/read.php';
+include_once __DIR__ . '/read.php';
 
 /**
  * A handler for read/unread handling
- * 
+ *
  * @package     newbb/cbb
- * 
- * @author	    D.J. (phppp, http://xoopsforge.com)
- * @copyright	copyright (c) 2005 XOOPS.org
+ *
+ * @author        D.J. (phppp, http://xoopsforge.com)
+ * @copyright    copyright (c) 2005 XOOPS.org
  */
-
-class Readforum extends Read 
+class Readforum extends Read
 {
-    function Readforum()
+    public function Readforum()
     {
         $this->Read("forum");
     }
 }
 
+/**
+ * Class NewbbReadforumHandler
+ */
 class NewbbReadforumHandler extends NewbbReadHandler
 {
-    function NewbbReadforumHandler(&$db) {
+    /**
+     * @param $db
+     */
+    public function NewbbReadforumHandler(&$db)
+    {
         $this->NewbbReadHandler($db, "forum");
     }
-    
+
     /**
      * clean orphan items from database
-     * 
-     * @return 	bool	true on success
+     *
+     * @return bool true on success
      */
-    function cleanOrphan()
+    public function cleanOrphan()
     {
-	    parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
-		return parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id", "read_item");
-    }    
-    
-    function setRead_items($status = 0, $uid = null)
-    {
-	    if (empty($this->mode)) return true;
-	    
-	    if ($this->mode == 1) return $this->setRead_items_cookie($status);
-	    else return $this->setRead_items_db($status, $uid);
-    }
-        
-    function setRead_items_cookie($status, $items)
-    {
-	    $cookie_name = "LF";
-		$items = array();
-		if (!empty($status)):
-		$item_handler =& xoops_getmodulehandler('forum', 'newbb');
-		$items_id = $item_handler->getIds();
-		foreach ($items_id as $key) {
-			$items[$key] = time();
-		}
-		endif;
-		newbb_setcookie($cookie_name, $items);
-		return true;
-    }
-    
-    function setRead_items_db($status, $uid)
-    {
-	    if (empty($uid)) {
-		    if (is_object($GLOBALS["xoopsUser"])) {
-			    $uid = $GLOBALS["xoopsUser"]->getVar("uid");
-		    } else {
-			    return false;
-		    }
-	    }
-	    if (empty($status)) {
-			$this->deleteAll(new Criteria("uid", $uid));
-		    return true;
-	    }
+        parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
 
-		$item_handler =& xoops_getmodulehandler('forum', 'newbb');
-		$items_obj =& $item_handler->getAll(null, array("forum_last_post_id"));
-		foreach (array_keys($items_obj) as $key) {
-			$this->setRead_db($key, $items_obj[$key]->getVar("forum_last_post_id"), $uid);
-		}
-		unset($items_obj);
-		
-		return true;
+        return parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id", "read_item");
     }
 
-	function synchronization()
+    /**
+     * @param int $status
+     * @param null $uid
+     * @return bool
+     */
+    public function setRead_items($status = 0, $uid = null)
     {
-		return;
-	}
+        if (empty($this->mode)) {
+            return true;
+        }
+
+        if ($this->mode == 1) {
+            return $this->setRead_items_cookie($status);
+        } else {
+            return $this->setRead_items_db($status, $uid);
+        }
+    }
+
+    /**
+     * @param $status
+     * @param $items
+     * @return bool
+     */
+    public function setRead_items_cookie($status, $items)
+    {
+        $cookie_name = "LF";
+        $items       = array();
+        if (!empty($status)) {
+            $item_handler =& xoops_getmodulehandler('forum', 'newbb');
+            $items_id     = $item_handler->getIds();
+            foreach ($items_id as $key) {
+                $items[$key] = time();
+            }
+        }
+        newbb_setcookie($cookie_name, $items);
+
+        return true;
+    }
+
+    /**
+     * @param $status
+     * @param $uid
+     * @return bool
+     */
+    public function setRead_items_db($status, $uid)
+    {
+        if (empty($uid)) {
+            if (is_object($GLOBALS["xoopsUser"])) {
+                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            } else {
+                return false;
+            }
+        }
+        if (empty($status)) {
+            $this->deleteAll(new Criteria("uid", $uid));
+
+            return true;
+        }
+
+        $item_handler =& xoops_getmodulehandler('forum', 'newbb');
+        $items_obj    =& $item_handler->getAll(null, array("forum_last_post_id"));
+        foreach (array_keys($items_obj) as $key) {
+            $this->setRead_db($key, $items_obj[$key]->getVar("forum_last_post_id"), $uid);
+        }
+        unset($items_obj);
+
+        return true;
+    }
+
+    public function synchronization()
+    {
+        return;
+    }
 }
-?>
