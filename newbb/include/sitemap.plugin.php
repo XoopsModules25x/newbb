@@ -14,9 +14,9 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = array();
 
-    $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
     /* Allowed forums */
-    $forums_allowed = $forum_handler->getIdsByPermission();
+    $forums_allowed = $forumHandler->getIdsByPermission();
 
     /* fetch top forums */
     $forums_top_id = array();
@@ -24,14 +24,14 @@ function b_sitemap_newbb()
         $crit_top = new CriteriaCompo(new Criteria("parent_forum", 0));
         //$crit_top->add(new Criteria("cat_id", "(".implode(", ", array_keys($categories)).")", "IN"));
         $crit_top->add(new Criteria("forum_id", "(" . implode(", ", $forums_allowed) . ")", "IN"));
-        $forums_top_id = $forum_handler->getIds($crit_top);
+        $forums_top_id = $forumHandler->getIds($crit_top);
     }
 
     $forums_sub_id = array();
     if ($sitemap_configs["show_subcategoris"] && !empty($forums_top_id)) {
         $crit_sub = new CriteriaCompo(new Criteria("parent_forum", "(" . implode(", ", $forums_top_id) . ")", "IN"));
         $crit_sub->add(new Criteria("forum_id", "(" . implode(", ", $forums_allowed) . ")", "IN"));
-        $forums_sub_id = $forum_handler->getIds($crit_sub);
+        $forums_sub_id = $forumHandler->getIds($crit_sub);
     }
 
     /* Fetch forum data */
@@ -41,7 +41,7 @@ function b_sitemap_newbb()
         $crit_forum = new Criteria("forum_id", "(" . implode(", ", $forums_available) . ")", "IN");
         $crit_forum->setSort("cat_id ASC, parent_forum ASC, forum_order");
         $crit_forum->setOrder("ASC");
-        $forums_array = $forum_handler->getAll($crit_forum, array("forum_name", "parent_forum", "cat_id"), false);
+        $forums_array = $forumHandler->getAll($crit_forum, array("forum_name", "parent_forum", "cat_id"), false);
     }
 
     $forums = array();
@@ -63,8 +63,8 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs["show_subcategoris"]) {
-        $category_handler =& xoops_getmodulehandler('category', 'newbb');
-        $categories       = $category_handler->getByPermission('access', array("cat_id", "cat_title"), false);
+        $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
+        $categories       = $categoryHandler->getByPermission('access', array("cat_id", "cat_title"), false);
 
         foreach ($categories as $key => $category) {
             $cat_id                         = $category["cat_id"];

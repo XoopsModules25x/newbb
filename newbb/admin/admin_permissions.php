@@ -262,13 +262,13 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-        $category_handler  =& xoops_getmodulehandler('category', 'newbb');
-        $criteria_category = new CriteriaCompo(new criteria('1', 1));
-        $criteria_category->setSort('cat_order');
-        $categories = $category_handler->getList($criteria_category);
+        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory->setSort('cat_order');
+        $categories = $categoryHandler->getList($criteriaCategory);
 
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-        $forums        = $forum_handler->getTree(array_keys($categories), 0, "all");
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forums        = $forumHandler->getTree(array_keys($categories), 0, "all");
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c - 1000] = " ";
             $fm_options[-1 * $c]        = "[" . $categories[$c] . "]";
@@ -348,18 +348,18 @@ switch ($action) {
 
         $form = new newbb_XoopsGroupPermForm($fm_options[$op]["title"], $module_id, $fm_options[$op]["item"], $fm_options[$op]["desc"], 'admin/admin_permissions.php', $fm_options[$op]["anonymous"]);
 
-        $category_handler  = &xoops_getmodulehandler('category', 'newbb');
-        $criteria_category = new CriteriaCompo(new criteria('1', 1));
-        $criteria_category->setSort('cat_order');
-        $categories = $category_handler->getList($criteria_category);
+        $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory->setSort('cat_order');
+        $categories = $categoryHandler->getList($criteriaCategory);
         if ($op == "category") {
             foreach (array_keys($categories) as $key) {
                 $form->addItem($key, $categories[$key]);
             }
             unset($categories);
         } else {
-            $forum_handler = &xoops_getmodulehandler('forum', 'newbb');
-            $forums        = $forum_handler->getTree(array_keys($categories), 0, "all");
+            $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
+            $forums        = $forumHandler->getTree(array_keys($categories), 0, "all");
             foreach (array_keys($forums) as $c) {
                 $key_c = -1 * $c;
                 $form->addItem($key_c, "<strong>[" . $categories[$c] . "]</strong>");

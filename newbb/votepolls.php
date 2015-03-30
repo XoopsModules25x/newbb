@@ -30,9 +30,9 @@ $poll_id  = XoopsRequest::getInt('poll_id', XoopsRequest::getInt('poll_id', 0, '
 $topic_id = XoopsRequest::getInt('topic_id', XoopsRequest::getInt('topic_id', 0, 'POST'), 'GET');
 $forum    = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET');
 
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topic_handler->get($topic_id);
-if (!$topic_handler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "vote")) {
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$topic_obj     =& $topicHandler->get($topic_id);
+if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "vote")) {
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }
 
@@ -41,18 +41,18 @@ if (!XoopsRequest::getInt('option_id', 0, 'POST')) {
     redirect_header("viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
-$pollModuleHandler =& $module_handler->getByDirname($xoopsModuleConfig["poll_module"]);
+$pollModuleHandler =& $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']["poll_module"]);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // new xoopspoll module
     if ($pollModuleHandler->getVar("version") >= 140) {
-        xoops_load('constants', $xoopsModuleConfig["poll_module"]);
-        xoops_loadLanguage('main', $xoopsModuleConfig["poll_module"]);
-        $xpPollHandler =& xoops_getmodulehandler('poll', $xoopsModuleConfig["poll_module"]);
-        $xpLogHandler  =& xoops_getmodulehandler('log', $xoopsModuleConfig["poll_module"]);
+        xoops_load('constants', $GLOBALS['xoopsModuleConfig']["poll_module"]);
+        xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']["poll_module"]);
+        $xpPollHandler =& xoops_getmodulehandler('poll', $GLOBALS['xoopsModuleConfig']["poll_module"]);
+        $xpLogHandler  =& xoops_getmodulehandler('log', $GLOBALS['xoopsModuleConfig']["poll_module"]);
         $poll_obj      = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
-        include $GLOBALS['xoops']->path("modules/" . $xoopsModuleConfig["poll_module"] . "/include/constants.php");
+        include $GLOBALS['xoops']->path("modules/" . $GLOBALS['xoopsModuleConfig']["poll_module"] . "/include/constants.php");
         $classPoll = $topic_obj->loadOldPoll();
         $poll_obj  = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
     }
@@ -63,7 +63,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 $mail_author = false;
 // new xoopspoll module
 if ($pollModuleHandler->getVar("version") >= 140) {
-    $classConstants = ucfirst($xoopsModuleConfig["poll_module"]) . "Constants";
+    $classConstants = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Constants";
     if (is_object($poll_obj)) {
         if ($poll_obj->getVar('multiple')) {
             $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
@@ -73,7 +73,7 @@ if ($pollModuleHandler->getVar("version") >= 140) {
             $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
         }
         if (!$poll_obj->hasExpired()) {
-            $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_MUSTLOGIN");
+            $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_MUSTLOGIN");
             //@todo:: add $url to all redirects
 //            $url = $GLOBALS['xoops']->buildUrl("index.php", array('poll_id' => $poll_id));
             if ($poll_obj->isAllowedToVote()) {
@@ -87,29 +87,29 @@ if ($pollModuleHandler->getVar("version") >= 140) {
                             echo $poll_obj->getHtmlErrors();
                             exit();
                         }
-                        $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_THANKSFORVOTE");
+                        $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_THANKSFORVOTE");
                     } else {
                         /* there was a problem registering the vote */
-                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', array('poll_id' => $poll_id)), $classConstants::REDIRECT_DELAY_MEDIUM, constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_VOTE_ERROR"));
+                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', array('poll_id' => $poll_id)), $classConstants::REDIRECT_DELAY_MEDIUM, constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_VOTE_ERROR"));
                     }
                 } else {
-                    $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_ALREADYVOTED");
+                    $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_ALREADYVOTED");
                 }
                 /* set anon user vote (and the time they voted) */
                 if (!is_object($GLOBALS['xoopsUser'])) {
-                    xoops_load("pollUtility", $xoopsModuleConfig["poll_module"]);
-                    $classPollUtility = ucfirst($xoopsModuleConfig["poll_module"]) . "PollUtility";
+                    xoops_load("pollUtility", $GLOBALS['xoopsModuleConfig']["poll_module"]);
+                    $classPollUtility = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "PollUtility";
                     $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
                 }
             } else {
-                $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_CANNOTVOTE");
+                $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_CANNOTVOTE");
             }
         } else {
             /* poll has expired so just show the results */
-            $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "SORRYEXPIRED");
+            $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "SORRYEXPIRED");
         }
     } else {
-        $msg = constant("_MD_" . strtoupper($xoopsModuleConfig["poll_module"]) . "_ERROR_INVALID_POLLID");
+        $msg = constant("_MD_" . strtoupper($GLOBALS['xoopsModuleConfig']["poll_module"]) . "_ERROR_INVALID_POLLID");
     }
     if (null !== $url) {
         redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
@@ -127,7 +127,7 @@ if ($pollModuleHandler->getVar("version") >= 140) {
             setcookie("bb_polls[{$poll_id}]", 1);
         } else {
             // irmtfan save ip to db
-            $poll_obj->vote(XoopsRequest::getInt('option_id',0, 'POST'), $_SERVER['REMOTE_ADDR'], $GLOBALS['xoopsUser']->getVar("uid"));
+            $poll_obj->vote(XoopsRequest::getInt('option_id', 0, 'POST'), $_SERVER['REMOTE_ADDR'], $GLOBALS['xoopsUser']->getVar("uid"));
             $poll_obj->updateCount();
             $msg = _PL_THANKSFORVOTE;
             setcookie("bb_polls[{$poll_id}]", 1);
@@ -137,7 +137,7 @@ if ($pollModuleHandler->getVar("version") >= 140) {
             $msg = _PL_ALREADYVOTED;
             setcookie("bb_polls[{$poll_id}]", 1);
         } else {
-            $poll_obj->vote(XoopsRequest::getInt('option_id',0, 'POST'), $_SERVER['REMOTE_ADDR']);
+            $poll_obj->vote(XoopsRequest::getInt('option_id', 0, 'POST'), $_SERVER['REMOTE_ADDR']);
             $poll_obj->updateCount();
             $msg = _PL_THANKSFORVOTE;
             setcookie("bb_polls[{$poll_id}]", 1);

@@ -23,8 +23,8 @@ if (empty($topic_id) || empty($op)) {
 }
 
 $topic_id      = array_values($topic_id);
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$forum_handler =& xoops_getmodulehandler('forum', 'newbb');
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 
 $isadmin = newbb_isAdmin($forum_id);
 
@@ -34,37 +34,37 @@ if (!$isadmin) {
 switch ($op) {
     case "restore":
         $forums     = array();
-        $topics_obj =& $topic_handler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
+        $topics_obj =& $topicHandler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];
-            $topic_handler->approve($topic_obj);
-            $topic_handler->synchronization($topic_obj);
+            $topicHandler->approve($topic_obj);
+            $topicHandler->synchronization($topic_obj);
             $forums[$topic_obj->getVar("forum_id")] = 1;
         }
         $criteria_forum = new Criteria("forum_id", "(" . implode(",", array_keys($forums)) . ")", "IN");
-        $forums_obj     =& $forum_handler->getAll($criteria_forum);
+        $forums_obj     =& $forumHandler->getAll($criteria_forum);
         foreach (array_keys($forums_obj) as $id) {
-            $forum_handler->synchronization($forums_obj[$id]);
+            $forumHandler->synchronization($forums_obj[$id]);
         }
         unset($topics_obj, $forums_obj);
         break;
     case "approve":
         $forums     = array();
-        $topics_obj =& $topic_handler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
+        $topics_obj =& $topicHandler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];
-            $topic_handler->approve($topic_obj);
-            $topic_handler->synchronization($topic_obj);
+            $topicHandler->approve($topic_obj);
+            $topicHandler->synchronization($topic_obj);
             $forums[$topic_obj->getVar("forum_id")] = 1;
         }
 
         $criteria_forum = new Criteria("forum_id", "(" . implode(",", array_keys($forums)) . ")", "IN");
-        $forums_obj     =& $forum_handler->getAll($criteria_forum);
+        $forums_obj     =& $forumHandler->getAll($criteria_forum);
         foreach (array_keys($forums_obj) as $id) {
-            $forum_handler->synchronization($forums_obj[$id]);
+            $forumHandler->synchronization($forums_obj[$id]);
         }
 
-        if (empty($xoopsModuleConfig['notification_enabled'])) {
+        if (empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
             break;
         }
 
@@ -79,7 +79,7 @@ switch ($op) {
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $topic_obj->getVar('forum_id');
             $notification_handler->triggerEvent('global', 0, 'new_thread', $tags);
             $notification_handler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_thread', $tags);
-            $post_obj         =& $topic_handler->getTopPost($id);
+            $post_obj         =& $topicHandler->getTopPost($id);
             $tags['POST_URL'] = $tags['THREAD_URL'] . '#forumpost' . $post_obj->getVar("post_id");
             $notification_handler->triggerEvent('thread', $id, 'new_post', $tags);
             $notification_handler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_post', $tags);
@@ -94,37 +94,37 @@ switch ($op) {
         break;
     case "delete":
         $forums     = array();
-        $topics_obj =& $topic_handler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
+        $topics_obj =& $topicHandler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];
             // irmtfan should be set to false to not delete topic from database
-            $topic_handler->delete($topic_obj, false);
-            $topic_handler->synchronization($topic_obj);
+            $topicHandler->delete($topic_obj, false);
+            $topicHandler->synchronization($topic_obj);
             $forums[$topic_obj->getVar("forum_id")] = 1;
         }
 
         $criteria_forum = new Criteria("forum_id", "(" . implode(",", array_keys($forums)) . ")", "IN");
-        $forums_obj     =& $forum_handler->getAll($criteria_forum);
+        $forums_obj     =& $forumHandler->getAll($criteria_forum);
         foreach (array_keys($forums_obj) as $id) {
-            $forum_handler->synchronization($forums_obj[$id]);
+            $forumHandler->synchronization($forums_obj[$id]);
         }
         unset($topics_obj, $forums_obj);
         break;
     case "move":
         if (XoopsRequest::getInt('newforum', 0, 'POST') && XoopsRequest::getInt('newforum', 0, 'POST') != $forum_id
-            && $forum_handler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')
+            && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')
         ) {
             $criteria     = new Criteria('topic_id', "(" . implode(",", $topic_id) . ")", "IN");
-            $post_handler =& xoops_getmodulehandler('post', 'newbb');
-            $post_handler->updateAll("forum_id", XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
-            $topic_handler->updateAll("forum_id", XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
-            $forum_handler->synchronization(XoopsRequest::getInt('newforum', 0, 'POST'));
-            $forum_handler->synchronization($forum_id);
+            $postHandler =& xoops_getmodulehandler('post', 'newbb');
+            $postHandler->updateAll("forum_id", XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
+            $topicHandler->updateAll("forum_id", XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
+            $forumHandler->synchronization(XoopsRequest::getInt('newforum', 0, 'POST'));
+            $forumHandler->synchronization($forum_id);
         } else {
             include $GLOBALS['xoops']->path('header.php');
-            $category_handler =& xoops_getmodulehandler('category', 'newbb');
-            $categories       = $category_handler->getByPermission('access');
-            $forums           = $forum_handler->getForumsByCategory(array_keys($categories), 'post', false);
+            $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
+            $categories       = $categoryHandler->getByPermission('access');
+            $forums           = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
             $box = '<select name="newforum" size="1">';
             if (count($categories) > 0 && count($forums) > 0) {
@@ -167,8 +167,8 @@ switch ($op) {
         }
         break;
 }
-$stats_handler = xoops_getmodulehandler('stats', 'newbb');
-$stats_handler->reset();
+$statsHandler = xoops_getmodulehandler('stats', 'newbb');
+$statsHandler->reset();
 if (empty($forum_id)) {
     redirect_header(XOOPS_URL . "/modules/newbb/list.topic.php", 2, _MD_DBUPDATED);
 } else {

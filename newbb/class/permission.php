@@ -122,13 +122,13 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function getPermission($type, $gperm_name = "access", $id = 0)
     {
-        global $xoopsUser, $xoopsModule;
+        global$xoopsModule;
 
         if ($GLOBALS["xoopsUserIsAdmin"] && $xoopsModule->getVar("dirname") == "newbb") {
             return true;
         }
 
-        $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
         if (!$groups) {
             return false;
         }
@@ -172,11 +172,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function getAllowedItems($type, $perm_name)
     {
-        global $xoopsUser;
-
         $ret = array();
 
-        $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
         if (count($groups) < 1) {
             return $ret;
         }

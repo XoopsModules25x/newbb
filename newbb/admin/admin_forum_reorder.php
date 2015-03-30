@@ -46,15 +46,15 @@ if (XoopsRequest::getInt('forum', 0, 'POST')) {
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $catOrdersCount = count($cat_orders);
     for ($i = 0; $i < $catOrdersCount; ++$i) {
-        $sql = "update " . $xoopsDB->prefix("bb_categories") . " set cat_order = " . $cat_orders[$i] . " WHERE cat_id=$cat[$i]";
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = "update " . $GLOBALS['xoopsDB']->prefix("bb_categories") . " set cat_order = " . $cat_orders[$i] . " WHERE cat_id=$cat[$i]";
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             redirect_header("admin_forum_reorder.php", 1, _AM_NEWBB_FORUM_ERROR);
         }
     }
     $ordersCount = count($orders);
     for ($i = 0; $i < $ordersCount; ++$i) {
-        $sql = "update " . $xoopsDB->prefix("bb_forums") . " set forum_order = " . $orders[$i] . " WHERE forum_id=" . $forum[$i];
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = "update " . $GLOBALS['xoopsDB']->prefix("bb_forums") . " set forum_order = " . $orders[$i] . " WHERE forum_id=" . $forum[$i];
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             redirect_header("admin_forum_reorder.php", 1, _AM_NEWBB_FORUM_ERROR);
         }
     }
@@ -88,12 +88,12 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo "<td class='head' align='center'><strong>" . _AM_NEWBB_REORDERWEIGHT . "</strong></td>";
     echo "</tr>";
 
-    $forum_handler     = &xoops_getmodulehandler('forum', 'newbb');
-    $category_handler  = &xoops_getmodulehandler('category', 'newbb');
-    $criteria_category = new CriteriaCompo(new criteria('1', 1));
-    $criteria_category->setSort('cat_order');
-    $categories = $category_handler->getAll($criteria_category, array("cat_id", "cat_order", "cat_title"));
-    $forums     = $forum_handler->getTree(array_keys($categories), 0, 'all', "&nbsp;&nbsp;&nbsp;&nbsp;");
+    $forumHandler     = &xoops_getmodulehandler('forum', 'newbb');
+    $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+    $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+    $criteriaCategory->setSort('cat_order');
+    $categories = $categoryHandler->getAll($criteriaCategory, array("cat_id", "cat_order", "cat_title"));
+    $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', "&nbsp;&nbsp;&nbsp;&nbsp;");
     foreach (array_keys($categories) as $c) {
         echo "<tr>";
         echo "<td align='left' nowrap='nowrap' class='head' >" . $categories[$c]->getVar("cat_title") . "</td>";

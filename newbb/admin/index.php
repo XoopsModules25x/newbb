@@ -31,7 +31,7 @@
 include_once __DIR__ . '/admin_header.php';
 mod_loadFunctions("stats", "newbb");
 
-$attach_path = $GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/');
+$attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
 $folder      = array($attach_path, $thumb_path);
 
@@ -84,12 +84,11 @@ function newbb_admin_chmod($target, $mode = 0777)
  */
 function newbb_getImageLibs()
 {
-    global $xoopsModuleConfig;
 
     $imageLibs = array();
     unset($output, $status);
-    if ($xoopsModuleConfig['image_lib'] == 1 or $xoopsModuleConfig['image_lib'] == 0) {
-        $path = empty($xoopsModuleConfig['path_magick']) ? "" : $xoopsModuleConfig['path_magick'] . "/";
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+        $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? "" : $GLOBALS['xoopsModuleConfig']['path_magick'] . "/";
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output)) {
             if (preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -98,8 +97,8 @@ function newbb_getImageLibs()
         }
         unset($output, $status);
     }
-    if ($xoopsModuleConfig['image_lib'] == 2 or $xoopsModuleConfig['image_lib'] == 0) {
-        $path = empty($xoopsModuleConfig['path_netpbm']) ? "" : $xoopsModuleConfig['path_netpbm'] . "/";
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+        $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? "" : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . "/";
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output)) {
             if (preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -161,12 +160,12 @@ switch ($op) {
         echo "<fieldset>";
         $imageLibs      = newbb_getImageLibs();
         $module_handler = &xoops_gethandler('module');
-        $report_handler = &xoops_getmodulehandler('report', 'newbb');
+        $reportHandler = &xoops_getmodulehandler('report', 'newbb');
 
         $isOK = false;
         // START irmtfan add a poll_module config
         //XOOPS_POLL
-        $xoopspoll = &$module_handler->getByDirname($xoopsModuleConfig['poll_module']);
+        $xoopspoll = &$module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
         if (is_object($xoopspoll)) {
             $isOK = $xoopspoll->getVar('isactive');
         }
@@ -210,13 +209,13 @@ switch ($op) {
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, "<infotext>" . _AM_NEWBB_UPLOAD . ' %s' . "</infotext>", $uploadlimit, $uploadfarbe);
 
             $indexAdmin->addInfoBox(_AM_NEWBB_BOARDSUMMARY);
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALTOPICS . ': %s' . "</infolabel>", get_total_topics(), 'Green');
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALPOSTS . ': %s' . "</infolabel>", get_total_posts(), 'Green');
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALVIEWS . ': %s' . "</infolabel>", get_total_views(), 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALTOPICS . ': %s' . "</infolabel>", getTotalTopics(), 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALPOSTS . ': %s' . "</infolabel>", getTotalPosts(), 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, "<infolabel>" . _AM_NEWBB_TOTALVIEWS . ': %s' . "</infolabel>", getTotalViews(), 'Green');
 
             $indexAdmin->addInfoBox(_AM_NEWBB_REPORT);
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, "<infolabel>" . _AM_NEWBB_REPORT_PENDING . ': %s' . "</infolabel>", $report_handler->getCount(new Criteria("report_result", 0)), 'Green');
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, "<infolabel>" . _AM_NEWBB_REPORT_PROCESSED . ': %s' . "</infolabel>", $report_handler->getCount(new Criteria("report_result", 1)), 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, "<infolabel>" . _AM_NEWBB_REPORT_PENDING . ': %s' . "</infolabel>", $reportHandler->getCount(new Criteria("report_result", 0)), 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, "<infolabel>" . _AM_NEWBB_REPORT_PROCESSED . ': %s' . "</infolabel>", $reportHandler->getCount(new Criteria("report_result", 1)), 'Green');
 
             foreach (array_keys($folder) as $i) {
                 if (!(newbb_admin_getPathStatus($folder[$i])) == '') {
@@ -282,17 +281,17 @@ switch ($op) {
             echo "</fieldset><br />";
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_BOARDSUMMARY . "</legend>";
             echo "<div style='padding: 12px;'>";
-            echo _AM_NEWBB_TOTALTOPICS . " <strong>" . get_total_topics() . "</strong> | ";
-            echo _AM_NEWBB_TOTALPOSTS . " <strong>" . get_total_posts() . "</strong> | ";
-            echo _AM_NEWBB_TOTALVIEWS . " <strong>" . get_total_views() . "</strong></div>";
+            echo _AM_NEWBB_TOTALTOPICS . " <strong>" . getTotalTopics() . "</strong> | ";
+            echo _AM_NEWBB_TOTALPOSTS . " <strong>" . getTotalPosts() . "</strong> | ";
+            echo _AM_NEWBB_TOTALVIEWS . " <strong>" . getTotalViews() . "</strong></div>";
             echo "</fieldset><br />";
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_REPORT . "</legend>";
-            echo "<div style='padding: 12px;'><a href='admin_report.php'>" . _AM_NEWBB_REPORT_PENDING . "</a> <strong>" . $report_handler->getCount(new Criteria("report_result", 0)) . "</strong> | ";
-            echo _AM_NEWBB_REPORT_PROCESSED . " <strong>" . $report_handler->getCount(new Criteria("report_result", 1)) . "</strong>";
+            echo "<div style='padding: 12px;'><a href='admin_report.php'>" . _AM_NEWBB_REPORT_PENDING . "</a> <strong>" . $reportHandler->getCount(new Criteria("report_result", 0)) . "</strong> | ";
+            echo _AM_NEWBB_REPORT_PROCESSED . " <strong>" . $reportHandler->getCount(new Criteria("report_result", 1)) . "</strong>";
             echo "</div>";
             echo "</fieldset><br />";
 
-            if ($xoopsModuleConfig['email_digest'] > 0) {
+            if ($GLOBALS['xoopsModuleConfig']['email_digest'] > 0) {
                 $digest_handler = &xoops_getmodulehandler('digest', 'newbb');
                 echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_DIGEST . "</legend>";
                 $due    = ($digest_handler->checkStatus()) / 60; // minutes
@@ -391,7 +390,7 @@ switch ($op) {
             /* A trick to clear garbage for suspension management
                 * Not good but works
             */
-            if (!empty($xoopsModuleConfig['enable_usermoderate'])) {
+            if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate'])) {
                 $moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
                 $moderate_handler->clearGarbage();
             }
@@ -404,28 +403,28 @@ mod_clearCacheFile("config", "newbb");
 mod_clearCacheFile("permission", "newbb");
 
 /**
- * @param $size_str
+ * @param $sizeAsString
  * @param bool $b
  * @return int|string
  */
-function return_bytes($size_str, $b = false)
+function return_bytes($sizeAsString, $b = false)
 {
     if ($b === false) {
-        switch (substr($size_str, -1)) {
+        switch (substr($sizeAsString, -1)) {
             case 'M':
             case 'm':
-                return (int)$size_str * 1048576;
+                return (int)$sizeAsString * 1048576;
             case 'K':
             case 'k':
-                return (int)$size_str * 1024;
+                return (int)$sizeAsString * 1024;
             case 'G':
             case 'g':
-                return (int)$size_str * 1073741824;
+                return (int)$sizeAsString * 1073741824;
             default:
-                return $size_str;
+                return $sizeAsString;
         }
     } else {
-        $base   = log($size_str) / log(1024);
+        $base   = log($sizeAsString) / log(1024);
         $suffix = array("", "KB", "MB", "GB", "TB");
 
         return pow(1024, $base - floor($base)) . ' ' . $suffix[floor($base)];

@@ -21,14 +21,14 @@
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$category_handler =& xoops_getmodulehandler("category");
-$category_obj     =& $category_handler->get($forum_obj->getVar("cat_id"), array("cat_title"));
+$categoryHandler =& xoops_getmodulehandler("category");
+$category_obj     =& $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
 
 //check banning
-$moderated_id = (is_object($xoopsUser) && $xoopsUser->uid() > 0) ? $xoopsUser->uid() : 0;
-// $moderated_isadmin = ( is_object($xoopsUser) && $xoopsUser->isAdmin() ) ? true : false; // irmtfan commented
+$moderated_id = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->uid() > 0) ? $GLOBALS['xoopsUser']->uid() : 0;
+// $moderated_isadmin = ( is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin() ) ? true : false; // irmtfan commented
 $moderated_ip     = $_SERVER['REMOTE_ADDR'];
 $moderated_forum  = $forum_obj->getVar('forum_id');
 $moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
@@ -46,14 +46,14 @@ if ($moderate_handler->verifyUser($moderated_id, $moderated_ip, $moderated_forum
 }
 
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
-$xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
+$xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(
                       'forum_id'   => $forum_obj->getVar('forum_id'),
                       'forum_name' => $forum_obj->getVar('forum_name'),
                   ));
 
 if (!is_object($topic_obj)) {
-    $topic_obj = $topic_handler->create();
+    $topic_obj = $topicHandler->create();
 }
 
 $editby = false;
@@ -61,7 +61,7 @@ if ($topic_obj->isNew()) {
     $form_title = _MD_POSTNEW;
 } elseif ($post_obj->isNew()) {
     if (empty($post_parent_obj)) {
-        $post_parent_obj =& $post_handler->get($pid);
+        $post_parent_obj =& $postHandler->get($pid);
     }
     $form_title = _MD_REPLY . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar("subject") . "</a>";
 } else {
@@ -92,8 +92,8 @@ foreach (array(
     ${$getstr} = XoopsRequest::getString($getstr,  ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_status  = $topic_handler->get(@$topic_id, 'topic_status');
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$topic_status  = $topicHandler->get(@$topic_id, 'topic_status');
 
 //$filname = XOOPS_URL.$_SERVER['REQUEST_URI'];
 
@@ -104,15 +104,15 @@ if ($editby) {
     $forum_form->addElement(new XoopsFormText(_MD_EDITEDMSG, 'editwhy', 60, 100, ''));
 }
 
-$uid = (is_object($xoopsUser)) ? $xoopsUser->getVar('uid') : 0;
+$uid = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 if (newbb_isAdmin($forum_obj)
     ||
-    ($topic_handler->getPermission($forum_obj, $topic_status, 'type')
+    ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
      &&
-     ($topic_id == 0 || $uid == $topic_handler->get(@$topic_id, 'topic_poster'))
+     ($topic_id == 0 || $uid == $topicHandler->get(@$topic_id, 'topic_poster'))
     )
 ) {
-    $type_id      = $topic_handler->get(@$topic_id, 'type_id');
+    $type_id      = $topicHandler->get(@$topic_id, 'type_id');
     $type_handler =& xoops_getmodulehandler('type', 'newbb');
     $types        = $type_handler->getByForum($forum_obj->getVar("forum_id"));
     if (!empty($types)) {
@@ -133,8 +133,8 @@ $subject_form = new XoopsFormText(_MD_SUBJECTC, 'subject', 60, 100, $subject);
 $subject_form->setExtra("tabindex='1'");
 $forum_form->addElement($subject_form, true);
 
-if (!is_object($xoopsUser)) {
-    $required = !empty($xoopsModuleConfig["require_name"]);
+if (!is_object($GLOBALS['xoopsUser'])) {
+    $required = !empty($GLOBALS['xoopsModuleConfig']["require_name"]);
     $forum_form->addElement(new XoopsFormText(_MD_NAMEMAIL, 'poster_name', 60, 255, (!empty($isedit) && !empty($poster_name)) ? $poster_name : ''), $required);
 }
 
@@ -145,42 +145,42 @@ foreach ($subject_icons as $iconfile) {
 }
 $forum_form->addElement($icons_radio);
 
-$nohtml = !$topic_handler->getPermission($forum_obj, $topic_status, 'html');
+$nohtml = !$topicHandler->getPermission($forum_obj, $topic_status, 'html');
 
 if (XoopsRequest::getString('editor', '', 'POST')) {
     $editor = trim(XoopsRequest::getString('editor', '', 'POST'));
     newbb_setcookie("editor", $editor);
 } elseif (!$editor = newbb_getcookie("editor")) {
     if (empty($editor)) {
-        $editor = @ $xoopsModuleConfig["editor_default"];
+        $editor = @ $GLOBALS['xoopsModuleConfig']["editor_default"];
     }
 }
-if (count(@$xoopsModuleConfig["editor_allowed"]) > 0) {
-    if (!in_array($editor, $xoopsModuleConfig["editor_allowed"])) {
-        $editor = $xoopsModuleConfig["editor_allowed"][0];
+if (count(@$GLOBALS['xoopsModuleConfig']["editor_allowed"]) > 0) {
+    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']["editor_allowed"])) {
+        $editor = $GLOBALS['xoopsModuleConfig']["editor_allowed"][0];
         newbb_setcookie("editor", $editor);
     }
 }
 
-$forum_form->addElement(new XoopsFormSelectEditor($forum_form, "editor", $editor, $nohtml, @$xoopsModuleConfig["editor_allowed"][0]));
+$forum_form->addElement(new XoopsFormSelectEditor($forum_form, "editor", $editor, $nohtml, @$GLOBALS['xoopsModuleConfig']["editor_allowed"][0]));
 
 $editor_configs           = array();
 $editor_configs["name"]   = "message";
 $editor_configs["value"]  = $message;
-$editor_configs["rows"]   = empty($xoopsModuleConfig["editor_rows"]) ? 10 : $xoopsModuleConfig["editor_rows"];
-$editor_configs["cols"]   = empty($xoopsModuleConfig["editor_cols"]) ? 30 : $xoopsModuleConfig["editor_cols"];
-$editor_configs["width"]  = empty($xoopsModuleConfig["editor_width"]) ? "100%" : $xoopsModuleConfig["editor_width"];
-$editor_configs["height"] = empty($xoopsModuleConfig["editor_height"]) ? "400px" : $xoopsModuleConfig["editor_height"];
+$editor_configs["rows"]   = empty($GLOBALS['xoopsModuleConfig']["editor_rows"]) ? 10 : $GLOBALS['xoopsModuleConfig']["editor_rows"];
+$editor_configs["cols"]   = empty($GLOBALS['xoopsModuleConfig']["editor_cols"]) ? 30 : $GLOBALS['xoopsModuleConfig']["editor_cols"];
+$editor_configs["width"]  = empty($GLOBALS['xoopsModuleConfig']["editor_width"]) ? "100%" : $GLOBALS['xoopsModuleConfig']["editor_width"];
+$editor_configs["height"] = empty($GLOBALS['xoopsModuleConfig']["editor_height"]) ? "400px" : $GLOBALS['xoopsModuleConfig']["editor_height"];
 
 $_editor = new XoopsFormEditor(_MD_MESSAGEC, $editor, $editor_configs, $nohtml, $onfailure = null);
 $forum_form->addElement($_editor, true);
 
-if (!empty($xoopsModuleConfig['do_tag']) && (empty($post_obj) || $post_obj->isTopic())) {
+if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $post_obj->isTopic())) {
     $topic_tags = "";
     if (XoopsRequest::getString('topic_tags', '', 'POST')) {
         $topic_tags = $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
     } elseif (!empty($topic_id)) {
-        $topic_tags = $topic_handler->get($topic_id, 'topic_tags');
+        $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
     if (@include_once $GLOBALS['xoops']->path('modules/tag/include/formtag.php')) {
         $forum_form->addElement(new XoopsFormTag("topic_tags", 60, 255, $topic_tags));
@@ -188,7 +188,7 @@ if (!empty($xoopsModuleConfig['do_tag']) && (empty($post_obj) || $post_obj->isTo
 }
 
 $options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br />');
-if (is_object($xoopsUser) && $xoopsModuleConfig['allow_user_anonymous'] == 1) {
+if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
     $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
     $noname_checkbox->addOption(1, _MD_POSTANONLY);
@@ -219,20 +219,20 @@ if (!$nohtml) {
     $forum_form->addElement(new XoopsFormHidden('dobr', 1));
 }
 
-if ($topic_handler->getPermission($forum_obj, $topic_status, 'signature') && is_object($xoopsUser)) {
+if ($topicHandler->getPermission($forum_obj, $topic_status, 'signature') && is_object($GLOBALS['xoopsUser'])) {
     $attachsig_checkbox = new XoopsFormCheckBox('', 'attachsig', $attachsig);
     $attachsig_checkbox->addOption(1, _MD_ATTACHSIG);
     $options_tray->addElement($attachsig_checkbox);
 }
 
-if (is_object($xoopsUser) && $xoopsModuleConfig['notification_enabled']) {
+if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['notification_enabled']) {
     if (!empty($notify)) {
         // If 'notify' set, use that value (e.g. preview or upload)
         //$notify = 1;
     } else {
         // Otherwise, check previous subscribed status...
         $notification_handler =& xoops_gethandler('notification');
-        if (!empty($topic_id) && $notification_handler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'))) {
+        if (!empty($topic_id) && $notification_handler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))) {
             $notify = 1;
         } else {
             $notify = 0;
@@ -245,7 +245,7 @@ if (is_object($xoopsUser) && $xoopsModuleConfig['notification_enabled']) {
 }
 $forum_form->addElement($options_tray);
 
-if ($topic_handler->getPermission($forum_obj, $topic_status, 'attach')) {
+if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
     $upload_tray = new XoopsFormElementTray(_MD_ATTACHMENT);
     $upload_tray->addElement(new XoopsFormFile('', 'userfile', ($forum_obj->getVar('attach_maxkb') * 1024)));
     $upload_tray->addElement(new XoopsFormButton('', 'contents_upload', _MD_UPLOAD, "submit"));
@@ -253,14 +253,14 @@ if ($topic_handler->getPermission($forum_obj, $topic_status, 'attach')) {
     $extensions = trim(str_replace('|', ' ', $forum_obj->getVar('attach_ext')));
     $extensions = (empty($extensions) || $extensions == "*") ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ":", $extensions));
-    $upload_tray->addElement(new XoopsFormLabel("<br />" . sprintf(_MD_NEWBB_MAXPIC, $xoopsModuleConfig['max_img_height'], $xoopsModuleConfig['max_img_width'])));
+    $upload_tray->addElement(new XoopsFormLabel("<br />" . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
     $forum_form->addElement($upload_tray);
 }
 
 if (!empty($attachments) && is_array($attachments) && count($attachments)) {
     $delete_attach_checkbox = new XoopsFormCheckBox(_MD_THIS_FILE_WAS_ATTACHED_TO_THIS_POST, 'delete_attach[]');
     foreach ($attachments as $key => $attachment) {
-        $attach = " " . _DELETE . ' <a href=' . XOOPS_URL . '/' . $xoopsModuleConfig['dir_attachments'] . '/' . $attachment['name_saved'] . ' rel="external">' . $attachment['nameDisplay'] . '</a><br />';
+        $attach = " " . _DELETE . ' <a href=' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachment['name_saved'] . ' rel="external">' . $attachment['nameDisplay'] . '</a><br />';
         $delete_attach_checkbox->addOption($key, $attach);
     }
     $forum_form->addElement($delete_attach_checkbox);
@@ -280,14 +280,14 @@ if (!empty($attachments_tmp) && is_array($attachments_tmp) && count($attachments
     $forum_form->addElement(new XoopsFormHidden('attachments_tmp', $attachments_tmp));
 }
 
-if ($xoopsModuleConfig['enable_karma'] || $xoopsModuleConfig['allow_require_reply']) {
+if ($GLOBALS['xoopsModuleConfig']['enable_karma'] || $GLOBALS['xoopsModuleConfig']['allow_require_reply']) {
     $view_require = ($require_reply) ? 'require_reply' : (($post_karma) ? 'require_karma' : 'require_null');
     $radiobox     = new XoopsFormRadio(_MD_VIEW_REQUIRE, 'view_require', $view_require);
-    if ($xoopsModuleConfig['allow_require_reply']) {
+    if ($GLOBALS['xoopsModuleConfig']['allow_require_reply']) {
         $radiobox->addOption('require_reply', _MD_REQUIRE_REPLY);
     }
-    if ($xoopsModuleConfig['enable_karma']) {
-        $karmas = array_map("trim", explode(',', $xoopsModuleConfig['karma_options']));
+    if ($GLOBALS['xoopsModuleConfig']['enable_karma']) {
+        $karmas = array_map("trim", explode(',', $GLOBALS['xoopsModuleConfig']['karma_options']));
         if (count($karmas) > 1) {
             foreach ($karmas as $karma) {
                 $karma_array[strval($karma)] = intval($karma);

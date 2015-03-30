@@ -277,14 +277,14 @@ class NewbbTopicHandler extends ArtObjectHandler
             //xoops_error($this->db->error());
             return false;
         }
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
-        $posts_obj    = $post_handler->getAll(new Criteria('topic_id', $topic_id));
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
+        $posts_obj    = $postHandler->getAll(new Criteria('topic_id', $topic_id));
         foreach (array_keys($posts_obj) as $post_id) {
-            $post_handler->approve($posts_obj[$post_id]);
+            $postHandler->approve($posts_obj[$post_id]);
         }
         unset($posts_obj);
-        $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
-        $stats_handler->update($object->getVar("forum_id"), "topic");
+        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler->update($object->getVar("forum_id"), "topic");
 
         return true;
     }
@@ -371,8 +371,8 @@ class NewbbTopicHandler extends ArtObjectHandler
         }
         $criteria = new CriteriaCompo(new Criteria("topic_id", $topic->getVar('topic_id')));
         $criteria->add(new Criteria("approved", $approved));
-        $post_handler =& xoops_getmodulehandler("post", "newbb");
-        $count        = $post_handler->getCount($criteria);
+        $postHandler =& xoops_getmodulehandler("post", "newbb");
+        $count        = $postHandler->getCount($criteria);
 
         return $count;
     }
@@ -395,9 +395,9 @@ class NewbbTopicHandler extends ArtObjectHandler
             //xoops_error($this->db->error());
             return $post;
         }
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
         $myrow        = $this->db->fetchArray($result);
-        $post         =& $post_handler->create(false);
+        $post         =& $postHandler->create(false);
         $post->assignVars($myrow);
 
         return $post;
@@ -431,20 +431,19 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function &getAllPosts(&$topic, $order = "ASC", $perpage = 10, &$start, $post_id = 0, $type = "")
     {
-        global $xoopsModuleConfig;
 
         $ret     = array();
-        $perpage = (intval($perpage) > 0) ? intval($perpage) : (empty($xoopsModuleConfig['posts_per_page']) ? 10 : $xoopsModuleConfig['posts_per_page']);
+        $perpage = (intval($perpage) > 0) ? intval($perpage) : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
         $start   = intval($start);
         switch ($type) {
             case "pending":
-                $approve_criteria = ' AND p.approved = 0';
+                $approveCriteria = ' AND p.approved = 0';
                 break;
             case "deleted":
-                $approve_criteria = ' AND p.approved = -1';
+                $approveCriteria = ' AND p.approved = -1';
                 break;
             default:
-                $approve_criteria = ' AND p.approved = 1';
+                $approveCriteria = ' AND p.approved = 1';
                 break;
         }
 
@@ -455,8 +454,8 @@ class NewbbTopicHandler extends ArtObjectHandler
                 $order                 = "ASC";
                 $operator_for_position = '<';
             }
-            //$approve_criteria = ' AND approved = 1'; // any others?
-            $sql    = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_posts') . " AS p WHERE p.topic_id=" . intval($topic->getVar('topic_id')) . $approve_criteria . " AND p.post_id $operator_for_position $post_id";
+            //$approveCriteria = ' AND approved = 1'; // any others?
+            $sql    = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_posts') . " AS p WHERE p.topic_id=" . intval($topic->getVar('topic_id')) . $approveCriteria . " AND p.post_id $operator_for_position $post_id";
             $result = $this->db->query($sql);
             if (!$result) {
                 //xoops_error($this->db->error());
@@ -466,15 +465,15 @@ class NewbbTopicHandler extends ArtObjectHandler
             $start = intval($position / $perpage) * $perpage;
         }
 
-        $sql    = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p, ' . $this->db->prefix('bb_posts_text') . " t WHERE p.topic_id=" . $topic->getVar('topic_id') . " AND p.post_id = t.post_id" . $approve_criteria . " ORDER BY p.post_id $order";
+        $sql    = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p, ' . $this->db->prefix('bb_posts_text') . " t WHERE p.topic_id=" . $topic->getVar('topic_id') . " AND p.post_id = t.post_id" . $approveCriteria . " ORDER BY p.post_id $order";
         $result = $this->db->query($sql, $perpage, $start);
         if (!$result) {
             //xoops_error($this->db->error());
             return $ret;
         }
-        $post_handler = &xoops_getmodulehandler('post', 'newbb');
+        $postHandler = &xoops_getmodulehandler('post', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
-            $post =& $post_handler->create(false);
+            $post =& $postHandler->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;
             unset($post);
@@ -506,7 +505,7 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function showTreeItem(&$topic, &$postArray)
     {
-        global $xoopsConfig, $xoopsModuleConfig, $viewtopic_users, $myts;
+        global $viewtopic_users, $myts;
 
         $postArray['post_time'] = newbb_formatTimestamp($postArray['post_time']);
 
@@ -525,7 +524,7 @@ class NewbbTopicHandler extends ArtObjectHandler
                 $postArray['poster'] = "<a href=\"" . XOOPS_URL . "/userinfo.php?uid=" . $postArray['uid'] . "\">" . $viewtopic_users[$postArray['uid']]['name'] . "</a>";
             }
         } else {
-            $postArray['poster'] = (empty($postArray['poster_name'])) ? $myts->HtmlSpecialChars($xoopsConfig['anonymous']) : $postArray['poster_name'];
+            $postArray['poster'] = (empty($postArray['poster_name'])) ? $myts->HtmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
         }
 
         return $postArray;
@@ -567,8 +566,8 @@ class NewbbTopicHandler extends ArtObjectHandler
             return false;
         }
         $post_obj     =& $this->getTopPost($topic_id);
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
-        $post_handler->delete($post_obj, false, $force);
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
+        $postHandler->delete($post_obj, false, $force);
 
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) && $tag_handler = @xoops_getmodulehandler('tag', 'tag', true)) {
@@ -589,7 +588,6 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function getPermission($forum, $topic_locked = 0, $type = "view")
     {
-        global $xoopsUser, $xoopsModule;
         static $_cachedTopicPerms;
         mod_loadFunctions("user", "newbb");
         if (newbb_isAdmin($forum)) {
@@ -663,11 +661,11 @@ class NewbbTopicHandler extends ArtObjectHandler
             return false;
         }
 
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
         $criteria     = new CriteriaCompo();
         $criteria->add(new criteria("topic_id", $object->getVar("topic_id")), "AND");
         $criteria->add(new criteria("approved", 1), "AND");
-        $post_ids = $post_handler->getIds($criteria);
+        $post_ids = $postHandler->getIds($criteria);
         if (empty($post_ids)) {
             return false;
         }
@@ -683,10 +681,10 @@ class NewbbTopicHandler extends ArtObjectHandler
         $b1 = $this->insert($object, $force);
         $criteria->add(new criteria("post_id", $top_post, "<>"), "AND");
         $criteria->add(new criteria("pid", "(" . implode(", ", $post_ids) . ")", "NOT IN"), "AND");
-        $b2       = $post_handler->updateAll("pid", $top_post, $criteria, $force);
+        $b2       = $postHandler->updateAll("pid", $top_post, $criteria, $force);
         $criteria = new CriteriaCompo();
         $criteria->add(new criteria("post_id", $top_post, "="), "AND");
-        $b3 = $post_handler->updateAll("pid", 0, $criteria, $force);
+        $b3 = $postHandler->updateAll("pid", 0, $criteria, $force);
 
         return ($b1 && $b2 && $b3) ? true : false;
     }

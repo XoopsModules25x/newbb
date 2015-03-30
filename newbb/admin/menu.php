@@ -38,11 +38,11 @@ if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/mo
     $newModuleGui   = true;
 }
 
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_HOME,
-    'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png'
-);
+//$adminmenu[] = array(
+//    'title' => _AM_MODULEADMIN_HOME,
+//    'link'  => 'admin/index.php',
+//    'icon'  => $pathIcon32 . '/home.png'
+//);
 
 $adminmenu[] = array(
     'title' => _MI_NEWBB_ADMENU_INDEX,

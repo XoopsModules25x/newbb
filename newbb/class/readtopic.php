@@ -54,7 +54,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
 {
     /**
      * maximum records per forum for one user.
-     * assigned from $xoopsModuleConfig["read_items"]
+     * assigned from $GLOBALS['xoopsModuleConfig']["read_items"]
      *
      * @var integer
      */

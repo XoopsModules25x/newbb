@@ -11,7 +11,7 @@
  */
 include_once __DIR__ . "/header.php";
 
-if (!is_object($xoopsUser) || !$xoopsUser->isAdmin()) {
+if (!is_object($GLOBALS['xoopsUser']) || !$GLOBALS['xoopsUser']->isAdmin()) {
     die(_NOPERM);
 }
 
@@ -19,7 +19,7 @@ if ($xoopsModule->getVar("version") >= 401) {
     die("Version not valid");
 }
 
-if (empty($xoopsModuleConfig["subject_prefix"])) {
+if (empty($GLOBALS['xoopsModuleConfig']["subject_prefix"])) {
     die("No need for update");
 }
 
@@ -58,7 +58,7 @@ if (!$GLOBALS['xoopsDB']->queryF("
 }
 
 $type_handler =& xoops_getmodulehandler('type', 'newbb');
-$subjectpres  = array_filter(array_map('trim', explode(',', $xoopsModuleConfig['subject_prefix'])));
+$subjectpres  = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
 $types        = array();
 $order        = 1;
 foreach ($subjectpres as $subjectpre) {
@@ -82,8 +82,8 @@ if (empty($types)) {
     die("No type item created");
 }
 
-$forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-if ($forums_type = $forum_handler->getIds(new Criteria("allow_subject_prefix", 1))) {
+$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+if ($forums_type = $forumHandler->getIds(new Criteria("allow_subject_prefix", 1))) {
     foreach ($forums_type as $forum_id) {
         $type_query = array();
         foreach ($types as $key => $order) {

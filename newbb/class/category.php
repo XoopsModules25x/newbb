@@ -93,9 +93,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function delete(&$category)
     {
-        global $xoopsModule;
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-        $forum_handler->deleteAll(new Criteria("cat_id", $category->getVar('cat_id')), true, true);
+//        global $xoopsModule;
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler->deleteAll(new Criteria("cat_id", $category->getVar('cat_id')), true, true);
         if ($result = parent::delete($category)) {
             // Delete group permissions
             return $this->deletePermission($category);

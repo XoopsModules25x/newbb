@@ -47,14 +47,14 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
             $onlines        =& $online_handler->getAll(new Criteria("online_uid", XoopsRequest::getInt('uid', 0, 'POST')));
             if (false !== $onlines) {
                 $online_ip = $onlines[0]["online_ip"];
-                $sql       = sprintf('DELETE FROM %s WHERE sess_ip = %s', $xoopsDB->prefix('session'), $xoopsDB->quoteString($online_ip));
-                if (!$result = $xoopsDB->queryF($sql)) {
+                $sql       = sprintf('DELETE FROM %s WHERE sess_ip = %s', $GLOBALS['xoopsDB']->prefix('session'), $GLOBALS['xoopsDB']->quoteString($online_ip));
+                if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 }
             }
         }
         if (XoopsRequest::getString('ip', '', 'POST')) {
-            $sql = 'DELETE FROM ' . $xoopsDB->prefix('session') . ' WHERE sess_ip LIKE ' . $xoopsDB->quoteString('%' . XoopsRequest::getString('ip', '', 'POST'));
-            if (!$result = $xoopsDB->queryF($sql)) {
+            $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('session') . ' WHERE sess_ip LIKE ' . $GLOBALS['xoopsDB']->quoteString('%' . XoopsRequest::getString('ip', '', 'POST'));
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             }
         }
         redirect_header("moderate.php?forum=$forum_id", 2, _MD_DBUPDATED);
@@ -94,7 +94,7 @@ if (!$is_administrator) {
     $criteria->add(new Criteria("forum_id", $forum_id, "="));
 }
 // END - irmtfan - only show all bans for module admin - for moderator just show its forum_id bans
-$criteria->setLimit($xoopsModuleConfig['topics_per_page']);
+$criteria->setLimit($GLOBALS['xoopsModuleConfig']['topics_per_page']);
 $criteria->setStart($start);
 $criteria->setSort($sort);
 $criteria->setOrder($order);
@@ -109,7 +109,7 @@ if ($forum_id) {
 }
 echo '<div class="forum_intro odd">
         <div class="forum_title">
-            <a href="index.php">' . sprintf(_MD_WELCOME, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)) . '</a>
+            <a href="index.php">' . sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)) . '</a>
             <span class="delimiter">&raquo;</span>
             ' . _MD_SUSPEND_MANAGEMENT . '
             <br /><br />
@@ -125,7 +125,7 @@ if (!empty($moderate_count)) {
     foreach (array_keys($moderate_objs) as $id) {
         $_users[$moderate_objs[$id]->getVar("uid")] = 1;
     }
-    $users =& newbb_getUnameFromIds(array_keys($_users), $xoopsModuleConfig['show_realname'], true);
+    $users =& newbb_getUnameFromIds(array_keys($_users), $GLOBALS['xoopsModuleConfig']['show_realname'], true);
 
     echo '
     <table class="outer" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
@@ -151,8 +151,8 @@ if (!empty($moderate_count)) {
         </tr>
     ';
     // START irmtfan add forum name in moderate.php
-    $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-    $forum_list    = $forum_handler->getAll(null, array("forum_name"), false);
+    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+    $forum_list    = $forumHandler->getAll(null, array("forum_name"), false);
     // END irmtfan add forum name in moderate.php
     foreach (array_keys($moderate_objs) as $id) {
         echo '
@@ -205,10 +205,10 @@ if (!empty($moderate_count)) {
                 </td>
         </tr>
     ';
-    if ($moderate_count > $xoopsModuleConfig['topics_per_page']) {
+    if ($moderate_count > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
         include $GLOBALS['xoops']->path('class/pagenav.php');
-        $nav = new XoopsPageNav($all_topics, $xoopsModuleConfig['topics_per_page'], $start, "start", 'forum=' . $forum_id . '&amp;sort=' . $sortname);
-        if (isset($xoopsModuleConfig['do_rewrite'])) {
+        $nav = new XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, "start", 'forum=' . $forum_id . '&amp;sort=' . $sortname);
+        if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
         }
         echo '<tr><td colspan="6">' . $nav->renderNav(4) . '</td></tr>';
@@ -233,7 +233,7 @@ if (newbb_isAdmin()) {
         $forumSel .= " selected";
     }
     $forumSel .= ">" . _ALL . "</option>";
-    $forumSel .= newbb_forumSelectBox($forum_id, "access", false); //$access_forums, $permission = "access", $delimitor_category = true
+    $forumSel .= newbb_forumSelectBox($forum_id, "access", false); //$accessForums, $permission = "access", $delimitor_category = true
     $forumSel .= "</select>";
     $forumEle                         = new XoopsFormLabel(_MD_SELFORUM, $forumSel);
     $forumEle->customValidationCode[] = "if (document.suspend.forum.value < 0) {return false;} ";

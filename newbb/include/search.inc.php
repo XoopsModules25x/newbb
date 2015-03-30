@@ -28,7 +28,7 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = "both", $criteriaExtra = "")
 {
     global $myts;
-    // irmtfan - in XOOPSCORE/search.php $xoopsModuleConfig is not set
+    // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS["xoopsModuleConfig"])) {
         $GLOBALS["xoopsModuleConfig"] = newbbLoadConfig();
     }
@@ -36,17 +36,17 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     if (!is_object($GLOBALS["xoopsModule"]) && is_object($GLOBALS["module"]) && $GLOBALS["module"]->getVar("dirname") == "newbb") {
         $GLOBALS["xoopsModule"] = $GLOBALS["module"];
     }
-    $forum_handler = xoops_getmodulehandler('forum', 'newbb');
-    $valid_forums  = $forum_handler->getIdsByValues($forums); // can we use view permission? $forum_handler->getIdsByValues($forums, "view")
+    $forumHandler = xoops_getmodulehandler('forum', 'newbb');
+    $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new CriteriaCompo();
     $criteriaPost->add(new Criteria('p.approved', 1), 'AND'); // only active posts
 
     $forum_list = array();// get forum lists just for forum names
-    if (count($valid_forums) > 0) {
+    if (count($validForums) > 0) {
         $criteriaPermissions = new CriteriaCompo();
-        $criteriaPermissions->add(new Criteria("p.forum_id", "(" . implode(",", $valid_forums) . ")", "IN"), 'AND');
-        $forum_list = $forum_handler->getAll(new Criteria("forum_id", "(" . implode(", ", $valid_forums) . ")", "IN"), "forum_name", false);
+        $criteriaPermissions->add(new Criteria("p.forum_id", "(" . implode(",", $validForums) . ")", "IN"), 'AND');
+        $forum_list = $forumHandler->getAll(new Criteria("forum_id", "(" . implode(", ", $validForums) . ")", "IN"), "forum_name", false);
     }
 
     if (is_numeric($userid) && $userid != 0) {
@@ -110,8 +110,8 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     }
     $criteria->setOrder($order);
 
-    $post_handler =& xoops_getmodulehandler('post', 'newbb');
-    $posts        = $post_handler->getPostsByLimit($criteria, $limit, $offset);
+    $postHandler =& xoops_getmodulehandler('post', 'newbb');
+    $posts        = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = array();
     $i   = 0;

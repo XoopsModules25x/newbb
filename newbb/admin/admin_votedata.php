@@ -36,20 +36,20 @@ switch ($op) {
     case "delvotes":
         $rid      = XoopsRequest::getInt('rid', 0, 'GET');
         $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-        $sql      = $xoopsDB->queryF("DELETE FROM " . $xoopsDB->prefix('bb_votedata') . " WHERE ratingid = $rid");
-        $xoopsDB->query($sql);
+        $sql      = $GLOBALS['xoopsDB']->queryF("DELETE FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE ratingid = $rid");
+        $GLOBALS['xoopsDB']->query($sql);
 
-        $query       = "select rating FROM " . $xoopsDB->prefix('bb_votedata') . " WHERE topic_id = " . $topic_id . "";
-        $voteresult  = $xoopsDB->query($query);
-        $votesDB     = $xoopsDB->getRowsNum($voteresult);
+        $query       = "select rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE topic_id = " . $topic_id . "";
+        $voteresult  = $GLOBALS['xoopsDB']->query($query);
+        $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
         $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $xoopsDB->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
-        $xoopsDB->queryF($sql);
+        $sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
+        $GLOBALS['xoopsDB']->queryF($sql);
 
         redirect_header("admin_votedata.php", 1, _AM_NEWBB_VOTEDELETED);
         break;
@@ -61,16 +61,16 @@ switch ($op) {
         $useravgrating = '0';
         $uservotes     = '0';
 
-        $sql     = "SELECT * FROM " . $xoopsDB->prefix('bb_votedata') . " ORDER BY ratingtimestamp DESC";
-        $results = $xoopsDB->query($sql, 20, $start);
-        $votes   = $xoopsDB->getRowsNum($results);
+        $sql     = "SELECT * FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " ORDER BY ratingtimestamp DESC";
+        $results = $GLOBALS['xoopsDB']->query($sql, 20, $start);
+        $votes   = $GLOBALS['xoopsDB']->getRowsNum($results);
 
-        $sql           = "SELECT rating FROM " . $xoopsDB->prefix('bb_votedata') . "";
-        $result2       = $xoopsDB->query($sql, 20, $start);
-        $uservotes     = $xoopsDB->getRowsNum($result2);
+        $sql           = "SELECT rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . "";
+        $result2       = $GLOBALS['xoopsDB']->query($sql, 20, $start);
+        $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
 
-        while (list($rating2) = $xoopsDB->fetchRow($result2)) {
+        while (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
             $useravgrating = $useravgrating + $rating2;
         }
         if ($useravgrating > 0) {
@@ -111,12 +111,12 @@ switch ($op) {
         if ($votes == 0) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . "</td></tr>";
         }
-        while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $xoopsDB->fetchRow($results)) {
-            $sql        = "SELECT topic_title FROM " . $xoopsDB->prefix('bb_topics') . " WHERE topic_id=" . $topic_id . "";
-            $down_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
+            $sql        = "SELECT topic_title FROM " . $GLOBALS['xoopsDB']->prefix('bb_topics') . " WHERE topic_id=" . $topic_id . "";
+            $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
             $formatted_date = formatTimestamp($ratingtimestamp, _DATESTRING);
-            $ratinguname    = newbb_getUnameFromId($ratinguser, $xoopsModuleConfig['show_realname']);
+            $ratinguname    = newbb_getUnameFromId($ratinguser, $GLOBALS['xoopsModuleConfig']['show_realname']);
             echo "
         <tr>\n
         <td class='head' align='center'>$ratingid</td>\n

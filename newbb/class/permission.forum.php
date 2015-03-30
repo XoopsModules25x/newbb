@@ -107,8 +107,6 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function getPermissions($id = 0)
     {
-        global $xoopsUser;
-
         if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
             $modid = $GLOBALS["xoopsModule"]->getVar("mid");
         } else {
@@ -119,7 +117,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         // Get user's groups
-        $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
         // Create string of groupid's separated by commas, inserted in a set of brackets
         if (count($groups) < 1) {
             return false;
@@ -160,7 +158,6 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
     {
-        global $xoopsUser;
         $perm = array();
 
         if (is_object($forum)) {

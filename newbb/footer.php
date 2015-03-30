@@ -21,17 +21,17 @@
 
 // defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
-global $xoopsConfig, $xoTheme;
+global $xoTheme;
 
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
-$icon_handler = newbbGetIconHandler();
+$iconHandler = newbbGetIconHandler();
 //  get css rel path from setted language
-$css_rel_path = $icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "css");
+$css_rel_path = $iconHandler->getPath("language/" . $GLOBALS['xoopsConfig']['language'], "newbb", "language/english", "css");
 // add local stylesheet
 $xoTheme->addStylesheet($css_rel_path . '/style.css');
 
 //  get js rel path from setted language
-$js_rel_path = $icon_handler->getPath("language/" . $xoopsConfig['language'], "newbb", "language/english", "js");
+$js_rel_path = $iconHandler->getPath("language/" . $GLOBALS['xoopsConfig']['language'], "newbb", "language/english", "js");
 // add all local js files inside js directory
 xoops_load('XoopsLists');
 $allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));

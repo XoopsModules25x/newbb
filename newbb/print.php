@@ -52,24 +52,24 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     }
 
     if (!empty($post_id)) {
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
-        $post         = &$post_handler->get($post_id);
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
+        $post         = &$postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
             die(_MD_NORIGHTTOVIEW);
         }
         $topic_id         = $post->getVar("topic_id");
-        $post_data        = $post_handler->getPostForPrint($post);
+        $post_data        = $postHandler->getPostForPrint($post);
         $isPost           = 1;
         $post_data["url"] = XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $post_id;
-        if (!empty($xoopsModuleConfig['do_rewrite'])) {
+        if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             $post_data["url"] = seo_urls('<a href="' . $post_data["url"] . '"></a>');
             $post_data["url"] = str_replace('<a href="', '', $post_data["url"]);
             $post_data["url"] = str_replace('"></a>', '', $post_data["url"]);
         }
     }
 
-    $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-    $topic_obj     =& $topic_handler->get($topic_id);
+    $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+    $topic_obj     =& $topicHandler->get($topic_id);
     $topic_id      = $topic_obj->getVar('topic_id');
     $forum         = $topic_obj->getVar('forum_id');
     if (!$approved = $topic_obj->getVar('approved')) {
@@ -81,18 +81,18 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
         die(_MD_NORIGHTTOVIEW);
     }
 
-    $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
     $forum         = $topic_obj->getVar('forum_id');
-    $forum_obj     =& $forum_handler->get($forum);
-    if (!$forum_handler->getPermission($forum_obj)) {
+    $forum_obj     =& $forumHandler->get($forum);
+    if (!$forumHandler->getPermission($forum_obj)) {
         die(_MD_NORIGHTTOVIEW);
     }
 
-    if (!$topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "view")) {
+    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "view")) {
         die(_MD_NORIGHTTOVIEW);
     }
 // irmtfan add print permission
-    if (!$topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "print")) {
+    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "print")) {
         die(_MD_NORIGHTTOPRINT);
     }
 } else {
@@ -109,12 +109,12 @@ if (empty($isPost)) {
             <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' />
             <br /><br /> ";
 
-    $postsArray = $topic_handler->getAllPosts($topic_obj);
+    $postsArray = $topicHandler->getAllPosts($topic_obj);
     foreach ($postsArray as $post) {
         if (!$post->getVar('approved')) {
             continue;
         }
-        $post_data = $post_handler->getPostForPrint($post);
+        $post_data = $postHandler->getPostForPrint($post);
         echo "<h2 style='margin: 0;'>" . $post_data['subject'] . "</h2>
               <div align='center'>" . _POSTEDBY . "&nbsp;" . $post_data['author'] . "&nbsp;" . _ON . "&nbsp;" . formatTimestamp($post_data['date']) . "</div>
               <div style='text-align: center; display: block; padding-bottom: 12px; margin: 0 0 6px 0; border-bottom: 2px solid #ccc;'></div>

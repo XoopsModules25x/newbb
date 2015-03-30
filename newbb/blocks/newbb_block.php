@@ -60,8 +60,7 @@ function b_newbb_array_filter($var)
  */
 function b_newbb_show($options)
 {
-    global $xoopsConfig;
-    global $access_forums;
+    global $accessForums;
     global $xoopsLogger;
 
     mod_loadFunctions("time", "newbb");
@@ -70,10 +69,10 @@ function b_newbb_show($options)
     $block          = array();
     $i              = 0;
     $order          = "";
-    $extra_criteria = "";
+    $extraCriteria = "";
     if (!empty($options[2])) {
         mod_loadFunctions("time", "newbb");
-        $extra_criteria .= " AND p.post_time>" . (time() - newbb_getSinceTime($options[2]));
+        $extraCriteria .= " AND p.post_time>" . (time() - newbb_getSinceTime($options[2]));
     }
     switch ($options[0]) {
         case 'time':
@@ -82,24 +81,24 @@ function b_newbb_show($options)
             break;
     }
 
-    if (!isset($access_forums)) {
+    if (!isset($accessForums)) {
         $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$access_forums = $perm_handler->getForums()) {
+        if (!$accessForums = $perm_handler->getForums()) {
             return $block;
         }
     }
     if (!empty($options[6])) {
-        $allowedforums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
-        $allowed_forums = array_intersect($allowedforums, $access_forums);
+        $myallowedForums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+         $allowedForums = array_intersect($myallowedForums, $accessForums);
     } else {
-        $allowed_forums = $access_forums;
+         $allowedForums = $accessForums;
     }
-    if (empty($allowed_forums)) {
+    if (empty( $allowedForums)) {
         return $block;
     }
 
-    $forum_criteria   = ' AND t.forum_id IN (' . implode(',', $allowed_forums) . ')';
-    $approve_criteria = ' AND t.approved = 1';
+    $forumCriteria   = ' AND t.forum_id IN (' . implode(',',  $allowedForums) . ')';
+    $approveCriteria = ' AND t.approved = 1';
 
     $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
@@ -118,9 +117,9 @@ function b_newbb_show($options)
              '	LEFT JOIN ' . $GLOBALS["xoopsDB"]->prefix('bb_posts') . ' AS p ON t.topic_last_post_id=p.post_id' .
              '	LEFT JOIN ' . $GLOBALS["xoopsDB"]->prefix('bb_forums') . ' AS f ON f.forum_id=t.forum_id' .
              '	WHERE 1=1 ' .
-             $forum_criteria .
-             $approve_criteria .
-             $extra_criteria .
+             $forumCriteria .
+             $approveCriteria .
+             $extraCriteria .
              ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS["xoopsDB"]->query($query, $options[1], 0);
@@ -225,18 +224,17 @@ function b_newbb_show($options)
  */
 function b_newbb_topic_show($options)
 {
-    global $xoopsConfig;
-    global $access_forums;
+    global $accessForums;
     mod_loadFunctions("time", "newbb");
     $myts           = MyTextSanitizer::getInstance();
     $block          = array();
     $i              = 0;
     $order          = "";
-    $extra_criteria = "";
+    $extraCriteria = "";
     $time_criteria  = null;
     if (!empty($options[2])) {
         $time_criteria  = time() - newbb_getSinceTime($options[2]);
-        $extra_criteria = " AND t.topic_time>" . $time_criteria;
+        $extraCriteria = " AND t.topic_time>" . $time_criteria;
     }
     switch ($options[0]) {
         case 'views':
@@ -247,14 +245,14 @@ function b_newbb_topic_show($options)
             break;
         case 'digest':
             $order          = 't.digest_time';
-            $extra_criteria = " AND t.topic_digest=1";
+            $extraCriteria = " AND t.topic_digest=1";
             if ($time_criteria) {
-                $extra_criteria .= " AND t.digest_time>" . $time_criteria;
+                $extraCriteria .= " AND t.digest_time>" . $time_criteria;
             }
             break;
         case 'sticky':
             $order = 't.topic_id';
-            $extra_criteria .= " AND t.topic_sticky=1";
+            $extraCriteria .= " AND t.topic_sticky=1";
             break;
         case 'time':
         default:
@@ -271,25 +269,25 @@ function b_newbb_topic_show($options)
         }
     }
 
-    if (!isset($access_forums)) {
+    if (!isset($accessForums)) {
         $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$access_forums = $perm_handler->getForums()) {
+        if (!$accessForums = $perm_handler->getForums()) {
             return $block;
         }
     }
 
     if (!empty($options[6])) {
-        $allowedforums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
-        $allowed_forums = array_intersect($allowedforums, $access_forums);
+        $myallowedForums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+         $allowedForums = array_intersect($myallowedForums, $accessForums);
     } else {
-        $allowed_forums = $access_forums;
+         $allowedForums = $accessForums;
     }
-    if (empty($allowed_forums)) {
+    if (empty( $allowedForums)) {
         return false;
     }
 
-    $forum_criteria   = ' AND t.forum_id IN (' . implode(',', $allowed_forums) . ')';
-    $approve_criteria = ' AND t.approved = 1';
+    $forumCriteria   = ' AND t.forum_id IN (' . implode(',',  $allowedForums) . ')';
+    $approveCriteria = ' AND t.approved = 1';
 
     $query = 'SELECT' .
              '	t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,' .
@@ -297,9 +295,9 @@ function b_newbb_topic_show($options)
              '	FROM ' . $GLOBALS["xoopsDB"]->prefix('bb_topics') . ' AS t ' .
              '	LEFT JOIN ' . $GLOBALS["xoopsDB"]->prefix('bb_forums') . ' AS f ON f.forum_id=t.forum_id' .
              '	WHERE 1=1 ' .
-             $forum_criteria .
-             $approve_criteria .
-             $extra_criteria .
+             $forumCriteria .
+             $approveCriteria .
+             $extraCriteria .
              ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS["xoopsDB"]->query($query, $options[1], 0);
@@ -395,37 +393,36 @@ function b_newbb_topic_show($options)
  */
 function b_newbb_post_show($options)
 {
-    global $xoopsConfig;
-    global $access_forums;
+    global $accessForums;
 
     mod_loadFunctions("time", "newbb");
     $myts           = MyTextSanitizer::getInstance();
     $block          = array();
     $i              = 0;
     $order          = "";
-    $extra_criteria = "";
+    $extraCriteria = "";
     $time_criteria  = null;
     if (!empty($options[2])) {
         $time_criteria  = time() - newbb_getSinceTime($options[2]);
-        $extra_criteria = " AND p.post_time>" . $time_criteria;
+        $extraCriteria = " AND p.post_time>" . $time_criteria;
     }
 
     switch ($options[0]) {
         case "text":
             if (!empty($newbbConfig['enable_karma'])) {
-                $extra_criteria .= " AND p.post_karma = 0";
+                $extraCriteria .= " AND p.post_karma = 0";
             }
             if (!empty($newbbConfig['allow_require_reply'])) {
-                $extra_criteria .= " AND p.require_reply = 0";
+                $extraCriteria .= " AND p.require_reply = 0";
             }
         default:
             $order = 'p.post_id';
             break;
     }
 
-    if (!isset($access_forums)) {
+    if (!isset($accessForums)) {
         $perm_handler = xoops_getmodulehandler('permission', 'newbb');
-        if (!$access_forums = $perm_handler->getForums()) {
+        if (!$accessForums = $perm_handler->getForums()) {
             return $block;
         }
     }
@@ -440,17 +437,17 @@ function b_newbb_post_show($options)
     }
 
     if (!empty($options[6])) {
-        $allowedforums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
-        $allowed_forums = array_intersect($allowedforums, $access_forums);
+        $myallowedForums  = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+         $allowedForums = array_intersect($myallowedForums, $accessForums);
     } else {
-        $allowed_forums = $access_forums;
+         $allowedForums = $accessForums;
     }
-    if (empty($allowed_forums)) {
+    if (empty( $allowedForums)) {
         return $block;
     }
 
-    $forum_criteria   = ' AND p.forum_id IN (' . implode(',', $allowed_forums) . ')';
-    $approve_criteria = ' AND p.approved = 1';
+    $forumCriteria   = ' AND p.forum_id IN (' . implode(',',  $allowedForums) . ')';
+    $approveCriteria = ' AND p.approved = 1';
 
     $query = 'SELECT';
     $query .= '	p.post_id, p.subject, p.post_time, p.icon, p.uid, p.poster_name,';
@@ -464,9 +461,9 @@ function b_newbb_post_show($options)
         $query .= '	LEFT JOIN ' . $GLOBALS["xoopsDB"]->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id';
     }
     $query .= '	WHERE 1=1 ' .
-              $forum_criteria .
-              $approve_criteria .
-              $extra_criteria .
+              $forumCriteria .
+              $approveCriteria .
+              $extraCriteria .
               ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS["xoopsDB"]->query($query, $options[1], 0);
@@ -563,79 +560,78 @@ function b_newbb_post_show($options)
  */
 function b_newbb_author_show($options)
 {
-    global $xoopsConfig;
-    global $access_forums;
-    global $newbbConfig;
+    global $accessForums;
+//    global $newbbConfig;
 
     $myts           =& MyTextSanitizer::getInstance();
     $block          = array();
-    $i              = 0;
+//    $i              = 0;
     $type           = "topic";
     $order          = "count";
-    $extra_criteria = "";
+    $extraCriteria = "";
     $time_criteria  = null;
     if (!empty($options[2])) {
         mod_loadFunctions("time", "newbb");
         $time_criteria  = time() - newbb_getSinceTime($options[2]);
-        $extra_criteria = " AND topic_time > " . $time_criteria;
+        $extraCriteria = " AND topic_time > " . $time_criteria;
     }
     switch ($options[0]) {
         case 'topic':
             break;
         case 'digest':
-            $extra_criteria = " AND topic_digest = 1";
+            $extraCriteria = " AND topic_digest = 1";
             if ($time_criteria) {
-                $extra_criteria .= " AND digest_time > " . $time_criteria;
+                $extraCriteria .= " AND digest_time > " . $time_criteria;
             }
             break;
         case 'sticky':
-            $extra_criteria .= " AND topic_sticky = 1";
+            $extraCriteria .= " AND topic_sticky = 1";
             break;
         case 'post':
         default:
             $type = "post";
             if ($time_criteria) {
-                $extra_criteria = " AND post_time > " . $time_criteria;
+                $extraCriteria = " AND post_time > " . $time_criteria;
             }
             break;
     }
 
-    if (!isset($access_forums)) {
+    if (!isset($accessForums)) {
         $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$access_forums = $perm_handler->getForums()) {
+        if (!$accessForums = $perm_handler->getForums()) {
             return $block;
         }
     }
 
     if (!empty($options[5])) {
-        $allowedforums  = array_filter(array_slice($options, 5), "b_newbb_array_filter"); // get allowed forums
-        $allowed_forums = array_intersect($allowedforums, $access_forums);
+        $myallowedForums  = array_filter(array_slice($options, 5), "b_newbb_array_filter"); // get allowed forums
+         $allowedForums = array_intersect($myallowedForums, $accessForums);
     } else {
-        $allowed_forums = $access_forums;
+         $allowedForums = $accessForums;
     }
-    if (empty($allowed_forums)) {
+    if (empty( $allowedForums)) {
         return false;
     }
 
     if ($type == "topic") {
-        $forum_criteria   = ' AND forum_id IN (' . implode(',', $allowed_forums) . ')';
-        $approve_criteria = ' AND approved = 1';
+        $forumCriteria   = ' AND forum_id IN (' . implode(',',  $allowedForums) . ')';
+        $approveCriteria = ' AND approved = 1';
         $query            = 'SELECT DISTINCT topic_poster AS author, COUNT(*) AS count
                     FROM ' . $GLOBALS["xoopsDB"]->prefix('bb_topics') . '
                     WHERE topic_poster>0 ' .
-                            $forum_criteria .
-                            $approve_criteria .
-                            $extra_criteria .
+                            $forumCriteria .
+                            $approveCriteria .
+                            $extraCriteria .
                             ' GROUP BY topic_poster ORDER BY ' . $order . ' DESC';
     } else {
-        $forum_criteria   = ' AND forum_id IN (' . implode(',', $allowed_forums) . ')';
-        $approve_criteria = ' AND approved = 1';
+        $forumCriteria   = ' AND forum_id IN (' . implode(',',  $allowedForums) . ')';
+        $approveCriteria = ' AND approved = 1';
         $query            = 'SELECT DISTINCT uid AS author, COUNT(*) AS count
                     FROM ' . $GLOBALS["xoopsDB"]->prefix('bb_posts') . '
                     WHERE uid > 0 ' .
-                            $forum_criteria .
-                            $approve_criteria .
-                            $extra_criteria .
+                            $forumCriteria .
+                            $approveCriteria .
+                            $extraCriteria .
                             ' GROUP BY uid ORDER BY ' . $order . ' DESC';
     }
 
@@ -709,15 +705,15 @@ function b_newbb_edit($options)
 
     $form .= "<br /><br />" . _MB_NEWBB_FORUMLIST;
 
-    $options_forum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
-    $isAll         = (count($options_forum) == 0 || empty($options_forum[0]));
+    $optionsForum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+    $isAll         = (count($optionsForum) == 0 || empty($optionsForum[0]));
     $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected";
     }
     $form .= ">" . _ALL . "</option>";
-    $form .= newbb_forumSelectBox($options_forum);
+    $form .= newbb_forumSelectBox($optionsForum);
     $form .= "</select><br />";
 
     return $form;
@@ -788,16 +784,16 @@ function b_newbb_topic_edit($options)
 
     $form .= "<br /><br />" . _MB_NEWBB_FORUMLIST;
 
-    $options_forum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+    $optionsForum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
 
-    $isAll = (count($options_forum) == 0 || empty($options_forum[0])) ? true : false;
+    $isAll = (count($optionsForum) == 0 || empty($optionsForum[0])) ? true : false;
     $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= ">" . _ALL . "</option>";
-    $form .= newbb_forumSelectBox($options_forum);
+    $form .= newbb_forumSelectBox($optionsForum);
     $form .= "</select><br />";
 
     return $form;
@@ -853,15 +849,15 @@ function b_newbb_post_edit($options)
 
     $form .= "<br /><br />" . _MB_NEWBB_FORUMLIST;
 
-    $options_forum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
-    $isAll         = (count($options_forum) == 0 || empty($options_forum[0])) ? true : false;
+    $optionsForum = array_filter(array_slice($options, 6), "b_newbb_array_filter"); // get allowed forums
+    $isAll         = (count($optionsForum) == 0 || empty($optionsForum[0])) ? true : false;
     $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= ">" . _ALL . "</option>";
-    $form .= newbb_forumSelectBox($options_forum);
+    $form .= newbb_forumSelectBox($optionsForum);
     $form .= "</select><br />";
 
     return $form;
@@ -921,15 +917,15 @@ function b_newbb_author_edit($options)
 
     $form .= "<br /><br />" . _MB_NEWBB_FORUMLIST;
 
-    $options_forum = array_filter(array_slice($options, 5), "b_newbb_array_filter"); // get allowed forums
-    $isAll         = (count($options_forum) == 0 || empty($options_forum[0])) ? true : false;
+    $optionsForum = array_filter(array_slice($options, 5), "b_newbb_array_filter"); // get allowed forums
+    $isAll         = (count($optionsForum) == 0 || empty($optionsForum[0])) ? true : false;
     $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= ">" . _ALL . "</option>";
-    $form .= newbb_forumSelectBox($options_forum);
+    $form .= newbb_forumSelectBox($optionsForum);
     $form .= "</select><br />";
 
     return $form;
@@ -941,10 +937,9 @@ function b_newbb_author_edit($options)
  */
 function b_newbb_custom($options)
 {
-    global $xoopsConfig;
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'));
+    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
+        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
     } else {
         include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
     }
@@ -966,10 +961,10 @@ function b_newbb_custom($options)
  */
 function b_newbb_custom_topic($options)
 {
-    global $xoopsConfig;
+
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'));
+    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
+        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
     } else {
         include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
     }
@@ -991,10 +986,10 @@ function b_newbb_custom_topic($options)
  */
 function b_newbb_custom_post($options)
 {
-    global $xoopsConfig;
+
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'));
+    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
+        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
     } else {
         include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
     }
@@ -1016,10 +1011,9 @@ function b_newbb_custom_post($options)
  */
 function b_newbb_custom_author($options)
 {
-    global $xoopsConfig;
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $xoopsConfig['language'] . '/blocks.php'));
+    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
+        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
     } else {
         include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
     }

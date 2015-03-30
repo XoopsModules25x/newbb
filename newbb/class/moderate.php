@@ -99,9 +99,9 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             $ip_criteria = "1=1";
         }
-        $forum_criteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . intval($forum);
+        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . intval($forum);
         $expire_criteria = "mod_end > " . time();
-        $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forum_criteria, $expire_criteria);
+        $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return false;
         }

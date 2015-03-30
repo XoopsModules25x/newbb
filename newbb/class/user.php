@@ -110,17 +110,17 @@ class newbbUser
      */
     public function getUserbar()
     {
-        global $xoopsModuleConfig, $xoopsUser, $isadmin;
+        global $isadmin;
 
         $userbar = array();
-        if (empty($xoopsModuleConfig['userbar_enabled'])) {
+        if (empty($GLOBALS['xoopsModuleConfig']['userbar_enabled'])) {
             return $userbar;
         }
 
         $user               = $this->user;
         $userbar["profile"] = array("link" => XOOPS_URL . "/userinfo.php?uid=" . $user->getVar("uid"), "name" => _PROFILE);
 
-        if (is_object($xoopsUser)) {
+        if (is_object($GLOBALS['xoopsUser'])) {
             $userbar["pm"] = array("link" => "javascript:void openWithSelfMain('" . XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $user->getVar("uid") . "', 'pmlite', 450, 380);", "name" => _MD_PM);
         }
         if ($user->getVar('user_viewemail') || $isadmin) {
@@ -150,15 +150,15 @@ class newbbUser
      */
     public function getLevel()
     {
-        global $xoopsModuleConfig, $forumUrl;
+        global $forumUrl;
 
         $level = newbb_calculateLevel($this->user->getVar("posts"), $this->user->getVar("user_regdate"));
         $info  = '';
-        if ($xoopsModuleConfig['user_level'] == 2) {
+        if ($GLOBALS['xoopsModuleConfig']['user_level'] == 2) {
             static $rpg_images;
             if (!isset($rpg_images)) {
-                $icon_handler = newbbGetIconHandler();
-                $rpg_path     = $icon_handler->getPath("rpg");
+                $iconHandler = newbbGetIconHandler();
+                $rpg_path     = $iconHandler->getPath("rpg");
                 foreach (array("img_left", "img_backing", "img_right", "blue", "green", "orange") as $img) {
                     // irmtfan fix: double "/" removed
                     $rpg_images[$img] = XOOPS_URL . $rpg_path . '/' . $img . '.gif';
@@ -188,7 +188,7 @@ class newbbUser
      */
     public function getInfo(&$user)
     {
-        global $xoopsModuleConfig, $myts;
+        global  $myts;
         static $name_anonymous;
 
         if (!(is_object($user)) || !($user->isActive())) {
@@ -203,7 +203,7 @@ class newbbUser
 
         $userinfo["uid"] = $user->getVar("uid");
 
-        $name             = empty($xoopsModuleConfig['show_realname']) ? $user->getVar('uname') : $user->getVar('name');
+        $name             = empty($GLOBALS['xoopsModuleConfig']['show_realname']) ? $user->getVar('uname') : $user->getVar('name');
         $userinfo["name"] = $name ? $name : $user->getVar('uname');
 
         $userinfo["link"] = "<a href=\"" . XOOPS_URL . "/userinfo.php?uid=" . $user->getVar("uid") . "\">" . $userinfo["name"] . "</a>";
@@ -234,11 +234,11 @@ class newbbUser
 
         $userinfo["posts"] = $user->getVar('posts');
 
-        if (!empty($xoopsModuleConfig['user_level'])) {
+        if (!empty($GLOBALS['xoopsModuleConfig']['user_level'])) {
             $userinfo["level"] = $this->getLevel();
         }
 
-        if (!empty($xoopsModuleConfig['userbar_enabled'])) {
+        if (!empty($GLOBALS['xoopsModuleConfig']['userbar_enabled'])) {
             $userinfo["userbar"] = $this->getUserbar();
         }
 
@@ -305,17 +305,16 @@ class NewbbUserHandler
 //		return true;
 //	}
 // END irmtfan remove function - no deprecated is needed because just use in this file
+
     public function loadUserDigest()
     {
-        global $xoopsDB;
-
         if (empty($this->users)) {
             return;
         }
 
-        $sql    = 'SELECT user_digests, uid FROM ' . $xoopsDB->prefix('bb_user_stats') . " WHERE uid IN( " . implode(", ", array_keys($this->users)) . ")";
-        $result = $xoopsDB->query($sql);
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . " WHERE uid IN( " . implode(", ", array_keys($this->users)) . ")";
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $this->userlist[$myrow['uid']]["digests"] = intval($myrow['user_digests']);
         }
     }

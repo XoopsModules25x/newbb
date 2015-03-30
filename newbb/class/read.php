@@ -77,7 +77,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     /**
      * seconds records will persist.
-     * assigned from $xoopsModuleConfig["read_expire"]
+     * assigned from $GLOBALS['xoopsModuleConfig']["read_expire"]
      * <ul>
      *  <li>positive days = delete all read records exist in the tables before expire time // irmtfan add comment</li>
      *  <li>0 = never expires // irmtfan change comment</li>
@@ -90,7 +90,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     /**
      * storage mode for records.
-     * assigned from $xoopsModuleConfig["read_mode"]
+     * assigned from $GLOBALS['xoopsModuleConfig']["read_mode"]
      * <ul>
      *  <li>0 = never records</li>
      *  <li>1 = uses cookie</li>

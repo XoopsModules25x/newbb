@@ -26,14 +26,14 @@ foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint
 $viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') != 'flat') ? 'thread' : 'flat';
 $viewmode = ($viewmode) ? $viewmode : (XoopsRequest::getString('viewmode', '', 'POST') ? XoopsRequest::getString('viewmode', '', 'POST')  : 'flat');
 
-$forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$post_handler  =& xoops_getmodulehandler('post', 'newbb');
+$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$postHandler  =& xoops_getmodulehandler('post', 'newbb');
 
 if (!empty($post_id)) {
-    $topic =& $topic_handler->getByPost($post_id);
+    $topic =& $topicHandler->getByPost($post_id);
 } else {
-    $topic =& $topic_handler->get($topic_id);
+    $topic =& $topicHandler->get($topic_id);
 }
 $topic_id = $topic->getVar('topic_id');
 if (!$topic_id) {
@@ -43,17 +43,17 @@ if (!$topic_id) {
 }
 
 $forum     = $topic->getVar('forum_id');
-$forum_obj =& $forum_handler->get($forum);
-if (!$forum_handler->getPermission($forum_obj)) {
+$forum_obj =& $forumHandler->get($forum);
+if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header("index.php", 2, _MD_NORIGHTTOACCESS);
 }
 
 $isadmin = newbb_isAdmin($forum_obj);
-$uid     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
-$post_obj     =& $post_handler->get($post_id);
+$post_obj     =& $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
-if ($topic_handler->getPermission($topic->getVar("forum_id"), $topic_status, 'delete')
+if ($topicHandler->getPermission($topic->getVar("forum_id"), $topic_status, 'delete')
     && ($isadmin || $post_obj->checkIdentity())
 ) {
 } else {
@@ -64,7 +64,7 @@ if (!$isadmin && !$post_obj->checkTimelimit('delete_timelimit')) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;pid=$pid", 2, _MD_TIMEISUPDEL);
 }
 
-if ($xoopsModuleConfig['wol_enabled']) {
+if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $online_handler =& xoops_getmodulehandler('online', 'newbb');
     $online_handler->init($forum_obj);
 }
@@ -75,7 +75,7 @@ if ($ok) {
         $isDeleteOne = false;
     }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar("topic_replies") > 0) {
-        //$post_handler->emptyTopic($post_obj);
+        //$postHandler->emptyTopic($post_obj);
         redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_POSTFIRSTWITHREPLYNODELETED);
     } else {
         if (XoopsRequest::getString('post_text', '', 'POST')) {
@@ -92,23 +92,23 @@ if ($ok) {
                 }
                 $xoopsMailer->setHTML(true);
                 $xoopsMailer->setToUsers($senduser);
-                $xoopsMailer->setFromName($xoopsUser->getVar('uname'));
+                $xoopsMailer->setFromName($GLOBALS['xoopsUser']->getVar('uname'));
                 $xoopsMailer->setSubject(_MD_DELEDEDMSG_SUBJECT);
                 $forenurl = "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=" . $post_obj->getVar('topic_id') . "\">" . $post_obj->getVar('subject') . "</a>";
-                if (!empty($xoopsModuleConfig['do_rewrite'])) {
+                if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
                     $forenurl = seo_urls($forenurl);
                 }
-                $body = sprintf(_MD_DELEDEDMSG_BODY, $senduser->getVar('uname'), $forenurl, XoopsRequest::getString('post_text', '', 'POST'), $xoopsUser->getVar('uname'), $xoopsConfig['sitename'], XOOPS_URL . "/");
+                $body = sprintf(_MD_DELEDEDMSG_BODY, $senduser->getVar('uname'), $forenurl, XoopsRequest::getString('post_text', '', 'POST'), $GLOBALS['xoopsUser']->getVar('uname'), $GLOBALS['xoopsConfig']['sitename'], XOOPS_URL . "/");
                 $body = $myts->nl2Br($body);
                 $xoopsMailer->setBody($body);
                 $xoopsMailer->send();
             }
         }
-        $post_handler->delete($post_obj, $isDeleteOne);
-        $forum_handler->synchronization($forum);
-        $topic_handler->synchronization($topic_id);
-        $stats_handler = xoops_getmodulehandler('stats', 'newbb');
-        $stats_handler->reset();
+        $postHandler->delete($post_obj, $isDeleteOne);
+        $forumHandler->synchronization($forum);
+        $topicHandler->synchronization($topic_id);
+        $statsHandler = xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler->reset();
     }
 
     $post_obj->loadFilters("delete");

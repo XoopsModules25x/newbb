@@ -94,15 +94,15 @@ class NewbbReportHandler extends ArtObjectHandler
         $result_criteria = ' AND r.report_result = ' . $report_result;
 
         if (!$forums) {
-            $forum_criteria = '';
+            $forumCriteria = '';
         } elseif (!is_array($forums)) {
             $forums         = array($forums);
-            $forum_criteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
+            $forumCriteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
         }
         $tables_criteria = ' FROM ' . $this->db->prefix('bb_report') . ' r, ' . $this->db->prefix('bb_posts') . ' p WHERE r.post_id= p.post_id';
 
         if ($report_id) {
-            $result = $this->db->query("SELECT COUNT(*) as report_count" . $tables_criteria . $forum_criteria . $result_criteria . " AND report_id $operator_for_position $report_id" . $order_criteria);
+            $result = $this->db->query("SELECT COUNT(*) as report_count" . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $report_id" . $order_criteria);
             if ($result) {
                 $row = $this->db->fetchArray($result);
             }
@@ -110,10 +110,10 @@ class NewbbReportHandler extends ArtObjectHandler
             $start    = intval($position / $perpage) * $perpage;
         }
 
-        $sql    = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forum_criteria . $result_criteria . $order_criteria;
+        $sql    = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forumCriteria . $result_criteria . $order_criteria;
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = array();
-        //$report_handler = &xoops_getmodulehandler('report', 'newbb');
+        //$reportHandler = &xoops_getmodulehandler('report', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }

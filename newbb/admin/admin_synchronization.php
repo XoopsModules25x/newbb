@@ -35,16 +35,16 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite topic sync
     case "topic":
         $limit         = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : intval($_GET['limit']);
-        $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
         $criteria      = new Criteria("approved", 1);
-        if ($start >= ($count = $topic_handler->getCount($criteria))) {
+        if ($start >= ($count = $topicHandler->getCount($criteria))) {
             break;
         }
         $criteria->setStart($start);
         $criteria->setLimit($limit);
-        $topicObjs = $topic_handler->getAll($criteria);
+        $topicObjs = $topicHandler->getAll($criteria);
         foreach ($topicObjs as $tObj) {
-            $topic_handler->synchronization($tObj);
+            $topicHandler->synchronization($tObj);
         }
         $result = newbb_synchronization("topic");
         redirect_header("admin_synchronization.php?type=topic&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
@@ -64,30 +64,30 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
             break;
         }
         $sql    = "	SELECT uid" .
-                  "	FROM " . $xoopsDB->prefix("users");
-        $result = $xoopsDB->query($sql, $limit, $start);
-        while (list($uid) = $xoopsDB->fetchRow($result)) {
+                  "	FROM " . $GLOBALS['xoopsDB']->prefix("users");
+        $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
+        while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             // irmtfan approved=1 AND
             $sql = "	SELECT count(*)" .
-                   "	FROM " . $xoopsDB->prefix("bb_topics") .
+                   "	FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") .
                    "	WHERE topic_poster = {$uid}";
-            $ret = $xoopsDB->query($sql);
-            list($topics) = $xoopsDB->fetchRow($ret);
+            $ret = $GLOBALS['xoopsDB']->query($sql);
+            list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
             $sql = "	SELECT count(*)" .
-                   "	FROM " . $xoopsDB->prefix("bb_topics") .
+                   "	FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") .
                    "	WHERE topic_digest > 0 AND topic_poster = {$uid}";
-            $ret = $xoopsDB->query($sql);
-            list($digests) = $xoopsDB->fetchRow($ret);
+            $ret = $GLOBALS['xoopsDB']->query($sql);
+            list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
             $sql = "	SELECT count(*), MAX(post_time)" .
-                   "	FROM " . $xoopsDB->prefix("bb_posts") .
+                   "	FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") .
                    "	WHERE uid = {$uid}";
-            $ret = $xoopsDB->query($sql);
-            list($posts, $lastpost) = $xoopsDB->fetchRow($ret);
+            $ret = $GLOBALS['xoopsDB']->query($sql);
+            list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $xoopsDB->queryF(
-                "	REPLACE INTO " . $xoopsDB->prefix("bb_user_stats") .
+            $GLOBALS['xoopsDB']->queryF(
+                "	REPLACE INTO " . $GLOBALS['xoopsDB']->prefix("bb_user_stats") .
                 " 	SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'"
             );
         }

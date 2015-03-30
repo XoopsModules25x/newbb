@@ -64,20 +64,20 @@ function newbb_list_topic_show($options)
     $topicRenderer->config['topic_title_excerpt'] = intval($options[10]); // topic title length 0 = dont excerpt
     $topicRenderer->config['post_excerpt']        = intval($options[11]); // post text excerpt 0 = no post text
 
-    $options_status = explode(',', $options[0]); // status in where claus
-    $options_forum  = explode(',', $options[12]);
+    $optionsStatus = explode(',', $options[0]); // status in where claus
+    $optionsForum  = explode(',', $options[12]);
 
     // set and parse values:
     // forum: parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     $topicRenderer->setVars(array(
-                                'status'     => $options_status,
+                                'status'     => $optionsStatus,
                                 'uid'        => $options[1],
                                 'lastposter' => $options[2],
                                 'type'       => $options[3],
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $options_forum,
+                                'forum'      => $optionsForum,
                             ));
     $block = array();
     // headers to display in block
@@ -107,8 +107,8 @@ function newbb_list_topic_edit($options)
     $topicRenderer->userlevel = 2; // 2 - moderator or admin
 
     // status element
-    $options_status = explode(',', $options[0]);
-    $statusEle      = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $options_status, 5, true);
+    $optionsStatus = explode(',', $options[0]);
+    $statusEle      = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $optionsStatus, 5, true);
     $status         = $topicRenderer->getStatus($topicRenderer->userlevel); // get all public status + admin status (admin mode, pending deleted)
     $statusEle->addOptionArray($status);
     $statusEle->setExtra("onchange = \"validate('options[0][]','select', true)\""); // if user dont select any option it select "all"
@@ -177,21 +177,21 @@ function newbb_list_topic_edit($options)
     $postExcerptEle->setDescription(_MB_NEWBB_POST_EXCERPT_DESC);
 
     //  forum element
-    $options_forum = explode(',', $options[12]);
+    $optionsForum = explode(',', $options[12]);
     mod_loadFunctions("forum", "newbb");
-    $forum_handler = xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = xoops_getmodulehandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
-    $access_forums = $forum_handler->getIdsByValues(array_map("intval", $options_forum));
-    $isAll         = (count($options_forum) == 0 || empty($options_forum[0]));
+    $accessForums = $forumHandler->getIdsByValues(array_map("intval", $optionsForum));
+    $isAll         = (count($optionsForum) == 0 || empty($optionsForum[0]));
     $forumSel      = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel .= "<option value=\"0\" ";
     if ($isAll) {
         $forumSel .= " selected";
-        $access_forums = null; // just select _ALL option
+        $accessForums = null; // just select _ALL option
     }
     $forumSel .= ">" . _ALL . "</option>";
-    $forumSel .= newbb_forumSelectBox($access_forums, "access", false); //$access_forums, $permission = "access", $delimitor_category = false
+    $forumSel .= newbb_forumSelectBox($accessForums, "access", false); //$accessForums, $permission = "access", $delimitor_category = false
     $forumSel .= "</select>";
     $forumEle = new XoopsFormLabel(_MB_NEWBB_FORUMLIST, $forumSel);
 

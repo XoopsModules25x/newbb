@@ -219,7 +219,7 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', "
 define('_MI_NEWBB_ADMENU_GROUPMOD', "Group moderate");
 define('_MI_SUBJECT_PREFIX', "Add a prefix to the topic subject");
 define('_MI_SUBJECT_PREFIX_DESC', "Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ',' as the separator. NONE is no prefix.");
-define('_MI_SUBJECT_PREFIX_DEFAULT', '<span style="color:#00CC00"> [solved] </span> <span style="color:#00CC00"> [done] </span> <span style="color:#FF0000"> [request] </span> , <span style="color:#FF0000"> [bug report] </span> <span style="color:#FF0000"> [unsolved] </span>');
+define('_MI_SUBJECT_PREFIX_DEFAULT', '<span style="color:#00CC00;"> [solved] </span> <span style="color:#00CC00;"> [done] </span> <span style="color:#FF0000;"> [request] </span> , <span style="color:#FF0000;"> [bug report] </span> <span style="color:#FF0000;"> [unsolved] </span>');
 define('_MI_SUBJECT_PREFIX_LEVEL', "Permissions for use of prefixes");
 define('_MI_SUBJECT_PREFIX_LEVEL_DESC', "The group (s) select the prefixes to use it.");
 define('_MI_SPL_DISABLE', "disabled");
