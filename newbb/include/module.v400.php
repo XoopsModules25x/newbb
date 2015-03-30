@@ -14,25 +14,25 @@
 
 function xoops_module_update_newbb_v400(XoopsModule &$module)
 {
-    $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
+    $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
 
     $result = $GLOBALS['xoopsDB']->query("SELECT `forum_id`, `forum_topics`, `forum_posts` FROM " . $GLOBALS['xoopsDB']->prefix("bb_forums"));
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $stats_handler->update($row["forum_id"], "topic", $row["forum_topics"]);
-        $stats_handler->update($row["forum_id"], "post", $row["forum_posts"]);
+        $statsHandler->update($row["forum_id"], "topic", $row["forum_topics"]);
+        $statsHandler->update($row["forum_id"], "post", $row["forum_posts"]);
     }
     $result = $GLOBALS['xoopsDB']->query("SELECT `forum_id`, SUM(topic_views) AS views FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " GROUP BY `forum_id`");
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $stats_handler->update($row["forum_id"], "view", $row["views"]);
+        $statsHandler->update($row["forum_id"], "view", $row["views"]);
     }
     $result = $GLOBALS['xoopsDB']->query("SELECT `forum_id`, COUNT(*) AS digests FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " WHERE topic_digest = 1 GROUP BY `forum_id`");
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $stats_handler->update($row["forum_id"], "digest", $row["digests"]);
+        $statsHandler->update($row["forum_id"], "digest", $row["digests"]);
     }
     $result = $GLOBALS['xoopsDB']->query("SELECT SUM(forum_topics) AS topics, SUM(forum_posts) AS posts FROM " . $GLOBALS['xoopsDB']->prefix("bb_forums"));
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-        $stats_handler->update(-1, "topic", $row["topics"]);
-        $stats_handler->update(-1, "post", $row["posts"]);
+        $statsHandler->update(-1, "topic", $row["topics"]);
+        $statsHandler->update(-1, "post", $row["posts"]);
     }
 
     /*

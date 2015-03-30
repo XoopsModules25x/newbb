@@ -157,12 +157,12 @@ switch ($op) {
             redirect_header(xoops_getenv("PHP_SELF") . "?op=template", 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
 
-        $category_handler  =& xoops_getmodulehandler('category', 'newbb');
-        $criteria_category = new CriteriaCompo(new criteria('1', 1));
-        $criteria_category->setSort('cat_order');
-        $categories    = $category_handler->getList($criteria_category);
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-        $forums        = $forum_handler->getTree(array_keys($categories), 0, "all");
+        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory->setSort('cat_order');
+        $categories    = $categoryHandler->getList($criteriaCategory);
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forums        = $forumHandler->getTree(array_keys($categories), 0, "all");
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c] = "[" . $categories[$c] . "]";
             foreach (array_keys($forums[$c]) as $f) {
@@ -239,15 +239,15 @@ switch ($op) {
         break;
 
     case "forum":
-        $category_handler  =& xoops_getmodulehandler('category', 'newbb');
-        $criteria_category = new CriteriaCompo(new criteria('1', 1));
-        $criteria_category->setSort('cat_order');
-        $categories = $category_handler->getList($criteria_category);
+        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory->setSort('cat_order');
+        $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
             redirect_header("admin_cat_manager.php", 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-        $forums        = $forum_handler->getTree(array_keys($categories));
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forums        = $forumHandler->getTree(array_keys($categories));
         if (empty($forums)) {
             redirect_header("admin_forum_manager.php", 2, _AM_NEWBB_CREATENEWFORUM);
         }
@@ -293,8 +293,8 @@ switch ($op) {
             redirect_header(xoops_getenv("PHP_SELF") . "?op=forum", 2, _AM_NEWBB_TYPE_FORUM);
         }
 
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-        if (!$forum_obj = $forum_handler->get(XoopsRequest::getInt('forum', 0, 'POST'))) {
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        if (!$forum_obj = $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv("PHP_SELF") . "?op=forum", 2, _AM_NEWBB_TYPE_FORUM);
         }
 
@@ -339,7 +339,7 @@ switch ($op) {
             $type_obj =& $types_obj[$type["type_id"]];
             echo "<tr class='even' align='left'>";
             echo "<td><input type='text' name='type_order[" . $type["type_id"] . "]' value='" . $type["type_order"] . "' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar("type_color") . "'>" . $type_obj->getVar("type_name") . "</em></td>";
+            echo "<td><em style='color:" . $type_obj->getVar("type_color") . ";'>" . $type_obj->getVar("type_name") . "</em></td>";
             echo "<td>" . $type_obj->getVar("type_description") . "</td>";
             echo "</tr>";
             unset($types_obj[$type["type_id"]]);
@@ -348,7 +348,7 @@ switch ($op) {
         foreach ($types_obj as $key => $type_obj) {
             echo "<tr class='odd' align='left'>";
             echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar("type_color") . "'>" . $type_obj->getVar("type_name") . "</em></td>";
+            echo "<td><em style='color:" . $type_obj->getVar("type_color") . ";'>" . $type_obj->getVar("type_name") . "</em></td>";
             echo "<td>" . $type_obj->getVar("type_description") . "</td>";
             echo "</tr>";
         }

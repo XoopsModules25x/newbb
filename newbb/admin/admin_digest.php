@@ -36,7 +36,7 @@ $op   = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST')
 $item = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 
 $start = XoopsRequest::getInt('start', 0, 'GET');
-//$report_handler =& xoops_getmodulehandler('report', 'newbb');
+//$reportHandler =& xoops_getmodulehandler('report', 'newbb');
 
 xoops_cp_header();
 switch ($op) {

@@ -75,8 +75,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
 
     function newbb_highlightText($text, $queryarray)
     {
-        global $xoopsModuleConfig;
-        if (empty($xoopsModuleConfig['highlight_search_enable'])) {
+        if (empty($GLOBALS['xoopsModuleConfig']['highlight_search_enable'])) {
             return $text;
         }
         $queryarray = newbb_str2array($queryarray);

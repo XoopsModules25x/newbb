@@ -10,21 +10,21 @@
  * @package        module::newbb
  */
 
-global $xoopsModule, $xoopsModuleConfig, $myts, $xoopsUser, $forum_obj;
+global $xoopsModule, $myts, $xoopsUser, $forum_obj;
 
-if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($xoopsUser) || !is_object($xoopsModule)) {
+if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)) {
     return;
 }
 
 $forum_id     = $forum_obj->getVar("forum_id");
-$post_handler =& xoops_getmodulehandler('post', 'newbb');
-$post_obj     =& $post_handler->create();
+$postHandler =& xoops_getmodulehandler('post', 'newbb');
+$post_obj     =& $postHandler->create();
 $post_obj->setVar('poster_ip', newbb_getIP());
-$post_obj->setVar('uid', $xoopsUser->getVar("uid"));
+$post_obj->setVar('uid', $GLOBALS['xoopsUser']->getVar("uid"));
 $post_obj->setVar('approved', 1);
 $post_obj->setVar('forum_id', $forum_id);
 
-$subject = sprintf(_MD_WELCOME_SUBJECT, $xoopsUser->getVar('uname'));
+$subject = sprintf(_MD_WELCOME_SUBJECT, $GLOBALS['xoopsUser']->getVar('uname'));
 $post_obj->setVar('subject', $subject);
 $post_obj->setVar('dohtml', 1);
 $post_obj->setVar('dosmiley', 1);
@@ -57,14 +57,14 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     $fieldcats        = $fieldcat_handler->getObjects(null, true, false);
 
     // Add core fields
-    $categories[0]['cat_title'] = sprintf(_PROFILE_MA_ALLABOUT, $xoopsUser->getVar('uname'));
-    $avatar                     = trim($xoopsUser->getVar('user_avatar'));
+    $categories[0]['cat_title'] = sprintf(_PROFILE_MA_ALLABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
+    $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
     if (!empty($avatar) && $avatar != "blank.gif") {
-        $categories[0]['fields'][] = array('title' => _PROFILE_MA_AVATAR, 'value' => "<img src='" . XOOPS_UPLOAD_URL . "/" . $xoopsUser->getVar('user_avatar') . "' alt='" . $xoopsUser->getVar('uname') . "' />");
+        $categories[0]['fields'][] = array('title' => _PROFILE_MA_AVATAR, 'value' => "<img src='" . XOOPS_UPLOAD_URL . "/" . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />");
         $weights[0][]              = 0;
     }
-    if ($xoopsUser->getVar('user_viewemail') == 1) {
-        $email                     = $xoopsUser->getVar('email', 'E');
+    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
+        $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
         $categories[0]['fields'][] = array('title' => _PROFILE_MA_EMAIL, 'value' => $email);
         $weights[0][]              = 0;
     }
@@ -73,7 +73,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     foreach (array_keys($fields) as $i) {
         if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
             $catid = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? $fieldcats[$fields[$i]->getVar('fieldid')]['catid'] : 0;
-            $value = $fields[$i]->getOutputValue($xoopsUser);
+            $value = $fields[$i]->getOutputValue($GLOBALS['xoopsUser']);
             if (is_array($value)) {
                 $value = implode('<br />', array_values($value));
             }
@@ -94,9 +94,9 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     ksort($categories);
 }
 
-$message = sprintf(_MD_WELCOME_MESSAGE, $xoopsUser->getVar('uname')) . "\n\n";
-$message .= _PROFILE . ": <a href='" . XOOPS_URL . "/userinfo.php?uid=" . $xoopsUser->getVar('uid') . "'><strong>" . $xoopsUser->getVar('uname') . "</strong></a> ";
-//$message .= " | <a href='".XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $xoopsUser->getVar('uid')."'>"._MD_PM."</a>\n";
+$message = sprintf(_MD_WELCOME_MESSAGE, $GLOBALS['xoopsUser']->getVar('uname')) . "\n\n";
+$message .= _PROFILE . ": <a href='" . XOOPS_URL . "/userinfo.php?uid=" . $GLOBALS['xoopsUser']->getVar('uid') . "'><strong>" . $GLOBALS['xoopsUser']->getVar('uname') . "</strong></a> ";
+//$message .= " | <a href='".XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $GLOBALS['xoopsUser']->getVar('uid')."'>"._MD_PM."</a>\n";
 foreach ($categories as $category) {
     if (isset($category["fields"])) {
         $message .= "\n\n" . $category["cat_title"] . ":\n\n";
@@ -109,9 +109,9 @@ foreach ($categories as $category) {
     }
 }
 $post_obj->setVar('post_text', $message);
-$post_id = $post_handler->insert($post_obj);
+$post_id = $postHandler->insert($post_obj);
 
-if (!empty($xoopsModuleConfig['notification_enabled'])) {
+if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags                = array();
     $tags['THREAD_NAME'] = $subject;
     $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname") . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;

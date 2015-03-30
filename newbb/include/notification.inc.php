@@ -51,15 +51,14 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         }
         $item_id = intval($item_id);
 
-        global $xoopsDB;
         if ($category == 'forum') {
             // Assume we have a valid forum id
-            $sql = 'SELECT forum_name FROM ' . $xoopsDB->prefix('bb_forums') . ' WHERE forum_id = ' . $item_id;
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = 'SELECT forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' WHERE forum_id = ' . $item_id;
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . "index.php", 2, _MD_ERRORFORUM);
             }
-            $result_array = $xoopsDB->fetchArray($result);
+            $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
             $item['name'] = $result_array['forum_name'];
             $item['url']  = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/viewforum.php?forum=' . $item_id;
 
@@ -68,12 +67,12 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
 
         if ($category == 'thread') {
             // Assume we have a valid topid id
-            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM ' . $xoopsDB->prefix('bb_topics') . ' t, ' . $xoopsDB->prefix('bb_forums') . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = ' . $item_id . ' limit 1';
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = ' . $item_id . ' limit 1';
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . "index.php", 2, _MD_ERROROCCURED);
             }
-            $result_array = $xoopsDB->fetchArray($result);
+            $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
             $item['name'] = $result_array['topic_title'];
             $item['url']  = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/viewtopic.php?forum=' . $result_array['forum_id'] . '&topic_id=' . $item_id;
 
@@ -82,12 +81,12 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
 
         if ($category == 'post') {
             // Assume we have a valid post id
-            $sql = 'SELECT subject,topic_id,forum_id FROM ' . $xoopsDB->prefix('bb_posts') . ' WHERE post_id = ' . $item_id . ' LIMIT 1';
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = 'SELECT subject,topic_id,forum_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE post_id = ' . $item_id . ' LIMIT 1';
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . "index.php", 2, _MD_ERROROCCURED);
             }
-            $result_array = $xoopsDB->fetchArray($result);
+            $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
             $item['name'] = $result_array['subject'];
             $item['url']  = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/viewtopic.php?forum= ' . $result_array['forum_id'] . '&amp;topic_id=' . $result_array['topic_id'] . '#forumpost' . $item_id;
 

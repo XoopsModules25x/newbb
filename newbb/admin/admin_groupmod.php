@@ -39,7 +39,7 @@ if (!$newXoopsModuleGui) {
     echo $indexAdmin->addNavigation('admin_groupmod.php');
 }
 $member_handler =& xoops_gethandler('member');
-$forum_handler  = &xoops_getmodulehandler('forum', 'newbb');
+$forumHandler  = &xoops_getmodulehandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
     $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// intval($_POST['forenid']);
@@ -56,11 +56,11 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             }
         }
         if ($fforum == -1) { // alle Foren
-            $sql = "UPDATE " . $xoopsDB->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
+            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
-            $sql = "UPDATE " . $xoopsDB->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
+            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
         }
-        if (is_array($fuser) && $xoopsDB->queryF($sql)) {
+        if (is_array($fuser) && $GLOBALS['xoopsDB']->queryF($sql)) {
             $mess = _AM_NEWBB_GROUPMOD_ADDMOD;
         } else {
             $mess = _AM_NEWBB_GROUPMOD_ERRMOD . "<br /><small>( " . $sql . " )</small>";
@@ -73,11 +73,11 @@ echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo "<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>"
      . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
-$category_handler  = &xoops_getmodulehandler('category', 'newbb');
-$criteria_category = new CriteriaCompo(new criteria('1', 1));
-$criteria_category->setSort('cat_order');
-$categories = $category_handler->getAll($criteria_category, array("cat_id", "cat_order", "cat_title"));
-$forums     = $forum_handler->getTree(array_keys($categories), 0, 'all', "&nbsp;&nbsp;&nbsp;&nbsp;");
+$categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+$criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+$criteriaCategory->setSort('cat_order');
+$categories = $categoryHandler->getAll($criteriaCategory, array("cat_id", "cat_order", "cat_title"));
+$forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', "&nbsp;&nbsp;&nbsp;&nbsp;");
 echo '<select name="forenid">';
 echo '<option value="-1">-- ' . _AM_NEWBB_GROUPMOD_ALLFORUMS . ' --</option>';
 foreach (array_keys($categories) as $c) {

@@ -44,7 +44,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $posts_number    = 0;
     $selected_forums = '';
     // irmtfan fix if it is array
-    if (!XoopsRequest::getArray('forums',0, 'POST') || !XoopsRequest::getArray('forums'[0], 0, 'POST')) {
+    if (!XoopsRequest::getArray('forums', 0, 'POST') || !XoopsRequest::getArray('forums'[0], 0, 'POST')) {
         redirect_header("./admin_forum_prune.php", 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
     } elseif (is_array(XoopsRequest::getArray('forums', '', 'POST'))) {
         $selected_forums = implode(",", XoopsRequest::getArray('forums', array(), 'POST'));
@@ -64,7 +64,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         $store = $myts->addSlashes(XoopsRequest::getInt('store', 0, 'POST'));
     }
 
-    $sql = "SELECT t.topic_id FROM " . $xoopsDB->prefix("bb_topics") . " t, " . $xoopsDB->prefix("bb_posts") . "  p
+    $sql = "SELECT t.topic_id FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " t, " . $GLOBALS['xoopsDB']->prefix("bb_posts") . "  p
                     WHERE t.forum_id IN (" . $selected_forums . ")
                     AND p.post_id =t.topic_last_post_id ";
 
@@ -84,26 +84,26 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $sql .= " AND p.post_time<= " . $prune_ddays . " ";
     // Ok now we have the sql query completed, go for topic_id's and posts_id's
     $topics = array();
-    if (!$result = $xoopsDB->query($sql)) {
+    if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
         return _MD_ERROR;
     }
     // Dave_L code
-    while ($row = $xoopsDB->fetchArray($result)) {
+    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
         $topics[] = $row['topic_id'];
     }
     $topics_number = count($topics);
     $topic_list    = implode(',', $topics);
 
     if (null !== $topic_list) {
-        $sql = "SELECT post_id FROM " . $xoopsDB->prefix("bb_posts") . "
+        $sql = "SELECT post_id FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . "
                     WHERE topic_id IN (" . $topic_list . ")";
 
         $posts = array();
-        if (!$result = $xoopsDB->query($sql)) {
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return _MD_ERROR;
         }
         // Dave_L code
-        while ($row = $xoopsDB->fetchArray($result)) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $posts[] = $row['post_id'];
         }
         $posts_number = count($posts);
@@ -113,46 +113,46 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     if (null !== $post_list) {
         // COPY POSTS TO OTHER FORUM
         if (null !== $store) {
-            $sql = "UPDATE " . $xoopsDB->prefix("bb_posts") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _AM_NEWBB_ERROR;
             }
 
-            $sql = "UPDATE " . $xoopsDB->prefix("bb_topics") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
         } else {
             // ARCHIVING POSTS
             if ($archive == 1) {
-                $result = $xoopsDB->query(
-                    "SELECT p.topic_id, p.post_id, t.post_text FROM " . $xoopsDB->prefix("bb_posts") . " p, "
-                    . $xoopsDB->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
+                $result = $GLOBALS['xoopsDB']->query(
+                    "SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " p, "
+                    . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
                 );
-                while (list($topic_id, $post_id, $post_text) = $xoopsDB->fetchRow($result)) {
-                    $sql = $xoopsDB->query(
-                        "INSERT INTO " . $xoopsDB->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, '$post_text')"
+                while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+                    $sql = $GLOBALS['xoopsDB']->query(
+                        "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, '$post_text')"
                     );
                 }
             }
             // DELETE POSTS
-            $sql = "DELETE FROM " . $xoopsDB->prefix("bb_posts") . " WHERE topic_id IN ($topic_list)";
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " WHERE topic_id IN ($topic_list)";
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
             // DELETE TOPICS
-            $sql = "DELETE FROM " . $xoopsDB->prefix("bb_topics") . " WHERE topic_id IN ($topic_list)";
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " WHERE topic_id IN ($topic_list)";
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
             // DELETE POSTS_TEXT
-            $sql = "DELETE FROM " . $xoopsDB->prefix("bb_posts_text") . " WHERE post_id IN ($post_list)";
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " WHERE post_id IN ($post_list)";
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-            $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-            $forum_handler->synchronization();
+            $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+            $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:
         }
     }
@@ -169,8 +169,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     /* Let User select the number of days
     $sform->addElement( new XoopsFormText(_AM_NEWBB_PRUNE_DAYS , 'days', 5, 10,100 ), true );
     */
-    // $sql="SELECT p.topic_id, p.post_id t.post_text FROM ".$xoopsDB->prefix("bb_posts")." p, ".$xoopsDB->prefix("bb_posts_text")." t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id";
-    // $result = $xoopsDB->query();
+    // $sql="SELECT p.topic_id, p.post_id t.post_text FROM ".$GLOBALS['xoopsDB']->prefix("bb_posts")." p, ".$GLOBALS['xoopsDB']->prefix("bb_posts_text")." t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id";
+    // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
     $days = new XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
     $days->addOptionArray(
@@ -191,7 +191,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = "<option value = 0 >-- " . _AM_NEWBB_PERM_FORUMS . " --</option>";
-    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$access_forums = nothing, $permission = "access", $delimitor_category = false
+    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$accessForums = nothing, $permission = "access", $delimitor_category = false
     $forumSelBox .= "</select>";
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
     $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
@@ -199,13 +199,13 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $checkbox = new XoopsFormCheckBox(_AM_NEWBB_PRUNE_FORUMS, 'forums');
     $radiobox = new XoopsFormRadio(_AM_NEWBB_PRUNE_STORE, 'store');
     // PUAJJ I HATE IT, please tidy up
-    $sql = "SELECT forum_name, forum_id FROM " . $xoopsDB->prefix("bb_forums") . " ORDER BY forum_id";
-    if ($result = $xoopsDB->query($sql)) {
-        if ($myrow = $xoopsDB->fetchArray($result)) {
+    $sql = "SELECT forum_name, forum_id FROM " . $GLOBALS['xoopsDB']->prefix("bb_forums") . " ORDER BY forum_id";
+    if ($result = $GLOBALS['xoopsDB']->query($sql)) {
+        if ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             do {
                 $checkbox->addOption($myrow['forum_id'], $myrow['forum_name']);
                 $radiobox->addOption($myrow['forum_id'], $myrow['forum_name']);
-            } while ($myrow = $xoopsDB->fetchArray($result));
+            } while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result));
         } else {
             echo "NO FORUMS";
         }

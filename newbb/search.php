@@ -30,13 +30,13 @@
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . "/header.php";
 xoops_loadLanguage("search");
-$config_handler    =& xoops_gethandler('config');
-$xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$configHandler    =& xoops_gethandler('config');
+$xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if ($xoopsConfigSearch['enable_search'] != 1) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
 
-$xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
+$GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 $xoopsOption['template_main']                             = 'newbb_search.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once $GLOBALS['xoops']->path('header.php');
@@ -47,7 +47,7 @@ mod_loadFunctions("time", "newbb");
 mod_loadFunctions("text", "newbb"); // irmtfan add text functions
 
 include_once $GLOBALS['xoops']->path('modules/newbb/include/search.inc.php');
-$limit = $xoopsModuleConfig['topics_per_page'];
+$limit = $GLOBALS['xoopsModuleConfig']['topics_per_page'];
 
 $queries              = array();
 $andor                = "";
@@ -73,12 +73,12 @@ $selectexclude  = newbb_str2array($selectexclude);
 $show_search     = "post_text";
 $search_username = trim($uname);
 
-if ($xoopsModuleConfig['wol_enabled']) {
+if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $online_handler =& xoops_getmodulehandler('online', 'newbb');
     $online_handler->init(0);
 }
 
-$xoopsTpl->assign("forumindex", sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign("forumindex", sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 //$xoopsTpl->assign("img_folder", newbbDisplayImage($forumImage['topic']));
 
 if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
@@ -122,11 +122,11 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     if (!empty($search_username)) {
         $uname_required  = true;
         $search_username = $myts->addSlashes($search_username);
-        if (!$result = $xoopsDB->query("SELECT uid FROM " . $xoopsDB->prefix("users") . " WHERE uname LIKE '%$search_username%'")) {
+        if (!$result = $GLOBALS['xoopsDB']->query("SELECT uid FROM " . $GLOBALS['xoopsDB']->prefix("users") . " WHERE uname LIKE '%$search_username%'")) {
             redirect_header('search.php', 1, _MD_ERROROCCURED);
         }
         $uid = array();
-        while ($row = $xoopsDB->fetchArray($result)) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $uid[] = $row['uid'];
         }
     } else {
@@ -418,7 +418,7 @@ $xoopsTpl->assign("selectexclude_check_box", $selectexclude_select);
 //  END irmtfan - assign template vars for search
 
 // irmtfan get since from the user for selction box
-$since        = XoopsRequest::getInt('since', $xoopsModuleConfig["since_default"], 'GET');
+$since        = XoopsRequest::getInt('since', $GLOBALS['xoopsModuleConfig']["since_default"], 'GET');
 $select_since = newbb_sinceSelectBox($since);
 $xoopsTpl->assign_by_ref("since_selection_box", $select_since);
 

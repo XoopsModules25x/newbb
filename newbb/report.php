@@ -46,20 +46,20 @@ if (empty($post_id)) {
     redirect_header("index.php", 2, _MD_ERRORPOST);
 }
 
-if ($xoopsModuleConfig['wol_enabled']) {
+if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $online_handler =& xoops_getmodulehandler('online', 'newbb');
     $online_handler->init($forum);
 }
 
 $myts = MyTextSanitizer::getInstance();
 // Disable cache
-$xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0;
+$GLOBALS['xoopsConfig']["module_cache"][$xoopsModule->getVar("mid")] = 0;
 include $GLOBALS['xoops']->path('header.php');
 include $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $error_message = '';
-    if (!is_object($xoopsUser)) {
+    if (!is_object($GLOBALS['xoopsUser'])) {
         xoops_load("xoopscaptcha");
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -69,24 +69,22 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     }
     if ($error_message != '') {
         xoops_error($error_message);
-
     } else {
-        $report_handler =& xoops_getmodulehandler('report', 'newbb');
-        $report         =& $report_handler->create();
+        $reportHandler =& xoops_getmodulehandler('report', 'newbb');
+        $report         =& $reportHandler->create();
         $report->setVar('report_text', XoopsRequest::getString('report_text', '', 'POST'));
         $report->setVar('post_id', XoopsRequest::getInt($post_id, 0, 'POST'));
         $report->setVar('report_time', time());
-        $report->setVar('reporter_uid', is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0);
+        $report->setVar('reporter_uid', is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0);
         $report->setVar('reporter_ip', newbb_getIP());
         $report->setVar('report_result', 0);
         $report->setVar('report_memo', "");
 
-        if ($report_id = $report_handler->insert($report)) {
-            $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
+        if ($report_id = $reportHandler->insert($report)) {
+            $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
             if (empty($forum)) {
-
             }
-            $forum_obj =& $forum_handler->get($forum);
+            $forum_obj =& $forumHandler->get($forum);
 
             if (is_object($forum_obj)) {
                 $mods           = $forum_obj->getVar('forum_moderator');
@@ -119,12 +117,12 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
 $report_form = new XoopsThemeForm('', 'reportform', 'report.php');
 $report_form->addElement(new XoopsFormText(_MD_REPORT_TEXT, 'report_text', 80, 255, XoopsRequest::getString('report_text', '', 'POST')), true);
-if (!is_object($xoopsUser)) {
+if (!is_object($GLOBALS['xoopsUser'])) {
     $report_form->addElement(new XoopsFormCaptcha());
 }
 
-$post_handler =& xoops_getmodulehandler('post', 'newbb');
-$post_obj     =& $post_handler->get($post_id);
+$postHandler =& xoops_getmodulehandler('post', 'newbb');
+$post_obj     =& $postHandler->get($post_id);
 $forum        = $post_obj->getVar('forum_id');
 
 //$report_form->addElement(new XoopsFormHidden('pid', $pid));
@@ -145,9 +143,9 @@ $report_form->addElement($button_tray);
 $report_form->display();
 
 $r_subject = $post_obj->getVar('subject', "E");
-if ($xoopsModuleConfig['enable_karma'] && $post_obj->getVar('post_karma') > 0) {
+if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_obj->getVar('post_karma') > 0) {
     $r_message = sprintf(_MD_KARMA_REQUIREMENT, "***", $post_obj->getVar('post_karma')) . "</div>";
-} elseif ($xoopsModuleConfig['allow_require_reply'] && $post_obj->getVar('require_reply')) {
+} elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $post_obj->getVar('require_reply')) {
     $r_message = _MD_REPLY_REQUIREMENT;
 } else {
     $r_message = $post_obj->getVar('post_text');
@@ -155,10 +153,10 @@ if ($xoopsModuleConfig['enable_karma'] && $post_obj->getVar('post_karma') > 0) {
 
 $r_date = formatTimestamp($post_obj->getVar('post_time'));
 if ($post_obj->getVar('uid')) {
-    $r_name = newbb_getUnameFromId($post_obj->getVar('uid'), $xoopsModuleConfig['show_realname']);
+    $r_name = newbb_getUnameFromId($post_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $post_obj->getVar('poster_name');
-    $r_name      = (empty($poster_name)) ? $xoopsConfig['anonymous'] : $myts->htmlSpecialChars($poster_name);
+    $r_name      = (empty($poster_name)) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlSpecialChars($poster_name);
 }
 $r_content = _MD_SUBJECTC . " " . $r_subject . "<br />";
 $r_content .= _MD_BY . " " . $r_name . " " . _MD_ON . " " . $r_date . "<br /><br />";

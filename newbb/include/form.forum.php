@@ -42,7 +42,7 @@ $form_forum->addElement(new XoopsFormHidden('cat_id', $forum_obj->getVar('cat_id
 
 // Parent forums
 ob_start();
-$mytree = new XoopsTree($xoopsDB->prefix("bb_forums"), "forum_id", "parent_forum");
+$mytree = new XoopsTree($GLOBALS['xoopsDB']->prefix("bb_forums"), "forum_id", "parent_forum");
 $mytree->makeMySelBox("forum_name", "parent_forum", $forum_obj->getVar("parent_forum"), 1, "parent_forum");
 $form_forum->addElement(new XoopsFormLabel(_AM_NEWBB_MAKE_SUBFORUM_OF, ob_get_contents()));
 ob_end_clean();

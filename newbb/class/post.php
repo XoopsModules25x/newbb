@@ -42,6 +42,9 @@ class Post extends ArtObject
 //class Post extends XoopsObject {
     public $attachmentArray = array();
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct("bb_posts");
@@ -130,7 +133,6 @@ class Post extends ArtObject
      */
     public function deleteAttachment($attachArray = null)
     {
-        global $xoopsModuleConfig;
 
         $attachOld = $this->getAttachment();
         if (!is_array($attachOld) || count($attach_old) < 1) {
@@ -147,8 +149,8 @@ class Post extends ArtObject
 
         foreach ($attach_old as $key => $attach) {
             if (in_array($key, $attachArray)) {
-                @unlink($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/' . $attach['name_saved']));
-                @unlink($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
+                @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']));
+                @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
                 continue;
             }
             $this->attachmentArray[$key] = $attach;
@@ -199,13 +201,13 @@ class Post extends ArtObject
      */
     public function displayAttachment($asSource = false)
     {
-        global $xoopsModule, $xoopsModuleConfig;
+        global $xoopsModule;
 
         $post_attachment = '';
         $attachments     = $this->getAttachment();
         if (is_array($attachments) && count($attachments) > 0) {
-            $icon_handler = newbbGetIconHandler();
-            $mime_path    = $icon_handler->getPath("mime");
+            $iconHandler = newbbGetIconHandler();
+            $mime_path    = $iconHandler->getPath("mime");
             include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname", "n") . '/include/functions.image.php');
             $image_extensions = array("jpg", "jpeg", "gif", "png", "bmp"); // need improve !!!
             $post_attachment .= '<br /><strong>' . _MD_ATTACHMENT . '</strong>:';
@@ -218,17 +220,16 @@ class Post extends ArtObject
                 } else {
                     $icon_filetype = XOOPS_URL . '/' . $mime_path . '/unknown.gif';
                 }
-                $file_size = @filesize($GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/' . $att['name_saved']));
+                $file_size = @filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = number_format($file_size / 1024, 2) . " KB";
-                if (in_array(strtolower($file_extension), $image_extensions) && $xoopsModuleConfig['media_allowed']) {
+                if (in_array(strtolower($file_extension), $image_extensions) && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
                     $post_attachment .= '<br /><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br />' . newbb_attachmentImage($att['name_saved']);
                     $isDisplayed = true;
                 } else {
-                    global $xoopsUser;
-                    if (empty($xoopsModuleConfig['show_userattach'])) {
+                    if (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
                         $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
-                    } elseif (($xoopsUser && $xoopsUser->uid() > 0 && $xoopsUser->isactive())) {
+                    } elseif (($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0 && $GLOBALS['xoopsUser']->isactive())) {
                         $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
                     } else {
                         $post_attachment .= _MD_NEWBB_SEENOTGUEST;
@@ -250,19 +251,17 @@ class Post extends ArtObject
      */
     public function setPostEdit($poster_name = '', $post_editmsg = '')
     {
-        global $xoopsModuleConfig, $xoopsUser;
-
-        if (empty($xoopsModuleConfig['recordedit_timelimit'])
-            || (time() - $this->getVar('post_time')) < $xoopsModuleConfig['recordedit_timelimit'] * 60
+        if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit'])
+            || (time() - $this->getVar('post_time')) < $GLOBALS['xoopsModuleConfig']['recordedit_timelimit'] * 60
             || $this->getVar('approved') < 1
         ) {
             return true;
         }
-        if (is_object($xoopsUser) && $xoopsUser->isActive()) {
-            if ($xoopsModuleConfig['show_realname'] && $xoopsUser->getVar('name')) {
-                $edit_user = $xoopsUser->getVar('name');
+        if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
+            if ($GLOBALS['xoopsModuleConfig']['show_realname'] && $GLOBALS['xoopsUser']->getVar('name')) {
+                $edit_user = $GLOBALS['xoopsUser']->getVar('name');
             } else {
-                $edit_user = $xoopsUser->getVar('uname');
+                $edit_user = $GLOBALS['xoopsUser']->getVar('uname');
             }
         }
         $post_edit              = array();
@@ -290,9 +289,9 @@ class Post extends ArtObject
      */
     public function displayPostEdit()
     {
-        global $myts, $xoopsModuleConfig;
+        global $myts;
 
-        if (empty($xoopsModuleConfig['recordedit_timelimit'])) {
+        if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit'])) {
             return false;
         }
 
@@ -310,7 +309,7 @@ class Post extends ArtObject
                 $edit_user = $myts->stripSlashesGPC($postedit['edit_user']);
                 $edit_msg  = (!empty($postedit['edit_msg'])) ? $myts->stripSlashesGPC($postedit['edit_msg']) : '';
                 // Start irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
-                if (empty($xoopsModuleConfig['do_latestedit'])) {
+                if (empty($GLOBALS['xoopsModuleConfig']['do_latestedit'])) {
                     $post_edit = '';
                 }
                 // End irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
@@ -333,12 +332,11 @@ class Post extends ArtObject
      */
     public function &getPostBody()
     {
-        global $xoopsConfig, $xoopsUser, $myts;
-        $xoopsModuleConfig = newbbLoadConfig(); // irmtfan  load all newbb configs - newbb config in blocks activated in some modules like profile
+        $GLOBALS['xoopsModuleConfig'] = newbbLoadConfig(); // irmtfan  load all newbb configs - newbb config in blocks activated in some modules like profile
         mod_loadFunctions("user", "newbb");
         mod_loadFunctions("render", "newbb");
 
-        $uid           = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+        $uid           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $karma_handler =& xoops_getmodulehandler('karma', 'newbb');
         $user_karma    = $karma_handler->getUserKarma();
 
@@ -347,9 +345,9 @@ class Post extends ArtObject
         $post_text          = newbb_displayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'), $this->getVar('dobr'));
         if (newbb_isAdmin($this->getVar('forum_id')) || $this->checkIdentity()) {
             $post['text'] = $post_text . '<br />' . $this->displayAttachment();
-        } elseif ($xoopsModuleConfig['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
             $post['text'] = sprintf(_MD_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma'));
-        } elseif ($xoopsModuleConfig['allow_require_reply'] && $this->getVar('require_reply') && (!$uid || !isset($viewtopic_users[$uid]))) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply') && (!$uid || !isset($viewtopic_users[$uid]))) {
             $post['text'] = _MD_REPLY_REQUIREMENT;
         } else {
             $post['text'] = $post_text . '<br />' . $this->displayAttachment();
@@ -357,14 +355,14 @@ class Post extends ArtObject
         $member_handler =& xoops_gethandler('member');
         $eachposter     =& $member_handler->getUser($this->getVar('uid'));
         if (is_object($eachposter) && $eachposter->isActive()) {
-            if ($xoopsModuleConfig['show_realname'] && $eachposter->getVar('name')) {
+            if ($GLOBALS['xoopsModuleConfig']['show_realname'] && $eachposter->getVar('name')) {
                 $post['author'] = $eachposter->getVar('name');
             } else {
                 $post['author'] = $eachposter->getVar('uname');
             }
             unset($eachposter);
         } else {
-            $post['author'] = $this->getVar('poster_name') ? $this->getVar('poster_name') : $xoopsConfig['anonymous'];
+            $post['author'] = $this->getVar('poster_name') ? $this->getVar('poster_name') : $GLOBALS['xoopsConfig']['anonymous'];
         }
 
         $post['subject'] = newbb_htmlSpecialChars($this->vars['subject']['value']);
@@ -402,9 +400,7 @@ class Post extends ArtObject
      */
     public function checkIdentity($uid = -1)
     {
-        global $xoopsUser;
-
-        $uid = ($uid > -1) ? $uid : (is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0);
+        $uid = ($uid > -1) ? $uid : (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0);
         if ($this->getVar('uid') > 0) {
             $user_ok = ($uid == $this->getVar('uid')) ? true : false;
         } else {
@@ -425,7 +421,7 @@ class Post extends ArtObject
      */
     public function showPost($isadmin)
     {
-        global $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $myts;
+        global $xoopsModule, $myts;
         global $forumUrl, $forumImage;
         global $viewtopic_users, $viewtopic_posters, $forum_obj, $topic_obj, $online, $user_karma, $viewmode, $order, $start, $total_posts, $topic_status;
         static $post_NO = 0;
@@ -453,7 +449,7 @@ class Post extends ArtObject
         }
         $page_query = htmlspecialchars(implode("&", array_values($query_array)));
 
-        $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+        $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
         ++$post_NO;
         if (strtolower($order) == "desc") {
@@ -465,11 +461,11 @@ class Post extends ArtObject
         if ($isadmin || $this->checkIdentity()) {
             $post_text       = $this->getVar('post_text');
             $post_attachment = $this->displayAttachment();
-        } elseif ($xoopsModuleConfig['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
             $post_text       = "<div class='karma'>" . sprintf(_MD_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma')) . "</div>";
             $post_attachment = '';
         } elseif (
-            $xoopsModuleConfig['allow_require_reply']
+            $GLOBALS['xoopsModuleConfig']['allow_require_reply']
             && $this->getVar('require_reply')
             && (
                 !$uid
@@ -512,7 +508,7 @@ class Post extends ArtObject
         $thread_buttons = array();
         $mod_buttons    = array();
 
-        if ($isadmin && ($xoopsUser && $xoopsUser->getVar('uid') != $this->getVar('uid')) && $this->getVar('uid') > 0) {
+        if ($isadmin && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') != $this->getVar('uid')) && $this->getVar('uid') > 0) {
             $mod_buttons['bann']['image']    = newbbDisplayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
             $mod_buttons['bann']['link']     = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/moderate.php?forum=" . $forum_id . "&amp;fuid=" . $this->getVar('uid');
             $mod_buttons['bann']['name']     = _MD_SUSPEND_MANAGEMENT;
@@ -522,9 +518,9 @@ class Post extends ArtObject
         }
 
         if ($GLOBALS["xoopsModuleConfig"]['enable_permcheck']) {
-            $topic_handler = xoops_getmodulehandler('topic', 'newbb');
+            $topicHandler = xoops_getmodulehandler('topic', 'newbb');
             $topic_status  = $topic_obj->getVar('topic_status');
-            if ($topic_handler->getPermission($forum_id, $topic_status, "edit")) {
+            if ($topicHandler->getPermission($forum_id, $topic_status, "edit")) {
                 $edit_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('edit_timelimit')));
 
                 if ($edit_ok) {
@@ -537,7 +533,7 @@ class Post extends ArtObject
                 }
             }
 
-            if ($topic_handler->getPermission($forum_id, $topic_status, "delete")) {
+            if ($topicHandler->getPermission($forum_id, $topic_status, "delete")) {
                 $delete_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('delete_timelimit')));
 
                 if ($delete_ok) {
@@ -549,7 +545,7 @@ class Post extends ArtObject
                     $mod_buttons['delete']['name']     = _DELETE;
                 }
             }
-            if ($topic_handler->getPermission($forum_id, $topic_status, "reply")) {
+            if ($topicHandler->getPermission($forum_id, $topic_status, "reply")) {
                 $thread_buttons['reply']['image'] = newbbDisplayImage('p_reply', _MD_REPLY);
                 $thread_buttons['reply']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/reply.php?{$page_query}";
                 $thread_buttons['reply']['name']  = _MD_REPLY;
@@ -572,7 +568,7 @@ class Post extends ArtObject
             $thread_buttons['reply']['name']  = _MD_REPLY;
         }
 
-        if (!$isadmin && $xoopsModuleConfig['reportmod_enabled']) {
+        if (!$isadmin && $GLOBALS['xoopsModuleConfig']['reportmod_enabled']) {
             $thread_buttons['report']['image'] = newbbDisplayImage('p_report', _MD_REPORT);
             $thread_buttons['report']['link']  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/report.php?{$page_query}";
             $thread_buttons['report']['name']  = _MD_REPORT;
@@ -580,21 +576,21 @@ class Post extends ArtObject
 
         $thread_action = array();
         // irmtfan add pdf permission
-        if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php') && $topic_handler->getPermission($forum_id, $topic_status, "pdf")) {
+        if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php') && $topicHandler->getPermission($forum_id, $topic_status, "pdf")) {
             $thread_action['pdf']['image']  = newbbDisplayImage('pdf', _MD_PDF);
             $thread_action['pdf']['link']   = XOOPS_URL . "/modules/newbb/makepdf.php?type=post&amp;pageid=0";
             $thread_action['pdf']['name']   = _MD_PDF;
             $thread_action['pdf']['target'] = '_blank';
         }
         // irmtfan add print permission
-        if ($topic_handler->getPermission($forum_id, $topic_status, "print")) {
+        if ($topicHandler->getPermission($forum_id, $topic_status, "print")) {
             $thread_action['print']['image']  = newbbDisplayImage('printer', _MD_PRINT);
             $thread_action['print']['link']   = XOOPS_URL . "/modules/newbb/print.php?form=2&amp;forum=" . $forum_id . "&amp;topic_id=" . $topic_id;
             $thread_action['print']['name']   = _MD_PRINT;
             $thread_action['print']['target'] = '_blank';
         }
 
-        if ($xoopsModuleConfig['show_sociallinks']) {
+        if ($GLOBALS['xoopsModuleConfig']['show_sociallinks']) {
             $full_title  = $this->getVar('subject');
             $clean_title = preg_replace('/[^A-Za-z0-9-]+/', '+', $this->getVar('subject'));
             $full_link   = XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $post_id;
@@ -651,7 +647,7 @@ class Post extends ArtObject
             'post_edit'       => $this->displayPostEdit(),
             'post_no'         => $post_no,
             'post_signature'  => ($this->getVar('attachsig')) ? @$poster["signature"] : "",
-            'poster_ip'       => ($isadmin && $xoopsModuleConfig['show_ip']) ? long2ip($this->getVar('poster_ip')) : "",
+            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($this->getVar('poster_ip')) : "",
             'thread_action'   => $thread_action,
             'thread_buttons'  => $thread_buttons,
             'mod_buttons'     => $mod_buttons,
@@ -761,8 +757,8 @@ class NewbbPostHandler extends ArtObjectHandler
         $post->setVar("approved", 1);
         $this->insert($post, true);
 
-        $topic_handler =& xoops_getmodulehandler("topic", "newbb");
-        $topic_obj     =& $topic_handler->get($post->getVar("topic_id"));
+        $topicHandler =& xoops_getmodulehandler("topic", "newbb");
+        $topic_obj     =& $topicHandler->get($post->getVar("topic_id"));
         if ($topic_obj->getVar("topic_last_post_id") < $post->getVar("post_id")) {
             $topic_obj->setVar("topic_last_post_id", $post->getVar("post_id"));
         }
@@ -771,10 +767,10 @@ class NewbbPostHandler extends ArtObjectHandler
         } else {
             $topic_obj->setVar("topic_replies", $topic_obj->getVar("topic_replies") + 1);
         }
-        $topic_handler->insert($topic_obj, true);
+        $topicHandler->insert($topic_obj, true);
 
-        $forum_handler =& xoops_getmodulehandler("forum", "newbb");
-        $forum_obj     =& $forum_handler->get($post->getVar("forum_id"));
+        $forumHandler =& xoops_getmodulehandler("forum", "newbb");
+        $forum_obj     =& $forumHandler->get($post->getVar("forum_id"));
         if ($forum_obj->getVar("forum_last_post_id") < $post->getVar("post_id")) {
             $forum_obj->setVar("forum_last_post_id", $post->getVar("post_id"));
         }
@@ -782,7 +778,7 @@ class NewbbPostHandler extends ArtObjectHandler
         if ($post->isTopic()) {
             $forum_obj->setVar("forum_topics", $forum_obj->getVar("forum_topics") + 1);
         }
-        $forum_handler->insert($forum_obj, true);
+        $forumHandler->insert($forum_obj, true);
 
         // Update user stats
         if ($post->getVar('uid') > 0) {
@@ -796,10 +792,10 @@ class NewbbPostHandler extends ArtObjectHandler
         }
 
         // Update forum stats
-        $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
-        $stats_handler->update($post->getVar("forum_id"), "post");
+        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler->update($post->getVar("forum_id"), "post");
         if ($post->isTopic()) {
-            $stats_handler->update($post->getVar("forum_id"), "topic");
+            $statsHandler->update($post->getVar("forum_id"), "topic");
         }
 
         return true;
@@ -812,18 +808,16 @@ class NewbbPostHandler extends ArtObjectHandler
      */
     public function insert(&$post, $force = true)
     {
-        global $xoopsUser;
-
         // Set the post time
         // The time should be "publish" time. To be adjusted later
         if (!$post->getVar("post_time")) {
             $post->setVar("post_time", time());
         }
 
-        $topic_handler =& xoops_getmodulehandler("topic", "newbb");
+        $topicHandler =& xoops_getmodulehandler("topic", "newbb");
         // Verify the topic ID
         if ($topic_id = $post->getVar("topic_id")) {
-            $topic_obj =& $topic_handler->get($topic_id);
+            $topic_obj =& $topicHandler->get($topic_id);
             // Invalid topic OR the topic is no approved and the post is not top post
             if (!$topic_obj
                 //	|| (!$post->isTopic() && $topic_obj->getVar("approved") < 1)
@@ -835,7 +829,7 @@ class NewbbPostHandler extends ArtObjectHandler
             $post->setVar("topic_id", 0);
             $post->setVar("pid", 0);
             $post->setNew();
-            $topic_obj =& $topic_handler->create();
+            $topic_obj =& $topicHandler->create();
         }
         $text_handler   =& xoops_getmodulehandler("text", "newbb");
         $post_text_vars = array("post_text", "post_edit", "dohtml", "doxcode", "dosmiley", "doimage", "dobr");
@@ -848,7 +842,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 $topic_obj->setVar("poster_name", $post->getVar("poster_name"), true);
                 $topic_obj->setVar("approved", $post->getVar("approved"), true);
 
-                if (!$topic_id = $topic_handler->insert($topic_obj, $force)) {
+                if (!$topic_id = $topicHandler->insert($topic_obj, $force)) {
                     $post->deleteAttachment();
                     $post->setErrors("insert topic error");
                     //xoops_error($topic_obj->getErrors());
@@ -859,7 +853,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 $pid = 0;
                 $post->setVar("pid", 0);
             } elseif (!$post->getVar("pid")) {
-                $pid = $topic_handler->getTopPostId($topic_id);
+                $pid = $topicHandler->getTopPostId($topic_id);
                 $post->setVar("pid", $pid);
             }
 
@@ -891,7 +885,7 @@ class NewbbPostHandler extends ArtObjectHandler
                     $topic_obj->setVar("approved", $post->getVar("approved"));
                 }
                 $topic_obj->setDirty();
-                if (!$result = $topic_handler->insert($topic_obj, $force)) {
+                if (!$result = $topicHandler->insert($topic_obj, $force)) {
                     $post->setErrors("update topic error");
                     //xoops_error($topic_obj->getErrors());
                     return false;
@@ -994,12 +988,12 @@ class NewbbPostHandler extends ArtObjectHandler
         }
 
         if ($post->isTopic()) {
-            $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-            $topic_obj     =& $topic_handler->get($post->getVar('topic_id'));
+            $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+            $topic_obj     =& $topicHandler->get($post->getVar('topic_id'));
             if (is_object($topic_obj) && $topic_obj->getVar("approved") > 0 && empty($force)) {
                 $topiccount_toupdate = 1;
                 $topic_obj->setVar("approved", -1);
-                $topic_handler->insert($topic_obj);
+                $topicHandler->insert($topic_obj);
                 xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'thread', $post->getVar('topic_id'));
             } else {
                 if (is_object($topic_obj)) {

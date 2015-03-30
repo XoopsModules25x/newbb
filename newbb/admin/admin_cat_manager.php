@@ -35,7 +35,7 @@ echo "<fieldset>";
 $op     = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // intval( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
-$category_handler =& xoops_getmodulehandler('category', 'newbb');
+$categoryHandler =& xoops_getmodulehandler('category', 'newbb');
 
 /**
  * newCategory()
@@ -55,9 +55,9 @@ function newCategory()
 function editCategory($category_obj = null)
 {
     global $xoopsModule;
-    $category_handler = &xoops_getmodulehandler('category', 'newbb');
+    $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
     if (empty($category_obj)) {
-        $category_obj =& $category_handler->create();
+        $category_obj =& $categoryHandler->create();
     }
     $groups_cat_access = null;
     include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
@@ -110,7 +110,7 @@ function editCategory($category_obj = null)
 
 switch ($op) {
     case "mod":
-        $category_obj = ($cat_id > 0) ? $category_handler->get($cat_id) : $category_handler->create();
+        $category_obj = ($cat_id > 0) ? $categoryHandler->get($cat_id) : $categoryHandler->create();
         if (!$newXoopsModuleGui) {
             //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
             echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . "</legend>";
@@ -126,9 +126,9 @@ switch ($op) {
             xoops_confirm(array('op' => 'del', 'cat_id' => XoopsRequest::getInt('cat_id', 0, 'GET'), 'confirm' => 1), 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
         } else {
-            $category_obj =& $category_handler->create(false);
+            $category_obj =& $categoryHandler->create(false);
             $category_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
-            $category_handler->delete($category_obj);
+            $categoryHandler->delete($category_obj);
 
             redirect_header("admin_cat_manager.php", 2, _AM_NEWBB_CATEGORYDELETED);
         }
@@ -137,10 +137,10 @@ switch ($op) {
     case "save":
         mod_clearCacheFile("permission_category", "newbb");
         if ($cat_id) {
-            $category_obj =& $category_handler->get($cat_id);
+            $category_obj =& $categoryHandler->get($cat_id);
             $message      = _AM_NEWBB_CATEGORYUPDATED;
         } else {
-            $category_obj =& $category_handler->create();
+            $category_obj =& $categoryHandler->create();
             $message      = _AM_NEWBB_CATEGORYCREATED;
         }
 
@@ -151,18 +151,18 @@ switch ($op) {
         $category_obj->setVar('cat_url', XoopsRequest::getString('cat_url', '', 'POST'));
 
         $cat_isNew = $category_obj->isNew();
-        if (!$category_handler->insert($category_obj)) {
+        if (!$categoryHandler->insert($category_obj)) {
             $message = _AM_NEWBB_DATABASEERROR;
         }
         if ($cat_id = $category_obj->getVar("cat_id") && $cat_isNew) {
-            $category_handler->applyPermissionTemplate($category_obj);
+            $categoryHandler->applyPermissionTemplate($category_obj);
         }
         redirect_header("admin_cat_manager.php", 2, $message);
         break;
 
     default:
 
-        if (!$categories = $category_handler->getByPermission("all")) {
+        if (!$categories = $categoryHandler->getByPermission("all")) {
             if (!$newXoopsModuleGui) {
                 //loadModuleAdminMenu(1, _AM_NEWBB_CREATENEWCATEGORY);
                 echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWCATEGORY . "</legend>";

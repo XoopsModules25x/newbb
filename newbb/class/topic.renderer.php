@@ -230,8 +230,7 @@ class NewbbTopicRenderer
                     // Use database
                 } elseif ($this->config["read_mode"] == 2) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
-                    global $xoopsUser;
-                    $read_uid = is_object($xoopsUser) ? $xoopsUser->getVar("uid") : 0;
+                    $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar("uid") : 0;
                     if (!empty($read_uid)) {
                         $this->query["join"][]  = 'LEFT JOIN ' . $this->handler->db->prefix('bb_reads_topic') . ' AS r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $this->query["where"][] = 'r.post_id = t.topic_last_post_id';
@@ -273,8 +272,7 @@ class NewbbTopicRenderer
                     // Use database
                 } elseif ($this->config["read_mode"] == 2) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
-                    global $xoopsUser;
-                    $read_uid = is_object($xoopsUser) ? $xoopsUser->getVar("uid") : 0;
+                    $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar("uid") : 0;
                     if (!empty($read_uid)) {
                         $this->query["join"][]  = 'LEFT JOIN ' . $this->handler->db->prefix('bb_reads_topic') . ' AS r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $this->query["where"][] = '(r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
@@ -341,24 +339,24 @@ class NewbbTopicRenderer
     {
         switch ($var) {
             case "forum":
-                $forum_handler = xoops_getmodulehandler('forum', 'newbb');
+                $forumHandler = xoops_getmodulehandler('forum', 'newbb');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
-                $access_forums = $forum_handler->getIdsByValues(array_map("intval", @explode("|", $val)));
+                $accessForums = $forumHandler->getIdsByValues(array_map("intval", @explode("|", $val)));
                 // Filter specified forums if any
                 //if (!empty($val) && $_forums = @explode("|", $val)) {
-                //$access_forums = array_intersect($access_forums, array_map("intval", $_forums));
+                //$accessForums = array_intersect($accessForums, array_map("intval", $_forums));
                 //}
-                $this->vars["forum"] = $this->setVar("forum", $access_forums);
+                $this->vars["forum"] = $this->setVar("forum", $accessForums);
                 // END irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
 
-                if (empty($access_forums)) {
+                if (empty($accessForums)) {
                     $this->noperm = true;
                     // irmtfan - it just return return the forum_id only when the forum_id is the first allowed forum - no need for this code implode is enough removed.
-                    //} elseif (count($access_forums) == 1) {
-                    //$this->query["where"][] = "t.forum_id = " . $access_forums[0];
+                    //} elseif (count($accessForums) == 1) {
+                    //$this->query["where"][] = "t.forum_id = " . $accessForums[0];
                 } else {
-                    $this->query["where"][] = "t.forum_id IN ( " . implode(", ", $access_forums) . " )";
+                    $this->query["where"][] = "t.forum_id IN ( " . implode(", ", $accessForums) . " )";
                 }
                 break;
 
@@ -807,7 +805,7 @@ class NewbbTopicRenderer
             }
             require_once $GLOBALS['xoops']->path('class/pagenav.php');
             $nav = new XoopsPageNav($count_topic, $this->config['topics_per_page'], @$this->vars["start"], "start", implode("&amp;", $args));
-            if (isset($xoopsModuleConfig['do_rewrite'])) {
+            if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
                 $nav->url = formatURL($_SERVER['SERVER_NAME']) . " /" . $nav->url;
             }
             if ($this->config['pagenav_display'] == 'select') {
@@ -1058,12 +1056,12 @@ class NewbbTopicRenderer
         }
         */
         $type_list     = $this->getTypes();
-        $forum_handler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 
         if (count($forums) > 0) {
-            $forum_list = $forum_handler->getAll(new Criteria("forum_id", "(" . implode(", ", array_keys($forums)) . ")", "IN"), array("forum_name", "hot_threshold"), false);
+            $forum_list = $forumHandler->getAll(new Criteria("forum_id", "(" . implode(", ", array_keys($forums)) . ")", "IN"), array("forum_name", "hot_threshold"), false);
         } else {
-            $forum_list = $forum_handler->getAll();
+            $forum_list = $forumHandler->getAll();
         }
 
         foreach (array_keys($topics) as $id) {

@@ -208,7 +208,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $sql            = "SELECT * FROM " . $this->db->prefix('bb_digest') . " ORDER BY digest_id DESC";
         $result         = $this->db->query($sql, $perpage, $start);
         $ret            = array();
-        $report_handler = xoops_getmodulehandler('report', 'newbb');
+//        $reportHandler = xoops_getmodulehandler('report', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
@@ -250,11 +250,10 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function checkStatus()
     {
-        global $xoopsModuleConfig;
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        $deadline  = ($xoopsModuleConfig['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
+        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
 
         return $time_diff - $deadline;
@@ -314,26 +313,26 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function buildDigest(&$digest)
     {
-        global $xoopsUser, $xoopsConfig, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsModule;
 
         if (!defined('SUMMARY_LENGTH')) {
             define('SUMMARY_LENGTH', 100);
         }
 
-        $forum_handler = &xoops_getmodulehandler('forum', 'newbb');
-        $thisUser      = $xoopsUser;
-        $xoopsUser     = null; // To get posts accessible by anonymous
-        $xoopsUser     = $thisUser;
+        $forumHandler         = &xoops_getmodulehandler('forum', 'newbb');
+        $thisUser             = $GLOBALS['xoopsUser'];
+        $GLOBALS['xoopsUser'] = null; // To get posts accessible by anonymous
+        $GLOBALS['xoopsUser'] = $thisUser;
 
-        $access_forums    = $forum_handler->getIdsByPermission(); // get all accessible forums
-        $forum_criteria   = ' AND t.forum_id IN (' . implode(',', $access_forums) . ')';
-        $approve_criteria = ' AND t.approved = 1 AND p.approved = 1';
+        $accessForums    = $forumHandler->getIdsByPermission(); // get all accessible forums
+        $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $accessForums) . ')';
+        $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
         $time_criteria    = ' AND t.digest_time > ' . $this->last_digest;
 
-        $karma_criteria = ($xoopsModuleConfig['enable_karma']) ? " AND p.post_karma=0" : "";
-        $reply_criteria = ($xoopsModuleConfig['allow_require_reply']) ? " AND p.require_reply=0" : "";
+        $karma_criteria = ($GLOBALS['xoopsModuleConfig']['enable_karma']) ? " AND p.post_karma=0" : "";
+        $reply_criteria = ($GLOBALS['xoopsModuleConfig']['allow_require_reply']) ? " AND p.require_reply=0" : "";
 
-        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM ' . $this->db->prefix('bb_topics') . ' t, ' . $this->db->prefix('bb_posts_text') . ' pt, ' . $this->db->prefix('bb_posts') . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 ' . $forum_criteria . $approve_criteria . $time_criteria . $karma_criteria . $reply_criteria . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
+        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM ' . $this->db->prefix('bb_topics') . ' t, ' . $this->db->prefix('bb_posts_text') . ' pt, ' . $this->db->prefix('bb_posts') . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 ' . $forumCriteria . $approveCriteria . $time_criteria . $karma_criteria . $reply_criteria . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
         if (!$result = $this->db->query($query)) {
             //echo "<br />No result:<br />$query";
             return false;
@@ -361,10 +360,10 @@ class NewbbDigestHandler extends XoopsObjectHandler
                 if (isset($users[$topic['uid']]) && (is_object($users[$topic['uid']])) && ($users[$topic['uid']]->isActive())) {
                     $topic['uname'] = $users[$topic['uid']]->getVar('uname');
                 } else {
-                    $topic['uname'] = $xoopsConfig['anonymous'];
+                    $topic['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
                 }
             } else {
-                $topic['uname'] = $topic['poster_name'] ? $topic['poster_name'] : $xoopsConfig['anonymous'];
+                $topic['uname'] = $topic['poster_name'] ? $topic['poster_name'] : $GLOBALS['xoopsConfig']['anonymous'];
             }
             $summary = xoops_substr(newbb_html2text($topic['post_text']), 0, SUMMARY_LENGTH);
             $author  = $topic['uname'] . " (" . formatTimestamp($topic['topic_time']) . ")";

@@ -31,7 +31,7 @@
 
 include_once __DIR__ . "/header.php";
 
-$ratinguser   = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$ratinguser   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 $anonwaitdays = 1;
 $ip           = newbb_getIP(true);
 foreach (array("topic_id", "rate", "forum") as $var) {
@@ -39,11 +39,11 @@ foreach (array("topic_id", "rate", "forum") as $var) {
     ${$var} = XoopsRequest::getInt($var, XoopsRequest::getInt($var, 0, 'POST'), 'GET');
 }
 
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topic_handler->get($topic_id);
-if (!$topic_handler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "post")
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$topic_obj     =& $topicHandler->get($topic_id);
+if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "post")
     &&
-    !$topic_handler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "reply")
+    !$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), "reply")
 ) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
@@ -57,8 +57,8 @@ if ($ratinguser != 0) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post =& new CriteriaCompo(new Criteria("topic_id", $topic_id));
     $crit_post->add(new Criteria("uid", $ratinguser));
-    $post_handler =& xoops_getmodulehandler("post", $xoopsModule->getVar("dirname"));
-    if ($post_handler->getCount($crit_post)) {
+    $postHandler =& xoops_getmodulehandler("post", $xoopsModule->getVar("dirname"));
+    if ($postHandler->getCount($crit_post)) {
         redirect_header("viewtopic.php?topic_id=" . $topic_id . "&amp;forum=" . $forum . "", 4, _MD_CANTVOTEOWN);
     }
     // Check if REG user is trying to vote twice.
@@ -86,19 +86,19 @@ $rate_obj->setVar("ratingtimestamp", time());
 
 $ratingid = $rate_handler->insert($rate_obj);;
 
-$query       = "select rating FROM " . $xoopsDB->prefix('bb_votedata') . " WHERE topic_id = " . $topic_id . "";
-$voteresult  = $xoopsDB->query($query);
-$votesDB     = $xoopsDB->getRowsNum($voteresult);
+$query       = "select rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE topic_id = " . $topic_id . "";
+$voteresult  = $GLOBALS['xoopsDB']->query($query);
+$votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
-while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
     $totalrating += $rating;
 }
 $finalrating = $totalrating / $votesDB;
 $finalrating = number_format($finalrating, 4);
-$sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $xoopsDB->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
-$xoopsDB->queryF($sql);
+$sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
+$GLOBALS['xoopsDB']->queryF($sql);
 
-$ratemessage = _MD_VOTEAPPRE . "<br />" . sprintf(_MD_THANKYOU, $xoopsConfig['sitename']);
+$ratemessage = _MD_VOTEAPPRE . "<br />" . sprintf(_MD_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
 redirect_header("viewtopic.php?topic_id=" . $topic_id . "&amp;forum=" . $forum . "", 2, $ratemessage);
 // irmtfan enhance include footer.php
 include $GLOBALS['xoops']->path('footer.php');

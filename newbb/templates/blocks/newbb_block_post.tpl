@@ -50,7 +50,7 @@
             <a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a> | 
             <{$topic.topic_poster}> | <{$topic.time}>
             </div>
-            <div style="padding: 5px 0px 10px 0px;"><{$topic.post_text}></div>
+            <div style="padding: 5px 0 10px 0;"><{$topic.post_text}></div>
         <{/foreach}>
         </td>
     </tr>

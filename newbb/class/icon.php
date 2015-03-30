@@ -95,7 +95,6 @@ class NewbbIconHandler
     public function getPath(/*$set, */
         $type, $dirname = "newbb", $default = "", $endDir = "images")
     {
-        global $xoopsConfig;
         static $paths;
         if (isset($paths[$endDir . '/' . $type])) {
             return $paths[$endDir . '/' . $type];

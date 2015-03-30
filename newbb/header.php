@@ -17,14 +17,14 @@ $dirname = $xoopsModule->getVar("dirname");
 //include_once $GLOBALS['xoops']->path('header.php');
 xoops_load('XoopsRequest');
 
-if (!empty($xoopsModuleConfig['do_rewrite'])) {
+if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     include_once "seo_url.php";
     /* for seo */
     $toseo_url = array("index.php", "viewforum.php", "viewtopic.php", "rss.php");
 
-    if (((strpos(getenv('REQUEST_URI'), '.html') === false) && !empty($xoopsModuleConfig['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0))) {
+    if (((strpos(getenv('REQUEST_URI'), '.html') === false) && !empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0))) {
         $redir = false;
-        if (strpos(getenv("REQUEST_URI"), "mark_read=") == true || strpos(getenv("REQUEST_URI"), "mark=") === true) {
+        if (strpos(getenv("REQUEST_URI"), "mark_read=") === true || strpos(getenv("REQUEST_URI"), "mark=") === true) {
             // Mark Forums
         } else {
             if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
@@ -68,7 +68,7 @@ $menumode       = 0;
 $menumode_other = array();
 $menu_url       = htmlSpecialChars(preg_replace("/&menumode=[^&]/", "", $_SERVER['REQUEST_URI']));
 $menu_url .= (false === strpos($menu_url, "?")) ? "?menumode=" : "&amp;menumode=";
-foreach ($xoopsModuleConfig["valid_menumodes"] as $key => $val) {
+foreach ($GLOBALS['xoopsModuleConfig']["valid_menumodes"] as $key => $val) {
     if ($key != $menumode) {
         $menumode_other[] = array("title" => $val, "link" => $menu_url . $key);
     }
@@ -83,14 +83,14 @@ foreach ($xoopsModuleConfig["valid_menumodes"] as $key => $val) {
 /*
 $newbb_module_header = '';
 $newbb_module_header .= '<link rel="alternate" type="application/rss+xml" title="'.$xoopsModule->getVar("name").'" href="'.XOOPS_URL.'/modules/'.$dirname.'/rss.php" />';
-if (!empty($xoopsModuleConfig['pngforie_enabled'])) {
+if (!empty($GLOBALS['xoopsModuleConfig']['pngforie_enabled'])) {
     $newbb_module_header .= '<style type="text/css">img {behavior:url("include/pngbehavior.htc");}</style>';
 }
 // START hacked by irmtfan to add localization/customization for newbb style.css
 mod_loadFunctions("render", $dirname);
-$icon_handler = newbbGetIconHandler();
+$iconHandler = newbbGetIconHandler();
 //  get from setted language
-$rel_path=$icon_handler->getPath("language/" . $xoopsConfig['language'], $dirname ,"language/english");
+$rel_path=$iconHandler->getPath("language/" . $GLOBALS['xoopsConfig']['language'], $dirname ,"language/english");
 if (!file_exists(XOOPS_ROOT_PATH . $rel_path . '/style.css')) {
     // for backward compatibility - as before
     $rel_path="/modules/" . $dirname . "/templates";
@@ -119,11 +119,11 @@ $xoops_module_header = $newbb_module_header; // for cache hack
 */
 /* END irmtfan remove and move to newbb/footer.php */
 
-if (!empty($xoopsModuleConfig["welcome_forum"]) && is_object($xoopsUser) && !$xoopsUser->getVar('posts')) {
+if (!empty($GLOBALS['xoopsModuleConfig']["welcome_forum"]) && is_object($GLOBALS['xoopsUser']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
     mod_loadFunctions("welcome", $dirname);
 }
 // irmtfan for backward compatibility
-$pollmodules = $xoopsModuleConfig["poll_module"];
+$pollmodules = $GLOBALS['xoopsModuleConfig']["poll_module"];
 
 //$module_handler = &xoops_gethandler('module');
 $xoopspoll = &$module_handler->getByDirname($pollmodules);

@@ -51,10 +51,9 @@ class Xmlrss
 
     public function Xmlrss()
     {
-        global $xoopsModuleConfig;
 
         $this->xml_version          = '1.0';
-        $this->xml_encoding         = empty($xoopsModuleConfig['rss_utf8']) ? _CHARSET : 'UTF-8';
+        $this->xml_encoding         = empty($GLOBALS['xoopsModuleConfig']['rss_utf8']) ? _CHARSET : 'UTF-8';
         $this->rss_version          = '2.0';
         $this->image_height         = 31;
         $this->image_width          = 88;

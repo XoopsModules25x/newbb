@@ -54,17 +54,17 @@ class NewbbOnlineHandler
 
     public function update()
     {
-        global $xoopsUser, $xoopsModuleConfig, $xoopsModule;
+        global $xoopsModule;
 
         mt_srand((double)microtime() * 1000000);
         // set gc probabillity to 10% for now..
         if (mt_rand(1, 100) < 60) {
             $this->gc(150);
         }
-        if (is_object($xoopsUser)) {
-            $uid   = $xoopsUser->getVar('uid');
-            $uname = $xoopsUser->getVar('uname');
-            $name  = $xoopsUser->getVar('name');
+        if (is_object($GLOBALS['xoopsUser'])) {
+            $uid   = $GLOBALS['xoopsUser']->getVar('uid');
+            $uname = $GLOBALS['xoopsUser']->getVar('uname');
+            $name  = $GLOBALS['xoopsUser']->getVar('name');
         } else {
             $uid   = 0;
             $uname = '';
@@ -77,7 +77,7 @@ class NewbbOnlineHandler
             //xoops_error("newbb online upate error");
         }
 
-        $uname = (empty($xoopsModuleConfig['show_realname']) || empty($name)) ? $uname : $name;
+        $uname = (empty($GLOBALS['xoopsModuleConfig']['show_realname']) || empty($name)) ? $uname : $name;
         $this->write($uid, $uname, time(), $this->forum_id, $_SERVER['REMOTE_ADDR'], $this->topic_id);
     }
 

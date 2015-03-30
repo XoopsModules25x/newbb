@@ -21,23 +21,23 @@ if (!$post_id || !$attach_id) {
     die(_MD_NO_SUCH_FILE . ': post_id:' . $post_id . '; attachid' . $attachid);
 }
 
-$post_handler =& xoops_getmodulehandler('post', 'newbb');
-$forumpost    =& $post_handler->get($post_id);
+$postHandler =& xoops_getmodulehandler('post', 'newbb');
+$forumpost    =& $postHandler->get($post_id);
 if (!$approved = $forumpost->getVar('approved')) {
     die(_MD_NORIGHTTOVIEW);
 }
-$topic_handler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topic_handler->getByPost($post_id);
+$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$topic_obj     =& $topicHandler->getByPost($post_id);
 $topic_id      = $topic_obj->getVar('topic_id');
 if (!$approved = $topic_obj->getVar('approved')) {
     die(_MD_NORIGHTTOVIEW);
 }
-$forum_handler =& xoops_getmodulehandler('forum', 'newbb');
-$forum_obj     =& $forum_handler->get($topic_obj->getVar('forum_id'));
-if (!$forum_handler->getPermission($forum_obj)) {
+$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+$forum_obj     =& $forumHandler->get($topic_obj->getVar('forum_id'));
+if (!$forumHandler->getPermission($forum_obj)) {
     die(_MD_NORIGHTTOACCESS);
 }
-if (!$topic_handler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "view")) {
+if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "view")) {
     die(_MD_NORIGHTTOVIEW);
 }
 
@@ -46,7 +46,7 @@ $attach      = $attachments[$attach_id];
 if (!$attach) {
     die(_MD_NO_SUCH_FILE);
 }
-$file_saved = $GLOBALS['xoops']->path($xoopsModuleConfig['dir_attachments'] . '/' . $attach['name_saved']);
+$file_saved = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
 if (!file_exists($file_saved)) {
     die(_MD_NO_SUCH_FILE);
 }
@@ -64,7 +64,7 @@ if (!empty($GLOBALS["xoopsModuleConfig"]["download_direct"])) {
     header("Pragma: no-cache");
     header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("location: " . XOOPS_URL . '/' . $xoopsModuleConfig['dir_attachments'] . '/' . $attach['name_saved']);
+    header("location: " . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
 } else {
     $file_display = $attach['nameDisplay'];
 //$mimetype = $attach['mimetype'];

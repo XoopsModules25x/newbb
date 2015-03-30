@@ -1,4 +1,4 @@
-<?xml version="<{$rss.xml_version}>" encoding="<{$rss.xml_encoding}>"?>
+<xml version="<{$rss.xml_version}>" encoding="<{$rss.xml_encoding}>">
 <rss version="<{$rss.rss_version}>">
   <channel>
     <title><{$rss.channel_title}></title>

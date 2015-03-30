@@ -115,25 +115,25 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      */
     function newbbDisplayImage($image, $alt = "", $display = true, $extra = "class='forum_icon'")
     {
-        $icon_handler = newbbGetIconHandler();
+        $iconHandler = newbbGetIconHandler();
         // START hacked by irmtfan
         // to show text links instead of buttons - func_num_args()==2 => only when $image, $alt is set and optional $display not set
-        global $xoopsModuleConfig;
+
         if (func_num_args() == 2) {
             // overall setting
-            if (!empty($xoopsModuleConfig['display_text_links'])) {
+            if (!empty($GLOBALS['xoopsModuleConfig']['display_text_links'])) {
                 $display = false;
             }
             // if set for each link => overwrite $display
-            if (isset($xoopsModuleConfig['display_text_each_link'][$image])) {
-                $display = empty($xoopsModuleConfig['display_text_each_link'][$image]);
+            if (isset($GLOBALS['xoopsModuleConfig']['display_text_each_link'][$image])) {
+                $display = empty($GLOBALS['xoopsModuleConfig']['display_text_each_link'][$image]);
             }
         }
         // END hacked by irmtfan
         if (empty($display)) {
-            return $icon_handler->assignImage($image, $alt, $extra);
+            return $iconHandler->assignImage($image, $alt, $extra);
         } else {
-            return $icon_handler->getImage($image, $alt, $extra);
+            return $iconHandler->getImage($image, $alt, $extra);
         }
     }
 
@@ -142,21 +142,21 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      */
     function newbbGetIconHandler()
     {
-        global $xoTheme, $xoopsConfig;
-        static $icon_handler;
+        global $xoTheme;
+        static $iconHandler;
 
-        if (isset($icon_handler)) {
-            return $icon_handler;
+        if (isset($iconHandler)) {
+            return $iconHandler;
         }
 
         if (!class_exists("NewbbIconHandler")) {
             require_once dirname(__DIR__) . "/class/icon.php";
         }
 
-        $icon_handler           = NewbbIconHandler::instance();
-        $icon_handler->template =& $xoTheme->template;
-        $icon_handler->init($xoopsConfig["language"]);
+        $iconHandler           = NewbbIconHandler::instance();
+        $iconHandler->template =& $xoTheme->template;
+        $iconHandler->init($GLOBALS['xoopsConfig']["language"]);
 
-        return $icon_handler;
+        return $iconHandler;
     }
 }

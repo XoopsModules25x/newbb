@@ -23,8 +23,8 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      */
     function newbb_get_stats()
     {
-        $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
-        $stats         = $stats_handler->getStats();
+        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $stats         = $statsHandler->getStats();
 
         return $stats;
     }
@@ -37,9 +37,9 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      */
     function newbb_update_stats($id, $type, $increment = 1)
     {
-        $stats_handler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
 
-        return $stats_handler->update($id, $type, $increment);
+        return $statsHandler->update($id, $type, $increment);
     }
 
     /*
@@ -49,15 +49,15 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      * @param string $forum_id
      * @return mixed
      */
-    function get_total_topics($forum_id = "")
+    function getTotalTopics($forum_id = "")
     {
-        $topic_handler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
         $criteria      = new CriteriaCompo(new Criteria("approved", 0, ">"));
         if ($forum_id) {
             $criteria->add(new Criteria("forum_id", intval($forum_id)));
         }
 
-        return $topic_handler->getCount($criteria);
+        return $topicHandler->getCount($criteria);
     }
 
     /*
@@ -69,9 +69,9 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      * @param string $type
      * @return mixed
      */
-    function get_total_posts($id = 0, $type = "all")
+    function getTotalPosts($id = 0, $type = "all")
     {
-        $post_handler =& xoops_getmodulehandler('post', 'newbb');
+        $postHandler =& xoops_getmodulehandler('post', 'newbb');
         $criteria     = new CriteriaCompo(new Criteria("approved", 0, ">"));
         switch ($type) {
             case 'forum':
@@ -89,20 +89,19 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
                 break;
         }
 
-        return $post_handler->getCount($criteria);
+        return $postHandler->getCount($criteria);
     }
 
     /**
      * @return null
      */
-    function get_total_views()
+    function getTotalViews()
     {
-        global $xoopsDB;
-        $sql = "SELECT sum(topic_views) FROM " . $xoopsDB->prefix("bb_topics") . "";
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = "SELECT sum(topic_views) FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . "";
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }
-        list($total) = $xoopsDB->fetchRow($result);
+        list($total) = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return $total;
     }

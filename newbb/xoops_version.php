@@ -709,8 +709,8 @@ $modversion['config'][] = array(
 xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
 if ($isModuleAction && "update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
-    $forum_handler =& xoops_getmodulehandler('forum', 'newbb', true);
-    if ($forums = $forum_handler->getForumsByCategory(0, 'access', false, array("parent_forum", "cat_id", "forum_name"))) {
+    $forumHandler =& xoops_getmodulehandler('forum', 'newbb', true);
+    if ($forums = $forumHandler->getForumsByCategory(0, 'access', false, array("parent_forum", "cat_id", "forum_name"))) {
         foreach (array_keys($forums) as $c) {
             foreach (array_keys($forums[$c]) as $f) {
                 $forum_options[$forums[$c][$f]["title"]] = $f;
@@ -739,14 +739,14 @@ $dir_def  = 0;
 $formtype = "select";
 // if in install, update
 if ($isModuleAction) {
-    $topic_handler = xoops_getmodulehandler('topic', $modversion['dirname']);
-    $pollDirs      = $topic_handler->getActivePolls();
+    $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
+    $pollDirs      = $topicHandler->getActivePolls();
     // priorities for default poll module : 1- xoopspoll 2- last element in array 3- if no poll module => 0
     $dir_def = !empty($pollDirs) ? (!empty($pollDirs["xoopspoll"]) ? $pollDirs["xoopspoll"] : end($pollDirs))
         : 0;
     //Now check all topics and try to find the poll module
     if ("update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
-        $dir_in_update = $topic_handler->findPollModule($pollDirs);
+        $dir_in_update = $topicHandler->findPollModule($pollDirs);
         if (!is_bool($dir_in_update)) {
             $dir_def = $dir_in_update;
             // if change 'formtype' to hidden the default value will be changed too!!!
@@ -776,10 +776,10 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
     if (is_object($pollOptions) && $pollOptions->getVar("conf_value") != "0") {
-        $topic_handler = xoops_getmodulehandler('topic', $modversion['dirname']);
-        $topicPolls    = $topic_handler->getCount(new Criteria("topic_haspoll", 1));
+        $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
+        $topicPolls    = $topicHandler->getCount(new Criteria("topic_haspoll", 1));
         if ($topicPolls > 0) {
-            $poll_module_in_use = $topic_handler->findPollModule();
+            $poll_module_in_use = $topicHandler->findPollModule();
             if (is_string($poll_module_in_use)) {
                 $pollOptions->setVar("conf_value", $poll_module_in_use);
                 $pollOptions->setVar("conf_formtype", "hidden");

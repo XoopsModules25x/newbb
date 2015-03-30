@@ -31,8 +31,8 @@ if (!defined("NEWBB_FUNCTIONS_CONFIG")) {
         if (isset($configs[""]) || isset($configs[$category])) {
             return true;
         }
-        $config_handler = xoops_getmodulehandler("config", $dirname);
-        if ($configs_data = $config_handler->getByCategory($category)) {
+        $configHandler = xoops_getmodulehandler("config", $dirname);
+        if ($configs_data = $configHandler->getByCategory($category)) {
             $GLOBALS["xoopsModuleConfig"] = array_merge($GLOBALS["xoopsModuleConfig"], $configs_data);
         }
         $configs[$category] = 1;

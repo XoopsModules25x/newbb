@@ -48,25 +48,25 @@ if (empty($post_id)) {
     die(_MD_ERRORTOPIC);
 }
 
-$post_handler = xoops_getmodulehandler('post', 'newbb');
-$post         = $post_handler->get($post_id);
+$postHandler = xoops_getmodulehandler('post', 'newbb');
+$post         = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
     die(_MD_NORIGHTTOVIEW);
 }
 
-$post_data = $post_handler->getPostForPDF($post);
+$post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
-$topic_handler = xoops_getmodulehandler('topic', 'newbb');
-$forumtopic    = $topic_handler->getByPost($post_id);
+$topicHandler = xoops_getmodulehandler('topic', 'newbb');
+$forumtopic    = $topicHandler->getByPost($post_id);
 $topic_id      = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
     die(_MD_NORIGHTTOVIEW);
 }
 
-$forum_handler   = xoops_getmodulehandler('forum', 'newbb');
+$forumHandler   = xoops_getmodulehandler('forum', 'newbb');
 $forum           = ($forum) ? $forum : $forumtopic->getVar('forum_id');
-$viewtopic_forum = $forum_handler->get($forum);
-$parent_forums   = $forum_handler->getParents($viewtopic_forum);
+$viewtopic_forum = $forumHandler->get($forum);
+$parent_forums   = $forumHandler->getParents($viewtopic_forum);
 $pf_title        = '';
 if ($parent_forums) {
     foreach ($parent_forums as $p_f) {
@@ -74,20 +74,20 @@ if ($parent_forums) {
     }
 }
 
-if (!$forum_handler->getPermission($viewtopic_forum)) {
+if (!$forumHandler->getPermission($viewtopic_forum)) {
     die(_MD_NORIGHTTOACCESS);
 }
-if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "view")) {
+if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "view")) {
     die(_MD_NORIGHTTOVIEW);
 }
 // irmtfan add pdf permission
-if (!$topic_handler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) {
+if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) {
     die(_MD_NORIGHTTOPDF);
 }
 
-$category_handler = xoops_getmodulehandler('category', 'newbb');
+$categoryHandler = xoops_getmodulehandler('category', 'newbb');
 $cat              = $viewtopic_forum->getVar('cat_id');
-$viewtopic_cat    = $category_handler->get($cat);
+$viewtopic_cat    = $categoryHandler->get($cat);
 
 $GLOBALS["xoopsOption"]["pdf_cache"] = 0;
 
@@ -105,7 +105,7 @@ $pdf_data['forum_title']    = $pf_title . $viewtopic_forum->getVar('forum_name')
 $pdf_data['cat_title']      = $viewtopic_cat->getVar('cat_title');
 $pdf_data['subject']        = NEWBB_PDF_SUBJECT . ': ' . $pdf_data['topic_title'];
 $pdf_data['keywords']       = XOOPS_URL . ', ' . 'SIMPLE-XOOPS, ' . $pdf_data['topic_title'];
-$pdf_data['HeadFirstLine']  = $xoopsConfig['sitename'] . ' - ' . $xoopsConfig['slogan'];
+$pdf_data['HeadFirstLine']  = $GLOBALS['xoopsConfig']['sitename'] . ' - ' . $GLOBALS['xoopsConfig']['slogan'];
 $pdf_data['HeadSecondLine'] = _MD_FORUMHOME . ' - ' . $pdf_data['cat_title'] . ' - ' . $pdf_data['forum_title'] . ' - ' . $pdf_data['topic_title'];
 
 // START irmtfan to implement EMLH by GIJ
@@ -121,8 +121,8 @@ if (function_exists('easiestml')) {
 require_once(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php');
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // load $localLanguageOptions array with language specific definitions and apply
-if (is_file(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $xoopsConfig['language'] . '.php')) {
-    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $xoopsConfig['language'] . '.php');
+if (is_file(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
+    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php');
 } else {
     require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/english.php');
 }

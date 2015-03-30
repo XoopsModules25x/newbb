@@ -102,7 +102,7 @@ padding: 5px;
 padding: 5px;
 }
 .thread_signature {
-	border: 0px;
+	border: 0;
     border-top-width:1px;
     border-top-style: solid;
     border-top-color: #000000;
@@ -157,7 +157,7 @@ padding: 5px; line-height: 150%;
 }
 /* newbb_index.html */
 .index_category{
-	border: 0px;
+	border: 0;
 	margin-top: -10px;
 	margin-bottom: 5px;
 	padding: 5px;
@@ -166,7 +166,7 @@ padding: 5px; line-height: 150%;
 	font-weight: normal !important;
 	padding-left: 0;
 	margin-top: 5px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 .forum_table{
 	width: 100%;
@@ -207,13 +207,13 @@ width: 9%;
 }
 
 .index_forum span.item{
-	padding: 0px;
-	margin: 0px;
-	border: 0px;
+	padding: 0;
+	margin: 0;
+	border: 0;
 }
 
 .index_forum span.extra{
-	margin: 0px;
+	margin: 0;
 }
 /* END index_newbb.html */
 
@@ -280,12 +280,12 @@ width:10%;
 .topic-read {
 }
 .topic-new {
-box-shadow: inset 0px 10px 10px 0px rgba(0, 0, 0, 0.5);
+box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
 .forum-read {
 }
 .forum-new {
-box-shadow: inset 0px 10px 10px 0px rgba(0, 0, 0, 0.5);
+box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
 /* newbb_viewtopic.html */
 .topic_top {
@@ -318,20 +318,20 @@ min-width: 250px;
 min-width: 100px;
 }
 .post_text{
-padding: 5px 0px 10px 0px;
+padding: 5px 0 10px 0;
 }
 
 .block_full_forum {
 width: 15%;
 }
 .block_full_topic {
-width: 35%
+width: 35%;
 }
 .block_full_reply, .block_full_view{
 width: 10%
 }
 .block_compact_topic{
-width: 50%
+width: 50%;
 }
 .block_compact_reply {
 width: 10%
@@ -368,16 +368,16 @@ span.digest
 
 div.dropdown .menu, div.dropdown .userbar{
 	font-weight: bold;
-	margin: 0px 1px;
-	border: 0px !important;
-	padding: 0px;
+	margin: 0 1px;
+	border: 0 !important;
+	padding: 0;
 }
 
 div.dropdown .item{
 	font-weight: bold;
 	padding: 2px 5px;
   	white-space: nowrap;
-  	border: 0px !important;
+  	border: 0 !important;
 }
 
 div.dropdown ul, div.dropdown table {
@@ -388,8 +388,8 @@ div.dropdown ul, div.dropdown table {
 /* -- user level -- */
 table.userlevel{
 	width: 90%;
-	border: 0px;
-	padding: 0px;
+	border: 0;
+	padding: 0;
 	border-collapse: collapse;
 	border-spacing: 0;
 	text-align: left;
@@ -397,7 +397,7 @@ table.userlevel{
 
 table.userlevel td{
 	height: 13px;
-	padding: 0px;
+	padding: 0;
 }
 
 table.userlevel td.end{

@@ -415,7 +415,7 @@ define('_MD_SUSPEND_SCOPE', "Scope");
 define('_MD_SUSPEND_MANAGEMENT', "Moderation management");
 define('_MD_SUSPEND_NOACCESS', "Your ID or IP has been suspended");
 define('_MD_NEWBB_TYPE', "Topic type");
-define('_MD_NEWBB_SEENOTGUEST', '<span style="color:red"><strong>Link only for registered users</strong></span>');
+define('_MD_NEWBB_SEENOTGUEST', '<span style="color:red;"><strong>Link only for registered users</strong></span>');
 define('_MD_NEWBB_REPORTSUBJECT', "A contribution has been reported");
 define('_MD_NEWBB_GOTOLASTPOST', "Go to last post");
 define('_MD_EDITEDMSG', "Reason:");
@@ -437,7 +437,7 @@ Please do not reply to this message!
 %s
 %s");
 define('_MD_FORUMHOME', "Board index");
-define('_MD_NEWBB_SEEWAITREPORT', 'There were <span style="color:red"> <strong>%s</strong> Contributions reported </span>');
+define('_MD_NEWBB_SEEWAITREPORT', 'There were <span style="color:red;"> <strong>%s</strong> Contributions reported </span>');
 define('NEWBB_PDF_SUBJECT', "Title: ");
 define('NEWBB_PDF_TOPIC', "Post: ");
 define('NEWBB_PDF_AUTHOR', "Author: ");

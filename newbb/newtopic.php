@@ -16,16 +16,16 @@ if (!$forum = XoopsRequest::getString('forum', '', 'GET')) {
     redirect_header("index.php", 2, _MD_ERRORFORUM);
 }
 
-$forum_handler =& xoops_getmodulehandler('forum');
-$forum_obj     = $forum_handler->get($forum);
-if (!$forum_handler->getPermission($forum_obj)) {
+$forumHandler =& xoops_getmodulehandler('forum');
+$forum_obj     = $forumHandler->get($forum);
+if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header("index.php", 2, _NOPERM);
 }
 
-$topic_handler =& xoops_getmodulehandler('topic');
-$topic_obj     = $topic_handler->create();
+$topicHandler =& xoops_getmodulehandler('topic');
+$topic_obj     = $topicHandler->create();
 $topic_obj->setVar("forum_id", $forum);
-if (!$topic_handler->getPermission($forum_obj, 0, 'post')) {
+if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
     /*
      * Build the page query
      */
@@ -41,13 +41,13 @@ if (!$topic_handler->getPermission($forum_obj, 0, 'post')) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query}", 2, _MD_NORIGHTTOPOST);
 }
 
-if ($xoopsModuleConfig['wol_enabled']) {
+if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $online_handler =& xoops_getmodulehandler('online');
     $online_handler->init($forum_obj);
 }
 
 $xoopsOption['template_main']                             = 'newbb_edit_post.tpl';
-$xoopsConfig["module_cache"][$xoopsModule->getVar("mid")] = 0; // Disable cache
+$GLOBALS['xoopsConfig']["module_cache"][$xoopsModule->getVar("mid")] = 0; // Disable cache
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
@@ -55,12 +55,12 @@ include_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 /*
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$category_handler =& xoops_getmodulehandler("category");
-$category_obj =& $category_handler->get($forum_obj->getVar("cat_id"), array("cat_title"));
+$categoryHandler =& xoops_getmodulehandler("category");
+$category_obj =& $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
-$xoopsTpl->assign("parentforum", $forum_handler->getParents($forum_obj));
+$xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(
     'forum_id' 			=> $forum_obj->getVar('forum_id'),
     'forum_name' 		=> $forum_obj->getVar('forum_name'),
@@ -70,8 +70,8 @@ $form_title = _MD_POSTNEW;
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ($xoopsModuleConfig['disc_show'] == 1 || $xoopsModuleConfig['disc_show'] == 3) {
-    $xoopsTpl->assign("disclaimer", $xoopsModuleConfig['disclaimer']);
+if ($GLOBALS['xoopsModuleConfig']['disc_show'] == 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] == 3) {
+    $xoopsTpl->assign("disclaimer", $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 
 $subject       = "";
@@ -83,7 +83,7 @@ $dobr          = 1;
 $icon          = '';
 $post_karma    = 0;
 $require_reply = 0;
-$attachsig     = (is_object($xoopsUser) && $xoopsUser->getVar('attachsig')) ? 1 : 0;
+$attachsig     = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('attachsig')) ? 1 : 0;
 $post_id       = 0;
 $topic_id      = 0;
 include __DIR__ . '/include/form.post.php';

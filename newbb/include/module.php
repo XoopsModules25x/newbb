@@ -180,19 +180,19 @@ function xoops_module_pre_install_newbb(XoopsModule &$module)
 function xoops_module_install_newbb(XoopsModule &$module)
 {
     /* Create a test category */
-    $category_handler = xoops_getmodulehandler('category', $module->getVar("dirname"));
-    $category         = $category_handler->create();
+    $categoryHandler = xoops_getmodulehandler('category', $module->getVar("dirname"));
+    $category         = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', "", true);
     $category->setVar('cat_description', _MI_NEWBB_INSTALL_CAT_DESC, true);
     $category->setVar('cat_url', "http://www.simple-xoops.de SIMPLE-XOOPS", true);
-    if (!$cat_id = $category_handler->insert($category)) {
+    if (!$cat_id = $categoryHandler->insert($category)) {
         return true;
     }
 
     /* Create a forum for test */
-    $forum_handler = xoops_getmodulehandler('forum', $module->getVar("dirname"));
-    $forum         = $forum_handler->create();
+    $forumHandler = xoops_getmodulehandler('forum', $module->getVar("dirname"));
+    $forum         = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
     $forum->setVar('forum_moderator', array());
@@ -201,7 +201,7 @@ function xoops_module_install_newbb(XoopsModule &$module)
     $forum->setVar('attach_maxkb', 100);
     $forum->setVar('attach_ext', "zip|jpg|gif|png");
     $forum->setVar('hot_threshold', 20);
-    $forum_id = $forum_handler->insert($forum);
+    $forum_id = $forumHandler->insert($forum);
 
     /* Set corresponding permissions for the category and the forum */
     $module_id     = $module->getVar("mid");
@@ -223,8 +223,8 @@ function xoops_module_install_newbb(XoopsModule &$module)
 
     /* Create a test post */
     mod_loadFunctions("user", "newbb");
-    $post_handler = xoops_getmodulehandler('post', $module->getVar("dirname"));
-    $forumpost    = $post_handler->create();
+    $postHandler = xoops_getmodulehandler('post', $module->getVar("dirname"));
+    $forumpost    = $postHandler->create();
     $forumpost->setVar('poster_ip', newbb_getIP());
     $forumpost->setVar('uid', $GLOBALS["xoopsUser"]->getVar("uid"));
     $forumpost->setVar('approved', 1);
@@ -238,7 +238,7 @@ function xoops_module_install_newbb(XoopsModule &$module)
     $forumpost->setVar('attachsig', 1);
     $forumpost->setVar('post_time', time());
     $forumpost->setVar('post_text', _MI_NEWBB_INSTALL_POST_TEXT, true);
-    $postid = $post_handler->insert($forumpost);
+    $postid = $postHandler->insert($forumpost);
 
     return true;
 }

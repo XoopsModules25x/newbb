@@ -4,7 +4,7 @@
 <a href="<{$xoops_url}>/modules/newbb/viewforum.php?forum=<{$topic.forum_id}>"><{$topic.forum_name}></a> 
 <{$topic.topic_poster}> <{$topic.time}>
 </div>
-<div style="padding: 5px 0px 10px 0px;"><{$topic.post_text}></div>
+<div style="padding: 5px 0 10px 0;"><{$topic.post_text}></div>
 <{/foreach}>
 
 <{if $block.indexNav}>

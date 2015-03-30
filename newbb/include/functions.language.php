@@ -25,9 +25,8 @@ if (!defined("NEWBB_FUNCTIONS_LANGUAGE")) {
      */
     function newbb_load_language($page, $dirname = "newbb")
     {
-        global $xoopsConfig;
         $page = str_replace("..", "", $page);
-        if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/{$xoopsConfig['language']}/{$language}.php")) {
+        if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/{$GLOBALS['xoopsConfig']['language']}/{$language}.php")) {
             if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/language/{$language}.php")) {
                 return false;
             }
@@ -35,5 +34,4 @@ if (!defined("NEWBB_FUNCTIONS_LANGUAGE")) {
 
         return true;
     }
-
 }
