@@ -313,7 +313,7 @@ foreach ($postsArray as $eachpost) {
 
 if ($total_posts > $xoopsModuleConfig['posts_per_page']) {
 
-//    include $GLOBALS['xoops']->path('class/pagenav.php');
+    include $GLOBALS['xoops']->path('class/pagenav.php');
 
     $nav = new XoopsPageNav($total_posts, $xoopsModuleConfig['posts_per_page'], $start, "start", 'topic_id=' . $topic_id . '&amp;order=' . $order . '&amp;status=' . $status . "&amp;mode=" . $mode);
     //if (isset($xoopsModuleConfig['do_rewrite']) && $xoopsModuleConfig['do_rewrite'] == 1) $nav->url = XOOPS_URL . $nav->url;
