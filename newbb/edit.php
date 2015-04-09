@@ -13,7 +13,7 @@
 include_once __DIR__ . "/header.php";
 
 foreach (array('forum', 'topic_id', 'post_id', 'order') as $getint) {
-    ${$getint} = XoopsRequest::getInt('getint', 0, 'GET');
+    ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');
 }
 
 if (!$topic_id && !$post_id) {

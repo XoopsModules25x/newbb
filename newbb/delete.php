@@ -14,9 +14,9 @@ include_once __DIR__ . "/header.php";
 
 $ok = XoopsRequest::getInt('ok', 0, 'POST');
 
-foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
-    ${$getint} = XoopsRequest::getInt('getint', 0, 'POST');
-}
+//foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
+//    ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
+//}
 foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
     ${$getint} = (${$getint}) ? ${$getint} : (XoopsRequest::getInt($getint, 0, 'GET'));
 }
