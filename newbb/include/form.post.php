@@ -39,7 +39,7 @@ if ($moderate_handler->verifyUser($moderated_id, $moderated_ip, $moderated_forum
     $criteria->setOrder('DESC');
     $mod  = $moderate_handler->getObjects($criteria, false, false);
     $tage = ($mod[0]['mod_end'] - $mod[0]['mod_start']) / 60 / 60 / 24;
-    $msg  = $myts->displayTarea(sprintf(_MD_SUSPEND_TEXT, newbb_getUnameFromId($moderated_id), intval($tage), $mod[0]['mod_desc'], formatTimestamp($mod[0]['mod_end'])), 1);
+    $msg  = $myts->displayTarea(sprintf(_MD_SUSPEND_TEXT, newbb_getUnameFromId($moderated_id), (int) $tage, $mod[0]['mod_desc'], formatTimestamp($mod[0]['mod_end'])), 1);
     xoops_error($msg, _MD_SUSPEND_NOACCESS);
     include $GLOBALS['xoops']->path('footer.php');
     exit();
@@ -79,7 +79,7 @@ foreach (array(
              'isedit',
              'contents_preview'
          ) as $getint) {
-    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? intval($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
+    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int) ($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
 foreach (array(
              'order',
@@ -109,7 +109,7 @@ if (newbb_isAdmin($forum_obj)
     ||
     ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
      &&
-     ($topic_id == 0 || $uid == $topicHandler->get(@$topic_id, 'topic_poster'))
+     ($topic_id === 0 || $uid === $topicHandler->get(@$topic_id, 'topic_poster'))
     )
 ) {
     $type_id      = $topicHandler->get(@$topic_id, 'type_id');
@@ -188,8 +188,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $pos
 }
 
 $options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br />');
-if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
-    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
+if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] === 1) {
+    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') === 0) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
     $noname_checkbox->addOption(1, _MD_POSTANONLY);
     $options_tray->addElement($noname_checkbox);
@@ -251,7 +251,7 @@ if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
     $upload_tray->addElement(new XoopsFormButton('', 'contents_upload', _MD_UPLOAD, "submit"));
     $upload_tray->addElement(new XoopsFormLabel("<br /><br />" . _MD_MAX_FILESIZE . ":", $forum_obj->getVar('attach_maxkb') . "Kb; "));
     $extensions = trim(str_replace('|', ' ', $forum_obj->getVar('attach_ext')));
-    $extensions = (empty($extensions) || $extensions == "*") ? _ALL : $extensions;
+    $extensions = (empty($extensions) || $extensions === "*") ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ":", $extensions));
     $upload_tray->addElement(new XoopsFormLabel("<br />" . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
     $forum_form->addElement($upload_tray);
@@ -290,7 +290,7 @@ if ($GLOBALS['xoopsModuleConfig']['enable_karma'] || $GLOBALS['xoopsModuleConfig
         $karmas = array_map("trim", explode(',', $GLOBALS['xoopsModuleConfig']['karma_options']));
         if (count($karmas) > 1) {
             foreach ($karmas as $karma) {
-                $karma_array[strval($karma)] = intval($karma);
+                $karma_array[(string) ($karma)] = (int) ($karma);
             }
             $karma_select = new XoopsFormSelect('', "post_karma", $post_karma);
             $karma_select->addOptionArray($karma_array);
@@ -323,7 +323,7 @@ $submit_button->setExtra("tabindex='3'");
 
 $cancel_button = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
 if (!empty($topic_id)) {
-    $extra = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . intval($topic_id);
+    $extra = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . (int) ($topic_id);
 } else {
     $extra = XOOPS_URL . "/modules/newbb/viewforum.php?forum=" . $forum_obj->getVar('forum_id');
 }

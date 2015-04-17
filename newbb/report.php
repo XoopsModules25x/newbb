@@ -38,9 +38,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
 
 foreach (array('post_id', 'order', 'forum', 'topic_id') as $getint) {
-    ${$getint} = intval(@${$GPC}[$getint]);
+    ${$getint} = (int) (@${$GPC}[$getint]);
 }
-$viewmode = (isset(${$GPC}['viewmode']) && ${$GPC}['viewmode'] != 'flat') ? 'thread' : 'flat';
+$viewmode = (isset(${$GPC}['viewmode']) && ${$GPC}['viewmode'] !== 'flat') ? 'thread' : 'flat';
 
 if (empty($post_id)) {
     redirect_header("index.php", 2, _MD_ERRORPOST);
@@ -67,7 +67,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $error_message   = $xoopsCaptcha->getMessage();
         }
     }
-    if ($error_message != '') {
+    if ($error_message !== '') {
         xoops_error($error_message);
     } else {
         $reportHandler =& xoops_getmodulehandler('report', 'newbb');

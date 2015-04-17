@@ -46,7 +46,7 @@ newbb_load_object();
 function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
 {
     //  START irmtfan to dont run update script if user has the latest version.
-    if ($oldversion == round($module->getInfo("version") * 100, 2)) {
+    if ($oldversion === round($module->getInfo("version") * 100, 2)) {
         $module->setErrors("You have the latest " . $module->getInfo("name") . " module (" . $module->getInfo("dirname") . " version " . $module->getInfo("version") . ") and update is not necessary");
         print_r($module->getErrors());
 
@@ -63,7 +63,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
     //$oldconfig = $module->getVar('hasconfig');
     // NewBB 1.0 -- no config
     //if (empty($oldconfig)) {
-    if ($oldversion == 100) {
+    if ($oldversion === 100) {
         include_once __DIR__ . "/module.v100.php";
         xoops_module_update_newbb_v100($module);
     }
@@ -92,7 +92,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
     }
 
     if ($oldversion < 403) {
-        $sql = "	ALTER TABLE " . $GLOBALS['xoopsDB']->prefix("bb_posts") .
+        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix("bb_posts") .
                " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
         $GLOBALS['xoopsDB']->queryF($sql);
     }
@@ -110,7 +110,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
                 @unlink($templateDirectory . $v);
             }
         }
@@ -118,7 +118,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
                 @unlink($templateDirectory . $v);
             }
         }

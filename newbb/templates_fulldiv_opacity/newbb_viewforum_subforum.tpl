@@ -2,9 +2,9 @@
     <div class="forum_row head">
         <div class="forum_folder align_center">&nbsp;</div>
         <div class="forum_name left"><{$smarty.const._MD_SUBFORUMS}></div>
-	    <div class="forum_topics align_center"><{$smarty.const._MD_TOPICS}></div>
-		<div class="forum_posts align_center"><{$smarty.const._MD_POSTS}></div>
-		<div class="forum_lastpost"><{$smarty.const._MD_LASTPOST}></div>
+        <div class="forum_topics align_center"><{$smarty.const._MD_TOPICS}></div>
+        <div class="forum_posts align_center"><{$smarty.const._MD_POSTS}></div>
+        <div class="forum_lastpost"><{$smarty.const._MD_LASTPOST}></div>
     </div>
     <!-- start subforums -->
     <{foreachq item=sforum from=$subforum}>
@@ -20,21 +20,21 @@
                     <span class="extra"><{$smarty.const._MD_MODERATOR}>:&nbsp;</strong><{$sforum.forum_moderators}>
                 <{/if}>
             </div>
-   	    </div>
+           </div>
         <div class="forum_topics even align_center"><{$sforum.forum_topics}></div>
         <div class="forum_posts odd align_center"><{$sforum.forum_posts}></div>
         <div class="forum_lastpost even">
             <{if $sforum.forum_lastpost_subject}>
-		    	<{$sforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$sforum.forum_lastpost_user}><br />			
+                <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$sforum.forum_lastpost_user}><br />
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
-		    	    <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
+                    <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
                     <{$sforum.forum_lastpost_icon}>
                 </a>                       
             <{else}>
                 <{$smarty.const._MD_NONEWPOSTS}>
-      	    <{/if}>
-	    </div>
+              <{/if}>
+        </div>
     </div>
-	<{/foreach}>
+    <{/foreach}>
     <!-- end subforums -->
 </div>

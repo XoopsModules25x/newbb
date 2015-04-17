@@ -54,7 +54,7 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
         $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
         $criteria      = new CriteriaCompo(new Criteria("approved", 0, ">"));
         if ($forum_id) {
-            $criteria->add(new Criteria("forum_id", intval($forum_id)));
+            $criteria->add(new Criteria("forum_id", (int) ($forum_id)));
         }
 
         return $topicHandler->getCount($criteria);
@@ -76,12 +76,12 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
         switch ($type) {
             case 'forum':
                 if ($id > 0) {
-                    $criteria->add(new Criteria("forum_id", intval($id)));
+                    $criteria->add(new Criteria("forum_id", (int) ($id)));
                 }
                 break;
             case 'topic':
                 if ($id > 0) {
-                    $criteria->add(new Criteria("topic_id", intval($id)));
+                    $criteria->add(new Criteria("topic_id", (int) ($id)));
                 }
                 break;
             case 'all':

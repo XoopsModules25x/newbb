@@ -100,7 +100,7 @@ class newbb_XoopsGroupPermForm extends XoopsGroupPermForm
                 $ret .= $elements[$i];
             } elseif (!$elements[$i]->isHidden()) {
                 $ret .= "<tr valign='top' align='left'><td class='head'>" . $elements[$i]->getCaption();
-                if ($elements[$i]->getDescription() != '') {
+                if ($elements[$i]->getDescription() !== '') {
                     $ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
@@ -137,7 +137,7 @@ class newbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
      * @param string $prefix
      * @param array  $parentIds
      */
-    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
+    public function _renderOptionTree(&$tree, $option, $prefix, array $parentIds)
     {
         if ($option['id'] > 0) {
             $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
@@ -146,11 +146,11 @@ class newbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
                     continue;
                 }
                 $parent_ele = $this->getName() . '[groups][' . $this->_groupId . '][' . $pid . ']';
-                $tree .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if (ele.checked != true) {ele.checked = this.checked;}";
+                $tree .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if (ele.checked !== true) {ele.checked = this.checked;}";
             }
             foreach ($option['allchild'] as $cid) {
                 $child_ele = $this->getName() . '[groups][' . $this->_groupId . '][' . $cid . ']';
-                $tree .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked != true) {ele.checked = false;}";
+                $tree .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
             }
             $tree .= '" value="1"';
             if (in_array($option['id'], $this->_value)) {
@@ -163,7 +163,8 @@ class newbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
                 if ($option['id'] > 0) {
-                    array_push($parentIds, $option['id']);
+//                  array_push($parentIds, $option['id']);
+                    $parentIds[] = $option['id'];
                 }
                 $this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix . '&nbsp;-', $parentIds);
             }
@@ -207,7 +208,7 @@ switch ($action) {
             $option_ids = array();
             foreach ($perms as $perm) {
                 ++$ii;
-                if ($ii % 5 == 0) {
+                if ($ii % 5 === 0) {
                     $ret_ele .= '</tr><tr>';
                 }
                 $checked      = in_array("forum_" . $perm, $selected) ? " checked='checked'" : "";
@@ -352,7 +353,7 @@ switch ($action) {
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
-        if ($op == "category") {
+        if ($op === "category") {
             foreach (array_keys($categories) as $key) {
                 $form->addItem($key, $categories[$key]);
             }
@@ -364,7 +365,7 @@ switch ($action) {
                 $key_c = -1 * $c;
                 $form->addItem($key_c, "<strong>[" . $categories[$c] . "]</strong>");
                 foreach (array_keys($forums[$c]) as $f) {
-                    $pid = $forums[$c][$f]["parent_forum"] ? $forums[$c][$f]["parent_forum"] : $key_c;
+                    $pid = $forums[$c][$f]['parent_forum'] ?: $key_c;
                     $form->addItem($f, $forums[$c][$f]["prefix"] . $forums[$c][$f]["forum_name"], $pid);
                 }
             }

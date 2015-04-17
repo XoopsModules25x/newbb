@@ -106,7 +106,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      * @param array $groups
      * @return mixed
      */
-    public function setCategoryPermission($category, $groups = array())
+    public function setCategoryPermission($category, array $groups = array())
     {
         mod_clearCacheFile("permission_category", "newbb");
         $handler =& $this->_loadHandler("category");
@@ -124,7 +124,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         global$xoopsModule;
 
-        if ($GLOBALS["xoopsUserIsAdmin"] && $xoopsModule->getVar("dirname") == "newbb") {
+        if ($GLOBALS["xoopsUserIsAdmin"] && $xoopsModule->getVar("dirname") === "newbb") {
             return true;
         }
 
@@ -185,7 +185,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
 
         $allowed_items = array();
         foreach ($_cachedPerms as $id => $allowed_groups) {
-            if ($id == 0 || empty($allowed_groups)) {
+            if ($id === 0 || empty($allowed_groups)) {
                 continue;
             }
 
@@ -221,7 +221,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         global $xoopsModule;
 
-        if (is_object($xoopsModule) && $xoopsModule->getVar("dirname") == "newbb") {
+        if (is_object($xoopsModule) && $xoopsModule->getVar("dirname") === "newbb") {
             $modid = $xoopsModule->getVar("mid");
         } else {
             $module_handler =& xoops_gethandler("module");
@@ -234,7 +234,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             $member_handler =& xoops_gethandler('member');
             $groups         = array_keys($member_handler->getGroupList());
 
-            $type           = ($perm_name == "category_all") ? "category" : "forum";
+            $type           = ($perm_name === "category_all") ? "category" : "forum";
             $object_handler =& xoops_getmodulehandler($type, 'newbb');
             $object_ids     = $object_handler->getIds();
             foreach ($object_ids as $item_id) {
@@ -243,7 +243,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         } else {
             $gperm_handler =& xoops_gethandler("groupperm");
             $criteria      = new CriteriaCompo(new Criteria('gperm_modid', $modid));
-            if (!empty($perm_name) && $perm_name != "forum_all" && $perm_name != "category_all") {
+            if (!empty($perm_name) && $perm_name !== "forum_all" && $perm_name !== "category_all") {
                 $criteria->add(new Criteria('gperm_name', $perm_name));
             }
             $permissions =& $this->getObjects($criteria);
@@ -251,7 +251,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             $perms = array();
             foreach ($permissions as $gperm) {
                 $item_id                                         = $gperm->getVar('gperm_itemid');
-                $group_id                                        = intval($gperm->getVar('gperm_groupid'));
+                $group_id                                        = (int) ($gperm->getVar('gperm_groupid'));
                 $perms[$gperm->getVar('gperm_name')][$item_id][] = $group_id;
             }
         }
@@ -289,7 +289,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function validateRight($perm, $itemid, $groupid, $mid = null)
     {
         if (empty($mid)) {
-            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
+            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
                 $mid = $GLOBALS["xoopsModule"]->getVar("mid");
             } else {
                 $module_handler =& xoops_gethandler("module");
@@ -322,7 +322,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         $criteria = new CriteriaCompo(new Criteria("gperm_modid", $gperm_modid));
         $criteria->add(new Criteria("gperm_name", $gperm_name));
-        $gperm_itemid = intval($gperm_itemid);
+        $gperm_itemid = (int) ($gperm_itemid);
         if ($gperm_itemid > 0) {
             $criteria->add(new Criteria("gperm_itemid", $gperm_itemid));
         }
@@ -353,7 +353,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         mod_clearCacheFile("permission", "newbb");
         if (empty($mid)) {
-            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
+            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
                 $mid = $GLOBALS["xoopsModule"]->getVar("mid");
             } else {
                 $module_handler =& xoops_gethandler("module");

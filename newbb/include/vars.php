@@ -49,7 +49,7 @@ newbb_setcookie("LV", time(), $forumCookie['expire']); // set cookie life time t
 newbb_setsession("LV", $last_visit);
 
 // include customized variables
-if (is_object($GLOBALS["xoopsModule"]) && "newbb" == $GLOBALS["xoopsModule"]->getVar("dirname", "n")) {
+if (is_object($GLOBALS["xoopsModule"]) && "newbb" === $GLOBALS["xoopsModule"]->getVar("dirname", "n")) {
     $GLOBALS["xoopsModuleConfig"] = newbbLoadConfig();
 }
 

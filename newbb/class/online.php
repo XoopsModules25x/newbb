@@ -37,7 +37,7 @@ class NewbbOnlineHandler
             $this->forum_id     = $forum->getVar('forum_id');
             $this->forum_object = &$forum;
         } else {
-            $this->forum_id     = intval($forum);
+            $this->forum_id     = (int) ($forum);
             $this->forum_object = $forum;
         }
         if (is_object($forumtopic)) {
@@ -46,7 +46,7 @@ class NewbbOnlineHandler
                 $this->forum_id = $forumtopic->getVar('forum_id');
             }
         } else {
-            $this->topic_id = intval($forumtopic);
+            $this->topic_id = (int) ($forumtopic);
         }
 
         $this->update();
@@ -219,7 +219,7 @@ class NewbbOnlineHandler
     {
         global $xoopsModule;
 
-        $uid = intval($uid);
+        $uid = (int) ($uid);
         if ($uid > 0) {
             $sql = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_online') . " WHERE online_uid=" . $uid;
         } else {
@@ -228,7 +228,7 @@ class NewbbOnlineHandler
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
             $sql = "UPDATE " . $this->db->prefix('bb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
-            if ($uid == 0) {
+            if ($uid === 0) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {
@@ -277,7 +277,7 @@ class NewbbOnlineHandler
     public function gc($expire)
     {
         global $xoopsModule;
-        $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - intval($expire));
+        $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - (int) ($expire));
         $this->db->queryF($sql);
 
         $xoops_online_handler =& xoops_gethandler('online');

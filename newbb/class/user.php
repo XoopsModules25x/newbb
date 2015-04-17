@@ -154,7 +154,7 @@ class newbbUser
 
         $level = newbb_calculateLevel($this->user->getVar("posts"), $this->user->getVar("user_regdate"));
         $info  = '';
-        if ($GLOBALS['xoopsModuleConfig']['user_level'] == 2) {
+        if ($GLOBALS['xoopsModuleConfig']['user_level'] === 2) {
             static $rpg_images;
             if (!isset($rpg_images)) {
                 $iconHandler = newbbGetIconHandler();
@@ -204,7 +204,7 @@ class newbbUser
         $userinfo["uid"] = $user->getVar("uid");
 
         $name             = empty($GLOBALS['xoopsModuleConfig']['show_realname']) ? $user->getVar('uname') : $user->getVar('name');
-        $userinfo["name"] = $name ? $name : $user->getVar('uname');
+        $userinfo["name"] = $name ?: $user->getVar('uname');
 
         $userinfo["link"] = "<a href=\"" . XOOPS_URL . "/userinfo.php?uid=" . $user->getVar("uid") . "\">" . $userinfo["name"] . "</a>";
 
@@ -300,10 +300,10 @@ class NewbbUserHandler
         }
     }
 // START irmtfan remove function - no deprecated is needed because just use in this file
-//	function loadUserGroups()
-//	{
-//		return true;
-//	}
+//    function loadUserGroups()
+//    {
+//        return true;
+//    }
 // END irmtfan remove function - no deprecated is needed because just use in this file
 
     public function loadUserDigest()
@@ -315,14 +315,14 @@ class NewbbUserHandler
         $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . " WHERE uid IN( " . implode(", ", array_keys($this->users)) . ")";
         $result = $GLOBALS['xoopsDB']->query($sql);
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            $this->userlist[$myrow['uid']]["digests"] = intval($myrow['user_digests']);
+            $this->userlist[$myrow['uid']]["digests"] = (int) ($myrow['user_digests']);
         }
     }
 // START irmtfan remove function
-//	function loadUserRank()
-//	{
+//    function loadUserRank()
+//    {
 //          return true;
-//	}
+//    }
 // END irmtfan remove function
 
     /**

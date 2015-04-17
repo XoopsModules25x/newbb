@@ -28,7 +28,7 @@
  */
 function newbb_tag_iteminfo(&$items)
 {
-    if (empty($items) || !is_array($items)) {
+    if (0 === count($items) || !is_array($items)) {
         return false;
     }
 
@@ -38,7 +38,7 @@ function newbb_tag_iteminfo(&$items)
         // catid is not used in newbb, so just skip it
         foreach (array_keys($items[$cat_id]) as $item_id) {
             // In newbb, the item_id is "topic_id"
-            $items_id[] = intval($item_id);
+            $items_id[] = (int) ($item_id);
         }
     }
     $item_handler =& xoops_getmodulehandler('topic', 'newbb');
@@ -75,25 +75,25 @@ function newbb_tag_synchronization($mid)
 
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4) {
-        $sql = "	DELETE FROM {$link_handler->table}" .
-               "	WHERE " .
-               "		tag_modid = {$mid}" .
-               "		AND " .
-               "		( tag_itemid NOT IN " .
-               "			( SELECT DISTINCT {$item_handler->keyName} " .
-               "				FROM {$item_handler->table} " .
-               "				WHERE {$item_handler->table}.approved > 0" .
-               "			) " .
-               "		)";
+        $sql = "    DELETE FROM {$link_handler->table}" .
+               "    WHERE " .
+               "        tag_modid = {$mid}" .
+               "        AND " .
+               "        ( tag_itemid NOT IN " .
+               "            ( SELECT DISTINCT {$item_handler->keyName} " .
+               "                FROM {$item_handler->table} " .
+               "                WHERE {$item_handler->table}.approved > 0" .
+               "            ) " .
+               "        )";
     } else {
-        $sql = "	DELETE {$link_handler->table} FROM {$link_handler->table}" .
-               "	LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
-               "	WHERE " .
-               "		tag_modid = {$mid}" .
-               "		AND " .
-               "		( aa.{$item_handler->keyName} IS NULL" .
-               "			OR aa.approved < 1" .
-               "		)";
+        $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
+               "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
+               "    WHERE " .
+               "        tag_modid = {$mid}" .
+               "        AND " .
+               "        ( aa.{$item_handler->keyName} IS NULL" .
+               "            OR aa.approved < 1" .
+               "        )";
     }
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());

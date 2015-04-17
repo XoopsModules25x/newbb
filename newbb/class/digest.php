@@ -133,7 +133,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     public function &get($id)
     {
         $digest = null;
-        $id     = intval($id);
+        $id     = (int) ($id);
         if (!$id) {
             return $digest;
         }
@@ -253,7 +253,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
+        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] === 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
 
         return $time_diff - $deadline;
@@ -268,7 +268,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $content = $digest->getVar('digest_content', 'E');
 
         $id  = $this->db->genId($digest->table . "_digest_id_seq");
-        $sql = "INSERT INTO " . $digest->table . " (digest_id, digest_time, digest_content)	VALUES (" . $id . ", " . time() . ", " . $this->db->quoteString($content) . " )";
+        $sql = "INSERT INTO " . $digest->table . " (digest_id, digest_time, digest_content)    VALUES (" . $id . ", " . time() . ", " . $this->db->quoteString($content) . " )";
 
         if (!$this->db->queryF($sql)) {
             //echo "<br />digest insert error::" . $sql;
@@ -296,7 +296,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        if ($this->last_digest == $digest_id) {
+        if ($this->last_digest === $digest_id) {
             return false;
         } // It is not allowed to delete the last digest
         $sql = "DELETE FROM " . $this->db->prefix("bb_digest") . " WHERE digest_id=" . $digest_id;
@@ -363,7 +363,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
                     $topic['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
                 }
             } else {
-                $topic['uname'] = $topic['poster_name'] ? $topic['poster_name'] : $GLOBALS['xoopsConfig']['anonymous'];
+                $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
             $summary = xoops_substr(newbb_html2text($topic['post_text']), 0, SUMMARY_LENGTH);
             $author  = $topic['uname'] . " (" . formatTimestamp($topic['topic_time']) . ")";

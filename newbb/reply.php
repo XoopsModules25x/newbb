@@ -133,7 +133,7 @@ $q_message = $post_parent_obj->getVar('post_text', "e");
 if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma'))
     && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))
 ) {
-    if (1 == XoopsRequest::getInt('quotedac', 0, 'GET')) {
+    if (1 === XoopsRequest::getInt('quotedac', 0, 'GET')) {
         $message = "[quote]\n";
         $message .= sprintf(_MD_USERWROTE, $r_name);
         $message .= "\n" . $q_message . "[/quote]";

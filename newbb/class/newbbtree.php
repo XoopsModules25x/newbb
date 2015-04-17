@@ -93,7 +93,7 @@ class newbbtree extends XoopsTree
         $newPostArray = array();
         $prefix .= $this->increment;
         foreach ($this->postArray as $post) {
-            if ($post->getVar('pid') == $pid) {
+            if ($post->getVar('pid') === $pid) {
                 $postTree_array[] = array('prefix'      => $prefix,
                                           'icon'        => $post->getVar('icon'),
                                           'post_time'   => $post->getVar('post_time'),

@@ -49,7 +49,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
                     $pos = min($thispos, $pos);
                 }
             }
-            if ($pos == $endpos) {
+            if ($pos === $endpos) {
                 break;
             }
             $start  = max(($pos - $selectstartlag), ($startpos - $maxlengthquery), 0); // $startpos is the last position in the previous select text

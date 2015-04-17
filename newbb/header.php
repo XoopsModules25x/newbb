@@ -30,7 +30,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
                 //rewrite only for files
 
-                if (trim(getenv("SCRIPT_NAME")) != '') {
+                if (trim(getenv("SCRIPT_NAME")) !== '') {
                     if (strpos(getenv("REQUEST_URI"), "/" . SEO_MODULE_NAME . "/") === false) {
                         $redir = true;
                     } elseif (getenv("QUERY_STRING")) {
@@ -69,7 +69,7 @@ $menumode_other = array();
 $menu_url       = htmlSpecialChars(preg_replace("/&menumode=[^&]/", "", $_SERVER['REQUEST_URI']));
 $menu_url .= (false === strpos($menu_url, "?")) ? "?menumode=" : "&amp;menumode=";
 foreach ($GLOBALS['xoopsModuleConfig']["valid_menumodes"] as $key => $val) {
-    if ($key != $menumode) {
+    if ($key !== $menumode) {
         $menumode_other[] = array("title" => $val, "link" => $menu_url . $key);
     }
 }
@@ -101,14 +101,14 @@ $newbb_module_header .= '
     <script src="'.XOOPS_URL.'/modules/'.$dirname.'/include/js/newbb_toggle.js" type="text/javascript"></script>
     ';
 // END hacked by irmtfan to add localization/customization for newbb style.css
-if ($menumode == 2) {
+if ($menumode === 2) {
     $newbb_module_header .= '
     <link rel="stylesheet" type="text/css" href="'.XOOPS_URL.'/modules/'.$dirname.'templates/newbb_menu_hover.css" />
     <style type="text/css">body {behavior:url("include/newbb.htc");}</style>
     ';
 }
 
-if ($menumode == 1) {
+if ($menumode === 1) {
     $newbb_module_header .= '
     <link rel="stylesheet" type="text/css" href="'.XOOPS_URL.'/modules/'.$dirname.'templates/newbb_menu_click.css" />
     <script src="include/js/newbb_menu_click.js" type="text/javascript"></script>

@@ -35,7 +35,7 @@ $ratinguser   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar
 $anonwaitdays = 1;
 $ip           = newbb_getIP(true);
 foreach (array("topic_id", "rate", "forum") as $var) {
-    //    ${$var} = isset($_POST[$var]) ? intval($_POST[$var]) : (isset($_GET[$var])?intval($_GET[$var]):0);
+    //    ${$var} = isset($_POST[$var]) ? (int) ($_POST[$var]) : (isset($_GET[$var])?(int) ($_GET[$var]):0);
     ${$var} = XoopsRequest::getInt($var, XoopsRequest::getInt($var, 0, 'POST'), 'GET');
 }
 
@@ -53,7 +53,7 @@ if (empty($rate)) {
     redirect_header("viewtopic.php?topic_id=" . $topic_id . "&amp;forum=" . $forum . "", 4, _MD_NOVOTERATE);
 }
 $rate_handler =& xoops_getmodulehandler("rate", $xoopsModule->getVar("dirname"));
-if ($ratinguser != 0) {
+if ($ratinguser !== 0) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post =& new CriteriaCompo(new Criteria("topic_id", $topic_id));
     $crit_post->add(new Criteria("uid", $ratinguser));

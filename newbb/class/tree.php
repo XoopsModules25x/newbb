@@ -133,7 +133,7 @@ if (!class_exists("newbbObjectTree")) {
          */
         public function getAllChild_object($key, &$ret, $depth = 0)
         {
-            if (--$depth == 0) {
+            if (--$depth === 0) {
                 return;
             }
 
@@ -175,9 +175,9 @@ if (!class_exists("newbbObjectTree")) {
          * @param  integer $depth level of subcategories
          * @return array
          **/
-        public function getAllChild_array($key, &$ret, $tags = array(), $depth = 0)
+        public function getAllChild_array($key, &$ret, array $tags = array(), $depth = 0)
         {
-            if (--$depth == 0) {
+            if (--$depth === 0) {
                 return;
             }
 
@@ -225,11 +225,11 @@ if (!class_exists("newbbObjectTree")) {
          * @param  int $uplevel (empty when called from outside) level of recursion
          * @return array  Array of parent nodes.
          */
-        public function &_getParentForums($key, $ret = array(), $uplevel = 0)
+        public function &_getParentForums($key, array $ret = array(), $uplevel = 0)
         {
             if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
                 $ret[$uplevel] = $this->_tree[$this->_tree[$key]['parent']]['obj'];
-                if ($this->_tree[$key]['parent'] != $key) {
+                if ($this->_tree[$key]['parent'] !== $key) {
                     //$parents =& $this->getParentForums($this->_tree[$key]['parent'], $ret, $uplevel+1);
                     $parents =& $this->getParentForums($this->_tree[$key]['parent']);
                     foreach (array_keys($parents) as $newkey) {

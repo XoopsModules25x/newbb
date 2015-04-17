@@ -33,7 +33,7 @@ mod_loadFunctions("render", "newbb");
 xoops_cp_header();
 echo "<fieldset>";
 $op     = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
-$cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // intval( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
+$cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // (int) ( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
 $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
 

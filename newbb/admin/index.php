@@ -87,7 +87,7 @@ function newbb_getImageLibs()
 
     $imageLibs = array();
     unset($output, $status);
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? "" : $GLOBALS['xoopsModuleConfig']['path_magick'] . "/";
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output)) {
@@ -97,7 +97,7 @@ function newbb_getImageLibs()
         }
         unset($output, $status);
     }
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? "" : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . "/";
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output)) {
@@ -218,7 +218,7 @@ switch ($op) {
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, "<infolabel>" . _AM_NEWBB_REPORT_PROCESSED . ': %s' . "</infolabel>", $reportHandler->getCount(new Criteria("report_result", 1)), 'Green');
 
             foreach (array_keys($folder) as $i) {
-                if (!(newbb_admin_getPathStatus($folder[$i])) == '') {
+                if (!(newbb_admin_getPathStatus($folder[$i])) === '') {
                     $indexAdmin->addConfigBoxLine($folder[$i] . ' ' . newbb_admin_getPathStatus($folder[$i]), 'folder');
                 } else {
                     $indexAdmin->addConfigBoxLine($folder[$i], 'folder');

@@ -42,8 +42,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     public function getValidPerms($fullname = false)
     {
         static $validPerms = array();
-        if (isset($validPerms[intval($fullname)])) {
-            return $validPerms[intval($fullname)];
+        if (isset($validPerms[(int) ($fullname)])) {
+            return $validPerms[(int) ($fullname)];
         }
         $items = array_filter(array_map("trim", explode(",", FORUM_PERM_ITEMS)));
         if (!empty($fullname)) {
@@ -51,7 +51,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
                 $items[$key] = "forum_" . $items[$key];
             }
         }
-        $validPerms[intval($fullname)] = $items;
+        $validPerms[(int) ($fullname)] = $items;
 
         return $items;
     }
@@ -107,7 +107,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function getPermissions($id = 0)
     {
-        if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
+        if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
             $modid = $GLOBALS["xoopsModule"]->getVar("mid");
         } else {
             $module_handler =& xoops_gethandler('module');
@@ -129,7 +129,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             if (is_array($id)) {
                 $criteria->add(new Criteria('gperm_itemid', "(" . implode(',', $id) . ")", 'IN'));
             } else {
-                $criteria->add(new Criteria('gperm_itemid', intval($id)));
+                $criteria->add(new Criteria('gperm_itemid', (int) ($id)));
             }
         }
         $gperm_names = implode(", ", $this->getValidItems($modid, $id));
@@ -170,11 +170,11 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
         $perm_items = $this->getValidPerms();
         foreach ($perm_items as $item) {
-            if ($item == "access") {
+            if ($item === "access") {
                 continue;
             }
             if ($isadmin ||
-                (isset($permission_set[$forum_id]['forum_' . $item]) && (!$topic_locked || $item == "view"))
+                (isset($permission_set[$forum_id]['forum_' . $item]) && (!$topic_locked || $item === "view"))
             ) {
                 $perm[] = constant('_MD_CAN_' . strtoupper($item));
             } else {
@@ -191,7 +191,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function deleteByForum($forum_id)
     {
-        $forum_id = intval($forum_id);
+        $forum_id = (int) ($forum_id);
         if (empty($forum_id)) {
             return false;
         }
@@ -216,7 +216,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         if (empty($mid)) {
-            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
+            if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
                 $mid = $GLOBALS["xoopsModule"]->getVar("mid");
             } else {
                 $module_handler =& xoops_gethandler('module');

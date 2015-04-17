@@ -63,7 +63,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
 
 } else {
     $last = $seoOp . "/" . $seoArg;
-    if ($seoOther != '') $last .= "/" . $seoOther;
+    if ($seoOther !== '') {
+        $last .= "/" . $seoOther;
+    }
     include $last;
 }
 exit();
@@ -84,23 +86,36 @@ function checker(&$value)
     $value = trim($value);
 
     // pruefe auf javascript include
-    if (strstr($value, '<script') !== false) $value = '';
+    if (false !== strpos($value, '<script')) {
+        $value = '';
+    }
+
 
     // pruefe auf Kommentare (SQL-Injections)
-    if (strstr($value, '/*' !== false)) $value = '';
+    if (false !== strpos($value, '/*')) {
+        $value = '';
+    }
 
     // pruefe UNION Injections
-    if (preg_match('/\sUNION\s+(ALL|SELECT)/i', $value)) $value = '';
+    if (preg_match('/\sUNION\s+(ALL|SELECT)/i', $value)) {
+        $value = '';
+    }
 
     // Nullbyte Injection
-    if (strstr($value, chr(0)) !== false) $value = '';
+    if (false !== strpos($value, chr(0))) {
+        $value = '';
+    }
 
     //pruefe Verzeichnis
-    if (strstr($value, '../') !== false) $value = '';
+    if (false !== strpos($value, '../')) {
+        $value = '';
+    }
 
     //pruefe auf externe
     $str = strstr($value, '://');
-    if (strstr($value, '://') !== false) $value = '';
+    if (false !== strpos($value, '://')) {
+        $value = '';
+    }
 
     return $value;
 }

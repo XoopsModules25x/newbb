@@ -13,7 +13,7 @@
 include_once __DIR__ . "/header.php";
 
 foreach (array('forum', 'topic_id', 'post_id', 'order') as $getint) {
-    ${$getint} = XoopsRequest::getInt('getint', 0, 'GET');
+    ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');
 }
 
 if (!$topic_id && !$post_id) {
@@ -90,8 +90,8 @@ $xoopsTpl->assign("form_title", $form_title);
 $xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 
 $xoopsTpl->assign(array(
-    'forum_id' 			=> $forum_obj->getVar('forum_id'),
-    'forum_name' 		=> $forum_obj->getVar('forum_name'),
+    'forum_id'             => $forum_obj->getVar('forum_id'),
+    'forum_name'         => $forum_obj->getVar('forum_name'),
     ));
 */
 
@@ -139,7 +139,7 @@ foreach ($posts_context_obj as $post_context_obj) {
     $posts_context[] = array(
         "subject" => $p_subject,
         "meta"    => _MD_BY . " " . $p_name . " " . _MD_ON . " " . $p_date,
-        "content" => $p_message,
+        "content" => $p_message
     );
 }
 $xoopsTpl->assign_by_ref("posts_context", $posts_context);

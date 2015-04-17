@@ -16,7 +16,7 @@ if (!defined('XOOPS_XMLRPC')) {
 }
 ob_start();
 include_once("header.php");
-if ($GLOBALS['xoopsModuleConfig']['email_digest'] == 0) {
+if ($GLOBALS['xoopsModuleConfig']['email_digest'] === 0) {
     echo "<br />Not set";
 
     return false;

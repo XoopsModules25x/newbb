@@ -20,10 +20,10 @@ foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint
 foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
     ${$getint} = (${$getint}) ? ${$getint} : (XoopsRequest::getInt($getint, 0, 'GET'));
 }
-//$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] != 'flat') ? 'thread' : 'flat';
+//$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
-$viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') != 'flat') ? 'thread' : 'flat';
+$viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
 $viewmode = ($viewmode) ? $viewmode : (XoopsRequest::getString('viewmode', '', 'POST') ? XoopsRequest::getString('viewmode', '', 'POST')  : 'flat');
 
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
@@ -70,8 +70,8 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 }
 
 if ($ok) {
-    $isDeleteOne = (1 == $ok) ? true : false;
-    if ($post_obj->isTopic() && $topic->getVar("topic_replies") == 0) {
+    $isDeleteOne = (1 === $ok) ? true : false;
+    if ($post_obj->isTopic() && $topic->getVar("topic_replies") === 0) {
         $isDeleteOne = false;
     }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar("topic_replies") > 0) {
@@ -85,7 +85,7 @@ if ($ok) {
             if ($senduser->getVar('notify_method') > 0) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
-                if (1 == $senduser->getVar('notify_method')) {
+                if (1 === $senduser->getVar('notify_method')) {
                     $xoopsMailer->usePM();
                 } else {
                     $xoopsMailer->useMail();

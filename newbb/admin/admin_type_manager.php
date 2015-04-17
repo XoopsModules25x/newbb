@@ -21,18 +21,18 @@ if ($newXoopsModuleGui) {
     echo $indexAdmin->addNavigation('admin_type_manager.php');
 }
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(9, _AM_NEWBB_TYPE_TEMPLATE);
-//	else echo $indexAdmin->addNavigation('admin_type_manager.php');
+//    else echo $indexAdmin->addNavigation('admin_type_manager.php');
 
 /*
  * The 'op' could be
  * <ol>
- *	<li>'save_type': saving for batch edit or add</li>
- *	<li>'delete': batch delete</li>
- *	<li>'template': set type setting template</li>
- *	<li>'apply': apply template to forums</li>
- *	<li>'forum': type setting per forum</li>
- *	<li>'add': batch add</li>
- *	<li>default: list of existing types</li>
+ *    <li>'save_type': saving for batch edit or add</li>
+ *    <li>'delete': batch delete</li>
+ *    <li>'template': set type setting template</li>
+ *    <li>'apply': apply template to forums</li>
+ *    <li>'forum': type setting per forum</li>
+ *    <li>'add': batch add</li>
+ *    <li>default: list of existing types</li>
  * </ol>
  */
 $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');// !empty($_GET['op'])? $_GET['op'] : ( !empty($_POST['op']) ? $_POST['op'] : "" );
@@ -85,7 +85,7 @@ switch ($op) {
 
     case "template":
         $types_obj = $type_handler->getAll();
-        if (count($types_obj) == 0) {
+        if (count($types_obj) === 0) {
             redirect_header(xoops_getenv("PHP_SELF"), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -299,7 +299,7 @@ switch ($op) {
         }
 
         $types_obj = $type_handler->getAll();
-        if (count($types_obj) == 0) {
+        if (count($types_obj) === 0) {
             redirect_header(xoops_getenv("PHP_SELF"), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -376,14 +376,14 @@ switch ($op) {
     case "add":
     default:
         $types_obj = $type_handler->getAll();
-        if (count($types_obj) == 0) {
+        if (count($types_obj) === 0) {
             $op    = "add";
             $title = _AM_NEWBB_TYPE_ADD;
         } else {
             $title = _AM_NEWBB_TYPE_LIST;
         }
 
-        if ($op != "add") {
+        if ($op !== "add") {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . "</legend>";
             echo "<br />";
             echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv("PHP_SELF") . "?op=add'>";
@@ -403,7 +403,7 @@ switch ($op) {
         echo "<form name='list' method='post' action='" . xoops_getenv("PHP_SELF") . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        if ($op != "add") {
+        if ($op !== "add") {
             echo "<td class='bg3' width='5%'>" . _DELETE . "</td>";
         }
         echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . "</td>";
@@ -413,7 +413,7 @@ switch ($op) {
 
         $isColorpicker = require_once($GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php'));
 
-        if ($op != "add") {
+        if ($op !== "add") {
             foreach ($types_obj as $key => $type_obj) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";

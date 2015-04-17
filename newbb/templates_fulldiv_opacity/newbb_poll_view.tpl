@@ -1,5 +1,5 @@
 <{if $topic_pollform}>
-	<{$topic_pollform}>
+    <{$topic_pollform}>
 <{else}>
 <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/votepolls.php" method="post">
   <input type="hidden" name="topic_id" value="<{$topic_id}>" />
