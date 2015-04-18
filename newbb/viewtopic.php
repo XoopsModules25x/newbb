@@ -319,7 +319,7 @@ if ($total_posts > $GLOBALS['xoopsModuleConfig']['posts_per_page']) {
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite']) && $GLOBALS['xoopsModuleConfig']['do_rewrite'] === 1) $nav->url = XOOPS_URL . $nav->url;
     if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
         $navi = $nav->renderSelect();
-    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'bild') {
+    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {
         $navi = $nav->renderImageNav(4);
     } else {
         $navi = $nav->renderNav(4);

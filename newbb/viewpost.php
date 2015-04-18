@@ -365,7 +365,7 @@ if ($postCount > $post_perpage) {
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . $nav->url;
     if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
         $navi = $nav->renderSelect();
-    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'bild') {
+    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {
         $navi = $nav->renderImageNav(4);
     } else {
         $navi = $nav->renderNav(4);

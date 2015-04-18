@@ -312,10 +312,10 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => array(
-        _MI_PAGENAV_ZAHL   => 'zahl',
-        _MI_PAGENAV_BILD   => 'bild',
+        _MI_PAGENAV_NUMBER   => 'number',
+        _MI_PAGENAV_IMAGE   => 'impage',
         _MI_PAGENAV_SELECT => 'select'),
-    'default'     => "zahl");
+    'default'     => "number");
 
 $modversion['config'][] = array(
     'name'        => 'cache_enabled',
