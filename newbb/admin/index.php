@@ -90,20 +90,17 @@ function newbb_getImageLibs()
     if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? "" : $GLOBALS['xoopsModuleConfig']['path_magick'] . "/";
         @exec($path . 'convert -version', $output, $status);
-        if (empty($status) && !empty($output)) {
-            if (preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
-                $imageLibs['imagemagick'] = $matches[0];
-            }
+        if (empty($status) && !empty($output) && preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
+            $imageLibs['imagemagick'] = $matches[0];
         }
+
         unset($output, $status);
     }
     if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? "" : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . "/";
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
-        if (empty($status) && !empty($output)) {
-            if (preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
-                $imageLibs['netpbm'] = $matches[0];
-            }
+        if (empty($status) && !empty($output) && preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
+            $imageLibs['netpbm'] = $matches[0];
         }
         unset($output, $status);
     }

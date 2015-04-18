@@ -2,9 +2,9 @@
 function ToggleBlockCategory(block, icon, src_expand, src_collapse, alt_expand, alt_collapse) {
     var Img_tag = 'IMG';
     if (document.getElementById) {
-        if (document.getElementById(block).style.display == 'block') {
+        if (document.getElementById(block).style.display === 'block') {
             document.getElementById(block).style.display = 'none';
-            if (icon.nodeName == Img_tag) {
+            if (icon.nodeName === Img_tag) {
                 icon.src = src_collapse;
             }
             icon.alt = alt_collapse;
@@ -13,7 +13,7 @@ function ToggleBlockCategory(block, icon, src_expand, src_collapse, alt_expand, 
         }
         else {
             document.getElementById(block).style.display = 'block';
-            if (icon.nodeName == Img_tag) {
+            if (icon.nodeName === Img_tag) {
                 icon.src = src_expand;
             }
             icon.alt = alt_expand;
@@ -22,9 +22,9 @@ function ToggleBlockCategory(block, icon, src_expand, src_collapse, alt_expand, 
         }
     }
     else if (document.all) {
-        if (document.all[block].style.display == 'block') {
+        if (document.all[block].style.display === 'block') {
             document.all[block].style.display = 'none';
-            if (icon.nodeName == Img_tag) {
+            if (icon.nodeName === Img_tag) {
                 icon.src = src_collapse;
             }
             icon.alt = alt_collapse;
@@ -33,7 +33,7 @@ function ToggleBlockCategory(block, icon, src_expand, src_collapse, alt_expand, 
         }
         else {
             document.all[block].style.display = 'block';
-            if (icon.nodeName == Img_tag) {
+            if (icon.nodeName === Img_tag) {
                 icon.src = src_expand;
             }
             icon.alt = alt_expand;
@@ -42,7 +42,7 @@ function ToggleBlockCategory(block, icon, src_expand, src_collapse, alt_expand, 
         }
     }
     icon.title = icon.alt;
-    if (icon.nodeName != Img_tag) {
+    if (icon.nodeName !== Img_tag) {
         icon.innerHTML = icon.alt; // to support IE7&8 use innerHTML istead of textContent
     }
 }
@@ -58,11 +58,11 @@ function SaveCollapsed(objid, addcollapsed) {
     var collapsed = GetCookie(toggle_cookie);
     var tmp = "";
 
-    if (collapsed != null) {
+    if (collapsed !== null) {
         collapsed = collapsed.split(",");
 
         for (i in collapsed) {
-            if (collapsed[i] != objid && collapsed[i] != "") {
+            if (collapsed[i] !== objid && collapsed[i] !== "") {
                 tmp = tmp + collapsed[i];
                 tmp = tmp + ",";
             }
@@ -91,15 +91,15 @@ function GetCookie(name) {
     cookie_begin = 0;
     while (cookie_begin < cookie_length) {
         value_begin = cookie_begin + cookie_name.length;
-        if (document.cookie.substring(cookie_begin, value_begin) == cookie_name) {
+        if (document.cookie.substring(cookie_begin, value_begin) === cookie_name) {
             var value_end = document.cookie.indexOf(";", value_begin);
-            if (value_end == -1) {
+            if (value_end === -1) {
                 value_end = cookie_length;
             }
             return unescape(document.cookie.substring(value_begin, value_end));
         }
         cookie_begin = document.cookie.indexOf(" ", cookie_begin) + 1;
-        if (cookie_begin == 0) {
+        if (cookie_begin === 0) {
             break;
         }
     }

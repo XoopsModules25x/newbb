@@ -160,10 +160,10 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
 
     foreach ($rows as $topic) {
-        if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $topic['post_karma'] > 0) {
+        if ($topic['post_karma'] > 0 && $GLOBALS['xoopsModuleConfig']['enable_karma']) {
             continue;
         }
-        if ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $topic['require_reply']) {
+        if ($topic['require_reply'] && $GLOBALS['xoopsModuleConfig']['allow_require_reply']) {
             continue;
         }
         if (!empty($users[$topic['uid']])) {
