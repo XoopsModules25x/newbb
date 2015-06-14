@@ -72,16 +72,16 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             ? array_filter(array_map("intval", array_map("trim", $forums)))
             : (empty($forums)
                 ? 0
-                : array(intval($forums))
+                : array((int) ($forums))
             )
         );
 
-        $sql = "	SELECT o.type_id, o.type_name, o.type_color, l.type_order" .
-               " 	FROM " . $this->db->prefix("bb_type_forum") . " AS l " .
-               " 		LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " .
-               " 	WHERE " .
-               "		l.forum_id " . (empty($forums) ? "IS NOT NULL" : "IN (" . implode(", ", $forums) . ")") .
-               " 		ORDER BY l.type_order ASC";
+        $sql = "    SELECT o.type_id, o.type_name, o.type_color, l.type_order" .
+               "     FROM " . $this->db->prefix("bb_type_forum") . " AS l " .
+               "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " .
+               "     WHERE " .
+               "        l.forum_id " . (empty($forums) ? "IS NOT NULL" : "IN (" . implode(", ", $forums) . ")") .
+               "         ORDER BY l.type_order ASC";
         if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             return $ret;
@@ -108,7 +108,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      */
     public function updateByForum($forum_id, $types)
     {
-        $forum_id = intval($forum_id);
+        $forum_id = (int) ($forum_id);
         if (empty($forum_id)) {
             return false;
         }
@@ -122,7 +122,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 continue;
             }
             $types_valid[] = $key;
-            if ($types[$key] != $types_existing[$key]["type_order"]) {
+            if ($types[$key] !== $types_existing[$key]["type_order"]) {
                 $types_update[] = $key;
             }
         }
@@ -139,7 +139,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             $sql = "DELETE FROM " . $this->db->prefix("bb_type_forum") .
                    " WHERE " .
                    " forum_id = " . $forum_id . " AND " . // irmtfan bug fix: delete other forums types when update the type for a specific forum
-                   " 	{$this->keyName} NOT IN (" . implode(", ", $types_valid) . ")";
+                   "     {$this->keyName} NOT IN (" . implode(", ", $types_valid) . ")";
             if (($result = $this->db->queryF($sql)) === false) {
             }
         }
@@ -148,7 +148,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             $type_query = array();
             foreach ($types_update as $key) {
                 $order = $types[$key];
-                if ($types_existing[$key]["type_order"] == $order) {
+                if ($types_existing[$key]["type_order"] === $order) {
                     continue;
                 }
                 $sql = "UPDATE " . $this->db->prefix("bb_type_forum") .

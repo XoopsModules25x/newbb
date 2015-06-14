@@ -9,6 +9,8 @@
 - replaced $_POST and $_GET with XoopsRequest (mamba)
 - replaced XOOPS_ROOT_PATH  with $GLOBALS['xoops']->path (mamba)
 - added/fixed phpDoc headers (mamba)
+- replaced intval() with (int) (mamba)
+- enforcing strict comparison (mamba)
 
 
 4.33         11/20/2012 (changes by Irmtfan)
@@ -40,8 +42,8 @@
 - add: forum name in newbb/moderate.php
 - add last_login to viewtopic.php (Mamba)
 - add: itemId($item_name) plugin: any module can define a plugin to get its itemId based on item_name. now newbb:
-		In newbb > viewtopic.php the topic_id is not always in the URL $_REQUEST.
-		in newbb/class/plugin/userlog.php (2013/05/14)
+        In newbb > viewtopic.php the topic_id is not always in the URL $_REQUEST.
+        in newbb/class/plugin/userlog.php (2013/05/14)
 - improve: use item($subscribe_from) in class/log.php, class/plugin/interface.php, class/plugin/newbb.php , modules/newbb/class/plugin/userlog.php(2013/05/15)
 - add poll_module config to avoid writing hard-code poll dirname (eg: clones) in newbb/xoops_version.php and newbb/header.php and newbb/admin/index.php
 - change version to 4.32 in newbb/xoops_version.php

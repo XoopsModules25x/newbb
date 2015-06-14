@@ -79,7 +79,7 @@ if (!defined("NEWBB_FUNCTIONS_SESSION")) {
             }
             $string = implode(",", $value);
         }
-        setcookie($forumCookie['prefix'] . $name, $string, intval($expire), $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
+        setcookie($forumCookie['prefix'] . $name, $string, (int) ($expire), $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
     }
 
     /**

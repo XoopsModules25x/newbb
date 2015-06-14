@@ -55,7 +55,7 @@ if (empty($forum_id)) {
 }
 
 /* Only admin has access to admin mode */
-if (!$isadmin && $mode == 2) {
+if (!$isadmin && $mode === 2) {
     $status = in_array($status, array("active", "pending", "deleted")) ? "" : $status;
     $mode   = 0;
 }
@@ -87,15 +87,15 @@ switch ($status) {
         $criteria_post->add(new Criteria("p.approved", -1)); // irmtfan add new criteria
         break;
     case "new":
-        //$criteria_status_count = new CriteriaCompo(new Criteria("post_time", intval($last_visit), ">"));// irmtfan commented and removed
-        //$criteria_status_post = new CriteriaCompo(new Criteria("p.post_time", intval($last_visit), ">"));// irmtfan commented and removed
+        //$criteria_status_count = new CriteriaCompo(new Criteria("post_time", (int) ($last_visit), ">"));// irmtfan commented and removed
+        //$criteria_status_post = new CriteriaCompo(new Criteria("p.post_time", (int) ($last_visit), ">"));// irmtfan commented and removed
         $criteria_count->add(new Criteria("approved", 1)); // irmtfan uncomment
         $criteria_post->add(new Criteria("p.approved", 1)); // irmtfan uncomment
         // following is for "unread" -- not finished -- irmtfan Now it is finished!
         if (empty($GLOBALS['xoopsModuleConfig']["read_mode"])) {
             //$criteria_status_count->add(new Criteria("approved", 1));// irmtfan commented and removed
             //$criteria_status_post->add(new Criteria("p.approved", 1));// irmtfan commented and removed
-        } elseif ($GLOBALS['xoopsModuleConfig']["read_mode"] == 2) {
+        } elseif ($GLOBALS['xoopsModuleConfig']["read_mode"] === 2) {
             // START irmtfan use read_uid to find the unread posts when the user is logged in
             $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar("uid") : 0;
             if (!empty($read_uid)) {
@@ -110,15 +110,15 @@ switch ($status) {
             // END irmtfan use read_uid to find the unread posts when the user is logged in
             //$criteria_status_post->add(new Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
-        } elseif ($GLOBALS['xoopsModuleConfig']["read_mode"] == 1) {
-            $criteria_count->add(new Criteria("post_time", intval($last_visit), ">")); // irmtfan add new criteria
-            $criteria_post->add(new Criteria("p.post_time", intval($last_visit), ">")); // irmtfan add new criteria
+        } elseif ($GLOBALS['xoopsModuleConfig']["read_mode"] === 1) {
+            $criteria_count->add(new Criteria("post_time", (int) ($last_visit), ">")); // irmtfan add new criteria
+            $criteria_post->add(new Criteria("p.post_time", (int) ($last_visit), ">")); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
             $topics         = array();
             $topic_lastread = newbb_getcookie('LT', true);
             if (count($topic_lastread) > 0) {
                 foreach ($topic_lastread as $id => $time) {
-                    if ($time > intval($last_visit)) {
+                    if ($time > (int) ($last_visit)) {
                         $topics[] = $id;
                     }
                 }
@@ -146,7 +146,7 @@ $user_karma    = $karma_handler->getUserKarma();
 $valid_modes     = array("flat", "compact");
 $viewmode_cookie = newbb_getcookie("V");
 
-if ('compact' == XoopsRequest::getString('viewmode', '', 'GET')) {
+if ('compact' === XoopsRequest::getString('viewmode', '', 'GET')) {
     newbb_setcookie("V", "compact", $forumCookie['expire']);
 }
 
@@ -363,9 +363,9 @@ if ($postCount > $post_perpage) {
     //    include $GLOBALS['xoops']->path('class/pagenav.php');
     $nav = new XoopsPageNav($postCount, $post_perpage, $start, "start", 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . "&amp;mode=" . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . $nav->url;
-    if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] == 'select') {
+    if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
         $navi = $nav->renderSelect();
-    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] == 'bild') {
+    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {
         $navi = $nav->renderImageNav(4);
     } else {
         $navi = $nav->renderNav(4);
@@ -420,7 +420,7 @@ $xoopsTpl->assign('unreplied_link', $unreplied_link);
 $xoopsTpl->assign('unread_link', $unread_link);
 
 $viewmode_options = array();
-if ($order == 'DESC') {
+if ($order === 'DESC') {
     $viewmode_options[] = array("link" => XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewpost.php?viewmode=flat&amp;order=ASC&amp;forum=" . $forum_id, "title" => _OLDESTFIRST);
 } else {
     $viewmode_options[] = array("link" => XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewpost.php?viewmode=flat&amp;order=DESC&amp;forum=" . $forum_id, "title" => _NEWESTFIRST);

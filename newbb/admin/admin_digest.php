@@ -43,7 +43,7 @@ switch ($op) {
     case "delete":
         $digest_ids     = XoopsRequest::getArray('digest_id', '', 'POST');
         $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
-        if ($digest_ids != '') {
+        if ($digest_ids !== '') {
             foreach ($digest_ids as $did => $value) {
                 $digest_handler->delete($did);
             }
@@ -59,7 +59,7 @@ switch ($op) {
             echo $indexAdmin->addNavigation('admin_digest.php');
         }
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
-        //	else echo $indexAdmin->addNavigation('admin_digest.php') ;
+        //    else echo $indexAdmin->addNavigation('admin_digest.php') ;
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";

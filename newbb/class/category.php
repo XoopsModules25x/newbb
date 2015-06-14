@@ -111,8 +111,8 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      *
      * TODO: get a list of categories per permission type
      *
-     * @param	mixed (object or integer)	category object or ID
-     * return	bool
+     * @param    mixed (object or integer)    category object or ID
+     * return    bool
      */
     /**
      * @param $category
@@ -121,11 +121,11 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getPermission($category, $perm = "access")
     {
-        if ($GLOBALS["xoopsUserIsAdmin"] && $GLOBALS["xoopsModule"]->getVar("dirname") == "newbb") {
+        if ($GLOBALS["xoopsUserIsAdmin"] && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
             return true;
         }
 
-        $cat_id       = is_object($category) ? $category->getVar('cat_id') : intval($category);
+        $cat_id       = is_object($category) ? $category->getVar('cat_id') : (int) ($category);
         $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
 
         return $perm_handler->getPermission("category", $perm, $cat_id);

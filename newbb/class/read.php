@@ -107,12 +107,12 @@ class NewbbReadHandler extends ArtObjectHandler
      */
     public function NewbbReadHandler(&$db, $type)
     {
-        $type = ("forum" == $type) ? "forum" : "topic";
+        $type = ("forum" === $type) ? "forum" : "topic";
         $this->ArtObjectHandler($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
         $this->type  = $type;
         $newbbConfig = newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
-        $this->lifetime = isset($newbbConfig["read_expire"]) ? intval($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
+        $this->lifetime = isset($newbbConfig["read_expire"]) ? (int) ($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
         $this->mode     = isset($newbbConfig["read_mode"]) ? $newbbConfig["read_mode"] : 2;
     }
 
@@ -149,7 +149,7 @@ class NewbbReadHandler extends ArtObjectHandler
             return true;
         }
         // irmtfan move here and rephrase
-        $expire = time() - intval($this->lifetime);
+        $expire = time() - (int) ($this->lifetime);
         $sql    = "DELETE FROM " . $this->table . " WHERE read_time < " . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -170,7 +170,7 @@ class NewbbReadHandler extends ArtObjectHandler
         if (empty($this->mode)) {
             return null;
         }
-        if (1 == $this->mode) {
+        if (1 === $this->mode) {
             return $this->getRead_cookie($read_item);
         } else {
             return $this->getRead_db($read_item, $uid);
@@ -183,7 +183,7 @@ class NewbbReadHandler extends ArtObjectHandler
      */
     public function getRead_cookie($item_id)
     {
-        $cookie_name = ($this->type == "forum") ? "LF" : "LT";
+        $cookie_name = ($this->type === "forum") ? "LF" : "LT";
         $cookie_var  = $item_id;
         // irmtfan set true to return array
         $lastview = newbb_getcookie($cookie_name, true);
@@ -207,8 +207,8 @@ class NewbbReadHandler extends ArtObjectHandler
         }
         $sql = "SELECT post_id " .
                " FROM " . $this->table .
-               " WHERE read_item = " . intval($read_item) .
-               " 	AND uid = " . intval($uid);
+               " WHERE read_item = " . (int) ($read_item) .
+               "     AND uid = " . (int) ($uid);
         if (!$result = $this->db->queryF($sql, 1)) {
             return null;
         }
@@ -228,7 +228,7 @@ class NewbbReadHandler extends ArtObjectHandler
         if (empty($this->mode)) {
             return true;
         }
-        if (1 == $this->mode) {
+        if (1 === $this->mode) {
             return $this->setRead_cookie($read_item, $post_id);
         } else {
             return $this->setRead_db($read_item, $post_id, $uid);
@@ -241,7 +241,7 @@ class NewbbReadHandler extends ArtObjectHandler
      */
     public function setRead_cookie($read_item, $post_id)
     {
-        $cookie_name          = ($this->type == "forum") ? "LF" : "LT";
+        $cookie_name          = ($this->type === "forum") ? "LF" : "LT";
         $lastview             = newbb_getcookie($cookie_name, true);
         $lastview[$read_item] = time();
         newbb_setcookie($cookie_name, $lastview);
@@ -264,10 +264,10 @@ class NewbbReadHandler extends ArtObjectHandler
         }
 
         $sql = "UPDATE " . $this->table .
-               " SET post_id = " . intval($post_id) . "," .
-               " 	read_time =" . time() .
-               " WHERE read_item = " . intval($read_item) .
-               " 	AND uid = " . intval($uid);
+               " SET post_id = " . (int) ($post_id) . "," .
+               "     read_time =" . time() .
+               " WHERE read_item = " . (int) ($read_item) .
+               "     AND uid = " . (int) ($uid);
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }
@@ -292,7 +292,7 @@ class NewbbReadHandler extends ArtObjectHandler
             return $ret;
         }
 
-        if (1 == $this->mode) {
+        if (1 === $this->mode) {
             $ret = $this->isRead_items_cookie($items);
         } else {
             $ret = $this->isRead_items_db($items, $uid);
@@ -307,7 +307,7 @@ class NewbbReadHandler extends ArtObjectHandler
      */
     public function isRead_items_cookie(&$items)
     {
-        $cookie_name = ($this->type == "forum") ? "LF" : "LT";
+        $cookie_name = ($this->type === "forum") ? "LF" : "LT";
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
         $ret = array();

@@ -59,11 +59,11 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     // Add core fields
     $categories[0]['cat_title'] = sprintf(_PROFILE_MA_ALLABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
     $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
-    if (!empty($avatar) && $avatar != "blank.gif") {
+    if (!empty($avatar) && $avatar !== "blank.gif") {
         $categories[0]['fields'][] = array('title' => _PROFILE_MA_AVATAR, 'value' => "<img src='" . XOOPS_UPLOAD_URL . "/" . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />");
         $weights[0][]              = 0;
     }
-    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
+    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') === 1) {
         $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
         $categories[0]['fields'][] = array('title' => _PROFILE_MA_EMAIL, 'value' => $email);
         $weights[0][]              = 0;
@@ -82,7 +82,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
                 continue;
             }
             $categories[$catid]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
-            $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? intval($fieldcats[$fields[$i]->getVar('fieldid')]['field_weight']) : 1;
+            $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? (int) ($fieldcats[$fields[$i]->getVar('fieldid')]['field_weight']) : 1;
         }
     }
 

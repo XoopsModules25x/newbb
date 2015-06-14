@@ -89,7 +89,7 @@ $adminmenu[] = array(
 $adminmenu[] = array(
     'title' => _MI_NEWBB_ADMENU_DIGEST,
     'link'  => "admin/admin_digest.php",
-    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/digest.png' : "assets/images/menu/digest.png",
+    'icon'  => ($newModuleGui) ? '../../' . $pathIcon32 . '/digest.png' : "assets/images/menu/digest.png"
 );
 
 $adminmenu[] = array(

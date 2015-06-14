@@ -32,7 +32,7 @@ include_once __DIR__ . "/header.php";
 xoops_loadLanguage("search");
 $configHandler    =& xoops_gethandler('config');
 $xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-if ($xoopsConfigSearch['enable_search'] != 1) {
+if ($xoopsConfigSearch['enable_search'] !== 1) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
 
@@ -93,7 +93,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
 
     $start = XoopsRequest::getInt('start', 0, 'GET');
     $forum = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', null, 'POST'), 'GET');
-    if (empty($forum) || $forum == 'all' or (is_array($forum) and in_array('all', $forum))) {
+    if (empty($forum) || $forum === 'all' or (is_array($forum) and in_array('all', $forum))) {
         $forum = array();
     } elseif (!is_array($forum)) {
         $forum = array_map("intval", explode("|", $forum));
@@ -136,7 +136,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     $next_search['term'] = $term;
     $query               = trim($term);
 
-    if ($andor != "EXACT") {
+    if ($andor !== "EXACT") {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
@@ -147,7 +147,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
                 $ignored_queries[] = $myts->addSlashes($q);
             }
         }
-        if (!$uname_required && count($queries) == 0) {
+        if (!$uname_required && count($queries) === 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
     } else {
@@ -196,14 +196,14 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
             $post_text           = "";
             $post_text_select    = "have text";
             $post_subject_select = "have text";
-            if ($show_search == 'post_text') {
+            if ($show_search === 'post_text') {
                 $post_text        = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode("", $selectexclude)); // strip html tags = $selecthtml
                 $post_text_select = $post_text;
                 $post_text        = newbb_highlightText($post_text, $queries);
-            } elseif ("title" != $searchin && !empty($selecthtml)) { // find if there is any query left after strip html tags
+            } elseif ("title" !== $searchin && !empty($selecthtml)) { // find if there is any query left after strip html tags
                 $post_text_select = newbb_selectText($row['post_text'], $queries, 100, 30000, true, implode("", $selectexclude)); // strip html tags = true
             }
-            if ("text" != $searchin) {
+            if ("text" !== $searchin) {
                 $post_subject_select = newbb_selectText($row['title'], $queries, 100, 400, true);// strip html tags = true
             }
             // if no text remained after select text continue
@@ -220,7 +220,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
         if (count($next_search) > 0) {
             $items = array();
             foreach ($next_search as $para => $val) {
-                if (!empty($val) || $para == "selecthtml") {
+                if (!empty($val) || $para === "selecthtml") {
                     $items[] = "{$para}={$val}";
                 }// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
             }
@@ -239,7 +239,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
         //$has_next = true;
         //}
         // irmtfan if $results < $limit => it is impossible to have next
-        if ($num_results == $limit) {
+        if ($num_results === $limit) {
             $next            = $start + $limit;
             $queries         = implode(',', $queries);
             $search_url_next = $search_url . "&direction=next&start={$next}"; // irmtfan add { and } direction=next
@@ -253,9 +253,9 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
             $xoopsTpl->assign("search_prev", $search_prev);
         }
         // irmtfan if all results skipped then redirect to the next/previous page
-        if ($num_results == $skipresults) {
+        if ($num_results === $skipresults) {
             $direction           = XoopsRequest::getString('direction', XoopsRequest::getString('direction', 'next', 'GET'), 'POST');
-            $search_url_redirect = (strtolower($direction) == "next") ? $search_url_next : $search_url_prev;
+            $search_url_redirect = (strtolower($direction) === "next") ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
         }
     }
@@ -282,17 +282,17 @@ $xoopsTpl->assign("search_term", $term);
 /* andor */
 $andor_select = "<select name=\"andor\">";
 $andor_select .= "<option value=\"OR\"";
-if ("OR" == $andor) {
+if ("OR" === $andor) {
     $andor_select .= " selected=\"selected\"";
 }
 $andor_select .= ">" . _SR_ANY . "</option>";
 $andor_select .= "<option value=\"AND\"";
-if ("AND" == $andor || empty($andor)) {
+if ("AND" === $andor || empty($andor)) {
     $andor_select .= " selected=\"selected\"";
 }
 $andor_select .= ">" . _SR_ALL . "</option>";
 $andor_select .= "<option value=\"EXACT\"";
-if ("EXACT" == $andor) {
+if ("EXACT" === $andor) {
     $andor_select .= " selected=\"selected\"";
 }
 $andor_select .= ">" . _SR_EXACT . "</option>";
@@ -309,17 +309,17 @@ $xoopsTpl->assign_by_ref("forum_selection_box", $select_forum);
 /* searchin */
 $searchin_select = "";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"title\"";
-if ("title" == $searchin) {
+if ("title" === $searchin) {
     $searchin_select .= " checked";
 }
 $searchin_select .= " />" . _MD_SUBJECT . "&nbsp;&nbsp;";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"text\"";
-if ("text" == $searchin) {
+if ("text" === $searchin) {
     $searchin_select .= " checked";
 }
 $searchin_select .= " />" . _MD_BODY . "&nbsp;&nbsp;";
 $searchin_select .= "<input type=\"radio\" name=\"searchin\" value=\"both\"";
-if ("both" == $searchin || empty($searchin)) {
+if ("both" === $searchin || empty($searchin)) {
     $searchin_select .= " checked";
 }
 $searchin_select .= " />" . _MD_SUBJECT . " & " . _MD_BODY . "&nbsp;&nbsp;";
@@ -328,12 +328,12 @@ $xoopsTpl->assign("searchin_radio", $searchin_select);
 /* show_search */
 $show_search_select = "";
 $show_search_select .= "<input type=\"radio\" name=\"show_search\" value=\"post\"";
-if ("post" == $show_search) {
+if ("post" === $show_search) {
     $show_search_select .= " checked";
 }
 $show_search_select .= " />" . _MD_POSTS . "&nbsp;&nbsp;";
 $show_search_select .= "<input type=\"radio\" name=\"show_search\" value=\"post_text\"";
-if ("post_text" == $show_search || empty($show_search)) {
+if ("post_text" === $show_search || empty($show_search)) {
     $show_search_select .= " checked";
 }
 $show_search_select .= " />" . _MD_SEARCHPOSTTEXT . "&nbsp;&nbsp;";
@@ -345,12 +345,12 @@ $xoopsTpl->assign("author_select", $search_username);
 /* sortby */
 $sortby_select = "<select name=\"sortby\">";
 $sortby_select .= "<option value=\"p.post_time\"";
-if ("p.post_time" == $sortby || empty($sortby)) {
+if ("p.post_time" === $sortby || empty($sortby)) {
     $sortby_select .= " selected=\"selected\"";
 }
 $sortby_select .= ">" . _MD_DATE . "</option>";
 $sortby_select .= "<option value=\"p.subject\"";
-if ("p.subject" == $sortby) {
+if ("p.subject" === $sortby) {
     $sortby_select .= " selected=\"selected\"";
 }
 $sortby_select .= ">" . _MD_TOPIC . "</option>";

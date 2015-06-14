@@ -33,7 +33,7 @@ if ($newXoopsModuleGui) {
     echo $indexAdmin->addNavigation('admin_forum_prune.php');
 }
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(5, _AM_NEWBB_PRUNE_TITLE);
-//	else echo $indexAdmin->addNavigation('admin_forum_prune.php') ;
+//    else echo $indexAdmin->addNavigation('admin_forum_prune.php') ;
 
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 
@@ -77,7 +77,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     if ($lock) {
         $sql .= " AND t.topic_status <> 1 ";
     }
-    if ($hot != 0) {
+    if ($hot !== 0) {
         $sql .= " AND t.topic_replies < " . $hot . " ";
     }
 
@@ -124,7 +124,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             }
         } else {
             // ARCHIVING POSTS
-            if ($archive == 1) {
+            if ($archive === 1) {
                 $result = $GLOBALS['xoopsDB']->query(
                     "SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " p, "
                     . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"

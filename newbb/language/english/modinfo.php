@@ -240,8 +240,8 @@ define('_MI_SHOW_SOCIALLINKS_DESC', "Show sharing buttons on the bottom of each 
 //4.2
 define('_MI_PAGENAV_DISPLAY', "display of navigation");
 define('_MI_PAGENAV_DISPLAY_DESC', "Shows the page number in the corresponding hardware mode");
-define('_MI_PAGENAV_ZAHL', "as numbers");
-define('_MI_PAGENAV_BILD', "as small images");
+define('_MI_PAGENAV_NUMBER', "as numbers");
+define('_MI_PAGENAV_IMAGE', "as small images");
 define('_MI_PAGENAV_SELECT', "as select box");
 define('_MI_ADVERTISING', "Show Advertising");
 define('_MI_ADVERTISING_DESC', "shows a commercial break after the 2nd Thread");

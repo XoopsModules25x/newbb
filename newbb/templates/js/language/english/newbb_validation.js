@@ -28,13 +28,13 @@ function validate(elName, elType, prevent, disablecat, elMsg) {
             var hasChecked = false;
             if (el.length) {
                 for (i = 0; i < el.length; i++) {
-                    if (el[i].checked == true) {
+                    if (el[i].checked === true) {
                         hasChecked = true;
                         break;
                     }
                 }
             } else {
-                if (el.checked == true) {
+                if (el.checked === true) {
                     hasChecked = true;
                 }
             }
@@ -64,11 +64,11 @@ function validate(elName, elType, prevent, disablecat, elMsg) {
                 }
             }
 
-            if (el.value == '') {
+            if (el.value === '') {
                 is_valid = false;
                 if (prevent) {
                     for (i = 0; i < el.options.length; i++) {
-                        if (el.options[i].value != '') {
+                        if (el.options[i].value !== '') {
                             el.value = el.options[i].value;
                             break; // loop exit
                         }

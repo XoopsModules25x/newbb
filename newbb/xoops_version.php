@@ -21,8 +21,8 @@ $modversion['image']       = "assets/images/xoopsbb_slogo.png";
 $modversion['dirname']     = "newbb";
 
 $modversion['author_realname'] = "NewBB Dev Team";
-$modversion['author_email']    = "dhsoft@users.sourceforge.net";
-$modversion['status_version']  = "4.2";
+$modversion['author_email']    = "";
+$modversion['status_version']  = "4.33";
 
 //about
 $modversion["module_status"]       = "RC9";
@@ -41,12 +41,12 @@ $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 
 $modversion['warning'] = "Only For XOOPS >= 2.5.0 ";
 
-$modversion['demo_site_url']     = "http://dev.simple-xoops.de/modules/newbb/";
-$modversion['demo_site_name']    = "Simple-XOOPS DEMO-SITE";
-$modversion['support_site_url']  = "http://www.simple-xoops.de/forum/";
-$modversion['support_site_name'] = "Team SIMPLE-XOOPS";
-$modversion['submit_feature']    = "http://www.simple-xoops.de/modules/mantis/set_project.php?ref=view_all_bug_page.php&project_id=2";
-$modversion['submit_bug']        = "http://www.simple-xoops.de/modules/mantis/set_project.php?ref=view_all_bug_page.php&project_id=2";
+$modversion['demo_site_url']        = "http://www.xoops.org/newbb/";
+$modversion['demo_site_name']        = "XOOPS Project";
+$modversion['support_site_url']    = "http://www.xoops.org/newbb/";
+$modversion['support_site_name']    = "XOOPS Project";
+$modversion['submit_feature']        = "http://xoops.org/modules/newbb/viewforum.php?forum=30";
+$modversion['submit_bug']            = "http://xoops.org/modules/newbb/viewforum.php?forum=28";
 
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.ini.php');
 // Is performing module install/update?
@@ -187,10 +187,10 @@ $modversion['blocks'][] = array(
 
 /*
  * $options:
- *					$options[0] - number of tags to display
- *					$options[1] - time duration, in days, 0 for all the time
- *					$options[2] - max font size (px or %)
- *					$options[3] - min font size (px or %)
+ *                    $options[0] - number of tags to display
+ *                    $options[1] - time duration, in days, 0 for all the time
+ *                    $options[2] - max font size (px or %)
+ *                    $options[3] - min font size (px or %)
  */
 $modversion["blocks"][] = array(
     "file"        => "newbb_block_tag.php",
@@ -204,9 +204,9 @@ $modversion["blocks"][] = array(
 
 /*
  * $options:
- *					$options[0] - number of tags to display
- *					$options[1] - time duration, in days, 0 for all the time
- *					$options[2] - sort: a - alphabet; c - count; t - time
+ *                    $options[0] - number of tags to display
+ *                    $options[1] - time duration, in days, 0 for all the time
+ *                    $options[2] - sort: a - alphabet; c - count; t - time
  */
 $modversion["blocks"][] = array(
     "file"        => "newbb_block_tag.php",
@@ -312,10 +312,10 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => array(
-        _MI_PAGENAV_ZAHL   => 'zahl',
-        _MI_PAGENAV_BILD   => 'bild',
+        _MI_PAGENAV_NUMBER   => 'number',
+        _MI_PAGENAV_IMAGE   => 'impage',
         _MI_PAGENAV_SELECT => 'select'),
-    'default'     => "zahl");
+    'default'     => "number");
 
 $modversion['config'][] = array(
     'name'        => 'cache_enabled',
@@ -708,7 +708,7 @@ $modversion['config'][] = array(
 
 xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
-if ($isModuleAction && "update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
+if ($isModuleAction && "update_ok" === XoopsRequest::getCmd('op', '', 'POST')) {
     $forumHandler =& xoops_getmodulehandler('forum', 'newbb', true);
     if ($forums = $forumHandler->getForumsByCategory(0, 'access', false, array("parent_forum", "cat_id", "forum_name"))) {
         foreach (array_keys($forums) as $c) {
@@ -745,7 +745,7 @@ if ($isModuleAction) {
     $dir_def = !empty($pollDirs) ? (!empty($pollDirs["xoopspoll"]) ? $pollDirs["xoopspoll"] : end($pollDirs))
         : 0;
     //Now check all topics and try to find the poll module
-    if ("update_ok" == XoopsRequest::getCmd('op', '', 'POST')) {
+    if ("update_ok" === XoopsRequest::getCmd('op', '', 'POST')) {
         $dir_in_update = $topicHandler->findPollModule($pollDirs);
         if (!is_bool($dir_in_update)) {
             $dir_def = $dir_in_update;
@@ -760,13 +760,13 @@ if ($isModuleAction) {
 
 $isPref = (
     // action module "system"
-    is_object($GLOBALS["xoopsModule"]) && "system" == $GLOBALS["xoopsModule"]->getVar("dirname", "n")
+    is_object($GLOBALS["xoopsModule"]) && "system" === $GLOBALS["xoopsModule"]->getVar("dirname", "n")
     &&
     // current action
-    !empty($_REQUEST['fct']) && $_REQUEST['fct'] == "preferences"
+    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === "preferences"
 );
 xoops_loadLanguage('admin', $modversion['dirname']);
-// if in pref AND click on save AND 'poll_module' != 0
+// if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $hModConfig = xoops_gethandler('config');
     $criteria   = new CriteriaCompo();
@@ -775,7 +775,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $criteria->add(new Criteria('conf_id', "(" . implode(", ", XoopsRequest::getArray('conf_ids', array(), 'POST')) . ")", "IN"), "AND");
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
-    if (is_object($pollOptions) && $pollOptions->getVar("conf_value") != "0") {
+    if (is_object($pollOptions) && $pollOptions->getVar("conf_value") !== "0") {
         $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
         $topicPolls    = $topicHandler->getCount(new Criteria("topic_haspoll", 1));
         if ($topicPolls > 0) {

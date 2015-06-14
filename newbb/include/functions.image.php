@@ -124,7 +124,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
         $newWidth  = (int)(min($imginfo[0], $thumb_width));
         $newHeight = (int)($imginfo[1] * $newWidth / $imginfo[0]);
 
-        if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
             if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                 $cur_dir     = __DIR__;
                 $src_file_im = '"' . $cur_dir . '\\' . strtr($src_file, '/', '\\') . '"';
@@ -142,7 +142,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
             }
         }
 
-        if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
             $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? "" : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . "/";
             if (preg_match("/\.png/", $source)) {
                 $cmd = $path . "pngtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "pnmtopng > $new_file";

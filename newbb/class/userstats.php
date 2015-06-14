@@ -66,7 +66,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     public function &get($id)
     {
         $object = null;
-        if (!$id = intval($id)) {
+        if (!$id = (int) ($id)) {
             return $object;
         }
         $object =& $this->create(false);
@@ -97,7 +97,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         if (empty($id)) {
             return null;
         }
-        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . intval($id);
+        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . (int) ($id);
         if (!$result = $this->db->query($sql)) {
             return null;
         }

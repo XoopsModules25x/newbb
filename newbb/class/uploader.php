@@ -34,7 +34,7 @@ class newbb_uploader extends XoopsMediaUploader
     public function newbb_uploader($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
     {
         if (!is_array($allowedMimeTypes)) {
-            if (empty($allowedMimeTypes) || $allowedMimeTypes == "*") {
+            if (empty($allowedMimeTypes) || $allowedMimeTypes === "*") {
                 $allowedMimeTypes = array();
             } else {
                 $allowedMimeTypes = array_filter(array_map("trim", explode("|", strtolower($allowedMimeTypes))));

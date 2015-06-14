@@ -77,7 +77,7 @@ class NewbbReportHandler extends ArtObjectHandler
      */
     public function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
     {
-        if ($order == "DESC") {
+        if ($order === "DESC") {
             $operator_for_position = '>';
         } else {
             $order                 = "ASC";
@@ -107,7 +107,7 @@ class NewbbReportHandler extends ArtObjectHandler
                 $row = $this->db->fetchArray($result);
             }
             $position = $row['report_count'];
-            $start    = intval($position / $perpage) * $perpage;
+            $start    = (int) ($position / $perpage) * $perpage;
         }
 
         $sql    = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forumCriteria . $result_criteria . $order_criteria;

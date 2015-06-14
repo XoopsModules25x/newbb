@@ -62,15 +62,15 @@ $category_obj =& $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
 $xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(
-    'forum_id' 			=> $forum_obj->getVar('forum_id'),
-    'forum_name' 		=> $forum_obj->getVar('forum_name'),
+    'forum_id'             => $forum_obj->getVar('forum_id'),
+    'forum_name'         => $forum_obj->getVar('forum_name'),
     ));
 
 $form_title = _MD_POSTNEW;
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ($GLOBALS['xoopsModuleConfig']['disc_show'] == 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] == 3) {
+if ($GLOBALS['xoopsModuleConfig']['disc_show'] === 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] === 3) {
     $xoopsTpl->assign("disclaimer", $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 

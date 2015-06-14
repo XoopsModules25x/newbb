@@ -17,7 +17,7 @@
                 <span class="extra"><{$smarty.const._MD_MODERATOR}>:&nbsp;</strong><{$sforum.forum_moderators}>
             <{/if}>
         </div>
-   	</td>
+       </td>
     <td class="even" align="center" valign="middle">
         <{$sforum.forum_topics}>  <{$smarty.const._MD_TOPICS}>
         <br />
@@ -26,17 +26,17 @@
 <!-- irmtfan hardcode removed align="right" -->
     <td class="odd" id="align_right" valign="middle">
         <{if $sforum.forum_lastpost_subject}>
-			<{$sforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$sforum.forum_lastpost_user}><br />			
+            <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$sforum.forum_lastpost_user}><br />
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
-			<{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
+            <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
 <!-- irmtfan removed icon_path -->
 <{$sforum.forum_lastpost_icon}>
             </a>                       
         <{else}>
             <{$smarty.const._MD_NONEWPOSTS}>
-      	<{/if}>
-	</td>
+          <{/if}>
+    </td>
   </tr>
-	<{/foreach}>
+    <{/foreach}>
   <!-- end subforums -->
 </table>

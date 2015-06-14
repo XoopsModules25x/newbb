@@ -60,7 +60,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      */
     public function clearGarbage($expire = 0)
     {
-        $expire = time() - intval($expire);
+        $expire = time() - (int) ($expire);
         $sql    = sprintf("DELETE FROM %s WHERE mod_end < %u", $this->db->prefix('bb_moderates'), $expire);
         $this->db->queryF($sql);
     }
@@ -88,7 +88,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             return in_array($forum, $forums);
         }
         $uid          = ($uid < 0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
-        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . intval($uid); // irmtfan - uid=0 for anons
+        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int) ($uid); // irmtfan - uid=0 for anons
         $ip           = empty($ip) ? newbb_getIP(true) : $ip;
         if (!empty($ip)) {
             $ip_segs = explode(".", $ip);
@@ -99,7 +99,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             $ip_criteria = "1=1";
         }
-        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . intval($forum);
+        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . (int) ($forum);
         $expire_criteria = "mod_end > " . time();
         $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
@@ -133,7 +133,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
                 return $forums[$uid][$ip];
             }
         }
-        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . intval($uid); // irmtfan - uid=0 for anons
+        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int) ($uid); // irmtfan - uid=0 for anons
         if (!empty($ip)) {
             $ip_segs = explode(".", $ip);
             for ($i = 1; $i <= 4; ++$i) {
@@ -173,7 +173,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     public function getLatest($item, $isUid = true)
     {
         if ($isUid) {
-            $criteria = "uid =" . intval($item);
+            $criteria = "uid =" . (int) ($item);
         } else {
             $ip_segs = explode(".", $item);
             $segs    = min(count($ip_segs), 4);
@@ -211,7 +211,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             /* */
             // for 4.1+
             /*
-            $sql = 	"DELETE bb FROM ".$this->table." AS bb".
+            $sql =     "DELETE bb FROM ".$this->table." AS bb".
                     " LEFT JOIN ".$this->db->prefix("bb_forums")." AS aa ON bb.forum_id = aa.forum_id ".
                     " WHERE bb.forum_id > 0 AND (aa.forum_id IS NULL)";
             */

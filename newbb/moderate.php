@@ -61,7 +61,7 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
     }
 } elseif (XoopsRequest::getString('del', '', 'GET')) {
     $moderate_obj = $moderate_handler->get(XoopsRequest::getString('del', '', 'GET'));
-    if ($is_administrator || $moderate_obj->getVar("forum_id") == $forum_id) {
+    if ($is_administrator || $moderate_obj->getVar("forum_id") === $forum_id) {
         $moderate_handler->delete($moderate_obj, true);
         redirect_header("moderate.php?forum=$forum_id", 2, _MD_DBUPDATED);
     }
@@ -178,7 +178,7 @@ if (!empty($moderate_count)) {
                     </td>
                 <td width="5%" align="center" nowrap="nowrap">
                     ' .
-             (($is_administrator || $moderate_objs[$id]->getVar("forum_id") == $forum_id) ? '<a href="moderate.php?forum=' . $forum_id . '&amp;del=' . $moderate_objs[$id]->getVar("mod_id") . '">' . _DELETE . '</a>' : ' ') . '
+             (($is_administrator || $moderate_objs[$id]->getVar("forum_id") === $forum_id) ? '<a href="moderate.php?forum=' . $forum_id . '&amp;del=' . $moderate_objs[$id]->getVar("mod_id") . '">' . _DELETE . '</a>' : ' ') . '
                     </td>
             </tr>
         ';
@@ -229,7 +229,7 @@ mod_loadFunctions("forum", "newbb");
 if (newbb_isAdmin()) {
     $forumSel = "<select name=\"forum\">";// if user dont select any it select "0"
     $forumSel .= "<option value=\"0\" ";
-    if ($forum_id == 0) {
+    if ($forum_id === 0) {
         $forumSel .= " selected";
     }
     $forumSel .= ">" . _ALL . "</option>";

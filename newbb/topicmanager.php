@@ -32,17 +32,17 @@ include_once __DIR__ . "/header.php";
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
     foreach (array('forum', 'newforum', 'newtopic') as $getint) {
-        ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// intval(@$_POST[$getint]);
+        ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// (int) (@$_POST[$getint]);
     }
     foreach (array('topic_id') as $getint) {
-        ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// intval(@$_POST[$getint]);
+        ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// (int) (@$_POST[$getint]);
     }
     if (!is_array($topic_id)) {
         $topic_id = array($topic_id);
     }
 } else {
     foreach (array('forum', 'topic_id') as $getint) {
-        ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');// intval(@$_GET[$getint]);
+        ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');// (int) (@$_GET[$getint]);
     }
 }
 
@@ -56,7 +56,7 @@ $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 
 if (!$forum) {
-    $topic_obj =& $topicHandler->get(intval($topic_id));
+    $topic_obj =& $topicHandler->get((int) ($topic_id));
     if (is_object($topic_obj)) {
         $forum = $topic_obj->getVar("forum_id");
     } else {
@@ -95,7 +95,7 @@ include_once $GLOBALS['xoops']->path('header.php');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $mode = XoopsRequest::getString('mode', '', 'POST');// $_POST['mode'];
 
-    if ('delete' == $mode) {
+    if ('delete' === $mode) {
         foreach ($topic_id as $tid) {
             $topic_obj =& $topicHandler->get($tid);
             $topicHandler->delete($topic_obj, false);
@@ -108,7 +108,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         }
         // irmtfan full URL
         echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . "</a></p><p><a href='index.php'>" . _MD_RETURNFORUMINDEX . "</a></p>";
-    } elseif ('restore' == $mode) {
+    } elseif ('restore' === $mode) {
         //$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
         $forums     = array();
         $topics_obj =& $topicHandler->getAll(new Criteria("topic_id", "(" . implode(",", $topic_id) . ")", "IN"));
@@ -132,7 +132,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewtopic.php?topic_id=$restoretopic_id'>" . _MD_VIEWTHETOPIC . "</a></p>" .
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . "</a></p>" .
              "<p><a href='index.php'>" . _MD_RETURNFORUMINDEX . "</a></p>";
-    } elseif ('merge' == $mode) {
+    } elseif ('merge' === $mode) {
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
         $rate_handler =& xoops_getmodulehandler('rate', 'newbb');
 
@@ -164,7 +164,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             // START irmtfan poll_module and rewrite the method
             // irmtfan only move poll in old topic to new topic if new topic has not a poll
             $poll_id = $topic_obj->getVar("poll_id");
-            if (($newtopic_obj->getVar("poll_id") == 0) && $poll_id > 0) {
+            if (($newtopic_obj->getVar("poll_id") === 0) && $poll_id > 0) {
                 $newtopic_obj->setVar("topic_haspoll", 1);
                 $newtopic_obj->setVar("poll_id", $poll_id);
                 $poll_id = 0;// set to not delete the poll
@@ -191,7 +191,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewtopic.php?topic_id=$newtopic'>" . _MD_VIEWTHETOPIC . "</a></p>" .
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . "</a></p>" .
              "<p><a href='" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/index.php'>" . _MD_RETURNFORUMINDEX . "</a></p>";
-    } elseif ('move' == $mode) {
+    } elseif ('move' === $mode) {
         if ($newforum > 0) {
             $topic_id  = $topic_id[0];
             $topic_obj = $topicHandler->get($topic_id);
@@ -232,14 +232,14 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         } else {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
         }
-        if ('digest' == $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
+        if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
             $topic_obj     =& $topicHandler->get($topic_id);
             $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
             $statsHandler->update($topic_obj->getVar("forum_id"), "digest");
             $userstats_handler =& xoops_getmodulehandler('userstats', 'newbb');
             if ($user_stat = $userstats_handler->get($topic_obj->getVar("topic_poster"))) {
                 $z = $user_stat->getVar("user_digests") + 1;
-                $user_stat->setVar("user_digests", intval($z));
+                $user_stat->setVar("user_digests", (int) ($z));
                 $userstats_handler->insert($user_stat);
             }
         }
@@ -255,7 +255,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo "<tr class='bg3' align='left'>";
     echo "<td colspan='2' align='center'>" . $action[$mode]['desc'] . "</td></tr>";
 
-    if ($mode == 'move') {
+    if ($mode === 'move') {
         echo '<tr><td class="bg3">' . _MD_MOVETOPICTO . '</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
@@ -284,7 +284,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         echo $box;
         echo '</select></td></tr>';
     }
-    if ($mode == 'merge') {
+    if ($mode === 'merge') {
         echo '<tr><td class="bg3">' . _MD_MERGETOPICTO . '</td><td class="bg1">';
         echo _MD_TOPIC . "ID-$topic_id -> ID: <input name='newtopic' value='' />";
         echo '</td></tr>';

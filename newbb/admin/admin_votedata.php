@@ -71,10 +71,12 @@ switch ($op) {
         $useravgrating = 0;
 
         while (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
-            $useravgrating = $useravgrating + $rating2;
+//            $useravgrating = $useravgrating + $rating2;
+            $useravgrating += $rating2;
         }
         if ($useravgrating > 0) {
-            $useravgrating = $useravgrating / $uservotes;
+//            $useravgrating = $useravgrating / $uservotes;
+            $useravgrating /= $uservotes;
             $useravgrating = number_format($useravgrating, 2);
         }
 
@@ -84,7 +86,7 @@ switch ($op) {
             echo $indexAdmin->addNavigation('admin_votedata.php');
         }
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(8, _AM_NEWBB_VOTE_RATINGINFOMATION);
-        //	else echo $indexAdmin->addNavigation('admin_votedata.php') ;
+        //    else echo $indexAdmin->addNavigation('admin_votedata.php') ;
 
         if (!$newXoopsModuleGui) {
             echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_VOTE_DISPLAYVOTES . "</legend>";
@@ -108,7 +110,7 @@ switch ($op) {
         <th align='center'>" . _AM_NEWBB_VOTE_DATE . "</th>\n
         <th align='center'>" . _AM_NEWBB_ACTION . "</th></tr>\n";
 
-        if ($votes == 0) {
+        if ($votes === 0) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . "</td></tr>";
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {

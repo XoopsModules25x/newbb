@@ -67,7 +67,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     {
         $this->NewbbReadHandler($db, "topic");
         $newbbConfig           = newbbLoadConfig();
-        $this->items_per_forum = isset($newbbConfig["read_items"]) ? intval($newbbConfig["read_items"]) : 100;
+        $this->items_per_forum = isset($newbbConfig["read_items"]) ? (int) ($newbbConfig["read_items"]) : 100;
     }
 
     /**
@@ -107,7 +107,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        if ($this->mode == 1) {
+        if ($this->mode === 1) {
             return $this->setRead_items_cookie($status, $forum_id);
         } else {
             return $this->setRead_items_db($status, $forum_id, $uid);

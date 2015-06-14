@@ -58,7 +58,7 @@ function &newbbLoadConfig()
     load_functions("config");
     $moduleConfig = mod_loadConfig("newbb");
     // irmtfan - change the read_mode = 2 (db) to read_mode = 1 (cookie) for anonymous users
-    if (!is_object($GLOBALS["xoopsUser"]) && $moduleConfig["read_mode_db_to_cookie_for_anon"] && 2 == $moduleConfig["read_mode"]) {
+    if (!is_object($GLOBALS["xoopsUser"]) && $moduleConfig["read_mode_db_to_cookie_for_anon"] && 2 === $moduleConfig["read_mode"]) {
         $moduleConfig["read_mode"] = 1;
     }
 

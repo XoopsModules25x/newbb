@@ -14,7 +14,7 @@ include_once __DIR__ . "/header.php";
 
 /* deal with marks */
 if (XoopsRequest::getInt('mark_read', 0)) { //TODO mb check if this is GET or POST?
-    if (1 == XoopsRequest::getInt('mark_read', 0)) { // marked as read
+    if (1 === XoopsRequest::getInt('mark_read', 0)) { // marked as read
         $markvalue  = 1;
         $markresult = _MD_MARK_READ;
     } else { // marked as unread
@@ -44,7 +44,7 @@ if (!$viewcat) {
     $xoops_pagetitle   = $category_obj->getVar('cat_title') . " [" . $xoopsModule->getVar('name') . "]";
 }
 
-if (count($categories) == 0) {
+if (count($categories) === 0) {
     redirect_header(XOOPS_URL, 2, _MD_NORIGHTTOACCESS);
 }
 
@@ -89,7 +89,7 @@ if (!empty($forums_allowed)) {
 }
 
 /* fetch subforums if required to display */
-if (empty($forums_top) || $GLOBALS['xoopsModuleConfig']['subforum_display'] == "hidden") {
+if (empty($forums_top) || $GLOBALS['xoopsModuleConfig']['subforum_display'] === "hidden") {
     $forums_sub = array();
 } else {
     $crit_sub = new CriteriaCompo(new Criteria("parent_forum", "(" . implode(", ", $forums_top) . ")", "IN"));
@@ -187,7 +187,7 @@ foreach (array_keys($categories) as $id) {
         $cat_sponsor = array("title" => $title, "link" => formatURL($url));
     }
     $cat_image = $onecat['cat_image'];
-    if (!empty($cat_image) && $cat_image != "blank.gif") {
+    if (!empty($cat_image) && $cat_image !== "blank.gif") {
         $cat_image = XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname", "n") . "/assets/images/category/" . $cat_image;
     } else {
         $cat_image = "";
@@ -221,9 +221,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     if (is_object($GLOBALS['xoopsUser'])) {
         $userstats_handler        =& xoops_getmodulehandler('userstats');
         $userstats_row            = $userstats_handler->getStats($GLOBALS['xoopsUser']->getVar("uid"));
-        $userstats["topics"]      = sprintf(_MD_USER_TOPICS, intval(@$userstats_row["user_topics"]));
-        $userstats["posts"]       = sprintf(_MD_USER_POSTS, intval(@$userstats_row["user_posts"]));
-        $userstats["digests"]     = sprintf(_MD_USER_DIGESTS, intval(@$userstats_row["user_digests"]));
+        $userstats["topics"]      = sprintf(_MD_USER_TOPICS, (int) (@$userstats_row["user_topics"]));
+        $userstats["posts"]       = sprintf(_MD_USER_POSTS, (int) (@$userstats_row["user_posts"]));
+        $userstats["digests"]     = sprintf(_MD_USER_DIGESTS, (int) (@$userstats_row["user_digests"]));
         $userstats["currenttime"] = sprintf(_MD_TIMENOW, formatTimestamp(time(), "s")); // irmtfan should be removed because it is for anon users too
         $userstats["lastvisit"]   = sprintf(_MD_USER_LASTVISIT, formatTimestamp($last_visit, "s")); // irmtfan should be removed because it is for anon users too
         $userstats["lastpost"]    = empty($userstats_row["user_lastpost"]) ? _MD_USER_NOLASTPOST : sprintf(_MD_USER_LASTPOST, formatTimestamp($userstats_row["user_lastpost"], "s"));
@@ -264,7 +264,7 @@ if ($isadmin) {
     $xoopsTpl->assign('forum_index_cpanel', array("link" => "admin/index.php", "name" => _MD_ADMINCP));
 }
 
-if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
+if ($GLOBALS['xoopsModuleConfig']['rss_enable'] === 1) {
     $xoopsTpl->assign("rss_enable", 1);
     $xoopsTpl->assign("rss_button", newbbDisplayImage('rss', 'RSS feed'));
 }

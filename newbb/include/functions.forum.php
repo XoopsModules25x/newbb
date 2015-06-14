@@ -31,10 +31,10 @@ if (!defined("NEWBB_FUNCTIONS_FORUM")) {
         $categories       = $categoryHandler->getByPermission($permission, array("cat_id", "cat_order", "cat_title"), false);
 
         load_functions("cache");
-        if ($permission == "all" || !$forums = mod_loadCacheFile_byGroup("forumselect")) {
+        if ($permission === "all" || !$forums = mod_loadCacheFile_byGroup("forumselect")) {
             $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
             $forums        = $forumHandler->getTree(array_keys($categories), 0, $permission);
-            if (empty($permission) || $permission == "access") {
+            if (empty($permission) || $permission === "access") {
                 mod_createCacheFile_byGroup($forums, "forumselect");
             }
         }
@@ -105,7 +105,7 @@ if (!defined("NEWBB_FUNCTIONS_FORUM")) {
         if (!is_array($list) || $refresh) {
             $list = newbb_createSubForumList();
         }
-        if ($pid == 0) {
+        if ($pid === 0) {
             return $list;
         } else {
             return @$list[$pid];
@@ -154,7 +154,7 @@ if (!defined("NEWBB_FUNCTIONS_FORUM")) {
         if (!is_array($list) || $refresh) {
             $list = newbb_createParentForumList();
         }
-        if ($forum_id == 0) {
+        if ($forum_id === 0) {
             return $list;
         } else {
             return @$list[$forum_id];

@@ -40,11 +40,11 @@
 <{if $search_next or $search_prev}>
   <tr>
     <td><table border="0" cellpadding="4" cellspacing="1" width="100%">
-		<tr class="head">
+        <tr class="head">
 <!-- irmtfan hardcode removed align="left" -->
-			<td class="align_left" width="50%"><{$search_prev}> </td><td class="align_right" width="50%"> <{$search_next}></td>
-		</tr>
-      	</table></td>
+            <td class="align_left" width="50%"><{$search_prev}> </td><td class="align_right" width="50%"> <{$search_next}></td>
+        </tr>
+          </table></td>
   </tr>
 <{/if}>
 </table>

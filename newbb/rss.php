@@ -45,7 +45,7 @@ $forums   = array();
 $category = XoopsRequest::getString('c', '', 'POST');
 if (XoopsRequest::getString('f', 0, 'GET')) {
     $forums = array_map("intval", array_map("trim", explode("|", XoopsRequest::getString('f', 0, 'GET'))));
-    //$forums[] = intval($_GET["f"]);
+    //$forums[] = (int) ($_GET["f"]);
 }
 
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
@@ -60,7 +60,7 @@ if (is_array($forums) && count($forums) > 0) {
     $forums_top   = $forumHandler->getIds($crit_top);
     $validForums = array_intersect($forums_top, $validForums);
 }
-if (count($validForums) == 0) {
+if (count($validForums) === 0) {
     newbb_trackback_response(1, _NOPERM);
 }
 
@@ -120,20 +120,20 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
     $query = 'SELECT' .
-             '	f.forum_id, f.forum_name,' .
-             '	t.topic_id, t.topic_title, t.type_id,' .
-             '	p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' .
-             '	pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' .
-             '	pt.post_text' .
-             '	FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' .
-             '	LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' .
-             '	LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id' .
-             '	LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=p.forum_id' .
-             '	WHERE 1=1 ' .
+             '    f.forum_id, f.forum_name,' .
+             '    t.topic_id, t.topic_title, t.type_id,' .
+             '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' .
+             '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' .
+             '    pt.post_text' .
+             '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' .
+             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' .
+             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id' .
+             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=p.forum_id' .
+             '    WHERE 1=1 ' .
              $forumCriteria .
              $approveCriteria .
              ' ORDER BY p.post_id DESC';
-    $limit = intval($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
+    $limit = (int) ($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
     if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
         newbb_trackback_response(1, _MD_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
@@ -160,10 +160,10 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
 
     foreach ($rows as $topic) {
-        if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $topic['post_karma'] > 0) {
+        if ($topic['post_karma'] > 0 && $GLOBALS['xoopsModuleConfig']['enable_karma']) {
             continue;
         }
-        if ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $topic['require_reply']) {
+        if ($topic['require_reply'] && $GLOBALS['xoopsModuleConfig']['allow_require_reply']) {
             continue;
         }
         if (!empty($users[$topic['uid']])) {

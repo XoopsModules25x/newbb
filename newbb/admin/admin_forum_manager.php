@@ -38,7 +38,7 @@ load_functions("cache");
 xoops_cp_header();
 
 $op       = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
-$forum_id = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET'); //intval( !empty($_GET['forum'])? $_GET['forum'] : (!empty($_POST['forum'])?$_POST['forum']:0) );
+$forum_id = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET'); //(int) ( !empty($_GET['forum'])? $_GET['forum'] : (!empty($_POST['forum'])?$_POST['forum']:0) );
 
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 switch ($op) {
@@ -48,12 +48,12 @@ switch ($op) {
         if (XoopsRequest::getInt('dest_forum', 0, 'POST')) {
             $dest = XoopsRequest::getInt('dest_forum', 0, 'POST');
             if ($dest > 0) {
-                $pid        = intval($dest);
+                $pid        = (int) ($dest);
                 $forum_dest =& $forumHandler->get($pid);
                 $cid        = $forum_dest->getVar("cat_id");
                 unset($forum_dest);
             } else {
-                $cid = abs(intval($dest));
+                $cid = abs((int) ($dest));
                 $pid = 0;
             }
             $forum_obj =& $forumHandler->get($forum_id);
@@ -61,7 +61,7 @@ switch ($op) {
             $forum_obj->setVar("parent_forum", $pid);
             $forumHandler->insert($forum_obj);
             if ($forumHandler->insert($forum_obj)) {
-                if ($cid != $forum_obj->getVar("cat_id") && $subforums = newbb_getSubForum($forum_id)) {
+                if ($cid !== $forum_obj->getVar("cat_id") && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map("intval", array_values($subforums));
                     $forumHandler->updateAll("cat_id", $cid, new Criteria("forum_id", "(" . implode(", ", $forums) . ")", "IN"));
                 }
@@ -96,19 +96,19 @@ switch ($op) {
             $forum_dest =& $forumHandler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
             if (is_object($forum_dest)) {
                 $cid         = $forum_dest->getVar("cat_id");
-                $sql         = "	UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_posts') .
-                               "	SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
-                               "	WHERE forum_id=$forum_id";
+                $sql         = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_posts') .
+                               "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
+                               "    WHERE forum_id=$forum_id";
                 $result_post = $GLOBALS['xoopsDB']->queryF($sql);
 
-                $sql          = "	UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_topics') .
-                                "	SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
-                                "	WHERE forum_id=$forum_id";
+                $sql          = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_topics') .
+                                "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
+                                "    WHERE forum_id=$forum_id";
                 $result_topic = $GLOBALS['xoopsDB']->queryF($sql);
 
                 $forum_obj =& $forumHandler->get($forum_id);
                 $forumHandler->updateAll("parent_forum", XoopsRequest::getInt('dest_forum', 0, 'POST'), new Criteria("parent_forum", $forum_id));
-                if ($cid != $forum_obj->getVar("cat_id") && $subforums = newbb_getSubForum($forum_id)) {
+                if ($cid !== $forum_obj->getVar("cat_id") && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map("intval", array_values($subforums));
                     $forumHandler->updateAll("cat_id", $cid, new Criteria("forum_id", "(" . implode(", ", $forums) . ")", "IN"));
                 }
@@ -205,7 +205,7 @@ switch ($op) {
         break;
 
     case "del":
-        if (1 != XoopsRequest::getInt('confirm', 0, 'POST')) {
+        if (1 !== XoopsRequest::getInt('confirm', 0, 'POST')) {
             xoops_confirm(array('op' => 'del', 'forum' => XoopsRequest::getInt('forum', 0, 'GET'), 'confirm' => 1), 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
             break;
         } else {
