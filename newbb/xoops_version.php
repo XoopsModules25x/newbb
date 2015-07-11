@@ -2,7 +2,7 @@
 /**
  * CBB 4.0, or newbb, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -13,25 +13,25 @@
 $modversion['name']        = _MI_NEWBB_NAME;
 $modversion['version']     = 4.33;
 $modversion['description'] = _MI_NEWBB_DESC;
-$modversion['credits']     = "NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)";
-$modversion['author']      = "Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / xoops.org (irmtfan)";
+$modversion['credits']     = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
+$modversion['author']      = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / xoops.org (irmtfan)';
 $modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html/";
-$modversion['image']       = "assets/images/xoopsbb_slogo.png";
-$modversion['dirname']     = "newbb";
+$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['image']       = 'assets/images/xoopsbb_slogo.png';
+$modversion['dirname']     = 'newbb';
 
-$modversion['author_realname'] = "NewBB Dev Team";
-$modversion['author_email']    = "";
-$modversion['status_version']  = "4.33";
+$modversion['author_realname'] = 'NewBB Dev Team';
+$modversion['author_email']    = '';
+$modversion['status_version']  = '4.33';
 
 //about
-$modversion["module_status"]       = "RC9";
-$modversion['release_date']        = '2015/03/27';
-$modversion["module_website_url"]  = "www.xoops.org/";
-$modversion["module_website_name"] = "XOOPS";
-$modversion['min_php']             = "5.3.7";
-$modversion['min_xoops']           = "2.5.7";
-$modversion['min_admin']           = "1.1";
+$modversion['module_status']       = 'RC10';
+$modversion['release_date']        = '2015/07/27';
+$modversion['module_website_url']  = 'www.xoops.org/';
+$modversion['module_website_name'] = 'XOOPS';
+$modversion['min_php']             = '5.3.7';
+$modversion['min_xoops']           = '2.5.7';
+$modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0', 'mysqli' => '5.0');
 $modversion['system_menu']         = 1;
 
@@ -39,48 +39,48 @@ $modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
 $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 
-$modversion['warning'] = "Only For XOOPS >= 2.5.0 ";
+$modversion['warning'] = 'Only For XOOPS >= 2.5.0 ';
 
-$modversion['demo_site_url']        = "http://www.xoops.org/newbb/";
-$modversion['demo_site_name']        = "XOOPS Project";
-$modversion['support_site_url']    = "http://www.xoops.org/newbb/";
-$modversion['support_site_name']    = "XOOPS Project";
-$modversion['submit_feature']        = "http://xoops.org/modules/newbb/viewforum.php?forum=30";
-$modversion['submit_bug']            = "http://xoops.org/modules/newbb/viewforum.php?forum=28";
+$modversion['demo_site_url']        = 'http://xoops.org/newbb/';
+$modversion['demo_site_name']        = 'XOOPS Project';
+$modversion['support_site_url']    = 'http://xoops.org/newbb/';
+$modversion['support_site_name']    = 'XOOPS Project';
+$modversion['submit_feature']        = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
+$modversion['submit_bug']            = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
 
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.ini.php');
 // Is performing module install/update?
 $isModuleAction = mod_isModuleAction($modversion['dirname']);
 
 // Sql file
-$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
 $modversion['tables'] = array(
-    "bb_archive",
-    "bb_categories",
-    "bb_votedata",
-    "bb_forums",
-    "bb_posts",
-    "bb_posts_text",
-    "bb_topics",
-    "bb_online",
-    "bb_digest",
-    "bb_report",
-    "bb_attachments", // reserved table for next version
-    "bb_moderates", // For suspension
-    "bb_reads_forum",
-    "bb_reads_topic",
-    "bb_type",
-    "bb_type_forum",
-    "bb_stats",
-    "bb_user_stats",
+    'bb_archive',
+    'bb_categories',
+    'bb_votedata',
+    'bb_forums',
+    'bb_posts',
+    'bb_posts_text',
+    'bb_topics',
+    'bb_online',
+    'bb_digest',
+    'bb_report',
+    'bb_attachments', // reserved table for next version
+    'bb_moderates', // For suspension
+    'bb_reads_forum',
+    'bb_reads_topic',
+    'bb_type',
+    'bb_type_forum',
+    'bb_stats',
+    'bb_user_stats',
 );
 
 // Admin things
 $modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu']  = "admin/menu.php";
+$modversion['adminindex'] = 'admin/index.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 // Menu
 $modversion['hasMain'] = 1;
@@ -127,12 +127,12 @@ $modversion['templates'] = array(
 // options[5] - SelectedForumIDs: null for all
 
 $modversion['blocks'][1] = array(
-    'file'        => "newbb_block.php",
+    'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_TOPIC_POST,
-    'description' => "It Will drop (use advance topic renderer block)", // irmtfan
-    'show_func'   => "b_newbb_show",
-    'options'     => "time|5|360|0|1|0",
-    'edit_func'   => "b_newbb_edit",
+    'description' => 'It Will drop (use advance topic renderer block)', // irmtfan
+    'show_func'   => 'b_newbb_show',
+    'options'     => 'time|5|360|0|1|0',
+    'edit_func'   => 'b_newbb_edit',
     'template'    => 'newbb_block.tpl');
 
 // options[0] - Citeria valid: time(by default), views, replies, digest, sticky
@@ -144,29 +144,29 @@ $modversion['blocks'][1] = array(
 // options[6] - SelectedForumIDs: null for all
 
 $modversion['blocks'][] = array(
-    'file'        => "newbb_block.php",
+    'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_TOPIC,
-    'description' => "It Will drop (use advance topic renderer block)", // irmtfan
-    'show_func'   => "b_newbb_topic_show",
-    'options'     => "time|5|0|0|1|0|0",
-    'edit_func'   => "b_newbb_topic_edit",
+    'description' => 'It Will drop (use advance topic renderer block)', // irmtfan
+    'show_func'   => 'b_newbb_topic_show',
+    'options'     => 'time|5|0|0|1|0|0',
+    'edit_func'   => 'b_newbb_topic_edit',
     'template'    => 'newbb_block_topic.tpl');
 
 // options[0] - Citeria valid: title(by default), text
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
-// options[3] - DisplayMode: 0-full view;1-compact view;2-lite view; Only valid for "time"
+// options[3] - DisplayMode: 0-full view;1-compact view;2-lite view; Only valid for 'time'
 // options[4] - Display Navigator: 1 (by default), 0 (No)
 // options[5] - Title/Text Length : 0 - no limit
 // options[6] - SelectedForumIDs: null for all
 
 $modversion['blocks'][] = array(
-    'file'        => "newbb_block.php",
+    'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_POST,
-    'description' => "Shows recent posts in the forums",
-    'show_func'   => "b_newbb_post_show",
-    'options'     => "title|10|0|0|1|0|0",
-    'edit_func'   => "b_newbb_post_edit",
+    'description' => 'Shows recent posts in the forums',
+    'show_func'   => 'b_newbb_post_show',
+    'options'     => 'title|10|0|0|1|0|0',
+    'edit_func'   => 'b_newbb_post_edit',
     'template'    => 'newbb_block_post.tpl');
 
 // options[0] - Citeria valid: post(by default), topic, digest, sticky
@@ -177,12 +177,12 @@ $modversion['blocks'][] = array(
 // options[5] - SelectedForumIDs: null for all
 
 $modversion['blocks'][] = array(
-    'file'        => "newbb_block.php",
+    'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_AUTHOR,
-    'description' => "Shows authors stats",
-    'show_func'   => "b_newbb_author_show",
-    'options'     => "topic|5|0|0|1|0",
-    'edit_func'   => "b_newbb_author_edit",
+    'description' => 'Shows authors stats',
+    'show_func'   => 'b_newbb_author_show',
+    'options'     => 'topic|5|0|0|1|0',
+    'edit_func'   => 'b_newbb_author_edit',
     'template'    => 'newbb_block_author.tpl');
 
 /*
@@ -192,14 +192,14 @@ $modversion['blocks'][] = array(
  *                    $options[2] - max font size (px or %)
  *                    $options[3] - min font size (px or %)
  */
-$modversion["blocks"][] = array(
-    "file"        => "newbb_block_tag.php",
-    "name"        => _MI_NEWBB_BLOCK_TAG_CLOUD,
-    "description" => "Show tag cloud",
-    "show_func"   => "newbb_tag_block_cloud_show",
-    "edit_func"   => "newbb_tag_block_cloud_edit",
-    "options"     => "100|0|150|80",
-    "template"    => "newbb_tag_block_cloud.tpl",
+$modversion['blocks'][] = array(
+    'file'        => 'newbb_block_tag.php',
+    'name'        => _MI_NEWBB_BLOCK_TAG_CLOUD,
+    'description' => 'Show tag cloud',
+    'show_func'   => 'newbb_tag_block_cloud_show',
+    'edit_func'   => 'newbb_tag_block_cloud_edit',
+    'options'     => '100|0|150|80',
+    'template'    => 'newbb_tag_block_cloud.tpl',
 );
 
 /*
@@ -208,14 +208,14 @@ $modversion["blocks"][] = array(
  *                    $options[1] - time duration, in days, 0 for all the time
  *                    $options[2] - sort: a - alphabet; c - count; t - time
  */
-$modversion["blocks"][] = array(
-    "file"        => "newbb_block_tag.php",
-    "name"        => _MI_NEWBB_BLOCK_TAG_TOP,
-    "description" => "Show top tags",
-    "show_func"   => "newbb_tag_block_top_show",
-    "edit_func"   => "newbb_tag_block_top_edit",
-    "options"     => "50|0|c",
-    "template"    => "newbb_tag_block_top.tpl",
+$modversion['blocks'][] = array(
+    'file'        => 'newbb_block_tag.php',
+    'name'        => _MI_NEWBB_BLOCK_TAG_TOP,
+    'description' => 'Show top tags',
+    'show_func'   => 'newbb_tag_block_top_show',
+    'edit_func'   => 'newbb_tag_block_top_edit',
+    'options'     => '50|0|c',
+    'template'    => 'newbb_tag_block_top.tpl',
 );
 // irmtfan START add list topic block
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
@@ -233,19 +233,19 @@ $modversion["blocks"][] = array(
 // options[12] - SelectedForumIDs: multi-select ngative values for categories and positive values for forums: null for all(by default)
 
 $modversion['blocks'][] = array(
-    'file'        => "list_topic.php",
+    'file'        => 'list_topic.php',
     'name'        => _MI_NEWBB_BLOCK_LIST_TOPIC,
-    'description' => "Shows a list of topics (advance renderer)",
-    'show_func'   => "newbb_list_topic_show",
-    'options'     => "all|-1|-1|0|lastpost|0|5|360|topic,forum,replies,lastpost,lastposttime,lastposter,lastpostmsgicon,publish|1|0|200|0",
-    'edit_func'   => "newbb_list_topic_edit",
+    'description' => 'Shows a list of topics (advance renderer)',
+    'show_func'   => 'newbb_list_topic_show',
+    'options'     => 'all|-1|-1|0|lastpost|0|5|360|topic,forum,replies,lastpost,lastposttime,lastposter,lastpostmsgicon,publish|1|0|200|0',
+    'edit_func'   => 'newbb_list_topic_edit',
     'template'    => 'newbb_block_list_topic.tpl');
 // irmtfan END add list topic block
 
 // Search
 $modversion['hasSearch']      = 1;
-$modversion['search']['file'] = "include/search.inc.php";
-$modversion['search']['func'] = "newbb_search";
+$modversion['search']['file'] = 'include/search.inc.php';
+$modversion['search']['func'] = 'newbb_search';
 
 // Smarty
 $modversion['use_smarty'] = 1;
@@ -279,7 +279,7 @@ $modversion['config'][] = array(
         _MI_SUBFORUM_EXPAND   => 'expand',
         _MI_SUBFORUM_COLLAPSE => 'collapse',
         _MI_SUBFORUM_HIDDEN   => 'hidden'),
-    'default'     => "collapse");
+    'default'     => 'collapse');
 
 $modversion['config'][] = array(
     'name'        => 'post_excerpt',
@@ -313,9 +313,9 @@ $modversion['config'][] = array(
     'valuetype'   => 'text',
     'options'     => array(
         _MI_PAGENAV_NUMBER   => 'number',
-        _MI_PAGENAV_IMAGE   => 'impage',
+        _MI_PAGENAV_IMAGE   => 'image',
         _MI_PAGENAV_SELECT => 'select'),
-    'default'     => "number");
+    'default'     => 'number');
 
 $modversion['config'][] = array(
     'name'        => 'cache_enabled',
@@ -602,7 +602,7 @@ $modversion['config'][] = array(
     'description' => '_MI_SINCE_OPTIONS_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => "-1, -2, -6, -12, 0, 1, 2, 5, 10, 20, 30, 60, 100, 365");
+    'default'     => '-1, -2, -6, -12, 0, 1, 2, 5, 10, 20, 30, 60, 100, 365');
 
 $modversion['config'][] = array(
     'name'        => 'since_default',
@@ -626,7 +626,7 @@ $modversion['config'][] = array(
     'description' => '_MI_ANONYMOUS_PRE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => $GLOBALS['xoopsConfig']['anonymous'] . "-");
+    'default'     => $GLOBALS['xoopsConfig']['anonymous'] . '-');
 
 $modversion['config'][] = array(
     'name'        => 'allow_require_reply',
@@ -708,17 +708,17 @@ $modversion['config'][] = array(
 
 xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
-if ($isModuleAction && "update_ok" === XoopsRequest::getCmd('op', '', 'POST')) {
+if ($isModuleAction && 'update_ok' === XoopsRequest::getCmd('op', '', 'POST')) {
     $forumHandler =& xoops_getmodulehandler('forum', 'newbb', true);
-    if ($forums = $forumHandler->getForumsByCategory(0, 'access', false, array("parent_forum", "cat_id", "forum_name"))) {
+    if ($forums = $forumHandler->getForumsByCategory(0, 'access', false, array('parent_forum', 'cat_id', 'forum_name'))) {
         foreach (array_keys($forums) as $c) {
             foreach (array_keys($forums[$c]) as $f) {
-                $forum_options[$forums[$c][$f]["title"]] = $f;
-                if (!isset($forums[$c][$f]["sub"])) {
+                $forum_options[$forums[$c][$f]['title']] = $f;
+                if (!isset($forums[$c][$f]['sub'])) {
                     continue;
                 }
-                foreach (array_keys($forums[$c][$f]["sub"]) as $s) {
-                    $forum_options["-- " . $forums[$c][$f]["sub"][$s]["title"]] = $s;
+                foreach (array_keys($forums[$c][$f]['sub']) as $s) {
+                    $forum_options['-- ' . $forums[$c][$f]['sub'][$s]['title']] = $s;
                 }
             }
         }
@@ -736,60 +736,60 @@ $modversion['config'][] = array(
 // START irmtfan add a poll_module config
 $pollDirs = array();
 $dir_def  = 0;
-$formtype = "select";
+$formtype = 'select';
 // if in install, update
 if ($isModuleAction) {
     $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
     $pollDirs      = $topicHandler->getActivePolls();
     // priorities for default poll module : 1- xoopspoll 2- last element in array 3- if no poll module => 0
-    $dir_def = !empty($pollDirs) ? (!empty($pollDirs["xoopspoll"]) ? $pollDirs["xoopspoll"] : end($pollDirs))
+    $dir_def = !empty($pollDirs) ? (!empty($pollDirs['xoopspoll']) ? $pollDirs['xoopspoll'] : end($pollDirs))
         : 0;
     //Now check all topics and try to find the poll module
-    if ("update_ok" === XoopsRequest::getCmd('op', '', 'POST')) {
+    if ('update_ok' === XoopsRequest::getCmd('op', '', 'POST')) {
         $dir_in_update = $topicHandler->findPollModule($pollDirs);
         if (!is_bool($dir_in_update)) {
             $dir_def = $dir_in_update;
             // if change 'formtype' to hidden the default value will be changed too!!!
             // see xoops255/modules/system/admin/modulesadmin/main.php line 829
-            $formtype = "hidden";
+            $formtype = 'hidden';
         } else {
-            $formtype = "select";
+            $formtype = 'select';
         }
     }
 }
 
 $isPref = (
     // action module "system"
-    is_object($GLOBALS["xoopsModule"]) && "system" === $GLOBALS["xoopsModule"]->getVar("dirname", "n")
+    is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')
     &&
     // current action
-    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === "preferences"
+    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === 'preferences'
 );
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $hModConfig = xoops_gethandler('config');
     $criteria   = new CriteriaCompo();
-    $criteria->add(new Criteria('conf_name', "poll_module", "="), "AND");
-    $criteria->add(new Criteria('conf_formtype', "select", "="), "AND"); // not hidden
-    $criteria->add(new Criteria('conf_id', "(" . implode(", ", XoopsRequest::getArray('conf_ids', array(), 'POST')) . ")", "IN"), "AND");
+    $criteria->add(new Criteria('conf_name', 'poll_module', '='), 'AND');
+    $criteria->add(new Criteria('conf_formtype', 'select', '='), 'AND'); // not hidden
+    $criteria->add(new Criteria('conf_id', '(' . implode(', ', XoopsRequest::getArray('conf_ids', array(), 'POST')) . ')', 'IN'), 'AND');
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
-    if (is_object($pollOptions) && $pollOptions->getVar("conf_value") !== "0") {
+    if (is_object($pollOptions) && $pollOptions->getVar('conf_value') !== '0') {
         $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
-        $topicPolls    = $topicHandler->getCount(new Criteria("topic_haspoll", 1));
+        $topicPolls    = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
         if ($topicPolls > 0) {
             $poll_module_in_use = $topicHandler->findPollModule();
             if (is_string($poll_module_in_use)) {
-                $pollOptions->setVar("conf_value", $poll_module_in_use);
-                $pollOptions->setVar("conf_formtype", "hidden");
+                $pollOptions->setVar('conf_value', $poll_module_in_use);
+                $pollOptions->setVar('conf_formtype', 'hidden');
                 $result = $hModConfig->insertConfig($pollOptions);
                 if (!$result) {
                     //echo "error: poll_module is in danger!!!";
                 }
                 // I have to redirect back to prevent system module to save bad $_POST['poll_module'] setting!!!
-                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . "<br/>" .
-                                                             _AM_NEWBB_POLLMODULE . " " . _AM_NEWBB_POLL_OK . " :(" . $poll_module_in_use . ")");
+                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . '<br/>' .
+                                                             _AM_NEWBB_POLLMODULE . ' ' . _AM_NEWBB_POLL_OK . ' :(' . $poll_module_in_use . ')');
             }
         }
     }
@@ -806,7 +806,7 @@ $modversion['config'][$i]['options']     = $pollDirs;
 
 // END irmtfan add a poll_module config
 // Notification
-$modversion["notification"]                = array();
+$modversion['notification']                = array();
 $modversion['hasNotification']             = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'newbb_notify_iteminfo';
