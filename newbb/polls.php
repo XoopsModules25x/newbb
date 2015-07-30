@@ -49,7 +49,7 @@ if (!$forumHandler->getPermission($forum_obj)) {
 }
 // topic view permission
 if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
-    redirect_header(XOOPS_URL . '/viewforum.php?forum=' . $forum_id, 2, _MD_NORIGHTTOVIEW);
+    redirect_header('viewforum.php?forum=' . $forum_id, 2, _MD_NORIGHTTOVIEW);
 }
 // poll module
 $pollModuleHandler =& $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
@@ -90,7 +90,7 @@ if (is_object($GLOBALS['xoopsUser']) && !newbb_isAdmin($forum_obj)) {
         }
     }
     if (!$perm) {
-        redirect_header(XOOPS_URL . "/viewtopic.php?topic_id={$topic_id}", 2, _NOPERM);
+        redirect_header("viewtopic.php?topic_id={$topic_id}", 2, _NOPERM);
     }
 }
 switch ($op) {
@@ -599,7 +599,7 @@ switch ($op) {
             xoops_error($msg);
             break;
         }
-        redirect_header("viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_DBUPDATED);
+        redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_DBUPDATED);
         break;
 
     case 'restart':
@@ -691,7 +691,7 @@ switch ($op) {
         include_once $GLOBALS['xoops']->path('class/template.php');
         xoops_template_clear_module_cache($xoopsModule->getVar('mid'));
         xoops_template_clear_module_cache($pollModuleHandler->getVar('mid'));
-        redirect_header(XOOPS_URL . "/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_DBUPDATED);
+        redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_DBUPDATED);
         break;
 
     case 'log':

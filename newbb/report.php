@@ -110,7 +110,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         } else {
             $message = _MD_REPORT_ERROR;
         }
-        redirect_header(XOOPS_URL . "/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;order=$order&amp;viewmode=$viewmode", 2, $message);
+        redirect_header("viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;order=$order&amp;viewmode=$viewmode", 2, $message);
     }
 }
 

@@ -38,7 +38,7 @@ if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->ge
 
 if (!XoopsRequest::getInt('option_id', 0, 'POST')) {
     // irmtfan - add error message - simple url
-    redirect_header(XOOPS_URL . "/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
+    redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
 $pollModuleHandler =& $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);

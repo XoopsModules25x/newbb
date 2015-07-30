@@ -130,7 +130,7 @@ switch ($op) {
             $category_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
             $categoryHandler->delete($category_obj);
 
-            redirect_header(XOOPS_URL . '/admin/admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
+            redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
         }
         break;
 
@@ -157,7 +157,7 @@ switch ($op) {
         if ($cat_id = $category_obj->getVar("cat_id") && $cat_isNew) {
             $categoryHandler->applyPermissionTemplate($category_obj);
         }
-        redirect_header(XOOPS_URL . '/admin/admin_cat_manager.php', 2, $message);
+        redirect_header('admin_cat_manager.php', 2, $message);
         break;
 
     default:

@@ -76,7 +76,7 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
     unset($query_array);
 
-    redirect_header(XOOPS_URL . "/viewtopic.php?{$page_query}", 2, _MD_NORIGHTTOREPLY);
+    redirect_header("viewtopic.php?{$page_query}", 2, _MD_NORIGHTTOREPLY);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {

@@ -57,13 +57,13 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             }
         }
-        redirect_header(XOOPS_URL . '/moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
+        redirect_header('moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
     }
 } elseif (XoopsRequest::getString('del', '', 'GET')) {
     $moderate_obj = $moderate_handler->get(XoopsRequest::getString('del', '', 'GET'));
     if ($is_administrator || $moderate_obj->getVar('forum_id') === $forum_id) {
         $moderate_handler->delete($moderate_obj, true);
-        redirect_header(XOOPS_URL . '/moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
+        redirect_header('moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
     }
 }
 

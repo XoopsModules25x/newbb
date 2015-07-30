@@ -39,8 +39,8 @@ foreach (array('topic_id', 'rate', 'forum') as $var) {
     ${$var} = XoopsRequest::getInt($var, XoopsRequest::getInt($var, 0, 'POST'), 'GET');
 }
 
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topicHandler->get($topic_id);
+$topicHandler = & xoops_getmodulehandler('topic', 'newbb');
+$topic_obj     = & $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), 'post')
     &&
     !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
@@ -50,7 +50,7 @@ if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->ge
 }
 
 if (empty($rate)) {
-    redirect_header(XOOPS_URL . '/viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NOVOTERATE);
+    redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NOVOTERATE);
 }
 $rate_handler =& xoops_getmodulehandler('rate', $xoopsModule->getVar('dirname'));
 if ($ratinguser !== 0) {
@@ -59,13 +59,13 @@ if ($ratinguser !== 0) {
     $crit_post->add(new Criteria('uid', $ratinguser));
     $postHandler = xoops_getmodulehandler('post', $xoopsModule->getVar('dirname'));
     if ($postHandler->getCount($crit_post)) {
-        redirect_header(XOOPS_URL . '/viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_CANTVOTEOWN);
+        redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_CANTVOTEOWN);
     }
     // Check if REG user is trying to vote twice.
     $crit_rate = new CriteriaCompo(new Criteria('topic_id', $topic_id));
     $crit_rate->add(new Criteria('ratinguser', $ratinguser));
     if ($rate_handler->getCount($crit_rate)) {
-        redirect_header(XOOPS_URL . '/viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
+        redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
     }
 } else {
     // Check if ANONYMOUS user is trying to vote more than once per day.
@@ -74,7 +74,7 @@ if ($ratinguser !== 0) {
     $crit_rate->add(new Criteria('ratinghostname', $ip));
     $crit_rate->add(new Criteria('ratingtimestamp', time() - (86400 * $anonwaitdays), '>'));
     if ($rate_handler->getCount($crit_rate)) {
-        redirect_header(XOOPS_URL . '/viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
+        redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
     }
 }
 $rate_obj =& $rate_handler->create();
@@ -99,6 +99,6 @@ $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %
 $GLOBALS['xoopsDB']->queryF($sql);
 
 $ratemessage = _MD_VOTEAPPRE . '<br />' . sprintf(_MD_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
-redirect_header(XOOPS_URL . '/viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 2, $ratemessage);
+redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 2, $ratemessage);
 // irmtfan enhance include footer.php
 include $GLOBALS['xoops']->path('footer.php');
