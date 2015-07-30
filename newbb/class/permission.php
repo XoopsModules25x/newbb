@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 define("NEWBB_HANDLER_PERMISSION", 1);
@@ -220,6 +220,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function createPermData($perm_name = "forum_all")
     {
         global $xoopsModule;
+        $perms = array();
 
         if (is_object($xoopsModule) && $xoopsModule->getVar("dirname") === "newbb") {
             $modid = $xoopsModule->getVar("mid");
@@ -230,7 +231,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             unset($module);
         }
 
-        if (in_array($perm_name, array("forum_all", "category_all"))) {
+        if (in_array($perm_name, array("forum_all", "category_all"), true)) {
             $member_handler =& xoops_gethandler('member');
             $groups         = array_keys($member_handler->getGroupList());
 
@@ -248,18 +249,18 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             }
             $permissions =& $this->getObjects($criteria);
 
-            $perms = array();
             foreach ($permissions as $gperm) {
                 $item_id                                         = $gperm->getVar('gperm_itemid');
-                $group_id                                        = (int) ($gperm->getVar('gperm_groupid'));
+                $group_id                                        = (int)($gperm->getVar('gperm_groupid'));
                 $perms[$gperm->getVar('gperm_name')][$item_id][] = $group_id;
             }
         }
         load_functions("cache");
-        foreach (array_keys($perms) as $perm) {
-            mod_createCacheFile($perms[$perm], "permission_{$perm}", "newbb");
+        if (count($perms) > 0) {
+            foreach (array_keys($perms) as $perm) {
+                mod_createCacheFile($perms[$perm], "permission_{$perm}", "newbb");
+            }
         }
-
         $ret = !empty($perm_name) ? @$perms[$perm_name] : $perms;
 
         return $ret;
@@ -322,7 +323,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         $criteria = new CriteriaCompo(new Criteria("gperm_modid", $gperm_modid));
         $criteria->add(new Criteria("gperm_name", $gperm_name));
-        $gperm_itemid = (int) ($gperm_itemid);
+        $gperm_itemid = (int)($gperm_itemid);
         if ($gperm_itemid > 0) {
             $criteria->add(new Criteria("gperm_itemid", $gperm_itemid));
         }

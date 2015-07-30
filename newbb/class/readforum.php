@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . '/read.php';
@@ -33,16 +33,16 @@ include_once __DIR__ . '/read.php';
 /**
  * A handler for read/unread handling
  *
- * @package     newbb/cbb
+ * @package     newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright    copyright (c) 2005 XOOPS.org
  */
 class Readforum extends Read
 {
-    public function Readforum()
+    public function __construct()
     {
-        $this->Read("forum");
+        parent::__construct('forum');
     }
 }
 
@@ -54,9 +54,9 @@ class NewbbReadforumHandler extends NewbbReadHandler
     /**
      * @param $db
      */
-    public function NewbbReadforumHandler(&$db)
+    public function __construct(&$db)
     {
-        $this->NewbbReadHandler($db, "forum");
+        parent::__construct($db, "forum");
     }
 
     /**

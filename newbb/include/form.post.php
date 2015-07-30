@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         newbb
  * @since           4.0
@@ -49,7 +49,7 @@ $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title
 $xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(
                       'forum_id'   => $forum_obj->getVar('forum_id'),
-                      'forum_name' => $forum_obj->getVar('forum_name'),
+                      'forum_name' => $forum_obj->getVar('forum_name')
                   ));
 
 if (!is_object($topic_obj)) {
@@ -79,7 +79,7 @@ foreach (array(
              'isedit',
              'contents_preview'
          ) as $getint) {
-    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int) ($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
+    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
 foreach (array(
              'order',
@@ -178,7 +178,7 @@ $forum_form->addElement($_editor, true);
 if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $post_obj->isTopic())) {
     $topic_tags = "";
     if (XoopsRequest::getString('topic_tags', '', 'POST')) {
-        $topic_tags = $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
+        $topic_tags = $myts->htmlspecialchars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
@@ -290,7 +290,7 @@ if ($GLOBALS['xoopsModuleConfig']['enable_karma'] || $GLOBALS['xoopsModuleConfig
         $karmas = array_map("trim", explode(',', $GLOBALS['xoopsModuleConfig']['karma_options']));
         if (count($karmas) > 1) {
             foreach ($karmas as $karma) {
-                $karma_array[(string) ($karma)] = (int) ($karma);
+                $karma_array[(string) ($karma)] = (int)($karma);
             }
             $karma_select = new XoopsFormSelect('', "post_karma", $post_karma);
             $karma_select->addOptionArray($karma_array);
@@ -323,7 +323,7 @@ $submit_button->setExtra("tabindex='3'");
 
 $cancel_button = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
 if (!empty($topic_id)) {
-    $extra = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . (int) ($topic_id);
+    $extra = XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . (int)($topic_id);
 } else {
     $extra = XOOPS_URL . "/modules/newbb/viewforum.php?forum=" . $forum_obj->getVar('forum_id');
 }

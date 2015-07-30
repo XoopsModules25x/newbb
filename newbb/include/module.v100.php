@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
@@ -33,7 +33,7 @@
  * @param $module
  * @return bool
  */
-function xoops_module_update_newbb_v100(&$module)
+function xoops_module_update_newbb_v100(XoopsObject $module)
 {
     $result = $GLOBALS['xoopsDB']->queryF("CREATE TABLE " . $GLOBALS['xoopsDB']->prefix("bb_archive") . "(
         `topic_id` tinyint(8) NOT NULL default '0',

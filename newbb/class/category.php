@@ -1,15 +1,15 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
  * @version        $Id $
  * @package        module::newbb
  */
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 class Category extends XoopsObject
 {
@@ -19,7 +19,7 @@ class Category extends XoopsObject
      */
     public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('cat_id', XOBJ_DTYPE_INT);
         $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX);
         $this->initVar('cat_image', XOBJ_DTYPE_SOURCE, "blank.gif");
@@ -125,7 +125,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
             return true;
         }
 
-        $cat_id       = is_object($category) ? $category->getVar('cat_id') : (int) ($category);
+        $cat_id       = is_object($category) ? $category->getVar('cat_id') : (int)($category);
         $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
 
         return $perm_handler->getPermission("category", $perm, $cat_id);

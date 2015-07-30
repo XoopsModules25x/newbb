@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB, XOOPS forum module
+ * NewBB, XOOPS forum module
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 include_once $GLOBALS['xoops']->path('class/uploader.php');
 
@@ -31,13 +31,15 @@ class newbb_uploader extends XoopsMediaUploader
      * @param int $maxWidth
      * @param int $maxHeight
      */
-    public function newbb_uploader($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
+    public function __construct($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
     {
+//        $this->XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
+        
         if (!is_array($allowedMimeTypes)) {
-            if (empty($allowedMimeTypes) || $allowedMimeTypes === "*") {
+            if (empty($allowedMimeTypes) || $allowedMimeTypes === '*') {
                 $allowedMimeTypes = array();
             } else {
-                $allowedMimeTypes = array_filter(array_map("trim", explode("|", strtolower($allowedMimeTypes))));
+                $allowedMimeTypes = array_filter(array_map('trim', explode('|', strtolower($allowedMimeTypes))));
             }
         }
         $_allowedMimeTypes = array();
@@ -49,7 +51,7 @@ class newbb_uploader extends XoopsMediaUploader
                 $_allowedMimeTypes[] = $type;
             }
         }
-        $this->XoopsMediaUploader($uploadDir, $_allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
+       parent::__construct($uploadDir, $_allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
     }
 
     /**

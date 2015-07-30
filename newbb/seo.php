@@ -26,7 +26,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
     $ori_self               = $_SERVER['PHP_SELF'];
-    $ori_self               = explode("modules/newbb", $ori_self);
+    $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
     $_ENV['PHP_SELF']       = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
@@ -62,9 +62,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     include($seoMap[$seoOp]);
 
 } else {
-    $last = $seoOp . "/" . $seoArg;
+    $last = $seoOp . '/' . $seoArg;
     if ($seoOther !== '') {
-        $last .= "/" . $seoOther;
+        $last .= '/' . $seoOther;
     }
     include $last;
 }

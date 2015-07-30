@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -51,7 +51,7 @@ function newbb_load_object()
 function &newbbLoadConfig()
 {
     static $moduleConfig;
-    if (isset($moduleConfig)) {
+    if (null !== ($moduleConfig)) {
         return $moduleConfig;
     }
 
@@ -74,12 +74,12 @@ function &newbbLoadConfig()
  */
 function newbb_load_lang_file($filename, $module = '', $default = 'english')
 {
-    if (function_exists("xoops_load_lang_file")) {
+    if (function_exists('xoops_load_lang_file')) {
         return xoops_load_lang_file($filename, $module, $default);
     }
 
     $lang = $GLOBALS['xoopsConfig']['language'];
-    $path = XOOPS_ROOT_PATH . (empty($module) ? '/' : "/modules/$module/") . 'language';
+    $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : "/modules/$module/") . 'language';
     if (!($ret = @include_once("$path/$lang/$filename.php"))) {
         $ret = @include_once("$path/$default/$filename.php");
     }

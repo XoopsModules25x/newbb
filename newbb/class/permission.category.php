@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 //defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_CATEGORY", 1);
@@ -49,7 +49,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function deleteByCategory($cat_id)
     {
-        $cat_id = (int) ($cat_id);
+        $cat_id = (int)($cat_id);
         if (empty($cat_id)) {
             return false;
         }

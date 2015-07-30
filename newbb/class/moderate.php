@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,12 +10,12 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * A handler for User moderation management
  *
- * @package     newbb/cbb
+ * @package     newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright    copyright (c) 2005 XOOPS.org
@@ -23,9 +23,9 @@
 //class Moderate extends ArtObject {
 class Moderate extends XoopsObject
 {
-    public function Moderate()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('mod_id', XOBJ_DTYPE_INT);
         $this->initVar('mod_start', XOBJ_DTYPE_INT);
         $this->initVar('mod_end', XOBJ_DTYPE_INT);
@@ -60,7 +60,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      */
     public function clearGarbage($expire = 0)
     {
-        $expire = time() - (int) ($expire);
+        $expire = time() - (int)($expire);
         $sql    = sprintf("DELETE FROM %s WHERE mod_end < %u", $this->db->prefix('bb_moderates'), $expire);
         $this->db->queryF($sql);
     }
@@ -88,7 +88,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             return in_array($forum, $forums);
         }
         $uid          = ($uid < 0) ? (is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0) : $uid;
-        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int) ($uid); // irmtfan - uid=0 for anons
+        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int)($uid); // irmtfan - uid=0 for anons
         $ip           = empty($ip) ? newbb_getIP(true) : $ip;
         if (!empty($ip)) {
             $ip_segs = explode(".", $ip);
@@ -99,7 +99,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             $ip_criteria = "1=1";
         }
-        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . (int) ($forum);
+        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . (int)($forum);
         $expire_criteria = "mod_end > " . time();
         $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
@@ -133,7 +133,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
                 return $forums[$uid][$ip];
             }
         }
-        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int) ($uid); // irmtfan - uid=0 for anons
+        $uid_criteria = empty($uid) ? "uid=0" : "uid=" . (int)($uid); // irmtfan - uid=0 for anons
         if (!empty($ip)) {
             $ip_segs = explode(".", $ip);
             for ($i = 1; $i <= 4; ++$i) {
@@ -173,7 +173,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     public function getLatest($item, $isUid = true)
     {
         if ($isUid) {
-            $criteria = "uid =" . (int) ($item);
+            $criteria = "uid =" . (int)($item);
         } else {
             $ip_segs = explode(".", $item);
             $segs    = min(count($ip_segs), 4);

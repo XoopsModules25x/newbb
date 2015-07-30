@@ -21,11 +21,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: phppp (D.J., infomax@gmail.com)                                  //
-// URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 require_once $GLOBALS['xoops']->path('class/tree.php');
 
 if (!class_exists("newbbObjectTree")) {
@@ -263,7 +263,7 @@ if (!class_exists("newbbObjectTree")) {
             if ($reverse) {
                 $pids = array_reverse($ret) + $pids;
             } else {
-                $pids = $pids + $ret;
+                $pids += $ret;
             }
 
             return $pids;

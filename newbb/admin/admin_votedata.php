@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
-// <http://www.xoops.org/>                             //
+// <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,8 +25,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
+// Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
 
@@ -51,7 +51,7 @@ switch ($op) {
         $sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        redirect_header("admin_votedata.php", 1, _AM_NEWBB_VOTEDELETED);
+        redirect_header('admin_votedata.php', 1, _AM_NEWBB_VOTEDELETED);
         break;
 
     case 'main':
@@ -81,7 +81,7 @@ switch ($op) {
         }
 
         xoops_cp_header();
-        echo "<fieldset>";
+        echo '<fieldset>';
         if ($newXoopsModuleGui) {
             echo $indexAdmin->addNavigation('admin_votedata.php');
         }
@@ -89,7 +89,7 @@ switch ($op) {
         //    else echo $indexAdmin->addNavigation('admin_votedata.php') ;
 
         if (!$newXoopsModuleGui) {
-            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_VOTE_DISPLAYVOTES . "</legend>";
+            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_VOTE_DISPLAYVOTES . '</legend>';
         }
         echo "<div style='padding: 8px;'>\n
         <div><strong>" . _AM_NEWBB_VOTE_USERAVG . ": </strong>$useravgrating</div>\n
@@ -124,13 +124,13 @@ switch ($op) {
         <td class='head' align='center'>$ratingid</td>\n
         <td class='even' align='center'>$ratinguname</td>\n
         <td class='even' align='center' >$ratinghostname</td>\n
-        <td class='even' align='left'><a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id . "' target='topic'>" . $myts->htmlSpecialChars($down_array['topic_title']) . "</a></td>\n
+        <td class='even' align='left'><a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id . "' target='topic'>" . $myts->htmlspecialchars($down_array['topic_title']) . "</a></td>\n
         <td class='even' align='center'>$rating</td>\n
         <td class='even' align='center'>$formatted_date</td>\n
         <td class='even' align='center'><strong><a href='admin_votedata.php?op=delvotes&amp;topic_id=$topic_id&amp;rid=$ratingid'>" . newbbDisplayImage('p_delete', _DELETE) . "</a></strong></td>\n
         </tr>\n";
         }
-        echo "</table>";
+        echo '</table>';
         //Include page navigation
         include_once $GLOBALS['xoops']->path('class/pagenav.php');
         $page    = ($votes > 20) ? _AM_NEWBB_MINDEX_PAGE : '';

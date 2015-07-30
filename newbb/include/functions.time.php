@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -54,7 +54,7 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
         //$select_array = explode(',', $newbbConfig['since_options']);
         //$select_array = array_map('trim', $select_array);
         // irmtfan - if the array is empty do not show selection box
-        if (empty($select_array)) {
+        if (!(bool)($select_array)) {
             $since = $newbbConfig['since_default'];
             switch ($since) {
                 case 0:
@@ -113,9 +113,9 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
         // irmtfan bad coding
         //if ($since==1000) return 0;
         if ($since > 0) {
-            return (int) ($since) * 24 * 3600;
+            return (int)($since) * 24 * 3600;
         } else {
-            return (int) (abs($since)) * 3600;
+            return (int)(abs($since)) * 3600;
         }
     }
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since        4.3
@@ -122,7 +122,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
         $ret[$i]['link']       = XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $post->getVar('post_id') . $hightlight_key; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = $myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]["forum_name"]);
+        $ret[$i]['forum_name'] = $myts->htmlspecialchars($forum_list[$post->getVar('forum_id')]["forum_name"]);
         $ret[$i]['forum_link'] = XOOPS_URL . "/modules/newbb/viewforum.php?forum=" . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
-// <http://www.xoops.org/>                             //
+// <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,15 +25,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
+// Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
-mod_loadFunctions("render", "newbb");
+mod_loadFunctions('render', 'newbb');
 xoops_cp_header();
-echo "<fieldset>";
+echo '<fieldset>';
 $op     = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
-$cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // (int) ( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
+$cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
 $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
 
@@ -52,7 +52,7 @@ function newCategory()
  * @param null $category_obj
  * @internal param int $catid
  */
-function editCategory($category_obj = null)
+function editCategory(XoopsObject $category_obj = null)
 {
     global $xoopsModule;
     $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
@@ -60,38 +60,38 @@ function editCategory($category_obj = null)
         $category_obj =& $categoryHandler->create();
     }
     $groups_cat_access = null;
-    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
+    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
 
     if (!$category_obj->isNew()) {
-        $sform = new XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . " " . $category_obj->getVar('cat_title'), "op", xoops_getenv('PHP_SELF'));
+        $sform = new XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $category_obj->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
     } else {
-        $sform = new XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, "op", xoops_getenv('PHP_SELF'));
+        $sform = new XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('PHP_SELF'));
         $category_obj->setVar('cat_title', '');
         $category_obj->setVar('cat_image', '');
         $category_obj->setVar('cat_description', '');
         $category_obj->setVar('cat_order', 0);
-        $category_obj->setVar('cat_url', 'http://www.simple-xoops.de newBB Support');
+        $category_obj->setVar('cat_url', 'http://xoops.org/modules/newbb/ newBB Support');
     }
 
     $sform->addElement(new XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $category_obj->getVar('cat_order')), false);
     $sform->addElement(new XoopsFormText(_AM_NEWBB_CATEGORY, 'title', 50, 80, $category_obj->getVar('cat_title', 'E')), true);
     $sform->addElement(new XoopsFormDhtmlTextArea(_AM_NEWBB_CATEGORYDESC, 'cat_description', $category_obj->getVar('cat_description', 'E'), 10, 60), false);
 
-    $imgdir      = "/modules/" . $xoopsModule->getVar("dirname") . "/assets/images/category";
+    $imgdir      = '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/category';
     $cat_image   = $category_obj->getVar("cat_image");
     $cat_image   = empty($cat_image) ? 'blank.gif' : $cat_image;
-    $graph_array =& XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . $imgdir . "/");
+    $graph_array =& XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . $imgdir . '/');
     array_unshift($graph_array, _NONE);
     $cat_image_select = new XoopsFormSelect('', 'cat_image', $category_obj->getVar('cat_image'));
     $cat_image_select->addOptionArray($graph_array);
     $cat_image_select->setExtra("onchange=\"showImgSelected('img', 'cat_image', '/" . $imgdir . "/', '', '" . XOOPS_URL . "')\"");
     $cat_image_tray = new XoopsFormElementTray(_AM_NEWBB_IMAGE, '&nbsp;');
     $cat_image_tray->addElement($cat_image_select);
-    $cat_image_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_URL . $imgdir . "/" . $cat_image . " 'name='img' id='img' alt='' />"));
+    $cat_image_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' />"));
     $sform->addElement($cat_image_tray);
 
     $sform->addElement(new XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $category_obj->getVar('cat_url', 'E')), false);
-    $sform->addElement(new XoopsFormHidden('cat_id', $category_obj->getVar("cat_id")));
+    $sform->addElement(new XoopsFormHidden('cat_id', $category_obj->getVar('cat_id')));
 
     $button_tray = new XoopsFormElementTray('', '');
     $button_tray->addElement(new XoopsFormHidden('op', 'save'));
@@ -99,7 +99,7 @@ function editCategory($category_obj = null)
     $butt_save = new XoopsFormButton('', '', _SUBMIT, 'submit');
     $butt_save->setExtra('onclick="this.form.elements.op.value=\'save\'"');
     $button_tray->addElement($butt_save);
-    if ($category_obj->getVar("cat_id")) {
+    if ($category_obj->getVar('cat_id')) {
         $butt_delete = new XoopsFormButton('', '', _CANCEL, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'default\'"');
         $button_tray->addElement($butt_delete);
@@ -109,11 +109,11 @@ function editCategory($category_obj = null)
 }
 
 switch ($op) {
-    case "mod":
+    case 'mod':
         $category_obj = ($cat_id > 0) ? $categoryHandler->get($cat_id) : $categoryHandler->create();
         if (!$newXoopsModuleGui) {
             //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
-            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . "</legend>";
+            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . '</legend>';
         } else {
             echo $indexAdmin->addNavigation('admin_cat_manager.php');
         }
@@ -121,7 +121,7 @@ switch ($op) {
         editCategory($category_obj);
         break;
 
-    case "del":
+    case 'del':
         if (!(XoopsRequest::getBool('confirm', '', 'POST'))) {
             xoops_confirm(array('op' => 'del', 'cat_id' => XoopsRequest::getInt('cat_id', 0, 'GET'), 'confirm' => 1), 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
@@ -130,12 +130,12 @@ switch ($op) {
             $category_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
             $categoryHandler->delete($category_obj);
 
-            redirect_header("admin_cat_manager.php", 2, _AM_NEWBB_CATEGORYDELETED);
+            redirect_header(XOOPS_URL . '/admin/admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
         }
         break;
 
-    case "save":
-        mod_clearCacheFile("permission_category", "newbb");
+    case 'save':
+        mod_clearCacheFile('permission_category', 'newbb');
         if ($cat_id) {
             $category_obj =& $categoryHandler->get($cat_id);
             $message      = _AM_NEWBB_CATEGORYUPDATED;
@@ -157,60 +157,60 @@ switch ($op) {
         if ($cat_id = $category_obj->getVar("cat_id") && $cat_isNew) {
             $categoryHandler->applyPermissionTemplate($category_obj);
         }
-        redirect_header("admin_cat_manager.php", 2, $message);
+        redirect_header(XOOPS_URL . '/admin/admin_cat_manager.php', 2, $message);
         break;
 
     default:
 
-        if (!$categories = $categoryHandler->getByPermission("all")) {
+        if (!$categories = $categoryHandler->getByPermission('all')) {
             if (!$newXoopsModuleGui) {
                 //loadModuleAdminMenu(1, _AM_NEWBB_CREATENEWCATEGORY);
-                echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWCATEGORY . "</legend>";
+                echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWCATEGORY . '</legend>';
             } else {
                 $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
                 echo $indexAdmin->renderButton();
             }
-            echo "<fieldset>";
-            echo "<br />";
+            echo '<fieldset>';
+            echo '<br />';
             newCategory();
-            echo "</fieldset>";
+            echo '</fieldset>';
             break;
         }
 
         if (!$newXoopsModuleGui) {
             //loadModuleAdminMenu(1, _AM_NEWBB_CATADMIN);
-            echo "<fieldset>";
-            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CATADMIN . "</legend>";
-            echo "<br />";
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='admin_cat_manager.php?op=mod'>" . _AM_NEWBB_CREATENEWCATEGORY . "</a><br /><br />";
+            echo '<fieldset>';
+            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CATADMIN . '</legend>';
+            echo '<br />';
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='admin_cat_manager.php?op=mod'>" . _AM_NEWBB_CREATENEWCATEGORY . '</a><br /><br />';
         } else {
             echo $indexAdmin->addNavigation('admin_cat_manager.php');
-            echo "<fieldset>";
+            echo '<fieldset>';
             $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
             echo $indexAdmin->renderButton();
         }
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3'>" . _AM_NEWBB_CATEGORY1 . "</td>";
-        echo "<td class='bg3' width='10%'>" . _AM_NEWBB_EDIT . "</td>";
-        echo "<td class='bg3' width='10%'>" . _AM_NEWBB_DELETE . "</td>";
-        echo "</tr>";
+        echo "<th align='left' class='bg3'>" . _AM_NEWBB_CATEGORY1 . '</th>';
+        echo "<th class='bg3' width='10%'>" . _AM_NEWBB_EDIT . '</th>';
+        echo "<th class='bg3' width='10%'>" . _AM_NEWBB_DELETE . '</th>';
+        echo '</tr>';
 
         foreach ($categories as $key => $onecat) {
-            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_edit', _EDIT) . "</a>";
-            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_delete', _DELETE) . "</a>";
-            $cat_title_link = "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar("dirname") . "/index.php?cat=" . $onecat->getVar('cat_id') . "\">" . $onecat->getVar('cat_title') . "</a>";
+            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
+            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
+            $cat_title_link = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname") . '/index.php?cat=' . $onecat->getVar('cat_id') . "\">" . $onecat->getVar('cat_title') . '</a>';
 
             echo "<tr class='odd' align='left'>";
-            echo "<td>" . $cat_title_link . "</td>";
-            echo "<td align='center'>" . $cat_edit_link . "</td>";
-            echo "<td align='center'>" . $cat_del_link . "</td>";
-            echo "</tr>";
+            echo '<td>' . $cat_title_link . '</td>';
+            echo "<td align='center'>" . $cat_edit_link . '</td>';
+            echo "<td align='center'>" . $cat_del_link . '</td>';
+            echo '</tr>';
         }
-        echo "</table>";
-        echo "</fieldset>";
+        echo '</table>';
+        echo '</fieldset>';
         break;
 }
-mod_clearCacheFile("permission_category", "newbb");
-echo "</fieldset>";
+mod_clearCacheFile('permission_category', 'newbb');
+echo '</fieldset>';
 xoops_cp_footer();

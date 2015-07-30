@@ -1,6 +1,6 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
  * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -74,7 +74,7 @@ $modversion['tables'] = array(
     'bb_type',
     'bb_type_forum',
     'bb_stats',
-    'bb_user_stats',
+    'bb_user_stats'
 );
 
 // Admin things
@@ -114,7 +114,7 @@ $modversion['templates'] = array(
     array('file' => 'newbb_online.tpl', 'description' => ''),
     array('file' => 'newbb_rss.tpl', 'description' => ''),
 
-    array('file' => 'newbb_notification_select.tpl', 'description' => ''),
+    array('file' => 'newbb_notification_select.tpl', 'description' => '')
 );
 
 // Blocks
@@ -199,7 +199,7 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_cloud_show',
     'edit_func'   => 'newbb_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
-    'template'    => 'newbb_tag_block_cloud.tpl',
+    'template'    => 'newbb_tag_block_cloud.tpl'
 );
 
 /*
@@ -215,7 +215,7 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_top_show',
     'edit_func'   => 'newbb_tag_block_top_edit',
     'options'     => '50|0|c',
-    'template'    => 'newbb_tag_block_top.tpl',
+    'template'    => 'newbb_tag_block_top.tpl'
 );
 // irmtfan START add list topic block
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
@@ -739,7 +739,7 @@ $dir_def  = 0;
 $formtype = 'select';
 // if in install, update
 if ($isModuleAction) {
-    $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
+    $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
     $pollDirs      = $topicHandler->getActivePolls();
     // priorities for default poll module : 1- xoopspoll 2- last element in array 3- if no poll module => 0
     $dir_def = !empty($pollDirs) ? (!empty($pollDirs['xoopspoll']) ? $pollDirs['xoopspoll'] : end($pollDirs))
@@ -768,7 +768,7 @@ $isPref = (
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
-    $hModConfig = xoops_gethandler('config');
+    $hModConfig = &xoops_gethandler('config');
     $criteria   = new CriteriaCompo();
     $criteria->add(new Criteria('conf_name', 'poll_module', '='), 'AND');
     $criteria->add(new Criteria('conf_formtype', 'select', '='), 'AND'); // not hidden
@@ -776,7 +776,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
     if (is_object($pollOptions) && $pollOptions->getVar('conf_value') !== '0') {
-        $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
+        $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
         $topicPolls    = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
         if ($topicPolls > 0) {
             $poll_module_in_use = $topicHandler->findPollModule();

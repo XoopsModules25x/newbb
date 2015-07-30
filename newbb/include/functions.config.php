@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -23,17 +23,17 @@ if (!defined("NEWBB_FUNCTIONS_CONFIG")) {
      * @param string $dirname
      * @return bool
      */
-    function newbbLoadConfig($category = "", $dirname = "newbb")
+    function newbbLoadConfig($category = '', $dirname = 'newbb')
     {
 //        global $xoopsModuleConfig;
         static $configs;
 
-        if (isset($configs[""]) || isset($configs[$category])) {
+        if (isset($configs['']) || isset($configs[$category])) {
             return true;
         }
-        $configHandler = xoops_getmodulehandler("config", $dirname);
+        $configHandler = xoops_getmodulehandler('config', $dirname);
         if ($configs_data = $configHandler->getByCategory($category)) {
-            $GLOBALS["xoopsModuleConfig"] = array_merge($GLOBALS["xoopsModuleConfig"], $configs_data);
+            $GLOBALS['xoopsModuleConfig'] = array_merge($GLOBALS['xoopsModuleConfig'], $configs_data);
         }
         $configs[$category] = 1;
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -25,7 +25,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      * @param $text
      * @return mixed
      */
-    function newbb_htmlSpecialChars($text)
+    function newbb_htmlspecialchars($text)
     {
         return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text));
     }
@@ -45,7 +45,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
 
         if ($html !== 1) {
             // html not allowed
-            $text = newbb_htmlSpecialChars($text);
+            $text = newbb_htmlspecialchars($text);
         }
         $text = $myts->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
         $text = $myts->makeClickable($text);
@@ -95,10 +95,9 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      */
     function newbb_getButton($link, $button, $alt = "", $asImage = true, $extra = "class='forum_button'")
     {
+        $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
         if (empty($asImage)) {
             $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbbDisplayImage($button, $alt, true) . "</a>";
-        } else {
-            $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
         }
 
         return $button;
@@ -113,7 +112,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      * @param  string $extra extra attribute for the image
      * @return mixed
      */
-    function newbbDisplayImage($image, $alt = "", $display = true, $extra = "class='forum_icon'")
+    function newbbDisplayImage($image, $alt = '', $display = true, $extra = "class='forum_icon'")
     {
         $iconHandler = newbbGetIconHandler();
         // START hacked by irmtfan

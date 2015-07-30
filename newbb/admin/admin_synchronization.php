@@ -2,7 +2,7 @@
 /**
  * newbb
  *
- * @copyright    The XOOPS project http://www.xoops.org/
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since        4.00
@@ -22,19 +22,19 @@ if ($newXoopsModuleGui) {
 //    else $form .= $indexAdmin->addNavigation('admin_synchronization.php');
 
 //if (!empty($_GET['type'])) {
-$start = XoopsRequest::getInt('start', 0, 'GET'); //(int) ( @$_GET['start'] );
+$start = XoopsRequest::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
 
 switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite forum sync
     case "forum":
         $result = newbb_synchronization("forum");
         if (!empty($result)) {
-            redirect_header("admin_synchronization.php", 2, _AM_NEWBB_SYNC_TYPE_FORUM . "<br />" . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_FORUM . "<br />" . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan rewrite topic sync
     case "topic":
-        $limit         = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int) ($_GET['limit']);
+        $limit         = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
         $criteria      = new Criteria("approved", 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
@@ -47,18 +47,18 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
             $topicHandler->synchronization($tObj);
         }
         $result = newbb_synchronization("topic");
-        redirect_header("admin_synchronization.php?type=topic&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
+        redirect_header('admin_synchronization.php?type=topic&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
         break;
     // irmtfan rewrite post sync
     case "post":
         $result = newbb_synchronization("post");
         if (!empty($result)) {
-            redirect_header("admin_synchronization.php", 2, _AM_NEWBB_SYNC_TYPE_POST . "<br />" . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_POST . "<br />" . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan - user is not in recon functions - only here
     case "user":
-        $limit        = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int) ($_GET['limit']);
+        $limit        = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         $user_handler =& xoops_gethandler('user');
         if ($start >= ($count = $user_handler->getCount())) {
             break;
@@ -92,7 +92,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
             );
         }
 
-        redirect_header("admin_synchronization.php?type=user&amp;start=" . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
+        redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
         break;
     // irmtfan rewrite stats reset
     case "stats":
@@ -102,7 +102,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     case "read":
         $result = newbb_synchronization(array("readtopic", "readforum"));
         if (!empty($result)) {
-            redirect_header("admin_synchronization.php", 2, _AM_NEWBB_SYNC_TYPE_READ . "<br />" . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_READ . "<br />" . _AM_NEWBB_DATABASEUPDATED);
         }
         exit();
     // END irmtfan add read sync

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -38,7 +38,7 @@ function newbb_tag_iteminfo(&$items)
         // catid is not used in newbb, so just skip it
         foreach (array_keys($items[$cat_id]) as $item_id) {
             // In newbb, the item_id is "topic_id"
-            $items_id[] = (int) ($item_id);
+            $items_id[] = (int)($item_id);
         }
     }
     $item_handler =& xoops_getmodulehandler('topic', 'newbb');
@@ -55,7 +55,7 @@ function newbb_tag_iteminfo(&$items)
                 "link"    => "viewtopic.php?topic_id={$item_id}",
                 "time"    => $item_obj->getVar("topic_time"),
                 "tags"    => tag_parse_tag($item_obj->getVar("topic_tags", "n")),
-                "content" => "",
+                "content" => ""
             );
         }
     }

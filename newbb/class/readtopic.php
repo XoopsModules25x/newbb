@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . '/read.php';
@@ -33,16 +33,16 @@ include_once __DIR__ . '/read.php';
 /**
  * A handler for read/unread handling
  *
- * @package     newbb/cbb
+ * @package     newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright    copyright (c) 2005 XOOPS.org
  */
 class Readtopic extends Read
 {
-    public function Readtopic()
+    public function __construct()
     {
-        $this->Read("topic");
+        parent::__construct('topic');
         //$this->initVar('forum_id', XOBJ_DTYPE_INT);
     }
 }
@@ -63,11 +63,11 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     /**
      * @param $db
      */
-    public function NewbbReadtopicHandler(&$db)
+    public function __construct(&$db)
     {
-        $this->NewbbReadHandler($db, "topic");
+        parent::__construct($db, "topic");
         $newbbConfig           = newbbLoadConfig();
-        $this->items_per_forum = isset($newbbConfig["read_items"]) ? (int) ($newbbConfig["read_items"]) : 100;
+        $this->items_per_forum = isset($newbbConfig["read_items"]) ? (int)($newbbConfig["read_items"]) : 100;
     }
 
     /**
@@ -182,7 +182,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
 
         $items_obj  =& $item_handler->getAll($criteria_topic, array("topic_last_post_id"));
         $sticky_obj =& $item_handler->getAll($criteria_sticky, array("topic_last_post_id"));
-        $items_obj  = $items_obj + $sticky_obj;
+        $items_obj += $sticky_obj;
         $items      = array();
         foreach (array_keys($items_obj) as $key) {
             $items[$key] = $items_obj[$key]->getVar("topic_last_post_id");

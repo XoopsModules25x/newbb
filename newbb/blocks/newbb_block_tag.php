@@ -1,8 +1,8 @@
 <?php
 /**
- * Tag blocks for CBB 4.0+
+ * Tag blocks for NewBB 4.0+
  *
- * @copyright    The XOOPS project http://www.xoops.org/
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since        4.00

@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,11 +25,11 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
@@ -37,7 +37,7 @@ newbb_load_object();
 /**
  * A handler for read/unread handling
  *
- * @package     newbb/cbb
+ * @package     newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright    copyright (c) 2005 XOOPS.org
@@ -47,10 +47,10 @@ class Read extends ArtObject
     /**
      * @param $type
      */
-    public function Read($type)
+    public function __construct($type)
     {
 //        parent::__construct("bb_reads_" . $type);
-        $this->ArtObject("bb_reads_" . $type);
+        parent::__construct("bb_reads_" . $type);
         $this->initVar('read_id', XOBJ_DTYPE_INT);
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('read_item', XOBJ_DTYPE_INT);
@@ -105,14 +105,14 @@ class NewbbReadHandler extends ArtObjectHandler
      * @param $db
      * @param $type
      */
-    public function NewbbReadHandler(&$db, $type)
+    public function __construct(&$db, $type)
     {
         $type = ("forum" === $type) ? "forum" : "topic";
-        $this->ArtObjectHandler($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
+        parent::__construct($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
         $this->type  = $type;
         $newbbConfig = newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
-        $this->lifetime = isset($newbbConfig["read_expire"]) ? (int) ($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
+        $this->lifetime = isset($newbbConfig["read_expire"]) ? (int)($newbbConfig["read_expire"]) * 24 * 3600 : 30 * 24 * 3600;
         $this->mode     = isset($newbbConfig["read_mode"]) ? $newbbConfig["read_mode"] : 2;
     }
 
@@ -149,7 +149,7 @@ class NewbbReadHandler extends ArtObjectHandler
             return true;
         }
         // irmtfan move here and rephrase
-        $expire = time() - (int) ($this->lifetime);
+        $expire = time() - (int)($this->lifetime);
         $sql    = "DELETE FROM " . $this->table . " WHERE read_time < " . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -207,8 +207,8 @@ class NewbbReadHandler extends ArtObjectHandler
         }
         $sql = "SELECT post_id " .
                " FROM " . $this->table .
-               " WHERE read_item = " . (int) ($read_item) .
-               "     AND uid = " . (int) ($uid);
+               " WHERE read_item = " . (int)($read_item) .
+               "     AND uid = " . (int)($uid);
         if (!$result = $this->db->queryF($sql, 1)) {
             return null;
         }
@@ -264,10 +264,10 @@ class NewbbReadHandler extends ArtObjectHandler
         }
 
         $sql = "UPDATE " . $this->table .
-               " SET post_id = " . (int) ($post_id) . "," .
+               " SET post_id = " . (int)($post_id) . "," .
                "     read_time =" . time() .
-               " WHERE read_item = " . (int) ($read_item) .
-               "     AND uid = " . (int) ($uid);
+               " WHERE read_item = " . (int)($read_item) .
+               "     AND uid = " . (int)($uid);
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }

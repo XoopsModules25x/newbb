@@ -1,9 +1,9 @@
 <?php
 
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -25,7 +25,7 @@ class Digest extends XoopsObject
      */
     public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('digest_id', XOBJ_DTYPE_INT);
         $this->initVar('digest_time', XOBJ_DTYPE_INT);
         $this->initVar('digest_content', XOBJ_DTYPE_TXTAREA);
@@ -82,14 +82,14 @@ class Digest extends XoopsObject
     public function buildContent($isSummary = true, $isHtml = false)
     {
         $digest_count = count($this->items);
-        $content      = "";
+        $content      = '';
         if ($digest_count > 0) {
             $linebreak = ($isHtml) ? "<br />" : "\n";
             for ($i = 0; $i < $digest_count; ++$i) {
                 if ($isHtml) {
                     $content .= ($i + 1) . ". <a href=" . $this->items[$i]['link'] . ">" . $this->items[$i]['title'] . "</a>";
                 } else {
-                    $content .= ($i + 1) . ". " . $this->items[$i]['title'] . $linebreak . $this->items[$i]['link'];
+                    $content .= ($i + 1) . '. ' . $this->items[$i]['title'] . $linebreak . $this->items[$i]['link'];
                 }
 
                 $content .= $linebreak . $this->items[$i]['author'];
@@ -133,7 +133,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     public function &get($id)
     {
         $digest = null;
-        $id     = (int) ($id);
+        $id     = (int)($id);
         if (!$id) {
             return $digest;
         }
@@ -199,11 +199,11 @@ class NewbbDigestHandler extends XoopsObjectHandler
      * @param int $perpage
      * @return array
      */
-    public function &getAllDigests($start, $perpage = 5)
+    public function &getAllDigests($start = 0, $perpage = 5)
     {
-        if (empty($start)) {
-            $start = 0;
-        }
+//        if (empty($start)) {
+//            $start = 0;
+//        }
 
         $sql            = "SELECT * FROM " . $this->db->prefix('bb_digest') . " ORDER BY digest_id DESC";
         $result         = $this->db->query($sql, $perpage, $start);

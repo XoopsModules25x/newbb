@@ -7,7 +7,7 @@
 -- Server version: 5.0.16
 -- PHP Version: 5.1.0
 -- 
--- CBB 4.02
+-- NewBB 4.02
 -- 
 -- 
 -- Database: `cbb`

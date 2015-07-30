@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,21 +10,21 @@
  * @package        module::newbb
  */
 
-include_once __DIR__ . "/header.php";
+include_once __DIR__ . '/header.php';
 
 $ok = XoopsRequest::getInt('ok', 0, 'POST');
 
+//foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
+//    ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
+//}
 foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
-    ${$getint} = XoopsRequest::getInt('getint', 0, 'POST');
-}
-foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
-    ${$getint} = (${$getint}) ? ${$getint} : (XoopsRequest::getInt($getint, 0, 'GET'));
+    ${$getint} = !empty(${$getint}) ? ${$getint} : (XoopsRequest::getInt($getint, 0, 'GET'));
 }
 //$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
 $viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
-$viewmode = ($viewmode) ? $viewmode : (XoopsRequest::getString('viewmode', '', 'POST') ? XoopsRequest::getString('viewmode', '', 'POST')  : 'flat');
+$viewmode = ($viewmode) ? : (XoopsRequest::getString('viewmode', '', 'POST') ? : 'flat');
 
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
@@ -37,15 +37,15 @@ if (!empty($post_id)) {
 }
 $topic_id = $topic->getVar('topic_id');
 if (!$topic_id) {
-    $redirect = empty($forum) ? "index.php" : 'viewforum.php?forum=' . $forum;
-    $redirect = XOOPS_URL . "/modules/newbb/" . $redirect;
+    $redirect = empty($forum) ? 'index.php' : 'viewforum.php?forum=' . $forum;
+    $redirect = XOOPS_URL . '/modules/newbb/' . $redirect;
     redirect_header($redirect, 2, _MD_ERRORTOPIC);
 }
 
 $forum     = $topic->getVar('forum_id');
 $forum_obj =& $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forum_obj)) {
-    redirect_header("index.php", 2, _MD_NORIGHTTOACCESS);
+    redirect_header(XOOPS_URL .'/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 
 $isadmin = newbb_isAdmin($forum_obj);
@@ -107,11 +107,11 @@ if ($ok) {
         $postHandler->delete($post_obj, $isDeleteOne);
         $forumHandler->synchronization($forum);
         $topicHandler->synchronization($topic_id);
-        $statsHandler = xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler = &xoops_getmodulehandler('stats', 'newbb');
         $statsHandler->reset();
     }
 
-    $post_obj->loadFilters("delete");
+    $post_obj->loadFilters('delete');
     if ($isDeleteOne) {
         redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode&amp;pid=$pid&amp;forum=$forum", 2, _MD_POSTDELETED);
     } else {

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since        4.3
@@ -116,7 +116,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
             $temp_str = preg_split('/[\s,]+/', $str);
             $strarray = array();
             foreach ($temp_str as $s) {
-                $strarray[] = addSlashes($s);
+                $strarray[] = addslashes($s);
             }
 
             return $strarray;

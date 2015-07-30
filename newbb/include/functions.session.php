@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -14,6 +14,7 @@
 
 defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
 define("NEWBB_FUNCTIONS_SESSION_LOADED", true);
+xoops_load('XoopsRequest');
 
 if (!defined("NEWBB_FUNCTIONS_SESSION")) {
     define("NEWBB_FUNCTIONS_SESSION", 1);
@@ -79,7 +80,7 @@ if (!defined("NEWBB_FUNCTIONS_SESSION")) {
             }
             $string = implode(",", $value);
         }
-        setcookie($forumCookie['prefix'] . $name, $string, (int) ($expire), $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
+        setcookie($forumCookie['prefix'] . $name, $string, (int)($expire), $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
     }
 
     /**
@@ -90,7 +91,9 @@ if (!defined("NEWBB_FUNCTIONS_SESSION")) {
     function newbb_getcookie($name, $isArray = false)
     {
         global $forumCookie;
-        $value = !empty($_COOKIE[$forumCookie['prefix'] . $name]) ? $_COOKIE[$forumCookie['prefix'] . $name] : null;
+//        $value = !empty($_COOKIE[$forumCookie['prefix'] . $name]) ? $_COOKIE[$forumCookie['prefix'] . $name] : null;
+        $value = XoopsRequest::getString($forumCookie['prefix'] . $name, null, 'COOKIE');
+
         if ($isArray) {
             $_value = ($value) ? explode(",", $value) : array();
             $value  = array();

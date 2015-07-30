@@ -11,6 +11,8 @@
 - added/fixed phpDoc headers (mamba)
 - replaced intval() with (int) (mamba)
 - enforcing strict comparison (mamba)
+- check for existence of Categories and Forums (cesag/mamba)
+- some PSR-2 code clean-up (mamba)
 
 
 4.33         11/20/2012 (changes by Irmtfan)

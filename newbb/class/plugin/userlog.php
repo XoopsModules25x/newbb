@@ -11,12 +11,12 @@
 /**
  *  userlog module
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         newbb class plugin
  * @since           4.31
  * @author          irmtfan (irmtfan@yahoo.com)
- * @author          The XOOPS Project <www.xoops.org> <www.xoops.ir>
+ * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
  * @version         $Id: userlog.php 4.31 2013/05/08 16:25:04Z irmtfan $
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -60,14 +60,14 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
         switch ($subscribe_from) {
             case "viewtopic.php":
                 $topicHandler = xoops_getmodulehandler('topic', "newbb");
-                $post_id       = XoopsRequest::getInt('post_id', 0);// !empty($_REQUEST["post_id"]) ? (int) ($_REQUEST["post_id"]) : 0;
+                $post_id       = XoopsRequest::getInt('post_id', 0);// !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
                 $move          = strtolower(XoopsRequest::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
-                $topic_id      = XoopsRequest::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int) ($_REQUEST["topic_id"]) : 0;
+                $topic_id      = XoopsRequest::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;
                 if (!empty($post_id)) {
                     $topic_obj = $topicHandler->getByPost($post_id);
                     $topic_id  = $topic_obj->getVar("topic_id");
                 } elseif (!empty($move)) {
-                    $forum_id  = XoopsRequest::getInt('forum_id', 0); //!empty($_REQUEST["forum_id"]) ? (int) ($_REQUEST["forum_id"]) : 0;
+                    $forum_id  = XoopsRequest::getInt('forum_id', 0); //!empty($_REQUEST["forum_id"]) ? (int)($_REQUEST["forum_id"]) : 0;
                     $topic_obj = $topicHandler->getByMove($topic_id, ($move === "prev") ? -1 : 1, $forum_id);
                     $topic_id  = $topic_obj->getVar("topic_id");
                 }
@@ -75,7 +75,7 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
                 return array("item_name" => "topic_id", "item_id" => $topic_id);
                 break;
             case "viewforum.php":
-                $forum_id = XoopsRequest::getInt('forum', 0); // !empty($_REQUEST["forum"]) ? (int) ($_REQUEST["forum"]) : 0;
+                $forum_id = XoopsRequest::getInt('forum', 0); // !empty($_REQUEST["forum"]) ? (int)($_REQUEST["forum"]) : 0;
 
                 return array("item_name" => "forum", "item_id" => $forum_id);
                 break;

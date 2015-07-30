@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 load_functions("locale");
@@ -49,7 +49,7 @@ class Xmlrss
     public $max_item_description;
     public $items = array();
 
-    public function Xmlrss()
+    public function __construct()
     {
 
         $this->xml_version          = '1.0';
@@ -111,7 +111,7 @@ class Xmlrss
             $text = XoopsLocal::convert_encoding($text, "utf-8");
         }
         if (!empty($trim)) {
-            $text = xoops_substr($text, 0, (int) ($trim));
+            $text = xoops_substr($text, 0, (int)($trim));
         }
         $text = htmlspecialchars($text, ENT_QUOTES);
 
@@ -138,7 +138,7 @@ class NewbbXmlrssHandler
      * @param $rss
      * @return array
      */
-    public function &get(&$rss)
+    public function &get(Xmlrss &$rss)
     {
         $rss_array                      = array();
         $rss_array['xml_version']       = $rss->xml_version;

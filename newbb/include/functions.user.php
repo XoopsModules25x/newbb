@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         newbb
  * @since           4.0
@@ -73,10 +73,10 @@ function newbb_isAdministrator($user = -1, $mid = 0)
     if (is_numeric($user) && $user === -1) {
         $user =& $GLOBALS['xoopsUser'];
     }
-    if (!is_object($user) && (int) ($user) < 1) {
+    if (!is_object($user) && (int)($user) < 1) {
         return false;
     }
-    $uid = (is_object($user)) ? $user->getVar("uid") : (int) ($user);
+    $uid = (is_object($user)) ? $user->getVar("uid") : (int)($user);
 
     if (!$mid) {
         if (is_object($xoopsModule) && "newbb" === $xoopsModule->getVar("dirname", "n")) {
@@ -111,7 +111,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 function newbb_isModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
-        $forum_id = (int) ($forum);
+        $forum_id = (int)($forum);
         if ($forum_id === 0) {
             return false;
         }
@@ -122,12 +122,12 @@ function newbb_isModerator(&$forum, $user = -1)
     if (is_numeric($user) && $user === -1) {
         $user =& $GLOBALS['xoopsUser'];
     }
-    if (!is_object($user) && (int) ($user) < 1) {
+    if (!is_object($user) && (int)($user) < 1) {
         return false;
     }
-    $uid = (is_object($user)) ? $user->getVar("uid", "n") : (int) ($user);
+    $uid = (is_object($user)) ? $user->getVar("uid", "n") : (int)($user);
 
-    return in_array($uid, $forum->getVar("forum_moderator"));
+    return in_array($uid, $forum->getVar("forum_moderator"), true);
 }
 
 /**
@@ -153,11 +153,11 @@ function newbb_isAdmin($forum = 0)
         return true;
     }
 
-    $cache_id = (is_object($forum)) ? $forum->getVar('forum_id', "n") : (int) ($forum);
+    $cache_id = (is_object($forum)) ? $forum->getVar('forum_id', "n") : (int)($forum);
     if (!isset($_cachedModerators[$cache_id])) {
         if (!is_object($forum)) {
             $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-            $forum         = $forumHandler->get((int) ($forum));
+            $forum         = $forumHandler->get((int)($forum));
         }
         $_cachedModerators[$cache_id] = $forum->getVar("forum_moderator");
     }
@@ -175,7 +175,7 @@ function newbb_isModuleAdministrators(array $uid = array())
     global $xoopsModule;
     $module_administrators = array();
 
-    if (empty($uid)) {
+    if (!(bool)($uid)) {
         return $module_administrators;
     }
     $mid = $xoopsModule->getVar("mid");
@@ -183,7 +183,7 @@ function newbb_isModuleAdministrators(array $uid = array())
     $sql = "SELECT COUNT(l.groupid) AS count, l.uid FROM " . $GLOBALS['xoopsDB']->prefix('groups_users_link') . " AS l" .
            " LEFT JOIN " . $GLOBALS['xoopsDB']->prefix('group_permission') . " AS p ON p.gperm_groupid=l.groupid" .
            " WHERE l.uid IN (" . implode(", ", array_map("intval", $uid)) . ")" .
-           "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" . (int) ($mid) . "'" .
+           "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" . (int)($mid) . "'" .
            " GROUP BY l.uid";
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -202,11 +202,11 @@ function newbb_isModuleAdministrators(array $uid = array())
  * @param int $mid
  * @return array
  */
-function newbb_isForumModerators(array $uid = array() , $mid = 0)
+function newbb_isForumModerators(array $uid = array(), $mid = 0)
 {
     $forum_moderators = array();
 
-    if (empty($uid)) {
+    if (!(bool)($uid)) {
         return $forum_moderators;
     }
 

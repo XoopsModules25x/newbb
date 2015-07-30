@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
@@ -26,7 +26,7 @@ class Topic extends ArtObject
      */
     public function __construct()
     {
-        $this->ArtObject("bb_topics");
+        parent::__construct("bb_topics");
         $this->initVar('topic_id', XOBJ_DTYPE_INT);
         $this->initVar('topic_title', XOBJ_DTYPE_TXTBOX);
         $this->initVar('topic_poster', XOBJ_DTYPE_INT);
@@ -206,9 +206,9 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * @param $db
      */
-    public function NewbbTopicHandler($db)
+    public function __construct($db)
     {
-        $this->ArtObjectHandler($db, 'bb_topics', 'Topic', 'topic_id', 'topic_title');
+        parent::__construct($db, 'bb_topics', 'Topic', 'topic_id', 'topic_title');
     }
 
     /**
@@ -313,8 +313,8 @@ class NewbbTopicHandler extends ArtObjectHandler
         if (!empty($action)) {
             $sql = "SELECT * FROM " . $this->table .
                    " WHERE 1=1" .
-                   (($forum_id > 0) ? " AND forum_id=" . (int) ($forum_id) : "") .
-                   " AND topic_id " . (($action > 0) ? ">" : "<") . (int) ($topic_id) .
+                   (($forum_id > 0) ? " AND forum_id=" . (int)($forum_id) : "") .
+                   " AND topic_id " . (($action > 0) ? ">" : "<") . (int)($topic_id) .
                    " ORDER BY topic_id " . (($action > 0) ? "ASC" : "DESC") . " LIMIT 1";
             if ($result = $this->db->query($sql)) {
                 if ($row = $this->db->fetchArray($result)) {
@@ -338,7 +338,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     {
         $topic  = null;
         $sql    = "SELECT t.* FROM " . $this->db->prefix('bb_topics') . " t, " . $this->db->prefix('bb_posts') . " p
-                WHERE t.topic_id = p.topic_id AND p.post_id = " . (int) ($post_id);
+                WHERE t.topic_id = p.topic_id AND p.post_id = " . (int)($post_id);
         $result = $this->db->query($sql);
         if (!$result) {
             //xoops_error($this->db->error());
@@ -433,8 +433,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     {
 
         $ret     = array();
-        $perpage = ((int) ($perpage) > 0) ? (int) ($perpage) : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
-        $start   = (int) ($start);
+        $perpage = ((int)($perpage) > 0) ? (int)($perpage) : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
+        $start   = (int)($start);
         switch ($type) {
             case "pending":
                 $approveCriteria = ' AND p.approved = 0';
@@ -455,14 +455,14 @@ class NewbbTopicHandler extends ArtObjectHandler
                 $operator_for_position = '<';
             }
             //$approveCriteria = ' AND approved = 1'; // any others?
-            $sql    = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_posts') . " AS p WHERE p.topic_id=" . (int) ($topic->getVar('topic_id')) . $approveCriteria . " AND p.post_id $operator_for_position $post_id";
+            $sql    = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_posts') . " AS p WHERE p.topic_id=" . (int)($topic->getVar('topic_id')) . $approveCriteria . " AND p.post_id $operator_for_position $post_id";
             $result = $this->db->query($sql);
             if (!$result) {
                 //xoops_error($this->db->error());
                 return $ret;
             }
             list($position) = $this->db->fetchRow($result);
-            $start = (int) ($position / $perpage) * $perpage;
+            $start = (int)($position / $perpage) * $perpage;
         }
 
         $sql    = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p, ' . $this->db->prefix('bb_posts_text') . " t WHERE p.topic_id=" . $topic->getVar('topic_id') . " AND p.post_id = t.post_id" . $approveCriteria . " ORDER BY p.post_id $order";
@@ -524,7 +524,7 @@ class NewbbTopicHandler extends ArtObjectHandler
                 $postArray['poster'] = "<a href=\"" . XOOPS_URL . "/userinfo.php?uid=" . $postArray['uid'] . "\">" . $viewtopic_users[$postArray['uid']]['name'] . "</a>";
             }
         } else {
-            $postArray['poster'] = (empty($postArray['poster_name'])) ? $myts->HtmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
+            $postArray['poster'] = (empty($postArray['poster_name'])) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
         }
 
         return $postArray;
@@ -561,7 +561,7 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function delete(&$topic, $force = true)
     {
-        $topic_id = is_object($topic) ? $topic->getVar("topic_id") : (int) ($topic);
+        $topic_id = is_object($topic) ? $topic->getVar("topic_id") : (int)($topic);
         if (empty($topic_id)) {
             return false;
         }
@@ -594,7 +594,7 @@ class NewbbTopicHandler extends ArtObjectHandler
             return true;
         }
 
-        $forum_id = is_object($forum) ? $forum->getVar('forum_id') : (int) ($forum);
+        $forum_id = is_object($forum) ? $forum->getVar('forum_id') : (int)($forum);
         if ($forum_id < 1) {
             return false;
         }
@@ -634,14 +634,14 @@ class NewbbTopicHandler extends ArtObjectHandler
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
             $newbbConfig = newbbLoadConfig();
-            $expire      = isset($newbbConfig["pending_expire"]) ? (int) ($newbbConfig["pending_expire"]) : 7;
+            $expire      = isset($newbbConfig["pending_expire"]) ? (int)($newbbConfig["pending_expire"]) : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
         if (empty($expire)) {
             return false;
         }
         $crit_expire = new CriteriaCompo(new Criteria("approved", 0, "<="));
-        $crit_expire->add(new Criteria("topic_time", time() - (int) ($expire), "<"));
+        $crit_expire->add(new Criteria("topic_time", time() - (int)($expire), "<"));
 
         return $this->deleteAll($crit_expire, true/*, true*/);
     }
@@ -655,7 +655,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     public function synchronization($object = null, $force = true)
     {
         if (!is_object($object)) {
-            $object =& $this->get((int) ($object));
+            $object =& $this->get((int)($object));
         }
         if (!$object->getVar("topic_id")) {
             return false;

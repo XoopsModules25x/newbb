@@ -1,27 +1,27 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since		4.00
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    XOOPS Project (http://xoops.org)
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since        4.00
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 /**
  * Set image path
  *
  * Priority for path per types:
- * 	NEWBB_ROOT 	-	IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
- *					ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
- *					ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
- * 	types:
- *		button		- 	language specified;
- *		indicator	-	language specified;
- *		icon		-	universal;
- *		mime		-	universal;
+ *    NEWBB_ROOT    -    IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
+ *                    ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
+ *                    ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
+ *    types:
+ *        button        -    language specified;
+ *        indicator    -    language specified;
+ *        icon        -    universal;
+ *        mime        -    universal;
  */
 
 // Forum image type
@@ -68,7 +68,7 @@ $forumImage['right'] =
 $forumImage['down'] =
 $forumImage['up'] =
 $forumImage['printer'] =
-$forumImage['new_forum']  =
+$forumImage['new_forum'] =
 
 $forumImage['facebook'] =
 $forumImage['twitter'] =
@@ -84,10 +84,10 @@ $forumImage['wong'] =
 $forumImage['anonym'] =
 $forumImage['more'] =
 $forumImage['less'] =
-"icon";
+    "icon";
 
 for ($i = 1; $i <= 5; ++$i) {
-    $forumImage['rate'.$i] = "icon";
+    $forumImage['rate' . $i] = "icon";
 }
 
 $forumImage['p_delete'] =
@@ -109,7 +109,7 @@ $forumImage['new_subforum'] =
 
 $forumImage['p_bann'] =
 
-"language";
+    "language";
 
 /*
 $forumImage[''] = $forumImage['blank'] = $forumImage['icon']."blank";

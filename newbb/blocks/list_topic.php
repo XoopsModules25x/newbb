@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @author      The Persian Xoops Support Site <www.xoops.ir>
@@ -11,7 +11,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
@@ -59,10 +59,10 @@ function newbb_list_topic_show($options)
     $topicRenderer->is_multiple = true; // is it for multiple forums
     $topicRenderer->config      =& $newbbConfig; // get all configs
     if (!empty($options[6])) {
-        $topicRenderer->config['topics_per_page'] = (int) ($options[6]); // number of topics (items) to display
+        $topicRenderer->config['topics_per_page'] = (int)($options[6]); // number of topics (items) to display
     }
-    $topicRenderer->config['topic_title_excerpt'] = (int) ($options[10]); // topic title length 0 = dont excerpt
-    $topicRenderer->config['post_excerpt']        = (int) ($options[11]); // post text excerpt 0 = no post text
+    $topicRenderer->config['topic_title_excerpt'] = (int)($options[10]); // topic title length 0 = dont excerpt
+    $topicRenderer->config['post_excerpt']        = (int)($options[11]); // post text excerpt 0 = no post text
 
     $optionsStatus = explode(',', $options[0]); // status in where claus
     $optionsForum  = explode(',', $options[12]);
@@ -77,7 +77,7 @@ function newbb_list_topic_show($options)
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $optionsForum,
+                                'forum'      => $optionsForum
                             ));
     $block = array();
     // headers to display in block
@@ -152,7 +152,7 @@ function newbb_list_topic_edit($options)
     $orderEle->addOption(1, _ASCENDING);
 
     // number of topics to display element
-    $numdispEle = new XoopsFormText(_MB_NEWBB_DISPLAY, 'options[6]', 10, 255, (int) ($options[6]));
+    $numdispEle = new XoopsFormText(_MB_NEWBB_DISPLAY, 'options[6]', 10, 255, (int)($options[6]));
 
     $timeEle = new XoopsFormText(_MB_NEWBB_TIME, 'options[7]', 10, 255, $options[7]);
     $timeEle->setDescription(_MB_NEWBB_TIME_DESC);
@@ -169,11 +169,11 @@ function newbb_list_topic_edit($options)
     $navEle = new XoopsFormRadioYN(_MB_NEWBB_INDEXNAV, 'options[9]', !empty($options[9]));
 
     // Topic title element
-    $lengthEle = new XoopsFormText(_MB_NEWBB_TITLE_LENGTH, 'options[10]', 10, 255, (int) ($options[10]));
+    $lengthEle = new XoopsFormText(_MB_NEWBB_TITLE_LENGTH, 'options[10]', 10, 255, (int)($options[10]));
     $lengthEle->setDescription(_MB_NEWBB_TITLE_LENGTH_DESC);
 
     // Post text element
-    $postExcerptEle = new XoopsFormText(_MB_NEWBB_POST_EXCERPT, 'options[11]', 10, 255, (int) ($options[11]));
+    $postExcerptEle = new XoopsFormText(_MB_NEWBB_POST_EXCERPT, 'options[11]', 10, 255, (int)($options[11]));
     $postExcerptEle->setDescription(_MB_NEWBB_POST_EXCERPT_DESC);
 
     //  forum element

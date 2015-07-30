@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,11 +25,11 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
@@ -135,19 +135,19 @@ class Post extends ArtObject
     {
 
         $attachOld = $this->getAttachment();
-        if (!is_array($attachOld) || count($attach_old) < 1) {
+        if (!is_array($attachOld) || count($attachOld) < 1) {
             return true;
         }
         $this->attachmentArray = array();
 
         if ($attachArray === null) {
-            $attachArray = array_keys($attach_old);
+            $attachArray = array_keys($attachOld);
         } // to delete all!
         if (!is_array($attachArray)) {
             $attachArray = array($attachArray);
         }
 
-        foreach ($attach_old as $key => $attach) {
+        foreach ($attachOld as $key => $attach) {
             if (in_array($key, $attachArray)) {
                 @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']));
                 @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
@@ -181,7 +181,7 @@ class Post extends ArtObject
             $this->attachmentArray[$key] = array('name_saved'   => $name_saved,
                                                   'nameDisplay' => isset($nameDisplay) ? $nameDisplay : $name_saved,
                                                   'mimetype'     => $mimetype,
-                                                  'numDownload' => isset($numDownload) ? (int) ($numDownload) : 0
+                                                  'numDownload' => isset($numDownload) ? (int)($numDownload) : 0
             );
         }
         if (is_array($this->attachmentArray)) {
@@ -305,7 +305,7 @@ class Post extends ArtObject
         }
         if (is_array($post_edits) && count($post_edits) > 0) {
             foreach ($post_edits as $postedit) {
-                $edit_time = (int) ($postedit['edit_time']);
+                $edit_time = (int)($postedit['edit_time']);
                 $edit_user = $myts->stripSlashesGPC($postedit['edit_user']);
                 $edit_msg  = (!empty($postedit['edit_msg'])) ? $myts->stripSlashesGPC($postedit['edit_msg']) : '';
                 // Start irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
@@ -315,7 +315,7 @@ class Post extends ArtObject
                 // End irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
                 // START hacked by irmtfan
                 // display/save all edit records.
-                $post_edit .= _MD_EDITEDBY . " " . $edit_user . " " . _MD_ON . " " . formatTimestamp((int) ($edit_time)) . "<br />";
+                $post_edit .= _MD_EDITEDBY . " " . $edit_user . " " . _MD_ON . " " . formatTimestamp((int)($edit_time)) . "<br />";
                 // if reason is not empty
                 if ($edit_msg !== "") {
                     $post_edit .= _MD_EDITEDMSG . " " . $edit_msg . "<br />";
@@ -365,7 +365,7 @@ class Post extends ArtObject
             $post['author'] = $this->getVar('poster_name') ?: $GLOBALS['xoopsConfig']['anonymous'];
         }
 
-        $post['subject'] = newbb_htmlSpecialChars($this->vars['subject']['value']);
+        $post['subject'] = newbb_htmlspecialchars($this->vars['subject']['value']);
 
         $post['date'] = $this->getVar('post_time');
 
@@ -428,7 +428,7 @@ class Post extends ArtObject
         static $name_anonymous;
 
         if (!isset($name_anonymous)) {
-            $name_anonymous = $myts->HtmlSpecialChars($GLOBALS["xoopsConfig"]['anonymous']);
+            $name_anonymous = $myts->htmlSpecialChars($GLOBALS["xoopsConfig"]['anonymous']);
         }
 
         mod_loadFunctions("time", "newbb");
@@ -483,7 +483,7 @@ class Post extends ArtObject
         $post_title = $this->getVar('subject');
 //        if (isset($_GET['keywords']) && !empty($_GET['keywords'])) {
         if (XoopsRequest::getString('keywords', '', 'GET')) {
-            $keywords   = $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
+            $keywords   = $myts->htmlspecialchars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
             $post_text  = newbb_highlightText($post_text, $keywords);
             $post_title = newbb_highlightText($post_title, $keywords);
         }
@@ -683,7 +683,7 @@ class NewbbPostHandler extends ArtObjectHandler
      */
     public function &get($id)
     {
-        $id   = (int) ($id);
+        $id   = (int)($id);
         $post = null;
         $sql  = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
         if ($array = $this->db->fetchArray($this->db->query($sql))) {
@@ -1109,7 +1109,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 $sql .= " ORDER BY " . $criteria->getSort() . " " . $criteria->getOrder();
             }
         }
-        $result = $this->db->query($sql, (int) ($limit), (int) ($start));
+        $result = $this->db->query($sql, (int)($limit), (int)($start));
         if (!$result) {
             //xoops_error($this->db->error());
             return $ret;
@@ -1181,7 +1181,7 @@ class NewbbPostHandler extends ArtObjectHandler
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
             $newbbConfig = newbbLoadConfig();
-            $expire      = isset($newbbConfig["pending_expire"]) ? (int) ($newbbConfig["pending_expire"]) : 7;
+            $expire      = isset($newbbConfig["pending_expire"]) ? (int)($newbbConfig["pending_expire"]) : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
         if (empty($expire)) {
@@ -1189,7 +1189,7 @@ class NewbbPostHandler extends ArtObjectHandler
         }
         $crit_expire = new CriteriaCompo(new Criteria("approved", 0, "<="));
         //if (!empty($expire)) {
-        $crit_expire->add(new Criteria("post_time", time() - (int) ($expire), "<"));
+        $crit_expire->add(new Criteria("post_time", time() - (int)($expire), "<"));
         //}
         return $this->deleteAll($crit_expire, true/*, true*/);
     }

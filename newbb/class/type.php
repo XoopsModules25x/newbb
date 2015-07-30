@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Type
@@ -29,7 +29,7 @@ class NewbbType extends XoopsObject
      */
     public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('type_id', XOBJ_DTYPE_INT);
         $this->initVar('type_name', XOBJ_DTYPE_TXTBOX, "");
         $this->initVar('type_color', XOBJ_DTYPE_SOURCE, "");
@@ -42,7 +42,7 @@ class NewbbType extends XoopsObject
  * @package module::newbb
  *
  * @author  D.J. (phppp)
- * @copyright copyright &copy; 2006 The XOOPS Project
+ * @copyright copyright &copy; 2006 XOOPS Project
  *
  * {@link ArtObjectHandler}
  *
@@ -72,7 +72,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             ? array_filter(array_map("intval", array_map("trim", $forums)))
             : (empty($forums)
                 ? 0
-                : array((int) ($forums))
+                : array((int)($forums))
             )
         );
 
@@ -92,7 +92,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 "type_id"    => $myrow[$this->keyName],
                 "type_order" => $myrow["type_order"],
                 "type_name"  => htmlspecialchars($myrow["type_name"]),
-                "type_color" => htmlspecialchars($myrow["type_color"]),
+                "type_color" => htmlspecialchars($myrow["type_color"])
             );
         }
 
@@ -108,7 +108,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      */
     public function updateByForum($forum_id, $types)
     {
-        $forum_id = (int) ($forum_id);
+        $forum_id = (int)($forum_id);
         if (empty($forum_id)) {
             return false;
         }

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -34,13 +34,13 @@ class NewbbStatsHandler
     public $table;
     public $param = array(
         "type"   => array("topic", "post", "digest", "view"),
-        "period" => array("total", "day", "week", "month"),
+        "period" => array("total", "day", "week", "month")
     );
 
     /**
      * @param null $db
      */
-    public function NewbbStatsHandler($db = null)
+    public function __construct($db = null)
     {
         if (!$db) {
             $this->db = $GLOBALS["xoopsDB"];
@@ -72,8 +72,8 @@ class NewbbStatsHandler
      */
     public function update($id, $type, $increment = 1)
     {
-        $id        = (int) ($id);
-        $increment = (int) ($increment);
+        $id        = (int)($id);
+        $increment = (int)($increment);
 
         if (empty($increment) || false === ($type = array_search($type, $this->param["type"]))) {
             return false;
@@ -155,7 +155,7 @@ class NewbbStatsHandler
         $time_start = array(
             "day"   => "%Y%j",
             "week"  => "%Y%u",
-            "month" => "%Y%m",
+            "month" => "%Y%m"
         );
         $counts     = array();
 
@@ -196,13 +196,13 @@ class NewbbStatsHandler
                     "    INSERT INTO {$this->table}" .
                     "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " .
                     "    VALUES " .
-                    "        ('{$forum_id}', '{$topics}', '" . array_search("topic", $this->param["type"]) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
+                    "        ('{$forum_id}', '{$topics}', '" . array_search("topic", $this->param["type"], true) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
                 );
                 $this->db->queryF(
                     "    INSERT INTO {$this->table}" .
                     "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " .
                     "    VALUES " .
-                    "        ('{$forum_id}', '{$views}', '" . array_search("view", $this->param["type"]) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
+                    "        ('{$forum_id}', '{$views}', '" . array_search("view", $this->param["type"], true) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
                 );
                 @$counts["topic"][$period] += $topics;
                 @$counts["view"][$period] += $views;
@@ -217,7 +217,7 @@ class NewbbStatsHandler
                     "    INSERT INTO {$this->table}" .
                     "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " .
                     "    VALUES " .
-                    "        ('{$forum_id}', '{$digests}', '" . array_search("digest", $this->param["type"]) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
+                    "        ('{$forum_id}', '{$digests}', '" . array_search("digest", $this->param["type"], true) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
                 );
                 @$counts["digest"][$period] += $digests;
 
@@ -231,7 +231,7 @@ class NewbbStatsHandler
                     "    INSERT INTO {$this->table}" .
                     "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " .
                     "    VALUES " .
-                    "        ('{$forum_id}', '{$posts}', '" . array_search("post", $this->param["type"]) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
+                    "        ('{$forum_id}', '{$posts}', '" . array_search("post", $this->param["type"]) . "', '" . array_search($period, $this->param['period'], true) . "', NOW(), '{$format}')"
                 );
                 @$counts["post"][$period] += $posts;
             }
@@ -239,7 +239,7 @@ class NewbbStatsHandler
 
         $this->db->queryF(
             "    DELETE FROM {$this->table}" .
-            "    WHERE stats_id = '0' AND stats_period <> " . array_search("total", $this->param['period'])
+            "    WHERE stats_id = '0' AND stats_period <> " . array_search("total", $this->param['period'], true)
         );
         foreach ($time_start as $period => $format) {
             foreach (array_keys($counts) as $type) {
@@ -247,7 +247,7 @@ class NewbbStatsHandler
                     "    INSERT INTO {$this->table}" .
                     "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " .
                     "    VALUES " .
-                    "        ('0', '{$counts[$type][$period]}', '" . array_search($type, $this->param["type"]) . "', '" . array_search($period, $this->param['period']) . "', NOW(), '{$format}')"
+                    "        ('0', '{$counts[$type][$period]}', '" . array_search($type, $this->param["type"], true) . "', '" . array_search($period, $this->param['period'], true) . "', NOW(), '{$format}')"
                 );
             }
         }

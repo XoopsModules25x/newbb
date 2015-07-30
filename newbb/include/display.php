@@ -1,13 +1,13 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @since		4.3
- * @version		$Id $
- * @package		module::newbb
+ * @copyright    XOOPS Project (http://xoops.org)
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @since        4.3
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 /*
@@ -23,9 +23,9 @@
     Find images in newbb/templates/images
     ===============================================================
     * Priority for image path OR style.css path:
-    * 	NEWBB_ROOT 	-	IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
-    *					ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
-    *					ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
+    *     NEWBB_ROOT     -    IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
+    *                    ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
+    *                    ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
     ===============================================================
     2- If you choose to show text links (set to true):
     2-1- customize the text show in style.css with the help of class="forum_icon" id=$image_name
@@ -147,7 +147,7 @@ $displayText['t_reply'] =
 
 $displayText['p_bann'] =
 
-true;
+    true;
 
 for ($i = 1; $i <= 5; ++$i) {
     //$displayText['rate'.$i] = true;
@@ -233,7 +233,7 @@ $displayText[''] =
 
 //$displayText['p_bann'] =
 
-false;
+    false;
 
 for ($i = 1; $i <= 5; ++$i) {
     //$displayText['rate'.$i] = false;

@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,13 +10,13 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 //defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_FORUM", 1);
 
 if (defined('FORUM_PERM_ITEMS') && class_exists("NewbbForumPermissionHandler")) {
-    die("access denied");
+    exit("access denied");
 }
 // irmtfan add pdf and print permissions.
 define('FORUM_PERM_ITEMS', 'access,view,post,reply,edit,delete,addpoll,vote,attach,noapprove,type,html,signature,pdf,print');
@@ -29,7 +29,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     /**
      * @param $db
      */
-    public function NewbbPermissionForumHandler(&$db)
+    public function __construct(&$db)
     {
 //        $this->NewbbPermissionHandler($db);
         parent::__construct($db);
@@ -42,8 +42,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     public function getValidPerms($fullname = false)
     {
         static $validPerms = array();
-        if (isset($validPerms[(int) ($fullname)])) {
-            return $validPerms[(int) ($fullname)];
+        if (isset($validPerms[(int)($fullname)])) {
+            return $validPerms[(int)($fullname)];
         }
         $items = array_filter(array_map("trim", explode(",", FORUM_PERM_ITEMS)));
         if (!empty($fullname)) {
@@ -51,7 +51,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
                 $items[$key] = "forum_" . $items[$key];
             }
         }
-        $validPerms[(int) ($fullname)] = $items;
+        $validPerms[(int)($fullname)] = $items;
 
         return $items;
     }
@@ -129,7 +129,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             if (is_array($id)) {
                 $criteria->add(new Criteria('gperm_itemid', "(" . implode(',', $id) . ")", 'IN'));
             } else {
-                $criteria->add(new Criteria('gperm_itemid', (int) ($id)));
+                $criteria->add(new Criteria('gperm_itemid', (int)($id)));
             }
         }
         $gperm_names = implode(", ", $this->getValidItems($modid, $id));
@@ -191,7 +191,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function deleteByForum($forum_id)
     {
-        $forum_id = (int) ($forum_id);
+        $forum_id = (int)($forum_id);
         if (empty($forum_id)) {
             return false;
         }

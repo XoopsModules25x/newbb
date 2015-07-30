@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
@@ -20,9 +20,9 @@ newbb_load_object();
  */
 class Report extends ArtObject
 {
-    public function Report()
+    public function __construct()
     {
-        $this->ArtObject("bb_report");
+        parent::__construct("bb_report");
         $this->initVar('report_id', XOBJ_DTYPE_INT);
         $this->initVar('post_id', XOBJ_DTYPE_INT);
         $this->initVar('reporter_uid', XOBJ_DTYPE_INT);
@@ -42,9 +42,9 @@ class NewbbReportHandler extends ArtObjectHandler
     /**
      * @param $db
      */
-    public function NewbbReportHandler(&$db)
+    public function __construct(&$db)
     {
-        $this->ArtObjectHandler($db, 'bb_report', 'Report', 'report_id');
+        parent::__construct($db, 'bb_report', 'Report', 'report_id','');
     }
 
     /**
@@ -107,7 +107,7 @@ class NewbbReportHandler extends ArtObjectHandler
                 $row = $this->db->fetchArray($result);
             }
             $position = $row['report_count'];
-            $start    = (int) ($position / $perpage) * $perpage;
+            $start    = (int)($position / $perpage) * $perpage;
         }
 
         $sql    = "SELECT r.*, p.subject, p.topic_id, p.forum_id" . $tables_criteria . $forumCriteria . $result_criteria . $order_criteria;

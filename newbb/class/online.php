@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -37,7 +37,7 @@ class NewbbOnlineHandler
             $this->forum_id     = $forum->getVar('forum_id');
             $this->forum_object = &$forum;
         } else {
-            $this->forum_id     = (int) ($forum);
+            $this->forum_id     = (int)($forum);
             $this->forum_object = $forum;
         }
         if (is_object($forumtopic)) {
@@ -46,7 +46,7 @@ class NewbbOnlineHandler
                 $this->forum_id = $forumtopic->getVar('forum_id');
             }
         } else {
-            $this->topic_id = (int) ($forumtopic);
+            $this->topic_id = (int)($forumtopic);
         }
 
         $this->update();
@@ -84,7 +84,7 @@ class NewbbOnlineHandler
     /**
      * @param $xoopsTpl
      */
-    public function render(&$xoopsTpl)
+    public function render(Smarty &$xoopsTpl)
     {
         mod_loadFunctions("render", "newbb");
         mod_loadFunctions("user", "newbb");
@@ -108,7 +108,7 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
-                "uname" => $users[$i]['online_uname'],
+                "uname" => $users[$i]['online_uname']
             );
             ++$num_user;
         }
@@ -168,7 +168,7 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
-                "uname" => $users[$i]['online_uname'],
+                "uname" => $users[$i]['online_uname']
             );
             ++$num_user;
         }
@@ -219,7 +219,7 @@ class NewbbOnlineHandler
     {
         global $xoopsModule;
 
-        $uid = (int) ($uid);
+        $uid = (int)($uid);
         if ($uid > 0) {
             $sql = "SELECT COUNT(*) FROM " . $this->db->prefix('bb_online') . " WHERE online_uid=" . $uid;
         } else {
@@ -277,7 +277,7 @@ class NewbbOnlineHandler
     public function gc($expire)
     {
         global $xoopsModule;
-        $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - (int) ($expire));
+        $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - (int)($expire));
         $this->db->queryF($sql);
 
         $xoops_online_handler =& xoops_gethandler('online');

@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,12 +25,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
-    define("NEWBB_FUNCTIONS_IMAGE", true);
+if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
+    define('NEWBB_FUNCTIONS_IMAGE', true);
 
     /**
      * @param $source
@@ -50,7 +50,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
         $image_url = $img_url . '/' . $source;
 
         $imginfo  = @getimagesize($image);
-        $img_info = (count($imginfo) > 0) ? $imginfo[0] . "X" . $imginfo[1] . ' px' : "";
+        $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0 && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width'] || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
@@ -124,7 +124,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
         $newWidth  = (int)(min($imginfo[0], $thumb_width));
         $newHeight = (int)($imginfo[1] * $newWidth / $imginfo[0]);
 
-        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
+        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
             if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                 $cur_dir     = __DIR__;
                 $src_file_im = '"' . $cur_dir . '\\' . strtr($src_file, '/', '\\') . '"';
@@ -142,8 +142,8 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
             }
         }
 
-        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 or $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
-            $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? "" : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . "/";
+        if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
+            $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
             if (preg_match("/\.png/", $source)) {
                 $cmd = $path . "pngtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "pnmtopng > $new_file";
             } elseif (preg_match("/\.(jpg|jpeg)/", $source)) {
@@ -174,7 +174,7 @@ if (!defined("NEWBB_FUNCTIONS_IMAGE")) {
             $supported_types[] = 3;
         }
 
-        $imageCreateFunction = (function_exists('imagecreatetruecolor')) ? "imagecreatetruecolor" : "imagecreate";
+        $imageCreateFunction = (function_exists('imagecreatetruecolor')) ? 'imagecreatetruecolor' : 'imagecreate';
 
         if (in_array($type, $supported_types)) {
             switch ($type) {

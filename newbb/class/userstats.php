@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -20,9 +20,9 @@ newbb_load_object();
  */
 class NewbbUserstats extends ArtObject
 {
-    public function NewbbUserstats()
+    public function __construct()
     {
-        $this->ArtObject("bb_user_stats");
+        parent::__construct("bb_user_stats");
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('user_topics', XOBJ_DTYPE_INT);
         $this->initVar('user_digests', XOBJ_DTYPE_INT);
@@ -40,9 +40,9 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     /**
      * @param $db
      */
-    public function NewbbUserstatsHandler(&$db)
+    public function __construct(&$db)
     {
-        $this->ArtObjectHandler($db, 'bb_user_stats', 'NewbbUserstats', 'uid');
+        parent::__construct($db, 'bb_user_stats', 'NewbbUserstats', 'uid');
     }
 
     /**
@@ -66,7 +66,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     public function &get($id)
     {
         $object = null;
-        if (!$id = (int) ($id)) {
+        if (!$id = (int)($id)) {
             return $object;
         }
         $object =& $this->create(false);
@@ -97,7 +97,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         if (empty($id)) {
             return null;
         }
-        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . (int) ($id);
+        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . (int)($id);
         if (!$result = $this->db->query($sql)) {
             return null;
         }

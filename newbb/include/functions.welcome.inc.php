@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -82,7 +82,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
                 continue;
             }
             $categories[$catid]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
-            $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? (int) ($fieldcats[$fields[$i]->getVar('fieldid')]['field_weight']) : 1;
+            $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? (int)($fieldcats[$fields[$i]->getVar('fieldid')]['field_weight']) : 1;
         }
     }
 

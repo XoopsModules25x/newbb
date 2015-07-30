@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -40,7 +40,7 @@ if (!defined("NEWBB_FUNCTIONS_RPC")) {
             echo "<error>1</error>\n";
             echo "<message>$error_message</message>\n";
             echo "</response>";
-            die();
+            exit();
         } else {
             echo '<?xml version="1.0" encoding="' . $charset . '"?' . ">\n";
             echo "<response>\n";

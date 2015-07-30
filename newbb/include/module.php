@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -45,10 +45,11 @@ newbb_load_object();
  */
 function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
 {
-    //  START irmtfan to dont run update script if user has the latest version.
+    //  START irmtfan to not run update script if user has the latest version.
     if ($oldversion === round($module->getInfo("version") * 100, 2)) {
         $module->setErrors("You have the latest " . $module->getInfo("name") . " module (" . $module->getInfo("dirname") . " version " . $module->getInfo("version") . ") and update is not necessary");
-        print_r($module->getErrors());
+//        print_r($module->getErrors());
+        echo ($module->getErrors());
 
         return true;
     }
@@ -183,9 +184,9 @@ function xoops_module_install_newbb(XoopsModule &$module)
     $categoryHandler = xoops_getmodulehandler('category', $module->getVar("dirname"));
     $category         = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
-    $category->setVar('cat_image', "", true);
+    $category->setVar('cat_image', '', true);
     $category->setVar('cat_description', _MI_NEWBB_INSTALL_CAT_DESC, true);
-    $category->setVar('cat_url', "http://www.simple-xoops.de SIMPLE-XOOPS", true);
+    $category->setVar('cat_url', 'http://xoops.org XOOPS Project', true);
     if (!$cat_id = $categoryHandler->insert($category)) {
         return true;
     }

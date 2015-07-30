@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -71,13 +71,13 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
     }
     $mpf = floor(100 * ($mp / $zmp)) - 1;
     if ($hpf >= 98) {
-        $hpf = $hpf - 2;
+        $hpf -= 2;
     }
     if ($ep >= 98) {
-        $ep = $ep - 2;
+        $ep -= 2;
     }
     if ($mpf >= 98) {
-        $mpf = $mpf - 2;
+        $mpf -= 2;
     }
 
     $level              = array();
@@ -99,7 +99,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
  */
 class newbbUser
 {
-    public $user = null;
+    public $user;
 
     public function User()
     {
@@ -193,7 +193,7 @@ class newbbUser
 
         if (!(is_object($user)) || !($user->isActive())) {
             if (!isset($name_anonymous)) {
-                $name_anonymous = $myts->HtmlSpecialChars($GLOBALS["xoopsConfig"]['anonymous']);
+                $name_anonymous = $myts->htmlSpecialChars($GLOBALS["xoopsConfig"]['anonymous']);
             }
 
             return array("name" => $name_anonymous, "link" => $name_anonymous);
@@ -264,7 +264,7 @@ class NewbbUserHandler
      * @param bool $enableGroup
      * @param bool $enableOnline
      */
-    public function NewbbUserHandler($enableGroup = true, $enableOnline = true)
+    public function __construct($enableGroup = true, $enableOnline = true)
     {
         $this->enableGroup  = $enableGroup;
         $this->enableOnline = $enableOnline;
@@ -315,7 +315,7 @@ class NewbbUserHandler
         $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . " WHERE uid IN( " . implode(", ", array_keys($this->users)) . ")";
         $result = $GLOBALS['xoopsDB']->query($sql);
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            $this->userlist[$myrow['uid']]["digests"] = (int) ($myrow['user_digests']);
+            $this->userlist[$myrow['uid']]["digests"] = (int)($myrow['user_digests']);
         }
     }
 // START irmtfan remove function
