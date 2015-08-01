@@ -292,5 +292,5 @@ define('_AM_NEWBB_REPORTDELETE', 'Selected Reports have been deleted from databa
 define('_AM_NEWBB_REPORTNOTSELECT', 'No Report is selected!');
 define('_AM_NEWBB_SYNC_TYPE_READ', 'Read Data');
 define('_AM_NEWBB_DATABASEUPDATED', 'Database Updated Successfully!');
-define('_AM_NEWBB_CAN_PDF', 'Can create pdf files');
+define('_AM_NEWBB_CAN_PDF', 'Can create PDF files');
 define('_AM_NEWBB_CAN_PRINT', 'Can get print page');
