@@ -43,9 +43,9 @@ error_reporting(0);
 $xoopsLogger->activated = false;
 
 if (!XoopsRequest::getString('post_data', '', 'POST')) {
-    $forum    = XoopsRequest::getInt('forum', 0, 'POST');
-    $topic_id = XoopsRequest::getInt('topic_id', 0, 'POST');
-    $post_id  = XoopsRequest::getInt('post_id', 0, 'POST');
+    $forum    = XoopsRequest::getInt('forum', 0, 'GET');
+    $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
+    $post_id  = XoopsRequest::getInt('post_id', 0, 'GET');
 
     if (0 ===$post_id && 0 ===$topic_id) {
         exit(_MD_ERRORTOPIC);
