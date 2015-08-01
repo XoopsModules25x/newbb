@@ -30,10 +30,10 @@
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-if (defined("NEWBB_FUNCTIONS_INI")) {
+if (defined('NEWBB_FUNCTIONS_INI')) {
     return;
 }
-define("NEWBB_FUNCTIONS_INI", 1);
+define('NEWBB_FUNCTIONS_INI', 1);
 
 include_once($GLOBALS['xoops']->path('Frameworks/art/functions.ini.php'));
 
@@ -55,11 +55,11 @@ function &newbbLoadConfig()
         return $moduleConfig;
     }
 
-    load_functions("config");
-    $moduleConfig = mod_loadConfig("newbb");
+    load_functions('config');
+    $moduleConfig = mod_loadConfig('newbb');
     // irmtfan - change the read_mode = 2 (db) to read_mode = 1 (cookie) for anonymous users
-    if (!is_object($GLOBALS["xoopsUser"]) && $moduleConfig["read_mode_db_to_cookie_for_anon"] && 2 === $moduleConfig["read_mode"]) {
-        $moduleConfig["read_mode"] = 1;
+    if (!is_object($GLOBALS['xoopsUser']) && $moduleConfig['read_mode_db_to_cookie_for_anon'] && 2 === $moduleConfig['read_mode']) {
+        $moduleConfig['read_mode'] = 1;
     }
 
     return $moduleConfig;
@@ -79,9 +79,9 @@ function newbb_load_lang_file($filename, $module = '', $default = 'english')
     }
 
     $lang = $GLOBALS['xoopsConfig']['language'];
-    $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : "/modules/$module/") . 'language';
-    if (!($ret = @include_once("$path/$lang/$filename.php"))) {
-        $ret = @include_once("$path/$default/$filename.php");
+    $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : '/modules/$module/') . 'language';
+    if (!($ret = @include_once('$path/$lang/$filename.php'))) {
+        $ret = @include_once('$path/$default/$filename.php');
     }
 
     return $ret;

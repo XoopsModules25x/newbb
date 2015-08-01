@@ -293,9 +293,7 @@ foreach (array_keys($posts) as $id) {
             $thread_buttons['delete']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['delete']['name']  = _DELETE;
         }
-        if (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit')
-            || $isadmin
-        ) {
+        if (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit') || $isadmin) {
             $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
             $thread_buttons['edit']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['edit']['name']  = _EDIT;

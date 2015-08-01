@@ -57,7 +57,7 @@ if ($ratinguser !== 0) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post = new CriteriaCompo(new Criteria('topic_id', $topic_id));
     $crit_post->add(new Criteria('uid', $ratinguser));
-    $postHandler = xoops_getmodulehandler('post', $xoopsModule->getVar('dirname'));
+    $postHandler = &xoops_getmodulehandler('post', $xoopsModule->getVar('dirname'));
     if ($postHandler->getCount($crit_post)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_CANTVOTEOWN);
     }
