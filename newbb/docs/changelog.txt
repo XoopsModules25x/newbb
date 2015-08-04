@@ -9,10 +9,12 @@
 - replaced $_POST and $_GET with XoopsRequest (mamba)
 - replaced XOOPS_ROOT_PATH  with $GLOBALS['xoops']->path (mamba)
 - added/fixed phpDoc headers (mamba)
+- fixes by Bleekk
 - replaced intval() with (int) (mamba)
 - enforcing strict comparison (mamba)
 - check for existence of Categories and Forums (cesag/mamba)
 - some PSR-2 code clean-up (mamba)
+- fix $cat_image in /index.php (mamba)
 
 
 4.33         11/20/2012 (changes by Irmtfan)
