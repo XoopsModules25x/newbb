@@ -220,8 +220,8 @@ class newbbUser
         // START hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         //checks for user's groups
         $userinfo["groups"] = array();
-        $member_handler     =& xoops_gethandler('member');
-        $usergroups         =& $member_handler->getGroupsByUser($userinfo["uid"], true);
+        $memberHandler     =& xoops_gethandler('member');
+        $usergroups         =& $memberHandler->getGroupsByUser($userinfo["uid"], true);
         foreach ($usergroups as $group) {
             $userinfo["groups"][] = $group->getVar('name');
         }
@@ -292,8 +292,8 @@ class NewbbUserHandler
         $image_online  = newbbDisplayImage('online', _MD_ONLINE);
         $image_offline = newbbDisplayImage('offline', _MD_OFFLINE);
 
-        $online_handler =& xoops_getmodulehandler('online', 'newbb');
-        $onlines        = $online_handler->checkStatus(array_keys($this->users));
+        $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+        $onlines        = $onlineHandler->checkStatus(array_keys($this->users));
 
         foreach (array_keys($this->users) as $uid) {
             $this->userlist[$uid]["status"] = empty($onlines[$uid]) ? $image_offline : $image_online;

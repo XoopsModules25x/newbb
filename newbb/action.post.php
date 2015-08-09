@@ -97,7 +97,7 @@ switch ($op) {
         $forum_list     =& $forumHandler->getList($criteria_forum);
 
         include_once 'include/notification.inc.php';
-        $notification_handler =& xoops_gethandler('notification');
+        $notificationHandler =& xoops_gethandler('notification');
         foreach ($post_id as $post) {
             $tags                = array();
             $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
@@ -105,13 +105,13 @@ switch ($op) {
             $tags['FORUM_NAME']  = $forum_list[$posts_obj[$post]->getVar('forum_id')];
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $posts_obj[$post]->getVar('forum_id');
             $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post;
-            $notification_handler->triggerEvent('thread', $posts_obj[$post]->getVar('topic_id'), 'new_post', $tags);
-            $notification_handler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_post', $tags);
-            $notification_handler->triggerEvent('global', 0, 'new_post', $tags);
+            $notificationHandler->triggerEvent('thread', $posts_obj[$post]->getVar('topic_id'), 'new_post', $tags);
+            $notificationHandler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_post', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
             $tags['POST_CONTENT'] = $posts_obj[$post]->getVar('post_text');
             $tags['POST_NAME']    = $posts_obj[$post]->getVar('subject');
-            $notification_handler->triggerEvent('global', 0, 'new_fullpost', $tags);
-            $notification_handler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_fullpost', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
+            $notificationHandler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_fullpost', $tags);
         }
         break;
     case 'delete':
@@ -190,6 +190,9 @@ switch ($op) {
             foreach ($posts as $postid => $pid) {
                 if (!in_array($pid, array_keys($posts))) {
                     $post_update[] = $pid;
+                }
+                if (!array_key_exists($pid, $posts)) {
+                    $post_update2[] = $pid;
                 }
             }
             if (count($post_update)) {

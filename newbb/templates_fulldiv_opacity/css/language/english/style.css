@@ -2,9 +2,7 @@
 
 .even, .odd, .head{
 padding: 5px;
-border-width: 1px;
-border-style: solid;
-border-color: black;
+border: 1px solid black;
 }
 
 /* div{
@@ -342,10 +340,9 @@ div.karma
 {
     background-color: transparent;
     text-align: left;
-    border-top: 1px solid #DDDDFF;
-    border-left: 1px solid #DDDDFF;
-    border-right: 1px solid #AAAAAA;
-    border-bottom: 1px solid #AAAAAA;
+    border: 1px solid #DDDDFF;
+    border-right-color: #AAAAAA;
+    border-bottom-color: #AAAAAA;
     padding: 10px;
 }
 

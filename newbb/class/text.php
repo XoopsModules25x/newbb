@@ -39,7 +39,7 @@ class NewbbTextHandler extends ArtObjectHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, 'bb_posts_text', 'Ntext', 'post_id');
+        parent::__construct($db, 'bb_posts_text', 'Ntext', 'post_id', '');
     }
 
     /**

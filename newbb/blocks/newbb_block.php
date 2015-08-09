@@ -82,8 +82,8 @@ function b_newbb_show($options)
     }
 
     if (!isset($accessForums)) {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$accessForums = $perm_handler->getForums()) {
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
     }
@@ -149,8 +149,8 @@ function b_newbb_show($options)
     $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
-        $type_handler =& xoops_getmodulehandler('type', 'newbb');
-        $type_list    = $type_handler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
+        $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+        $type_list    = $typeHandler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
     }
 
     foreach ($rows as $arr) {
@@ -270,8 +270,8 @@ function b_newbb_topic_show($options)
     }
 
     if (!isset($accessForums)) {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$accessForums = $perm_handler->getForums()) {
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
     }
@@ -323,8 +323,8 @@ function b_newbb_topic_show($options)
     mod_loadFunctions("user", "newbb");
     $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
-        $type_handler = xoops_getmodulehandler('type', 'newbb');
-        $type_list    = $type_handler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
+        $typeHandler = xoops_getmodulehandler('type', 'newbb');
+        $type_list    = $typeHandler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
     }
 
     foreach ($rows as $arr) {
@@ -421,8 +421,8 @@ function b_newbb_post_show($options)
     }
 
     if (!isset($accessForums)) {
-        $perm_handler = xoops_getmodulehandler('permission', 'newbb');
-        if (!$accessForums = $perm_handler->getForums()) {
+        $permHandler = xoops_getmodulehandler('permission', 'newbb');
+        if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
     }
@@ -597,8 +597,8 @@ function b_newbb_author_show($options)
     }
 
     if (!isset($accessForums)) {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        if (!$accessForums = $perm_handler->getForums()) {
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
     }

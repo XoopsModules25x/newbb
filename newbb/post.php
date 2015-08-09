@@ -56,8 +56,8 @@ if (!$forumHandler->getPermission($forum_obj)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler = &xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj);
+    $onlineHandler = &xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj);
 }
 
 $error_message = array();
@@ -70,12 +70,12 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     if (!is_object($GLOBALS['xoopsUser']) && XoopsRequest::getString('uname', '', 'POST') && XoopsRequest::getString('pass', '', 'POST')) {
         $uname          = XoopsRequest::getString('uname', '', 'POST');
         $pass           = XoopsRequest::getString('pass', '', 'POST');
-        $member_handler = &xoops_gethandler('member');
-        $user           = $member_handler->loginUser(addslashes($myts->stripSlashesGPC($uname)), addslashes($myts->stripSlashesGPC($pass)));
+        $memberHandler = &xoops_gethandler('member');
+        $user           = $memberHandler->loginUser(addslashes($myts->stripSlashesGPC($uname)), addslashes($myts->stripSlashesGPC($pass)));
         if (is_object($user) && 0 < $user->getVar('level')) {
             if (XoopsRequest::getString('login', '', 'POST')) {
                 $user->setVar('last_login', time());
-                if (!$member_handler->insertUser($user)) {
+                if (!$memberHandler->insertUser($user)) {
                 }
                 $_SESSION                    = array();
                 $_SESSION['xoopsUserId']     = $user->getVar('uid');
@@ -94,7 +94,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     }
     if (!is_object($GLOBALS['xoopsUser'])) {
         xoops_load('captcha');
-        $xoopsCaptcha = XoopsCaptcha::getInstance();
+        $xoopsCaptcha = &XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $captcha_invalid = true;
             $error_message[] = $xoopsCaptcha->getMessage();
@@ -267,7 +267,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                 $prefix = is_object($GLOBALS['xoopsUser']) ? (string) ($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
-                    $error_message[] = $error_upload = $uploader->getErrors();
+                    $error_message[] = $error_upload = &$uploader->getErrors();
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
                         if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . "/" . $uploader->getSavedFileName()))) {
@@ -276,7 +276,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                     }
                 }
             } else {
-                $error_message[] = $error_upload = $uploader->getErrors();
+                $error_message[] = $error_upload = &$uploader->getErrors();
             }
         }
     }
@@ -325,34 +325,34 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $forum_info           = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
         $tags['FORUM_NAME']   = $forum_info['name'];
         $tags['FORUM_URL']    = $forum_info['url'];
-        $notification_handler =& xoops_gethandler('notification');
+        $notificationHandler =& xoops_gethandler('notification');
         if (empty($isreply)) {
             // Notify of new thread
-            $notification_handler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_thread', $tags);
+            $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_thread', $tags);
         } else {
             // Notify of new post
-            $notification_handler->triggerEvent('thread', $topic_id, 'new_post', $tags);
+            $notificationHandler->triggerEvent('thread', $topic_id, 'new_post', $tags);
             $_tags['name'] = $tags['THREAD_NAME'];
             $_tags['url']  = $tags['POST_URL'];
             $_tags['uid']  = $uid;
-            $notification_handler->triggerEvent('thread', $topic_id, 'post', $_tags);
+            $notificationHandler->triggerEvent('thread', $topic_id, 'post', $_tags);
         }
-        $notification_handler->triggerEvent('global', 0, 'new_post', $tags);
-        $notification_handler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_post', $tags);
+        $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
+        $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_post', $tags);
         $tags['POST_CONTENT'] = $myts->stripSlashesGPC(XoopsRequest::getString('message', '', 'POST'));
         $tags['POST_NAME']    = $myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST'));
-        $notification_handler->triggerEvent('global', 0, 'new_fullpost', $tags);
-        $notification_handler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_fullpost', $tags);
+        $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
+        $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_fullpost', $tags);
     }
 
     // If user checked notification box, subscribe them to the
     // appropriate event; if unchecked, then unsubscribe
     if (!empty($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
-        $notification_handler = &xoops_gethandler('notification');
+        $notificationHandler = &xoops_gethandler('notification');
         if (!XoopsRequest::getInt('notify', 0, 'POST')) {
-            $notification_handler->unsubscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
+            $notificationHandler->unsubscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
         } elseif (XoopsRequest::getInt('notify', 0, 'POST') > 0) {
-            $notification_handler->subscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
+            $notificationHandler->subscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
         }
         // elseif ($_POST['notify']<0) keep it as it is
     }

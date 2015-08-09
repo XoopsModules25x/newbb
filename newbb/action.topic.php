@@ -69,7 +69,7 @@ switch ($op) {
         }
 
         include_once 'include/notification.inc.php';
-        $notification_handler =& xoops_gethandler('notification');
+        $notificationHandler =& xoops_gethandler('notification');
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj           =& $topics_obj[$id];
             $tags                = array();
@@ -77,17 +77,17 @@ switch ($op) {
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
             $tags['FORUM_NAME']  = $forums_obj[$topic_obj->getVar("forum_id")]->getVar('forum_name');
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $topic_obj->getVar('forum_id');
-            $notification_handler->triggerEvent('global', 0, 'new_thread', $tags);
-            $notification_handler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_thread', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'new_thread', $tags);
+            $notificationHandler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_thread', $tags);
             $post_obj         =& $topicHandler->getTopPost($id);
             $tags['POST_URL'] = $tags['THREAD_URL'] . '#forumpost' . $post_obj->getVar('post_id');
-            $notification_handler->triggerEvent('thread', $id, 'new_post', $tags);
-            $notification_handler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_post', $tags);
-            $notification_handler->triggerEvent('global', 0, 'new_post', $tags);
+            $notificationHandler->triggerEvent('thread', $id, 'new_post', $tags);
+            $notificationHandler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_post', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
             $tags['POST_CONTENT'] = $post_obj->getVar('post_text');
             $tags['POST_NAME']    = $post_obj->getVar('subject');
-            $notification_handler->triggerEvent('global', 0, 'new_fullpost', $tags);
-            $notification_handler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_fullpost', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
+            $notificationHandler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_fullpost', $tags);
             unset($post_obj);
         }
         unset($topics_obj, $forums_obj);

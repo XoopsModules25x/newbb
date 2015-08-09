@@ -70,7 +70,7 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
     $query_array = array();
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET'}";
+            $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -80,8 +80,8 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj);
 }
 
 $xoopsOption['template_main']                             = 'newbb_edit_post.tpl';
@@ -161,8 +161,8 @@ $require_reply = 0;
 
 include __DIR__ . '/include/form.post.php';
 
-$karma_handler =& xoops_getmodulehandler('karma', 'newbb');
-$user_karma    = $karma_handler->getUserKarma();
+$karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+$user_karma    = $karmaHandler->getUserKarma();
 
 $posts_context     = array();
 $posts_context_obj = $postHandler->getByLimit($topic_id, 5);

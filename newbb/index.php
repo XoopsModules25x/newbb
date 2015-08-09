@@ -27,7 +27,7 @@ if (XoopsRequest::getInt('mark_read', 0)) { //TODO mb check if this is GET or PO
     redirect_header($url, 2, _MD_ALL_FORUM_MARKED . ' ' . $markresult);
 }
 
-$viewcat          = XoopsRequest::getInt('cat', 0);//TODO mb check if this is GET or POST?
+$viewcat          = XoopsRequest::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
 $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
 
 $categories = array();
@@ -68,9 +68,9 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('forum_index_title', $forum_index_title);
 //if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
-    $online_handler = &xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init();
-    $xoopsTpl->assign('online', $online_handler->show_online());
+    $onlineHandler = &xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init();
+    $xoopsTpl->assign('online', $onlineHandler->show_online());
 }
 $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
 $postHandler  = &xoops_getmodulehandler('post', 'newbb');
@@ -219,8 +219,8 @@ $xoopsTpl->assign(array(
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = array();
     if (is_object($GLOBALS['xoopsUser'])) {
-        $userstats_handler        =& xoops_getmodulehandler('userstats');
-        $userstats_row            = $userstats_handler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
+        $userstatsHandler        =& xoops_getmodulehandler('userstats');
+        $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
         $userstats['topics']      = sprintf(_MD_USER_TOPICS, (int)(@$userstats_row['user_topics']));
         $userstats['posts']       = sprintf(_MD_USER_POSTS, (int)(@$userstats_row['user_posts']));
         $userstats['digests']     = sprintf(_MD_USER_DIGESTS, (int)(@$userstats_row['user_digests']));

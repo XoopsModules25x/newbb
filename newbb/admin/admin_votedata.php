@@ -133,7 +133,7 @@ switch ($op) {
         echo '</table>';
         //Include page navigation
         include_once $GLOBALS['xoops']->path('class/pagenav.php');
-        $page    = ($votes > 20) ? _AM_NEWBB_MINDEX_PAGE : '';
+        $page    = ($votes > 10) ? _AM_NEWBB_MINDEX_PAGE : '';
         $pagenav = new XoopsPageNav($page, 20, $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $page . '' . $pagenav->renderImageNav(4) . '</div>';
         break;

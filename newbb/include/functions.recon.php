@@ -25,9 +25,10 @@ if (!defined("NEWBB_FUNCTIONS_RECON")) {
     function newbb_synchronization($type = null)
     {
         $allTypes = array("category", "forum", "topic", "post", "report", "rate", "moderate", "readtopic", "readforum", "stats");
+        $type = array();
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : array($type));
         foreach ($type as $item) {
-            $handler = xoops_getmodulehandler($item, "newbb");
+            $handler = & xoops_getmodulehandler($item, "newbb");
             if ($item !== "stats") {
                 $handler->synchronization();
             } else {

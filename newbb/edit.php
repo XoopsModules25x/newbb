@@ -33,8 +33,8 @@ if (!$forumHandler->getPermission($forum_obj)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj);
 }
 $isadmin = newbb_isAdmin($forum_obj);
 $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -59,7 +59,7 @@ if (!empty($error_msg)) {
     $query_array = array();
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+            $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -68,8 +68,8 @@ if (!empty($error_msg)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj);
 }
 
 $xoopsOption['template_main']                             = 'newbb_edit_post.tpl';
@@ -113,8 +113,8 @@ $require_reply = $post_obj->getVar('require_reply');
 $xoopsTpl->assign('error_message', _MD_EDITEDBY . ' ' . $GLOBALS['xoopsUser']->uname());
 include __DIR__ . '/include/form.post.php';
 
-$karma_handler =& xoops_getmodulehandler('karma', 'newbb');
-$user_karma    = $karma_handler->getUserKarma();
+$karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+$user_karma    = $karmaHandler->getUserKarma();
 
 $posts_context     = array();
 $posts_context_obj = ($istopic) ? array() : array($postHandler->get($post_obj->getVar('pid')));

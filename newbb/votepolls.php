@@ -31,7 +31,7 @@ $topic_id = XoopsRequest::getInt('topic_id', XoopsRequest::getInt('topic_id', 0,
 $forum    = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET');
 
 $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topicHandler->get($topic_id);
+$topic_obj    =& $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'vote')) {
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }
@@ -75,7 +75,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
         if (!$poll_obj->hasExpired()) {
             $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_MUSTLOGIN');
             //@todo:: add $url to all redirects
-//            $url = $GLOBALS['xoops']->buildUrl("index.php", array('poll_id' => $poll_id));
+            //            $url = $GLOBALS['xoops']->buildUrl("index.php", array('poll_id' => $poll_id));
             if ($poll_obj->isAllowedToVote()) {
                 $thisVoter     = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : null;
                 $votedThisPoll = $xpLogHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $thisVoter);
@@ -114,11 +114,9 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     if (null !== $url) {
         redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     } else {
-        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', array('topic_id' => $topic_id)),
-                        $classConstants::REDIRECT_DELAY_MEDIUM,
-                        $msg);
+        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', array('topic_id' => $topic_id)), $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     }
-// old xoopspoll or umfrage or any clone from them
+    // old xoopspoll or umfrage or any clone from them
 } else {
     $classLog = $classPoll . "Log";
     if (is_object($GLOBALS['xoopsUser'])) {

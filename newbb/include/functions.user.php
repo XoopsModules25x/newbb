@@ -93,12 +93,12 @@ function newbb_isAdministrator($user = -1, $mid = 0)
         return $GLOBALS["xoopsUserIsAdmin"];
     }
 
-    $member_handler =& xoops_gethandler('member');
-    $groups         = $member_handler->getGroupsByUser($uid);
+    $memberHandler =& xoops_gethandler('member');
+    $groups         = $memberHandler->getGroupsByUser($uid);
 
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $modulepermHandler =& xoops_gethandler('groupperm');
 
-    return $moduleperm_handler->checkRight('module_admin', $mid, $groups);
+    return $modulepermHandler->checkRight('module_admin', $mid, $groups);
 }
 
 /**

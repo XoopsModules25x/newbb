@@ -31,13 +31,13 @@ $moderated_id = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->uid(
 // $moderated_isadmin = ( is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin() ) ? true : false; // irmtfan commented
 $moderated_ip     = $_SERVER['REMOTE_ADDR'];
 $moderated_forum  = $forum_obj->getVar('forum_id');
-$moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
-if ($moderate_handler->verifyUser($moderated_id, $moderated_ip, $moderated_forum)) { // irmtfan removed
+$moderateHandler =& xoops_getmodulehandler('moderate', 'newbb');
+if ($moderateHandler->verifyUser($moderated_id, $moderated_ip, $moderated_forum)) { // irmtfan removed
     $criteria = new CriteriaCompo();
     $criteria->add(new criteria('uid', $moderated_id, '='));
     $criteria->setSort('mod_end');
     $criteria->setOrder('DESC');
-    $mod  = $moderate_handler->getObjects($criteria, false, false);
+    $mod  = $moderateHandler->getObjects($criteria, false, false);
     $tage = ($mod[0]['mod_end'] - $mod[0]['mod_start']) / 60 / 60 / 24;
     $msg  = $myts->displayTarea(sprintf(_MD_SUSPEND_TEXT, newbb_getUnameFromId($moderated_id), (int) $tage, $mod[0]['mod_desc'], formatTimestamp($mod[0]['mod_end'])), 1);
     xoops_error($msg, _MD_SUSPEND_NOACCESS);
@@ -113,8 +113,8 @@ if (newbb_isAdmin($forum_obj)
     )
 ) {
     $type_id      = $topicHandler->get(@$topic_id, 'type_id');
-    $type_handler =& xoops_getmodulehandler('type', 'newbb');
-    $types        = $type_handler->getByForum($forum_obj->getVar("forum_id"));
+    $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+    $types        = $typeHandler->getByForum($forum_obj->getVar("forum_id"));
     if (!empty($types)) {
         $type_element = new XoopsFormSelect(_MD_NEWBB_TYPE, 'type_id', $type_id);
         //$type_element = new XoopsFormRadio(_MD_NEWBB_TYPE, 'type_id', $type_id);
@@ -231,8 +231,8 @@ if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['notificat
         //$notify = 1;
     } else {
         // Otherwise, check previous subscribed status...
-        $notification_handler =& xoops_gethandler('notification');
-        if (!empty($topic_id) && $notification_handler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))) {
+        $notificationHandler =& xoops_gethandler('notification');
+        if (!empty($topic_id) && $notificationHandler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))) {
             $notify = 1;
         } else {
             $notify = 0;

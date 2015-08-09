@@ -73,8 +73,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         $uid = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getVar("uid") : 0;
         $ip  = newbb_getIP(true);
         if (!empty($GLOBALS["xoopsModuleConfig"]['enable_usermoderate']) && !isset($suspension[$uid][$id]) && !newbb_isAdmin($id)) {
-            $moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
-            if ($moderate_handler->verifyUser($uid, "", $id)) {
+            $moderateHandler =& xoops_getmodulehandler('moderate', 'newbb');
+            if ($moderateHandler->verifyUser($uid, "", $id)) {
                 $suspension[$uid][$ip][$id] = 1;
             } else {
                 $suspension[$uid][$ip][$id] = 0;
@@ -195,13 +195,13 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         if (empty($forum_id)) {
             return false;
         }
-        $gperm_handler =& xoops_gethandler('groupperm');
+        $gpermHandler =& xoops_gethandler('groupperm');
         $criteria      = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
         $items         = $this->getValidPerms(true);
         $criteria->add(new Criteria('gperm_name', "('" . implode("', '", $items) . "')", 'IN'));
         $criteria->add(new Criteria('gperm_itemid', $forum_id));
 
-        return $gperm_handler->deleteAll($criteria);
+        return $gpermHandler->deleteAll($criteria);
     }
 
     /**
@@ -226,8 +226,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             }
         }
 
-        $member_handler = xoops_gethandler('member');
-        $glist          = $member_handler->getGroupList();
+        $memberHandler = xoops_gethandler('member');
+        $glist          = $memberHandler->getGroupList();
         $perms          = $this->getValidPerms(true);
         foreach (array_keys($glist) as $group) {
             foreach ($perms as $perm) {

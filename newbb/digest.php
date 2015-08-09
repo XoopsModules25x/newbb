@@ -21,8 +21,8 @@ if ($GLOBALS['xoopsModuleConfig']['email_digest'] === 0) {
 
     return false;
 }
-$digest_handler =& xoops_getmodulehandler('digest', 'newbb');
-$msg            = $digest_handler->process();
+$digestHandler =& xoops_getmodulehandler('digest', 'newbb');
+$msg            = $digestHandler->process();
 $msg .= ob_get_contents();
 ob_end_clean();
 echo '<br />' . $msg;

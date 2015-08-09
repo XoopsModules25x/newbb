@@ -186,10 +186,10 @@ class NewbbDigestHandler extends XoopsObjectHandler
     public function notify(&$digest)
     {
         $content                = $digest->getVar('digest_content');
-        $notification_handler   = &xoops_gethandler('notification');
+        $notificationHandler   = &xoops_gethandler('notification');
         $tags['DIGEST_ID']      = $digest->getVar('digest_id');
         $tags['DIGEST_CONTENT'] = $digest->getVar('digest_content', 'E');
-        $notification_handler->triggerEvent('global', 0, 'digest', $tags);
+        $notificationHandler->triggerEvent('global', 0, 'digest', $tags);
 
         return true;
     }
@@ -348,9 +348,9 @@ class NewbbDigestHandler extends XoopsObjectHandler
         }
         $uids = array_keys($users);
         if (count($uids) > 0) {
-            $member_handler = &xoops_gethandler('member');
+            $memberHandler = &xoops_gethandler('member');
             $user_criteria  = new Criteria('uid', "(" . implode(',', $uids) . ")", 'IN');
-            $users          = $member_handler->getUsers(new Criteria('uid', "(" . implode(',', $uids) . ")", 'IN'), true);
+            $users          = $memberHandler->getUsers(new Criteria('uid', "(" . implode(',', $uids) . ")", 'IN'), true);
         } else {
             $users = array();
         }

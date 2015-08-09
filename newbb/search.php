@@ -74,8 +74,8 @@ $show_search     = 'post_text';
 $search_username = trim($uname);
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init(0);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init(0);
 }
 
 $xoopsTpl->assign('forumindex', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));

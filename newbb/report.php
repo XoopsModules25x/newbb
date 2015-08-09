@@ -46,8 +46,8 @@ if (empty($post_id)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum);
 }
 
 $myts = MyTextSanitizer::getInstance();
@@ -88,9 +88,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             if (is_object($forum_obj)) {
                 $mods           = $forum_obj->getVar('forum_moderator');
                 $emails         = array();
-                $member_handler =& xoops_gethandler('member');
+                $memberHandler =& xoops_gethandler('member');
                 foreach ($mods as $mod) {
-                    $thisUser =& $member_handler->getUser($mod);
+                    $thisUser =& $memberHandler->getUser($mod);
                     if (is_object($thisUser)) {
                         $emails[] = $thisUser->getVar('email');
                         unset($thisUser);

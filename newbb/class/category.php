@@ -49,9 +49,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getIdsByPermission($perm = "access")
     {
-        $perm_handler = xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->getCategories($perm);
+        return $permHandler->getCategories($perm);
     }
 
     /**
@@ -126,9 +126,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
         }
 
         $cat_id       = is_object($category) ? $category->getVar('cat_id') : (int)($category);
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->getPermission("category", $perm, $cat_id);
+        return $permHandler->getPermission("category", $perm, $cat_id);
     }
 
     /**
@@ -137,9 +137,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function deletePermission(&$category)
     {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->deleteByCategory($category->getVar("cat_id"));
+        return $permHandler->deleteByCategory($category->getVar("cat_id"));
     }
 
     /**
@@ -148,9 +148,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function applyPermissionTemplate(&$category)
     {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->setCategoryPermission($category->getVar("cat_id"));
+        return $permHandler->setCategoryPermission($category->getVar("cat_id"));
     }
 
     /**

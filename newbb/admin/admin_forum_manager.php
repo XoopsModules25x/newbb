@@ -170,19 +170,19 @@ switch ($op) {
         if ($forumHandler->insert($forum_obj)) {
             mod_clearCacheFile('forum', 'newbb');
             if (XoopsRequest::getInt('perm_template', 0, 'POST')) {
-                $groupperm_handler = xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
-                $perm_template     = $groupperm_handler->getTemplate();
-                $member_handler    =& xoops_gethandler('member');
-                $glist             = $member_handler->getGroupList();
-                $perms             = $groupperm_handler->getValidForumPerms(true);
+                $grouppermHandler = xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
+                $perm_template     = $grouppermHandler->getTemplate();
+                $memberHandler    =& xoops_gethandler('member');
+                $glist             = $memberHandler->getGroupList();
+                $perms             = $grouppermHandler->getValidForumPerms(true);
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
-                        $ids = $groupperm_handler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
+                        $ids = $grouppermHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
                         if (!in_array($forum_obj->getVar('forum_id'), $ids)) {
                             if (empty($perm_template[$group][$perm])) {
-                                $groupperm_handler->deleteRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $grouppermHandler->deleteRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {
-                                $groupperm_handler->addRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $grouppermHandler->addRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             }
                         }
                     }

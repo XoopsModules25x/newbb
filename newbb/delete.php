@@ -54,7 +54,7 @@ $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid
 $post_obj     =& $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
 if ($topicHandler->getPermission($topic->getVar("forum_id"), $topic_status, 'delete')
-    && ($isadmin || $post_obj->checkIdentity())
+    && ($post_obj->checkIdentity() || $isadmin )
 ) {
 } else {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_DELNOTALLOWED);
@@ -65,8 +65,8 @@ if (!$isadmin && !$post_obj->checkTimelimit('delete_timelimit')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj);
 }
 
 if ($ok) {
@@ -80,8 +80,8 @@ if ($ok) {
     } else {
         if (XoopsRequest::getString('post_text', '', 'POST')) {
             //send a message
-            $member_handler =& xoops_gethandler('member');
-            $senduser       =& $member_handler->getUser($post_obj->getVar('uid'));
+            $memberHandler =& xoops_gethandler('member');
+            $senduser       =& $memberHandler->getUser($post_obj->getVar('uid'));
             if ($senduser->getVar('notify_method') > 0) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();

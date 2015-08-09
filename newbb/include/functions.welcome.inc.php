@@ -38,15 +38,15 @@ $categories = array();
 
 $module_handler =& xoops_gethandler('module');
 if ($mod = @$module_handler->getByDirname('profile', true)) {
-    $gperm_handler = &xoops_gethandler('groupperm');
+    $gpermHandler = &xoops_gethandler('groupperm');
     $groups        = array(XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS);
 
     if (!defined("_PROFILE_MA_ALLABOUT")) {
         $mod->loadLanguage();
     }
-    $groupperm_handler =& xoops_getmodulehandler('permission', 'newbb');
-    $show_ids          = $groupperm_handler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
-    $visible_ids       = $groupperm_handler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
+    $grouppermHandler =& xoops_getmodulehandler('permission', 'newbb');
+    $show_ids          = $grouppermHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
+    $visible_ids       = $grouppermHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
     $fieldids         = array_intersect($show_ids, $visible_ids);
     $profile_handler  =& xoops_gethandler('profile');
@@ -120,11 +120,11 @@ if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $forum_info           = newbb_notify_iteminfo('forum', $forum_id);
     $tags['FORUM_NAME']   = $forum_info['name'];
     $tags['FORUM_URL']    = $forum_info['url'];
-    $notification_handler =& xoops_gethandler('notification');
-    $notification_handler->triggerEvent('forum', $forum_id, 'new_thread', $tags);
-    $notification_handler->triggerEvent('global', 0, 'new_post', $tags);
-    $notification_handler->triggerEvent('forum', $forum_id, 'new_post', $tags);
+    $notificationHandler =& xoops_gethandler('notification');
+    $notificationHandler->triggerEvent('forum', $forum_id, 'new_thread', $tags);
+    $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
+    $notificationHandler->triggerEvent('forum', $forum_id, 'new_post', $tags);
     $tags['POST_CONTENT'] = $myts->stripSlashesGPC($message);
     $tags['POST_NAME']    = $myts->stripSlashesGPC($subject);
-    $notification_handler->triggerEvent('global', 0, 'new_fullpost', $tags);
+    $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
 }

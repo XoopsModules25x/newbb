@@ -140,8 +140,8 @@ switch ($status) {
 //$criteria_count->add($criteria_status_count); // irmtfan commented and removed
 //$criteria_post->add($criteria_status_post); // irmtfan commented and removed
 // END irmtfan solve the status issues and specially status = new issue
-$karma_handler =& xoops_getmodulehandler('karma', 'newbb');
-$user_karma    = $karma_handler->getUserKarma();
+$karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+$user_karma    = $karmaHandler->getUserKarma();
 
 $valid_modes     = array('flat', 'compact');
 $viewmode_cookie = newbb_getcookie('V');
@@ -210,10 +210,10 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('anonym_avatar', newbbDisplayImage('anonym'));
 $userid_array = array();
 if (count($poster_array) > 0) {
-    $member_handler =& xoops_gethandler('member');
+    $memberHandler =& xoops_gethandler('member');
     $userid_array   = array_keys($poster_array);
     $user_criteria  = '(' . implode(',', $userid_array) . ')';
-    $users          = $member_handler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
+    $users          = $memberHandler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
 } else {
     $user_criteria = '';
     $users         = null;
@@ -223,8 +223,8 @@ $online = array();
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-        $online_handler =& xoops_getmodulehandler('online', 'newbb');
-        $online_handler->init($forum_id);
+        $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+        $onlineHandler->init($forum_id);
     }
 }
 
@@ -232,10 +232,10 @@ $viewtopic_users = array();
 
 if (count($userid_array) > 0) {
     require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
-    $user_handler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
-    $user_handler->users  = $users;
-    $user_handler->online = $online;
-    $viewtopic_users      = $user_handler->getUsers();
+    $userHandler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
+    $userHandler->users  = $users;
+    $userHandler->online = $online;
+    $viewtopic_users      = $userHandler->getUsers();
 }
 
 $pn            = 0;
@@ -282,18 +282,17 @@ foreach (array_keys($posts) as $id) {
 
     if ($GLOBALS["xoopsModuleConfig"]['enable_permcheck']) {
         if (!isset($suspension[$post->getVar('forum_id')])) {
-            $moderate_handler                      =& xoops_getmodulehandler('moderate', 'newbb');
-            $suspension[$post->getVar('forum_id')] = $moderate_handler->verifyUser(-1, '', $post->getVar('forum_id'));
+            $moderateHandler                      =& xoops_getmodulehandler('moderate', 'newbb');
+            $suspension[$post->getVar('forum_id')] = $moderateHandler->verifyUser(-1, '', $post->getVar('forum_id'));
         }
 
-        if ((!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('delete_timelimit'))
-            || $isadmin
+        if ($isadmin || (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('delete_timelimit'))
         ) {
             $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
             $thread_buttons['delete']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['delete']['name']  = _DELETE;
         }
-        if (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit') || $isadmin) {
+        if ($isadmin || !$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit')) {
             $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
             $thread_buttons['edit']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['edit']['name']  = _EDIT;

@@ -66,6 +66,7 @@ if (!$approved = $forumtopic->getVar('approved')) {
 $forumHandler   = &xoops_getmodulehandler('forum', 'newbb');
 $forum           = ($forum) ? : $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
+$parent_forums = array();
 $parent_forums   = $forumHandler->getParents($viewtopic_forum);
 $pf_title        = '';
 if ($parent_forums) {

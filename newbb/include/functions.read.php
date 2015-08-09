@@ -27,9 +27,9 @@ if (!defined("NEWBB_FUNCTIONS_READ")) {
      */
     function newbb_setRead($type, $item_id, $post_id, $uid = null)
     {
-        $read_handler = xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler = & xoops_getmodulehandler("read" . $type, "newbb");
 
-        return $read_handler->setRead($item_id, $post_id, $uid);
+        return $readHandler->setRead($item_id, $post_id, $uid);
     }
 
     /**
@@ -40,9 +40,9 @@ if (!defined("NEWBB_FUNCTIONS_READ")) {
      */
     function newbb_getRead($type, $item_id, $uid = null)
     {
-        $read_handler =& xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler =& xoops_getmodulehandler("read" . $type, "newbb");
 
-        return $read_handler->getRead($item_id, $uid);
+        return $readHandler->getRead($item_id, $uid);
     }
 
     /**
@@ -52,9 +52,9 @@ if (!defined("NEWBB_FUNCTIONS_READ")) {
      */
     function newbb_setRead_forum($status = 0, $uid = null)
     {
-        $read_handler =& xoops_getmodulehandler("readforum", "newbb");
+        $readHandler =& xoops_getmodulehandler("readforum", "newbb");
 
-        return $read_handler->setRead_items($status, $uid);
+        return $readHandler->setRead_items($status, $uid);
     }
 
     /**
@@ -65,9 +65,9 @@ if (!defined("NEWBB_FUNCTIONS_READ")) {
      */
     function newbb_setRead_topic($status = 0, $forum_id = 0, $uid = null)
     {
-        $read_handler =& xoops_getmodulehandler("readtopic", "newbb");
+        $readHandler =& xoops_getmodulehandler("readtopic", "newbb");
 
-        return $read_handler->setRead_items($status, $forum_id, $uid);
+        return $readHandler->setRead_items($status, $forum_id, $uid);
     }
 
     /**
@@ -78,8 +78,8 @@ if (!defined("NEWBB_FUNCTIONS_READ")) {
      */
     function newbb_isRead($type, &$items, $uid = null)
     {
-        $read_handler =& xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler =& xoops_getmodulehandler("read" . $type, "newbb");
 
-        return $read_handler->isRead_items($items, $uid);
+        return $readHandler->isRead_items($items, $uid);
     }
 }

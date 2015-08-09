@@ -67,8 +67,8 @@ if (!$forum) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum);
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum);
 }
 // irmtfan add restore to viewtopic
 $action_array = array('merge', 'delete', 'restore', 'move', 'lock', 'unlock', 'sticky', 'unsticky', 'digest', 'undigest');
@@ -134,7 +134,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
              "<p><a href='index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
     } elseif ('merge' === $mode) {
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $rate_handler =& xoops_getmodulehandler('rate', 'newbb');
+        $rateHandler =& xoops_getmodulehandler('rate', 'newbb');
 
         foreach ($topic_id as $tid) {
             $topic_obj    =& $topicHandler->get($tid);
@@ -154,7 +154,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $postHandler->updateAll('pid', $topicHandler->getTopPostId($newtopic), $criteria, true);
             $postHandler->updateAll('topic_id', $newtopic, $criteria_topic, true);
             // irmtfan update vote data instead of deleting them
-            $rate_handler->updateAll('topic_id', $newtopic, $criteria_topic, true);
+            $rateHandler->updateAll('topic_id', $newtopic, $criteria_topic, true);
 
             $topic_views = $topic_obj->getVar('topic_views') + $newtopic_obj->getVar('topic_views');
             // irmtfan better method to update topic_views in new topic
@@ -236,11 +236,11 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $topic_obj     =& $topicHandler->get($topic_id);
             $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
             $statsHandler->update($topic_obj->getVar('forum_id'), 'digest');
-            $userstats_handler =& xoops_getmodulehandler('userstats', 'newbb');
-            if ($user_stat = $userstats_handler->get($topic_obj->getVar('topic_poster'))) {
+            $userstatsHandler =& xoops_getmodulehandler('userstats', 'newbb');
+            if ($user_stat = $userstatsHandler->get($topic_obj->getVar('topic_poster'))) {
                 $z = $user_stat->getVar('user_digests') + 1;
                 $user_stat->setVar('user_digests', (int)($z));
-                $userstats_handler->insert($user_stat);
+                $userstatsHandler->insert($user_stat);
             }
         }
 // irmtfan full URL

@@ -232,8 +232,8 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         }
 
         if (in_array($perm_name, array("forum_all", "category_all"), true)) {
-            $member_handler =& xoops_gethandler('member');
-            $groups         = array_keys($member_handler->getGroupList());
+            $memberHandler =& xoops_gethandler('member');
+            $groups         = array_keys($memberHandler->getGroupList());
 
             $type           = ($perm_name === "category_all") ? "category" : "forum";
             $object_handler =& xoops_getmodulehandler($type, 'newbb');
@@ -242,7 +242,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
                 $perms[$perm_name][$item_id] = $groups;
             }
         } else {
-            $gperm_handler =& xoops_gethandler("groupperm");
+            $gpermHandler =& xoops_gethandler("groupperm");
             $criteria      = new CriteriaCompo(new Criteria('gperm_modid', $modid));
             if (!empty($perm_name) && $perm_name !== "forum_all" && $perm_name !== "category_all") {
                 $criteria->add(new Criteria('gperm_name', $perm_name));

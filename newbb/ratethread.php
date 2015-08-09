@@ -52,7 +52,7 @@ if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->ge
 if (empty($rate)) {
     redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NOVOTERATE);
 }
-$rate_handler =& xoops_getmodulehandler('rate', $xoopsModule->getVar('dirname'));
+$rateHandler =& xoops_getmodulehandler('rate', $xoopsModule->getVar('dirname'));
 if ($ratinguser !== 0) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post = new CriteriaCompo(new Criteria('topic_id', $topic_id));
@@ -64,7 +64,7 @@ if ($ratinguser !== 0) {
     // Check if REG user is trying to vote twice.
     $crit_rate = new CriteriaCompo(new Criteria('topic_id', $topic_id));
     $crit_rate->add(new Criteria('ratinguser', $ratinguser));
-    if ($rate_handler->getCount($crit_rate)) {
+    if ($rateHandler->getCount($crit_rate)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
     }
 } else {
@@ -73,18 +73,18 @@ if ($ratinguser !== 0) {
     $crit_rate->add(new Criteria('ratinguser', $ratinguser));
     $crit_rate->add(new Criteria('ratinghostname', $ip));
     $crit_rate->add(new Criteria('ratingtimestamp', time() - (86400 * $anonwaitdays), '>'));
-    if ($rate_handler->getCount($crit_rate)) {
+    if ($rateHandler->getCount($crit_rate)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
     }
 }
-$rate_obj =& $rate_handler->create();
+$rate_obj =& $rateHandler->create();
 $rate_obj->setVar('rating', $rate * 2);
 $rate_obj->setVar('topic_id', $topic_id);
 $rate_obj->setVar('ratinguser', $ratinguser);
 $rate_obj->setVar('ratinghostname', $ip);
 $rate_obj->setVar('ratingtimestamp', time());
 
-$ratingid = $rate_handler->insert($rate_obj);;
+$ratingid = $rateHandler->insert($rate_obj);;
 
 $query       = 'select rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);

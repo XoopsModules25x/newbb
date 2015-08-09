@@ -38,7 +38,7 @@ if (!$newXoopsModuleGui) {
 } else {
     echo $indexAdmin->addNavigation('admin_groupmod.php');
 }
-$member_handler =&xoops_gethandler('member');
+$memberHandler =&xoops_gethandler('member');
 $forumHandler  = &xoops_getmodulehandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
@@ -46,8 +46,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $fuser   = array();
     if ($fforum !== 0) {
         if ($fgroups !== '') {
+            $gg = array();
             foreach ($fgroups as $k) {
-                $gg = &$member_handler->getUsersByGroup($k, false);
+                $gg = &$memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
                     if (!in_array($f, $fuser)) {
                         $fuser[] = $f;
@@ -92,7 +93,8 @@ foreach (array_keys($categories) as $c) {
 }
 echo '</select>';
 echo "</td><tr><tr><td class='even'>";
-$groups =& $member_handler->getGroups();
+
+$groups =& $memberHandler->getGroups();
 foreach ($groups as $value) {
     echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br />';
 }

@@ -33,7 +33,7 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
     $query_array = array();
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET'}";
+            $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -42,8 +42,8 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online');
-    $online_handler->init($forum_obj);
+    $onlineHandler =& xoops_getmodulehandler('online');
+    $onlineHandler->init($forum_obj);
 }
 
 $xoopsOption['template_main']                             = 'newbb_edit_post.tpl';

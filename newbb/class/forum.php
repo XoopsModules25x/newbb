@@ -116,9 +116,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function getIdsByPermission($perm = 'access')
     {
-        $perm_handler = xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->getForums($perm);
+        return $permHandler->getForums($perm);
     }
 
     /**
@@ -332,8 +332,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $reads   = array();
         $types   = array();
 
-        $type_handler =& xoops_getmodulehandler('type', 'newbb');
-        $typen        = $type_handler->getByForum($forum->getVar('forum_id'));
+        $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+        $typen        = $typeHandler->getByForum($forum->getVar('forum_id'));
         while ($myrow = $this->db->fetchArray($result)) {
             if ($myrow['topic_sticky']) {
                 ++$sticky;
@@ -637,8 +637,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         //$permission = newbb_isModerator($forum);
         //} else {
         $forum_id     = $forum->getVar('forum_id');
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-        $permission   = $perm_handler->getPermission("forum", $type, $forum_id);
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permission   = $permHandler->getPermission("forum", $type, $forum_id);
         //}
         // END irmtfan commented and removed
         return $permission;
@@ -650,9 +650,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function deletePermission(&$forum)
     {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->deleteByForum($forum->getVar('forum_id'));
+        return $permHandler->deleteByForum($forum->getVar('forum_id'));
     }
 
     /**
@@ -661,9 +661,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function applyPermissionTemplate(&$forum)
     {
-        $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
-        return $perm_handler->applyTemplate($forum->getVar('forum_id'));
+        return $permHandler->applyTemplate($forum->getVar('forum_id'));
     }
 
     /*

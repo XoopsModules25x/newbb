@@ -40,7 +40,7 @@ $query_vars  = array('post_id', 'topic_id', 'status', 'order', 'start', 'move', 
 $query_array = array();
 foreach ($query_vars as $var) {
     if (XoopsRequest::getString($var, '', 'GET')) {
-        $query_array[$var] = "{$var}={XoopsRequest::getString($var, '', 'GET')}";
+        $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
     }
 }
 $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -129,8 +129,8 @@ if (!$isadmin) {
 }
 
 if (!empty($GLOBALS['xoopsModuleConfig']['enable_karma'])) {
-    $karma_handler = &xoops_getmodulehandler('karma', 'newbb');
-    $user_karma    = $karma_handler->getUserKarma();
+    $karmaHandler = &xoops_getmodulehandler('karma', 'newbb');
+    $user_karma    = $karmaHandler->getUserKarma();
 }
 
 //$viewmode = "flat";
@@ -158,9 +158,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $online_handler =& xoops_getmodulehandler('online', 'newbb');
-    $online_handler->init($forum_obj, $topic_obj);
-    $xoopsTpl->assign('online', $online_handler->show_online());
+    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler->init($forum_obj, $topic_obj);
+    $xoopsTpl->assign('online', $onlineHandler->show_online());
 }
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
 // irmtfan - remove icon_path and use newbbDisplayImage
@@ -247,10 +247,10 @@ foreach ($postsArray as $eachpost) {
 $userid_array = array();
 $online       = array();
 if (count($poster_array) > 0) {
-    $member_handler =& xoops_gethandler('member');
+    $memberHandler =& xoops_gethandler('member');
     $userid_array   = array_keys($poster_array);
     $user_criteria  = '(' . implode(',', $userid_array) . ')';
-    $users          = $member_handler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
+    $users          = $memberHandler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
 } else {
     $users = array();
 }
@@ -258,10 +258,10 @@ if (count($poster_array) > 0) {
 $viewtopic_users = array();
 if (count($userid_array) > 0) {
     require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
-    $user_handler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
-    $user_handler->users  = $users;
-    $user_handler->online = $online;
-    $viewtopic_users      = $user_handler->getUsers();
+    $userHandler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
+    $userHandler->users  = $users;
+    $userHandler->online = $online;
+    $viewtopic_users      = $userHandler->getUsers();
 }
 unset($users);
 
@@ -428,8 +428,8 @@ $xoopsTpl->assign_by_ref('admin_actions', $admin_actions);
 $xoopsTpl->assign('viewer_level', (int)(($isadmin) ? 2 : is_object($GLOBALS['xoopsUser'])));
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
-    $perm_handler     =& xoops_getmodulehandler('permission', 'newbb');
-    $permission_table = $perm_handler->permission_table($forum_obj, $topic_obj->getVar('topic_status'), $isadmin);
+    $permHandler     =& xoops_getmodulehandler('permission', 'newbb');
+    $permission_table = $permHandler->permission_table($forum_obj, $topic_obj->getVar('topic_status'), $isadmin);
     $xoopsTpl->assign_by_ref('permission_table', $permission_table);
 }
 
@@ -495,8 +495,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                                                  'disp_votes'      => $xp_config['disp_vote_nums'],
                                                  'lang_vote'       => constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE'),
                                                  'lang_results'    => constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_RESULTS'),
-                                                 'back_link'       => '')
-                );
+                                                 'back_link'       => ''));
                 $classRenderer = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Renderer';
                 $renderer      = new $classRenderer($poll_obj);
                 // check to see if user has voted, show form if not, otherwise get results for form
@@ -505,7 +504,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                 if ($poll_obj->isAllowedToVote() && (!$logHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $uid))) {
                     $myTpl = new XoopsTpl();
                     $renderer->assignForm($myTpl);
-                    $myTpl->assign('action', $GLOBALS['xoops']->url('modules/newbb/votepolls.php?topic_id={$topic_id}&amp;poll_id={$poll_id}'));
+                    $myTpl->assign('action', $GLOBALS['xoops']->url("modules/newbb/votepolls.php?topic_id={$topic_id}&amp;poll_id={$poll_id}"));
                     $topic_pollform = $myTpl->fetch($GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/templates/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '_view.tpl'));
                     $GLOBALS['xoopsTpl']->assign('topic_pollform', $topic_pollform);
                 } else {
@@ -684,10 +683,10 @@ $xoopsTpl->assign('menumode_other', $menumode_other);
 
 // START irmtfan add verifyUser to quick reply
 //check banning
-$moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
+$moderateHandler =& xoops_getmodulehandler('moderate', 'newbb');
 if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     && $topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'reply')
-    && !$moderate_handler->verifyUser(-1, "", $forum_obj->getVar('forum_id'))
+    && !$moderateHandler->verifyUser(-1, "", $forum_obj->getVar('forum_id'))
 ) {
     // END irmtfan add verifyUser to quick reply
     $forum_form = new XoopsThemeForm(_MD_POSTREPLY, 'quick_reply', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/post.php', 'post', true);

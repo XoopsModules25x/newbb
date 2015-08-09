@@ -337,8 +337,8 @@ class Post extends ArtObject
         mod_loadFunctions("render", "newbb");
 
         $uid           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-        $karma_handler =& xoops_getmodulehandler('karma', 'newbb');
-        $user_karma    = $karma_handler->getUserKarma();
+        $karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+        $user_karma    = $karmaHandler->getUserKarma();
 
         $post               = array();
         $post['attachment'] = false;
@@ -352,8 +352,8 @@ class Post extends ArtObject
         } else {
             $post['text'] = $post_text . '<br />' . $this->displayAttachment();
         }
-        $member_handler =& xoops_gethandler('member');
-        $eachposter     =& $member_handler->getUser($this->getVar('uid'));
+        $memberHandler =& xoops_gethandler('member');
+        $eachposter     =& $memberHandler->getUser($this->getVar('uid'));
         if (is_object($eachposter) && $eachposter->isActive()) {
             if ($GLOBALS['xoopsModuleConfig']['show_realname'] && $eachposter->getVar('name')) {
                 $post['author'] = $eachposter->getVar('name');
@@ -444,7 +444,7 @@ class Post extends ArtObject
         $query_array["topic_id"] = "topic_id={$topic_id}";
         foreach ($query_vars as $var) {
             if (XoopsRequest::getString($var, '', 'GET')) {
-                $query_array[$var] = "{$var}={XoopsRequest::getString($var,'','GET')}";
+                $query_array[$var] = "{$var}=".XoopsRequest::getString($var,'','GET');
             }
         }
         $page_query = htmlspecialchars(implode("&", array_values($query_array)));
@@ -782,11 +782,11 @@ class NewbbPostHandler extends ArtObjectHandler
 
         // Update user stats
         if ($post->getVar('uid') > 0) {
-            $member_handler =& xoops_gethandler('member');
-            $poster         =& $member_handler->getUser($post->getVar('uid'));
+            $memberHandler =& xoops_gethandler('member');
+            $poster         =& $memberHandler->getUser($post->getVar('uid'));
             if (is_object($poster) && $post->getVar('uid') === $poster->getVar("uid")) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
-                $res = $member_handler->insertUser($poster, true);
+                $res = $memberHandler->insertUser($poster, true);
                 unset($poster);
             }
         }
@@ -831,7 +831,7 @@ class NewbbPostHandler extends ArtObjectHandler
             $post->setNew();
             $topic_obj =& $topicHandler->create();
         }
-        $text_handler   =& xoops_getmodulehandler("text", "newbb");
+        $textHandler   =& xoops_getmodulehandler("text", "newbb");
         $post_text_vars = array("post_text", "post_edit", "dohtml", "doxcode", "dosmiley", "doimage", "dobr");
         if ($post->isNew()) {
             if (!$topic_id = $post->getVar("topic_id")) {
@@ -857,7 +857,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 $post->setVar("pid", $pid);
             }
 
-            $text_obj =& $text_handler->create();
+            $text_obj =& $textHandler->create();
             foreach ($post_text_vars as $key) {
                 $text_obj->vars[$key] = $post->vars[$key];
             }
@@ -866,7 +866,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 return false;
             }
             $text_obj->setVar("post_id", $post_id);
-            if (!$text_handler->insert($text_obj, $force)) {
+            if (!$textHandler->insert($text_obj, $force)) {
                 $this->delete($post);
                 $post->setErrors("post text insert error");
                 //xoops_error($text_obj->getErrors());
@@ -891,7 +891,7 @@ class NewbbPostHandler extends ArtObjectHandler
                     return false;
                 }
             }
-            $text_obj =& $text_handler->get($post->getVar("post_id"));
+            $text_obj =& $textHandler->get($post->getVar("post_id"));
             $text_obj->setDirty();
             foreach ($post_text_vars as $key) {
                 $text_obj->vars[$key] = $post->vars[$key];
@@ -901,7 +901,7 @@ class NewbbPostHandler extends ArtObjectHandler
                 //xoops_error($post->getErrors());
                 return false;
             }
-            if (!$text_handler->insert($text_obj, $force)) {
+            if (!$textHandler->insert($text_obj, $force)) {
                 $post->setErrors("update post text error");
                 //xoops_error($text_obj->getErrors());
                 return false;
@@ -1032,11 +1032,11 @@ class NewbbPostHandler extends ArtObjectHandler
 
             // Update user stats
             if ($post->getVar('uid') > 0) {
-                $member_handler =& xoops_gethandler('member');
-                $poster         =& $member_handler->getUser($post->getVar('uid'));
+                $memberHandler =& xoops_gethandler('member');
+                $poster         =& $memberHandler->getUser($post->getVar('uid'));
                 if (is_object($poster) && $post->getVar('uid') === $poster->getVar("uid")) {
                     $poster->setVar('posts', $poster->getVar('posts') - 1);
-                    $res = $member_handler->insertUser($poster, true);
+                    $res = $memberHandler->insertUser($poster, true);
                     unset($poster);
                 }
             }

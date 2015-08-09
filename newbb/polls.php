@@ -271,7 +271,7 @@ switch ($op) {
                 break;
             }
             $i            = 0;
-            $option_color = XoopsRequest::getArray('option_color', null, 'POST');;
+            $option_color = XoopsRequest::getArray('option_color', null, 'POST');
             $classOption = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
                 $optxt      = trim($optxt);
@@ -612,7 +612,7 @@ switch ($op) {
             $default_poll_duration = (86400 * 10);
         }
         $poll_form   = new XoopsThemeForm(_MD_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
-        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION . "<br /><small>" . _MD_POLL_FORMAT . "<br />" . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), "Y-m-d H:i:s")) . "<br />" . sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar("end_time"), "Y-m-d H:i:s")) . "</small>", "end_time", 20, 19, formatTimestamp(time() + $default_poll_duration, "Y-m-d H:i:s"));
+        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION . '<br /><small>' . _MD_POLL_FORMAT . '<br />' . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), "Y-m-d H:i:s")) . "<br />" . sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar("end_time"), 'Y-m-d H:i:s')) . '</small>', 'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_NOTIFY, 'notify', 1));
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_RESET, 'reset', 0));
@@ -646,7 +646,7 @@ switch ($op) {
 
         $end_time = !XoopsRequest::getInt('end_time', 0, 'POST');
         if (0 !==$end_time) {
-            $timezone = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar("timezone") : null;
+            $timezone = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('timezone') : null;
             $poll_obj->setVar('end_time', userTimeToServerTime(method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time), $timezone));
         } else {
             $poll_obj->setVar('end_time', time() + $default_poll_duration);

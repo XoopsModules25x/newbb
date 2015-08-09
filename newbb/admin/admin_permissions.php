@@ -85,12 +85,12 @@ public function __construct($title, $modid, $permname, $permdesc, $url = '')
             $this->_itemTree[$item_id]['allchild'] = array();
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
-        $gperm_handler  = xoops_gethandler('groupperm');
-        $member_handler = xoops_gethandler('member');
-        $glist          =& $member_handler->getGroupList();
+        $gpermHandler  = xoops_gethandler('groupperm');
+        $memberHandler = xoops_gethandler('member');
+        $glist          =& $memberHandler->getGroupList();
         foreach (array_keys($glist) as $i) {
             // get selected item id(s) for each group
-            $selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
+            $selected = $gpermHandler->getItemIds($this->_permName, $i, $this->_modid);
             $ele      = new NewbbXoopsGroupFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
             $ele->setOptionTree($this->_itemTree);
             $this->addElement($ele);
@@ -184,8 +184,8 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
 $action            = strtolower(XoopsRequest::getCmd('action', ''));
 $module_id         = $xoopsModule->getVar('mid');
-$newbbperm_handler =& xoops_getmodulehandler('permission', 'newbb');
-$perms             = $newbbperm_handler->getValidForumPerms();
+$newbbpermHandler =& xoops_getmodulehandler('permission', 'newbb');
+$perms             = $newbbpermHandler->getValidForumPerms();
 
 switch ($action) {
     case 'template':
@@ -204,10 +204,10 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-        $member_handler =& xoops_gethandler('member');
-        $glist          = $member_handler->getGroupList();
+        $memberHandler =& xoops_gethandler('member');
+        $glist          = $memberHandler->getGroupList();
         $elements       = array();
-        $perm_template  = $newbbperm_handler->getTemplate();
+        $perm_template  = $newbbpermHandler->getTemplate();
         foreach (array_keys($glist) as $i) {
             $selected = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : array();
             $ret_ele  = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
@@ -247,8 +247,8 @@ switch ($action) {
         break;
 
     case 'template_save':
-//        $res = $newbbperm_handler->setTemplate($_POST['perms'], $groupid = 0);
-        $res = $newbbperm_handler->setTemplate(XoopsRequest::getArray('perms', '', 'POST'), $groupid = 0);
+//        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0);
+        $res = $newbbpermHandler->setTemplate(XoopsRequest::getArray('perms', '', 'POST'), $groupid = 0);
         if ($res) {
             redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_CREATED);
         } else {
@@ -258,7 +258,7 @@ switch ($action) {
 //        exit();
 
     case 'apply':
-        $perm_template = $newbbperm_handler->getTemplate();
+        $perm_template = $newbbpermHandler->getTemplate();
         if ($perm_template === null) {
             redirect_header('admin_permissions.php?action=template', 2, _AM_NEWBB_PERM_TEMPLATE);
         }
@@ -309,7 +309,7 @@ switch ($action) {
             if ($forum < 1) {
                 continue;
             }
-            $newbbperm_handler->applyTemplate($forum, $module_id);
+            $newbbpermHandler->applyTemplate($forum, $module_id);
         }
         mod_clearCacheFile('permission', 'newbb');
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
@@ -404,8 +404,8 @@ switch ($action) {
         $form->display();
 
         // Since we can not control the permission update, a trick is used here
-        $permission_handler =& xoops_getmodulehandler('permission', 'newbb');
-        $permission_handler->createPermData();
+        $permissionHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permissionHandler->createPermData();
         mod_clearCacheFile('permission', 'newbb');
         xoops_cp_footer();
         break;

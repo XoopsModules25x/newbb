@@ -729,8 +729,8 @@ class NewbbTopicRenderer
     {
         static $types;
         if (!isset($types)) {
-            $type_handler =& xoops_getmodulehandler('type', 'newbb');
-            $types        = $type_handler->getByForum(explode("|", @$this->vars["forum"]));
+            $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+            $types        = $typeHandler->getByForum(explode("|", @$this->vars["forum"]));
         }
 
         if (empty($type_id)) {
@@ -1051,8 +1051,8 @@ class NewbbTopicRenderer
         /*
         $type_list = array();
         if (count($types) > 0) {
-            $type_handler =& xoops_getmodulehandler('type', 'newbb');
-            $type_list = $type_handler->getAll(new Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
+            $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+            $type_list = $typeHandler->getAll(new Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
         }
         */
         $type_list     = $this->getTypes();

@@ -41,8 +41,8 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)($item_id);
         }
     }
-    $item_handler =& xoops_getmodulehandler('topic', 'newbb');
-    $items_obj    = $item_handler->getObjects(new Criteria("topic_id", "(" . implode(", ", $items_id) . ")", "IN"), true);
+    $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
+    $items_obj    = $itemHandler->getObjects(new Criteria("topic_id", "(" . implode(", ", $items_id) . ")", "IN"), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -70,7 +70,7 @@ function newbb_tag_iteminfo(&$items)
  */
 function newbb_tag_synchronization($mid)
 {
-    $item_handler =& xoops_getmodulehandler("topic", "newbb");
+    $itemHandler =& xoops_getmodulehandler("topic", "newbb");
     $link_handler =& xoops_getmodulehandler("link", "tag");
 
     /* clear tag-item links */
@@ -80,18 +80,18 @@ function newbb_tag_synchronization($mid)
                "        tag_modid = {$mid}" .
                "        AND " .
                "        ( tag_itemid NOT IN " .
-               "            ( SELECT DISTINCT {$item_handler->keyName} " .
-               "                FROM {$item_handler->table} " .
-               "                WHERE {$item_handler->table}.approved > 0" .
+               "            ( SELECT DISTINCT {$itemHandler->keyName} " .
+               "                FROM {$itemHandler->table} " .
+               "                WHERE {$itemHandler->table}.approved > 0" .
                "            ) " .
                "        )";
     } else {
         $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-               "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
+               "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " .
                "    WHERE " .
                "        tag_modid = {$mid}" .
                "        AND " .
-               "        ( aa.{$item_handler->keyName} IS NULL" .
+               "        ( aa.{$itemHandler->keyName} IS NULL" .
                "            OR aa.approved < 1" .
                "        )";
     }

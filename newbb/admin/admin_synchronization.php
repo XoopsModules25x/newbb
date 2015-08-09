@@ -42,6 +42,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $criteria->setStart($start);
         $criteria->setLimit($limit);
+        $topicObjs = array();
         $topicObjs = $topicHandler->getAll($criteria);
         foreach ($topicObjs as $tObj) {
             $topicHandler->synchronization($tObj);
@@ -59,8 +60,8 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan - user is not in recon functions - only here
     case "user":
         $limit        = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
-        $user_handler =& xoops_gethandler('user');
-        if ($start >= ($count = $user_handler->getCount())) {
+        $userHandler =& xoops_gethandler('user');
+        if ($start >= ($count = $userHandler->getCount())) {
             break;
         }
         $sql    = "    SELECT uid" .

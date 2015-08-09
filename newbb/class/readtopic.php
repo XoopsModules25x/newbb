@@ -124,12 +124,12 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $cookie_name = "LT";
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
-        $item_handler =& xoops_getmodulehandler('topic', 'newbb');
+        $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
         $criteria     = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria->setSort("topic_last_post_id");
         $criteria->setOrder("DESC");
         $criteria->setLimit($this->items_per_forum);
-        $items = $item_handler->getIds($criteria);
+        $items = $itemHandler->getIds($criteria);
 
         foreach ($items as $var) {
             if (empty($status)) {
@@ -161,7 +161,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             }
         }
 
-        $item_handler   =& xoops_getmodulehandler('topic', 'newbb');
+        $itemHandler   =& xoops_getmodulehandler('topic', 'newbb');
         $criteria_topic = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria_topic->setSort("topic_last_post_id");
         $criteria_topic->setOrder("DESC");
@@ -170,8 +170,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $criteria_sticky->add(new Criteria("topic_sticky", 1));
 
         if (empty($status)) {
-            $items_id  = $item_handler->getIds($criteria_topic);
-            $sticky_id = $item_handler->getIds($criteria_sticky);
+            $items_id  = $itemHandler->getIds($criteria_topic);
+            $sticky_id = $itemHandler->getIds($criteria_sticky);
             $items     = $items_id + $sticky_id;
             $criteria  = new CriteriaCompo(new Criteria("uid", $uid));
             $criteria->add(new Criteria("read_item", "(" . implode(", ", $items) . ")", "IN"));
@@ -180,8 +180,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        $items_obj  =& $item_handler->getAll($criteria_topic, array("topic_last_post_id"));
-        $sticky_obj =& $item_handler->getAll($criteria_sticky, array("topic_last_post_id"));
+        $items_obj  =& $itemHandler->getAll($criteria_topic, array("topic_last_post_id"));
+        $sticky_obj =& $itemHandler->getAll($criteria_sticky, array("topic_last_post_id"));
         $items_obj += $sticky_obj;
         $items      = array();
         foreach (array_keys($items_obj) as $key) {

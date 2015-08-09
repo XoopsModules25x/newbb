@@ -115,9 +115,9 @@ define('_MI_SHOW_IP_DESC', 'Setting YES will show users IP to moderators');
 define('_MI_ENABLE_KARMA', 'Enable karma requirement');
 define('_MI_ENABLE_KARMA_DESC', 'This allows user to set a karma requirement for other users reading his/her post');
 define('_MI_KARMA_OPTIONS', 'Karma options for post');
-define('_MI_KARMA_OPTIONS_DESC', 'Use ',' as delimiter for multi-options.');
+define('_MI_KARMA_OPTIONS_DESC', "Use ', ' as delimiter for multi-options.");
 // irmtfan rewise since
-define('_MI_SINCE_OPTIONS', "'Since' options for creating a selection box in 'viewform.php', 'list.topic.php'and 'search.php'");
+define('_MI_SINCE_OPTIONS', "'Since' options for creating a selection box in 'viewform.php', 'list.topic.php' and 'search.php'");
 define('_MI_SINCE_OPTIONS_DESC', 'Positive value for days and negative value for hours. Use ',' as delimiter for multi-options. (0=From the beginning) (365=From the last year)');
 define('_MI_SINCE_DEFAULT', "'Since' default value in selection box");
 define('_MI_SINCE_DEFAULT_DESC', 'Default value in the selection box if not specified by users. Positive value for days and negative value for hours. (0=From the beginning) (365=From the last year)');
@@ -227,7 +227,7 @@ define('_MI_SPL_ANYONE', 'each');
 define('_MI_SPL_MEMBER', 'Members');
 define('_MI_SPL_MODERATOR', 'Moderators');
 define('_MI_SPL_ADMIN', 'Administrators');
-define('_MI_STATISTIK_ENABLE', 'enable Stats');
+define('_MI_STATISTIK_ENABLE', 'Enable Stats');
 define('_MI_STATISTIK_ENABLE_DESC', 'The stats will be shown in your forum at the bottom of each forum/topic');
 //4.05
 define('_MI_SHOW_INFOBOX', 'Show Infobox');
@@ -238,7 +238,7 @@ define('_MI_NEWBB_INFOBOX_SHOW', 'Yes, expanded');
 define('_MI_SHOW_SOCIALLINKS', 'Show social links');
 define('_MI_SHOW_SOCIALLINKS_DESC', 'Show sharing buttons on the bottom of each post');
 //4.2
-define('_MI_PAGENAV_DISPLAY', 'display of navigation');
+define('_MI_PAGENAV_DISPLAY', 'Display of navigation');
 define('_MI_PAGENAV_DISPLAY_DESC', 'Shows the page number in the corresponding hardware mode');
 define('_MI_PAGENAV_NUMBER', 'as numbers');
 define('_MI_PAGENAV_IMAGE', 'as small images');

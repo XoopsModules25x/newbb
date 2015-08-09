@@ -144,8 +144,8 @@ switch ($op) {
         break;
 
     case 'senddigest':
-        $digest_handler = &xoops_getmodulehandler('digest', 'newbb');
-        $res            = $digest_handler->process(true);
+        $digestHandler = &xoops_getmodulehandler('digest', 'newbb');
+        $res            = $digestHandler->process(true);
         $msg            = ($res) ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
         redirect_header('index.php', 2, $msg);
         break;
@@ -289,12 +289,12 @@ switch ($op) {
             echo '</fieldset><br />';
 
             if ($GLOBALS['xoopsModuleConfig']['email_digest'] > 0) {
-                $digest_handler = &xoops_getmodulehandler('digest', 'newbb');
+                $digestHandler = &xoops_getmodulehandler('digest', 'newbb');
                 echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_DIGEST . '</legend>';
-                $due    = ($digest_handler->checkStatus()) / 60; // minutes
+                $due    = ($digestHandler->checkStatus()) / 60; // minutes
                 $prompt = ($due > 0) ? sprintf(_AM_NEWBB_DIGEST_PAST, $due) : sprintf(_AM_NEWBB_DIGEST_NEXT, abs($due));
                 echo "<div style='padding: 12px;'><a href='index.php?op=senddigest'>" . $prompt . "</a> | ";
-                echo "<a href='admin_digest.php'>" . _AM_NEWBB_DIGEST_ARCHIVE . '</a> <strong>' . $digest_handler->getDigestCount() . '</strong>';
+                echo "<a href='admin_digest.php'>" . _AM_NEWBB_DIGEST_ARCHIVE . '</a> <strong>' . $digestHandler->getDigestCount() . '</strong>';
                 echo '</div>';
                 echo '</fieldset><br />';
             }
@@ -388,8 +388,8 @@ switch ($op) {
                 * Not good but works
             */
             if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate'])) {
-                $moderate_handler =& xoops_getmodulehandler('moderate', 'newbb');
-                $moderate_handler->clearGarbage();
+                $moderateHandler =& xoops_getmodulehandler('moderate', 'newbb');
+                $moderateHandler->clearGarbage();
             }
         }
         echo '</fieldset>';

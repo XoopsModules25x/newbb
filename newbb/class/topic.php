@@ -68,8 +68,8 @@ class Topic extends ArtObject
         if (!$this->getVar("type_id")) {
             return $topic_title;
         }
-        $type_handler =& xoops_getmodulehandler('type', 'newbb');
-        if (!$type_obj =& $type_handler->get($this->getVar("type_id"))) {
+        $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+        if (!$type_obj =& $typeHandler->get($this->getVar("type_id"))) {
             return $topic_title;
         }
 
@@ -134,12 +134,12 @@ class Topic extends ArtObject
         }
         // new xoopspoll module
         if ($pollModuleHandler->getVar("version") >= 140) {
-            $poll_handler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
-            if (false !== $poll_handler->deleteAll(new Criteria('poll_id', $poll_id, '='))) {
-                $option_handler =& xoops_getmodulehandler('option', $newbbConfig["poll_module"]);
-                $option_handler->deleteAll(new Criteria('poll_id', $poll_id, '='));
-                $log_handler =& xoops_getmodulehandler('log', $newbbConfig["poll_module"]);
-                $log_handler->deleteAll(new Criteria('poll_id', $poll_id, '='));
+            $pollHandler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
+            if (false !== $pollHandler->deleteAll(new Criteria('poll_id', $poll_id, '='))) {
+                $optionHandler =& xoops_getmodulehandler('option', $newbbConfig["poll_module"]);
+                $optionHandler->deleteAll(new Criteria('poll_id', $poll_id, '='));
+                $logHandler =& xoops_getmodulehandler('log', $newbbConfig["poll_module"]);
+                $logHandler->deleteAll(new Criteria('poll_id', $poll_id, '='));
                 xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
             }
             // old xoopspoll or umfrage or any clone from them
@@ -185,8 +185,8 @@ class Topic extends ArtObject
         }
         // new xoopspoll module
         if ($pollModuleHandler->getVar("version") >= 140) {
-            $poll_handler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
-            $poll_obj     = $poll_handler->get($poll_id);
+            $pollHandler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
+            $poll_obj     = $pollHandler->get($poll_id);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll = $this->loadOldPoll($newbbConfig["poll_module"]);
@@ -602,8 +602,8 @@ class NewbbTopicHandler extends ArtObjectHandler
         if ($topic_locked && 'view' !== $type) {
             $permission = false;
         } else {
-            $perm_handler =& xoops_getmodulehandler('permission', 'newbb');
-            $permission   = $perm_handler->getPermission("forum", $type, $forum_id);
+            $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+            $permission   = $permHandler->getPermission("forum", $type, $forum_id);
         }
 
         return $permission;

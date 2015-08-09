@@ -42,7 +42,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, 'bb_user_stats', 'NewbbUserstats', 'uid');
+        parent::__construct($db, 'bb_user_stats', 'NewbbUserstats', 'uid', '');
     }
 
     /**

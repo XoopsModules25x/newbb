@@ -40,7 +40,7 @@ if (!in_array($op, array('save_type', 'delete', 'template', 'save_template', 'ap
     $op = '';
 }
 
-$type_handler =& xoops_getmodulehandler('type', 'newbb');
+$typeHandler =& xoops_getmodulehandler('type', 'newbb');
 
 switch ($op) {
     case 'save_type':
@@ -49,8 +49,8 @@ switch ($op) {
         $type_del   = array();
         foreach (array_keys($type_names) as $key) {
             if (XoopsRequest::getBool('isnew', '', 'POST')) {
-                $type_obj =& $type_handler->create();
-            } elseif (!$type_obj =& $type_handler->get($key)) {
+                $type_obj =& $typeHandler->create();
+            } elseif (!$type_obj =& $typeHandler->get($key)) {
                 continue;
             }
 
@@ -71,12 +71,12 @@ switch ($op) {
 
 //                    $type_obj->setVar($var, XoopsRequest::getArray($var, '', 'POST')[$key]);
                 }
-                $type_handler->insert($type_obj);
+                $typeHandler->insert($type_obj);
                 unset($type_obj);
             }
         }
         if (count($type_del) > 0) {
-            $type_list = $type_handler->getList(new Criteria('type_id', '(' . implode(", ", $type_del) . ')', 'IN'));
+            $type_list = $typeHandler->getList(new Criteria('type_id', '(' . implode(", ", $type_del) . ')', 'IN'));
             xoops_confirm(array('op' => 'delete', 'type_del' => serialize($type_del)), xoops_getenv("PHP_SELF"), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
         } else {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
@@ -86,17 +86,17 @@ switch ($op) {
     case 'delete':
         $type_dels = @unserialize(XoopsRequest::getString('type_del', '', 'POST'));
         foreach ($type_dels as $key) {
-            if (!$type_obj =& $type_handler->get($key)) {
+            if (!$type_obj =& $typeHandler->get($key)) {
                 continue;
             }
-            $type_handler->delete($type_obj);
+            $typeHandler->delete($type_obj);
             unset($type_obj);
         }
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
         break;
 
     case 'template':
-        $types_obj = $type_handler->getAll();
+        $types_obj = $typeHandler->getAll();
         if (count($types_obj) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
@@ -217,7 +217,7 @@ switch ($op) {
         echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
         echo '</tr>';
 
-        $types_obj = $type_handler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
+        $types_obj = $typeHandler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
         arsort($templates);
         foreach ($templates as $order => $key) {
             if (!isset($types_obj[$key])) {
@@ -245,7 +245,7 @@ switch ($op) {
             if ($forum < 1) {
                 continue;
             }
-            $type_handler->updateByForum($forum, array_flip($templates));
+            $typeHandler->updateByForum($forum, array_flip($templates));
         }
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
         break;
@@ -310,7 +310,7 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
 
-        $types_obj = $type_handler->getAll();
+        $types_obj = $typeHandler->getAll();
         if (count($types_obj) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
@@ -338,7 +338,7 @@ switch ($op) {
         echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
         echo '</tr>';
 
-        $types       = $type_handler->getByForum(XoopsRequest::getInt('forum', 0, 'POST'));
+        $types       = $typeHandler->getByForum(XoopsRequest::getInt('forum', 0, 'POST'));
         $types_order = array();
         foreach ($types as $key => $type) {
             $types_order[] = $type['type_order'];
@@ -381,13 +381,13 @@ switch ($op) {
         if (!(XoopsRequest::getInt('forum', 0, 'POST')) || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . "?op=forum", 2, _AM_NEWBB_TYPE_FORUM);
         }
-        $type_handler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getInt('type_order', 0, 'POST'));
+        $typeHandler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getInt('type_order', 0, 'POST'));
         redirect_header(xoops_getenv('PHP_SELF') . "?op=forum", 2, _MD_DBUPDATED);
         break;
 
     case 'add':
     default:
-        $types_obj = $type_handler->getAll();
+        $types_obj = $typeHandler->getAll();
         if (count($types_obj) === 0) {
             $op    = 'add';
             $title = _AM_NEWBB_TYPE_ADD;

@@ -98,16 +98,16 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     $rss->xml_encoding      = $charset;
     $rss->image_url         = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image');
 
-    $dimention = @getimagesize($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image')));
-    if (empty($dimention[0])) {
+    $dimension = @getimagesize($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image')));
+    if (empty($dimension[0])) {
         $width = 88;
     } else {
-        $width = ($dimention[0] > 144) ? 144 : $dimention[0];
+        $width = ($dimension[0] > 144) ? 144 : $dimension[0];
     }
-    if (empty($dimention[1])) {
+    if (empty($dimension[1])) {
         $height = 31;
     } else {
-        $height = ($dimention[1] > 400) ? 400 : $dimention[1];
+        $height = ($dimension[1] > 400) ? 400 : $dimension[1];
     }
     $rss->image_width  = $width;
     $rss->image_height = $height;
@@ -155,8 +155,8 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbb_getUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-        $type_handler = xoops_getmodulehandler('type', 'newbb');
-        $type_list    = $type_handler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
+        $typeHandler = & xoops_getmodulehandler('type', 'newbb');
+        $type_list    = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
     foreach ($rows as $topic) {

@@ -57,7 +57,7 @@ if (!$GLOBALS['xoopsDB']->queryF('
     exit('Can not create tmp table for `bb_type_forum_tmp`');
 }
 
-$type_handler =& xoops_getmodulehandler('type', 'newbb');
+$typeHandler =& xoops_getmodulehandler('type', 'newbb');
 $subjectpres  = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
 $types        = array();
 $order        = 1;

@@ -20,31 +20,31 @@ if (!$isadmin) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
-$moderate_handler = &xoops_getmodulehandler('moderate', 'newbb');
+$moderateHandler = &xoops_getmodulehandler('moderate', 'newbb');
 
 if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expire', 0, 'POST')) {
     if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) {
         $_POST["ip"] = "";
     }
     if (
-        (XoopsRequest::getInt('uid', 0, 'POST') && $moderate_handler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
+        (XoopsRequest::getInt('uid', 0, 'POST') && $moderateHandler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
         ||
-        (XoopsRequest::getString('ip', '', 'POST') && $moderate_handler->getLatest(XoopsRequest::getString('ip', '', 'POST'), false) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
+        (XoopsRequest::getString('ip', '', 'POST') && $moderateHandler->getLatest(XoopsRequest::getString('ip', '', 'POST'), false) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
         ||
         (!XoopsRequest::getInt('uid', 0, 'POST') && !XoopsRequest::getString('ip', '', 'POST'))
     ) {
     } else {
-        $moderate_obj = $moderate_handler->create();
+        $moderate_obj = $moderateHandler->create();
         $moderate_obj->setVar('uid', XoopsRequest::getInt('uid', 0, 'POST'));
         $moderate_obj->setVar('ip', XoopsRequest::getString('ip', '', 'POST'));
         $moderate_obj->setVar('forum_id', $forum_id);
         $moderate_obj->setVar('mod_start', time());
         $moderate_obj->setVar('mod_end', time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24);
         $moderate_obj->setVar('mod_desc', XoopsRequest::getString('desc', '', 'POST'));
-        $res = $moderate_handler->insert($moderate_obj);
+        $res = $moderateHandler->insert($moderate_obj);
         if (XoopsRequest::getInt('uid', 0, 'POST') > 0) {
-            $online_handler = &xoops_gethandler('online');
-            $onlines        =& $online_handler->getAll(new Criteria('online_uid', XoopsRequest::getInt('uid', 0, 'POST')));
+            $onlineHandler = &xoops_gethandler('online');
+            $onlines        =& $onlineHandler->getAll(new Criteria('online_uid', XoopsRequest::getInt('uid', 0, 'POST')));
             if (false !== $onlines) {
                 $online_ip = $onlines[0]['online_ip'];
                 $sql       = sprintf('DELETE FROM %s WHERE sess_ip = %s', $GLOBALS['xoopsDB']->prefix('session'), $GLOBALS['xoopsDB']->quoteString($online_ip));
@@ -60,9 +60,9 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
         redirect_header('moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
     }
 } elseif (XoopsRequest::getString('del', '', 'GET')) {
-    $moderate_obj = $moderate_handler->get(XoopsRequest::getString('del', '', 'GET'));
+    $moderate_obj = $moderateHandler->get(XoopsRequest::getString('del', '', 'GET'));
     if ($is_administrator || $moderate_obj->getVar('forum_id') === $forum_id) {
-        $moderate_handler->delete($moderate_obj, true);
+        $moderateHandler->delete($moderate_obj, true);
         redirect_header('moderate.php?forum=$forum_id', 2, _MD_DBUPDATED);
     }
 }
@@ -98,8 +98,8 @@ $criteria->setLimit($GLOBALS['xoopsModuleConfig']['topics_per_page']);
 $criteria->setStart($start);
 $criteria->setSort($sort);
 $criteria->setOrder($order);
-$moderate_objs  =& $moderate_handler->getObjects($criteria);
-$moderate_count = $moderate_handler->getCount($criteria);
+$moderate_objs  =& $moderateHandler->getObjects($criteria);
+$moderate_count = $moderateHandler->getCount($criteria);
 
 include $GLOBALS['xoops']->path('header.php');
 $url = 'index.php';

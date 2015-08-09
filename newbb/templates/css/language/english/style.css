@@ -1,16 +1,16 @@
 /* -- style.css -- */
 .forum_header {
-    float        : center;
-    overflow    : hidden;
-    border        : 1px solid #aaaaaa;
-    width        : 100%;
-}  
+    float: center;
+    overflow: hidden;
+    border: 1px solid #aaaaaa;
+    width: 100%;
+}
 
 .forum_title {
-    float        : left;
-    text-align    : left;
-    padding        : 5px;
-    width        : 100%;
+    float: left;
+    text-align: left;
+    padding: 5px;
+    width: 100%;
 
 }
 
@@ -18,69 +18,69 @@
     font-weight: bold;
 }
 
-
 .forum_stats {
-    float:center;
-    overflow:hidden;
-    text-align:left; 
+    float: center;
+    overflow: hidden;
+    text-align: left;
     /* border:1px solid #aaaaaa; */
-    padding:5px;
+    padding: 5px;
 }
 
 .forum_stats_left {
-    float: left; 
+    float: left;
     text-align: left;
-    width:45%;    
+    width: 45%;
 }
 
 .forum_stats_right {
-    float: right; 
+    float: right;
     text-align: right;
-    width:45%;
+    width: 45%;
 }
 
 .forum_body {
     margin-top: -10px;
     padding-top: 20px;
-    float:center;
-    width:99%;
-    overflow:hidden;
+    float: center;
+    width: 99%;
+    overflow: hidden;
 }
 
 .forum_footer {
-    float:center;
-    width:99%;
-    overflow:hidden;
+    float: center;
+    width: 99%;
+    overflow: hidden;
 }
 
-.index_category{
+.index_category {
     border: 0;
     /*margin-top: -10px;
     margin-bottom: 5px;*/
 }
 
 .ThreadUserName a {
-    font-weight: bold; 
+    font-weight: bold;
     margin-bottom: 2px;
     /*color: #000; irmtfan */
 }
 
-.ThreadTitle,  .ThreadTitle a{
-    font-weight: bold; 
+.ThreadTitle, .ThreadTitle a {
+    font-weight: bold;
     margin-bottom: 2px;
     /*color: #fff; irmtfan */
 }
 
 .icon_left {
-    float: left; text-align: left;
+    float: left;
+    text-align: left;
 }
 
 .icon_right {
-    float: right; text-align: right;
+    float: right;
+    text-align: right;
 }
 
-div.karma
-{
+div.karma {
     background-color: transparent;
     text-align: left;
     border: 1px solid #DDDDFF;
@@ -89,16 +89,15 @@ div.karma
     padding: 10px;
 }
 
-span.digest
-{
+span.digest {
 }
 
-span.index_title{
+span.index_title {
     float: left;
     border: 0;
 }
 
-span.index_extra{
+span.index_extra {
     float: right;
     padding: 2px;
     border: 0;
@@ -109,88 +108,101 @@ div.signature {
     border-top: 1px inherit;
 }
 
-div#index_welcome{
+div#index_welcome {
     margin: 10px;
 }
-html>body div#index_welcome {
+
+html > body div#index_welcome {
     margin-bottom: 15px;
 }
 
-#index_welcome div.title{
+#index_welcome div.title {
     font-size: 18px;
     font-weight: bold;
     border-bottom: dashed 1px;
     padding: 5px;
 }
 
-#index_welcome div.desc{
+#index_welcome div.desc {
     padding: 5px;
     font-size: 12px;
     color: #000;
 }
 
-#index_welcome div.visit{
+#index_welcome div.visit {
     padding: 10px 5px;
 }
 
-.left { text-align: left; }
-.right { text-align: right; }
-.floatleft { float: left;}
-.floatright { float: right;} 
+.left {
+    text-align: left;
+}
 
-#index_forum a{
+.right {
+    text-align: right;
+}
+
+.floatleft {
+    float: left;
+}
+
+.floatright {
+    float: right;
+}
+
+#index_forum a {
     font-weight: bold;
 }
 
-table.index_category{
+table.index_category {
     border: 0;
     margin-top: -10px;
     margin-bottom: 5px;
 }
 
-table.index_category td{
+table.index_category td {
     padding: 2px;
 }
 
-table.index_category td a:first-letter{}
+table.index_category td a:first-letter {
+}
 
-table.index_category .desc, table.index_category .desc a{
+table.index_category .desc, table.index_category .desc a {
     font-weight: normal !important;
     padding-left: 0;
     margin-top: 5px;
     margin-bottom: 0;
 }
 
-table.index_category .desc:first-letter, table.index_category .desc a:first-letter{}
+table.index_category .desc:first-letter, table.index_category .desc a:first-letter {
+}
 
-#index_forum span.item{
+#index_forum span.item {
     padding: 0 0 0 0;
     margin: 0;
     border: 0;
 }
 
-#index_forum span.extra{
+#index_forum span.extra {
     float: right;
     text-align: left;
     margin: 0;
 }
 
-div#forum_header{
+div#forum_header {
     margin: 5px;
 }
-#forum_header div{
+
+#forum_header div {
     padding-top: 5px;
 }
 
-
-
 /* -- dropdown menu -- */
 
-div.dropdown{
+div.dropdown {
     float: left;
 }
 
-div.dropdown .menu, div.dropdown .userbar{
+div.dropdown .menu, div.dropdown .userbar {
     font-weight: bold;
     float: left;
     margin: 0 1px;
@@ -198,20 +210,21 @@ div.dropdown .menu, div.dropdown .userbar{
     padding: 0;
 }
 
-div.dropdown .item{
+div.dropdown .item {
     font-weight: bold;
     padding: 2px 5px;
-      white-space: nowrap;
-      border: 0 !important;
+    white-space: nowrap;
+    border: 0 !important;
 }
 
 div.dropdown ul, div.dropdown table {
     width: 135px;
 }
+
 /* -- dropdown menu -- */
 
 /* -- user level -- */
-table.userlevel{
+table.userlevel {
     width: 90%;
     border: 0;
     padding: 0;
@@ -220,106 +233,124 @@ table.userlevel{
     text-align: left;
 }
 
-table.userlevel td{
+table.userlevel td {
     height: 13px;
     padding: 0;
 }
 
-table.userlevel td.end{
+table.userlevel td.end {
     width: 3px;
 }
 
-table.userlevel td.end img{
+table.userlevel td.end img {
     width: 3px;
     height: 13px;
 }
 
-table.userlevel td.center{
+table.userlevel td.center {
     width: 100%;
 }
 
-table.userlevel td.center img{
+table.userlevel td.center img {
     height: 12px;
 }
+
 /* -- user level -- */
 
-span.online_admin{
-    color:#FFA34F;
+span.online_admin {
+    color: #FFA34F;
 }
 
-span.online_moderator{
-    color:#006600;
+span.online_moderator {
+    color: #006600;
 }
-
 
 /*
  * From http://www.positioniseverything.net/easyclearing.html
  */
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
-.clear {display: inline-table;}
+
+.clear {
+    display: inline-table;
+}
+
 /* Hides from IE-mac \*/
-* html .clear {height: 1%;}
-.clear {display: block;}
+* html .clear {
+    height: 1%;
+}
+
+.clear {
+    display: block;
+}
+
 /* End hide from IE-mac */
 
 /* color -- dropdown menu for Forum */
-div.dropdown a, div.dropdown .menubar a{
+div.dropdown a, div.dropdown .menubar a {
     /* irmtfan remove hardcode color color:#FFF; */
 }
 
-div.dropdown .menu, div.dropdown .menubar, div.dropdown .item, div.dropdown .separator{
+div.dropdown .menu, div.dropdown .menubar, div.dropdown .item, div.dropdown .separator {
     /* irmtfan remove hardcode color background-color: #436792;*/
     /* same color set as in your theme/style.ss .th{} is recommended */
     /* irmtfan remove hardcode color color:#FFF; */
 }
 
-div.dropdown .separator{
+div.dropdown .separator {
     border: 1px inset #e0e0e0;
 }
 
-div.dropdown .menu a:hover, div.dropdown .userbar a:hover{
+div.dropdown .menu a:hover, div.dropdown .userbar a:hover {
     color: #333;
 }
+
 /* irmtfan class added for solve some hard codes */
 .post_edit {
-     float: right;
-     padding: 5px;
-     margin-top: 10px;
-     border:1px solid #000;
-     font-size: small;
+    float: right;
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid #000;
+    font-size: small;
 }
+
 .post_ip {
-     float: right;
-     padding: 5px;
-     margin-top: 10px;
+    float: right;
+    padding: 5px;
+    margin-top: 10px;
 }
+
 .pagenav {
-     float: right;
-     text-align: right;
-     padding: 5px;
+    float: right;
+    text-align: right;
+    padding: 5px;
 }
+
 .align_left, #align_left {
-     margin-left: 0;
-     text-align: left;
+    margin-left: 0;
+    text-align: left;
 }
+
 .align_right, #align_right {
-     margin-right: 0;
-     text-align: right;
+    margin-right: 0;
+    text-align: right;
 }
+
 .poll {
     text-align: center;
     margin: 3px;
 }
+
 .pointer {
-  cursor:pointer;
-  padding:2px;
+    cursor: pointer;
+    padding: 2px;
 }
+
 /* irmtfan source: http://jsfiddle.net/VTLmj/
 you can customize each button like this:
 span.forum_icon.forum_button#p_edit
@@ -328,55 +359,65 @@ span.forum_icon.forum_button#p_edit:active
 find all image names in newbb/include/images.php
 */
 span.forum_icon.forum_button {
-background: #407DC7;
-background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#407DC7), to(#4279B8));
-background-image: -webkit-linear-gradient(top, #407DC7, #4279B8);
-background-image: -moz-linear-gradient(top, #407DC7, #4279B8);
-background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
-background-image: -o-linear-gradient(top, #407DC7, #4279B8);
-border-width: 1px;
-color: white;
-padding: 4px 4px;
-text-shadow: 0 1px 0 gray;
-border-color: white #A1C1E6 #2B4763 #A1C1E6;
-border-style: solid;
-border-radius: 5px;
-box-shadow: 0 1px 7px #080808;
-font-weight: bold;
+    background: #407DC7;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#407DC7), to(#4279B8));
+    background-image: -webkit-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -moz-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -o-linear-gradient(top, #407DC7, #4279B8);
+    border-width: 1px;
+    color: white;
+    padding: 4px 4px;
+    text-shadow: 0 1px 0 gray;
+    border-color: white #A1C1E6 #2B4763 #A1C1E6;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 1px 7px #080808;
+    font-weight: bold;
 }
+
 span.forum_icon.forum_button:hover {
-box-shadow: 0 1px 5px #222;
+    box-shadow: 0 1px 5px #222;
 }
+
 span.forum_icon.forum_button:active {
-box-shadow: inset 0 1px 7px #565656;
-border-color: white #a1c1e6 black #a1c1e6;
-font-weight: normal;
+    box-shadow: inset 0 1px 7px #565656;
+    border-color: white #a1c1e6 black #a1c1e6;
+    font-weight: normal;
 }
 
 span.newbb_highlight {
-background-color: #FFFF80 !important;
-font-weight: bold !important;
+    background-color: #FFFF80 !important;
+    font-weight: bold !important;
 }
+
 span.term0 {
-background-color: #00FF00 !important;
+    background-color: #00FF00 !important;
 }
+
 span.term1 {
-background-color: #FF0000 !important;
+    background-color: #FF0000 !important;
 }
+
 span.term2 {
-background-color: #0000FF !important;
+    background-color: #0000FF !important;
 }
+
 .topic-read {
 }
+
 .topic-new {
-/*box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);*/
+    /*box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);*/
 }
+
 .forum-read {
 }
+
 .forum-new {
-/*box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);*/
+    /*box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);*/
 }
 
 .newbb_select_text {
 }
+
 /* color - end */

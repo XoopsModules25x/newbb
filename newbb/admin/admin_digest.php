@@ -42,10 +42,10 @@ xoops_cp_header();
 switch ($op) {
     case 'delete':
         $digest_ids     = XoopsRequest::getArray('digest_id', '', 'POST');
-        $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
+        $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
         if ($digest_ids !== '') {
             foreach ($digest_ids as $did => $value) {
-                $digest_handler->delete($did);
+                $digestHandler->delete($did);
             }
         }
         redirect_header('admin_digest.php', 1);
@@ -67,8 +67,8 @@ switch ($op) {
         echo "<td class='bg3' width='2%'>" . _DELETE . '</td>';
         echo '</tr>';
 
-        $digest_handler =& xoops_getmodulehandler('digest', 'newbb');
-        $digests        =& $digest_handler->getAllDigests($start, $limit);
+        $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
+        $digests        =& $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
             echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", "<br />", $digest['digest_content']) . '</td>';
@@ -85,7 +85,7 @@ switch ($op) {
 
         echo '</table>';
 
-        $nav = new XoopsPageNav($digest_handler->getDigestCount(), $limit, $start, 'start');
+        $nav = new XoopsPageNav($digestHandler->getDigestCount(), $limit, $start, 'start');
         echo $nav->renderNav(4);
 
         echo '</fieldset>';

@@ -36,7 +36,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     if (!is_object($GLOBALS["xoopsModule"]) && is_object($GLOBALS["module"]) && $GLOBALS["module"]->getVar("dirname") === "newbb") {
         $GLOBALS["xoopsModule"] = $GLOBALS["module"];
     }
-    $forumHandler = xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new CriteriaCompo();
@@ -71,8 +71,8 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
                 case 'text':
                     $criteriaKeyword->add(new Criteria('t.post_text', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
                     break;
-                case 'both' :
-                default :
+                case 'both':
+                default:
                     $criteriaKeyword->add(new Criteria('p.subject', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
                     $criteriaKeyword->add(new Criteria('t.post_text', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
                     break;

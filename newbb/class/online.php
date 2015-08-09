@@ -71,8 +71,8 @@ class NewbbOnlineHandler
             $name  = '';
         }
 
-        $xoops_online_handler =& xoops_gethandler('online');
-        $xoopsupdate          = $xoops_online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+        $xoops_onlineHandler =& xoops_gethandler('online');
+        $xoopsupdate          = $xoops_onlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
         if (!$xoopsupdate) {
             //xoops_error("newbb online upate error");
         }
@@ -280,8 +280,8 @@ class NewbbOnlineHandler
         $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE online_updated < " . (time() - (int)($expire));
         $this->db->queryF($sql);
 
-        $xoops_online_handler =& xoops_gethandler('online');
-        $xoops_online_handler->gc($expire);
+        $xoops_onlineHandler =& xoops_gethandler('online');
+        $xoops_onlineHandler->gc($expire);
     }
 
     /**
