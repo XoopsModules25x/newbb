@@ -15,7 +15,7 @@
 - check for existence of Categories and Forums (cesag/mamba)
 - some PSR-2 code clean-up (mamba)
 - fix $cat_image in /index.php (mamba)
-
+- fix RSS bug (mamba)
 
 4.33         11/20/2012 (changes by Irmtfan)
 ===========================================
