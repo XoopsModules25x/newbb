@@ -221,6 +221,7 @@ $page_query_type = implode('&amp;', array_values($query_type));
 unset($query_type);
 $typeHandler =& xoops_getmodulehandler('type', 'newbb');
 $typeOptions = null;
+$types = array();
 if ($types = $typeHandler->getByForum($forum_id)) {
     $typeOptions[] = array('title' => _ALL, 'link' => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}");
     foreach ($types as $key => $item) {

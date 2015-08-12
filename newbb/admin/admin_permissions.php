@@ -85,8 +85,8 @@ public function __construct($title, $modid, $permname, $permdesc, $url = '')
             $this->_itemTree[$item_id]['allchild'] = array();
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
-        $gpermHandler  = xoops_gethandler('groupperm');
-        $memberHandler = xoops_gethandler('member');
+        $gpermHandler  = & xoops_gethandler('groupperm');
+        $memberHandler = & xoops_gethandler('member');
         $glist          =& $memberHandler->getGroupList();
         foreach (array_keys($glist) as $i) {
             // get selected item id(s) for each group
@@ -102,7 +102,7 @@ public function __construct($title, $modid, $permname, $permdesc, $url = '')
         $this->addElement($tray);
         $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
         $ret .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
-        $elements = $this->getElements();
+        $elements = & $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
             if (!is_object($elements[$i])) {

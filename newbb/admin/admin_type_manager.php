@@ -45,8 +45,8 @@ $typeHandler =& xoops_getmodulehandler('type', 'newbb');
 switch ($op) {
     case 'save_type':
         $type_names0 = $_POST['type_name'];
-        $type_names = XoopsRequest::getArray('type_name', null, 'POST');// $_POST['type_name'];
-        $type_del   = array();
+        $type_names  = XoopsRequest::getArray('type_name', null, 'POST');// $_POST['type_name'];
+        $type_del    = array();
         foreach (array_keys($type_names) as $key) {
             if (XoopsRequest::getBool('isnew', '', 'POST')) {
                 $type_obj =& $typeHandler->create();
@@ -54,22 +54,23 @@ switch ($op) {
                 continue;
             }
 
-//            if (XoopsRequest::getArray("type_del[$key]", '', 'POST')) {
-            if (XoopsRequest::getArray('type_del', '', 'POST')[$key]) {
+            //            if (XoopsRequest::getArray("type_del[$key]", '', 'POST')) {
+            $temp = XoopsRequest::getArray('type_del', '', 'POST');
+            if ($temp[$key]) {
                 $type_del[] = $key;
                 continue;
             } else {
                 foreach (array('type_name', 'type_color', 'type_description') as $var) {
 
-//                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
-//                        $type_obj->setVar($var, @$_POST[$var][$key]);
-//                    }
+                    //                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
+                    //                        $type_obj->setVar($var, @$_POST[$var][$key]);
+                    //                    }
+                    $temp = XoopsRequest::getArray($var, '', 'POST');
+                    if ($type_obj->getVar($var) != $temp[$key]) {
+                        $type_obj->setVar($var, $temp[$key]);
+                    }
 
-                                        if ($type_obj->getVar($var) != XoopsRequest::getArray($var, '', 'POST')[$key]) {
-                                            $type_obj->setVar($var, XoopsRequest::getArray($var, '', 'POST')[$key]);
-                                        }
-
-//                    $type_obj->setVar($var, XoopsRequest::getArray($var, '', 'POST')[$key]);
+                    //                    $type_obj->setVar($var, XoopsRequest::getArray($var, '', 'POST')[$key]);
                 }
                 $typeHandler->insert($type_obj);
                 unset($type_obj);
@@ -119,9 +120,9 @@ switch ($op) {
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</td>';
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</td>';
-        echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</th>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
+        echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
         if ($templates = mod_loadCacheFile('type_template')) {
@@ -212,9 +213,9 @@ switch ($op) {
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</td>';
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</td>';
-        echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</th>';
+        echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
         $types_obj = $typeHandler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
@@ -333,9 +334,9 @@ switch ($op) {
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</td>';
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</td>';
-        echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</th>';
+        echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
+        echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
         $types       = $typeHandler->getByForum(XoopsRequest::getInt('forum', 0, 'POST'));
@@ -418,9 +419,9 @@ switch ($op) {
         if ($op !== 'add') {
             echo "<td class='bg3' width='5%'>" . _DELETE . '</td>';
         }
-        echo "<td class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</td>';
-        echo "<td class='bg3' width='15%'>" . _AM_NEWBB_TYPE_COLOR . '</td>';
-        echo "<td class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</td>';
+        echo "<th align='left' class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
+        echo "<th class='bg3' width='15%'>" . _AM_NEWBB_TYPE_COLOR . '</th>';
+        echo "<th align='left' class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
         $isColorpicker = require_once($GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php'));

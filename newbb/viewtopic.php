@@ -116,7 +116,7 @@ if (!empty($topic_last_post_time_or_id_read)) {
         $topic_is_unread = ($topic_last_post_time_or_id_read < $topic_obj->getVar('topic_last_post_id'));
         // hack jump to last post read if post_id is empty - is there any better way?
         if (empty($post_id) && !empty($GLOBALS['xoopsModuleConfig']['jump_to_topic_last_post_read_enabled']) && $topic_is_unread) {
-            header('Location: ' . $_SERVER['REQUEST_URI'] . '&post_id=' . $topic_last_post_time_or_id_read);
+            header('Location: ' . XoopsRequest::getString('REQUEST_URI', '', 'SERVER') . '&post_id=' . $topic_last_post_time_or_id_read);
         }
     }
 }
@@ -136,6 +136,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['enable_karma'])) {
 //$viewmode = "flat";
 
 $total_posts = $topicHandler->getPostCount($topic_obj, $status);
+$postsArray = array();
 $postsArray  = $topicHandler->getAllPosts($topic_obj, $order, $GLOBALS['xoopsModuleConfig']['posts_per_page'], $start, $post_id, $status);
 
 //irmtfan - increment topic_views only if the topic is unread

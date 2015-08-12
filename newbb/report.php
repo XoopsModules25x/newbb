@@ -59,7 +59,7 @@ include $GLOBALS['xoops']->path('class/xoopsformloader.php');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $error_message = '';
     if (!is_object($GLOBALS['xoopsUser'])) {
-        xoops_load("xoopscaptcha");
+        xoops_load('xoopscaptcha');
         $xoopsCaptcha = &XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $captcha_invalid = true;

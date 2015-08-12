@@ -74,7 +74,7 @@ class NewbbTopicRenderer
     //    public function NewbbTopicRenderer()
     public function __construct()
     {
-        $this->handler = xoops_getmodulehandler("topic", "newbb");
+        $this->handler = & xoops_getmodulehandler("topic", "newbb");
     }
 
     /**
@@ -339,7 +339,7 @@ class NewbbTopicRenderer
     {
         switch ($var) {
             case "forum":
-                $forumHandler = xoops_getmodulehandler('forum', 'newbb');
+                $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
                 $accessForums = $forumHandler->getIdsByValues(array_map("intval", @explode("|", $val)));

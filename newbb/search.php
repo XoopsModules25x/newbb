@@ -122,7 +122,7 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     if (!empty($search_username)) {
         $uname_required  = true;
         $search_username = $myts->addslashes($search_username);
-        if (!$result = $GLOBALS['xoopsDB']->query("SELECT uid FROM " . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
+        if (!$result = $GLOBALS['xoopsDB']->query('SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_ERROROCCURED);
         }
         $uid = array();

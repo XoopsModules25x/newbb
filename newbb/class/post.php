@@ -518,7 +518,7 @@ class Post extends ArtObject
         }
 
         if ($GLOBALS["xoopsModuleConfig"]['enable_permcheck']) {
-            $topicHandler = xoops_getmodulehandler('topic', 'newbb');
+            $topicHandler = & xoops_getmodulehandler('topic', 'newbb');
             $topic_status  = $topic_obj->getVar('topic_status');
             if ($topicHandler->getPermission($forum_id, $topic_status, "edit")) {
                 $edit_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('edit_timelimit')));

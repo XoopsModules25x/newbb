@@ -59,7 +59,7 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
 
         switch ($subscribe_from) {
             case "viewtopic.php":
-                $topicHandler = xoops_getmodulehandler('topic', "newbb");
+                $topicHandler = & xoops_getmodulehandler('topic', "newbb");
                 $post_id       = XoopsRequest::getInt('post_id', 0);// !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
                 $move          = strtolower(XoopsRequest::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
                 $topic_id      = XoopsRequest::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;

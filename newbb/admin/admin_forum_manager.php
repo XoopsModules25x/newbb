@@ -170,7 +170,7 @@ switch ($op) {
         if ($forumHandler->insert($forum_obj)) {
             mod_clearCacheFile('forum', 'newbb');
             if (XoopsRequest::getInt('perm_template', 0, 'POST')) {
-                $grouppermHandler = xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
+                $grouppermHandler = & xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
                 $perm_template     = $grouppermHandler->getTemplate();
                 $memberHandler    =& xoops_gethandler('member');
                 $glist             = $memberHandler->getGroupList();

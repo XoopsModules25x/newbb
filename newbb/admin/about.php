@@ -95,7 +95,7 @@ if ($newXoopsModuleGui) {
     // Module Developpment information
     echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
     echo '<tr>';
-    echo "<td colspan='2' class='bg3' align='left'><strong>" . _AM_NEWBB_MODULE_INFO . "</strong></td>";
+    echo "<td colspan='2' class='bg3' align='left'><strong>" . _AM_NEWBB_MODULE_INFO . '</strong></td>';
     echo '</tr>';
 
     if ($versioninfo->getInfo('status') !== '') {

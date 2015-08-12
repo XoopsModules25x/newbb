@@ -14,7 +14,7 @@ ob_start();
 include_once __DIR__ . '/header.php';
 include $GLOBALS['xoops']->path('header.php');
 
-$attach_id = XoopsRequest::getString('attachid', '', 'GET');
+$attach_id = XoopsRequest::getInt('attachid', 0, 'GET');
 $post_id   = XoopsRequest::getInt('post_id', 0, 'GET');
 
 if (!$post_id || !$attach_id) {

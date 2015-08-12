@@ -262,8 +262,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             }
         } else {
             $uploader->setCheckMediaTypeByExt();
-
-            if ($uploader->fetchMedia(XoopsRequest::getArray('xoops_upload_file', array(), 'POST')[0])) {
+            $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
+            if ($uploader->fetchMedia($temp[0])) {
                 $prefix = is_object($GLOBALS['xoopsUser']) ? (string) ($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
@@ -448,7 +448,8 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
             }
         } else {
             $uploader->setCheckMediaTypeByExt();
-            if ($uploader->fetchMedia(XoopsRequest::getArray('xoops_upload_file', array(), 'POST')[0])) {
+            $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
+            if ($uploader->fetchMedia($temp[0])) {
                 $prefix = is_object($GLOBALS['xoopsUser']) ? (string) ($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {

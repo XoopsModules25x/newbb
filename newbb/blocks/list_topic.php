@@ -179,7 +179,7 @@ function newbb_list_topic_edit($options)
     //  forum element
     $optionsForum = explode(',', $options[12]);
     mod_loadFunctions("forum", "newbb");
-    $forumHandler = xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map("intval", $optionsForum));

@@ -65,7 +65,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     }
     if ($GLOBALS['xoopsUser']->getVar('user_viewemail') === 1) {
         $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
-        $categories[0]['fields'][] = array('title' => _PROFILE_MA_EMAIL, 'value' => $email);
+        $categories[0]['fields'][] = array('title' => _PROFILE_AM_EMAIL, 'value' => $email);
         $weights[0][]              = 0;
     }
 

@@ -49,14 +49,14 @@ function newCategory()
 /**
  * editCategory()
  *
- * @param null $category_obj
+ * @param null|XoopsObject $category_obj
  * @internal param int $catid
  */
 function editCategory(XoopsObject $category_obj = null)
 {
     global $xoopsModule;
     $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
-    if (empty($category_obj)) {
+    if (null === $category_obj) {
         $category_obj =& $categoryHandler->create();
     }
     $groups_cat_access = null;
@@ -161,7 +161,6 @@ switch ($op) {
         break;
 
     default:
-
         if (!$categories = $categoryHandler->getByPermission('all')) {
             if (!$newXoopsModuleGui) {
                 //loadModuleAdminMenu(1, _AM_NEWBB_CREATENEWCATEGORY);

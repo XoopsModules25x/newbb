@@ -44,7 +44,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $posts_number    = 0;
     $selected_forums = '';
     // irmtfan fix if it is array
-    if (!XoopsRequest::getArray('forums', null, 'POST') || !(XoopsRequest::getArray('forums', null, 'POST')[0])) {
+    $temp = XoopsRequest::getArray('forums', null, 'POST');
+    if (!$temp || !($temp[0])) {
         redirect_header('admin_forum_prune.php', 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
     } elseif (is_array(XoopsRequest::getArray('forums', '', 'POST'))) {
         $selected_forums = implode(',', XoopsRequest::getArray('forums', null, 'POST'));

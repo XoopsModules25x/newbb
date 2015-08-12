@@ -323,7 +323,7 @@ function b_newbb_topic_show($options)
     mod_loadFunctions("user", "newbb");
     $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
-        $typeHandler = xoops_getmodulehandler('type', 'newbb');
+        $typeHandler = & xoops_getmodulehandler('type', 'newbb');
         $type_list    = $typeHandler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
     }
 
@@ -421,7 +421,7 @@ function b_newbb_post_show($options)
     }
 
     if (!isset($accessForums)) {
-        $permHandler = xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = & xoops_getmodulehandler('permission', 'newbb');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }

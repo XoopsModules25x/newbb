@@ -102,7 +102,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         // RMV-NOTIFY
         xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'forum', $forum->getVar('forum_id'));
         // Get list of all topics in forum, to delete them too
-        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler = & xoops_getmodulehandler('topic', 'newbb');
         $topicHandler->deleteAll(new Criteria('forum_id', $forum->getVar('forum_id')), true, true);
         $this->updateAll('parent_forum', $forum->getVar('parent_forum'), new Criteria('parent_forum', $forum->getVar('forum_id')));
         $this->deletePermission($forum);
@@ -116,7 +116,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function getIdsByPermission($perm = 'access')
     {
-        $permHandler = xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = & xoops_getmodulehandler('permission', 'newbb');
 
         return $permHandler->getForums($perm);
     }

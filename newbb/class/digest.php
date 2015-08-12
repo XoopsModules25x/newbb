@@ -208,7 +208,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $sql            = "SELECT * FROM " . $this->db->prefix('bb_digest') . " ORDER BY digest_id DESC";
         $result         = $this->db->query($sql, $perpage, $start);
         $ret            = array();
-//        $reportHandler = xoops_getmodulehandler('report', 'newbb');
+//        $reportHandler = & xoops_getmodulehandler('report', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }

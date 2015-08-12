@@ -33,9 +33,9 @@
 include_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
- * Class newbbtree
+ * Class Newbbtree
  */
-class newbbtree extends XoopsTree
+class Newbbtree extends XoopsTree
 {
     public $prefix    = '&nbsp;&nbsp;';
     public $increment = '&nbsp;&nbsp;';

@@ -33,13 +33,13 @@ include_once __DIR__ . '/admin_header.php';
 $op = $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 
 switch ($op) {
-    case "delvotes":
+    case 'delvotes':
         $rid      = XoopsRequest::getInt('rid', 0, 'GET');
         $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-        $sql      = $GLOBALS['xoopsDB']->queryF("DELETE FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE ratingid = $rid");
+        $sql      = $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE ratingid = $rid");
         $GLOBALS['xoopsDB']->query($sql);
 
-        $query       = "select rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE topic_id = " . $topic_id . "";
+        $query       = "select rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
@@ -61,7 +61,7 @@ switch ($op) {
         $useravgrating = '0';
         $uservotes     = '0';
 
-        $sql     = "SELECT * FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " ORDER BY ratingtimestamp DESC";
+        $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' ORDER BY ratingtimestamp DESC';
         $results = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($results);
 
@@ -114,7 +114,7 @@ switch ($op) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . "</td></tr>";
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
-            $sql        = "SELECT topic_title FROM " . $GLOBALS['xoopsDB']->prefix('bb_topics') . " WHERE topic_id=" . $topic_id . "";
+            $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id=' . $topic_id . '';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
             $formatted_date = formatTimestamp($ratingtimestamp, _DATESTRING);
@@ -124,7 +124,7 @@ switch ($op) {
         <td class='head' align='center'>$ratingid</td>\n
         <td class='even' align='center'>$ratinguname</td>\n
         <td class='even' align='center' >$ratinghostname</td>\n
-        <td class='even' align='left'><a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $topic_id . "' target='topic'>" . $myts->htmlspecialchars($down_array['topic_title']) . "</a></td>\n
+        <td class='even' align='left'><a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topic_id . "' target='topic'>" . $myts->htmlspecialchars($down_array['topic_title']) . "</a></td>\n
         <td class='even' align='center'>$rating</td>\n
         <td class='even' align='center'>$formatted_date</td>\n
         <td class='even' align='center'><strong><a href='admin_votedata.php?op=delvotes&amp;topic_id=$topic_id&amp;rid=$ratingid'>" . newbbDisplayImage('p_delete', _DELETE) . "</a></strong></td>\n

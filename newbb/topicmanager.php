@@ -248,7 +248,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     }
 } else {  // No submit
     $mode = XoopsRequest::getString('mode', '', 'GET'); //$_GET['mode'];
-    echo "<form action='" . $_SERVER['PHP_SELF'] . "' method='post'>";
+    echo "<form action='" . XoopsRequest::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
     echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
     echo "<tr><td class='bg2'>";
     echo "<table border='0' cellpadding='1' cellspacing='1' width='100%'>";

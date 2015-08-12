@@ -82,7 +82,7 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
     exit(_MD_NORIGHTTOVIEW);
 }
 // irmtfan add pdf permission
-if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) {
+if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'pdf')) {
     exit(_MD_NORIGHTTOPDF);
 }
 
@@ -90,7 +90,7 @@ $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
 $cat              = $viewtopic_forum->getVar('cat_id');
 $viewtopic_cat    = $categoryHandler->get($cat);
 
-$GLOBALS["xoopsOption"]["pdf_cache"] = 0;
+$GLOBALS['xoopsOption']['pdf_cache'] = 0;
 
 $pdf_data['author'] = $myts->undohtmlSpecialChars($post_data['author']);
 $pdf_data['title']  = $myts->undohtmlSpecialChars($post_data['subject']);

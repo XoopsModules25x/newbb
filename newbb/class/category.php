@@ -49,7 +49,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getIdsByPermission($perm = "access")
     {
-        $permHandler = xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = & xoops_getmodulehandler('permission', 'newbb');
 
         return $permHandler->getCategories($perm);
     }

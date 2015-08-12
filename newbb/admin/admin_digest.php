@@ -67,6 +67,7 @@ switch ($op) {
         echo "<td class='bg3' width='2%'>" . _DELETE . '</td>';
         echo '</tr>';
 
+        $digests = array();
         $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
         $digests        =& $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {

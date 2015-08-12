@@ -329,7 +329,7 @@ define('_MD_REGISTERED_USERS', 'Registered Users: ');
 define('_MD_BROWSING_FORUM', 'Users browsing forum');
 define('_MD_TOTAL_ONLINE', 'Total %d Users Online.');
 define('_MD_ADMINISTRATOR', 'Administrator');
-define('_MD_NO_SUCH_FILE', 'File not exist!');
+define('_MD_NO_SUCH_FILE', 'File does not exist!');
 //define('_MD_ERROR_UPATEATTACHMENT', 'Error occur when updating attachment');
 // ratethread.php
 define('_MD_CANTVOTEOWN', 'You cannot vote on the topic you submitted.<br />All votes are logged and reviewed.');

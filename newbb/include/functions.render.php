@@ -12,11 +12,11 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include __DIR__ . "/functions.ini.php";
-define("NEWBB_FUNCTIONS_RENDER_LOADED", true);
+defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
+define('NEWBB_FUNCTIONS_RENDER_LOADED', true);
 
-if (!defined("NEWBB_FUNCTIONS_RENDER")) {
-    define("NEWBB_FUNCTIONS_RENDER", 1);
+if (!defined('NEWBB_FUNCTIONS_RENDER')) {
+    define('NEWBB_FUNCTIONS_RENDER', 1);
 
     /*
      * Sorry, we have to use the stupid solution unless there is an option in MyTextSanitizer:: htmlspecialchars();
@@ -25,7 +25,7 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      * @param $text
      * @return mixed
      */
-    function newbb_htmlspecialchars($text)
+    function newbb_htmlspecialchars(&$text)
     {
         return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text));
     }
@@ -93,11 +93,11 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
      * @return mixed
      * @internal param string $image image/button name, without extension
      */
-    function newbb_getButton($link, $button, $alt = "", $asImage = true, $extra = "class='forum_button'")
+    function newbb_getButton($link, $button, $alt = '', $asImage = true, $extra = "class='forum_button'")
     {
         $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
         if (empty($asImage)) {
-            $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbbDisplayImage($button, $alt, true) . "</a>";
+            $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbbDisplayImage($button, $alt, true) . '</a>';
         }
 
         return $button;
@@ -148,13 +148,13 @@ if (!defined("NEWBB_FUNCTIONS_RENDER")) {
             return $iconHandler;
         }
 
-        if (!class_exists("NewbbIconHandler")) {
-            require_once dirname(__DIR__) . "/class/icon.php";
+        if (!class_exists('NewbbIconHandler')) {
+            require_once dirname(__DIR__) . '/class/icon.php';
         }
 
         $iconHandler           = NewbbIconHandler::instance();
         $iconHandler->template =& $xoTheme->template;
-        $iconHandler->init($GLOBALS['xoopsConfig']["language"]);
+        $iconHandler->init($GLOBALS['xoopsConfig']['language']);
 
         return $iconHandler;
     }
