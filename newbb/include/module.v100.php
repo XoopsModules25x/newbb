@@ -44,7 +44,7 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not create bb_archive');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF("CREATE TABLE " . $GLOBALS['xoopsDB']->prefix("bb_attachments") . "(
+    $result = $GLOBALS['xoopsDB']->queryF("CREATE TABLE " . $GLOBALS['xoopsDB']->prefix('bb_attachments') . "(
         `attach_id` int(8) unsigned NOT NULL auto_increment,
         `post_id` int(10) default NULL,
         `name_saved` varchar(255) default NULL,
@@ -60,7 +60,7 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not create bb_attachments');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF("CREATE TABLE " . $GLOBALS['xoopsDB']->prefix('bb_digest') . "(
+    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_digest') . "(
         `digest_id` int(8) unsigned NOT NULL auto_increment,
         `digest_time` int(10) NOT NULL default '0',
         `digest_content` text,
@@ -115,12 +115,12 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not create bb_votedata');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . " ADD `cat_image` VARCHAR(50) DEFAULT NULL AFTER `cat_id`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . ' ADD `cat_image` VARCHAR(50) DEFAULT NULL AFTER `cat_id`');
     if (!$result) {
         $module->setErrors('Could not add field in bb_categories');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . " ADD `cat_description` TEXT NOT NULL AFTER `cat_title`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . ' ADD `cat_description` TEXT NOT NULL AFTER `cat_title`');
     if (!$result) {
         $module->setErrors('Could not add field in bb_categories');
     }
@@ -130,22 +130,22 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not change field in bb_categories');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . " ADD `cat_url` VARCHAR(50) DEFAULT NULL AFTER `cat_state`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_categories') . ' ADD `cat_url` VARCHAR(50) DEFAULT NULL AFTER `cat_state`');
     if (!$result) {
         $module->setErrors('Could not add field in bb_categories');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " DROP `forum_access`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' DROP `forum_access`');
     if (!$result) {
         $module->setErrors('Could not drop field in bb_forums');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " DROP `posts_per_page`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' DROP `posts_per_page`');
     if (!$result) {
         $module->setErrors('Could not drop field in bb_forums');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " DROP `topics_per_page`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' DROP `topics_per_page`');
     if (!$result) {
         $module->setErrors('Could not drop field in bb_forums');
     }
@@ -155,7 +155,7 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not add field in bb_forums');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " CHANGE `forum_moderator` `forum_moderator` TEXT NOT NULL");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' CHANGE `forum_moderator` `forum_moderator` TEXT NOT NULL');
     if (!$result) {
         $module->setErrors('Could not change field in bb_forums');
     }
@@ -180,7 +180,7 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not add field in bb_forums');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF("ALTER TABLE " . $GLOBALS['xoopsDB']->prefix("bb_forums") . " ADD `forum_order` INT(8) NOT NULL DEFAULT '0' AFTER `hot_threshold`");
+    $result = $GLOBALS['xoopsDB']->queryF("ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_forums') . " ADD `forum_order` INT(8) NOT NULL DEFAULT '0' AFTER `hot_threshold`");
     if (!$result) {
         $module->setErrors('Could not add field in bb_forums');
     }
@@ -195,7 +195,7 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         $module->setErrors('Could not add field in bb_forums');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " ADD `attach_ext` TEXT NOT NULL AFTER `attach_maxkb`");
+    $result = $GLOBALS['xoopsDB']->queryF('ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' ADD `attach_ext` TEXT NOT NULL AFTER `attach_maxkb`');
     if (!$result) {
         $module->setErrors('Could not add field in bb_forums');
     }

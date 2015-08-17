@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -26,8 +26,8 @@ if (empty($GLOBALS['xoopsModuleConfig']['subject_prefix'])) {
 $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
 $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));
 
-if (!$GLOBALS['xoopsDB']->queryF("
-        CREATE TABLE " . $GLOBALS['xoopsDB']->prefix('bb_type_tmp') . " (
+if (!$GLOBALS['xoopsDB']->queryF('
+        CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp') . " (
           `type_id`             smallint(4)         unsigned NOT NULL auto_increment,
           `type_name`             varchar(64)         NOT NULL default '',
           `type_color`             varchar(10)         NOT NULL default '',
@@ -58,9 +58,9 @@ if (!$GLOBALS['xoopsDB']->queryF('
 }
 
 $typeHandler =& xoops_getmodulehandler('type', 'newbb');
-$subjectpres  = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
-$types        = array();
-$order        = 1;
+$subjectpres = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
+$types       = array();
+$order       = 1;
 foreach ($subjectpres as $subjectpre) {
     if (preg_match("/<[^#]*color=[\"'](#[^'\"\s]*)[^>]>[\[]?([^<\]]*)[\]]?/is", $subjectpre, $matches)) {
         if (!$GLOBALS['xoopsDB']->queryF('
@@ -90,9 +90,7 @@ if ($forums_type = $forumHandler->getIds(new Criteria('allow_subject_prefix', 1)
             $type_query[] = "({$key}, {$forum_id}, {$order})";
         }
 
-        $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp') .
-               ' (type_id, forum_id, type_order) ' .
-               ' VALUES ' . implode(', ', $type_query);
+        $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
         if (($result = $GLOBALS['xoopsDB']->queryF($sql)) === false) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }

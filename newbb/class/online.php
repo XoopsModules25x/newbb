@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -72,7 +72,7 @@ class NewbbOnlineHandler
         }
 
         $xoops_onlineHandler =& xoops_gethandler('online');
-        $xoopsupdate          = $xoops_onlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+        $xoopsupdate         = $xoops_onlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
         if (!$xoopsupdate) {
             //xoops_error("newbb online upate error");
         }
@@ -108,8 +108,7 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
-                "uname" => $users[$i]['online_uname']
-            );
+                "uname" => $users[$i]['online_uname']);
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
@@ -168,8 +167,7 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 "link"  => XOOPS_URL . "/userinfo.php?uid=" . $users[$i]['online_uid'],
-                "uname" => $users[$i]['online_uname']
-            );
+                "uname" => $users[$i]['online_uname']);
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
@@ -206,12 +204,12 @@ class NewbbOnlineHandler
     /**
      * Write online information to the database
      *
-     * @param  int $uid UID of the active user
-     * @param  string $uname Username
-     * @param $time
+     * @param  int    $uid      UID of the active user
+     * @param  string $uname    Username
+     * @param         $time
      * @param  string $forum_id Current forum_id
-     * @param  string $ip User's IP adress
-     * @param $topic_id
+     * @param  string $ip       User's IP adress
+     * @param         $topic_id
      * @return bool TRUE on success
      * @internal param string $timestamp
      */
@@ -242,10 +240,7 @@ class NewbbOnlineHandler
         $mysql_version = substr(trim(mysql_get_server_info()), 0, 3);
         /* for MySQL 4.1+ */
         if ($mysql_version >= "4.1") {
-            $sql = "DELETE FROM " . $this->db->prefix('bb_online') .
-                   " WHERE" .
-                   " ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM " . $this->db->prefix('online') . " WHERE online_module =" . $xoopsModule->getVar('mid') . " ) )" .
-                   " OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM " . $this->db->prefix('online') . " WHERE online_module =" . $xoopsModule->getVar('mid') . " AND online_uid = 0 ) )";
+            $sql = "DELETE FROM " . $this->db->prefix('bb_online') . " WHERE" . " ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM " . $this->db->prefix('online') . " WHERE online_module =" . $xoopsModule->getVar('mid') . " ) )" . " OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM " . $this->db->prefix('online') . " WHERE online_module =" . $xoopsModule->getVar('mid') . " AND online_uid = 0 ) )";
 
             if ($result = $this->db->queryF($sql)) {
                 return true;
@@ -254,13 +249,9 @@ class NewbbOnlineHandler
                 return false;
             }
         } else {
-            $sql    = "DELETE " . $this->db->prefix('bb_online') . " FROM " . $this->db->prefix('bb_online') .
-                      " LEFT JOIN " . $this->db->prefix('online') . " AS aa " .
-                      " ON " . $this->db->prefix('bb_online') . ".online_uid = aa.online_uid WHERE " . $this->db->prefix('bb_online') . ".online_uid > 0 AND aa.online_uid IS NULL";
+            $sql    = "DELETE " . $this->db->prefix('bb_online') . " FROM " . $this->db->prefix('bb_online') . " LEFT JOIN " . $this->db->prefix('online') . " AS aa " . " ON " . $this->db->prefix('bb_online') . ".online_uid = aa.online_uid WHERE " . $this->db->prefix('bb_online') . ".online_uid > 0 AND aa.online_uid IS NULL";
             $result = $this->db->queryF($sql);
-            $sql    = "DELETE " . $this->db->prefix('bb_online') . " FROM " . $this->db->prefix('bb_online') .
-                      " LEFT JOIN " . $this->db->prefix('online') . " AS aa " .
-                      " ON " . $this->db->prefix('bb_online') . ".online_ip = aa.online_ip WHERE " . $this->db->prefix('bb_online') . ".online_uid = 0 AND aa.online_ip IS NULL";
+            $sql    = "DELETE " . $this->db->prefix('bb_online') . " FROM " . $this->db->prefix('bb_online') . " LEFT JOIN " . $this->db->prefix('online') . " AS aa " . " ON " . $this->db->prefix('bb_online') . ".online_ip = aa.online_ip WHERE " . $this->db->prefix('bb_online') . ".online_uid = 0 AND aa.online_ip IS NULL";
             $result = $this->db->queryF($sql);
 
             return true;

@@ -64,7 +64,7 @@ if ($newXoopsModuleGui) {
     echo "<td colspan='2' class='bg3' align='left'><strong>" . _AM_NEWBB_AUTHOR_INFO . '</strong></td>';
     echo '</tr>';
 
-    if ($versioninfo->getInfo('$author_name') !== '') {
+    if ($versioninfo->getInfo($author_name) !== '') {
         echo '<tr>';
         echo "<td class='head' width='150px' align='left'>" . _AM_NEWBB_AUTHOR_NAME . '</td>';
         echo "<td class='even' align='left'>" . $author_name . '</td>';

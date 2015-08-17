@@ -2,10 +2,10 @@
 /**
  * newbb
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since          4.00
  * @version        $Id: admin_synchronization.php 62 2012-08-17 10:15:26Z alfred $
  * @package        module::newbb
  */
@@ -34,9 +34,9 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // irmtfan rewrite topic sync
     case "topic":
-        $limit         = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit        = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria      = new Criteria("approved", 1);
+        $criteria     = new Criteria("approved", 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
             break;
         }
@@ -59,38 +59,28 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // irmtfan - user is not in recon functions - only here
     case "user":
-        $limit        = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit       = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         $userHandler =& xoops_gethandler('user');
         if ($start >= ($count = $userHandler->getCount())) {
             break;
         }
-        $sql    = "    SELECT uid" .
-                  "    FROM " . $GLOBALS['xoopsDB']->prefix("users");
+        $sql    = "    SELECT uid" . "    FROM " . $GLOBALS['xoopsDB']->prefix("users");
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
         while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             // irmtfan approved=1 AND
-            $sql = "    SELECT count(*)" .
-                   "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") .
-                   "    WHERE topic_poster = {$uid}";
+            $sql = "    SELECT count(*)" . "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql = "    SELECT count(*)" .
-                   "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") .
-                   "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
+            $sql = "    SELECT count(*)" . "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql = "    SELECT count(*), MAX(post_time)" .
-                   "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") .
-                   "    WHERE uid = {$uid}";
+            $sql = "    SELECT count(*), MAX(post_time)" . "    FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . "    WHERE uid = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF(
-                "    REPLACE INTO " . $GLOBALS['xoopsDB']->prefix("bb_user_stats") .
-                "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'"
-            );
+            $GLOBALS['xoopsDB']->queryF("    REPLACE INTO " . $GLOBALS['xoopsDB']->prefix("bb_user_stats") . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));

@@ -30,14 +30,14 @@
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
-$configHandler    =& xoops_gethandler('config');
+$configHandler     =& xoops_gethandler('config');
 $xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if ($xoopsConfigSearch['enable_search'] !== 1) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
 
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
-$xoopsOption['template_main']                             = 'newbb_search.tpl';
+$xoopsOption['template_main']                                        = 'newbb_search.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once $GLOBALS['xoops']->path('header.php');
 
@@ -65,10 +65,10 @@ $uname                = XoopsRequest::getString('uname', XoopsRequest::getString
 // irmtfan add select parameters
 $selectstartlag = XoopsRequest::getInt('selectstartlag', 100, 'GET');
 $selectlength   = XoopsRequest::getInt('selectlength', 200, 'POST');
-$selecthtml = XoopsRequest::getInt('selecthtml', '', 'GET') ? (XoopsRequest::getInt('selecthtml', '', 'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
+$selecthtml     = XoopsRequest::getInt('selecthtml', '', 'GET') ? (XoopsRequest::getInt('selecthtml', '', 'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
 
-$selectexclude  = XoopsRequest::getString('selectexclude', '', 'GET');
-$selectexclude  = newbb_str2array($selectexclude);
+$selectexclude = XoopsRequest::getString('selectexclude', '', 'GET');
+$selectexclude = newbb_str2array($selectexclude);
 // irmtfan assign default values to variables
 $show_search     = 'post_text';
 $search_username = trim($uname);
@@ -81,7 +81,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $xoopsTpl->assign('forumindex', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 //$xoopsTpl->assign("img_folder", newbbDisplayImage($forumImage['topic']));
 
-if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
+if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     // irmtfan filter positive numbers
     $selectstartlag = !empty($selectstartlag) ? abs($selectstartlag) : 100;
     $selectlength   = !empty($selectlength) ? abs($selectlength) : 200;
@@ -104,15 +104,15 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
     $next_search['topic'] = $topic;
     // END irmtfan topic search
     // START irmtfan add show search
-    $show_search                =  XoopsRequest::getString('show_search', XoopsRequest::getString('show_search', 'post_text', 'GET'), 'POST');
+    $show_search                = XoopsRequest::getString('show_search', XoopsRequest::getString('show_search', 'post_text', 'GET'), 'POST');
     $next_search['show_search'] = $show_search;
     // START irmtfan add show search
 
     $addterms             = XoopsRequest::getString('andor', XoopsRequest::getString('andor', '', 'GET'), 'POST');
     $next_search['andor'] = $addterms;
     if (!in_array(strtolower($addterms), array('or', 'and', 'exact'), true)) {
-            // irmtfan change default to AND
-            $andor = 'AND';
+        // irmtfan change default to AND
+        $andor = 'AND';
     } else {
         $andor = strtoupper($addterms);
     }
@@ -212,7 +212,14 @@ if (XoopsRequest::getString('submit', '') || !empty($uname) || !empty($term)) {
                 continue;
             }
             // add newbb_highlightText function to subject - add post_text
-            $xoopsTpl->append('results', array('forum_name' => $row['forum_name'], 'forum_link' => $row['forum_link'], 'link' => $row['link'], 'title' => newbb_highlightText($row['title'], $queries), 'poster' => $row['poster'], 'post_time' => formatTimestamp($row['time'], 'm'), 'post_text' => $post_text));
+            $xoopsTpl->append('results', array(
+                'forum_name' => $row['forum_name'],
+                'forum_link' => $row['forum_link'],
+                'link'       => $row['link'],
+                'title'      => newbb_highlightText($row['title'], $queries),
+                'poster'     => $row['poster'],
+                'post_time'  => formatTimestamp($row['time'], 'm'),
+                'post_text'  => $post_text));
         }
         // END irmtfan add show search post_text
         unset($results);

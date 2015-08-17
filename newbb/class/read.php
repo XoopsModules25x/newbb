@@ -37,10 +37,10 @@ newbb_load_object();
 /**
  * A handler for read/unread handling
  *
- * @package     newbb
+ * @package       newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
- * @copyright    copyright (c) 2005 XOOPS.org
+ * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Read extends ArtObject
 {
@@ -49,7 +49,7 @@ class Read extends ArtObject
      */
     public function __construct($type)
     {
-//        parent::__construct("bb_reads_" . $type);
+        //        parent::__construct("bb_reads_" . $type);
         parent::__construct("bb_reads_" . $type);
         $this->initVar('read_id', XOBJ_DTYPE_INT);
         $this->initVar('uid', XOBJ_DTYPE_INT);
@@ -131,14 +131,10 @@ class NewbbReadHandler extends ArtObjectHandler
 
         /* for MySQL 4.1+ */
         if ($this->mysql_major_version() >= 4) {
-            $sql = "DELETE bb FROM " . $this->table . " AS bb" .
-                   " LEFT JOIN " . $this->table . " AS aa ON bb.read_item = aa.read_item " .
-                   " WHERE aa.post_id > bb.post_id";
+            $sql = "DELETE bb FROM " . $this->table . " AS bb" . " LEFT JOIN " . $this->table . " AS aa ON bb.read_item = aa.read_item " . " WHERE aa.post_id > bb.post_id";
         } else {
             // for 4.0+
-            $sql = "DELETE " . $this->table . " FROM " . $this->table .
-                   " LEFT JOIN " . $this->table . " AS aa ON " . $this->table . ".read_item = aa.read_item " .
-                   " WHERE aa.post_id > " . $this->table . ".post_id";
+            $sql = "DELETE " . $this->table . " FROM " . $this->table . " LEFT JOIN " . $this->table . " AS aa ON " . $this->table . ".read_item = aa.read_item " . " WHERE aa.post_id > " . $this->table . ".post_id";
         }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -161,7 +157,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
     /**
-     * @param $read_item
+     * @param      $read_item
      * @param null $uid
      * @return bool|mixed|null
      */
@@ -205,10 +201,7 @@ class NewbbReadHandler extends ArtObjectHandler
                 return false;
             }
         }
-        $sql = "SELECT post_id " .
-               " FROM " . $this->table .
-               " WHERE read_item = " . (int)($read_item) .
-               "     AND uid = " . (int)($uid);
+        $sql = "SELECT post_id " . " FROM " . $this->table . " WHERE read_item = " . (int)($read_item) . "     AND uid = " . (int)($uid);
         if (!$result = $this->db->queryF($sql, 1)) {
             return null;
         }
@@ -218,8 +211,8 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $read_item
-     * @param $post_id
+     * @param      $read_item
+     * @param      $post_id
      * @param null $uid
      * @return bool|mixed|void
      */
@@ -263,11 +256,7 @@ class NewbbReadHandler extends ArtObjectHandler
             }
         }
 
-        $sql = "UPDATE " . $this->table .
-               " SET post_id = " . (int)($post_id) . "," .
-               "     read_time =" . time() .
-               " WHERE read_item = " . (int)($read_item) .
-               "     AND uid = " . (int)($uid);
+        $sql = "UPDATE " . $this->table . " SET post_id = " . (int)($post_id) . "," . "     read_time =" . time() . " WHERE read_item = " . (int)($read_item) . "     AND uid = " . (int)($uid);
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }
@@ -281,7 +270,7 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $items
+     * @param      $items
      * @param null $uid
      * @return array|null
      */

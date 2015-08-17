@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id$
  * @package        module::newbb
  */
@@ -22,7 +22,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     /* for seo */
     $toseo_url = array('index.php', 'viewforum.php', 'viewtopic.php', 'rss.php');
 
-    if (((strpos(getenv('REQUEST_URI'), '.html') === false) && !empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0))) {
+    if ((!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0) && (strpos(getenv('REQUEST_URI'), '.html') === false))) {
         $redir = false;
         if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
             // Mark Forums
@@ -119,7 +119,7 @@ $xoops_module_header = $newbb_module_header; // for cache hack
 */
 /* END irmtfan remove and move to newbb/footer.php */
 
-if (!empty($GLOBALS['xoopsModuleConfig']['welcome_forum']) && is_object($GLOBALS['xoopsUser']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
+if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
     mod_loadFunctions('welcome', $dirname);
 }
 // irmtfan for backward compatibility

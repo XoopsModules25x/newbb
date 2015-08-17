@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -31,7 +31,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function __construct(&$db)
     {
-//        $this->NewbbPermissionHandler($db);
+        //        $this->NewbbPermissionHandler($db);
         parent::__construct($db);
     }
 
@@ -57,7 +57,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param $mid
+     * @param     $mid
      * @param int $id
      * @return array
      */
@@ -151,7 +151,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param int $forum
+     * @param int  $forum
      * @param bool $topic_locked
      * @param bool $isadmin
      * @return array
@@ -173,9 +173,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             if ($item === "access") {
                 continue;
             }
-            if ($isadmin ||
-                (isset($permission_set[$forum_id]['forum_' . $item]) && (!$topic_locked || $item === "view"))
-            ) {
+            if ($isadmin || (isset($permission_set[$forum_id]['forum_' . $item]) && (!$topic_locked || $item === "view"))) {
                 $perm[] = constant('_MD_CAN_' . strtoupper($item));
             } else {
                 $perm[] = constant('_MD_CANNOT_' . strtoupper($item));
@@ -196,8 +194,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             return false;
         }
         $gpermHandler =& xoops_gethandler('groupperm');
-        $criteria      = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
-        $items         = $this->getValidPerms(true);
+        $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
+        $items        = $this->getValidPerms(true);
         $criteria->add(new Criteria('gperm_name', "('" . implode("', '", $items) . "')", 'IN'));
         $criteria->add(new Criteria('gperm_itemid', $forum_id));
 
@@ -205,7 +203,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param $forum
+     * @param     $forum
      * @param int $mid
      * @return bool
      */
@@ -227,8 +225,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         $memberHandler = xoops_gethandler('member');
-        $glist          = $memberHandler->getGroupList();
-        $perms          = $this->getValidPerms(true);
+        $glist         = $memberHandler->getGroupList();
+        $perms         = $this->getValidPerms(true);
         foreach (array_keys($glist) as $group) {
             foreach ($perms as $perm) {
                 if (!empty($perm_template[$group][$perm])) {

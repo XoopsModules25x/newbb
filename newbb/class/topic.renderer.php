@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -15,9 +15,9 @@
 /**
  * Topic Renderer
  *
- * @author D.J. (phppp)
+ * @author    D.J. (phppp)
  * @copyright copyright &copy; Xoops Project
- * @package module::newbb
+ * @package   module::newbb
  *
  */
 class NewbbTopicRenderer
@@ -74,7 +74,7 @@ class NewbbTopicRenderer
     //    public function NewbbTopicRenderer()
     public function __construct()
     {
-        $this->handler = & xoops_getmodulehandler("topic", "newbb");
+        $this->handler = &xoops_getmodulehandler("topic", "newbb");
     }
 
     /**
@@ -339,7 +339,7 @@ class NewbbTopicRenderer
     {
         switch ($var) {
             case "forum":
-                $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
+                $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
                 $accessForums = $forumHandler->getIdsByValues(array_map("intval", @explode("|", $val)));
@@ -466,33 +466,26 @@ class NewbbTopicRenderer
         $headers = array(
             "topic"           => array(
                 "title" => _MD_TOPICS,
-                "sort"  => "t.topic_title"
-            ),
+                "sort"  => "t.topic_title"),
             "forum"           => array(
                 "title" => _MD_FORUM,
-                "sort"  => "t.forum_id"
-            ),
+                "sort"  => "t.forum_id"),
             "poster"          => array(
                 "title" => _MD_TOPICPOSTER, /*irmtfan _MD_POSTER to _MD_TOPICPOSTER*/
-                "sort"  => "t.topic_poster"
-            ),
+                "sort"  => "t.topic_poster"),
             "replies"         => array(
                 "title" => _MD_REPLIES,
-                "sort"  => "t.topic_replies"
-            ),
+                "sort"  => "t.topic_replies"),
             "views"           => array(
                 "title" => _MD_VIEWS,
-                "sort"  => "t.topic_views"
-            ),
+                "sort"  => "t.topic_views"),
             "lastpost"        => array( // irmtfan show topic_page_jump_icon smarty
                                         "title" => _MD_LASTPOST, /*irmtfan _MD_DATE to _MD_LASTPOSTTIME again change to _MD_LASTPOST*/
-                                        "sort"  => "t.topic_last_post_id"
-            ),
+                                        "sort"  => "t.topic_last_post_id"),
             // START irmtfan add more sorts
             "lastposttime"    => array( // irmtfan same as lastpost
                                         "title" => _MD_LASTPOSTTIME,
-                                        "sort"  => "t.topic_last_post_id"
-            ),
+                                        "sort"  => "t.topic_last_post_id"),
             "lastposter"      => array( // irmtfan
                                         "title" => _MD_POSTER,
                                         "sort"  => "p.uid", // poster uid
@@ -507,41 +500,32 @@ class NewbbTopicRenderer
             ),
             "votes"           => array(
                 "title" => _MD_VOTES,
-                "sort"  => "t.votes"
-            ),
+                "sort"  => "t.votes"),
             "publish"         => array(
                 "title" => _MD_TOPICTIME,
-                "sort"  => "t.topic_id"
-            ),
+                "sort"  => "t.topic_id"),
             "digest"          => array(
                 "title" => _MD_DIGEST,
-                "sort"  => "t.digest_time"
-            ),
+                "sort"  => "t.digest_time"),
             "sticky"          => array(
                 "title" => _MD_STICKY,
-                "sort"  => "t.topic_sticky"
-            ),
+                "sort"  => "t.topic_sticky"),
             "lock"            => array(
                 "title" => _MD_LOCK,
-                "sort"  => "t.topic_status"
-            ),
+                "sort"  => "t.topic_status"),
             "poll"            => array(
                 "title" => _MD_POLL_POLL,
-                "sort"  => "t.poll_id"
-            )
-        );
+                "sort"  => "t.poll_id"));
         $types   = $this->getTypes();
         if (!empty($types)) {
             $headers["type"] = array(
                 "title" => _MD_NEWBB_TYPE,
-                "sort"  => "t.type_id"
-            );
+                "sort"  => "t.type_id");
         }
         if ($this->userlevel === 2) {
             $headers["approve"] = array(
                 "title" => _MD_APPROVE,
-                "sort"  => "t.approved"
-            );
+                "sort"  => "t.approved");
         }
         // END irmtfan add more sorts
         if (empty($header) && empty($var)) {
@@ -605,14 +589,12 @@ class NewbbTopicRenderer
             "replied"   => _MD_REPLIED, // irmtfan add
             "unreplied" => _MD_UNREPLIED,
             "read"      => _MD_READ, // irmtfan add
-            "unread"    => _MD_UNREAD
-        );
+            "unread"    => _MD_UNREAD);
         $links_admin = array(
             //" "            => "", /* irmtfan remove empty array */
             "active"  => _MD_TYPE_ADMIN,
             "pending" => _MD_TYPE_PENDING,
-            "deleted" => _MD_TYPE_DELETED
-        );
+            "deleted" => _MD_TYPE_DELETED);
 
         // all status, for admin
         if ($type > 1) {
@@ -730,7 +712,7 @@ class NewbbTopicRenderer
         static $types;
         if (!isset($types)) {
             $typeHandler =& xoops_getmodulehandler('type', 'newbb');
-            $types        = $typeHandler->getByForum(explode("|", @$this->vars["forum"]));
+            $types       = $typeHandler->getByForum(explode("|", @$this->vars["forum"]));
         }
 
         if (empty($type_id)) {
@@ -842,12 +824,8 @@ class NewbbTopicRenderer
         $joins[]  = 'LEFT JOIN ' . $this->handler->db->prefix('bb_posts') . ' AS p ON p.post_id = t.topic_last_post_id';
         $wheres[] = "1 = 1";
 
-        $sql = '    SELECT ' . implode(", ", $selects) .
-               '     FROM ' . implode(", ", $froms) .
-               '        ' . implode(" ", $joins) .
-               (!empty($this->query["join"]) ? '        ' . implode(" ", $this->query["join"]) : '') . // irmtfan bug fix: Undefined index: join when post_excerpt = 0
-               '     WHERE ' . implode(" AND ", $wheres) .
-               '        AND ' . @implode(" AND ", @$this->query["where"]);
+        $sql = '    SELECT ' . implode(", ", $selects) . '     FROM ' . implode(", ", $froms) . '        ' . implode(" ", $joins) . (!empty($this->query["join"]) ? '        ' . implode(" ", $this->query["join"]) : '') . // irmtfan bug fix: Undefined index: join when post_excerpt = 0
+               '     WHERE ' . implode(" AND ", $wheres) . '        AND ' . @implode(" AND ", @$this->query["where"]);
 
         if (!$result = $this->handler->db->query($sql)) {
             return 0;
@@ -898,13 +876,8 @@ class NewbbTopicRenderer
         }
         //if (empty($this->query["sort"])) $this->query["sort"][] = 't.topic_last_post_id DESC'; // irmtfan commented no need
 
-        $sql = '    SELECT ' . implode(", ", $selects) .
-               '     FROM ' . implode(", ", $froms) .
-               '        ' . implode(" ", $joins) .
-               (!empty($this->query["join"]) ? '        ' . implode(" ", $this->query["join"]) : '') . // irmtfan bug fix: Undefined index join when post_excerpt = 0
-               '     WHERE ' . implode(" AND ", $wheres) .
-               '        AND ' . @implode(" AND ", @$this->query["where"]) .
-               '     ORDER BY ' . implode(", ", $this->query["sort"]);
+        $sql = '    SELECT ' . implode(", ", $selects) . '     FROM ' . implode(", ", $froms) . '        ' . implode(" ", $joins) . (!empty($this->query["join"]) ? '        ' . implode(" ", $this->query["join"]) : '') . // irmtfan bug fix: Undefined index join when post_excerpt = 0
+               '     WHERE ' . implode(" AND ", $wheres) . '        AND ' . @implode(" AND ", @$this->query["where"]) . '     ORDER BY ' . implode(", ", $this->query["sort"]);
 
         if (!$result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars["start"])) {
             if (is_object($xoopsTpl)) {
@@ -1055,7 +1028,7 @@ class NewbbTopicRenderer
             $type_list = $typeHandler->getAll(new Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
         }
         */
-        $type_list     = $this->getTypes();
+        $type_list    = $this->getTypes();
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 
         if (count($forums) > 0) {
@@ -1074,12 +1047,8 @@ class NewbbTopicRenderer
             } else {
                 $topics[$id]["topic_title"] = $topics[$id]["topic_title_excerpt"];
             }
-            $topics[$id]["topic_poster"]      = !empty($posters_name[$topics[$id]["topic_poster_uid"]])
-                ? $posters_name[$topics[$id]["topic_poster_uid"]]
-                : $topics[$id]["topic_poster_name"];
-            $topics[$id]["topic_last_poster"] = !empty($posters_name[$topics[$id]["topic_last_poster_uid"]])
-                ? $posters_name[$topics[$id]["topic_last_poster_uid"]]
-                : $topics[$id]["topic_last_poster_name"];
+            $topics[$id]["topic_poster"]      = !empty($posters_name[$topics[$id]["topic_poster_uid"]]) ? $posters_name[$topics[$id]["topic_poster_uid"]] : $topics[$id]["topic_poster_name"];
+            $topics[$id]["topic_last_poster"] = !empty($posters_name[$topics[$id]["topic_last_poster_uid"]]) ? $posters_name[$topics[$id]["topic_last_poster_uid"]] : $topics[$id]["topic_last_poster_name"];
             // ------------------------------------------------------
             // START irmtfan remove hardcodes from topic_folder smarty
             // topic_folder: priority: newhot -> hot/new -> regular
@@ -1108,9 +1077,7 @@ class NewbbTopicRenderer
         }
 
         if (count($topics) > 0) {
-            $sql = " SELECT DISTINCT topic_id FROM " . $this->handler->db->prefix("bb_posts") .
-                   " WHERE attachment != ''" .
-                   " AND topic_id IN (" . implode(',', array_keys($topics)) . ")";
+            $sql = " SELECT DISTINCT topic_id FROM " . $this->handler->db->prefix("bb_posts") . " WHERE attachment != ''" . " AND topic_id IN (" . implode(',', array_keys($topics)) . ")";
             if ($result = $this->handler->db->query($sql)) {
                 while (list($topic_id) = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_TOPICSHASATT);
@@ -1130,7 +1097,7 @@ class NewbbTopicRenderer
 
     // START irmtfan to create an array from selected keys of an array
     /**
-     * @param $array
+     * @param      $array
      * @param null $keys
      * @return array
      */

@@ -2,83 +2,83 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include __DIR__ . "/functions.ini.php";
-define("NEWBB_FUNCTIONS_READ_LOADED", true);
+defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
+define('NEWBB_FUNCTIONS_READ_LOADED', true);
 
-if (!defined("NEWBB_FUNCTIONS_READ")) {
-    define("NEWBB_FUNCTIONS_READ", 1);
+if (!defined('NEWBB_FUNCTIONS_READ')) {
+    define('NEWBB_FUNCTIONS_READ', 1);
 
     /**
-     * @param $type
-     * @param $item_id
-     * @param $post_id
+     * @param      $type
+     * @param      $item_id
+     * @param      $post_id
      * @param null $uid
      * @return mixed
      */
     function newbb_setRead($type, $item_id, $post_id, $uid = null)
     {
-        $readHandler = & xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler = &xoops_getmodulehandler('read' . $type, 'newbb');
 
         return $readHandler->setRead($item_id, $post_id, $uid);
     }
 
     /**
-     * @param $type
-     * @param $item_id
+     * @param      $type
+     * @param      $item_id
      * @param null $uid
      * @return mixed
      */
     function newbb_getRead($type, $item_id, $uid = null)
     {
-        $readHandler =& xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler =& xoops_getmodulehandler('read' . $type, 'newbb');
 
         return $readHandler->getRead($item_id, $uid);
     }
 
     /**
-     * @param int $status
+     * @param int  $status
      * @param null $uid
      * @return mixed
      */
     function newbb_setRead_forum($status = 0, $uid = null)
     {
-        $readHandler =& xoops_getmodulehandler("readforum", "newbb");
+        $readHandler =& xoops_getmodulehandler('readforum', 'newbb');
 
         return $readHandler->setRead_items($status, $uid);
     }
 
     /**
-     * @param int $status
-     * @param int $forum_id
+     * @param int  $status
+     * @param int  $forum_id
      * @param null $uid
      * @return mixed
      */
     function newbb_setRead_topic($status = 0, $forum_id = 0, $uid = null)
     {
-        $readHandler =& xoops_getmodulehandler("readtopic", "newbb");
+        $readHandler =& xoops_getmodulehandler('readtopic', 'newbb');
 
         return $readHandler->setRead_items($status, $forum_id, $uid);
     }
 
     /**
-     * @param $type
-     * @param $items
+     * @param      $type
+     * @param      $items
      * @param null $uid
      * @return mixed
      */
     function newbb_isRead($type, &$items, $uid = null)
     {
-        $readHandler =& xoops_getmodulehandler("read" . $type, "newbb");
+        $readHandler =& xoops_getmodulehandler('read' . $type, 'newbb');
 
         return $readHandler->isRead_items($items, $uid);
     }

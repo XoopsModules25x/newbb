@@ -70,7 +70,7 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
     $query_array = array();
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
+            $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -84,8 +84,8 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum_obj);
 }
 
-$xoopsOption['template_main']                             = 'newbb_edit_post.tpl';
-$GLOBALS['xoopsConfig']["module_cache"][$xoopsModule->getVar('mid')] = 0;
+$xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';
+$GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
@@ -111,8 +111,7 @@ $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
 
 $xoopsTpl->assign(array(
                       'forum_id'   => $forum_obj->getVar('forum_id'),
-                      'forum_name' => $forum_obj->getVar('forum_name')
-                  ));
+                      'forum_name' => $forum_obj->getVar('forum_name')));
 
 if ($post_parent_obj->getVar('uid')) {
     $r_name = newbb_getUnameFromId($post_parent_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
@@ -129,9 +128,7 @@ if (!preg_match('/^(Re|' . _MD_RE . '):/i', $r_subject)) {
 }
 
 $q_message = $post_parent_obj->getVar('post_text', 'e');
-if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma'))
-    && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))
-) {
+if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma')) && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))) {
     if (1 === XoopsRequest::getInt('quotedac', 0, 'GET')) {
         $message = "[quote]\n";
         $message .= sprintf(_MD_USERWROTE, $r_name);
@@ -162,14 +159,14 @@ $require_reply = 0;
 include __DIR__ . '/include/form.post.php';
 
 $karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
-$user_karma    = $karmaHandler->getUserKarma();
+$user_karma   = $karmaHandler->getUserKarma();
 
 $posts_context     = array();
 $posts_context_obj = $postHandler->getByLimit($topic_id, 5);
 foreach ($posts_context_obj as $post_context_obj) {
     // Sorry, in order to save queries, we have to hide the non-open post_text even if you have replied or have adequate karma, even an admin.
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_context_obj->getVar('post_karma') > 0) {
-        $p_message = sprintf(_MD_KARMA_REQUIREMENT, "***", $post_context_obj->getVar('post_karma')) . '</div>';
+        $p_message = sprintf(_MD_KARMA_REQUIREMENT, '***', $post_context_obj->getVar('post_karma')) . '</div>';
     } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $post_context_obj->getVar('require_reply')) {
         $p_message = _MD_REPLY_REQUIREMENT;
     } else {
@@ -188,8 +185,7 @@ foreach ($posts_context_obj as $post_context_obj) {
     $posts_context[] = array(
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
-        'content' => $p_message
-    );
+        'content' => $p_message);
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php

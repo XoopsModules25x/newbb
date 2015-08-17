@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -19,21 +19,21 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param null $value
+     * @param null   $value
      * @param string $permission
-     * @param bool $delimitor_category
-     * @param bool $see
+     * @param bool   $delimitorCategory
+     * @param bool   $see
      * @return string
      */
-    function newbb_forumSelectBox($value = null, $permission = 'access', $delimitor_category = true, $see = false)
+    function newbb_forumSelectBox($value = null, $permission = 'access', $delimitorCategory = true, $see = false)
     {
         $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
-        $categories       = $categoryHandler->getByPermission($permission, array('cat_id', 'cat_order', 'cat_title'), false);
+        $categories      = $categoryHandler->getByPermission($permission, array('cat_id', 'cat_order', 'cat_title'), false);
 
         load_functions('cache');
         if ($permission === 'all' || !$forums = mod_loadCacheFile_byGroup('forumselect')) {
             $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-            $forums        = $forumHandler->getTree(array_keys($categories), 0, $permission);
+            $forums       = $forumHandler->getTree(array_keys($categories), 0, $permission);
             if (empty($permission) || $permission === 'access') {
                 mod_createCacheFile_byGroup($forums, 'forumselect');
             }
@@ -44,7 +44,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $box = '';
         if (count($forums) > 0) {
             foreach (array_keys($categories) as $key) {
-                if ($delimitor_category) {
+                if ($delimitorCategory) {
                     $box .= "<option value=0>&nbsp;</option>\n";
                 }
                 $box .= "<option value='" . (-1 * $key) . "'>[" . $categories[$key]['cat_title'] . "]</option>\n";
@@ -90,7 +90,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      *
      * @int integer    $pid    parent forum ID
      *
-     * @param int $pid
+     * @param int  $pid
      * @param bool $refresh
      * @return array
      */
@@ -118,7 +118,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbb_createSubForumList()
     {
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $criteria      = new CriteriaCompo('1', 1);
+        $criteria     = new CriteriaCompo('1', 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);
@@ -139,7 +139,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param int $forum_id
+     * @param int  $forum_id
      * @param bool $refresh
      * @return array|mixed|null
      */
@@ -167,7 +167,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbb_createParentForumList()
     {
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $criteria      = new Criteria('1', 1);
+        $criteria     = new Criteria('1', 1);
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);

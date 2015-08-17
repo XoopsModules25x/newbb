@@ -24,8 +24,18 @@ include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('class/xoopsblock.php');
 xoops_load('XoopsLocal');
 $op      = 'add';
-$goodOps = array('add', 'save', 'edit', 'update', 'addmore', 'savemore',
-                 'delete', 'delete_ok', 'restart', 'restart_ok', 'log');
+$goodOps = array(
+    'add',
+    'save',
+    'edit',
+    'update',
+    'addmore',
+    'savemore',
+    'delete',
+    'delete_ok',
+    'restart',
+    'restart_ok',
+    'log');
 $op      = (isset($_REQUEST['op'])) ? $_REQUEST['op'] : 'add';
 $op      = (!in_array($op, $goodOps)) ? 'add' : $op;
 
@@ -34,7 +44,7 @@ $topic_id = XoopsRequest::getInt('topic_id', XoopsRequest::getInt('topic_id', 0,
 
 // deal with permissions
 $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topicHandler->get($topic_id);
+$topic_obj    =& $topicHandler->get($topic_id);
 // topic exist
 if (is_object($topic_obj)) {
     $forum_id = $topic_obj->getVar('forum_id');
@@ -43,7 +53,7 @@ if (is_object($topic_obj)) {
 }
 // forum access permission
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$forum_obj     =& $forumHandler->get($forum_id);
+$forum_obj    =& $forumHandler->get($forum_id);
 if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
@@ -78,12 +88,8 @@ include $GLOBALS['xoops']->path('header.php');
 // no admin user permission
 if (is_object($GLOBALS['xoopsUser']) && !newbb_isAdmin($forum_obj)) {
     $perm = false;
-    if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'addpoll')
-    ) {
-        if (('add' === $op || 'save' === $op || 'update' === $op)
-            && !$topic_obj->getVar('topic_haspoll')
-            && ($GLOBALS['xoopsUser']->getVar('uid') === $topic_obj->getVar('topic_poster'))
-        ) {
+    if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'addpoll')) {
+        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll') && ($GLOBALS['xoopsUser']->getVar('uid') === $topic_obj->getVar('topic_poster'))) {
             $perm = true;
         } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') === $poll_obj->getVar('user_id'))) {
             $perm = true;
@@ -97,14 +103,13 @@ switch ($op) {
     case 'add':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            echo "<h4>" . _MD_POLL_CREATNEWPOLL . "</h4>\n";
+            echo '<h4>' . _MD_POLL_CREATNEWPOLL . "</h4>\n";
             $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', array('topic_id' => $topic_id));
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new XoopsThemeForm(_MD_POLL_CREATNEWPOLL, 'poll_form', 'polls.php', 'post', true);
-            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR, (is_object($GLOBALS['xoopsUser'])) ? ("<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']) . '</a>')
-                : $GLOBALS['xoopsConfig']['anonymous']);
+            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR, (is_object($GLOBALS['xoopsUser'])) ? ("<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']) . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
             $poll_form->addElement($author_label);
             $question_text = new XoopsFormText(_MD_POLL_POLLQUESTION, 'question', 50, 255);
             $poll_form->addElement($question_text);
@@ -133,7 +138,7 @@ switch ($op) {
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" . $GLOBALS['xoopsModuleConfig']["poll_module"] . "/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" . XOOPS_URL . '/modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . "/assets/images/colorbars/" . $current_bar . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br />");
+                $color_label = new XoopsFormLabel('', "<img src='" . XOOPS_URL . '/modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/' . $current_bar . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br />");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 if (!next($barcolor_array)) {
@@ -197,14 +202,14 @@ switch ($op) {
                 $color_select = new XoopsFormSelect('', 'option_color[{$i}]', $option->getVar('option_color'));
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[" . $i . "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
-                $color_label = new XoopsFormLabel("", "<img src='" . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar("option_color", "E")) . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br />");
+                $color_label = new XoopsFormLabel('', "<img src='" . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E')) . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br />");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label);
                 ++$i;
             }
             // irmtfan full URL
-            $more_label = new XoopsFormLabel('', "<br /><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname") . "/polls.php?op=addmore&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_POLL_ADDMORE . "</a>");
+            $more_label = new XoopsFormLabel('', "<br /><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=addmore&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_POLL_ADDMORE . '</a>');
             $option_tray->addElement($more_label);
             $poll_form->addElement($option_tray);
             $poll_form->addElement(new XoopsFormHidden('op', 'update'));
@@ -272,7 +277,7 @@ switch ($op) {
             }
             $i            = 0;
             $option_color = XoopsRequest::getArray('option_color', null, 'POST');
-            $classOption = $classPoll . 'Option';
+            $classOption  = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
                 $optxt      = trim($optxt);
                 $option_obj = new $classOption();
@@ -309,7 +314,7 @@ switch ($op) {
         $option_text   = XoopsRequest::getString('option_text', '', 'POST');
         $option_string = is_array($option_text) ? implode('', $option_text) : $option_text;
         $option_string = trim($option_string);
-        if ('' ===$option_string) {
+        if ('' === $option_string) {
             redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_ERROROCCURED . ': ' . _MD_POLL_POLLOPTIONS . ' !');
         }
 
@@ -317,7 +322,7 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 140) {
             $xpOptHandler =& xoops_getmodulehandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
             $xpLogHandler =& xoops_getmodulehandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
-//            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
+            //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
             $classConstants   = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
             $notify           = XoopsRequest::getInt('notify', $classConstants::NOTIFICATION_ENABLED, 'POST');
             $currentTimestamp = time();
@@ -331,9 +336,7 @@ switch ($op) {
             $startTimestamp   = (!XoopsRequest::getString('xu_start_time', null, 'POST')) ? ($endTimestamp - $classConstants::DEFAULT_POLL_DURATION) : userTimeToServerTime($xuStartTimestamp);
 
             //  don't allow changing start time if there are votes in the log
-            if (($startTimestamp < $poll_obj->getVar('start_time'))
-                && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)
-            ) {
+            if (($startTimestamp < $poll_obj->getVar('start_time')) && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)) {
                 $startTimestamp = $poll_obj->getVar('start_time'); //don't change start time
             }
 
@@ -350,8 +353,7 @@ switch ($op) {
                 'weight'      => XoopsRequest::getInt('weight', $classConstants::DEFAULT_WEIGHT, 'POST'),
                 'multiple'    => XoopsRequest::getInt('multiple', $classConstants::NOT_MULTIPLE_SELECT_POLL, 'POST'),
                 'multilimit'  => XoopsRequest::getInt('multilimit', $classConstants::MULTIPLE_SELECT_LIMITLESS, 'POST'),
-                'anonymous'   => XoopsRequest::getInt('anonymous', $classConstants::ANONYMOUS_VOTING_DISALLOWED, 'POST')
-            );
+                'anonymous'   => XoopsRequest::getInt('anonymous', $classConstants::ANONYMOUS_VOTING_DISALLOWED, 'POST'));
             $poll_obj->setVars($poll_vars);
             $poll_id = $xpPollHandler->insert($poll_obj);
             if (!$poll_id) {
@@ -612,7 +614,7 @@ switch ($op) {
             $default_poll_duration = (86400 * 10);
         }
         $poll_form   = new XoopsThemeForm(_MD_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
-        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION . '<br /><small>' . _MD_POLL_FORMAT . '<br />' . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), "Y-m-d H:i:s")) . "<br />" . sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar("end_time"), 'Y-m-d H:i:s')) . '</small>', 'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
+        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION . '<br /><small>' . _MD_POLL_FORMAT . '<br />' . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br />' . sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar('end_time'), 'Y-m-d H:i:s')) . '</small>', 'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_NOTIFY, 'notify', 1));
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_RESET, 'reset', 0));
@@ -645,7 +647,7 @@ switch ($op) {
         }
 
         $end_time = !XoopsRequest::getInt('end_time', 0, 'POST');
-        if (0 !==$end_time) {
+        if (0 !== $end_time) {
             $timezone = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('timezone') : null;
             $poll_obj->setVar('end_time', userTimeToServerTime(method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time), $timezone));
         } else {

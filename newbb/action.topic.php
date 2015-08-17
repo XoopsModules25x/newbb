@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -22,14 +22,14 @@ if (0 === count($topic_id) || 0 === count($op)) {
     redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NORIGHTTOACCESS);
 }
 
-$topic_id      = array_values($topic_id);
+$topic_id     = array_values($topic_id);
 $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
 
 $isadmin = newbb_isAdmin($forum_id);
 
 if (!$isadmin) {
-    redirect_header(XOOPS_URL .'/index.php', 2, _MD_NORIGHTTOACCESS);
+    redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 switch ($op) {
     case 'restore':
@@ -75,7 +75,7 @@ switch ($op) {
             $tags                = array();
             $tags['THREAD_NAME'] = $topic_obj->getVar('topic_title');
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
-            $tags['FORUM_NAME']  = $forums_obj[$topic_obj->getVar("forum_id")]->getVar('forum_name');
+            $tags['FORUM_NAME']  = $forums_obj[$topic_obj->getVar('forum_id')]->getVar('forum_name');
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $topic_obj->getVar('forum_id');
             $notificationHandler->triggerEvent('global', 0, 'new_thread', $tags);
             $notificationHandler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_thread', $tags);
@@ -111,10 +111,8 @@ switch ($op) {
         unset($topics_obj, $forums_obj);
         break;
     case 'move':
-        if (XoopsRequest::getInt('newforum', 0, 'POST') && XoopsRequest::getInt('newforum', 0, 'POST') !== $forum_id
-            && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')
-        ) {
-            $criteria     = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
+        if (XoopsRequest::getInt('newforum', 0, 'POST') && XoopsRequest::getInt('newforum', 0, 'POST') !== $forum_id && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')) {
+            $criteria    = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
             $postHandler =& xoops_getmodulehandler('post', 'newbb');
             $postHandler->updateAll('forum_id', XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
             $topicHandler->updateAll('forum_id', XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
@@ -123,30 +121,30 @@ switch ($op) {
         } else {
             include $GLOBALS['xoops']->path('header.php');
             $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
-            $categories       = $categoryHandler->getByPermission('access');
-            $forums           = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
+            $categories      = $categoryHandler->getByPermission('access');
+            $forums          = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
             $box = '<select name="newforum" size="1">';
             if (count($categories) > 0 && count($forums) > 0) {
                 foreach (array_keys($forums) as $key) {
-                    $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . "]</option>";
+                    $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . ']</option>';
                     foreach ($forums[$key] as $forumid => $_forum) {
-                        $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . "</option>";
-                        if (!isset($_forum["sub"])) {
+                        $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . '</option>';
+                        if (!isset($_forum['sub'])) {
                             continue;
                         }
-                        foreach (array_keys($_forum["sub"]) as $fid) {
-                            $box .= "<option value='" . $fid . "'>---- " . $_forum["sub"][$fid]['title'] . "</option>";
+                        foreach (array_keys($_forum['sub']) as $fid) {
+                            $box .= "<option value='" . $fid . "'>---- " . $_forum['sub'][$fid]['title'] . '</option>';
                         }
                     }
                 }
             } else {
-                $box .= "<option value='-1'>" . _MD_NOFORUMINDB . "</option>";
+                $box .= "<option value='-1'>" . _MD_NOFORUMINDB . '</option>';
             }
-            $box .= "</select>";
+            $box .= '</select>';
             unset($forums, $categories);
 
-            echo "<form action='" . XoopsRequest::getString('PHP_SELF','', 'SERVER') . "' method='post'>";
+            echo "<form action='" . XoopsRequest::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
             echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
             echo "<tr><td class='bg2'>";
             echo "<table border='0' cellpadding='1' cellspacing='1' width='100%'>";
@@ -160,8 +158,8 @@ switch ($op) {
                 echo "<input type='hidden' name='topic_id[]' value='" . $id . "' />";
             }
             echo "<input type='submit' name='submit' value='" . _SUBMIT . "' />";
-            echo "</td></tr></table></td></tr></table>";
-            echo "</form>";
+            echo '</td></tr></table></td></tr></table>';
+            echo '</form>';
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }

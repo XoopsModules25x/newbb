@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id: index.php 62 2012-08-17 10:15:26Z alfred $
  * @package        module::newbb
  */
@@ -27,7 +27,7 @@ if (XoopsRequest::getInt('mark_read', 0)) { //TODO mb check if this is GET or PO
     redirect_header($url, 2, _MD_ALL_FORUM_MARKED . ' ' . $markresult);
 }
 
-$viewcat          = XoopsRequest::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
+$viewcat         = XoopsRequest::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
 $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
 
 $categories = array();
@@ -89,7 +89,7 @@ if (!empty($forums_allowed)) {
 }
 
 /* fetch subforums if required to display */
-if ('hidden' === $GLOBALS['xoopsModuleConfig']['subforum_display']  || 0 === count($forums_top)) {
+if ('hidden' === $GLOBALS['xoopsModuleConfig']['subforum_display'] || 0 === count($forums_top)) {
     $forums_sub = array();
 } else {
     $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top) . ')', 'IN'));
@@ -134,7 +134,7 @@ if ($deleteposts > 0) {
 }
 
 $reportHandler = &xoops_getmodulehandler('report', 'newbb');
-$reported       = $reportHandler->getCount(new Criteria('report_result', 0));
+$reported      = $reportHandler->getCount(new Criteria('report_result', 0));
 if ($reported > 0) {
     $xoopsTpl->assign('report_post', sprintf(_MD_NEWBB_SEEWAITREPORT, $reported));
 }
@@ -150,7 +150,7 @@ if (count($forums_array) > 0) {
 
 $category_array = array();
 $toggles        = newbb_getcookie('G', true);
-$iconHandler   = newbbGetIconHandler();
+$iconHandler    = newbbGetIconHandler();
 $category_icon  = array(
     'expand'   => $iconHandler->getImageSource('minus'),
     'collapse' => $iconHandler->getImageSource('plus'));
@@ -182,7 +182,7 @@ foreach (array_keys($categories) as $id) {
     if ('' === $title) {
         $title = $url;
     }
-    $title = $myts->htmlspecialchars($title);
+    $title = &$myts->htmlspecialchars($title);
     if ('' !== $url) {
         $cat_sponsor = array('title' => $title, 'link' => formatURL($url));
     }
@@ -201,8 +201,7 @@ foreach (array_keys($categories) as $id) {
         'cat_element_id'   => $cat_element_id,
         'cat_display'      => $cat_display,
         'cat_displayImage' => $cat_displayImage,
-        'forums'           => $forums
-    );
+        'forums'           => $forums);
 }
 
 unset($categories, $forums_array, $forumsByCat);
@@ -212,14 +211,13 @@ $xoopsTpl->assign('notifyicon', $category_icon);
 
 $xoopsTpl->assign(array(
                       'index_title' => sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
-                      'index_desc'  => _MD_TOSTART
-                  ));
+                      'index_desc'  => _MD_TOSTART));
 
 /* display user stats */
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = array();
     if (is_object($GLOBALS['xoopsUser'])) {
-        $userstatsHandler        =& xoops_getmodulehandler('userstats');
+        $userstatsHandler         =& xoops_getmodulehandler('userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
         $userstats['topics']      = sprintf(_MD_USER_TOPICS, (int)(@$userstats_row['user_topics']));
         $userstats['posts']       = sprintf(_MD_USER_POSTS, (int)(@$userstats_row['user_posts']));
@@ -236,7 +234,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
 
 /* display forum stats */
 $statsHandler = &xoops_getmodulehandler('stats');
-$stats         = $statsHandler->getStats(array_merge(array(0), $forums_available));
+$stats        = $statsHandler->getStats(array_merge(array(0), $forums_available));
 $xoopsTpl->assign_by_ref('stats', $stats);
 $xoopsTpl->assign('subforum_display', $GLOBALS['xoopsModuleConfig']['subforum_display']);
 $xoopsTpl->assign('mark_read', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/index.php?mark_read=1');

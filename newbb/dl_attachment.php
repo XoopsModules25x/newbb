@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -22,22 +22,22 @@ if (!$post_id || !$attach_id) {
 }
 
 $postHandler =& xoops_getmodulehandler('post', 'newbb');
-$forumpost    =& $postHandler->get($post_id);
+$forumpost   =& $postHandler->get($post_id);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
 $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     =& $topicHandler->getByPost($post_id);
-$topic_id      = $topic_obj->getVar('topic_id');
+$topic_obj    =& $topicHandler->getByPost($post_id);
+$topic_id     = $topic_obj->getVar('topic_id');
 if (!$approved = $topic_obj->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$forum_obj     =& $forumHandler->get($topic_obj->getVar('forum_id'));
+$forum_obj    =& $forumHandler->get($topic_obj->getVar('forum_id'));
 if (!$forumHandler->getPermission($forum_obj)) {
     exit(_MD_NORIGHTTOACCESS);
 }
-if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), "view")) {
+if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
     exit(_MD_NORIGHTTOVIEW);
 }
 
@@ -67,7 +67,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
     header('location: ' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
 } else {
     $file_display = $attach['nameDisplay'];
-//$mimetype = $attach['mimetype'];
+    //$mimetype = $attach['mimetype'];
 
     if (ini_get('zlib.output_compression')) {
         @ini_set('zlib.output_compression', 'Off');
@@ -77,7 +77,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
         mb_http_output('pass');
     }
     header('Expires: 0');
-//header('Content-Type: '.$mimetype);
+    //header('Content-Type: '.$mimetype);
     header('Content-Type: application/octet-stream');
     if (preg_match("/MSIE (\d\.\d{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
         header('Content-Disposition: attachment; filename="' . $file_display . '"');

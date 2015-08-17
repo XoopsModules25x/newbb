@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -28,88 +28,41 @@
 // irmtfan add anonym.png more.png and less.png icon
 $forumImage[''] = $forumImage['blank'] =
 
-$forumImage['attachment'] =
-$forumImage['whosonline'] =
-$forumImage['statistik'] =
-$forumImage['lastposticon'] =
+$forumImage['attachment'] = $forumImage['whosonline'] = $forumImage['statistik'] = $forumImage['lastposticon'] =
 
-$forumImage['plus'] =
-$forumImage['minus'] =
+$forumImage['plus'] = $forumImage['minus'] =
 
-$forumImage['forum'] =
-$forumImage['forum_new'] =
+$forumImage['forum'] = $forumImage['forum_new'] =
 
-$forumImage['topic'] =
-$forumImage['topic_hot'] =
-$forumImage['topic_sticky'] =
-$forumImage['topic_digest'] =
-$forumImage['topic_locked'] =
-$forumImage['topic_new'] =
-$forumImage['topic_hot_new'] =
-$forumImage['topic_my'] =
+$forumImage['topic'] = $forumImage['topic_hot'] = $forumImage['topic_sticky'] = $forumImage['topic_digest'] = $forumImage['topic_locked'] = $forumImage['topic_new'] = $forumImage['topic_hot_new'] = $forumImage['topic_my'] =
 
 $forumImage['post'] =
 
-$forumImage['poll'] =
-$forumImage['rss'] =
-$forumImage['pdf'] =
-$forumImage['subforum'] =
+$forumImage['poll'] = $forumImage['rss'] = $forumImage['pdf'] = $forumImage['subforum'] =
 
-$forumImage['admin_move'] =
-$forumImage['admin_merge'] =
-$forumImage['admin_edit'] =
-$forumImage['admin_delete'] =
+$forumImage['admin_move'] = $forumImage['admin_merge'] = $forumImage['admin_edit'] = $forumImage['admin_delete'] =
 
 $forumImage['document'] =
 
-$forumImage['previous'] =
-$forumImage['next'] =
-$forumImage['right'] =
-$forumImage['down'] =
-$forumImage['up'] =
-$forumImage['printer'] =
-$forumImage['new_forum'] =
+$forumImage['previous'] = $forumImage['next'] = $forumImage['right'] = $forumImage['down'] = $forumImage['up'] = $forumImage['printer'] = $forumImage['new_forum'] =
 
-$forumImage['facebook'] =
-$forumImage['twitter'] =
-$forumImage['linkedin'] =
-$forumImage['googleplus'] =
-$forumImage['stumbleupon'] =
-$forumImage['friendfeed'] =
-$forumImage['digg'] =
-$forumImage['reddit'] =
-$forumImage['delicious'] =
-$forumImage['technorati'] =
-$forumImage['wong'] =
-$forumImage['anonym'] =
-$forumImage['more'] =
-$forumImage['less'] =
-    "icon";
+$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['googleplus'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['digg'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['wong'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
 
 for ($i = 1; $i <= 5; ++$i) {
-    $forumImage['rate' . $i] = "icon";
+    $forumImage['rate' . $i] = 'icon';
 }
 
-$forumImage['p_delete'] =
-$forumImage['p_reply'] =
-$forumImage['p_quote'] =
-$forumImage['p_edit'] =
-$forumImage['p_report'] =
+$forumImage['p_delete'] = $forumImage['p_reply'] = $forumImage['p_quote'] = $forumImage['p_edit'] = $forumImage['p_report'] =
 
-$forumImage['t_new'] =
-$forumImage['t_poll'] =
-$forumImage['t_qr'] =
-$forumImage['t_qr_expand'] =
-$forumImage['t_reply'] =
+$forumImage['t_new'] = $forumImage['t_poll'] = $forumImage['t_qr'] = $forumImage['t_qr_expand'] = $forumImage['t_reply'] =
 
-$forumImage['online'] =
-$forumImage['offline'] =
+$forumImage['online'] = $forumImage['offline'] =
 
 $forumImage['new_subforum'] =
 
 $forumImage['p_bann'] =
 
-    "language";
+    'language';
 
 /*
 $forumImage[''] = $forumImage['blank'] = $forumImage['icon']."blank";

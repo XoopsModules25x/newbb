@@ -28,7 +28,7 @@ function b_sitemap_newbb()
     }
 
     $forums_sub_id = array();
-    if ((bool)($forums_top_id) && $sitemap_configs['show_subcategoris'] ) {
+    if ((bool)($forums_top_id) && $sitemap_configs['show_subcategoris']) {
         $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top_id) . ')', 'IN'));
         $crit_sub->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
         $forums_sub_id = $forumHandler->getIds($crit_sub);
@@ -50,22 +50,20 @@ function b_sitemap_newbb()
             $forums[$forum['parent_forum']]['fchild'][$forumid] = array(
                 'id'    => $forumid,
                 'url'   => 'viewforum.php?forum=' . $forumid,
-                'title' => $forum['forum_name']
-            );
+                'title' => $forum['forum_name']);
         } else {
             $forums[$forumid] = array(
                 'id'    => $forumid,
                 'cid'   => $forum['cat_id'],
                 'url'   => 'viewforum.php?forum=' . $forumid,
-                'title' => $forum['forum_name']
-            );
+                'title' => $forum['forum_name']);
         }
     }
 
     if ($sitemap_configs['show_subcategoris']) {
         $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
-        $categories = array();
-        $categories       = $categoryHandler->getByPermission('access', array('cat_id', 'cat_title'), false);
+        $categories      = array();
+        $categories      = $categoryHandler->getByPermission('access', array('cat_id', 'cat_title'), false);
 
         foreach ($categories as $key => $category) {
             $cat_id                         = $category['cat_id'];

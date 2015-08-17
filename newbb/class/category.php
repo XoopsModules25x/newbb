@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -42,22 +42,21 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, "bb_categories", 'Category', 'cat_id', 'cat_title');
     }
 
-
     /**
      * @param string $perm
      * @return mixed
      */
     public function getIdsByPermission($perm = "access")
     {
-        $permHandler = & xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = &xoops_getmodulehandler('permission', 'newbb');
 
         return $permHandler->getCategories($perm);
     }
 
     /**
      * @param string $permission
-     * @param null $tags
-     * @param bool $asObject
+     * @param null   $tags
+     * @param bool   $asObject
      * @return array
      */
     public function &getByPermission($permission = "access", $tags = null, $asObject = true)
@@ -93,7 +92,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function delete(&$category)
     {
-//        global $xoopsModule;
+        //        global $xoopsModule;
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
         $forumHandler->deleteAll(new Criteria("cat_id", $category->getVar('cat_id')), true, true);
         if ($result = parent::delete($category)) {
@@ -115,7 +114,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * return    bool
      */
     /**
-     * @param $category
+     * @param        $category
      * @param string $perm
      * @return bool
      */
@@ -125,7 +124,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
             return true;
         }
 
-        $cat_id       = is_object($category) ? $category->getVar('cat_id') : (int)($category);
+        $cat_id      = is_object($category) ? $category->getVar('cat_id') : (int)($category);
         $permHandler =& xoops_getmodulehandler('permission', 'newbb');
 
         return $permHandler->getPermission("category", $perm, $cat_id);

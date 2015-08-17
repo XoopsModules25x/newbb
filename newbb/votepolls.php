@@ -118,7 +118,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     }
     // old xoopspoll or umfrage or any clone from them
 } else {
-    $classLog = $classPoll . "Log";
+    $classLog = $classPoll . 'Log';
     if (is_object($GLOBALS['xoopsUser'])) {
         if ($classLog::hasVoted($poll_id, $_SERVER['REMOTE_ADDR'], $GLOBALS['xoopsUser']->getVar('uid'))) {
             $msg = _PL_ALREADYVOTED;

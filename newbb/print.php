@@ -47,13 +47,13 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
     $post_id  = XoopsRequest::getInt('post_id', 0, 'GET');
 
-    if (0 ===$post_id && 0 ===$topic_id) {
+    if (0 === $post_id && 0 === $topic_id) {
         exit(_MD_ERRORTOPIC);
     }
 
     if (0 !== $post_id) {
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $post         = &$postHandler->get($post_id);
+        $post        = &$postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
             exit(_MD_NORIGHTTOVIEW);
         }
@@ -69,9 +69,9 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     }
 
     $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-    $topic_obj     =& $topicHandler->get($topic_id);
-    $topic_id      = $topic_obj->getVar('topic_id');
-    $forum         = $topic_obj->getVar('forum_id');
+    $topic_obj    =& $topicHandler->get($topic_id);
+    $topic_id     = $topic_obj->getVar('topic_id');
+    $forum        = $topic_obj->getVar('forum_id');
     if (!$approved = $topic_obj->getVar('approved')) {
         exit(_MD_NORIGHTTOVIEW);
     }
@@ -82,8 +82,8 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     }
 
     $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-    $forum         = $topic_obj->getVar('forum_id');
-    $forum_obj     =& $forumHandler->get($forum);
+    $forum        = $topic_obj->getVar('forum_id');
+    $forum_obj    =& $forumHandler->get($forum);
     if (!$forumHandler->getPermission($forum_obj)) {
         exit(_MD_NORIGHTTOVIEW);
     }
@@ -91,7 +91,7 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
         exit(_MD_NORIGHTTOVIEW);
     }
-// irmtfan add print permission
+    // irmtfan add print permission
     if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'print')) {
         exit(_MD_NORIGHTTOPRINT);
     }
@@ -116,7 +116,7 @@ if (empty($isPost)) {
         }
         $post_data = $postHandler->getPostForPrint($post);
         echo "<h2 style='margin: 0;'>" . $post_data['subject'] . "</h2>
-              <div align='center'>" . _POSTEDBY . "&nbsp;" . $post_data['author'] . "&nbsp;" . _ON . "&nbsp;" . formatTimestamp($post_data['date']) . "</div>
+              <div align='center'>" . _POSTEDBY . '&nbsp;' . $post_data['author'] . "&nbsp;" . _ON . "&nbsp;" . formatTimestamp($post_data['date']) . "</div>
               <div style='text-align: center; display: block; padding-bottom: 12px; margin: 0 0 6px 0; border-bottom: 2px solid #ccc;'></div>
                <div>" . $post_data['text'] . "</div>
               <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div><br />";

@@ -39,7 +39,7 @@ $folder      = array($attach_path, $thumb_path);
  * @param $path
  * @return bool|string
  */
-function newbb_admin_getPathStatus($path='')
+function newbb_admin_getPathStatus($path = '')
 {
     if ('' === $path) {
         return false;
@@ -56,19 +56,20 @@ function newbb_admin_getPathStatus($path='')
 }
 
 /**
- * @param $target
+ * @param     $target
  * @param int $mode
  * @return bool
  */
 function newbb_admin_mkdir($target, $mode = 0777)
 {
     $target = str_replace('..', '', $target);
+
     // http://www.php.net/manual/en/function.mkdir.php
     return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) && mkdir($target, $mode));
 }
 
 /**
- * @param $target
+ * @param     $target
  * @param int $mode
  * @return bool
  */
@@ -145,8 +146,8 @@ switch ($op) {
 
     case 'senddigest':
         $digestHandler = &xoops_getmodulehandler('digest', 'newbb');
-        $res            = $digestHandler->process(true);
-        $msg            = ($res) ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
+        $res           = $digestHandler->process(true);
+        $msg           = ($res) ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
         redirect_header('index.php', 2, $msg);
         break;
 
@@ -157,7 +158,7 @@ switch ($op) {
         echo '<fieldset>';
         $imageLibs      = newbb_getImageLibs();
         $module_handler = &xoops_gethandler('module');
-        $reportHandler = &xoops_getmodulehandler('report', 'newbb');
+        $reportHandler  = &xoops_getmodulehandler('report', 'newbb');
 
         $isOK = false;
         // START irmtfan add a poll_module config
@@ -235,7 +236,7 @@ switch ($op) {
 
             echo "<div style='padding: 12px;'>" . _AM_NEWBB_POLLMODULE . ': ';
 
-            echo($isOK) ? _AM_NEWBB_AVAILABLE . ': (Module: ' . $xoopspoll->getVar('name') . ')' : _AM_NEWBB_NOTAVAILABLE;
+            echo ($isOK) ? _AM_NEWBB_AVAILABLE . ': (Module: ' . $xoopspoll->getVar('name') . ')' : _AM_NEWBB_NOTAVAILABLE;
             echo '</div>';
             echo "<div style='padding: 8px;'>";
             echo "<a href='http://www.imagemagick.org' target='_blank'>" . _AM_NEWBB_IMAGEMAGICK . '&nbsp;</a>';
@@ -400,7 +401,7 @@ mod_clearCacheFile('config', 'newbb');
 mod_clearCacheFile('permission', 'newbb');
 
 /**
- * @param $sizeAsString
+ * @param      $sizeAsString
  * @param bool $b
  * @return int|string
  */
@@ -424,6 +425,6 @@ function return_bytes($sizeAsString, $b = false)
         $base   = log($sizeAsString) / log(1024);
         $suffix = array('', 'KB', 'MB', 'GB', 'TB');
 
-        return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int) floor($base)];
+        return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
     }
 }

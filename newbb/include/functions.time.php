@@ -2,40 +2,40 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
-define("NEWBB_FUNCTIONS_TIME_LOADED", true);
+defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+define('NEWBB_FUNCTIONS_TIME_LOADED', true);
 
-if (!defined("NEWBB_FUNCTIONS_TIME")) {
-    define("NEWBB_FUNCTIONS_TIME", 1);
+if (!defined('NEWBB_FUNCTIONS_TIME')) {
+    define('NEWBB_FUNCTIONS_TIME', 1);
 
     /**
      * Function to convert UNIX time to formatted time string
-     * @param $time
+     * @param        $time
      * @param string $format
      * @param string $timeoffset
      * @return string
      */
-    function newbb_formatTimestamp($time, $format = "c", $timeoffset = "")
+    function newbb_formatTimestamp($time, $format = 'c', $timeoffset = '')
     {
-        load_functions("locale");
+        load_functions('locale');
         $newbbConfig = newbbLoadConfig();
 
         $format = strtolower($format);
-        if ($format === "reg" || $format === "") {
-            $format = "c";
+        if ($format === 'reg' || $format === '') {
+            $format = 'c';
         }
-        if (($format === "custom" || $format === "c") && !empty($newbbConfig["formatTimestamp_custom"])) {
-            $format = $newbbConfig["formatTimestamp_custom"];
+        if (($format === 'custom' || $format === 'c') && !empty($newbbConfig['formatTimestamp_custom'])) {
+            $format = $newbbConfig['formatTimestamp_custom'];
         }
 
         return XoopsLocal::formatTimestamp($time, $format, $timeoffset);
@@ -49,7 +49,7 @@ if (!defined("NEWBB_FUNCTIONS_TIME")) {
     {
         $newbbConfig = newbbLoadConfig();
         // irmtfan - new method to get user inputs
-        preg_match_all('/-?[0-9]+/', $newbbConfig['since_options'], $match);
+        preg_match_all('/-?\d+/', $newbbConfig['since_options'], $match);
         $select_array = array_unique($match[0]);
         //$select_array = explode(',', $newbbConfig['since_options']);
         //$select_array = array_map('trim', $select_array);

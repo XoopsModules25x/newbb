@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -52,8 +52,8 @@ class Topic extends ArtObject
     // irmtfan add LAST_INSERT_ID to enhance the mysql performances
     public function incrementCounter()
     {
-        $sql = 'UPDATE ' . $GLOBALS["xoopsDB"]->prefix('bb_topics') . ' SET topic_views = LAST_INSERT_ID(topic_views + 1) WHERE topic_id =' . $this->getVar('topic_id');
-        $GLOBALS["xoopsDB"]->queryF($sql);
+        $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' SET topic_views = LAST_INSERT_ID(topic_views + 1) WHERE topic_id =' . $this->getVar('topic_id');
+        $GLOBALS['xoopsDB']->queryF($sql);
     }
 
     /**
@@ -118,7 +118,7 @@ class Topic extends ArtObject
      * delete a poll in database
      *
      * @access public
-     * @param  int  $poll_id
+     * @param  int $poll_id
      * @return bool
      */
     public function deletePoll($poll_id)
@@ -186,7 +186,7 @@ class Topic extends ArtObject
         // new xoopspoll module
         if ($pollModuleHandler->getVar("version") >= 140) {
             $pollHandler =& xoops_getmodulehandler('poll', $newbbConfig["poll_module"]);
-            $poll_obj     = $pollHandler->get($poll_id);
+            $poll_obj    = $pollHandler->get($poll_id);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll = $this->loadOldPoll($newbbConfig["poll_module"]);
@@ -213,7 +213,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param mixed $id
-     * @param null $var
+     * @param null  $var
      * @return mixed|null
      */
     public function &get($id, $var = null)
@@ -238,7 +238,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param object $object
-     * @param bool $force
+     * @param bool   $force
      * @return mixed
      */
     public function insert(&$object, $force = true)
@@ -261,7 +261,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $object
+     * @param      $object
      * @param bool $force
      * @return bool
      */
@@ -278,7 +278,7 @@ class NewbbTopicHandler extends ArtObjectHandler
             return false;
         }
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $posts_obj    = $postHandler->getAll(new Criteria('topic_id', $topic_id));
+        $posts_obj   = $postHandler->getAll(new Criteria('topic_id', $topic_id));
         foreach (array_keys($posts_obj) as $post_id) {
             $postHandler->approve($posts_obj[$post_id]);
         }
@@ -311,11 +311,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     {
         $topic = null;
         if (!empty($action)) {
-            $sql = "SELECT * FROM " . $this->table .
-                   " WHERE 1=1" .
-                   (($forum_id > 0) ? " AND forum_id=" . (int)($forum_id) : "") .
-                   " AND topic_id " . (($action > 0) ? ">" : "<") . (int)($topic_id) .
-                   " ORDER BY topic_id " . (($action > 0) ? "ASC" : "DESC") . " LIMIT 1";
+            $sql = "SELECT * FROM " . $this->table . " WHERE 1=1" . (($forum_id > 0) ? " AND forum_id=" . (int)($forum_id) : "") . " AND topic_id " . (($action > 0) ? ">" : "<") . (int)($topic_id) . " ORDER BY topic_id " . (($action > 0) ? "ASC" : "DESC") . " LIMIT 1";
             if ($result = $this->db->query($sql)) {
                 if ($row = $this->db->fetchArray($result)) {
                     $topic =& $this->create(false);
@@ -352,7 +348,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $topic
+     * @param        $topic
      * @param string $type
      * @return mixed
      */
@@ -372,7 +368,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         $criteria = new CriteriaCompo(new Criteria("topic_id", $topic->getVar('topic_id')));
         $criteria->add(new Criteria("approved", $approved));
         $postHandler =& xoops_getmodulehandler("post", "newbb");
-        $count        = $postHandler->getCount($criteria);
+        $count       = $postHandler->getCount($criteria);
 
         return $count;
     }
@@ -396,8 +392,8 @@ class NewbbTopicHandler extends ArtObjectHandler
             return $post;
         }
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $myrow        = $this->db->fetchArray($result);
-        $post         =& $postHandler->create(false);
+        $myrow       = $this->db->fetchArray($result);
+        $post        =& $postHandler->create(false);
         $post->assignVars($myrow);
 
         return $post;
@@ -421,11 +417,11 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $topic
+     * @param        $topic
      * @param string $order
-     * @param int $perpage
-     * @param $start
-     * @param int $post_id
+     * @param int    $perpage
+     * @param        $start
+     * @param int    $post_id
      * @param string $type
      * @return array
      */
@@ -483,7 +479,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $postArray
+     * @param     $postArray
      * @param int $pid
      * @return mixed
      */
@@ -531,7 +527,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param $topic
+     * @param      $topic
      * @param bool $isApproved
      * @return array
      */
@@ -556,7 +552,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param object $topic
-     * @param bool $force
+     * @param bool   $force
      * @return bool
      */
     public function delete(&$topic, $force = true)
@@ -565,7 +561,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         if (empty($topic_id)) {
             return false;
         }
-        $post_obj     =& $this->getTopPost($topic_id);
+        $post_obj    =& $this->getTopPost($topic_id);
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
         $postHandler->delete($post_obj, false, $force);
 
@@ -581,8 +577,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     // parameter: $type: 'post', 'view',  'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach'
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
     /**
-     * @param $forum
-     * @param int $topic_locked
+     * @param        $forum
+     * @param int    $topic_locked
      * @param string $type
      * @return bool
      */
@@ -603,7 +599,7 @@ class NewbbTopicHandler extends ArtObjectHandler
             $permission = false;
         } else {
             $permHandler =& xoops_getmodulehandler('permission', 'newbb');
-            $permission   = $permHandler->getPermission("forum", $type, $forum_id);
+            $permission  = $permHandler->getPermission("forum", $type, $forum_id);
         }
 
         return $permission;
@@ -626,7 +622,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * clean expired objects from database
      *
-     * @param  int  $expire time limit for expiration
+     * @param  int $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)
@@ -662,7 +658,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         }
 
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $criteria     = new CriteriaCompo();
+        $criteria    = new CriteriaCompo();
         $criteria->add(new criteria("topic_id", $object->getVar("topic_id")), "AND");
         $criteria->add(new criteria("approved", 1), "AND");
         $post_ids = $postHandler->getIds($criteria);
@@ -714,7 +710,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * find poll module that is in used in the current newbb installtion.
      * @access public
-     * @param  array  $pollDirs dirnames of all active poll modules
+     * @param  array $pollDirs dirnames of all active poll modules
      * @return string $dir_def | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic

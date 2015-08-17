@@ -2,28 +2,28 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @since        4.3
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @since          4.3
  * @version        $Id $
  * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-define("NEWBB_FUNCTIONS_TEXT_LOADED", true);
+define('NEWBB_FUNCTIONS_TEXT_LOADED', true);
 
-if (!defined("NEWBB_FUNCTIONS_TEXT")) {
-    define("NEWBB_FUNCTIONS_TEXT", 1);
+if (!defined('NEWBB_FUNCTIONS_TEXT')) {
+    define('NEWBB_FUNCTIONS_TEXT', 1);
     /**
      * function for select from a text where it have some keywords
      *
-     * @param  text $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
-     * @param $queryarray
-     * @param int $selectstartlag
-     * @param int $selectlength
-     * @param bool $striptags
+     * @param  text  $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
+     * @param        $queryarray
+     * @param int    $selectstartlag
+     * @param int    $selectlength
+     * @param bool   $striptags
      * @param string $excludetags
      * @param string $start_trimmarker
      * @param string $end_trimmarker
@@ -39,7 +39,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
         $lengtharray          = array_map('strlen', $queryarray);
         $maxlengthquery       = max($lengtharray);
         $lengthend_trimmarker = strlen($end_trimmarker);
-        $select_text          = "";
+        $select_text          = '';
         $startpos             = 0;
         $endpos               = strlen($sanitized_text);
         while ($startpos < $endpos) {
@@ -54,9 +54,9 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
             }
             $start  = max(($pos - $selectstartlag), ($startpos - $maxlengthquery), 0); // $startpos is the last position in the previous select text
             $length = $maxlengthquery + $selectlength; //xoops_local("strlen", $query) + 200;
-            $select_text .= "<p>";
-            $select_text .= ($start > 0) ? $start_trimmarker . " " : " ";
-            $select_text .= xoops_substr($sanitized_text, $start, $length + $lengthend_trimmarker + 1, " " . $end_trimmarker) . "</p>";
+            $select_text .= '<p>';
+            $select_text .= ($start > 0) ? $start_trimmarker . ' ' : ' ';
+            $select_text .= xoops_substr($sanitized_text, $start, $length + $lengthend_trimmarker + 1, ' ' . $end_trimmarker) . '</p>';
             $startpos = $start + $length + 1; // start searching from next position.
         }
         if (empty($select_text)) {
@@ -69,7 +69,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
      * function for highlight a text when it have some keywords
      *
      * @param  text $text , array text $queryarray
-     * @param $queryarray
+     * @param       $queryarray
      * @return text $highlight_text
      */
 
@@ -83,7 +83,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
         $highlight_text = $text;
         foreach ($queryarray as $key => $query) {
             // use preg_replace instead of str_replace to exclude all $queries inside html span tag
-            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query) . ")/si", newbb_highlighter($query, $key), $highlight_text);
+            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query) . ')/si', newbb_highlighter($query, $key), $highlight_text);
         }
 
         return $highlight_text;
@@ -93,7 +93,7 @@ if (!defined("NEWBB_FUNCTIONS_TEXT")) {
      * function for highlighting search results
      *
      * @param  text $query , int $i
-     * @param $i
+     * @param       $i
      * @return unknown
      */
     function newbb_highlighter($query, $i)

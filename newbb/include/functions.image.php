@@ -127,13 +127,13 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
             if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                 $cur_dir     = __DIR__;
-                $src_file_im = '"' . $cur_dir . '\\' . strtr($src_file, '/', '\\') . '"';
-                $new_file_im = '"' . $cur_dir . '\\' . strtr($new_file, '/', '\\') . '"';
+                $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $src_file) . '"';
+                $new_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $new_file) . '"';
             } else {
                 $src_file_im = @escapeshellarg($src_file);
                 $new_file_im = @escapeshellarg($new_file);
             }
-            $path           = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? "" : $GLOBALS['xoopsModuleConfig']['path_magick'] . "/";
+            $path           = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
             $magick_command = $path . 'convert -quality 85 -antialias -sample ' . $newWidth . 'x' . $newHeight . ' ' . $src_file_im . ' +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
 
             @passthru($magick_command);
@@ -178,7 +178,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (in_array($type, $supported_types)) {
             switch ($type) {
-                case 1 :
+                case 1:
                     if (!function_exists('imagecreatefromgif')) {
                         return false;
                     }
@@ -189,7 +189,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                     imagedestroy($im);
                     imagedestroy($new_im);
                     break;
-                case 2 :
+                case 2:
                     $im     = imagecreatefromjpeg($src_file);
                     $new_im = $imageCreateFunction($newWidth, $newHeight);
                     imagecopyresized($new_im, $im, 0, 0, 0, 0, $newWidth, $newHeight, $imginfo[0], $imginfo[1]);
@@ -197,7 +197,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                     imagedestroy($im);
                     imagedestroy($new_im);
                     break;
-                case 3 :
+                case 3:
                     $im     = imagecreatefrompng($src_file);
                     $new_im = $imageCreateFunction($newWidth, $newHeight);
                     imagecopyresized($new_im, $im, 0, 0, 0, 0, $newWidth, $newHeight, $imginfo[0], $imginfo[1]);

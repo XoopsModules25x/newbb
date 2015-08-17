@@ -2,11 +2,11 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @author      The Persian Xoops Support Site <www.xoops.ir>
- * @since        4.3
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @author         The Persian Xoops Support Site <www.xoops.ir>
+ * @since          4.3
  * @version        $Id $
  * @package        module::newbb
  */
@@ -77,8 +77,7 @@ function newbb_list_topic_show($options)
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $optionsForum
-                            ));
+                                'forum'      => $optionsForum));
     $block = array();
     // headers to display in block
     $block['headers'] = $topicRenderer->getHeader($options[8]);
@@ -108,8 +107,8 @@ function newbb_list_topic_edit($options)
 
     // status element
     $optionsStatus = explode(',', $options[0]);
-    $statusEle      = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $optionsStatus, 5, true);
-    $status         = $topicRenderer->getStatus($topicRenderer->userlevel); // get all public status + admin status (admin mode, pending deleted)
+    $statusEle     = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $optionsStatus, 5, true);
+    $status        = $topicRenderer->getStatus($topicRenderer->userlevel); // get all public status + admin status (admin mode, pending deleted)
     $statusEle->addOptionArray($status);
     $statusEle->setExtra("onchange = \"validate('options[0][]','select', true)\""); // if user dont select any option it select "all"
     $statusEle->setDescription(_MB_NEWBB_CRITERIA_DESC);
@@ -179,19 +178,19 @@ function newbb_list_topic_edit($options)
     //  forum element
     $optionsForum = explode(',', $options[12]);
     mod_loadFunctions("forum", "newbb");
-    $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map("intval", $optionsForum));
-    $isAll         = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $forumSel      = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
+    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel .= "<option value=\"0\" ";
     if ($isAll) {
         $forumSel .= " selected";
         $accessForums = null; // just select _ALL option
     }
     $forumSel .= ">" . _ALL . "</option>";
-    $forumSel .= newbb_forumSelectBox($accessForums, "access", false); //$accessForums, $permission = "access", $delimitor_category = false
+    $forumSel .= newbb_forumSelectBox($accessForums, "access", false); //$accessForums, $permission = "access", $delimitorCategory = false
     $forumSel .= "</select>";
     $forumEle = new XoopsFormLabel(_MB_NEWBB_FORUMLIST, $forumSel);
 

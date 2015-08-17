@@ -27,8 +27,7 @@ foreach (array(
              'pid',
              'start',
              'isreply',
-             'isedit'
-         ) as $getint) {
+             'isedit') as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
 }
 
@@ -68,10 +67,10 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
 
     $captcha_invalid = false;
     if (!is_object($GLOBALS['xoopsUser']) && XoopsRequest::getString('uname', '', 'POST') && XoopsRequest::getString('pass', '', 'POST')) {
-        $uname          = XoopsRequest::getString('uname', '', 'POST');
-        $pass           = XoopsRequest::getString('pass', '', 'POST');
+        $uname         = XoopsRequest::getString('uname', '', 'POST');
+        $pass          = XoopsRequest::getString('pass', '', 'POST');
         $memberHandler = &xoops_gethandler('member');
-        $user           = $memberHandler->loginUser(addslashes($myts->stripSlashesGPC($uname)), addslashes($myts->stripSlashesGPC($pass)));
+        $user          = $memberHandler->loginUser(addslashes($myts->stripSlashesGPC($uname)), addslashes($myts->stripSlashesGPC($pass)));
         if (is_object($user) && 0 < $user->getVar('level')) {
             if (XoopsRequest::getString('login', '', 'POST')) {
                 $user->setVar('last_login', time());
@@ -88,8 +87,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                     $_SESSION['xoopsUserTheme'] = $user_theme;
                 }
             }
-            $GLOBALS['xoopsUser']        =& $user;
-            $xoopsUserIsAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
+            $GLOBALS['xoopsUser'] =& $user;
+            $xoopsUserIsAdmin     = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
         }
     }
     if (!is_object($GLOBALS['xoopsUser'])) {
@@ -134,9 +133,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
         $topic_status = $topic_obj->getVar('topic_status');
-        if ($topicHandler->getPermission($forum_obj, $topic_status, 'edit')
-            && ($isadmin || ($post_obj->checkTimelimit('edit_timelimit') && $post_obj->checkIdentity()))
-        ) {
+        if ($topicHandler->getPermission($forum_obj, $topic_status, 'edit') && ($isadmin || ($post_obj->checkTimelimit('edit_timelimit') && $post_obj->checkIdentity()))) {
         } else {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NORIGHTTOEDIT);
         }
@@ -192,10 +189,10 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     $icon          = (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '', 'POST') : '');
     $attachsig     = XoopsRequest::getBool('attachsig', false, 'POST') && $topicHandler->getPermission($forum_obj, $topic_status, 'signature');
     $view_require  = XoopsRequest::getString('view_require', '', 'POST');
-    $post_karma    = ($view_require === 'require_karma') ?  XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
+    $post_karma    = ($view_require === 'require_karma') ? XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
     $require_reply = ($view_require === 'require_reply');
     $post_obj->setVar('subject', $subject);
-    $editwhy =  xoops_trim(XoopsRequest::getString('editwhy', '', 'POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
+    $editwhy = xoops_trim(XoopsRequest::getString('editwhy', '', 'POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
 
     if ($dohtml && !newbb_isAdmin($forum_obj)) {
         //$message=newbb_textFilter($message);
@@ -215,8 +212,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $post_obj->setPostEdit($poster_name, $editwhy);
     } // is reply
 
-//    $attachments_tmp = array();
-//    if (!empty($_POST["attachments_tmp"])) {
+    //    $attachments_tmp = array();
+    //    if (!empty($_POST["attachments_tmp"])) {
     if (XoopsRequest::getString('attachments_tmp', '', 'POST')) {
         $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp', '', 'POST')));
         if (XoopsRequest::getArray('delete_tmp', null, 'POST') && count(XoopsRequest::getArray('delete_tmp', null, 'POST')) > 1) {
@@ -240,13 +237,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new newbb_uploader(
-            $uploaddir,
-            $forum_obj->getVar('attach_ext'),
-            (int)($maxfilesize),
-            (int)($GLOBALS['xoopsModuleConfig']['max_img_width']),
-            (int)($GLOBALS['xoopsModuleConfig']['max_img_height'])
-        );
+        $uploader = new newbb_uploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
 
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
@@ -264,13 +255,13 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             $uploader->setCheckMediaTypeByExt();
             $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
             if ($uploader->fetchMedia($temp[0])) {
-                $prefix = is_object($GLOBALS['xoopsUser']) ? (string) ($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
+                $prefix = is_object($GLOBALS['xoopsUser']) ? (string)($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = &$uploader->getErrors();
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
-                        if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . "/" . $uploader->getSavedFileName()))) {
+                        if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
                             $post_obj->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
                         }
                     }
@@ -291,11 +282,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     newbb_setsession('LP', time()); // Recording last post time
     $topic_obj =& $topicHandler->get($post_obj->getVar('topic_id'));
     $uid       = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-    if (newbb_isAdmin($forum_obj)
-        ||
-        ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id === 0 || $uid === $topic_obj->getVar('topic_poster'))
-        )
-    ) {
+    if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id === 0 || $uid === $topic_obj->getVar('topic_poster')))) {
         $topic_obj->setVar('type_id', XoopsRequest::getInt('type_id', 0, 'POST'));
     }
 
@@ -316,15 +303,15 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     $post_obj->loadFilters(empty($isnew) ? 'update' : 'insert');
 
     // Define tags for notification message
-    if ($approved && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled']) && !empty($isnew)) {
+    if (!empty($isnew) && $approved && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
         $tags                = array();
         $tags['THREAD_NAME'] = XoopsRequest::getString('subject', '', 'POST');
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
         $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
         include_once 'include/notification.inc.php';
-        $forum_info           = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
-        $tags['FORUM_NAME']   = $forum_info['name'];
-        $tags['FORUM_URL']    = $forum_info['url'];
+        $forum_info          = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
+        $tags['FORUM_NAME']  = $forum_info['name'];
+        $tags['FORUM_URL']   = $forum_info['url'];
         $notificationHandler =& xoops_gethandler('notification');
         if (empty($isreply)) {
             // Notify of new thread
@@ -363,28 +350,19 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         }
         // Update user
         if ($uid > 0) {
-            $sql = 'SELECT count(*)' .
-                   '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') .
-                   '    WHERE approved=1 AND topic_poster =' . $uid;
+            $sql = 'SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '    WHERE approved=1 AND topic_poster =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $sql = '    SELECT count(*)' .
-                   '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') .
-                   '    WHERE approved=1 AND topic_digest > 0 AND topic_poster =' . $uid;
+            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '    WHERE approved=1 AND topic_digest > 0 AND topic_poster =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $sql = '    SELECT count(*), MAX(post_time)' .
-                   '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') .
-                   '    WHERE approved=1 AND uid =' . $uid;
+            $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '    WHERE approved=1 AND uid =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF(
-                '    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') .
-                "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'"
-            );
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $postid;
@@ -401,7 +379,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     }
 }
 
-$xoopsOption['template_main'] = 'newbb_edit_post.tpl';
+$xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
@@ -413,7 +391,7 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
     $attachments_tmp = array();
     if (XoopsRequest::getArray('attachments_tmp', null, 'POST')) {
         $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp', array(), 'POST')));
-        if (XoopsRequest::getArray('delete_tmp', null, 'POST')  && count(XoopsRequest::getArray('delete_tmp', null, 'POST'))) {
+        if (XoopsRequest::getArray('delete_tmp', null, 'POST') && count(XoopsRequest::getArray('delete_tmp', null, 'POST'))) {
             foreach (XoopsRequest::getArray('delete_tmp', '', 'POST') as $key) {
                 unlink($uploaddir = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]));
                 unset($attachments_tmp[$key]);
@@ -427,13 +405,7 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new newbb_uploader(
-            $uploaddir,
-            $forum_obj->getVar('attach_ext'),
-            (int)($maxfilesize),
-            (int)($GLOBALS['xoopsModuleConfig']['max_img_width']),
-            (int)($GLOBALS['xoopsModuleConfig']['max_img_height'])
-        );
+        $uploader = new newbb_uploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
                 case 1:
@@ -450,17 +422,16 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
             $uploader->setCheckMediaTypeByExt();
             $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
             if ($uploader->fetchMedia($temp[0])) {
-                $prefix = is_object($GLOBALS['xoopsUser']) ? (string) ($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
+                $prefix = is_object($GLOBALS['xoopsUser']) ? (string)($GLOBALS['xoopsUser']->uid()) . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = &$uploader->getErrors();
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
-                        $attachments_tmp[(string) (time())] = array(
+                        $attachments_tmp[(string)(time())] = array(
                             $uploader->getSavedFileName(),
                             $uploader->getMediaName(),
-                            $uploader->getMediaType()
-                        );
+                            $uploader->getMediaType());
                     }
                 }
             } else {
@@ -475,13 +446,13 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
         $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp', '', 'POST')));
     }
 
-    $p_subject = $myts->htmlspecialchars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
+    $p_subject = &$myts->htmlspecialchars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
     $dosmiley  = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml    = XoopsRequest::getInt('dohtml', 0, 'POST');
     $doxcode   = XoopsRequest::getInt('doxcode', 0, 'POST');
     $dobr      = XoopsRequest::getInt('dobr', 0, 'POST');
     $p_message = XoopsRequest::getString('message', '', 'POST');
-    $p_message = $myts->previewTarea($p_message, $dohtml, $dosmiley, $doxcode, 1, $dobr);
+    $p_message = &$myts->previewTarea($p_message, $dohtml, $dosmiley, $doxcode, 1, $dobr);
     $p_date    = formatTimestamp(time());
     if ($post_obj->isNew()) {
         if (is_object($GLOBALS['xoopsUser'])) {
@@ -500,12 +471,11 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
     $post_preview = array(
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
-        'content' => $p_message
-    );
+        'content' => $p_message);
     $xoopsTpl->assign_by_ref('post_preview', $post_preview);
 }
 
-if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'POST') ||  XoopsRequest::getString('contents_preview', null, 'GET') || XoopsRequest::getString('editor', '', 'POST')) {
+if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'GET') || XoopsRequest::getString('editor', '', 'POST')) {
     $editor        = XoopsRequest::getString('editor', '', 'POST');
     $dosmiley      = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml        = XoopsRequest::getInt('dohtml', 0, 'POST');

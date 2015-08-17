@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  * @param XoopsModule $module
@@ -66,20 +66,9 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
             );
     */
 
-    $sql = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS t, ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' .
-           '    SET t.dohtml = p.dohtml, ' .
-           '        t.dosmiley = p.dosmiley, ' .
-           '        t.doxcode = p.doxcode, ' .
-           '        t.doimage = p.doimage, ' .
-           '        t.dobr = p.dobr' .
-           '    WHERE p.post_id =t.post_id ';
+    $sql = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS t, ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' . '    SET t.dohtml = p.dohtml, ' . '        t.dosmiley = p.dosmiley, ' . '        t.doxcode = p.doxcode, ' . '        t.doimage = p.doimage, ' . '        t.dobr = p.dobr' . '    WHERE p.post_id =t.post_id ';
     if ($GLOBALS['xoopsDB']->queryF($sql)) {
-        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') .
-               '        DROP `dohtml`,' .
-               '        DROP `dosmiley`,' .
-               '        DROP `doxcode`,' .
-               '        DROP `doimage`,' .
-               '        DROP `dobr`';
+        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '        DROP `dohtml`,' . '        DROP `dosmiley`,' . '        DROP `doxcode`,' . '        DROP `doimage`,' . '        DROP `dobr`';
         $GLOBALS['xoopsDB']->queryF($sql);
     } else {
         xoops_error($GLOBALS['xoopsDB']->error() . '<br />' . $sql);
@@ -89,8 +78,7 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
     if (function_exists('tag_getTagHandler') && $tag_handler =& tag_getTagHandler()) {
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
-        $sql = '    SELECT topic_id, topic_tags' .
-               "    FROM {$table_topic}";
+        $sql = '    SELECT topic_id, topic_tags' . "    FROM {$table_topic}";
         if (($result = $GLOBALS['xoopsDB']->query($sql)) === false) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
@@ -115,18 +103,8 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         return true;
     }
 
-    $GLOBALS['xoopsDB']->queryF(
-        '    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type') .
-        '        (`type_id`, `type_name`, `type_color`)' .
-        '    SELECT `type_id`, `type_name`, `type_color`' .
-        '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp')
-    );
-    $GLOBALS['xoopsDB']->queryF(
-        '    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum') .
-        '        (`type_id`, `forum_id`, `type_order`)' .
-        '    SELECT `type_id`, `forum_id`, `type_order`' .
-        '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp')
-    );
+    $GLOBALS['xoopsDB']->queryF('    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type') . '        (`type_id`, `type_name`, `type_color`)' . '    SELECT `type_id`, `type_name`, `type_color`' . '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
+    $GLOBALS['xoopsDB']->queryF('    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum') . '        (`type_id`, `forum_id`, `type_order`)' . '    SELECT `type_id`, `forum_id`, `type_order`' . '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));
 
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));

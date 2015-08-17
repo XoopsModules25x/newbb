@@ -33,10 +33,10 @@ include_once __DIR__ . '/read.php';
 /**
  * A handler for read/unread handling
  *
- * @package     newbb
+ * @package       newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
- * @copyright    copyright (c) 2005 XOOPS.org
+ * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Readtopic extends Read
 {
@@ -96,8 +96,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     }
 
     /**
-     * @param int $status
-     * @param int $forum_id
+     * @param int  $status
+     * @param int  $forum_id
      * @param null $uid
      * @return bool
      */
@@ -125,7 +125,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
         $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria     = new CriteriaCompo(new Criteria("forum_id", $forum_id));
+        $criteria    = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria->setSort("topic_last_post_id");
         $criteria->setOrder("DESC");
         $criteria->setLimit($this->items_per_forum);
@@ -137,7 +137,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
                     unset($cookie_vars[$var]);
                 }
             } else {
-                $cookie_vars[$var] = time() /*$items[$var]*/;
+                $cookie_vars[$var] = time() /*$items[$var]*/
+                ;
             }
         }
         newbb_setcookie($cookie_name, $cookie_vars);
@@ -161,7 +162,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             }
         }
 
-        $itemHandler   =& xoops_getmodulehandler('topic', 'newbb');
+        $itemHandler    =& xoops_getmodulehandler('topic', 'newbb');
         $criteria_topic = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria_topic->setSort("topic_last_post_id");
         $criteria_topic->setOrder("DESC");
@@ -183,7 +184,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $items_obj  =& $itemHandler->getAll($criteria_topic, array("topic_last_post_id"));
         $sticky_obj =& $itemHandler->getAll($criteria_sticky, array("topic_last_post_id"));
         $items_obj += $sticky_obj;
-        $items      = array();
+        $items = array();
         foreach (array_keys($items_obj) as $key) {
             $items[$key] = $items_obj[$key]->getVar("topic_last_post_id");
         }

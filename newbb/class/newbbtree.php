@@ -42,7 +42,7 @@ class Newbbtree extends XoopsTree
     public $postArray = '';
 
     /**
-     * @param $table_name
+     * @param        $table_name
      * @param string $id_name
      * @param string $pid_name
      */
@@ -61,7 +61,7 @@ class Newbbtree extends XoopsTree
     }
 
     /**
-     * @param $sel_id
+     * @param        $sel_id
      * @param string $order
      */
     public function getAllPostArray($sel_id, $order = '')
@@ -79,8 +79,8 @@ class Newbbtree extends XoopsTree
 
     // returns an array of first child objects for a given id($sel_id)
     /**
-     * @param $postTree_array
-     * @param int $pid
+     * @param        $postTree_array
+     * @param int    $pid
      * @param string $prefix
      * @return bool
      */
@@ -94,15 +94,15 @@ class Newbbtree extends XoopsTree
         $prefix .= $this->increment;
         foreach ($this->postArray as $post) {
             if ($post->getVar('pid') === $pid) {
-                $postTree_array[] = array('prefix'      => $prefix,
-                                          'icon'        => $post->getVar('icon'),
-                                          'post_time'   => $post->getVar('post_time'),
-                                          'post_id'     => $post->getVar('post_id'),
-                                          'forum_id'    => $post->getVar('forum_id'),
-                                          'subject'     => $post->getVar('subject'),
-                                          'poster_name' => $post->getVar('poster_name'),
-                                          'uid'         => $post->getVar('uid')
-                );
+                $postTree_array[] = array(
+                    'prefix'      => $prefix,
+                    'icon'        => $post->getVar('icon'),
+                    'post_time'   => $post->getVar('post_time'),
+                    'post_id'     => $post->getVar('post_id'),
+                    'forum_id'    => $post->getVar('forum_id'),
+                    'subject'     => $post->getVar('subject'),
+                    'poster_name' => $post->getVar('poster_name'),
+                    'uid'         => $post->getVar('uid'));
                 $this->getPostTree($postTree_array, $post->getVar('post_id'), $prefix);
             } else {
                 $newPostArray[] = $post;

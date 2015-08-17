@@ -94,7 +94,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     }
     $topics_number = count($topics);
     $topic_list    = implode(',', $topics);
-    $post_list = '';
+    $post_list     = '';
 
     if ('' !== $topic_list) {
         $sql = 'SELECT post_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE topic_id IN (' . $topic_list . ')';
@@ -126,14 +126,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         } else {
             // ARCHIVING POSTS
             if ($archive === 1) {
-                $result = $GLOBALS['xoopsDB']->query(
-                    "SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " p, "
-                    . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
-                );
+                $result = $GLOBALS['xoopsDB']->query("SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " p, " . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
                 while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-                    $sql = $GLOBALS['xoopsDB']->query(
-                        "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, '$post_text')"
-                    );
+                    $sql = $GLOBALS['xoopsDB']->query("INSERT INTO " . $GLOBALS['xoopsDB']->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
                 }
             }
             // DELETE POSTS
@@ -174,17 +169,14 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
     $days = new XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
-    $days->addOptionArray(
-        array(
-            604800   => _AM_NEWBB_PRUNE_WEEK,
-            1209600  => _AM_NEWBB_PRUNE_2WEEKS,
-            2592000  => _AM_NEWBB_PRUNE_MONTH,
-            5184000  => _AM_NEWBB_PRUNE_2MONTH,
-            10368000 => _AM_NEWBB_PRUNE_4MONTH,
-            31536000 => _AM_NEWBB_PRUNE_YEAR,
-            63072000 => _AM_NEWBB_PRUNE_2YEARS
-        )
-    );
+    $days->addOptionArray(array(
+                              604800   => _AM_NEWBB_PRUNE_WEEK,
+                              1209600  => _AM_NEWBB_PRUNE_2WEEKS,
+                              2592000  => _AM_NEWBB_PRUNE_MONTH,
+                              5184000  => _AM_NEWBB_PRUNE_2MONTH,
+                              10368000 => _AM_NEWBB_PRUNE_4MONTH,
+                              31536000 => _AM_NEWBB_PRUNE_YEAR,
+                              63072000 => _AM_NEWBB_PRUNE_2YEARS));
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/footer.php"); // to include js files
@@ -192,7 +184,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = "<option value = 0 >-- " . _AM_NEWBB_PERM_FORUMS . " --</option>";
-    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$accessForums = nothing, $permission = "access", $delimitor_category = false
+    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
     $forumSelBox .= "</select>";
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
     $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
@@ -235,17 +227,14 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $sform->addElement($lock_confirmation);
 
     $hot_confirmation = new XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
-    $hot_confirmation->addOptionArray(
-        array(
-            '0'  => 0,
-            '5'  => 5,
-            '10' => 10,
-            '15' => 15,
-            '20' => 20,
-            '25' => 25,
-            '30' => 30
-        )
-    );
+    $hot_confirmation->addOptionArray(array(
+                                          '0'  => 0,
+                                          '5'  => 5,
+                                          '10' => 10,
+                                          '15' => 15,
+                                          '20' => 20,
+                                          '25' => 25,
+                                          '30' => 30));
     $sform->addElement($hot_confirmation);
 
     $sform->addElement( /*$radiobox*/

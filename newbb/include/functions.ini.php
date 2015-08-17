@@ -79,9 +79,9 @@ function newbb_load_lang_file($filename, $module = '', $default = 'english')
     }
 
     $lang = $GLOBALS['xoopsConfig']['language'];
-    $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : '/modules/$module/') . 'language';
-    if (!($ret = @include_once('$path/$lang/$filename.php'))) {
-        $ret = @include_once('$path/$default/$filename.php');
+    $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : "/modules/$module/") . 'language';
+    if (!($ret = @include_once("$path/$lang/$filename.php"))) {
+        $ret = @include_once("$path/$default/$filename.php");
     }
 
     return $ret;

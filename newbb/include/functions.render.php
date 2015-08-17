@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -31,7 +31,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     }
 
     /**
-     * @param $text
+     * @param     $text
      * @param int $html
      * @param int $smiley
      * @param int $xcode
@@ -57,14 +57,14 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
             // decode xcode
             if ($image !== 0) {
                 // image allowed
-                $text = $myts->xoopsCodeDecode($text);
+                $text = &$myts->xoopsCodeDecode($text);
             } else {
                 // image not allowed
-                $text = $myts->xoopsCodeDecode($text, 0);
+                $text = &$myts->xoopsCodeDecode($text, 0);
             }
         }
         if ($br !== 0) {
-            $text = $myts->nl2Br($text);
+            $text = &$myts->nl2Br($text);
         }
         $text = $myts->codeConv($text, $xcode, $image);    // Ryuji_edit(2003-11-18)
 
@@ -85,11 +85,11 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     /**
      * Display forrum button
      *
-     * @param $link
-     * @param $button
-     * @param  string $alt alt message
+     * @param          $link
+     * @param          $button
+     * @param  string  $alt     alt message
      * @param  boolean $asImage true for image mode; false for text mode
-     * @param  string $extra extra attribute for the button
+     * @param  string  $extra   extra attribute for the button
      * @return mixed
      * @internal param string $image image/button name, without extension
      */
@@ -106,10 +106,10 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     /**
      * Display forrum images
      *
-     * @param  string $image image name, without extension
-     * @param  string $alt alt message
+     * @param  string  $image   image name, without extension
+     * @param  string  $alt     alt message
      * @param  boolean $display true for return image anchor; faulse for assign to $xoopsTpl
-     * @param  string $extra extra attribute for the image
+     * @param  string  $extra   extra attribute for the image
      * @return mixed
      */
     function newbbDisplayImage($image, $alt = '', $display = true, $extra = "class='forum_icon'")

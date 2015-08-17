@@ -35,7 +35,6 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $GPC = '_POST';
 }
 
-
 foreach (array('post_id', 'order', 'forum', 'topic_id') as $getint) {
     ${$getint} = (int)(@${$GPC}[$getint]);
 }
@@ -70,7 +69,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         xoops_error($error_message);
     } else {
         $reportHandler =& xoops_getmodulehandler('report', 'newbb');
-        $report         =& $reportHandler->create();
+        $report        =& $reportHandler->create();
         $report->setVar('report_text', XoopsRequest::getString('report_text', '', 'POST'));
         $report->setVar('post_id', XoopsRequest::getInt($post_id, 0, 'POST'));
         $report->setVar('report_time', time());
@@ -86,8 +85,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $forum_obj =& $forumHandler->get($forum);
 
             if (is_object($forum_obj)) {
-                $mods           = $forum_obj->getVar('forum_moderator');
-                $emails         = array();
+                $mods          = $forum_obj->getVar('forum_moderator');
+                $emails        = array();
                 $memberHandler =& xoops_gethandler('member');
                 foreach ($mods as $mod) {
                     $thisUser =& $memberHandler->getUser($mod);
@@ -121,8 +120,8 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 
 $postHandler =& xoops_getmodulehandler('post', 'newbb');
-$post_obj     =& $postHandler->get($post_id);
-$forum        = $post_obj->getVar('forum_id');
+$post_obj    =& $postHandler->get($post_id);
+$forum       = $post_obj->getVar('forum_id');
 
 //$report_form->addElement(new XoopsFormHidden('pid', $pid));
 $report_form->addElement(new XoopsFormHidden('post_id', $post_id));
@@ -162,6 +161,6 @@ $r_content .= _MD_BY . ' ' . $r_name . ' ' . _MD_ON . ' ' . $r_date . '<br /><br
 $r_content .= $r_message;
 
 echo "<br /><table cellpadding='4' cellspacing='1' width='98%' class='outer'><tr><td class='head'>" . $r_subject . '</td></tr>';
-echo "<tr><td><br />" . $r_content . "<br /></td></tr></table>";
+echo '<tr><td><br />' . $r_content . '<br /></td></tr></table>';
 
 include $GLOBALS['xoops']->path('footer.php');

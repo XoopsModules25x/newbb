@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -158,21 +158,18 @@ class newbbUser
             static $rpg_images;
             if (!isset($rpg_images)) {
                 $iconHandler = newbbGetIconHandler();
-                $rpg_path     = $iconHandler->getPath("rpg");
+                $rpg_path    = $iconHandler->getPath("rpg");
                 foreach (array("img_left", "img_backing", "img_right", "blue", "green", "orange") as $img) {
                     // irmtfan fix: double "/" removed
                     $rpg_images[$img] = XOOPS_URL . $rpg_path . '/' . $img . '.gif';
                 }
             }
-// irmtfan hardcore removed align="left"
+            // irmtfan hardcore removed align="left"
             $table = "<table class='userlevel'><tr><td class='end'><img src='" . $rpg_images['img_left'] . "' alt='' /></td><td class='center' background='" . $rpg_images['img_backing'] . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='" . $rpg_images['img_right'] . "' alt='' /></td></tr></table>";
 
-            $info = _MD_LEVEL . " " . $level['level'] . "<br />" . _MD_HP . " " . $level['hp'] . " / " . $level['hp_max'] . "<br />" .
-                    sprintf($table, $rpg_images["orange"], $level['hp_width']);
-            $info .= _MD_MP . " " . $level['mp'] . " / " . $level['mp_max'] . "<br />" .
-                     sprintf($table, $rpg_images["green"], $level['mp_width']);
-            $info .= _MD_EXP . " " . $level['exp'] . "<br />" .
-                     sprintf($table, $rpg_images["blue"], $level['exp_width']);
+            $info = _MD_LEVEL . " " . $level['level'] . "<br />" . _MD_HP . " " . $level['hp'] . " / " . $level['hp_max'] . "<br />" . sprintf($table, $rpg_images["orange"], $level['hp_width']);
+            $info .= _MD_MP . " " . $level['mp'] . " / " . $level['mp_max'] . "<br />" . sprintf($table, $rpg_images["green"], $level['mp_width']);
+            $info .= _MD_EXP . " " . $level['exp'] . "<br />" . sprintf($table, $rpg_images["blue"], $level['exp_width']);
         } else {
             $info = _MD_LEVEL . " " . $level['level'] . "; " . _MD_EXP . " " . $level['exp'] . "<br />";
             $info .= _MD_HP . " " . $level['hp'] . " / " . $level['hp_max'] . "<br />";
@@ -188,7 +185,7 @@ class newbbUser
      */
     public function getInfo(&$user)
     {
-        global  $myts;
+        global $myts;
         static $name_anonymous;
 
         if (!(is_object($user)) || !($user->isActive())) {
@@ -220,7 +217,7 @@ class newbbUser
         // START hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         //checks for user's groups
         $userinfo["groups"] = array();
-        $memberHandler     =& xoops_gethandler('member');
+        $memberHandler      =& xoops_gethandler('member');
         $usergroups         =& $memberHandler->getGroupsByUser($userinfo["uid"], true);
         foreach ($usergroups as $group) {
             $userinfo["groups"][] = $group->getVar('name');
@@ -293,18 +290,18 @@ class NewbbUserHandler
         $image_offline = newbbDisplayImage('offline', _MD_OFFLINE);
 
         $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
-        $onlines        = $onlineHandler->checkStatus(array_keys($this->users));
+        $onlines       = $onlineHandler->checkStatus(array_keys($this->users));
 
         foreach (array_keys($this->users) as $uid) {
             $this->userlist[$uid]["status"] = empty($onlines[$uid]) ? $image_offline : $image_online;
         }
     }
-// START irmtfan remove function - no deprecated is needed because just use in this file
-//    function loadUserGroups()
-//    {
-//        return true;
-//    }
-// END irmtfan remove function - no deprecated is needed because just use in this file
+    // START irmtfan remove function - no deprecated is needed because just use in this file
+    //    function loadUserGroups()
+    //    {
+    //        return true;
+    //    }
+    // END irmtfan remove function - no deprecated is needed because just use in this file
 
     public function loadUserDigest()
     {
@@ -318,12 +315,12 @@ class NewbbUserHandler
             $this->userlist[$myrow['uid']]["digests"] = (int)($myrow['user_digests']);
         }
     }
-// START irmtfan remove function
-//    function loadUserRank()
-//    {
-//          return true;
-//    }
-// END irmtfan remove function
+    // START irmtfan remove function
+    //    function loadUserRank()
+    //    {
+    //          return true;
+    //    }
+    // END irmtfan remove function
 
     /**
      * @return array

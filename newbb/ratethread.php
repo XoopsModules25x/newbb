@@ -39,12 +39,9 @@ foreach (array('topic_id', 'rate', 'forum') as $var) {
     ${$var} = XoopsRequest::getInt($var, XoopsRequest::getInt($var, 0, 'POST'), 'GET');
 }
 
-$topicHandler = & xoops_getmodulehandler('topic', 'newbb');
-$topic_obj     = & $topicHandler->get($topic_id);
-if (!$topicHandler->getPermission($topic_obj->getVar("forum_id"), $topic_obj->getVar('topic_status'), 'post')
-    &&
-    !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
-) {
+$topicHandler = &xoops_getmodulehandler('topic', 'newbb');
+$topic_obj    = &$topicHandler->get($topic_id);
+if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post') && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }

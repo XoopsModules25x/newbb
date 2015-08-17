@@ -24,8 +24,7 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewforum.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(newtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
-        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i'
-    );
+        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i');
 
     $s = preg_replace_callback($search, 'replace_links', $s);
 
@@ -168,6 +167,7 @@ function replace_links($matches)
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
+
     //$ret = '<'.$matches[1].$matches[2].$matches[3].'='.$matches[4].XOOPS_URL.'/'.REAL_MODULE_NAME.'/'.$add_to_url.$req_string.$matches[7].$matches[8].'>';
     return $ret;
 }
@@ -187,7 +187,7 @@ function forum_seo_cat($_cat_id)
             return $ret;
         }
     }
-    $query  = "SELECT cat_id, cat_title FROM " . $GLOBALS['xoopsDB']->prefix('bb_categories');
+    $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_categories');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = array();
     while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -234,9 +234,7 @@ function forum_seo_forum($_cat_id)
  */
 function forum_seo_topic($_cat_id)
 {
-    $query  = 'SELECT    topic_title    FROM ' .
-              $GLOBALS['xoopsDB']->prefix('bb_topics') .
-              ' WHERE topic_id = ' . $_cat_id;
+    $query  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['topic_title']);
@@ -250,9 +248,7 @@ function forum_seo_topic($_cat_id)
  */
 function forum_seo_post($_cat_id)
 {
-    $query  = 'SELECT    subject    FROM ' .
-              $GLOBALS['xoopsDB']->prefix('bb_posts') .
-              ' WHERE post_id = ' . $_cat_id;
+    $query  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE post_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['subject']);
@@ -262,7 +258,7 @@ function forum_seo_post($_cat_id)
 
 /**
  * @param string $title
- * @param bool $withExt
+ * @param bool   $withExt
  * @return mixed|string
  */
 function forum_seo_title($title = '', $withExt = true)

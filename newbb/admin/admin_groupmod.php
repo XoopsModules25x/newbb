@@ -38,7 +38,7 @@ if (!$newXoopsModuleGui) {
 } else {
     echo $indexAdmin->addNavigation('admin_groupmod.php');
 }
-$memberHandler =&xoops_gethandler('member');
+$memberHandler =& xoops_gethandler('member');
 $forumHandler  = &xoops_getmodulehandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
@@ -67,13 +67,12 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $mess = _AM_NEWBB_GROUPMOD_ERRMOD . '<br /><small>( ' . $sql . ' )</small>';
         }
         redirect_header('admin_groupmod.php', 1, $mess);
-//        echo '<div class="confirmMsg">' . $mess . '</div><br /><br />';
+        //        echo '<div class="confirmMsg">' . $mess . '</div><br /><br />';
     }
 }
 
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
-echo "<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>"
-     . "<tr><td class='odd'>";
+echo "<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
 $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
 $criteriaCategory = new CriteriaCompo(new criteria('1', 1));

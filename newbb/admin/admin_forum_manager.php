@@ -96,14 +96,10 @@ switch ($op) {
             $forum_dest =& $forumHandler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
             if (is_object($forum_dest)) {
                 $cid         = $forum_dest->getVar("cat_id");
-                $sql         = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_posts') .
-                               "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
-                               "    WHERE forum_id=$forum_id";
+                $sql         = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_post = $GLOBALS['xoopsDB']->queryF($sql);
 
-                $sql          = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_topics') .
-                                "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') .
-                                "    WHERE forum_id=$forum_id";
+                $sql          = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_topics') . "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_topic = $GLOBALS['xoopsDB']->queryF($sql);
 
                 $forum_obj =& $forumHandler->get($forum_id);
@@ -170,11 +166,11 @@ switch ($op) {
         if ($forumHandler->insert($forum_obj)) {
             mod_clearCacheFile('forum', 'newbb');
             if (XoopsRequest::getInt('perm_template', 0, 'POST')) {
-                $grouppermHandler = & xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
-                $perm_template     = $grouppermHandler->getTemplate();
+                $grouppermHandler = &xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
+                $perm_template    = $grouppermHandler->getTemplate();
                 $memberHandler    =& xoops_gethandler('member');
-                $glist             = $memberHandler->getGroupList();
-                $perms             = $grouppermHandler->getValidForumPerms(true);
+                $glist            = $memberHandler->getGroupList();
+                $perms            = $grouppermHandler->getValidForumPerms(true);
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
                         $ids = $grouppermHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));

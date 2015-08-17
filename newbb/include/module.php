@@ -40,16 +40,16 @@ newbb_load_object();
 
 /**
  * @param XoopsModule $module
- * @param null $oldversion
+ * @param null        $oldversion
  * @return bool
  */
-function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
+function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 {
     //  START irmtfan to not run update script if user has the latest version.
     if ($oldversion === round($module->getInfo('version') * 100, 2)) {
         $module->setErrors('You have the latest ' . $module->getInfo('name') . ' module (' . $module->getInfo('dirname') . ' version ' . $module->getInfo('version') . ') and update is not necessary');
-//        print_r($module->getErrors());
-        echo ($module->getErrors());
+        //        print_r($module->getErrors());
+        echo($module->getErrors());
 
         return true;
     }
@@ -93,8 +93,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
     }
 
     if ($oldversion < 403) {
-        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') .
-               " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
+        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
@@ -155,7 +154,7 @@ function xoops_module_update_newbb(XoopsModule &$module, $oldversion = null)
  * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_update_newbb(XoopsModule &$module)
+function xoops_module_pre_update_newbb(XoopsModule $module)
 {
     return newbb_setModuleConfig($module, true);
 }
@@ -164,11 +163,11 @@ function xoops_module_pre_update_newbb(XoopsModule &$module)
  * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_pre_install_newbb(XoopsModule &$module)
+function xoops_module_pre_install_newbb(XoopsModule $module)
 {
     $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
-        $GLOBALS['xoopsDB']->queryF("DROP TABLE IF EXISTS " . $GLOBALS['xoopsDB']->prefix($table) . ';');
+        $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
     return newbb_setModuleConfig($module);
@@ -178,11 +177,11 @@ function xoops_module_pre_install_newbb(XoopsModule &$module)
  * @param XoopsModule $module
  * @return bool
  */
-function xoops_module_install_newbb(XoopsModule &$module)
+function xoops_module_install_newbb(XoopsModule $module)
 {
     /* Create a test category */
-    $categoryHandler = & xoops_getmodulehandler('category', $module->getVar('dirname'));
-    $category         = $categoryHandler->create();
+    $categoryHandler = &xoops_getmodulehandler('category', $module->getVar('dirname'));
+    $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
     $category->setVar('cat_description', _MI_NEWBB_INSTALL_CAT_DESC, true);
@@ -192,8 +191,8 @@ function xoops_module_install_newbb(XoopsModule &$module)
     }
 
     /* Create a forum for test */
-    $forumHandler = & xoops_getmodulehandler('forum', $module->getVar('dirname'));
-    $forum         = $forumHandler->create();
+    $forumHandler = &xoops_getmodulehandler('forum', $module->getVar('dirname'));
+    $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
     $forum->setVar('forum_moderator', array());
@@ -205,10 +204,10 @@ function xoops_module_install_newbb(XoopsModule &$module)
     $forum_id = $forumHandler->insert($forum);
 
     /* Set corresponding permissions for the category and the forum */
-    $module_id     = $module->getVar('mid');
-    $gpermHandler = & xoops_gethandler('groupperm');
-    $groups_view   = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-    $groups_post   = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
+    $module_id    = $module->getVar('mid');
+    $gpermHandler = &xoops_gethandler('groupperm');
+    $groups_view  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+    $groups_post  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
     $post_items = array('post', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove', 'type', 'html', 'signature', 'pdf', 'print');
     foreach ($groups_view as $group_id) {
@@ -224,8 +223,8 @@ function xoops_module_install_newbb(XoopsModule &$module)
 
     /* Create a test post */
     mod_loadFunctions('user', 'newbb');
-    $postHandler = & xoops_getmodulehandler('post', $module->getVar('dirname'));
-    $forumpost    = $postHandler->create();
+    $postHandler = &xoops_getmodulehandler('post', $module->getVar('dirname'));
+    $forumpost   = $postHandler->create();
     $forumpost->setVar('poster_ip', newbb_getIP());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
     $forumpost->setVar('approved', 1);
@@ -245,7 +244,7 @@ function xoops_module_install_newbb(XoopsModule &$module)
 }
 
 /**
- * @param $module
+ * @param      $module
  * @param bool $isUpdate
  * @return bool
  */

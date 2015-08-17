@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -15,10 +15,10 @@
 /**
  * A handler for User moderation management
  *
- * @package     newbb
+ * @package       newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
- * @copyright    copyright (c) 2005 XOOPS.org
+ * @copyright     copyright (c) 2005 XOOPS.org
  */
 //class Moderate extends ArtObject {
 class Moderate extends XoopsObject
@@ -50,7 +50,6 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, 'bb_moderates', 'Moderate', 'mod_id', 'uid');
     }
 
-
     /**
      * Clear garbage
      *
@@ -69,9 +68,9 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param int $uid user id
-     * @param string $ip user ip
-     * @param int $forum
+     * @param int    $uid user id
+     * @param string $ip  user ip
+     * @param int    $forum
      * @return bool
      */
     public function verifyUser($uid = -1, $ip = "", $forum = 0)
@@ -99,7 +98,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             $ip_criteria = "1=1";
         }
-        $forumCriteria  = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . (int)($forum);
+        $forumCriteria   = empty($forum) ? "forum_id=0" : "forum_id=0 OR forum_id=" . (int)($forum);
         $expire_criteria = "mod_end > " . time();
         $sql             = sprintf("SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)", $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
@@ -115,8 +114,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Store the list into session if module cache is enabled
      *
      *
-     * @param int $uid user id
-     * @param string $ip user ip
+     * @param int    $uid user id
+     * @param string $ip  user ip
      * @return array
      */
     public function forumList($uid = -1, $ip = '')
@@ -166,7 +165,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Get latest expiration for a user moderation
      *
      *
-     * @param mix $item user id or ip
+     * @param mix  $item user id or ip
      * @param bool $isUid
      * @return int
      */
@@ -200,14 +199,11 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     {
         /* for MySQL 4.1+ */
         if ($this->mysql_major_version() >= 4) {
-            $sql = 'DELETE FROM ' . $this->table .
-                   ' WHERE (forum_id >0 AND forum_id NOT IN ( SELECT DISTINCT forum_id FROM ' . $this->db->prefix('bb_forums') . ') )';
+            $sql = 'DELETE FROM ' . $this->table . ' WHERE (forum_id >0 AND forum_id NOT IN ( SELECT DISTINCT forum_id FROM ' . $this->db->prefix('bb_forums') . ') )';
         } else {
             // for 4.0 +
             /* */
-            $sql = 'DELETE ' . $this->table . ' FROM ' . $this->table .
-                   ' LEFT JOIN ' . $this->db->prefix('bb_forums') . ' AS aa ON ' . $this->table . '.forum_id = aa.forum_id ' .
-                   ' WHERE ' . $this->table . '.forum_id > 0 AND (aa.forum_id IS NULL)';
+            $sql = 'DELETE ' . $this->table . ' FROM ' . $this->table . ' LEFT JOIN ' . $this->db->prefix('bb_forums') . ' AS aa ON ' . $this->table . '.forum_id = aa.forum_id ' . ' WHERE ' . $this->table . '.forum_id > 0 AND (aa.forum_id IS NULL)';
             /* */
             // for 4.1+
             /*
