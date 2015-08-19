@@ -161,17 +161,17 @@ CREATE TABLE `bb_online` (
 -- 
 
 CREATE TABLE `bb_posts` (
-  `post_id`       INT(10)    UNSIGNED    NOT NULL AUTO_INCREMENT,
-  `pid`           INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
-  `topic_id`      INT(8)      UNSIGNED   NOT NULL DEFAULT '0',
+  `post_id`       INT(10) UNSIGNED       NOT NULL AUTO_INCREMENT,
+  `pid`           INT(10) UNSIGNED       NOT NULL DEFAULT '0',
+  `topic_id`      INT(8) UNSIGNED        NOT NULL DEFAULT '0',
   `forum_id`      SMALLINT(4)  UNSIGNED  NOT NULL DEFAULT '0',
   `post_time`     INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
   `uid`           INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
   `poster_name`   VARCHAR(255)           NOT NULL DEFAULT '',
-  `poster_ip`     INT(11)                NOT NULL DEFAULT '0',
+  `poster_ip`     INT(11)    UNSIGNED    NOT NULL DEFAULT '0',
   `subject`       VARCHAR(255)           NOT NULL DEFAULT '',
   `icon`          VARCHAR(25)            NOT NULL DEFAULT '',
-  `attachsig`     TINYINT(1)    UNSIGNED NOT NULL DEFAULT '0',
+  `attachsig`     TINYINT(1) UNSIGNED    NOT NULL DEFAULT '0',
   `approved`      SMALLINT(2)            NOT NULL DEFAULT '1',
   `post_karma`    INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
   `attachment`    TEXT,
