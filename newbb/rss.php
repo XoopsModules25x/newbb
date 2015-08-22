@@ -156,7 +156,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = ($topic['poster_name']) ? $myts->htmlspecialchars($topic['poster_name']) : $myts->htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+            $topic['uname'] = ($topic['poster_name']) ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';

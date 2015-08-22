@@ -473,7 +473,7 @@ class Post extends ArtObject
         $post_title = $this->getVar('subject');
         //        if (isset($_GET['keywords']) && !empty($_GET['keywords'])) {
         if (XoopsRequest::getString('keywords', '', 'GET')) {
-            $keywords   = $myts->htmlspecialchars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
+            $keywords   = $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
             $post_text  = newbb_highlightText($post_text, $keywords);
             $post_title = newbb_highlightText($post_title, $keywords);
         }

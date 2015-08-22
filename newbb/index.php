@@ -182,7 +182,7 @@ foreach (array_keys($categories) as $id) {
     if ('' === $title) {
         $title = $url;
     }
-    $title = &$myts->htmlspecialchars($title);
+    $title = &$myts->htmlSpecialChars($title);
     if ('' !== $url) {
         $cat_sponsor = array('title' => $title, 'link' => formatURL($url));
     }

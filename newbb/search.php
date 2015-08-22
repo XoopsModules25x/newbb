@@ -184,7 +184,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     } // irmtfan $criteriaExtra
 
     // add newbb_highlightText function to keywords
-    $search_info_keywords = newbb_highlightText($myts->htmlspecialchars($term), $queries);
+    $search_info_keywords = newbb_highlightText($myts->htmlSpecialChars($term), $queries);
     // add number of results
     $num_results = count($results);
     if ($num_results < 1) {
@@ -271,7 +271,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         if ($search_info) {
             $search_info .= '<br />';
         }
-        $search_info .= _MD_USERNAME . ': ' . $myts->htmlspecialchars($search_username);
+        $search_info .= _MD_USERNAME . ': ' . $myts->htmlSpecialChars($search_username);
     }
     // add num_results
     $search_info .= '<br />' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);

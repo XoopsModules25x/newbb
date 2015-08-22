@@ -446,7 +446,7 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
         $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp', '', 'POST')));
     }
 
-    $p_subject = &$myts->htmlspecialchars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
+    $p_subject = &$myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
     $dosmiley  = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml    = XoopsRequest::getInt('dohtml', 0, 'POST');
     $doxcode   = XoopsRequest::getInt('doxcode', 0, 'POST');

@@ -169,7 +169,7 @@ $forum_form->addElement($_editor, true);
 if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $post_obj->isTopic())) {
     $topic_tags = '';
     if (XoopsRequest::getString('topic_tags', '', 'POST')) {
-        $topic_tags = &$myts->htmlspecialchars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
+        $topic_tags = &$myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('topic_tags', '', 'POST')));
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }

@@ -154,7 +154,7 @@ if ($post_obj->getVar('uid')) {
     $r_name = newbb_getUnameFromId($post_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $post_obj->getVar('poster_name');
-    $r_name      = (empty($poster_name)) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlspecialchars($poster_name);
+    $r_name      = (empty($poster_name)) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlSpecialChars($poster_name);
 }
 $r_content = _MD_SUBJECTC . ' ' . $r_subject . '<br />';
 $r_content .= _MD_BY . ' ' . $r_name . ' ' . _MD_ON . ' ' . $r_date . '<br /><br />';

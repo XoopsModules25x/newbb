@@ -392,7 +392,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $forum_link = '';
             }
 
-            $topic_title = $myts->htmlspecialchars($myrow['topic_title']);
+            $topic_title = $myts->htmlSpecialChars($myrow['topic_title']);
             // irmtfan remove here and move to for loop
             //if ($myrow['type_id'] > 0) {
             //$topic_title = '<span style="color:'.$typen[$myrow["type_id"]]["type_color"].'">['.$typen[$myrow["type_id"]]["type_name"].']</span> '.$topic_title.'';
@@ -407,7 +407,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = xoops_substr(newbb_html2text($myts->displayTarea($myrow['post_text'])), 0, $excerpt);
-                $topic_excerpt = str_replace('[', '&#91;', $myts->htmlspecialchars($topic_excerpt));
+                $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
             }
             // START irmtfan move here
             $topics[$myrow['topic_id']] = array(
@@ -423,12 +423,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 'topic_page_jump_icon'   => $topic_page_jump_icon,
                 'topic_replies'          => $myrow['topic_replies'],
                 'topic_poster_uid'       => $myrow['topic_poster'],
-                'topic_poster_name'      => $myts->htmlspecialchars(($myrow['poster_name']) ?: $GLOBALS['xoopsConfig']['anonymous']),
+                'topic_poster_name'      => $myts->htmlSpecialChars(($myrow['poster_name']) ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_views'            => $myrow['topic_views'],
                 'topic_time'             => newbb_formatTimestamp($myrow['topic_time']),
                 'topic_last_posttime'    => newbb_formatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
-                'topic_last_poster_name' => $myts->htmlspecialchars(($myrow['last_poster_name']) ?: $GLOBALS['xoopsConfig']['anonymous']),
+                'topic_last_poster_name' => $myts->htmlSpecialChars(($myrow['last_poster_name']) ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_forum_link'       => $forum_link,
                 'topic_excerpt'          => $topic_excerpt,
                 'stick'                  => empty($myrow['topic_sticky']),
@@ -884,7 +884,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $users_linked = newbb_getUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
         $forums_array   = array();
-        $name_anonymous = $myts->htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+        $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
 
         foreach (array_keys($forums) as $id) {
             $forum =& $forums[$id];

@@ -14,18 +14,18 @@
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
- * @param $queryarray
- * @param $andor
- * @param $limit
- * @param $offset
- * @param $userid
- * @param int $forums
- * @param int $sortby
- * @param string $searchin
- * @param string $criteriaExtra
+ * @param                      $queryarray
+ * @param                      $andor
+ * @param                      $limit
+ * @param                      $offset
+ * @param                      $userid
+ * @param int                  $forums
+ * @param int                  $sortby
+ * @param string               $searchin
+ * @param CriteriaCompo        $criteriaExtra
  * @return array
  */
-function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', $criteriaExtra = '')
+function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', CriteriaCompo $criteriaExtra)
 {
     global $myts;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
@@ -94,7 +94,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     if (null !== $criteriaKeywords) {
         $criteria->add($criteriaKeywords, 'AND');
     }
-    if ('' !== $criteriaExtra) {
+    if (null !== $criteriaExtra) {
         $criteria->add($criteriaExtra, 'AND');
     }
     //$criteria->setLimit($limit); // no need for this
@@ -122,7 +122,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
         $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $hightlight_key; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = &$myts->htmlspecialchars($forum_list[$post->getVar('forum_id')]['forum_name']);
+        $ret[$i]['forum_name'] = &$myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);
         $ret[$i]['forum_link'] = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

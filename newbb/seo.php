@@ -110,7 +110,7 @@ function checker(&$value)
     }
 
     //pruefe auf externe
-    $str = strstr($value, '://');
+//    $str = strstr($value, '://');
     if (false !== strpos($value, '://')) {
         $value = '';
     }

@@ -32,9 +32,9 @@
 include_once __DIR__ . '/admin_header.php';
 include_once $GLOBALS['xoops']->path('class/pagenav.php');
 
-$op             = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
-$item           = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
-$start          = XoopsRequest::getInt('start', XoopsRequest::getInt('start', 0, 'GET'), 'POST'); //$start = !empty($_POST['start']) ?  (int)( $_POST['start'] ) : (int)( @$_GET['start'] );
+$op            = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
+$item          = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
+$start         = XoopsRequest::getInt('start', XoopsRequest::getInt('start', 0, 'GET'), 'POST'); //$start = !empty($_POST['start']) ?  (int)( $_POST['start'] ) : (int)( @$_GET['start'] );
 $reportHandler =& xoops_getmodulehandler('report', 'newbb');
 
 xoops_cp_header();
@@ -42,7 +42,7 @@ echo '<fieldset>';
 switch ($op) {
     case 'save':
         $report_ids = XoopsRequest::getArray('report_id', '', 'POST');
-//        $report_ids = XoopsRequest::getInt('report_id', 0, 'POST'); //$_POST['report_id'];
+        //        $report_ids = XoopsRequest::getInt('report_id', 0, 'POST'); //$_POST['report_id'];
         // irmtfan add error redirect header
         if (0 === count($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
@@ -116,12 +116,12 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports(0, 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewtopic.php?post_id=" . $report['post_id'] . "&amp;topic_id=" . $report['topic_id'] . "&amp;forum=" . $report['forum_id'] . "&amp;viewmode=thread\" target=\"checkreport\">" . $myts->htmlspecialchars($report['subject']) . '</a>';
+            $post_link = "<a href=\"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/viewtopic.php?post_id=" . $report['post_id'] . "&amp;topic_id=" . $report['topic_id'] . "&amp;forum=" . $report['forum_id'] . "&amp;viewmode=thread\" target=\"checkreport\">" . $myts->htmlSpecialChars($report['subject']) . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked="checked" />';
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
-                $memo = $myts->htmlspecialchars($report['report_memo']);
+                $memo = $myts->htmlSpecialChars($report['report_memo']);
             }
 
             echo "<tr class='odd' align='left'>";
@@ -129,7 +129,7 @@ switch ($op) {
             echo "<td align='center'>" . $report['report_id'] . '</td>';
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
-            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlspecialchars($report['report_text']) . '</td>';
+            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
             $uid           = (int)($report['reporter_uid']);
             $reporter_name = newbb_getUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br />' : '';
