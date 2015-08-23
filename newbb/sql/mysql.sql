@@ -168,7 +168,7 @@ CREATE TABLE `bb_posts` (
   `post_time`     INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
   `uid`           INT(10)    UNSIGNED    NOT NULL DEFAULT '0',
   `poster_name`   VARCHAR(255)           NOT NULL DEFAULT '',
-  `poster_ip`     INT(11)    UNSIGNED    NOT NULL DEFAULT '0',
+  `poster_ip`     VARCHAR(45)            NOT NULL DEFAULT '',
   `subject`       VARCHAR(255)           NOT NULL DEFAULT '',
   `icon`          VARCHAR(25)            NOT NULL DEFAULT '',
   `attachsig`     TINYINT(1) UNSIGNED    NOT NULL DEFAULT '0',

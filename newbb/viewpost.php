@@ -332,7 +332,8 @@ foreach (array_keys($posts) as $id) {
                                  'post_edit'       => $post->displayPostEdit(),
                                  'post_no'         => $start + $pn,
                                  'post_signature'  => ($post->getVar('attachsig')) ? @$poster['signature'] : '',
-                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
+//                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
+                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
                                  'thread_action'   => $thread_action,
                                  'thread_buttons'  => $thread_buttons,
                                  'poster'          => $poster));

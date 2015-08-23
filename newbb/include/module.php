@@ -79,7 +79,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 
     if ($oldversion < 230) {
         $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/upgrade_230.sql'));
-        //$module->setErrors("bb_moderates table inserted");
+        //$module->setErrors('bb_moderates table inserted');
     }
 
     if ($oldversion < 304) {
@@ -92,18 +92,53 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         xoops_module_update_newbb_v400($module);
     }
 
-    if ($oldversion < 403) {
-        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(15) NOT NULL default '0.0.0.0'";
-        $GLOBALS['xoopsDB']->queryF($sql);
-    }
+//    if ($oldversion < 403) {
+//        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
+//        $GLOBALS['xoopsDB']->queryF($sql);
+//    }
 
     if ($oldversion < 431) {
         $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.430.sql'));
     }
 
     if ($oldversion < 434) {
-        // remove old html template files
+        //convert "poster_ip" to varchar(45) for IPv6
+        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
+        $GLOBALS['xoopsDB']->queryF($sql);
 
+        //check if "poster_ip" is valid IP, and convert to string representation
+        include_once dirname(__DIR__) . '/class/ipcheck.php';
+        include_once dirname(__DIR__) . '/class/utilities.php';
+        $MyIpCheck   = new IpCheck();
+        $MyUtilities = new NewbbUtilities();
+
+        if (!$MyUtilities->fieldExists('updated', $GLOBALS['xoopsDB']->prefix('bb_posts'))) {
+            $MyUtilities->addField('updated BOOL NOT NULL', $GLOBALS['xoopsDB']->prefix('bb_posts'));
+        }
+
+        $sql    = 'SELECT post_id, poster_ip FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts');
+        $result = $GLOBALS['xoopsDB']->query($sql);
+//        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            $newIpValue = '';
+            if ($MyIpCheck->isValidIpAddress(long2ip((int)$row['poster_ip']))) {
+                $newIpValue = long2ip((int)$row['poster_ip']);
+            }
+            $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " SET poster_ip='" . $newIpValue . "' WHERE post_id=" . $row['post_id'];
+            $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
+            if ($result_sub) {
+                $sql2          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' SET updated=true WHERE post_id=' . $row['post_id'];
+                $GLOBALS['xoopsDB']->queryF($sql2);
+            } else {
+                $module->setErrors("Could not convert 'poster_ip' to varchar(45) for IPv6 " . $row['post_id']);
+            }
+        }
+
+        //delete the "updated" column
+        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' DROP `updated`';
+        $GLOBALS['xoopsDB']->queryF($sql);
+
+        // remove old html template files
         // create an array with all folders, and then run this once
 
         $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/');
@@ -130,16 +165,13 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $folderHandler->delete($imagesDirectory);
 
         //remove old changelogs
+        array_map('unlink', glob(dirname(__DIR__) ."/docs/changelog-rev*.txt"));
 
-        array_map('unlink', glob('some/dir/*.txt'));
+//        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
+//        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
+//        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
 
-        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
-        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
-        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
 
-        if (is_file("$file")) {
-            unlink("$file");
-        }
     }
 
     if (!empty($newbbConfig["syncOnUpdate"])) {

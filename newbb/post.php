@@ -169,7 +169,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             $post_obj->setVar('topic_id', $topic_id);
             $isreply = 1;
         }
-        $post_obj->setVar('poster_ip', newbb_getIP());
+        $post_obj->setVar('poster_ip', newbb_getIP(true));//using "true" to force the IP as a string
         $post_obj->setVar('uid', $uid);
         $post_obj->setVar('post_time', time());
     }
