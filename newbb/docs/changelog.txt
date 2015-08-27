@@ -14,16 +14,16 @@
 - enforcing strict comparison (mamba)
 - check for existence of Categories and Forums (cesag/mamba)
 - some PSR-2 code clean-up (mamba)
-- fix $cat_image in /index.php (mamba)
-- fix RSS bug (mamba)
-- fix bug in deleting posts (slider84/mamba)
+- bug fix: $cat_image in /index.php (mamba)
+- bug fix: RSS (mamba)
+- bug fix: in deleting posts (slider84/mamba)
 - added conversion of "poster_ip" field to IPv6 format: varchar(45) (trabis/mamba)
 
 4.33         11/20/2012 (changes by Irmtfan)
 ===========================================
 - fixed .htaccess (Trabis)
 - Changing TYPE to ENGINE (mamba)
-- fixing bug in Prune function (mamba)
+- bug fix: Prune function (mamba)
 - New topic list block using NewbbTopicRenderer class, fix topic type and prune system
 - bug fix: undefined forumCookie in footer
 - bug fix: dont show topic title in list.topic.php

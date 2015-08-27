@@ -121,8 +121,8 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 //        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
         while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $newIpValue = '';
-            if ($MyIpCheck->isValidIpAddress(long2ip((int)$row['poster_ip']))) {
-                $newIpValue = long2ip((int)$row['poster_ip']);
+            if ($MyIpCheck->isValidIpAddress(long2ip((float)$row['poster_ip']))) {
+                $newIpValue = long2ip((float)$row['poster_ip']);
             }
             $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " SET poster_ip='" . $newIpValue . "' WHERE post_id=" . $row['post_id'];
             $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
