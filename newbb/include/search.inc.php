@@ -25,7 +25,7 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param CriteriaCompo        $criteriaExtra
  * @return array
  */
-function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', CriteriaCompo $criteriaExtra)
+function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', CriteriaCompo $criteriaExtra = null)
 {
     global $myts;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
@@ -85,16 +85,16 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     }
     $criteria = new CriteriaCompo();
     $criteria->add($criteriaPost, 'AND');
-    if (null !== $criteriaPermissions) {
+    if (isset($criteriaPermissions)) {
         $criteria->add($criteriaPermissions, 'AND');
     }
-    if (null !== $criteriaUser) {
+    if (isset($criteriaUser)) {
         $criteria->add($criteriaUser, 'AND');
     }
-    if (null !== $criteriaKeywords) {
+    if (isset($criteriaKeywords)) {
         $criteria->add($criteriaKeywords, 'AND');
     }
-    if (null !== $criteriaExtra) {
+    if (isset($criteriaExtra)) {
         $criteria->add($criteriaExtra, 'AND');
     }
     //$criteria->setLimit($limit); // no need for this
