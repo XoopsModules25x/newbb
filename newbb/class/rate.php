@@ -39,6 +39,9 @@ newbb_load_object();
  */
 class Nrate extends ArtObject
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct("bb_votedata");
@@ -61,7 +64,7 @@ class NewbbRateHandler extends ArtObjectHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, 'bb_votedata', 'Nrate', 'ratingid','');
+        parent::__construct($db, 'bb_votedata', 'Nrate', 'ratingid', '');
     }
 
     public function synchronization()

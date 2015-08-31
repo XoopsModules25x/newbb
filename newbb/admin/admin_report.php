@@ -121,7 +121,7 @@ switch ($op) {
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
-                $memo = $myts->htmlSpecialChars($report['report_memo']);
+                $memo = & $myts->htmlSpecialChars($report['report_memo']);
             }
 
             echo "<tr class='odd' align='left'>";

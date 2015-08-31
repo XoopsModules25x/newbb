@@ -23,6 +23,9 @@
 //class Moderate extends ArtObject {
 class Moderate extends XoopsObject
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

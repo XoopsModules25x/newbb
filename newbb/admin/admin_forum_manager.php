@@ -63,7 +63,7 @@ switch ($op) {
             if ($forumHandler->insert($forum_obj)) {
                 if ($cid !== $forum_obj->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
-                    $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(", ", $forums) . ')', 'IN'));
+                    $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
                 mod_clearCacheFile('forum', 'newbb');
@@ -74,7 +74,7 @@ switch ($op) {
         } else {
             $box = '<select name="dest_forum">';
             $box .= '<option value=0 selected>' . _SELECT . '</option>';
-            $box .= newbb_forumSelectBox($forum_id, "all", true, true);
+            $box .= newbb_forumSelectBox($forum_id, 'all', true, true);
             $box .= '</select>';
 
             echo '<form action="./admin_forum_manager.php" method="post" name="forummove" id="forummove">';
@@ -95,11 +95,11 @@ switch ($op) {
         if (XoopsRequest::getString('dest_forum', '', 'POST')) {
             $forum_dest =& $forumHandler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
             if (is_object($forum_dest)) {
-                $cid         = $forum_dest->getVar("cat_id");
-                $sql         = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
+                $cid         = $forum_dest->getVar('cat_id');
+                $sql         = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '    SET forum_id=' . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_post = $GLOBALS['xoopsDB']->queryF($sql);
 
-                $sql          = "    UPDATE " . $GLOBALS['xoopsDB']->prefix('bb_topics') . "    SET forum_id=" . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
+                $sql          = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '    SET forum_id=' . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_topic = $GLOBALS['xoopsDB']->queryF($sql);
 
                 $forum_obj =& $forumHandler->get($forum_id);
@@ -224,7 +224,7 @@ switch ($op) {
         $forum_obj =& $forumHandler->create();
         $forum_obj->setVar('parent_forum', $parent_forum);
         $forum_obj->setVar('cat_id', $cat_id);
-        include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . '/include/form.forum.php');
+        include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
 
         echo '</fieldset>';
 
@@ -245,7 +245,7 @@ switch ($op) {
             $echo = "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_FORUM_MANAGER . '</legend>';
         } else {
             $echo = $indexAdmin->addNavigation('admin_forum_manager.php');
-            $echo .= "<fieldset>";
+            $echo .= '<fieldset>';
         }
         $echo .= "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         $echo .= "<tr align='center'>";
@@ -255,7 +255,7 @@ switch ($op) {
         $echo .= "<th class='bg3'>" . _AM_NEWBB_ADD . '</th>';
         $echo .= "<th class='bg3'>" . _AM_NEWBB_MOVE . '</th>';
         $echo .= "<th class='bg3'>" . _AM_NEWBB_MERGE . '</th>';
-        $echo .= "</tr>";
+        $echo .= '</tr>';
 
         $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
@@ -265,30 +265,30 @@ switch ($op) {
         foreach (array_keys($categories) as $c) {
             $category       = $categories[$c];
             $cat_id         = $c;
-            $cat_link       = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/index.php?viewcat=" . $cat_id . "\">" . $category . "</a>";
-            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_edit', _EDIT) . "</a>";
-            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_delete', _DELETE) . "</a>";
-            $forum_add_link = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('new_forum') . "</a>";
+            $cat_link       = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/index.php?viewcat=' . $cat_id . "\">" . $category . '</a>';
+            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
+            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
+            $forum_add_link = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $cat_id . "\">" . newbbDisplayImage('new_forum') . '</a>';
             $echo .= "<tr class='even' align='left'>";
-            $echo .= "<td width='100%' colspan='2'><strong>" . $cat_link . "</strong></td>";
+            $echo .= "<td width='100%' colspan='2'><strong>" . $cat_link . '</strong></td>';
             $echo .= "<td align='center'>" . $cat_edit_link . '</td>';
             $echo .= "<td align='center'>" . $cat_del_link . '</td>';
             $echo .= "<td align='center'>" . $forum_add_link . '</td>';
-            $echo .= "<td></td>";
-            $echo .= "<td></td>";
-            $echo .= "</tr>";
+            $echo .= '<td></td>';
+            $echo .= '<td></td>';
+            $echo .= '</tr>';
             if (!isset($forums[$c])) {
                 continue;
             }
             $i = 0;
             foreach (array_keys($forums[$c]) as $f) {
                 $forum        = $forums[$c][$f];
-                $f_link       = $forum["prefix"] . "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/viewforum.php?forum=" . $f . "\">" . $forum["forum_name"] . "</a>";
-                $f_edit_link  = "<a href=\"admin_forum_manager.php?op=mod&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_edit', _AM_NEWBB_EDIT) . "</a>";
-                $f_del_link   = "<a href=\"admin_forum_manager.php?op=del&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_delete', _AM_NEWBB_DELETE) . "</a>";
-                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . "&forum=" . $f . "\">" . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . "</a>";
-                $f_move_link  = "<a href=\"admin_forum_manager.php?op=moveforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_move', _AM_NEWBB_MOVE) . "</a>";
-                $f_merge_link = "<a href=\"admin_forum_manager.php?op=mergeforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . "</a>";
+                $f_link       = $forum["prefix"] . "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/viewforum.php?forum=" . $f . "\">" . $forum["forum_name"] . '</a>';
+                $f_edit_link  = "<a href=\"admin_forum_manager.php?op=mod&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_edit', _AM_NEWBB_EDIT) . '</a>';
+                $f_del_link   = "<a href=\"admin_forum_manager.php?op=del&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_delete', _AM_NEWBB_DELETE) . '</a>';
+                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . "&forum=" . $f . "\">" . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . '</a>';
+                $f_move_link  = "<a href=\"admin_forum_manager.php?op=moveforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_move', _AM_NEWBB_MOVE) . '</a>';
+                $f_merge_link = "<a href=\"admin_forum_manager.php?op=mergeforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . '</a>';
 
                 $class = (($i++) % 2) ? "odd" : "even";
                 $echo .= "<tr class='" . $class . "' align='left'><td></td>";
@@ -298,7 +298,7 @@ switch ($op) {
                 $echo .= "<td align='center'>" . $sf_add_link . '</td>';
                 $echo .= "<td align='center'>" . $f_move_link . '</td>';
                 $echo .= "<td align='center'>" . $f_merge_link . '</td>';
-                $echo .= "</tr>";
+                $echo .= '</tr>';
             }
         }
         unset($forums, $categories);

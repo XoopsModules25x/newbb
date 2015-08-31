@@ -49,7 +49,7 @@ if (empty($post_id)) {
 }
 
 $postHandler = &xoops_getmodulehandler('post', 'newbb');
-$post         = $postHandler->get($post_id);
+$post        = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
@@ -57,16 +57,16 @@ if (!$approved = $post->getVar('approved')) {
 $post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
 $topicHandler = &xoops_getmodulehandler('topic', 'newbb');
-$forumtopic    = $topicHandler->getByPost($post_id);
-$topic_id      = $forumtopic->getVar('topic_id');
+$forumtopic   = $topicHandler->getByPost($post_id);
+$topic_id     = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
 
-$forumHandler   = &xoops_getmodulehandler('forum', 'newbb');
-$forum           = ($forum) ? : $forumtopic->getVar('forum_id');
+$forumHandler    = &xoops_getmodulehandler('forum', 'newbb');
+$forum           = ($forum) ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
-$parent_forums = array();
+$parent_forums   = array();
 $parent_forums   = $forumHandler->getParents($viewtopic_forum);
 $pf_title        = '';
 if ($parent_forums) {
@@ -87,18 +87,18 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
 }
 
 $categoryHandler = &xoops_getmodulehandler('category', 'newbb');
-$cat              = $viewtopic_forum->getVar('cat_id');
-$viewtopic_cat    = $categoryHandler->get($cat);
+$cat             = $viewtopic_forum->getVar('cat_id');
+$viewtopic_cat   = $categoryHandler->get($cat);
 
 $GLOBALS['xoopsOption']['pdf_cache'] = 0;
 
-$pdf_data['author'] = $myts->undohtmlSpecialChars($post_data['author']);
-$pdf_data['title']  = $myts->undohtmlSpecialChars($post_data['subject']);
+$pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
+$pdf_data['title']  = $myts->undoHtmlSpecialChars($post_data['subject']);
 $content            = '';
 $content .= '<b>' . $pdf_data['title'] . '</b><br /><br />';
 $content .= _MD_AUTHORC . ' ' . $pdf_data['author'] . '<br />';
 $content .= _MD_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br /><br /><br />';
-$content .= $myts->undohtmlSpecialChars($post_data['text']) . '<br />';
+$content .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br />';
 //$content .= $post_edit . '<br />'; //reserve for future versions to display edit records
 $pdf_data['content']        = str_replace('[pagebreak]', '<br />', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');
@@ -112,8 +112,8 @@ $pdf_data['HeadSecondLine'] = _MD_FORUMHOME . ' - ' . $pdf_data['cat_title'] . '
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {
     $pdf_data = easiestml($pdf_data);
-// END irmtfan to implement EMLH by GIJ
-// START irmtfan to implement Xlanguage by phppp(DJ)
+    // END irmtfan to implement EMLH by GIJ
+    // START irmtfan to implement Xlanguage by phppp(DJ)
 } elseif (function_exists('xlanguage_ml')) {
     $pdf_data = xlanguage_ml($pdf_data);
 }

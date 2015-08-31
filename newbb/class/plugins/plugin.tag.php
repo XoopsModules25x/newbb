@@ -42,7 +42,7 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
-    $items_obj    = $itemHandler->getObjects(new Criteria("topic_id", "(" . implode(", ", $items_id) . ")", "IN"), true);
+    $items_obj    = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -50,12 +50,12 @@ function newbb_tag_iteminfo(&$items)
                 continue;
             }
             $items[$cat_id][$item_id] = array(
-                "title"   => $item_obj->getVar("topic_title"),
-                "uid"     => $item_obj->getVar("topic_poster"),
-                "link"    => "viewtopic.php?topic_id={$item_id}",
-                "time"    => $item_obj->getVar("topic_time"),
-                "tags"    => tag_parse_tag($item_obj->getVar("topic_tags", "n")),
-                "content" => ""
+                'title'   => $item_obj->getVar('topic_title'),
+                'uid'     => $item_obj->getVar('topic_poster'),
+                'link'    => "viewtopic.php?topic_id={$item_id}",
+                'time'    => $item_obj->getVar('topic_time'),
+                'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
+                'content' => ''
             );
         }
     }
@@ -70,8 +70,8 @@ function newbb_tag_iteminfo(&$items)
  */
 function newbb_tag_synchronization($mid)
 {
-    $itemHandler =& xoops_getmodulehandler("topic", "newbb");
-    $link_handler =& xoops_getmodulehandler("link", "tag");
+    $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
+    $link_handler =& xoops_getmodulehandler('link', 'tag');
 
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4) {

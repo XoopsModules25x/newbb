@@ -28,11 +28,12 @@
 // URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
+
 //include $GLOBALS['xoops']->path('include/cp_header.php');
-include("../../../include/cp_header.php");
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/vars.php");
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/functions.user.php");
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/include/functions.render.php");
+include('../../../include/cp_header.php');
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 xoops_load('XoopsRequest');

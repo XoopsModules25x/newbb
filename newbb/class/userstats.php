@@ -20,6 +20,9 @@ newbb_load_object();
  */
 class NewbbUserstats extends ArtObject
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct("bb_user_stats");

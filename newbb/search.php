@@ -121,7 +121,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $next_search['uname'] = $search_username;
     if (!empty($search_username)) {
         $uname_required  = true;
-        $search_username = $myts->addslashes($search_username);
+        $search_username = $myts->addSlashes($search_username);
         if (!$result = $GLOBALS['xoopsDB']->query('SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_ERROROCCURED);
         }
@@ -142,9 +142,9 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         foreach ($temp_queries as $q) {
             $q = trim($q);
             if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
-                $queries[] = $myts->addslashes($q);
+                $queries[] = $myts->addSlashes($q);
             } else {
-                $ignored_queries[] = $myts->addslashes($q);
+                $ignored_queries[] = $myts->addSlashes($q);
             }
         }
         if (!$uname_required && count($queries) === 0) {
@@ -155,7 +155,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         if (!$uname_required && (strlen($query) < $xoopsConfigSearch['keyword_min'])) {
             redirect_header(XOOPS_URL . '/search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = array($myts->addslashes($query));
+        $queries = array($myts->addSlashes($query));
     }
 
     // entries must be lowercase

@@ -63,8 +63,8 @@ function xoops_module_update_newbb_v220(XoopsModule $module)
         $mods       = is_array($mods) ? serialize($mods) : serialize(array());
         $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . $mods . "' WHERE forum_id=" . $row['forum_id'];
         $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
-        if (!$result) {
-            $module->setErrors('Could not forum_moderator for forum ' . $row['forum_id']);
+        if (!$result_sub) {
+            $module->setErrors('Could not set forum_moderator for forum ' . $row['forum_id']);
         }
     }
 

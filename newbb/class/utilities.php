@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class NewbbUtilities
+ */
 class NewbbUtilities
 {
     /**
@@ -8,6 +11,8 @@ class NewbbUtilities
      * @package       News
      * @author        Hervé Thouzard (http://www.herve-thouzard.com)
      * @copyright (c) Hervé Thouzard
+     * @param $tablename
+     * @return bool
      */
     public function tableExists($tablename)
     {
@@ -16,12 +21,16 @@ class NewbbUtilities
 
         return ($xoopsDB->getRowsNum($result) > 0);
     }
+
     /**
      * Verify that a field exists inside a mysql table
      *
      * @package       News
      * @author        Hervé Thouzard (http://www.herve-thouzard.com)
      * @copyright (c) Hervé Thouzard
+     * @param $fieldname
+     * @param $table
+     * @return bool
      */
     public function fieldExists($fieldname, $table)
     {
@@ -37,6 +46,9 @@ class NewbbUtilities
      * @package       News
      * @author        Hervé Thouzard (http://www.herve-thouzard.com)
      * @copyright (c) Hervé Thouzard
+     * @param $field
+     * @param $table
+     * @return
      */
     public function addField($field, $table)
     {

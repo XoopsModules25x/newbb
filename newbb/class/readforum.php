@@ -33,13 +33,16 @@ include_once __DIR__ . '/read.php';
 /**
  * A handler for read/unread handling
  *
- * @package     newbb
+ * @package       newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
- * @copyright    copyright (c) 2005 XOOPS.org
+ * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Readforum extends Read
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct('forum');
@@ -56,7 +59,7 @@ class NewbbReadforumHandler extends NewbbReadHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, "forum");
+        parent::__construct($db, 'forum');
     }
 
     /**
@@ -66,26 +69,26 @@ class NewbbReadforumHandler extends NewbbReadHandler
      */
     public function cleanOrphan()
     {
-        parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
+        parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
 
-        return parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id", "read_item");
+        return parent::cleanOrphan($this->db->prefix('bb_forums'), 'forum_id', 'read_item');
     }
 
     /**
-     * @param int $status
+     * @param int  $status
      * @param null $uid
      * @return bool
      */
-    public function setRead_items($status = 0, $uid = null)
+    public function setReadItems($status = 0, $uid = null)
     {
         if (empty($this->mode)) {
             return true;
         }
 
         if ($this->mode === 1) {
-            return $this->setRead_items_cookie($status);
+            return $this->setReadItemsCookie($status);
         } else {
-            return $this->setRead_items_db($status, $uid);
+            return $this->setReadItemsDb($status, $uid);
         }
     }
 
@@ -94,13 +97,13 @@ class NewbbReadforumHandler extends NewbbReadHandler
      * @param $items
      * @return bool
      */
-    public function setRead_items_cookie($status, $items)
+    public function setReadItemsCookie($status, $items)
     {
-        $cookie_name = "LF";
+        $cookie_name = 'LF';
         $items       = array();
         if (!empty($status)) {
             $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
-            $items_id     = $itemHandler->getIds();
+            $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
                 $items[$key] = time();
             }
@@ -115,25 +118,25 @@ class NewbbReadforumHandler extends NewbbReadHandler
      * @param $uid
      * @return bool
      */
-    public function setRead_items_db($status, $uid)
+    public function setReadItemsDb($status, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS["xoopsUser"])) {
-                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            if (is_object($GLOBALS['xoopsUser'])) {
+                $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
             }
         }
         if (empty($status)) {
-            $this->deleteAll(new Criteria("uid", $uid));
+            $this->deleteAll(new Criteria('uid', $uid));
 
             return true;
         }
 
         $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $items_obj    =& $itemHandler->getAll(null, array("forum_last_post_id"));
+        $items_obj   =& $itemHandler->getAll(null, array('forum_last_post_id'));
         foreach (array_keys($items_obj) as $key) {
-            $this->setRead_db($key, $items_obj[$key]->getVar("forum_last_post_id"), $uid);
+            $this->setRead_db($key, $items_obj[$key]->getVar('forum_last_post_id'), $uid);
         }
         unset($items_obj);
 

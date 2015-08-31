@@ -39,14 +39,14 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, "bb_categories", 'Category', 'cat_id', 'cat_title');
+        parent::__construct($db, 'bb_categories', 'Category', 'cat_id', 'cat_title');
     }
 
     /**
      * @param string $perm
      * @return mixed
      */
-    public function getIdsByPermission($perm = "access")
+    public function getIdsByPermission($perm = 'access')
     {
         $permHandler = &xoops_getmodulehandler('permission', 'newbb');
 
@@ -59,14 +59,14 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @param bool   $asObject
      * @return array
      */
-    public function &getByPermission($permission = "access", $tags = null, $asObject = true)
+    public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
     {
         $categories = array();
         if (!$valid_ids = $this->getIdsByPermission($permission)) {
             return $categories;
         }
-        $criteria = new Criteria("cat_id", "(" . implode(", ", $valid_ids) . ")", "IN");
-        $criteria->setSort("cat_order");
+        $criteria = new Criteria('cat_id', '(' . implode(', ', $valid_ids) . ')', 'IN');
+        $criteria->setSort('cat_order');
         $categories = $this->getAll($criteria, $tags, $asObject);
 
         return $categories;
@@ -94,12 +94,12 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     {
         //        global $xoopsModule;
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $forumHandler->deleteAll(new Criteria("cat_id", $category->getVar('cat_id')), true, true);
+        $forumHandler->deleteAll(new Criteria('cat_id', $category->getVar('cat_id')), true, true);
         if ($result = parent::delete($category)) {
             // Delete group permissions
             return $this->deletePermission($category);
         } else {
-            $category->setErrors("delete category error: " . $sql);
+            $category->setErrors('delete category error: ' . $sql);
 
             return false;
         }
@@ -118,9 +118,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @param string $perm
      * @return bool
      */
-    public function getPermission($category, $perm = "access")
+    public function getPermission($category, $perm = 'access')
     {
-        if ($GLOBALS["xoopsUserIsAdmin"] && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
+        if ($GLOBALS['xoopsUserIsAdmin'] && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             return true;
         }
 

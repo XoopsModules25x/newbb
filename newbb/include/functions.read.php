@@ -54,7 +54,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     {
         $readHandler =& xoops_getmodulehandler('readforum', 'newbb');
 
-        return $readHandler->setRead_items($status, $uid);
+        return $readHandler->setReadItems($status, $uid);
     }
 
     /**
@@ -67,7 +67,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     {
         $readHandler =& xoops_getmodulehandler('readtopic', 'newbb');
 
-        return $readHandler->setRead_items($status, $forum_id, $uid);
+        return $readHandler->setReadItems($status, $forum_id, $uid);
     }
 
     /**

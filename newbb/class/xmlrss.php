@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -49,6 +49,9 @@ class Xmlrss
     public $max_item_description;
     public $items = array();
 
+    /**
+     *
+     */
     public function __construct()
     {
 
@@ -72,11 +75,11 @@ class Xmlrss
     }
 
     /**
-     * @param $title
-     * @param $link
+     * @param        $title
+     * @param        $link
      * @param string $description
      * @param string $label
-     * @param int $pubdate
+     * @param int    $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)
@@ -101,7 +104,7 @@ class Xmlrss
     }
 
     /**
-     * @param $text
+     * @param     $text
      * @param int $trim
      * @return mixed|string
      */
@@ -138,7 +141,7 @@ class NewbbXmlrssHandler
      * @param $rss
      * @return array
      */
-    public function &get(Xmlrss &$rss)
+    public function &get(Xmlrss $rss)
     {
         $rss_array                      = array();
         $rss_array['xml_version']       = $rss->xml_version;

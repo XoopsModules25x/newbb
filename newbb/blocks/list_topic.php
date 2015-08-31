@@ -18,16 +18,16 @@ if (defined('LIST_TOPIC_DEFINED')) {
 }
 define('LIST_TOPIC_DEFINED', true);
 
-include_once dirname(__DIR__) . "/include/functions.ini.php";
-require_once dirname(__DIR__) . "/class/topic.renderer.php";
-include_once dirname(__DIR__) . "/footer.php"; // to include js/style files like validate function
+include_once dirname(__DIR__) . '/include/functions.ini.php';
+require_once dirname(__DIR__) . '/class/topic.renderer.php';
+include_once dirname(__DIR__) . '/footer.php'; // to include js/style files like validate function
 
-xoops_loadLanguage("main", "newbb");
+xoops_loadLanguage('main', 'newbb');
 
-mod_loadFunctions("time", "newbb");
-mod_loadFunctions("session", "newbb");
-mod_loadFunctions("render", "newbb");
-mod_loadFunctions("user", "newbb");
+mod_loadFunctions('time', 'newbb');
+mod_loadFunctions('session', 'newbb');
+mod_loadFunctions('render', 'newbb');
+mod_loadFunctions('user', 'newbb');
 
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -52,7 +52,7 @@ function newbb_list_topic_show($options)
     $newbbConfig = newbbLoadConfig(); // load all newbb configs
 
     $topicRenderer            = new NewbbTopicRenderer();
-    $topicRenderer->userlevel = $GLOBALS["xoopsUserIsAdmin"] ? 2 : is_object($GLOBALS["xoopsUser"]); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
+    $topicRenderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
 
     $topicRenderer->force = true; // force against static vars for parse
 
@@ -135,14 +135,14 @@ function newbb_list_topic_edit($options)
     $typeEle->addOption(0, _NONE);
     if (!empty($types)) {
         foreach ($types as $type_id => $type) {
-            $typeEle->addOption($type_id, $type["type_name"]);
+            $typeEle->addOption($type_id, $type['type_name']);
         }
     }
 
     // sort element
     $sortEle = new XoopsFormSelect(_MD_SORTBY, 'options[4]', $options[4]);
     $sortEle->setDescription(_MB_NEWBB_CRITERIA_SORT_DESC);
-    $sorts = $topicRenderer->getSort("", "title");
+    $sorts = $topicRenderer->getSort('', 'title');
     $sortEle->addOptionArray($sorts);
 
     // order element
@@ -177,21 +177,21 @@ function newbb_list_topic_edit($options)
 
     //  forum element
     $optionsForum = explode(',', $options[12]);
-    mod_loadFunctions("forum", "newbb");
+    mod_loadFunctions('forum', 'newbb');
     $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
-    $accessForums = $forumHandler->getIdsByValues(array_map("intval", $optionsForum));
+    $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
     $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel .= "<option value=\"0\" ";
     if ($isAll) {
-        $forumSel .= " selected";
+        $forumSel .= ' selected';
         $accessForums = null; // just select _ALL option
     }
-    $forumSel .= ">" . _ALL . "</option>";
-    $forumSel .= newbb_forumSelectBox($accessForums, "access", false); //$accessForums, $permission = "access", $delimitorCategory = false
-    $forumSel .= "</select>";
+    $forumSel .= '>' . _ALL . '</option>';
+    $forumSel .= newbb_forumSelectBox($accessForums, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = false
+    $forumSel .= '</select>';
     $forumEle = new XoopsFormLabel(_MB_NEWBB_FORUMLIST, $forumSel);
 
     // add all elements to form

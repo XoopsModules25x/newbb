@@ -41,7 +41,7 @@ $start = XoopsRequest::getInt('start', 0, 'GET');
 xoops_cp_header();
 switch ($op) {
     case 'delete':
-        $digest_ids     = XoopsRequest::getArray('digest_id', '', 'POST');
+        $digest_ids    = XoopsRequest::getArray('digest_id', '', 'POST');
         $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
         if ($digest_ids !== '') {
             foreach ($digest_ids as $did => $value) {
@@ -52,7 +52,7 @@ switch ($op) {
         break;
 
     default:
-        include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . '/class/xoopsformloader.php');
+        include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
         echo '<fieldset>';
         $limit = 5;
         if ($newXoopsModuleGui) {
@@ -67,9 +67,9 @@ switch ($op) {
         echo "<td class='bg3' width='2%'>" . _DELETE . '</td>';
         echo '</tr>';
 
-        $digests = array();
+        $digests       = array();
         $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
-        $digests        =& $digestHandler->getAllDigests($start, $limit);
+        $digests       =& $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
             echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", "<br />", $digest['digest_content']) . '</td>';

@@ -465,7 +465,7 @@ function b_newbb_post_show($options)
         } else {
             $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/icon1.gif" alt="" />';
         }
-        //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . "</a>";
+        //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
         $topic['forum_id']   = $arr['forum_id'];
         $topic['forum_name'] = $myts->htmlSpecialChars($arr['forum_name']);
         //$topic['id'] = $arr['topic_id'];
@@ -985,7 +985,7 @@ function b_newbb_custom_author($options)
     }
 
     $options = explode('|', $options);
-    $block   = &b_newbb_author_show($options);
+    $block   = & b_newbb_author_show($options);
     if (count($block['authors']) < 1) {
         return false;
     }

@@ -2,6 +2,9 @@
 
 //adopted from poweradmin (https://github.com/poweradmin)
 
+/**
+ * Class IpCheck
+ */
 class IpCheck
 {
     public $ipin;
@@ -9,7 +12,10 @@ class IpCheck
     public $ipver;
 
     // Return IP type.  4 for IPv4, 6 for IPv6, 0 for bad IP.
-    public function address_type( $ipValue)
+    /**
+     * @param $ipValue
+     */
+    public function address_type($ipValue)
     {
         $this->ipin = $ipValue;
         $this->ipver = 0;

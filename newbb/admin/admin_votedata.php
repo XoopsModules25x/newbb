@@ -56,7 +56,6 @@ switch ($op) {
 
     case 'main':
     default:
-
         $start         = XoopsRequest::getInt('start', 0, 'POST');
         $useravgrating = '0';
         $uservotes     = '0';
@@ -65,7 +64,7 @@ switch ($op) {
         $results = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($results);
 
-        $sql           = "SELECT rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . "";
+        $sql           = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . '';
         $result2       = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
@@ -111,7 +110,7 @@ switch ($op) {
         <th align='center'>" . _AM_NEWBB_ACTION . "</th></tr>\n";
 
         if ($votes === 0) {
-            echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . "</td></tr>";
+            echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
             $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id=' . $topic_id . '';

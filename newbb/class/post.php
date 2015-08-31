@@ -113,10 +113,9 @@ class Post extends ArtObject
      */
     public function saveAttachment()
     {
+        $attachmentSave = '';
         if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
-        } else {
-            $attachmentSave = '';
         }
         $this->setVar('attachment', $attachmentSave);
         $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' SET attachment=' . $GLOBALS['xoopsDB']->quoteString($attachmentSave) . ' WHERE post_id = ' . $this->getVar('post_id');
@@ -156,10 +155,10 @@ class Post extends ArtObject
             }
             $this->attachmentArray[$key] = $attach;
         }
+        $attachmentSave = '';
         if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
-        } else {
-            $attachmentSave = '';
+
         }
         $this->setVar('attachment', $attachmentSave);
 
@@ -185,10 +184,9 @@ class Post extends ArtObject
                 'mimetype'    => $mimetype,
                 'numDownload' => isset($numDownload) ? (int)($numDownload) : 0);
         }
+        $attachmentSave = null;
         if (is_array($this->attachmentArray)) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
-        } else {
-            $attachmentSave = null;
         }
         $this->setVar('attachment', $attachmentSave);
 
@@ -426,7 +424,7 @@ class Post extends ArtObject
         static $name_anonymous;
 
         if (!isset($name_anonymous)) {
-            $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+            $name_anonymous = & $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
 
         mod_loadFunctions('time', 'newbb');
@@ -474,7 +472,7 @@ class Post extends ArtObject
         $post_title = $this->getVar('subject');
         //        if (isset($_GET['keywords']) && !empty($_GET['keywords'])) {
         if (XoopsRequest::getString('keywords', '', 'GET')) {
-            $keywords   = $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
+            $keywords   = & $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
             $post_text  = newbb_highlightText($post_text, $keywords);
             $post_title = newbb_highlightText($post_title, $keywords);
         }

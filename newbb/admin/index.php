@@ -153,7 +153,6 @@ switch ($op) {
 
     case 'default':
     default:
-
         xoops_cp_header();
         echo '<fieldset>';
         $imageLibs      = newbb_getImageLibs();
@@ -227,7 +226,6 @@ switch ($op) {
             echo $indexAdmin->addNavigation('index.php');
             echo $indexAdmin->renderIndex();
         } else {
-
             // loadModuleAdminMenu(0, _MI_NEWBB_ADMENU_INDEX);
 
             echo '<table><tr>';

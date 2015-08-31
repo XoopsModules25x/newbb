@@ -279,7 +279,7 @@ $xoopsTpl->assign('forum_topicstatus', $current_status);
 
 $all_topics = $forumHandler->getTopicCount($forum_obj, $startdate, $status);
 if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
-    include $GLOBALS['xoops']->path('class/pagenav.php');
+    include_once $GLOBALS['xoops']->path('class/pagenav.php');
     $query_nav = $query_array;
     unset($query_nav['start']);
     $page_query_nav = implode('&amp;', array_values($query_nav));

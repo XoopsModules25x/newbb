@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -20,6 +20,9 @@ newbb_load_object();
  */
 class Report extends ArtObject
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct("bb_report");
@@ -44,7 +47,7 @@ class NewbbReportHandler extends ArtObjectHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, 'bb_report', 'Report', 'report_id','');
+        parent::__construct($db, 'bb_report', 'Report', 'report_id', '');
     }
 
     /**
@@ -67,12 +70,12 @@ class NewbbReportHandler extends ArtObjectHandler
     }
 
     /**
-     * @param int $forums
+     * @param int    $forums
      * @param string $order
-     * @param int $perpage
-     * @param $start
-     * @param int $report_result
-     * @param int $report_id
+     * @param int    $perpage
+     * @param        $start
+     * @param int    $report_result
+     * @param int    $report_id
      * @return array
      */
     public function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
@@ -96,7 +99,7 @@ class NewbbReportHandler extends ArtObjectHandler
         if (!$forums) {
             $forumCriteria = '';
         } elseif (!is_array($forums)) {
-            $forums         = array($forums);
+            $forums        = array($forums);
             $forumCriteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
         }
         $tables_criteria = ' FROM ' . $this->db->prefix('bb_report') . ' r, ' . $this->db->prefix('bb_posts') . ' p WHERE r.post_id= p.post_id';

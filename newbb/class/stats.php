@@ -41,10 +41,9 @@ class NewbbStatsHandler
      */
     public function __construct($db = null)
     {
+        $this->db = $db;
         if (!$db) {
             $this->db = $GLOBALS['xoopsDB'];
-        } else {
-            $this->db = $db;
         }
         $this->table = $this->db->prefix("bb_stats");
     }

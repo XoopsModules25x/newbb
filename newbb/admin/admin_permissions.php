@@ -29,7 +29,7 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . '/class/xoopsformloader.php');
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
 include_once $GLOBALS['xoops']->path('class/xoopsform/grouppermform.php');
 
 /**
@@ -222,7 +222,7 @@ switch ($action) {
                 $checked      = in_array('forum_' . $perm, $selected) ? " checked='checked'" : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele .= '<td><input name="perms[' . $i . '][' . "forum_" . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant("_AM_NEWBB_CAN_" . strtoupper($perm)) . '<br></td>';
+                $ret_ele .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant("_AM_NEWBB_CAN_" . strtoupper($perm)) . '<br></td>';
             }
             $ret_ele .= '</tr></table></td><td class="even">';
             $ret_ele .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(", ", $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
@@ -287,7 +287,7 @@ switch ($action) {
         }
         unset($forums, $categories);
 
-        $fmform    = new XoopsThemeForm(_AM_NEWBB_PERM_TEMPLATEAPP, 'fmform', 'admin_permissions.php', "post");
+        $fmform    = new XoopsThemeForm(_AM_NEWBB_PERM_TEMPLATEAPP, 'fmform', 'admin_permissions.php', 'post');
         $fm_select = new XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forums', null, 10, true);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
@@ -349,8 +349,8 @@ switch ($action) {
         $op_options = array('category' => _AM_NEWBB_CAT_ACCESS);
         $fm_options = array('category' => array('title' => _AM_NEWBB_CAT_ACCESS, 'item' => 'category_access', 'desc' => '', 'anonymous' => true));
         foreach ($perms as $perm) {
-            $op_options[$perm] = constant("_AM_NEWBB_CAN_" . strtoupper($perm));
-            $fm_options[$perm] = array('title' => constant("_AM_NEWBB_CAN_" . strtoupper($perm)), "item" => "forum_" . $perm, "desc" => "", "anonymous" => true);
+            $op_options[$perm] = constant('_AM_NEWBB_CAN_' . strtoupper($perm));
+            $fm_options[$perm] = array('title' => constant('_AM_NEWBB_CAN_' . strtoupper($perm)), 'item' => 'forum_' . $perm, 'desc' => '', 'anonymous' => true);
         }
 
         $op_keys = array_keys($op_options);
@@ -371,7 +371,7 @@ switch ($action) {
 
         $perm_desc = '';
 
-        $form = new NewbbXoopsGroupPermForm($fm_options[$op]["title"], $module_id, $fm_options[$op]["item"], $fm_options[$op]["desc"], 'admin/admin_permissions.php', $fm_options[$op]["anonymous"]);
+        $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]["anonymous"]);
 
         $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
@@ -384,11 +384,11 @@ switch ($action) {
             unset($categories);
         } else {
             $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
-            $forums       = $forumHandler->getTree(array_keys($categories), 0, "all");
+            $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
             if (count($forums) > 0) {
                 foreach (array_keys($forums) as $c) {
                     $key_c = -1 * $c;
-                    $form->addItem($key_c, "<strong>[" . $categories[$c] . "]</strong>");
+                    $form->addItem($key_c, '<strong>[' . $categories[$c] . ']</strong>');
                     foreach (array_keys($forums[$c]) as $f) {
                         $pid = $forums[$c][$f]['parent_forum'] ?: $key_c;
                         $form->addItem($f, $forums[$c][$f]['prefix'] . $forums[$c][$f]['forum_name'], $pid);

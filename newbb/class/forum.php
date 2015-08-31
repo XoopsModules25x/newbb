@@ -186,8 +186,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $array_forum[$forum['cid']][$key] = $forum;
         }
         ksort($array_forum);
-        unset($forums);
-        unset($forums_array);
+        unset($forums, $forums_array);
 
         return $array_forum;
     }
@@ -377,7 +376,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     } else {
                         $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '">' . $i . '</a>]';
                         // irmtfan remove here and move
-                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . "</a>";
+                        //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . '</a>';
                     }
                 }
             }
@@ -386,13 +385,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             // ------------------------------------------------------
             // => topic array
+            $forum_link = '';
             if (!empty($viewAllForums[$myrow['forum_id']])) {
                 $forum_link = '<a href="' . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $myrow['forum_id'] . '">' . $viewAllForums[$myrow['forum_id']]['forum_name'] . '</a>';
-            } else {
-                $forum_link = '';
             }
 
-            $topic_title = $myts->htmlSpecialChars($myrow['topic_title']);
+            $topic_title =& $myts->htmlSpecialChars($myrow['topic_title']);
             // irmtfan remove here and move to for loop
             //if ($myrow['type_id'] > 0) {
             //$topic_title = '<span style="color:'.$typen[$myrow["type_id"]]["type_color"].'">['.$typen[$myrow["type_id"]]["type_name"].']</span> '.$topic_title.'';
@@ -884,7 +882,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $users_linked = newbb_getUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
         $forums_array   = array();
-        $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+        $name_anonymous =& $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
 
         foreach (array_keys($forums) as $id) {
             $forum =& $forums[$id];
@@ -894,7 +892,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $_forum_data['forum_id']     = $id;
             $_forum_data['forum_cid']    = $forum['cat_id'];
             $_forum_data['forum_name']   = $forum['forum_name'];
-            $_forum_data['forum_desc']   = $myts->displayTarea($forum['forum_desc']);
+            $_forum_data['forum_desc']   = & $myts->displayTarea($forum['forum_desc']);
             $_forum_data['forum_topics'] = $forum['forum_topics'] + @$stats_forum[$id]['topics'];
             $_forum_data['forum_posts']  = $forum['forum_posts'] + @$stats_forum[$id]['posts'];
             //$_forum_data["forum_type"]= $forum['forum_type'];
@@ -963,7 +961,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (!is_array($tags) || count($tags) === 0) {
             $tags = array('forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id');
         }
-        $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
+        $forums_obj = & $this->getByPermission($cat_id, $perm_string, $tags);
 
         require_once __DIR__ . '/tree.php';
         $forums_structured = array();
@@ -1076,7 +1074,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             return array_intersect($validForums, $forums);
         }
         // Get all forums by category IDs
-        $forumObjs = $this->getForumsByCategory($cats, $permission, true);
+        $forumObjs = & $this->getForumsByCategory($cats, $permission, true);
         $forums    = array_merge($forums, array_keys($forumObjs));
 
         return array_intersect($validForums, $forums);

@@ -84,10 +84,10 @@ class NewbbOnlineHandler
     /**
      * @param $xoopsTpl
      */
-    public function render(Smarty &$xoopsTpl)
+    public function render(Smarty $xoopsTpl)
     {
-        mod_loadFunctions("render", "newbb");
-        mod_loadFunctions("user", "newbb");
+        mod_loadFunctions('render', 'newbb');
+        mod_loadFunctions('user', 'newbb');
         if ($this->topic_id) {
             $criteria = new Criteria('online_topic', $this->topic_id);
         } elseif ($this->forum_id) {
@@ -95,7 +95,7 @@ class NewbbOnlineHandler
         } else {
             $criteria = null;
         }
-        $users     = $this->getAll($criteria);
+        $users     = & $this->getAll($criteria);
         $num_total = count($users);
 
         $num_user     = 0;

@@ -61,12 +61,11 @@ switch ($op) {
                 continue;
             } else {
                 foreach (array('type_name', 'type_color', 'type_description') as $var) {
-
                     //                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
                     //                        $type_obj->setVar($var, @$_POST[$var][$key]);
                     //                    }
                     $temp = XoopsRequest::getArray($var, '', 'POST');
-                    if ($type_obj->getVar($var) != $temp[$key]) {
+                    if ($type_obj->getVar($var) !== $temp[$key]) {
                         $type_obj->setVar($var, $temp[$key]);
                     }
 

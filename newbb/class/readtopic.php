@@ -40,6 +40,9 @@ include_once __DIR__ . '/read.php';
  */
 class Readtopic extends Read
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct('topic');
@@ -65,7 +68,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      */
     public function __construct(&$db)
     {
-        parent::__construct($db, "topic");
+        parent::__construct($db, 'topic');
         $newbbConfig           = newbbLoadConfig();
         $this->items_per_forum = isset($newbbConfig["read_items"]) ? (int)($newbbConfig["read_items"]) : 100;
     }
@@ -77,9 +80,9 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      */
     public function cleanOrphan()
     {
-        parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
+        parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
 
-        return parent::cleanOrphan($this->db->prefix("bb_topics"), "topic_id", "read_item");
+        return parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id', 'read_item');
     }
 
     /**
@@ -101,16 +104,16 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      * @param null $uid
      * @return bool
      */
-    public function setRead_items($status = 0, $forum_id = 0, $uid = null)
+    public function setReadItems($status = 0, $forum_id = 0, $uid = null)
     {
         if (empty($this->mode)) {
             return true;
         }
 
         if ($this->mode === 1) {
-            return $this->setRead_items_cookie($status, $forum_id);
+            return $this->setReadItemsCookie($status, $forum_id);
         } else {
-            return $this->setRead_items_db($status, $forum_id, $uid);
+            return $this->setReadItemsDb($status, $forum_id, $uid);
         }
     }
 
@@ -119,15 +122,15 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      * @param $forum_id
      * @return bool
      */
-    public function setRead_items_cookie($status, $forum_id)
+    public function setReadItemsCookie($status, $forum_id)
     {
-        $cookie_name = "LT";
+        $cookie_name = 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
         $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria    = new CriteriaCompo(new Criteria("forum_id", $forum_id));
-        $criteria->setSort("topic_last_post_id");
-        $criteria->setOrder("DESC");
+        $criteria    = new CriteriaCompo(new Criteria('forum_id', $forum_id));
+        $criteria->setSort('topic_last_post_id');
+        $criteria->setOrder('DESC');
         $criteria->setLimit($this->items_per_forum);
         $items = $itemHandler->getIds($criteria);
 
@@ -152,20 +155,20 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      * @param $uid
      * @return bool
      */
-    public function setRead_items_db($status, $forum_id, $uid)
+    public function setReadItemsDb($status, $forum_id, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS["xoopsUser"])) {
-                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            if (is_object($GLOBALS['xoopsUser'])) {
+                $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
             }
         }
 
         $itemHandler    =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria_topic = new CriteriaCompo(new Criteria("forum_id", $forum_id));
-        $criteria_topic->setSort("topic_last_post_id");
-        $criteria_topic->setOrder("DESC");
+        $criteria_topic = new CriteriaCompo(new Criteria('forum_id', $forum_id));
+        $criteria_topic->setSort('topic_last_post_id');
+        $criteria_topic->setOrder('DESC');
         $criteria_topic->setLimit($this->items_per_forum);
         $criteria_sticky = new CriteriaCompo(new Criteria("forum_id", $forum_id));
         $criteria_sticky->add(new Criteria("topic_sticky", 1));
@@ -175,18 +178,18 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             $sticky_id = $itemHandler->getIds($criteria_sticky);
             $items     = $items_id + $sticky_id;
             $criteria  = new CriteriaCompo(new Criteria("uid", $uid));
-            $criteria->add(new Criteria("read_item", "(" . implode(", ", $items) . ")", "IN"));
+            $criteria->add(new Criteria('read_item', '(' . implode(', ', $items) . ')', 'IN'));
             $this->deleteAll($criteria, true);
 
             return true;
         }
 
-        $items_obj  =& $itemHandler->getAll($criteria_topic, array("topic_last_post_id"));
-        $sticky_obj =& $itemHandler->getAll($criteria_sticky, array("topic_last_post_id"));
+        $items_obj  =& $itemHandler->getAll($criteria_topic, array('topic_last_post_id'));
+        $sticky_obj =& $itemHandler->getAll($criteria_sticky, array('topic_last_post_id'));
         $items_obj += $sticky_obj;
         $items = array();
         foreach (array_keys($items_obj) as $key) {
-            $items[$key] = $items_obj[$key]->getVar("topic_last_post_id");
+            $items[$key] = $items_obj[$key]->getVar('topic_last_post_id');
         }
         unset($items_obj, $sticky_obj);
         foreach (array_keys($items) as $key) {
