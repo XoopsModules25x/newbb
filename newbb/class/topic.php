@@ -20,7 +20,6 @@ newbb_load_object();
  */
 class Topic extends ArtObject
 {
-
     /**
      *
      */
@@ -229,7 +228,6 @@ class NewbbTopicHandler extends ArtObjectHandler
         $ret =& $topic_obj;
         if (!empty($var) && is_string($var)) {
             $ret = @$topic_obj->getVar($var);
-
         }
 
         return $ret;
@@ -426,7 +424,6 @@ class NewbbTopicHandler extends ArtObjectHandler
      */
     public function &getAllPosts(&$topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
     {
-
         $ret     = array();
         $perpage = ((int)($perpage) > 0) ? (int)($perpage) : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
         $start   = (int)($start);

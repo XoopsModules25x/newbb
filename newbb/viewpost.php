@@ -258,7 +258,6 @@ foreach (array_keys($posts) as $id) {
         'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']));
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
-
         }
     if ($isadmin || $post->checkIdentity()) {
         $post_text       = $post->getVar('post_text');

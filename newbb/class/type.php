@@ -23,7 +23,6 @@
  **/
 class NewbbType extends XoopsObject
 {
-
     /**
      *
      */
@@ -49,7 +48,6 @@ class NewbbType extends XoopsObject
  */
 class NewbbTypeHandler extends XoopsPersistableObjectHandler
 {
-
     /**
      * @param null|object $db
      */

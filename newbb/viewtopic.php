@@ -309,7 +309,6 @@ foreach ($postsArray as $eachpost) {
 }
 
 if ($total_posts > $GLOBALS['xoopsModuleConfig']['posts_per_page']) {
-
     include $GLOBALS['xoops']->path('class/pagenav.php');
 
     $nav = new XoopsPageNav($total_posts, $GLOBALS['xoopsModuleConfig']['posts_per_page'], $start, 'start', 'topic_id=' . $topic_id . '&amp;order=' . $order . '&amp;status=' . $status . '&amp;mode=' . $mode);

@@ -13,7 +13,6 @@
 
 class Category extends XoopsObject
 {
-
     /**
      *
      */

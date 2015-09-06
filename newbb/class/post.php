@@ -133,7 +133,6 @@ class Post extends ArtObject
      */
     public function deleteAttachment($attachArray = null)
     {
-
         $attachOld = $this->getAttachment();
         if (!is_array($attachOld) || count($attachOld) < 1) {
             return true;
@@ -158,7 +157,6 @@ class Post extends ArtObject
         $attachmentSave = '';
         if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
-
         }
         $this->setVar('attachment', $attachmentSave);
 

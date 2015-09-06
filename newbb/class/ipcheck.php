@@ -71,5 +71,4 @@ class IpCheck
 
         return $value;
     }
-
 }

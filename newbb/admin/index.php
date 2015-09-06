@@ -85,7 +85,6 @@ function newbb_admin_chmod($target, $mode = 0777)
  */
 function newbb_getImageLibs()
 {
-
     $imageLibs = array();
     unset($output, $status);
     if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {

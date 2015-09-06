@@ -20,7 +20,6 @@
 
 class Forum extends XoopsObject
 {
-
     /**
      *
      */
@@ -48,7 +47,6 @@ class Forum extends XoopsObject
      */
     public function dispForumModerators()
     {
-
         $ret = '';
         if (!$valid_moderators = $this->getVar('forum_moderator')) {
             return $ret;
@@ -66,7 +64,6 @@ class Forum extends XoopsObject
  */
 class NewbbForumHandler extends XoopsPersistableObjectHandler
 {
-
     /**
      * @param null|object $db
      */

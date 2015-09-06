@@ -38,7 +38,6 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      */
     function newbb_attachmentImage($source)
     {
-
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $img_url    = XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'];
         $thumb_path = $img_path . '/thumbs';
@@ -97,7 +96,6 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      */
     function newbb_createThumbnail($source, $thumb_width)
     {
-
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $thumb_path = $img_path . '/thumbs';
         $src_file   = $img_path . '/' . $source;

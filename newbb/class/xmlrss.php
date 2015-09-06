@@ -54,7 +54,6 @@ class Xmlrss
      */
     public function __construct()
     {
-
         $this->xml_version          = '1.0';
         $this->xml_encoding         = empty($GLOBALS['xoopsModuleConfig']['rss_utf8']) ? _CHARSET : 'UTF-8';
         $this->rss_version          = '2.0';

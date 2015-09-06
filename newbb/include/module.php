@@ -170,8 +170,6 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 //        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
 //        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
 //        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
-
-
     }
 
     if (!empty($newbbConfig["syncOnUpdate"])) {
