@@ -35,17 +35,17 @@ if (!defined('NEWBB_FUNCTIONS_RPC')) {
         }
         header('Content-Type: text/xml; charset="' . $charset . '"');
         if ($error) {
-            echo '<?xml version="1.0" encoding="' . $charset . '"?' . '>\n';
-            echo '<response>\n';
-            echo '<error>1</error>\n';
-            echo '<message>$error_message</message>\n';
-            echo '</response>';
+            echo '<?xml version="1.0" encoding="' . $charset . '"?' . ">\n";
+            echo "<response>\n";
+            echo "<error>1</error>\n";
+            echo "<message>$error_message</message>\n";
+            echo "</response>";
             exit();
         } else {
-            echo '<?xml version="1.0" encoding="' . $charset . '"?' . '>\n';
-            echo '<response>\n';
-            echo '<error>0</error>\n';
-            echo '</response>';
+            echo '<?xml version="1.0" encoding="' . $charset . '"?' . ">\n";
+            echo "<response>\n";
+            echo "<error>0</error>\n";
+            echo "</response>";
         }
     }
 }

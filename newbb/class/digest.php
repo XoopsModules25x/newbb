@@ -75,8 +75,8 @@ class Digest extends XoopsObject
     }
 
     /**
-     * @param bool $isSummary
-     * @param bool $isHtml
+     * @param  bool $isSummary
+     * @param  bool $isHtml
      * @return bool
      */
     public function buildContent($isSummary = true, $isHtml = false)
@@ -84,7 +84,7 @@ class Digest extends XoopsObject
         $digest_count = count($this->items);
         $content      = '';
         if ($digest_count > 0) {
-            $linebreak = ($isHtml) ? '<br />' : '\n';
+            $linebreak = ($isHtml) ? '<br />' : "\n";
             for ($i = 0; $i < $digest_count; ++$i) {
                 if ($isHtml) {
                     $content .= ($i + 1) . '. <a href=' . $this->items[$i]['link'] . '>' . $this->items[$i]['title'] . '</a>';
@@ -113,7 +113,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     public $last_digest;
 
     /**
-     * @param bool $isNew
+     * @param  bool   $isNew
      * @return Digest
      */
     public function &create($isNew = true)
@@ -127,7 +127,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param int $id
+     * @param  int         $id
      * @return Digest|null
      */
     public function &get($id)
@@ -150,7 +150,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param bool $isForced
+     * @param  bool $isForced
      * @return int
      */
     public function process($isForced = false)
@@ -195,8 +195,8 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param     $start
-     * @param int $perpage
+     * @param        $start
+     * @param  int   $perpage
      * @return array
      */
     public function &getAllDigests($start = 0, $perpage = 5)
@@ -260,7 +260,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param object $digest
+     * @param  object $digest
      * @return bool
      */
     public function insert(&$digest)
@@ -283,7 +283,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param object $digest
+     * @param  object $digest
      * @return bool
      */
     public function delete($digest)

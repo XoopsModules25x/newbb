@@ -104,7 +104,7 @@ foreach ($categories as $category) {
             if (empty($field['value'])) {
                 continue;
             }
-            $message .= $field['title'] . ': ' . $field['value'] . '\n';
+            $message .= $field['title'] . ': ' . $field['value'] . "\n";
         }
     }
 }
