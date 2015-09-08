@@ -647,9 +647,9 @@ $xoopsTpl->assign(array(
 
 $viewmode_options = array();
 if ($order === 'DESC') {
-    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?order=ASC&amp;status=$status&amp;topic_id=' . $topic_id, 'title' => _OLDESTFIRST);
+    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . "/viewtopic.php?order=ASC&amp;status=$status&amp;topic_id=" . $topic_id, 'title' => _OLDESTFIRST);
 } else {
-    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?order=DESC&amp;status=$status&amp;topic_id=' . $topic_id, 'title' => _NEWESTFIRST);
+    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . "/viewtopic.php?order=DESC&amp;status=$status&amp;topic_id=" . $topic_id, 'title' => _NEWESTFIRST);
 }
 
 switch ($status) {
@@ -691,7 +691,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']) && $topicHandler
         $login_checkbox->addOption(1, _MD_LOGIN);
         $user_tray->addElement($login_checkbox);
         $forum_form->addElement($user_tray);
-        $captcha = new XoopsFormCaptcha('', 'topic_{$topic_id}_{$start}');
+        $captcha = new XoopsFormCaptcha('', "topic_{$topic_id}_{$start}");
         $captcha->setConfig('mode', 'text');
         $forum_form->addElement($captcha);
     }
