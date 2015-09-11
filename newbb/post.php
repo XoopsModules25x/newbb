@@ -124,7 +124,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
 }
 
 if (XoopsRequest::getString('contents_submit', '', 'POST')) {
-    $message = XoopsRequest::getString('message', '', 'POST');
+    $message = XoopsRequest::getText('message', '', 'POST');
     if (empty($message)) {
         // irmtfan - issue with javascript:history.go(-1) - add error message
         redirect_header($_SERVER['HTTP_REFERER'], 1, _MD_ERROR_BACK);
