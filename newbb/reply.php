@@ -103,7 +103,7 @@ $form_title = _MD_REPLY.": <a href=\"viewtopic.php?topic_id={$topic_id}\">".$top
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ((2 === $GLOBALS['xoopsModuleConfig']['disc_show']) || (3 === $GLOBALS['xoopsModuleConfig']['disc_show'])) {
+if ((2 == $GLOBALS['xoopsModuleConfig']['disc_show']) || (3 == $GLOBALS['xoopsModuleConfig']['disc_show'])) {
     $xoopsTpl->assign('disclaimer', $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 

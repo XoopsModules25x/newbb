@@ -128,7 +128,7 @@ class Post extends ArtObject
     }
 
     /**
-     * @param null $attachArray
+     * @param  null $attachArray
      * @return bool
      */
     public function deleteAttachment($attachArray = null)
@@ -164,10 +164,10 @@ class Post extends ArtObject
     }
 
     /**
-     * @param string $name_saved
-     * @param string $nameDisplay
-     * @param string $mimetype
-     * @param int    $numDownload
+     * @param  string $name_saved
+     * @param  string $nameDisplay
+     * @param  string $mimetype
+     * @param  int    $numDownload
      * @return bool
      */
     public function setAttachment($name_saved = '', $nameDisplay = '', $mimetype = '', $numDownload = 0)
@@ -193,7 +193,7 @@ class Post extends ArtObject
 
     /**
      * TODO: refactor
-     * @param bool $asSource
+     * @param  bool   $asSource
      * @return string
      */
     public function displayAttachment($asSource = false)
@@ -242,8 +242,8 @@ class Post extends ArtObject
     // ////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param string $poster_name
-     * @param string $post_editmsg
+     * @param  string $poster_name
+     * @param  string $post_editmsg
      * @return bool
      */
     public function setPostEdit($poster_name = '', $post_editmsg = '')
@@ -375,7 +375,7 @@ class Post extends ArtObject
     }
 
     /**
-     * @param string $action_tag
+     * @param  string $action_tag
      * @return bool
      */
     public function checkTimelimit($action_tag = 'edit_timelimit')
@@ -389,20 +389,20 @@ class Post extends ArtObject
     }
 
     /**
-     * @param int $uid
+     * @param  int  $uid
      * @return bool
      */
     public function checkIdentity($uid = -1)
     {
         $uid = ($uid > -1) ? $uid : (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0);
         if ($this->getVar('uid') > 0) {
-            $user_ok = ($uid === $this->getVar('uid')) ? true : false;
+            $user_ok = ($uid == $this->getVar('uid'));
         } else {
             static $user_ip;
             if (!isset($user_ip)) {
                 $user_ip = newbb_getIP();
             }
-            $user_ok = ($user_ip === $this->getVar('poster_ip')) ? true : false;
+            $user_ok = ($user_ip == $this->getVar('poster_ip'));
         }
 
         return $user_ok;
@@ -653,15 +653,15 @@ class Post extends ArtObject
 class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param object $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_posts', 'Post', 'post_id', 'subject');
     }
 
     /**
-     * @param mixed $id
+     * @param  mixed       $id
      * @return null|object
      */
     public function &get($id)
@@ -678,9 +678,9 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param     $topic_id
-     * @param     $limit
-     * @param int $approved
+     * @param        $topic_id
+     * @param        $limit
+     * @param  int   $approved
      * @return array
      */
     public function &getByLimit($topic_id, $limit, $approved = 1)
@@ -718,8 +718,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param      $post
-     * @param bool $force
+     * @param       $post
+     * @param  bool $force
      * @return bool
      */
     public function approve(&$post, $force = false)
@@ -767,7 +767,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         if ($post->getVar('uid') > 0) {
             $memberHandler =& xoops_gethandler('member');
             $poster        =& $memberHandler->getUser($post->getVar('uid'));
-            if (is_object($poster) && $post->getVar('uid') === $poster->getVar('uid')) {
+            if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
                 $res = $memberHandler->insertUser($poster, true);
                 unset($poster);
@@ -785,8 +785,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param object $post
-     * @param bool   $force
+     * @param  object $post
+     * @param  bool   $force
      * @return bool
      */
     public function insert(&$post, $force = true)
@@ -899,14 +899,14 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param object $post
-     * @param bool   $isDeleteOne
-     * @param bool   $force
+     * @param  object $post
+     * @param  bool   $isDeleteOne
+     * @param  bool   $force
      * @return bool
      */
     public function delete(&$post, $isDeleteOne = true, $force = false)
     {
-        if (!is_object($post) || $post->getVar('post_id') === 0) {
+        if (!is_object($post) || $post->getVar('post_id') == 0) {
             return false;
         }
 
@@ -939,15 +939,15 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param      $post
-     * @param bool $force
+     * @param       $post
+     * @param  bool $force
      * @return bool
      */
     public function _delete(&$post, $force = false)
     {
         global $xoopsModule;
 
-        if (!is_object($post) || $post->getVar('post_id') === 0) {
+        if (!is_object($post) || $post->getVar('post_id') == 0) {
             return false;
         }
 
@@ -1021,7 +1021,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             if ($post->getVar('uid') > 0) {
                 $memberHandler =& xoops_gethandler('member');
                 $poster        =& $memberHandler->getUser($post->getVar('uid'));
-                if (is_object($poster) && $post->getVar('uid') === $poster->getVar('uid')) {
+                if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                     $poster->setVar('posts', $poster->getVar('posts') - 1);
                     $res = $memberHandler->insertUser($poster, true);
                     unset($poster);
@@ -1041,8 +1041,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
 
     // START irmtfan enhance getPostCount when there is join (read_mode = 2)
     /**
-     * @param null $criteria
-     * @param null $join
+     * @param  null     $criteria
+     * @param  null     $join
      * @return int|null
      */
     public function getPostCount($criteria = null, $join = null)
@@ -1073,10 +1073,10 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
      * TODO: combining viewtopic.php
      */
     /**
-     * @param null $criteria
-     * @param int  $limit
-     * @param int  $start
-     * @param null $join
+     * @param  null  $criteria
+     * @param  int   $limit
+     * @param  int   $start
+     * @param  null  $join
      * @return array
      */
     public function &getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
@@ -1152,7 +1152,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     /**
      * clean expired objects from database
      *
-     * @param  int $expire time limit for expiration
+     * @param  int  $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)

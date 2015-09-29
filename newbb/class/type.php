@@ -49,9 +49,9 @@ class NewbbType extends XoopsObject
 class NewbbTypeHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_type', 'NewbbType', 'type_id', 'type_name');
     }
@@ -132,7 +132,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             $type_query = array();
             foreach ($types_update as $key) {
                 $order = $types[$key];
-                if ($types_existing[$key]["type_order"] === $order) {
+                if ($types_existing[$key]["type_order"] == $order) {
                     continue;
                 }
                 $sql = "UPDATE " . $this->db->prefix("bb_type_forum") . " SET type_order = {$order}" . " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";

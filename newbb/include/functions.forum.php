@@ -19,10 +19,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param null   $value
-     * @param string $permission
-     * @param bool   $delimitorCategory
-     * @param bool   $see
+     * @param  null   $value
+     * @param  string $permission
+     * @param  bool   $delimitorCategory
+     * @param  bool   $see
      * @return string
      */
     function newbb_forumSelectBox($value = null, $permission = 'access', $delimitorCategory = true, $see = false)
@@ -67,7 +67,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param int $forum_id
+     * @param  int    $forum_id
      * @return string
      */
     function newbb_make_jumpbox($forum_id = 0)
@@ -90,8 +90,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      *
      * @int integer    $pid    parent forum ID
      *
-     * @param int  $pid
-     * @param bool $refresh
+     * @param  int   $pid
+     * @param  bool  $refresh
      * @return array
      */
     function newbb_getSubForum($pid = 0, $refresh = false)
@@ -105,7 +105,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         if (!is_array($list) || $refresh) {
             $list = newbb_createSubForumList();
         }
-        if ($pid === 0) {
+        if ($pid == 0) {
             return $list;
         } else {
             return @$list[$pid];
@@ -139,8 +139,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param int  $forum_id
-     * @param bool $refresh
+     * @param  int              $forum_id
+     * @param  bool             $refresh
      * @return array|mixed|null
      */
     function newbb_getParentForum($forum_id = 0, $refresh = false)
@@ -154,7 +154,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         if (!is_array($list) || $refresh) {
             $list = newbb_createParentForumList();
         }
-        if ($forum_id === 0) {
+        if ($forum_id == 0) {
             return $list;
         } else {
             return @$list[$forum_id];

@@ -216,7 +216,7 @@ switch ($action) {
             $option_ids = array();
             foreach ($perms as $perm) {
                 ++$ii;
-                if ($ii % 5 === 0) {
+                if ($ii % 5 == 0) {
                     $ret_ele .= '</tr><tr>';
                 }
                 $checked      = in_array('forum_' . $perm, $selected) ? " checked='checked'" : '';

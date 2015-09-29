@@ -245,7 +245,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         //$has_next = true;
         //}
         // irmtfan if $results < $limit => it is impossible to have next
-        if ($num_results === $limit) {
+        if ($num_results == $limit) {
             $next            = $start + $limit;
             $queries         = implode(',', $queries);
             $search_url_next = $search_url . "&direction=next&start={$next}"; // irmtfan add { and } direction=next
@@ -259,7 +259,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
             $xoopsTpl->assign('search_prev', $search_prev);
         }
         // irmtfan if all results skipped then redirect to the next/previous page
-        if ($num_results === $skipresults) {
+        if ($num_results == $skipresults) {
             $direction           = XoopsRequest::getString('direction', XoopsRequest::getString('direction', 'next', 'GET'), 'POST');
             $search_url_redirect = (strtolower($direction) === 'next') ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));

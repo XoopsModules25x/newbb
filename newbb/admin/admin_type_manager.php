@@ -65,7 +65,7 @@ switch ($op) {
                     //                        $type_obj->setVar($var, @$_POST[$var][$key]);
                     //                    }
                     $temp = XoopsRequest::getArray($var, '', 'POST');
-                    if ($type_obj->getVar($var) !== $temp[$key]) {
+                    if ($type_obj->getVar($var) != $temp[$key]) {
                         $type_obj->setVar($var, $temp[$key]);
                     }
 
@@ -381,7 +381,7 @@ switch ($op) {
         if (!(XoopsRequest::getInt('forum', 0, 'POST')) || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . "?op=forum", 2, _AM_NEWBB_TYPE_FORUM);
         }
-        $typeHandler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getInt('type_order', 0, 'POST'));
+        $typeHandler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getArray('type_order', null, 'POST'));
         redirect_header(xoops_getenv('PHP_SELF') . "?op=forum", 2, _MD_DBUPDATED);
         break;
 

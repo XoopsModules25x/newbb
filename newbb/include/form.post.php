@@ -102,7 +102,7 @@ if ($editby) {
 }
 
 $uid = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id === 0 || $uid === $topicHandler->get(@$topic_id, 'topic_poster')))) {
+if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id == 0 || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
     $type_id     = $topicHandler->get(@$topic_id, 'type_id');
     $typeHandler =& xoops_getmodulehandler('type', 'newbb');
     $types       = $typeHandler->getByForum($forum_obj->getVar('forum_id'));
@@ -179,8 +179,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $pos
 }
 
 $options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br />');
-if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] === 1) {
-    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') === 0) ? 1 : 0;
+if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
+    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
     $noname_checkbox->addOption(1, _MD_POSTANONLY);
     $options_tray->addElement($noname_checkbox);

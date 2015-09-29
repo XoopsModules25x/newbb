@@ -31,12 +31,12 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     }
 
     /**
-     * @param     $text
-     * @param int $html
-     * @param int $smiley
-     * @param int $xcode
-     * @param int $image
-     * @param int $br
+     * @param        $text
+     * @param  int   $html
+     * @param  int   $smiley
+     * @param  int   $xcode
+     * @param  int   $image
+     * @param  int   $br
      * @return mixed
      */
     function &newbb_displayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
@@ -118,7 +118,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         // START hacked by irmtfan
         // to show text links instead of buttons - func_num_args()==2 => only when $image, $alt is set and optional $display not set
 
-        if (func_num_args() === 2) {
+        if (func_num_args() == 2) {
             // overall setting
             if (!empty($GLOBALS['xoopsModuleConfig']['display_text_links'])) {
                 $display = false;

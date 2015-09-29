@@ -5,7 +5,7 @@
 /**
  * Class IpCheck
  */
-class IpCheck
+class ipcheck
 {
     public $ipin;
     public $ipout;
@@ -38,7 +38,7 @@ class IpCheck
                 }
 
                 // Look for an IPv4 address embedded as ::x.x.x.x
-            } else if (strpos($this->ipin, "::") === 0) {
+            } elseif (strpos($this->ipin, "::") === 0) {
                 $ipv4addr = substr($this->ipin, 2);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;

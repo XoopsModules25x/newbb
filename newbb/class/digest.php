@@ -253,7 +253,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] === 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
+        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
 
         return $time_diff - $deadline;
@@ -295,7 +295,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        if ($this->last_digest === $digest_id) {
+        if ($this->last_digest == $digest_id) {
             return false;
         } // It is not allowed to delete the last digest
         $sql = 'DELETE FROM ' . $this->db->prefix('bb_digest') . ' WHERE digest_id=' . $digest_id;

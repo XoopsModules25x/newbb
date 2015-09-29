@@ -60,9 +60,9 @@ class Nrate extends ArtObject
 class NewbbRateHandler extends ArtObjectHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_votedata', 'Nrate', 'ratingid', '');
     }

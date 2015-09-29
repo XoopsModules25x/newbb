@@ -228,7 +228,7 @@ class NewbbTopicRenderer
                 // Skip
                 if (empty($this->config['read_mode'])) {
                     // Use database
-                } elseif ($this->config['read_mode'] === 2) {
+                } elseif ($this->config['read_mode'] == 2) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
@@ -238,7 +238,7 @@ class NewbbTopicRenderer
                     }
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
-                } elseif ($this->config['read_mode'] === 1) {
+                } elseif ($this->config['read_mode'] == 1) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
@@ -270,7 +270,7 @@ class NewbbTopicRenderer
                 // Skip
                 if (empty($this->config['read_mode'])) {
                     // Use database
-                } elseif ($this->config['read_mode'] === 2) {
+                } elseif ($this->config['read_mode'] == 2) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
@@ -280,7 +280,7 @@ class NewbbTopicRenderer
                     }
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
-                } elseif ($this->config['read_mode'] === 1) {
+                } elseif ($this->config['read_mode'] == 1) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
@@ -377,7 +377,7 @@ class NewbbTopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbb_getSinceTime($val);
-                    if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] === 1 && $GLOBALS['last_visit'] > $startdate) {
+                    if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1 && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
@@ -457,8 +457,8 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param null $header
-     * @param null $var
+     * @param  null       $header
+     * @param  null       $var
      * @return array|null
      */
     public function getSort($header = null, $var = null)
@@ -522,7 +522,7 @@ class NewbbTopicRenderer
                 'title' => _MD_NEWBB_TYPE,
                 'sort'  => 't.type_id');
         }
-        if ($this->userlevel === 2) {
+        if ($this->userlevel == 2) {
             $headers['approve'] = array(
                 'title' => _MD_APPROVE,
                 'sort'  => 't.approved');
@@ -547,7 +547,7 @@ class NewbbTopicRenderer
 
     // START irmtfan add Display topic headers function
     /**
-     * @param null $header
+     * @param  null  $header
      * @return array
      */
     public function getHeader($header = null)
@@ -565,8 +565,8 @@ class NewbbTopicRenderer
 
     // END irmtfan add Display topic headers function
     /**
-     * @param null $type
-     * @param null $status
+     * @param  null  $type
+     * @param  null  $status
      * @return array
      */
     public function getStatus($type = null, $status = null)
@@ -626,7 +626,7 @@ class NewbbTopicRenderer
         $sorts             = $this->getSort('', 'title');
         $selection['sort'] = "<select name='sort'>";
         foreach ($sorts as $sort => $title) {
-            $selection['sort'] .= "<option value='" . $sort . "' " . (($sort === $sort_selected) ? " selected='selected'" : '') . '>' . $title . '</option>';
+            $selection['sort'] .= "<option value='" . $sort . "' " . (($sort == $sort_selected) ? " selected='selected'" : '') . '>' . $title . '</option>';
         }
         $selection['sort'] .= '</select>';
 
@@ -670,7 +670,7 @@ class NewbbTopicRenderer
         $headers = $this->getSort('', 'title');
         foreach ($headers as $header => $title) {
             $_args = array('sort={$header}');
-            if (@$this->vars['sort'] === $header) {
+            if (@$this->vars['sort'] == $header) {
                 $_args[] = 'order=' . ((@$this->vars['order'] + 1) % 2);
             }
             $headers_data[$header]['title'] = $title;
@@ -704,7 +704,7 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param null $type_id
+     * @param  null  $type_id
      * @return mixed
      */
     public function getTypes($type_id = null)
@@ -723,7 +723,7 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param Smarty $xoopsTpl
+     * @param  Smarty $xoopsTpl
      * @return bool
      */
     public function buildTypes(Smarty $xoopsTpl)
@@ -749,7 +749,7 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param Smarty $xoopsTpl
+     * @param  Smarty $xoopsTpl
      * @return bool
      */
     public function buildCurrent(Smarty $xoopsTpl)
@@ -836,7 +836,7 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param Smarty $xoopsTpl
+     * @param  Smarty     $xoopsTpl
      * @return array|void
      */
     public function renderTopics(Smarty $xoopsTpl = null)
@@ -1009,7 +1009,7 @@ class NewbbTopicRenderer
             $posters[$myrow['uid']]          = 1;
             // reads
             if (!empty($this->config['read_mode'])) {
-                $reads[$myrow['topic_id']] = ($this->config['read_mode'] === 1) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
+                $reads[$myrow['topic_id']] = ($this->config['read_mode'] == 1) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
             }
             // types
             if (!empty($myrow['type_id'])) {
@@ -1096,8 +1096,8 @@ class NewbbTopicRenderer
 
     // START irmtfan to create an array from selected keys of an array
     /**
-     * @param      $array
-     * @param null $keys
+     * @param        $array
+     * @param  null  $keys
      * @return array
      */
     public function getFromKeys($array, $keys = null)

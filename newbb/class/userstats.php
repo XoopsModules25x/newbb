@@ -41,15 +41,15 @@ class NewbbUserstats extends ArtObject
 class NewbbUserstatsHandler extends ArtObjectHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_user_stats', 'NewbbUserstats', 'uid', '');
     }
 
     /**
-     * @param null $db
+     * @param  null                  $db
      * @return NewbbUserstatsHandler
      */
     public function &instance($db = null)
@@ -63,7 +63,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     }
 
     /**
-     * @param mixed $id
+     * @param  mixed       $id
      * @return null|object
      */
     public function &get($id)

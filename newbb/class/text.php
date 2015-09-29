@@ -38,9 +38,9 @@ class Ntext extends ArtObject
 class NewbbTextHandler extends ArtObjectHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_posts_text', 'Ntext', 'post_id', '');
     }

@@ -27,16 +27,16 @@ define('FORUM_PERM_ITEMS', 'access,view,post,reply,edit,delete,addpoll,vote,atta
 class NewbbPermissionForumHandler extends NewbbPermissionHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         //        $this->NewbbPermissionHandler($db);
         parent::__construct($db);
     }
 
     /**
-     * @param bool $fullname
+     * @param  bool  $fullname
      * @return array
      */
     public function getValidPerms($fullname = false)
@@ -57,8 +57,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param     $mid
-     * @param int $id
+     * @param        $mid
+     * @param  int   $id
      * @return array
      */
     public function getValidItems($mid, $id = 0)
@@ -102,7 +102,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     * @return array
     */
     /**
-     * @param int $id
+     * @param  int  $id
      * @return bool
      */
     public function getPermissions($id = 0)
@@ -151,9 +151,9 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param int  $forum
-     * @param bool $topic_locked
-     * @param bool $isadmin
+     * @param  int   $forum
+     * @param  bool  $topic_locked
+     * @param  bool  $isadmin
      * @return array
      */
     public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
@@ -162,7 +162,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
         $forum_id = $forum;
         if (is_object($forum)) {
-            $forum_id = $forum->getVar('forum_id');          
+            $forum_id = $forum->getVar('forum_id');
         }
 
         $permission_set = $this->getPermissions($forum_id);
@@ -202,8 +202,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param     $forum
-     * @param int $mid
+     * @param       $forum
+     * @param  int  $mid
      * @return bool
      */
     public function applyTemplate($forum, $mid = 0)

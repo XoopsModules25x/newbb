@@ -70,7 +70,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
-    if (is_numeric($user) && $user === -1) {
+    if (is_numeric($user) && $user == -1) {
         $user =& $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)($user) < 1) {
@@ -79,7 +79,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
     $uid = (is_object($user)) ? $user->getVar('uid') : (int)($user);
 
     if (!$mid) {
-        if (is_object($xoopsModule) && 'newbb' === $xoopsModule->getVar('dirname', 'n')) {
+        if (is_object($xoopsModule) && 'newbb' == $xoopsModule->getVar('dirname', 'n')) {
             $mid = $xoopsModule->getVar('mid', 'n');
         } else {
             $modhandler   =& xoops_gethandler('module');
@@ -89,7 +89,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
         }
     }
 
-    if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid === $xoopsModule->getVar('mid', 'n') && $uid === $GLOBALS['xoopsUser']->getVar('uid', 'n')) {
+    if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid == $xoopsModule->getVar('mid', 'n') && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')) {
         return $GLOBALS['xoopsUserIsAdmin'];
     }
 
@@ -112,14 +112,14 @@ function newbb_isModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)($forum);
-        if ($forum_id === 0) {
+        if ($forum_id == 0) {
             return false;
         }
         $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
         $forum        =& $forumHandler->get($forum_id);
     }
 
-    if (is_numeric($user) && $user === -1) {
+    if (is_numeric($user) && $user == -1) {
         $user =& $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)($user) < 1) {

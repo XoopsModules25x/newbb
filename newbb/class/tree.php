@@ -79,10 +79,10 @@ if (!class_exists("newbbObjectTree")) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string  $prefix         String to indent deeper levels
-         * @param  integer $key            ID of the object to display as the root of select options
-         * @param null     $tags
-         * @return string HTML select box
+         * @param  string  $prefix String to indent deeper levels
+         * @param  integer $key    ID of the object to display as the root of select options
+         * @param  null    $tags
+         * @return string  HTML select box
          * @internal param string $name Name of the select box
          * @internal param string $fieldName Name of the member variable from the
          *                                 node objects that should be used as the title for the options.
@@ -100,12 +100,12 @@ if (!class_exists("newbbObjectTree")) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string  $name           Name of the select box
-         * @param  string  $prefix         String to indent deeper levels
-         * @param  string  $selected       Value to display as selected
-         * @param bool     $EmptyOption
-         * @param  integer $key            ID of the object to display as the root of select options
-         * @return string HTML select box
+         * @param  string  $name        Name of the select box
+         * @param  string  $prefix      String to indent deeper levels
+         * @param  string  $selected    Value to display as selected
+         * @param  bool    $EmptyOption
+         * @param  integer $key         ID of the object to display as the root of select options
+         * @return string  HTML select box
          * @internal param string $fieldName Name of the member variable from the
          *                                 node objects that should be used as the title for the options.
          * @internal param bool $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
@@ -133,7 +133,7 @@ if (!class_exists("newbbObjectTree")) {
          */
         public function getAllChild_object($key, &$ret, $depth = 0)
         {
-            if (--$depth === 0) {
+            if (--$depth == 0) {
                 return;
             }
 
@@ -150,8 +150,8 @@ if (!class_exists("newbbObjectTree")) {
         /**
          * Make a tree for the array
          *
-         * @param int|string $key   top key of the tree
-         * @param  integer   $depth level of subcategories
+         * @param  int|string $key   top key of the tree
+         * @param  integer    $depth level of subcategories
          * @return array
          * @internal param array $tags fields to be used
          */
@@ -177,7 +177,7 @@ if (!class_exists("newbbObjectTree")) {
          **/
         public function getAllChild_array($key, &$ret, array $tags = array(), $depth = 0)
         {
-            if (--$depth === 0) {
+            if (--$depth == 0) {
                 return;
             }
 
@@ -201,9 +201,9 @@ if (!class_exists("newbbObjectTree")) {
         /**
          * Make a tree for the array
          *
-         * @param int|string $key   top key of the tree
-         * @param  array     $tags  fields to be used
-         * @param  integer   $depth level of subcategories
+         * @param  int|string $key   top key of the tree
+         * @param  array      $tags  fields to be used
+         * @param  integer    $depth level of subcategories
          * @return array
          */
         public function &makeArrayTree($key = 0, $tags = null, $depth = 0)
@@ -242,8 +242,8 @@ if (!class_exists("newbbObjectTree")) {
         }
 
         /**
-         * @param      $key
-         * @param bool $reverse
+         * @param        $key
+         * @param  bool  $reverse
          * @return array
          */
         public function &getParentForums($key, $reverse = true)

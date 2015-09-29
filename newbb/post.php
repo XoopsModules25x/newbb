@@ -282,7 +282,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     newbb_setsession('LP', time()); // Recording last post time
     $topic_obj =& $topicHandler->get($post_obj->getVar('topic_id'));
     $uid       = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-    if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id === 0 || $uid === $topic_obj->getVar('topic_poster')))) {
+    if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id == 0 || $uid == $topic_obj->getVar('topic_poster')))) {
         $topic_obj->setVar('type_id', XoopsRequest::getInt('type_id', 0, 'POST'));
     }
 

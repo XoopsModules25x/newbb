@@ -58,9 +58,9 @@ $order    = (XoopsRequest::getString('order', '', 'GET') && in_array(XoopsReques
 
 if ($order === '') {
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
-        $order = ($GLOBALS['xoopsUser']->getVar('uorder') === 1) ? 'DESC' : 'ASC';
+        $order = ($GLOBALS['xoopsUser']->getVar('uorder') == 1) ? 'DESC' : 'ASC';
     } else {
-        $order = ($GLOBALS['xoopsConfig']['com_order'] === 1) ? 'DESC' : 'ASC';
+        $order = ($GLOBALS['xoopsConfig']['com_order'] == 1) ? 'DESC' : 'ASC';
     }
 }
 
@@ -107,12 +107,12 @@ $topic_is_unread = true;
 */
 $topic_last_post_time_or_id_read = newbb_getRead('topic', $topic_id);
 if (!empty($topic_last_post_time_or_id_read)) {
-    if ($GLOBALS['xoopsModuleConfig']['read_mode'] === 1) {
+    if ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
         $postHandler     =& xoops_getmodulehandler('post', 'newbb');
         $post_obj        =& $postHandler->get($topic_obj->getVar('topic_last_post_id'));
         $topic_is_unread = ($topic_last_post_time_or_id_read < $post_obj->getVar('post_time'));
     }
-    if ($GLOBALS['xoopsModuleConfig']['read_mode'] === 2) {
+    if ($GLOBALS['xoopsModuleConfig']['read_mode'] == 2) {
         $topic_is_unread = ($topic_last_post_time_or_id_read < $topic_obj->getVar('topic_last_post_id'));
         // hack jump to last post read if post_id is empty - is there any better way?
         if (empty($post_id) && $topic_is_unread && !empty($GLOBALS['xoopsModuleConfig']['jump_to_topic_last_post_read_enabled'])) {
@@ -179,7 +179,7 @@ if ($infobox['show'] > 0) {
     $infobox['icon'] = array(
         'expand'   => $iconHandler->getImageSource('less'),
         'collapse' => $iconHandler->getImageSource('more'));
-    if ($infobox['show'] === 1) {
+    if ($infobox['show'] == 1) {
         $infobox['style'] = 'none';        //irmtfan move semicolon
         $infobox['alt']   = _MD_NEWBB_SEEUSERDATA;
         $infobox['src']   = 'more';
@@ -561,11 +561,11 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // START can add poll
     if ($pollAdd) {
         if (!$topic_obj->getVar('topic_haspoll')) {
-            if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('uid') === $topic_obj->getVar('topic_poster')) {
+            if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster')) {
                 $t_poll = newbbDisplayImage('t_poll', _MD_ADDPOLL);
                 $xoopsTpl->assign('forum_addpoll', '<a href=\'' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/polls.php?op=add&amp;topic_id=' . $topic_id . '\'>' . $t_poll . '</a>');
             }
-        } elseif ($isadmin || (is_object($poll_obj) && is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('uid') === $poll_obj->getVar('user_id'))) {
+        } elseif ($isadmin || (is_object($poll_obj) && is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('uid') == $poll_obj->getVar('user_id'))) {
             $poll_edit    = '';
             $poll_delete  = '';
             $poll_restart = '';
@@ -647,9 +647,9 @@ $xoopsTpl->assign(array(
 
 $viewmode_options = array();
 if ($order === 'DESC') {
-    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . "/viewtopic.php?order=ASC&amp;status=$status&amp;topic_id=" . $topic_id, 'title' => _OLDESTFIRST);
+    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?order=ASC&amp;status=$status&amp;topic_id=' . $topic_id, 'title' => _OLDESTFIRST);
 } else {
-    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . "/viewtopic.php?order=DESC&amp;status=$status&amp;topic_id=" . $topic_id, 'title' => _NEWESTFIRST);
+    $viewmode_options[] = array('link' => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?order=DESC&amp;status=$status&amp;topic_id=' . $topic_id, 'title' => _NEWESTFIRST);
 }
 
 switch ($status) {
@@ -691,7 +691,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']) && $topicHandler
         $login_checkbox->addOption(1, _MD_LOGIN);
         $user_tray->addElement($login_checkbox);
         $forum_form->addElement($user_tray);
-        $captcha = new XoopsFormCaptcha('', "topic_{$topic_id}_{$start}");
+        $captcha = new XoopsFormCaptcha('', 'topic_{$topic_id}_{$start}');
         $captcha->setConfig('mode', 'text');
         $forum_form->addElement($captcha);
     }

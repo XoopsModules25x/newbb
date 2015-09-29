@@ -160,7 +160,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             // START irmtfan poll_module and rewrite the method
             // irmtfan only move poll in old topic to new topic if new topic has not a poll
             $poll_id = $topic_obj->getVar('poll_id');
-            if ($poll_id > 0 && ($newtopic_obj->getVar('poll_id') === 0)) {
+            if ($poll_id > 0 && ($newtopic_obj->getVar('poll_id') == 0)) {
                 $newtopic_obj->setVar('topic_haspoll', 1);
                 $newtopic_obj->setVar('poll_id', $poll_id);
                 $poll_id = 0;// set to not delete the poll

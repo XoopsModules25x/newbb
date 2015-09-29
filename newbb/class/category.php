@@ -34,15 +34,15 @@ class Category extends XoopsObject
 class NewbbCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_categories', 'Category', 'cat_id', 'cat_title');
     }
 
     /**
-     * @param string $perm
+     * @param  string $perm
      * @return mixed
      */
     public function getIdsByPermission($perm = 'access')
@@ -53,9 +53,9 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param string $permission
-     * @param null   $tags
-     * @param bool   $asObject
+     * @param  string $permission
+     * @param  null   $tags
+     * @param  bool   $asObject
      * @return array
      */
     public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
@@ -72,7 +72,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param object $category
+     * @param  object $category
      * @return mixed
      */
     public function insert(&$category)
@@ -86,7 +86,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param object $category
+     * @param  object     $category
      * @return bool|mixed
      */
     public function delete(&$category)
@@ -113,8 +113,8 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * return    bool
      */
     /**
-     * @param        $category
-     * @param string $perm
+     * @param         $category
+     * @param  string $perm
      * @return bool
      */
     public function getPermission($category, $perm = 'access')
@@ -152,7 +152,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param null $object
+     * @param  null $object
      * @return bool
      */
     public function synchronization($object = null)

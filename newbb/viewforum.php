@@ -159,7 +159,7 @@ if (!XoopsRequest::getString('sort', '', 'GET') || !array_key_exists(XoopsReques
 
 $forum_selection_sort = '<select name="sort">';
 foreach ($sel_sort_array as $sort_k => $sort_v) {
-    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort === $sort_k) ? ' selected="selected"' : '') . '>' . $sort_v . '</option>';
+    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort == $sort_k) ? ' selected="selected"' : '') . '>' . $sort_v . '</option>';
 }
 $forum_selection_sort .= '</select>';
 
@@ -310,7 +310,7 @@ if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
     unset($permission_table);
 }
 
-if ($GLOBALS['xoopsModuleConfig']['rss_enable'] === 1) {
+if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
     $xoopsTpl->assign('rss_button', "<div align='right'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/rss.php?f=' . $forum_id . "' title='RSS feed' target='_blank'>" . newbbDisplayImage('rss', 'RSS feed') . '</a></div>');
 }
 // irmtfan move to footer.php

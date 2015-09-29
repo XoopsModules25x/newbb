@@ -56,8 +56,8 @@ function newbb_admin_getPathStatus($path = '')
 }
 
 /**
- * @param     $target
- * @param int $mode
+ * @param       $target
+ * @param  int  $mode
  * @return bool
  */
 function newbb_admin_mkdir($target, $mode = 0777)
@@ -69,8 +69,8 @@ function newbb_admin_mkdir($target, $mode = 0777)
 }
 
 /**
- * @param     $target
- * @param int $mode
+ * @param       $target
+ * @param  int  $mode
  * @return bool
  */
 function newbb_admin_chmod($target, $mode = 0777)
@@ -87,7 +87,7 @@ function newbb_getImageLibs()
 {
     $imageLibs = array();
     unset($output, $status);
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -96,7 +96,7 @@ function newbb_getImageLibs()
 
         unset($output, $status);
     }
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] === 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] === 0) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -398,8 +398,8 @@ mod_clearCacheFile('config', 'newbb');
 mod_clearCacheFile('permission', 'newbb');
 
 /**
- * @param      $sizeAsString
- * @param bool $b
+ * @param             $sizeAsString
+ * @param  bool       $b
  * @return int|string
  */
 function return_bytes($sizeAsString, $b = false)

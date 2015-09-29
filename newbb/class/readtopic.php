@@ -64,9 +64,9 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     public $items_per_forum;
 
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'topic');
         $newbbConfig           = newbbLoadConfig();
@@ -99,9 +99,9 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     }
 
     /**
-     * @param int  $status
-     * @param int  $forum_id
-     * @param null $uid
+     * @param  int  $status
+     * @param  int  $forum_id
+     * @param  null $uid
      * @return bool
      */
     public function setReadItems($status = 0, $forum_id = 0, $uid = null)
@@ -110,7 +110,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        if ($this->mode === 1) {
+        if ($this->mode == 1) {
             return $this->setReadItemsCookie($status, $forum_id);
         } else {
             return $this->setReadItemsDb($status, $forum_id, $uid);

@@ -63,7 +63,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
         $categories[0]['fields'][] = array('title' => _PROFILE_MA_AVATAR, 'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />");
         $weights[0][]              = 0;
     }
-    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') === 1) {
+    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
         $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
         $categories[0]['fields'][] = array('title' => _PROFILE_AM_EMAIL, 'value' => $email);
         $weights[0][]              = 0;

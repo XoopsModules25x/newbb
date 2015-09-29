@@ -102,7 +102,7 @@ class Topic extends ArtObject
         include_once $relPath . 'renderer.php';
         $classes = get_declared_classes();
         foreach (array_reverse($classes) as $class) {
-            if (strtolower($class) === $newbbConfig['poll_module']) {
+            if (strtolower($class) == $newbbConfig['poll_module']) {
                 $classPoll = $class;
 
                 return $classPoll;
@@ -117,7 +117,7 @@ class Topic extends ArtObject
      * delete a poll in database
      *
      * @access public
-     * @param  int $poll_id
+     * @param  int  $poll_id
      * @return bool
      */
     public function deletePoll($poll_id)
@@ -211,8 +211,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param mixed $id
-     * @param null  $var
+     * @param  mixed      $id
+     * @param  null       $var
      * @return mixed|null
      */
     public function &get($id, $var = null)
@@ -220,7 +220,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         $ret = null;
         $tags = $var;
         if (!empty($var) && is_string($var)) {
-            $tags = array($var);            
+            $tags = array($var);
         }
         if (!$topic_obj = parent::get($id, $tags)) {
             return $ret;
@@ -234,8 +234,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param object $object
-     * @param bool   $force
+     * @param  object $object
+     * @param  bool   $force
      * @return mixed
      */
     public function insert(&$object, $force = true)
@@ -258,8 +258,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param      $object
-     * @param bool $force
+     * @param       $object
+     * @param  bool $force
      * @return bool
      */
     public function approve(&$object, $force = false)
@@ -345,8 +345,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param        $topic
-     * @param string $type
+     * @param         $topic
+     * @param  string $type
      * @return mixed
      */
     public function getPostCount(&$topic, $type = '')
@@ -414,12 +414,12 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param        $topic
-     * @param string $order
-     * @param int    $perpage
-     * @param        $start
-     * @param int    $post_id
-     * @param string $type
+     * @param         $topic
+     * @param  string $order
+     * @param  int    $perpage
+     * @param         $start
+     * @param  int    $post_id
+     * @param  string $type
      * @return array
      */
     public function &getAllPosts(&$topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
@@ -475,8 +475,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param     $postArray
-     * @param int $pid
+     * @param        $postArray
+     * @param  int   $pid
      * @return mixed
      */
     public function &getPostTree(&$postArray, $pid = 0)
@@ -523,8 +523,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param      $topic
-     * @param bool $isApproved
+     * @param        $topic
+     * @param  bool  $isApproved
      * @return array
      */
     public function &getAllPosters(&$topic, $isApproved = true)
@@ -547,8 +547,8 @@ class NewbbTopicHandler extends ArtObjectHandler
     }
 
     /**
-     * @param object $topic
-     * @param bool   $force
+     * @param  object $topic
+     * @param  bool   $force
      * @return bool
      */
     public function delete(&$topic, $force = true)
@@ -573,9 +573,9 @@ class NewbbTopicHandler extends ArtObjectHandler
     // parameter: $type: 'post', 'view',  'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach'
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
     /**
-     * @param        $forum
-     * @param int    $topic_locked
-     * @param string $type
+     * @param         $forum
+     * @param  int    $topic_locked
+     * @param  string $type
      * @return bool
      */
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
@@ -618,7 +618,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * clean expired objects from database
      *
-     * @param  int $expire time limit for expiration
+     * @param  int  $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)
@@ -640,8 +640,8 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     // START irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
     /**
-     * @param null $object
-     * @param bool $force
+     * @param  null $object
+     * @param  bool $force
      * @return bool
      */
     public function synchronization($object = null, $force = true)
@@ -706,7 +706,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * find poll module that is in used in the current newbb installtion.
      * @access public
-     * @param  array $pollDirs dirnames of all active poll modules
+     * @param  array  $pollDirs dirnames of all active poll modules
      * @return string $dir_def | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
@@ -730,20 +730,20 @@ class NewbbTopicHandler extends ArtObjectHandler
             $poll_idInMod = 0;
             foreach ($pollDirs as $dirname) {
                 $pollObj = $tObj->getPoll($tObj->getVar('poll_id'), $dirname);
-                if (is_object($pollObj) && ($pollObj->getVar('poll_id') === $tObj->getVar('poll_id'))) {
+                if (is_object($pollObj) && ($pollObj->getVar('poll_id') == $tObj->getVar('poll_id'))) {
                     ++$poll_idInMod;
                     $dir_def = $dirname;
                 }
             }
             // Only one poll module should has this poll_id
             // if 0 there is an error
-            if ($poll_idInMod === 0) {
+            if ($poll_idInMod == 0) {
                 xoops_error("Error: Cannot find poll module for poll_id='{$tObj->getVar('poll_id')}'");
 
                 return false;
             }
             // if 1 => $dir_def is correct
-            if ($poll_idInMod === 1) {
+            if ($poll_idInMod == 1) {
                 return $dir_def;
             }
             // if more than 1 continue

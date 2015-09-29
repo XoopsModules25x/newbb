@@ -89,9 +89,9 @@ include $GLOBALS['xoops']->path('header.php');
 if (is_object($GLOBALS['xoopsUser']) && !newbb_isAdmin($forum_obj)) {
     $perm = false;
     if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'addpoll')) {
-        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll') && ($GLOBALS['xoopsUser']->getVar('uid') === $topic_obj->getVar('topic_poster'))) {
+        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll') && ($GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster'))) {
             $perm = true;
-        } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') === $poll_obj->getVar('user_id'))) {
+        } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') == $poll_obj->getVar('user_id'))) {
             $perm = true;
         }
     }
@@ -344,7 +344,7 @@ switch ($op) {
                 'user_id'     => XoopsRequest::getInt('user_id', $GLOBALS['xoopsUser']->uid(), 'POST'),
                 'question'    => XoopsRequest::getString('question', null, 'POST'),
                 'description' => XoopsRequest::getText('description', null, 'POST'),
-                'mail_status' => ($classConstants::NOTIFICATION_ENABLED === $notify) ? $classConstants::POLL_NOT_MAILED : $classConstants::POLL_MAILED,
+                'mail_status' => ($classConstants::NOTIFICATION_ENABLED == $notify) ? $classConstants::POLL_NOT_MAILED : $classConstants::POLL_MAILED,
                 'mail_voter'  => XoopsRequest::getInt('mail_voter', $classConstants::NOT_MAIL_POLL_TO_VOTER, 'POST'),
                 'start_time'  => $startTimestamp,
                 'end_time'    => $endTimestamp,

@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -18,17 +18,17 @@
 class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
-//        $this->NewbbPermissionHandler($db);
+        //        $this->NewbbPermissionHandler($db);
         parent::__construct($db);
     }
 
     /**
-     * @param $mid
-     * @param int $id
+     * @param        $mid
+     * @param  int   $id
      * @return array
      */
     public function getValidItems($mid, $id = 0)
@@ -54,7 +54,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
             return false;
         }
         $gpermHandler =& xoops_gethandler('groupperm');
-        $criteria      = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
+        $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
         $criteria->add(new Criteria('gperm_name', 'category_access'));
         $criteria->add(new Criteria('gperm_itemid', $cat_id));
 
@@ -62,8 +62,8 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param $category
-     * @param array $groups
+     * @param        $category
+     * @param  array $groups
      * @return bool
      */
     public function setCategoryPermission($category, array $groups = array())
@@ -77,8 +77,8 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
         }
         if (empty($groups)) {
             $memberHandler =& xoops_gethandler('member');
-            $glist          = $memberHandler->getGroupList();
-            $groups         = array_keys($glist);
+            $glist         = $memberHandler->getGroupList();
+            $groups        = array_keys($glist);
         }
         $ids     = $this->getGroupIds("category_access", $category, $mid);
         $ids_add = array_diff($groups, $ids);

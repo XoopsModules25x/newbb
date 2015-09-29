@@ -55,9 +55,9 @@ class Readforum extends Read
 class NewbbReadforumHandler extends NewbbReadHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'forum');
     }
@@ -75,8 +75,8 @@ class NewbbReadforumHandler extends NewbbReadHandler
     }
 
     /**
-     * @param int  $status
-     * @param null $uid
+     * @param  int  $status
+     * @param  null $uid
      * @return bool
      */
     public function setReadItems($status = 0, $uid = null)
@@ -85,7 +85,7 @@ class NewbbReadforumHandler extends NewbbReadHandler
             return true;
         }
 
-        if ($this->mode === 1) {
+        if ($this->mode == 1) {
             return $this->setReadItemsCookie($status);
         } else {
             return $this->setReadItemsDb($status, $uid);

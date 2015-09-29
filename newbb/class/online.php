@@ -210,7 +210,7 @@ class NewbbOnlineHandler
      * @param  string $forum_id Current forum_id
      * @param  string $ip       User's IP adress
      * @param         $topic_id
-     * @return bool TRUE on success
+     * @return bool   TRUE on success
      * @internal param string $timestamp
      */
     public function write($uid, $uname, $time, $forum_id, $ip, $topic_id)
@@ -226,7 +226,7 @@ class NewbbOnlineHandler
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
             $sql = "UPDATE " . $this->db->prefix('bb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
-            if ($uid === 0) {
+            if ($uid == 0) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {
@@ -343,7 +343,7 @@ class NewbbOnlineHandler
     /**
      * Count the number of online users
      *
-     * @param object $criteria {@link CriteriaElement}
+     * @param  object $criteria {@link CriteriaElement}
      * @return bool
      */
     public function getCount($criteria = null)

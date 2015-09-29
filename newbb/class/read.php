@@ -102,10 +102,10 @@ class NewbbReadHandler extends ArtObjectHandler
     public $mode;
 
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      * @param $type
      */
-    public function __construct(&$db, $type)
+    public function __construct(XoopsDatabase $db, $type)
     {
         $type = ('forum' === $type) ? 'forum' : 'topic';
         parent::__construct($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
@@ -157,8 +157,8 @@ class NewbbReadHandler extends ArtObjectHandler
 
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
     /**
-     * @param      $read_item
-     * @param null $uid
+     * @param                  $read_item
+     * @param  null            $uid
      * @return bool|mixed|null
      */
     public function getRead($read_item, $uid = null)
@@ -166,7 +166,7 @@ class NewbbReadHandler extends ArtObjectHandler
         if (empty($this->mode)) {
             return null;
         }
-        if (1 === $this->mode) {
+        if (1 == $this->mode) {
             return $this->getRead_cookie($read_item);
         } else {
             return $this->getRead_db($read_item, $uid);
@@ -211,9 +211,9 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     /**
-     * @param      $read_item
-     * @param      $post_id
-     * @param null $uid
+     * @param                  $read_item
+     * @param                  $post_id
+     * @param  null            $uid
      * @return bool|mixed|void
      */
     public function setRead($read_item, $post_id, $uid = null)
@@ -221,7 +221,7 @@ class NewbbReadHandler extends ArtObjectHandler
         if (empty($this->mode)) {
             return true;
         }
-        if (1 === $this->mode) {
+        if (1 == $this->mode) {
             return $this->setRead_cookie($read_item, $post_id);
         } else {
             return $this->setRead_db($read_item, $post_id, $uid);
@@ -270,8 +270,8 @@ class NewbbReadHandler extends ArtObjectHandler
     }
 
     /**
-     * @param      $items
-     * @param null $uid
+     * @param             $items
+     * @param  null       $uid
      * @return array|null
      */
     public function isRead_items(&$items, $uid = null)
@@ -281,7 +281,7 @@ class NewbbReadHandler extends ArtObjectHandler
             return $ret;
         }
 
-        if (1 === $this->mode) {
+        if (1 == $this->mode) {
             $ret = $this->isRead_items_cookie($items);
         } else {
             $ret = $this->isRead_items_db($items, $uid);

@@ -95,7 +95,7 @@ switch ($status) {
         if (empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
             //$criteria_status_count->add(new Criteria('approved', 1));// irmtfan commented and removed
             //$criteria_status_post->add(new Criteria('p.approved', 1));// irmtfan commented and removed
-        } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] === 2) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 2) {
             // START irmtfan use read_uid to find the unread posts when the user is logged in
             $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
             if (!empty($read_uid)) {
@@ -110,7 +110,7 @@ switch ($status) {
             // END irmtfan use read_uid to find the unread posts when the user is logged in
             //$criteria_status_post->add(new Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
-        } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] === 1) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
             $criteria_count->add(new Criteria('post_time', (int)($last_visit), '>')); // irmtfan add new criteria
             $criteria_post->add(new Criteria('p.post_time', (int)($last_visit), '>')); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
@@ -258,7 +258,7 @@ foreach (array_keys($posts) as $id) {
         'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']));
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
-        }
+    }
     if ($isadmin || $post->checkIdentity()) {
         $post_text       = $post->getVar('post_text');
         $post_attachment = $post->displayAttachment();

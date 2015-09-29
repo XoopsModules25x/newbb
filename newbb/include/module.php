@@ -39,14 +39,14 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
 /**
- * @param XoopsModule $module
- * @param null        $oldversion
+ * @param  XoopsModule $module
+ * @param  null        $oldversion
  * @return bool
  */
 function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 {
     //  START irmtfan to not run update script if user has the latest version.
-    if ($oldversion === round($module->getInfo('version') * 100, 2)) {
+    if ($oldversion == round($module->getInfo('version') * 100, 2)) {
         $module->setErrors('You have the latest ' . $module->getInfo('name') . ' module (' . $module->getInfo('dirname') . ' version ' . $module->getInfo('version') . ') and update is not necessary');
         //        print_r($module->getErrors());
         echo($module->getErrors());
@@ -64,7 +64,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     //$oldconfig = $module->getVar('hasconfig');
     // NewBB 1.0 -- no config
     //if (empty($oldconfig)) {
-    if ($oldversion === 100) {
+    if ($oldversion == 100) {
         include_once __DIR__ . '/module.v100.php';
         xoops_module_update_newbb_v100($module);
     }
@@ -181,7 +181,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_update_newbb(XoopsModule $module)
@@ -190,7 +190,7 @@ function xoops_module_pre_update_newbb(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_newbb(XoopsModule $module)
@@ -204,7 +204,7 @@ function xoops_module_pre_install_newbb(XoopsModule $module)
 }
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_install_newbb(XoopsModule $module)
@@ -274,8 +274,8 @@ function xoops_module_install_newbb(XoopsModule $module)
 }
 
 /**
- * @param      $module
- * @param bool $isUpdate
+ * @param       $module
+ * @param  bool $isUpdate
  * @return bool
  */
 function newbb_setModuleConfig(&$module, $isUpdate = false)

@@ -79,9 +79,9 @@ class Newbbtree extends XoopsTree
 
     // returns an array of first child objects for a given id($sel_id)
     /**
-     * @param        $postTree_array
-     * @param int    $pid
-     * @param string $prefix
+     * @param         $postTree_array
+     * @param  int    $pid
+     * @param  string $prefix
      * @return bool
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
@@ -93,7 +93,7 @@ class Newbbtree extends XoopsTree
         $newPostArray = array();
         $prefix .= $this->increment;
         foreach ($this->postArray as $post) {
-            if ($post->getVar('pid') === $pid) {
+            if ($post->getVar('pid') == $pid) {
                 $postTree_array[] = array(
                     'prefix'      => $prefix,
                     'icon'        => $post->getVar('icon'),

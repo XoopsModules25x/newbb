@@ -46,9 +46,9 @@ class Moderate extends XoopsObject
 class NewbbModerateHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_moderates', 'Moderate', 'mod_id', 'uid');
     }
@@ -71,9 +71,9 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param int    $uid user id
-     * @param string $ip  user ip
-     * @param int    $forum
+     * @param  int    $uid   user id
+     * @param  string $ip    user ip
+     * @param  int    $forum
      * @return bool
      */
     public function verifyUser($uid = -1, $ip = "", $forum = 0)
@@ -117,8 +117,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Store the list into session if module cache is enabled
      *
      *
-     * @param int    $uid user id
-     * @param string $ip  user ip
+     * @param  int    $uid user id
+     * @param  string $ip  user ip
      * @return array
      */
     public function forumList($uid = -1, $ip = '')
@@ -168,8 +168,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Get latest expiration for a user moderation
      *
      *
-     * @param mix  $item user id or ip
-     * @param bool $isUid
+     * @param  mix  $item  user id or ip
+     * @param  bool $isUid
      * @return int
      */
     public function getLatest($item, $isUid = true)

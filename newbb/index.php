@@ -261,7 +261,7 @@ if ($isadmin) {
     $xoopsTpl->assign('forum_index_cpanel', array('link' => 'admin/index.php', 'name' => _MD_ADMINCP));
 }
 
-if ($GLOBALS['xoopsModuleConfig']['rss_enable'] === 1) {
+if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
     $xoopsTpl->assign('rss_enable', 1);
     $xoopsTpl->assign('rss_button', newbbDisplayImage('rss', 'RSS feed'));
 }

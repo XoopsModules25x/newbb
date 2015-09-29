@@ -49,7 +49,7 @@ class NewbbStatsHandler
     }
 
     /**
-     * @param null $db
+     * @param  null              $db
      * @return NewbbStatsHandler
      */
     public function &instance($db = null)
@@ -63,9 +63,9 @@ class NewbbStatsHandler
     }
 
     /**
-     * @param     $id
-     * @param     $type
-     * @param int $increment
+     * @param       $id
+     * @param       $type
+     * @param  int  $increment
      * @return bool
      */
     public function update($id, $type, $increment = 1)
@@ -80,7 +80,7 @@ class NewbbStatsHandler
         $sql    = "    UPDATE {$this->table}" . "    SET stats_value = CASE " . "                    WHEN time_format = '' OR DATE_FORMAT(time_update, time_format) = DATE_FORMAT(NOW(), time_format)  THEN stats_value + '{$increment}' " . "                    ELSE '{$increment}' " . "                END, " . "        time_update = NOW()" . "    WHERE " . "        (stats_id = '0' OR stats_id = '{$id}') " . "        AND stats_type='{$type}' ";
         $result = $this->db->queryF($sql);
         $rows   = $this->db->getAffectedRows();
-        if ($rows === 0) {
+        if ($rows == 0) {
             $sql    = "    INSERT INTO {$this->table}" . "        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) " . "    VALUES " . "        ('0', '{$increment}', '{$type}', '" . array_search("total", $this->param['period'], true) . "', NOW(), ''), " . "        ('0', '{$increment}', '{$type}', '" . array_search("day", $this->param['period'], true) . "', NOW(), '%Y%j'), " . "        ('0', '{$increment}', '{$type}', '" . array_search("week", $this->param['period'], true) . "', NOW(), '%Y%u'), " . "        ('0', '{$increment}', '{$type}', '" . array_search("month", $this->param['period'], true) . "', NOW(), '%Y%m')";
             $result = $this->db->queryF($sql);
         }
@@ -93,9 +93,9 @@ class NewbbStatsHandler
     /**
      * Get stats of "Today"
      *
-     * @param array $ids     ID of forum: > 0, forum; 0 - global; empty - all
-     * @param array $types   type of stats items: 1 - topic; 2 - post; 3 - digest; 4 - click; empty - all
-     * @param array $periods time period: 1 - all time; 2 - today; 3 - this week; 4 - this month; empty - all
+     * @param  array $ids     ID of forum: > 0, forum; 0 - global; empty - all
+     * @param  array $types   type of stats items: 1 - topic; 2 - post; 3 - digest; 4 - click; empty - all
+     * @param  array $periods time period: 1 - all time; 2 - today; 3 - this week; 4 - this month; empty - all
      * @return array
      */
     public function getStats(array $ids, array $types = array(), array $periods = array())

@@ -53,7 +53,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param bool $fullname
+     * @param  bool  $fullname
      * @return mixed
      */
     public function getValidForumPerms($fullname = false)
@@ -64,9 +64,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param int  $forum
-     * @param bool $topic_locked
-     * @param bool $isadmin
+     * @param  int   $forum
+     * @param  bool  $topic_locked
+     * @param  bool  $isadmin
      * @return mixed
      */
     public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
@@ -102,8 +102,8 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param       $category
-     * @param array $groups
+     * @param        $category
+     * @param  array $groups
      * @return mixed
      */
     public function setCategoryPermission($category, array $groups = array())
@@ -115,9 +115,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param        $type
-     * @param string $gperm_name
-     * @param int    $id
+     * @param         $type
+     * @param  string $gperm_name
+     * @param  int    $id
      * @return bool
      */
     public function getPermission($type, $gperm_name = 'access', $id = 0)
@@ -144,7 +144,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param string $perm_name
+     * @param  string $perm_name
      * @return array
      */
     public function &getCategories($perm_name = 'access')
@@ -155,7 +155,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param string $perm_name
+     * @param  string $perm_name
      * @return array
      */
     public function getForums($perm_name = "access")
@@ -185,7 +185,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
 
         $allowed_items = array();
         foreach ($_cachedPerms as $id => $allowed_groups) {
-            if ($id === 0 || empty($allowed_groups)) {
+            if ($id == 0 || empty($allowed_groups)) {
                 continue;
             }
 
@@ -200,8 +200,8 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param     $gperm_name
-     * @param int $id
+     * @param        $gperm_name
+     * @param  int   $id
      * @return array
      */
     public function &getGroups($gperm_name, $id = 0)
@@ -214,7 +214,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param string $perm_name
+     * @param  string $perm_name
      * @return array
      */
     public function createPermData($perm_name = 'forum_all')
@@ -267,7 +267,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param string $perm_name
+     * @param  string           $perm_name
      * @return array|mixed|null
      */
     public function &loadPermData($perm_name = 'forum_access')
@@ -281,10 +281,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param      $perm
-     * @param      $itemid
-     * @param      $groupid
-     * @param null $mid
+     * @param       $perm
+     * @param       $itemid
+     * @param       $groupid
+     * @param  null $mid
      * @return bool
      */
     public function validateRight($perm, $itemid, $groupid, $mid = null)
@@ -312,10 +312,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     /**
      * Check permission (directly)
      *
-     * @param string $gperm_name   Name of permission
-     * @param int    $gperm_itemid ID of an item
-     * @param        int           /array $gperm_groupid A group ID or an array of group IDs
-     * @param int    $gperm_modid  ID of a module
+     * @param string               $gperm_name    Name of permission
+     * @param int                  $gperm_itemid  ID of an item
+     * @param int           /array $gperm_groupid A group ID or an array of group IDs
+     * @param int                  $gperm_modid   ID of a module
      *
      * @return bool TRUE if permission is enabled
      */
@@ -344,10 +344,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param      $perm
-     * @param      $itemid
-     * @param      $groupid
-     * @param null $mid
+     * @param       $perm
+     * @param       $itemid
+     * @param       $groupid
+     * @param  null $mid
      * @return bool
      */
     public function deleteRight($perm, $itemid, $groupid, $mid = null)
@@ -383,8 +383,8 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param     $forum
-     * @param int $mid
+     * @param        $forum
+     * @param  int   $mid
      * @return mixed
      */
     public function applyTemplate($forum, $mid = 0)

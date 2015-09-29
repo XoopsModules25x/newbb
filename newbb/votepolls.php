@@ -66,11 +66,11 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     $classConstants = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
     if (is_object($poll_obj)) {
         if ($poll_obj->getVar('multiple')) {
-            $optionId = XoopsRequest::getArray('option_id', null, 'POST');
+            $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
             $optionId = (array)$optionId; // type cast to make sure it's an array
             $optionId = array_map('intval', $optionId); // make sure values are integers
         } else {
-            $optionId = XoopsRequest::getInt('option_id', 0, 'POST');
+            $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
         }
         if (!$poll_obj->hasExpired()) {
             $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_MUSTLOGIN');
@@ -111,7 +111,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     } else {
         $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_ERROR_INVALID_POLLID');
     }
-    if (isset($url) && '' !== $url) {
+    if (null !== $url) {
         redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     } else {
         redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', array('topic_id' => $topic_id)), $classConstants::REDIRECT_DELAY_MEDIUM, $msg);

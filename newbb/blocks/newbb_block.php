@@ -644,25 +644,25 @@ function b_newbb_edit($options)
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
     $form .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>" . _MB_NEWBB_TIME_DESC . "</small>";
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
-    if (0 === $options[3]) {
+    if (0 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
-    if (1 === $options[3]) {
+    if (1 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
-    if (2 === $options[3]) {
+    if (2 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_LITE;
 
     $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
-    if (1 === $options[4]) {
+    if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
-    if (0 === $options[4]) {
+    if (0 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _NO;
@@ -723,25 +723,25 @@ function b_newbb_topic_edit($options)
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
     $form .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>" . _MB_NEWBB_TIME_DESC . "</small>";
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
-    if (0 === $options[3]) {
+    if (0 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
-    if (1 === $options[3]) {
+    if (1 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
-    if (2 === $options[3]) {
+    if (2 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
     $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
-    if (1 === $options[4]) {
+    if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
-    if (0 === $options[4]) {
+    if (0 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _NO;
@@ -788,25 +788,25 @@ function b_newbb_post_edit($options)
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
     $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . "</small>";
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
-    if (0 === $options[3]) {
+    if (0 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
-    if (1 === $options[3]) {
+    if (1 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
-    if (2 === $options[3]) {
+    if (2 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
     $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
-    if (1 === $options[4]) {
+    if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
-    if (0 === $options[4]) {
+    if (0 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _NO;
@@ -862,21 +862,21 @@ function b_newbb_author_edit($options)
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
     $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . "</small>";
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
-    if (0 === $options[3]) {
+    if (0 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='1'";
-    if (1 === $options[3]) {
+    if (1 == $options[3]) {
         $form .= " checked='checked'";
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
     $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
-    if (1 === $options[4]) {
+    if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
-    if (0 === $options[4]) {
+    if (0 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
     $form .= ' />' . _NO;

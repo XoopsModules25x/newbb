@@ -69,8 +69,8 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 }
 
 if ($ok) {
-    $isDeleteOne = (1 === $ok) ? true : false;
-    if ($post_obj->isTopic() && $topic->getVar('topic_replies') === 0) {
+    $isDeleteOne = (1 === $ok);
+    if ($post_obj->isTopic() && $topic->getVar('topic_replies') == 0) {
         $isDeleteOne = false;
     }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar('topic_replies') > 0) {
@@ -84,7 +84,7 @@ if ($ok) {
             if ($senduser->getVar('notify_method') > 0) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
-                if (1 === $senduser->getVar('notify_method')) {
+                if (1 == $senduser->getVar('notify_method')) {
                     $xoopsMailer->usePM();
                 } else {
                     $xoopsMailer->useMail();

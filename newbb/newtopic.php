@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -17,13 +17,13 @@ if (!$forum = XoopsRequest::getString('forum', '', 'GET')) {
 }
 
 $forumHandler =& xoops_getmodulehandler('forum');
-$forum_obj     = $forumHandler->get($forum);
+$forum_obj    = $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _NOPERM);
 }
 
 $topicHandler =& xoops_getmodulehandler('topic');
-$topic_obj     = $topicHandler->create();
+$topic_obj    = $topicHandler->create();
 $topic_obj->setVar('forum_id', $forum);
 if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
     /*
@@ -33,7 +33,7 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
     $query_array = array();
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}=".XoopsRequest::getString($var, '', 'GET');
+            $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -46,7 +46,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum_obj);
 }
 
-$xoopsOption['template_main']                             = 'newbb_edit_post.tpl';
+$xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0; // Disable cache
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
@@ -70,7 +70,7 @@ $form_title = _MD_POSTNEW;
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ($GLOBALS['xoopsModuleConfig']['disc_show'] === 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] === 3) {
+if ($GLOBALS['xoopsModuleConfig']['disc_show'] == 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] == 3) {
     $xoopsTpl->assign('disclaimer', $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 

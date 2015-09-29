@@ -20,9 +20,9 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
 
     /**
      * Function to convert UNIX time to formatted time string
-     * @param        $time
-     * @param string $format
-     * @param string $timeoffset
+     * @param         $time
+     * @param  string $format
+     * @param  string $timeoffset
      * @return string
      */
     function newbb_formatTimestamp($time, $format = 'c', $timeoffset = '')
@@ -42,7 +42,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
     }
 
     /**
-     * @param int $selected
+     * @param  int    $selected
      * @return string
      */
     function newbb_sinceSelectBox($selected = 100)
@@ -77,7 +77,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         // irmtfan no option when no selected value
         $forum_selection_since .= '<option value="">--------</option>';
         foreach ($select_array as $since) {
-            $forum_selection_since .= '<option value="' . $since . '"' . (($selected === $since) ? ' selected="selected"' : '') . '>';
+            $forum_selection_since .= '<option value="' . $since . '"' . (($selected == $since) ? ' selected="selected"' : '') . '>';
             // START irmtfan functional since 0 and 365
             switch ($since) {
                 case 0:
@@ -105,7 +105,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
     }
 
     /**
-     * @param int $since
+     * @param  int $since
      * @return int
      */
     function newbb_getSinceTime($since = 100)

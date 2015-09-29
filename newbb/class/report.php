@@ -43,9 +43,9 @@ class Report extends ArtObject
 class NewbbReportHandler extends ArtObjectHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_report', 'Report', 'report_id', '');
     }
@@ -70,12 +70,12 @@ class NewbbReportHandler extends ArtObjectHandler
     }
 
     /**
-     * @param int    $forums
-     * @param string $order
-     * @param int    $perpage
-     * @param        $start
-     * @param int    $report_result
-     * @param int    $report_id
+     * @param  int    $forums
+     * @param  string $order
+     * @param  int    $perpage
+     * @param         $start
+     * @param  int    $report_result
+     * @param  int    $report_id
      * @return array
      */
     public function &getAllReports($forums = 0, $order = "ASC", $perpage = 0, &$start, $report_result = 0, $report_id = 0)
