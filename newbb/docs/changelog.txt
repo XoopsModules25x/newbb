@@ -1,4 +1,4 @@
-4.33 RC 10                   NOT RELEASED
+4.33 RC 10                   (2015-11-15)
 ===========================================
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
