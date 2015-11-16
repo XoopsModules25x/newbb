@@ -24,8 +24,7 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewforum.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(newtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
-        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i'
-    );
+        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i');
 
     $s = preg_replace_callback($search, 'replace_links', $s);
 
@@ -44,9 +43,9 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing cat=x
-                if (preg_match('/cat=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/cat=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'c-' . $mvars[1] . '/' . forum_seo_cat($mvars[1]) . '';
-                    $req_string = preg_replace('/cat=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/cat=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -72,22 +71,22 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing c=x
-                if (preg_match('/c=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/c=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'rc-';
                     if ($mvars[1] > 0) {
                         $add_to_url .= $mvars[1] . '/' . forum_seo_cat($mvars[1]) . '';
                     } else {
                         $add_to_url .= $mvars[1] . '/rss.html';
                     }
-                    $req_string = preg_replace('/c=[0-9]+/', '', $matches[6]);
-                } elseif (preg_match('/f=([0-9]+)/', $matches[6], $mvars)) {
+                    $req_string = preg_replace('/c=\d+/', '', $matches[6]);
+                } elseif (preg_match('/f=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'rf-';
                     if ($mvars[1] > 0) {
                         $add_to_url .= $mvars[1] . '/' . forum_seo_forum($mvars[1]) . '';
                     } else {
                         $add_to_url .= $mvars[1] . '/rss.html';
                     }
-                    $req_string = preg_replace('/f=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/f=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -99,9 +98,9 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing forum=x
-                if (preg_match('/forum=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/forum=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'f-' . $mvars[1] . '/' . forum_seo_forum($mvars[1]) . '';
-                    $req_string = preg_replace('/forum=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/forum=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -112,13 +111,13 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing topic_id=x
-                if (preg_match('/topic_id=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/topic_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 't-' . $mvars[1] . '/' . forum_seo_topic($mvars[1]) . '';
-                    $req_string = preg_replace('/topic_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/topic_id=\d+/', '', $matches[6]);
                 } //replacing post_id=x
-                elseif (preg_match('/post_id=([0-9]+)/', $matches[6], $mvars)) {
+                elseif (preg_match('/post_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'p-' . $mvars[1] . '/' . forum_seo_post($mvars[1]) . '';
-                    $req_string = preg_replace('/post_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/post_id=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -129,13 +128,13 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing topic_id=x
-                if (preg_match('/topic_id=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/topic_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'pr-' . $mvars[1] . '/' . forum_seo_topic($mvars[1]) . '';
-                    $req_string = preg_replace('/topic_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/topic_id=\d+/', '', $matches[6]);
                 } //replacing post_id=x
-                elseif (preg_match('/post_id=([0-9]+)/', $matches[6], $mvars)) {
+                elseif (preg_match('/post_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'pr-' . $mvars[1] . '/' . forum_seo_post($mvars[1]) . '';
-                    $req_string = preg_replace('/post_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/post_id=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -146,13 +145,13 @@ function replace_links($matches)
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //                replacing topic_id=x
-                if (preg_match('/topic_id=([0-9]+)/', $matches[6], $mvars)) {
+                if (preg_match('/topic_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'pdf-' . $mvars[1] . '/' . forum_seo_topic($mvars[1]) . '';
-                    $req_string = preg_replace('/topic_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/topic_id=\d+/', '', $matches[6]);
                 } //replacing post_id=x
-                elseif (preg_match('/post_id=([0-9]+)/', $matches[6], $mvars)) {
+                elseif (preg_match('/post_id=(\d+)/', $matches[6], $mvars)) {
                     $add_to_url = 'pdf-' . $mvars[1] . '/' . forum_seo_post($mvars[1]) . '';
-                    $req_string = preg_replace('/post_id=[0-9]+/', '', $matches[6]);
+                    $req_string = preg_replace('/post_id=\d+/', '', $matches[6]);
                 } else {
                     return $matches['0'];
                 }
@@ -168,6 +167,7 @@ function replace_links($matches)
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
+
     //$ret = '<'.$matches[1].$matches[2].$matches[3].'='.$matches[4].XOOPS_URL.'/'.REAL_MODULE_NAME.'/'.$add_to_url.$req_string.$matches[7].$matches[8].'>';
     return $ret;
 }
@@ -179,7 +179,7 @@ function replace_links($matches)
 function forum_seo_cat($_cat_id)
 {
     xoops_load('XoopsCache');
-    $key = "newbb_seo_cat";
+    $key = 'newbb_seo_cat';
     $ret = false;
     if ($ret = XoopsCache::read($key)) {
         $ret = @$ret[$_cat_id];
@@ -187,7 +187,7 @@ function forum_seo_cat($_cat_id)
             return $ret;
         }
     }
-    $query  = "SELECT cat_id, cat_title FROM " . $GLOBALS['xoopsDB']->prefix('bb_categories');
+    $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_categories');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = array();
     while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -207,7 +207,7 @@ function forum_seo_cat($_cat_id)
 function forum_seo_forum($_cat_id)
 {
     xoops_load('XoopsCache');
-    $key = "newbb_seo_forum";
+    $key = 'newbb_seo_forum';
     $ret = false;
     if ($ret = XoopsCache::read($key)) {
         $ret = @$ret[$_cat_id];
@@ -215,7 +215,7 @@ function forum_seo_forum($_cat_id)
             return $ret;
         }
     }
-    $query  = "SELECT forum_id, forum_name    FROM " . $GLOBALS['xoopsDB']->prefix('bb_forums');
+    $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = array();
     while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -234,9 +234,7 @@ function forum_seo_forum($_cat_id)
  */
 function forum_seo_topic($_cat_id)
 {
-    $query  = "SELECT    topic_title    FROM " .
-              $GLOBALS['xoopsDB']->prefix('bb_topics') .
-              " WHERE topic_id = " . $_cat_id;
+    $query  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['topic_title']);
@@ -250,9 +248,7 @@ function forum_seo_topic($_cat_id)
  */
 function forum_seo_post($_cat_id)
 {
-    $query  = "SELECT    subject    FROM " .
-              $GLOBALS['xoopsDB']->prefix('bb_posts') .
-              " WHERE post_id = " . $_cat_id;
+    $query  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE post_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['subject']);
@@ -262,7 +258,7 @@ function forum_seo_post($_cat_id)
 
 /**
  * @param string $title
- * @param bool $withExt
+ * @param bool   $withExt
  * @return mixed|string
  */
 function forum_seo_title($title = '', $withExt = true)
@@ -281,14 +277,14 @@ function forum_seo_title($title = '', $withExt = true)
 
     // Transformation des ponctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
-    $pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./", "/%2A/");
-    $rep_pat = array("-", "-", "", "", "", "-100", "", "-", "", "", "", "-", "", "", "", "-", "", "", "-at-", "", "-", "", "-", "", "-", "", "-", "", "");
+    $pattern = array('/%09/', '/%20/', '/%21/', '/%22/', '/%23/', '/%25/', '/%26/', '/%27/', '/%28/', '/%29/', '/%2C/', '/%2F/', '/%3A/', '/%3B/', '/%3C/', '/%3D/', '/%3E/', '/%3F/', '/%40/', '/%5B/', '/%5C/', '/%5D/', '/%5E/', '/%7B/', '/%7C/', '/%7D/', '/%7E/', '/\./', '/%2A/');
+    $rep_pat = array('-', '-', '', '', '', '-100', '', '-', '', '', '', '-', '', '', '', '-', '', '', '-at-', '', '-', '', '-', '', '-', '', '-', '', '');
     $title   = preg_replace($pattern, $rep_pat, $title);
 
-    // Transformation des caract�res accentu�s
-    //                  �        �        �        �        �        �        �        �        �        �        �        �        �        �        �
-    $pattern = array("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/", "/%E3%BC/", "/%E3%96/", "/%E3%84/", "/%E3%9C/", "/%E3%FF/", "/%E3%B6/", "/%E3%A4/", "/%E3%9F/");
-    $rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o", "ue", "oe", "ae", "ue", "ss", "oe", "ae", "ss");
+    // Transformation des caractères accentués
+    //                  è         é        ê         ë         ç         à         â         ä        î         ï        ù         ü         û         ô        ö
+    $pattern = array('/%B0/', '/%E8/', '/%E9/', '/%EA/', '/%EB/', '/%E7/', '/%E0/', '/%E2/', '/%E4/', '/%EE/', '/%EF/', '/%F9/', '/%FC/', '/%FB/', '/%F4/', '/%F6/', '/%E3%BC/', '/%E3%96/', '/%E3%84/', '/%E3%9C/', '/%E3%FF/', '/%E3%B6/', '/%E3%A4/', '/%E3%9F/');
+    $rep_pat = array('-', 'e', 'e', 'e', 'e', 'c', 'a', 'a', 'a', 'i', 'i', 'u', 'u', 'u', 'o', 'o', 'ue', 'oe', 'ae', 'ue', 'ss', 'oe', 'ae', 'ss');
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     /*$string = str_replace(' ', '-', $title);
@@ -296,7 +292,7 @@ function forum_seo_title($title = '', $withExt = true)
     $string = preg_replace('#[^a-z0-9\-\.]#si', '', $string);
     $title  = str_replace('\/','', $string);  */
 
-    if (sizeof($title) > 0) {
+    if (count($title) > 0) {
         if ($withExt) {
             $title .= '.html';
         }

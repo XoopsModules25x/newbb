@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,14 +25,14 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
 
-include_once __DIR__ . "/header.php";
+include_once __DIR__ . '/header.php';
 
 $attach_id = XoopsRequest::getString('attachid', '', 'GET');
 
@@ -45,27 +45,28 @@ if (!is_file(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php')) {
 }
 
 if (empty($post_id)) {
-    die(_MD_ERRORTOPIC);
+    exit(_MD_ERRORTOPIC);
 }
 
-$postHandler = xoops_getmodulehandler('post', 'newbb');
-$post         = $postHandler->get($post_id);
+$postHandler = &xoops_getmodulehandler('post', 'newbb');
+$post        = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
-    die(_MD_NORIGHTTOVIEW);
+    exit(_MD_NORIGHTTOVIEW);
 }
 
 $post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
-$topicHandler = xoops_getmodulehandler('topic', 'newbb');
-$forumtopic    = $topicHandler->getByPost($post_id);
-$topic_id      = $forumtopic->getVar('topic_id');
+$topicHandler = &xoops_getmodulehandler('topic', 'newbb');
+$forumtopic   = $topicHandler->getByPost($post_id);
+$topic_id     = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
-    die(_MD_NORIGHTTOVIEW);
+    exit(_MD_NORIGHTTOVIEW);
 }
 
-$forumHandler   = xoops_getmodulehandler('forum', 'newbb');
-$forum           = ($forum) ? $forum : $forumtopic->getVar('forum_id');
+$forumHandler    = &xoops_getmodulehandler('forum', 'newbb');
+$forum           = ($forum) ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
+$parent_forums   = array();
 $parent_forums   = $forumHandler->getParents($viewtopic_forum);
 $pf_title        = '';
 if ($parent_forums) {
@@ -75,21 +76,21 @@ if ($parent_forums) {
 }
 
 if (!$forumHandler->getPermission($viewtopic_forum)) {
-    die(_MD_NORIGHTTOACCESS);
+    exit(_MD_NORIGHTTOACCESS);
 }
-if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "view")) {
-    die(_MD_NORIGHTTOVIEW);
+if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'view')) {
+    exit(_MD_NORIGHTTOVIEW);
 }
 // irmtfan add pdf permission
-if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), "pdf")) {
-    die(_MD_NORIGHTTOPDF);
+if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'pdf')) {
+    exit(_MD_NORIGHTTOPDF);
 }
 
-$categoryHandler = xoops_getmodulehandler('category', 'newbb');
-$cat              = $viewtopic_forum->getVar('cat_id');
-$viewtopic_cat    = $categoryHandler->get($cat);
+$categoryHandler = &xoops_getmodulehandler('category', 'newbb');
+$cat             = $viewtopic_forum->getVar('cat_id');
+$viewtopic_cat   = $categoryHandler->get($cat);
 
-$GLOBALS["xoopsOption"]["pdf_cache"] = 0;
+$GLOBALS['xoopsOption']['pdf_cache'] = 0;
 
 $pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
 $pdf_data['title']  = $myts->undoHtmlSpecialChars($post_data['subject']);
@@ -104,15 +105,15 @@ $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');
 $pdf_data['forum_title']    = $pf_title . $viewtopic_forum->getVar('forum_name');
 $pdf_data['cat_title']      = $viewtopic_cat->getVar('cat_title');
 $pdf_data['subject']        = NEWBB_PDF_SUBJECT . ': ' . $pdf_data['topic_title'];
-$pdf_data['keywords']       = XOOPS_URL . ', ' . 'SIMPLE-XOOPS, ' . $pdf_data['topic_title'];
+$pdf_data['keywords']       = XOOPS_URL . ', ' . 'XOOPS Project, ' . $pdf_data['topic_title'];
 $pdf_data['HeadFirstLine']  = $GLOBALS['xoopsConfig']['sitename'] . ' - ' . $GLOBALS['xoopsConfig']['slogan'];
 $pdf_data['HeadSecondLine'] = _MD_FORUMHOME . ' - ' . $pdf_data['cat_title'] . ' - ' . $pdf_data['forum_title'] . ' - ' . $pdf_data['topic_title'];
 
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {
     $pdf_data = easiestml($pdf_data);
-// END irmtfan to implement EMLH by GIJ
-// START irmtfan to implement Xlanguage by phppp(DJ)
+    // END irmtfan to implement EMLH by GIJ
+    // START irmtfan to implement Xlanguage by phppp(DJ)
 } elseif (function_exists('xlanguage_ml')) {
     $pdf_data = xlanguage_ml($pdf_data);
 }
@@ -144,12 +145,12 @@ $pdf->SetSubject($pdf_data['subject']);
 $pdf->SetKeywords($pdf_data['keywords']);
 
 //$pdf->SetHeaderData('', '5', $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine']);
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine'], array(0, 64, 255), array(0, 64, 128));
+$pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine'], array(0, 64, 255), array(0, 64, 128));
 
 //set margins
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+$pdf->setHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 //set auto page breaks
 $pdf->SetAutoPageBreak(true, 25);
 

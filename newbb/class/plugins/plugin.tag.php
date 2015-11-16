@@ -1,8 +1,8 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright    XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since        4.00
@@ -21,9 +21,9 @@
  * uname
  * tags
  *
- * @var        array $items associative array of items: [modid][catid][itemid]
+ * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return    boolean
+ * @return boolean
  *
  */
 function newbb_tag_iteminfo(&$items)
@@ -38,11 +38,11 @@ function newbb_tag_iteminfo(&$items)
         // catid is not used in newbb, so just skip it
         foreach (array_keys($items[$cat_id]) as $item_id) {
             // In newbb, the item_id is "topic_id"
-            $items_id[] = (int) ($item_id);
+            $items_id[] = (int)($item_id);
         }
     }
-    $item_handler =& xoops_getmodulehandler('topic', 'newbb');
-    $items_obj    = $item_handler->getObjects(new Criteria("topic_id", "(" . implode(", ", $items_id) . ")", "IN"), true);
+    $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
+    $items_obj    = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -50,12 +50,12 @@ function newbb_tag_iteminfo(&$items)
                 continue;
             }
             $items[$cat_id][$item_id] = array(
-                "title"   => $item_obj->getVar("topic_title"),
-                "uid"     => $item_obj->getVar("topic_poster"),
-                "link"    => "viewtopic.php?topic_id={$item_id}",
-                "time"    => $item_obj->getVar("topic_time"),
-                "tags"    => tag_parse_tag($item_obj->getVar("topic_tags", "n")),
-                "content" => "",
+                'title'   => $item_obj->getVar('topic_title'),
+                'uid'     => $item_obj->getVar('topic_poster'),
+                'link'    => "viewtopic.php?topic_id={$item_id}",
+                'time'    => $item_obj->getVar('topic_time'),
+                'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
+                'content' => ''
             );
         }
     }
@@ -70,30 +70,30 @@ function newbb_tag_iteminfo(&$items)
  */
 function newbb_tag_synchronization($mid)
 {
-    $item_handler =& xoops_getmodulehandler("topic", "newbb");
-    $link_handler =& xoops_getmodulehandler("link", "tag");
+    $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
+    $link_handler =& xoops_getmodulehandler('link', 'tag');
 
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4) {
         $sql = "    DELETE FROM {$link_handler->table}" .
-               "    WHERE " .
+               '    WHERE ' .
                "        tag_modid = {$mid}" .
-               "        AND " .
-               "        ( tag_itemid NOT IN " .
-               "            ( SELECT DISTINCT {$item_handler->keyName} " .
-               "                FROM {$item_handler->table} " .
-               "                WHERE {$item_handler->table}.approved > 0" .
-               "            ) " .
-               "        )";
+               '        AND ' .
+               '        ( tag_itemid NOT IN ' .
+               "            ( SELECT DISTINCT {$itemHandler->keyName} " .
+               "                FROM {$itemHandler->table} " .
+               "                WHERE {$itemHandler->table}.approved > 0" .
+               '            ) ' .
+               '        )';
     } else {
         $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-               "    LEFT JOIN {$item_handler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$item_handler->keyName} " .
-               "    WHERE " .
+               "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " .
+               '    WHERE ' .
                "        tag_modid = {$mid}" .
-               "        AND " .
-               "        ( aa.{$item_handler->keyName} IS NULL" .
-               "            OR aa.approved < 1" .
-               "        )";
+               '        AND ' .
+               "        ( aa.{$itemHandler->keyName} IS NULL" .
+               '            OR aa.approved < 1' .
+               '        )';
     }
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());

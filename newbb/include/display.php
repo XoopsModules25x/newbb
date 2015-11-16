@@ -1,13 +1,13 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright	The XOOPS Project http://xoops.sf.net
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @since		4.3
- * @version		$Id $
- * @package		module::newbb
+ * @copyright      XOOPS Project (http://xoops.org)
+ * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @since          4.3
+ * @version        $Id $
+ * @package        module::newbb
  */
 
 /*
@@ -23,9 +23,9 @@
     Find images in newbb/templates/images
     ===============================================================
     * Priority for image path OR style.css path:
-    * 	NEWBB_ROOT 	-	IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
-    *					ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
-    *					ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
+    *     NEWBB_ROOT     -    IF EXISTS XOOPS_THEME/modules/newbb/images/, TAKE IT;
+    *                    ELSEIF EXISTS  XOOPS_THEME_DEFAULT/modules/newbb/assets/images/, TAKE IT;
+    *                    ELSE TAKE  XOOPS_ROOT/modules/newbb/templates/images/.
     ===============================================================
     2- If you choose to show text links (set to true):
     2-1- customize the text show in style.css with the help of class="forum_icon" id=$image_name
@@ -68,172 +68,162 @@
 */
 
 // uncomment to show text link instead of images (set to true)
-$displayText[''] =
-//$displayText['blank'] =
+$displayText[''] = //$displayText['blank'] =
 
-//$displayText['attachment'] =
-//$displayText['whosonline'] =
-//$displayText['statistik'] =
-//$displayText['lastposticon'] =
+    //$displayText['attachment'] =
+    //$displayText['whosonline'] =
+    //$displayText['statistik'] =
+    //$displayText['lastposticon'] =
 
-//$displayText['plus'] =
-//$displayText['minus'] =
+    //$displayText['plus'] =
+    //$displayText['minus'] =
 
-//$displayText['forum'] =
-//$displayText['forum_new'] =
+    //$displayText['forum'] =
+    //$displayText['forum_new'] =
 
-//$displayText['topic'] =
-//$displayText['topic_hot'] =
-//$displayText['topic_sticky'] =
-//$displayText['topic_digest'] =
-//$displayText['topic_locked'] =
-//$displayText['topic_new'] =
-//$displayText['topic_hot_new'] =
-//$displayText['topic_my'] =
+    //$displayText['topic'] =
+    //$displayText['topic_hot'] =
+    //$displayText['topic_sticky'] =
+    //$displayText['topic_digest'] =
+    //$displayText['topic_locked'] =
+    //$displayText['topic_new'] =
+    //$displayText['topic_hot_new'] =
+    //$displayText['topic_my'] =
 
-//$displayText['post'] =
+    //$displayText['post'] =
 
-//$displayText['poll'] =
-//$displayText['rss'] =
-//$displayText['pdf'] =
-//$displayText['subforum'] =
+    //$displayText['poll'] =
+    //$displayText['rss'] =
+    //$displayText['pdf'] =
+    //$displayText['subforum'] =
 
-//$displayText['admin_move'] =
-//$displayText['admin_merge'] =
-//$displayText['admin_edit'] =
-//$displayText['admin_delete'] =
+    //$displayText['admin_move'] =
+    //$displayText['admin_merge'] =
+    //$displayText['admin_edit'] =
+    //$displayText['admin_delete'] =
 
-//$displayText['document'] =
+    //$displayText['document'] =
 
-//$displayText['previous'] =
-//$displayText['next'] =
-//$displayText['right'] =
-//$displayText['down'] =
-//$displayText['up'] =
-//$displayText['printer'] =
-//$displayText['new_forum']  =
+    //$displayText['previous'] =
+    //$displayText['next'] =
+    //$displayText['right'] =
+    //$displayText['down'] =
+    //$displayText['up'] =
+    //$displayText['printer'] =
+    //$displayText['new_forum']  =
 
-//$displayText['facebook'] =
-//$displayText['twitter'] =
-//$displayText['linkedin'] =
-//$displayText['googleplus'] =
-//$displayText['stumbleupon'] =
-//$displayText['friendfeed'] =
-//$displayText['digg'] =
-//$displayText['reddit'] =
-//$displayText['delicious'] =
-//$displayText['technorati'] =
-//$displayText['wong'] =
-//$displayText['anonym'] =
-//$displayText['more'] =
-//$displayText['less'] =
+    //$displayText['facebook'] =
+    //$displayText['twitter'] =
+    //$displayText['linkedin'] =
+    //$displayText['googleplus'] =
+    //$displayText['stumbleupon'] =
+    //$displayText['friendfeed'] =
+    //$displayText['digg'] =
+    //$displayText['reddit'] =
+    //$displayText['delicious'] =
+    //$displayText['technorati'] =
+    //$displayText['wong'] =
+    //$displayText['anonym'] =
+    //$displayText['more'] =
+    //$displayText['less'] =
 
-$displayText['p_delete'] =
-$displayText['p_reply'] =
-$displayText['p_quote'] =
-$displayText['p_edit'] =
-$displayText['p_report'] =
+$displayText['p_delete'] = $displayText['p_reply'] = $displayText['p_quote'] = $displayText['p_edit'] = $displayText['p_report'] =
 
-$displayText['t_new'] =
-$displayText['t_poll'] =
-$displayText['t_qr'] =
-$displayText['t_qr_expand'] =
-$displayText['t_reply'] =
+$displayText['t_new'] = $displayText['t_poll'] = $displayText['t_qr'] = $displayText['t_qr_expand'] = $displayText['t_reply'] =
 
-//$displayText['online'] =
-//$displayText['offline'] =
+    //$displayText['online'] =
+    //$displayText['offline'] =
 
-//$displayText['new_subforum'] =
+    //$displayText['new_subforum'] =
 
 $displayText['p_bann'] =
 
-true;
+    true;
 
 for ($i = 1; $i <= 5; ++$i) {
     //$displayText['rate'.$i] = true;
 }
 
 // uncomment to show images instead of text links (set to false)
-$displayText[''] =
-//$displayText['blank'] =
+$displayText[''] = //$displayText['blank'] =
 
-//$displayText['attachment'] =
-//$displayText['whosonline'] =
-//$displayText['statistik'] =
-//$displayText['lastposticon'] =
+    //$displayText['attachment'] =
+    //$displayText['whosonline'] =
+    //$displayText['statistik'] =
+    //$displayText['lastposticon'] =
 
-//$displayText['plus'] =
-//$displayText['minus'] =
+    //$displayText['plus'] =
+    //$displayText['minus'] =
 
-//$displayText['forum'] =
-//$displayText['forum_new'] =
+    //$displayText['forum'] =
+    //$displayText['forum_new'] =
 
-//$displayText['topic'] =
-//$displayText['topic_hot'] =
-//$displayText['topic_sticky'] =
-//$displayText['topic_digest'] =
-//$displayText['topic_locked'] =
-//$displayText['topic_new'] =
-//$displayText['topic_hot_new'] =
-//$displayText['topic_my'] =
+    //$displayText['topic'] =
+    //$displayText['topic_hot'] =
+    //$displayText['topic_sticky'] =
+    //$displayText['topic_digest'] =
+    //$displayText['topic_locked'] =
+    //$displayText['topic_new'] =
+    //$displayText['topic_hot_new'] =
+    //$displayText['topic_my'] =
 
-//$displayText['post'] =
+    //$displayText['post'] =
 
-//$displayText['poll'] =
-//$displayText['rss'] =
-//$displayText['pdf'] =
-//$displayText['subforum'] =
+    //$displayText['poll'] =
+    //$displayText['rss'] =
+    //$displayText['pdf'] =
+    //$displayText['subforum'] =
 
-//$displayText['admin_move'] =
-//$displayText['admin_merge'] =
-//$displayText['admin_edit'] =
-//$displayText['admin_delete'] =
+    //$displayText['admin_move'] =
+    //$displayText['admin_merge'] =
+    //$displayText['admin_edit'] =
+    //$displayText['admin_delete'] =
 
-//$displayText['document'] =
+    //$displayText['document'] =
 
-//$displayText['previous'] =
-//$displayText['next'] =
-//$displayText['right'] =
-//$displayText['down'] =
-//$displayText['up'] =
-//$displayText['printer'] =
-//$displayText['new_forum']  =
+    //$displayText['previous'] =
+    //$displayText['next'] =
+    //$displayText['right'] =
+    //$displayText['down'] =
+    //$displayText['up'] =
+    //$displayText['printer'] =
+    //$displayText['new_forum']  =
 
-//$displayText['facebook'] =
-//$displayText['twitter'] =
-//$displayText['linkedin'] =
-//$displayText['googleplus'] =
-//$displayText['stumbleupon'] =
-//$displayText['friendfeed'] =
-//$displayText['digg'] =
-//$displayText['reddit'] =
-//$displayText['delicious'] =
-//$displayText['technorati'] =
-//$displayText['wong'] =
-//$displayText['anonym'] =
-//$displayText['more'] =
-//$displayText['less'] =
+    //$displayText['facebook'] =
+    //$displayText['twitter'] =
+    //$displayText['linkedin'] =
+    //$displayText['googleplus'] =
+    //$displayText['stumbleupon'] =
+    //$displayText['friendfeed'] =
+    //$displayText['digg'] =
+    //$displayText['reddit'] =
+    //$displayText['delicious'] =
+    //$displayText['technorati'] =
+    //$displayText['wong'] =
+    //$displayText['anonym'] =
+    //$displayText['more'] =
+    //$displayText['less'] =
 
-//$displayText['p_delete'] =
-//$displayText['p_reply'] =
-//$displayText['p_quote'] =
-//$displayText['p_edit'] =
-//$displayText['p_report'] =
+    //$displayText['p_delete'] =
+    //$displayText['p_reply'] =
+    //$displayText['p_quote'] =
+    //$displayText['p_edit'] =
+    //$displayText['p_report'] =
 
-//$displayText['t_new'] =
-//$displayText['t_poll'] =
-//$displayText['t_qr'] =
-//$displayText['t_qr_expand'] =
-//$displayText['t_reply'] =
+    //$displayText['t_new'] =
+    //$displayText['t_poll'] =
+    //$displayText['t_qr'] =
+    //$displayText['t_qr_expand'] =
+    //$displayText['t_reply'] =
 
-//$displayText['online'] =
-//$displayText['offline'] =
+    //$displayText['online'] =
+    //$displayText['offline'] =
 
-//$displayText['new_subforum'] =
+    //$displayText['new_subforum'] =
 
-//$displayText['p_bann'] =
+    //$displayText['p_bann'] =
 
-false;
+    false;
 
 for ($i = 1; $i <= 5; ++$i) {
     //$displayText['rate'.$i] = false;

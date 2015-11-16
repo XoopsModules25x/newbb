@@ -1,33 +1,33 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @author      The Persian Xoops Support Site <www.xoops.ir>
- * @since        4.3
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @author         The Persian Xoops Support Site <www.xoops.ir>
+ * @since          4.3
  * @version        $Id $
  * @package        module::newbb
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
 }
 define('LIST_TOPIC_DEFINED', true);
 
-include_once dirname(__DIR__) . "/include/functions.ini.php";
-require_once dirname(__DIR__) . "/class/topic.renderer.php";
-include_once dirname(__DIR__) . "/footer.php"; // to include js/style files like validate function
+include_once dirname(__DIR__) . '/include/functions.ini.php';
+require_once dirname(__DIR__) . '/class/topic.renderer.php';
+include_once dirname(__DIR__) . '/footer.php'; // to include js/style files like validate function
 
-xoops_loadLanguage("main", "newbb");
+xoops_loadLanguage('main', 'newbb');
 
-mod_loadFunctions("time", "newbb");
-mod_loadFunctions("session", "newbb");
-mod_loadFunctions("render", "newbb");
-mod_loadFunctions("user", "newbb");
+mod_loadFunctions('time', 'newbb');
+mod_loadFunctions('session', 'newbb');
+mod_loadFunctions('render', 'newbb');
+mod_loadFunctions('user', 'newbb');
 
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -52,17 +52,17 @@ function newbb_list_topic_show($options)
     $newbbConfig = newbbLoadConfig(); // load all newbb configs
 
     $topicRenderer            = new NewbbTopicRenderer();
-    $topicRenderer->userlevel = $GLOBALS["xoopsUserIsAdmin"] ? 2 : is_object($GLOBALS["xoopsUser"]); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
+    $topicRenderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
 
     $topicRenderer->force = true; // force against static vars for parse
 
     $topicRenderer->is_multiple = true; // is it for multiple forums
     $topicRenderer->config      =& $newbbConfig; // get all configs
     if (!empty($options[6])) {
-        $topicRenderer->config['topics_per_page'] = (int) ($options[6]); // number of topics (items) to display
+        $topicRenderer->config['topics_per_page'] = (int)($options[6]); // number of topics (items) to display
     }
-    $topicRenderer->config['topic_title_excerpt'] = (int) ($options[10]); // topic title length 0 = dont excerpt
-    $topicRenderer->config['post_excerpt']        = (int) ($options[11]); // post text excerpt 0 = no post text
+    $topicRenderer->config['topic_title_excerpt'] = (int)($options[10]); // topic title length 0 = dont excerpt
+    $topicRenderer->config['post_excerpt']        = (int)($options[11]); // post text excerpt 0 = no post text
 
     $optionsStatus = explode(',', $options[0]); // status in where claus
     $optionsForum  = explode(',', $options[12]);
@@ -77,8 +77,7 @@ function newbb_list_topic_show($options)
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $optionsForum,
-                            ));
+                                'forum'      => $optionsForum));
     $block = array();
     // headers to display in block
     $block['headers'] = $topicRenderer->getHeader($options[8]);
@@ -108,8 +107,8 @@ function newbb_list_topic_edit($options)
 
     // status element
     $optionsStatus = explode(',', $options[0]);
-    $statusEle      = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $optionsStatus, 5, true);
-    $status         = $topicRenderer->getStatus($topicRenderer->userlevel); // get all public status + admin status (admin mode, pending deleted)
+    $statusEle     = new XoopsFormSelect(_MB_NEWBB_CRITERIA, 'options[0]', $optionsStatus, 5, true);
+    $status        = $topicRenderer->getStatus($topicRenderer->userlevel); // get all public status + admin status (admin mode, pending deleted)
     $statusEle->addOptionArray($status);
     $statusEle->setExtra("onchange = \"validate('options[0][]','select', true)\""); // if user dont select any option it select "all"
     $statusEle->setDescription(_MB_NEWBB_CRITERIA_DESC);
@@ -136,14 +135,14 @@ function newbb_list_topic_edit($options)
     $typeEle->addOption(0, _NONE);
     if (!empty($types)) {
         foreach ($types as $type_id => $type) {
-            $typeEle->addOption($type_id, $type["type_name"]);
+            $typeEle->addOption($type_id, $type['type_name']);
         }
     }
 
     // sort element
     $sortEle = new XoopsFormSelect(_MD_SORTBY, 'options[4]', $options[4]);
     $sortEle->setDescription(_MB_NEWBB_CRITERIA_SORT_DESC);
-    $sorts = $topicRenderer->getSort("", "title");
+    $sorts = $topicRenderer->getSort('', 'title');
     $sortEle->addOptionArray($sorts);
 
     // order element
@@ -152,7 +151,7 @@ function newbb_list_topic_edit($options)
     $orderEle->addOption(1, _ASCENDING);
 
     // number of topics to display element
-    $numdispEle = new XoopsFormText(_MB_NEWBB_DISPLAY, 'options[6]', 10, 255, (int) ($options[6]));
+    $numdispEle = new XoopsFormText(_MB_NEWBB_DISPLAY, 'options[6]', 10, 255, (int)($options[6]));
 
     $timeEle = new XoopsFormText(_MB_NEWBB_TIME, 'options[7]', 10, 255, $options[7]);
     $timeEle->setDescription(_MB_NEWBB_TIME_DESC);
@@ -169,30 +168,30 @@ function newbb_list_topic_edit($options)
     $navEle = new XoopsFormRadioYN(_MB_NEWBB_INDEXNAV, 'options[9]', !empty($options[9]));
 
     // Topic title element
-    $lengthEle = new XoopsFormText(_MB_NEWBB_TITLE_LENGTH, 'options[10]', 10, 255, (int) ($options[10]));
+    $lengthEle = new XoopsFormText(_MB_NEWBB_TITLE_LENGTH, 'options[10]', 10, 255, (int)($options[10]));
     $lengthEle->setDescription(_MB_NEWBB_TITLE_LENGTH_DESC);
 
     // Post text element
-    $postExcerptEle = new XoopsFormText(_MB_NEWBB_POST_EXCERPT, 'options[11]', 10, 255, (int) ($options[11]));
+    $postExcerptEle = new XoopsFormText(_MB_NEWBB_POST_EXCERPT, 'options[11]', 10, 255, (int)($options[11]));
     $postExcerptEle->setDescription(_MB_NEWBB_POST_EXCERPT_DESC);
 
     //  forum element
     $optionsForum = explode(',', $options[12]);
-    mod_loadFunctions("forum", "newbb");
-    $forumHandler = xoops_getmodulehandler('forum', 'newbb');
+    mod_loadFunctions('forum', 'newbb');
+    $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
-    $accessForums = $forumHandler->getIdsByValues(array_map("intval", $optionsForum));
-    $isAll         = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $forumSel      = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
+    $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
+    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel .= "<option value=\"0\" ";
     if ($isAll) {
-        $forumSel .= " selected";
+        $forumSel .= ' selected';
         $accessForums = null; // just select _ALL option
     }
-    $forumSel .= ">" . _ALL . "</option>";
-    $forumSel .= newbb_forumSelectBox($accessForums, "access", false); //$accessForums, $permission = "access", $delimitor_category = false
-    $forumSel .= "</select>";
+    $forumSel .= '>' . _ALL . '</option>';
+    $forumSel .= newbb_forumSelectBox($accessForums, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = false
+    $forumSel .= '</select>';
     $forumEle = new XoopsFormLabel(_MB_NEWBB_FORUMLIST, $forumSel);
 
     // add all elements to form

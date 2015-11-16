@@ -1,11 +1,11 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id$
  * @package        module::newbb
  */
@@ -13,27 +13,27 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
-$dirname = $xoopsModule->getVar("dirname");
+$dirname = $xoopsModule->getVar('dirname');
 //include_once $GLOBALS['xoops']->path('header.php');
 xoops_load('XoopsRequest');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once "seo_url.php";
+    include_once 'seo_url.php';
     /* for seo */
-    $toseo_url = array("index.php", "viewforum.php", "viewtopic.php", "rss.php");
+    $toseo_url = array('index.php', 'viewforum.php', 'viewtopic.php', 'rss.php');
 
-    if (((strpos(getenv('REQUEST_URI'), '.html') === false) && !empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0))) {
+    if ((!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0) && (strpos(getenv('REQUEST_URI'), '.html') === false))) {
         $redir = false;
-        if (strpos(getenv("REQUEST_URI"), "mark_read=") === true || strpos(getenv("REQUEST_URI"), "mark=") === true) {
+        if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
             // Mark Forums
         } else {
             if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
                 //rewrite only for files
 
-                if (trim(getenv("SCRIPT_NAME")) !== '') {
-                    if (strpos(getenv("REQUEST_URI"), "/" . SEO_MODULE_NAME . "/") === false) {
+                if (trim(getenv('SCRIPT_NAME')) !== '') {
+                    if (strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/') === false) {
                         $redir = true;
-                    } elseif (getenv("QUERY_STRING")) {
+                    } elseif (getenv('QUERY_STRING')) {
                         $redir = true;
                     }
                 }
@@ -41,13 +41,13 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         }
 
         if ($redir === true) {
-            $s      = "http://" . getenv('HTTP_HOST') . getenv("REQUEST_URI");
-            $s      = str_replace("/" . REAL_MODULE_NAME . "/", "/" . SEO_MODULE_NAME . "/", $s);
+            $s      = 'http://' . getenv('HTTP_HOST') . getenv('REQUEST_URI');
+            $s      = str_replace('/' . REAL_MODULE_NAME . '/', '/' . SEO_MODULE_NAME . '/', $s);
             $newurl = seo_urls('<a href="' . $s . '"></a>');
             $newurl = str_replace('<a href="', '', $newurl);
             $newurl = str_replace('"></a>', '', $newurl);
             if (!headers_sent()) {
-                header("HTTP/1.1 301 Moved Permanently");
+                header('HTTP/1.1 301 Moved Permanently');
                 header("Location: $newurl");
                 exit();
             }
@@ -55,10 +55,10 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     }
 }
 
-include_once $GLOBALS['xoops']->path('modules/' . $dirname . "/include/vars.php");
+include_once $GLOBALS['xoops']->path('modules/' . $dirname . '/include/vars.php');
 
-mod_loadFunctions("user", $dirname);
-mod_loadFunctions("topic", $dirname);
+mod_loadFunctions('user', $dirname);
+mod_loadFunctions('topic', $dirname);
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 require_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
@@ -66,11 +66,11 @@ $myts = MyTextSanitizer::getInstance();
 
 $menumode       = 0;
 $menumode_other = array();
-$menu_url       = htmlSpecialChars(preg_replace("/&menumode=[^&]/", "", $_SERVER['REQUEST_URI']));
-$menu_url .= (false === strpos($menu_url, "?")) ? "?menumode=" : "&amp;menumode=";
-foreach ($GLOBALS['xoopsModuleConfig']["valid_menumodes"] as $key => $val) {
+$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', $_SERVER['REQUEST_URI']));
+$menu_url .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
+foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
     if ($key !== $menumode) {
-        $menumode_other[] = array("title" => $val, "link" => $menu_url . $key);
+        $menumode_other[] = array('title' => $val, 'link' => $menu_url . $key);
     }
 }
 // irmtfan new method for add js scripts - commented and move to footer.php
@@ -119,11 +119,11 @@ $xoops_module_header = $newbb_module_header; // for cache hack
 */
 /* END irmtfan remove and move to newbb/footer.php */
 
-if (!empty($GLOBALS['xoopsModuleConfig']["welcome_forum"]) && is_object($GLOBALS['xoopsUser']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
-    mod_loadFunctions("welcome", $dirname);
+if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
+    mod_loadFunctions('welcome', $dirname);
 }
 // irmtfan for backward compatibility
-$pollmodules = $GLOBALS['xoopsModuleConfig']["poll_module"];
+$pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
 //$module_handler = &xoops_gethandler('module');
 $xoopspoll = &$module_handler->getByDirname($pollmodules);

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
-// <http://www.xoops.org/>                             //
+// <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,28 +25,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: phppp (D.J., infomax@gmail.com)                                  //
-// URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
- * Class newbbtree
+ * Class Newbbtree
  */
-class newbbtree extends XoopsTree
+class Newbbtree extends XoopsTree
 {
     public $prefix    = '&nbsp;&nbsp;';
     public $increment = '&nbsp;&nbsp;';
     public $postArray = '';
 
     /**
-     * @param $table_name
+     * @param        $table_name
      * @param string $id_name
      * @param string $pid_name
      */
-    public function NewBBTree($table_name, $id_name = "post_id", $pid_name = "pid")
+    public function NewBBTree($table_name, $id_name = 'post_id', $pid_name = 'pid')
     {
         $this->XoopsTree($table_name, $id_name, $pid_name);
     }
@@ -61,7 +61,7 @@ class newbbtree extends XoopsTree
     }
 
     /**
-     * @param $sel_id
+     * @param        $sel_id
      * @param string $order
      */
     public function getAllPostArray($sel_id, $order = '')
@@ -79,9 +79,9 @@ class newbbtree extends XoopsTree
 
     // returns an array of first child objects for a given id($sel_id)
     /**
-     * @param $postTree_array
-     * @param int $pid
-     * @param string $prefix
+     * @param         $postTree_array
+     * @param  int    $pid
+     * @param  string $prefix
      * @return bool
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
@@ -93,16 +93,16 @@ class newbbtree extends XoopsTree
         $newPostArray = array();
         $prefix .= $this->increment;
         foreach ($this->postArray as $post) {
-            if ($post->getVar('pid') === $pid) {
-                $postTree_array[] = array('prefix'      => $prefix,
-                                          'icon'        => $post->getVar('icon'),
-                                          'post_time'   => $post->getVar('post_time'),
-                                          'post_id'     => $post->getVar('post_id'),
-                                          'forum_id'    => $post->getVar('forum_id'),
-                                          'subject'     => $post->getVar('subject'),
-                                          'poster_name' => $post->getVar('poster_name'),
-                                          'uid'         => $post->getVar('uid')
-                );
+            if ($post->getVar('pid') == $pid) {
+                $postTree_array[] = array(
+                    'prefix'      => $prefix,
+                    'icon'        => $post->getVar('icon'),
+                    'post_time'   => $post->getVar('post_time'),
+                    'post_id'     => $post->getVar('post_id'),
+                    'forum_id'    => $post->getVar('forum_id'),
+                    'subject'     => $post->getVar('subject'),
+                    'poster_name' => $post->getVar('poster_name'),
+                    'uid'         => $post->getVar('uid'));
                 $this->getPostTree($postTree_array, $post->getVar('post_id'), $prefix);
             } else {
                 $newPostArray[] = $post;

@@ -14,13 +14,13 @@
         <option value="<{$unread_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREAD}></option>
     </select>
 
-    <{if $type_options}>
+    <{if $typeOptions}>
     <select
         name="type" id="type"
         onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.location=this.options[this.selectedIndex].value;}"
     >
         <option value=""><{$smarty.const._MD_NEWBB_TYPE}></option>
-        <{foreachq item=opt from=$type_options}>
+        <{foreachq item=opt from=$typeOptions}>
         <option value="<{$opt.link}>"><{$opt.title}></option>
         <{/foreach}>
     </select>

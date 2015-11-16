@@ -2,9 +2,7 @@
 
 .even, .odd, .head{
 padding: 5px;
-border-width: 1px;
-border-style: solid;
-border-color: black;
+border: 1px solid black;
 }
 
 /* div{
@@ -44,7 +42,7 @@ border-color: black;
         -ms-transition-duration: 1s;
         -ms-transition-timing-function: ease-in-out;
         -ms-transition-delay: 0s;
-		-o-transition-property: all;
+        -o-transition-property: all;
         -o-transition-duration: 1s;
         -o-transition-timing-function: ease-in-out;
         -o-transition-delay: 0s;
@@ -102,7 +100,7 @@ padding: 5px;
 padding: 5px;
 }
 .thread_signature {
-	border: 0;
+    border: 0;
     border-top-width:1px;
     border-top-style: solid;
     border-top-color: #000000;
@@ -126,15 +124,15 @@ padding: 5px;
 
 /* -- general css classes -- */
 .forum_header {
-	overflow: hidden;
-    border		: 1px solid #aaaaaa;
-	margin: 5px;
+    overflow: hidden;
+    border        : 1px solid #aaaaaa;
+    margin: 5px;
 }
 
 .forum_title {
-    float		: left;
-    text-align	: left;
-    padding		: 5px;
+    float        : left;
+    text-align    : left;
+    padding        : 5px;
     width: 100%;
 }
 .forum_title > hr{
@@ -157,19 +155,19 @@ padding: 5px; line-height: 150%;
 }
 /* newbb_index.html */
 .index_category{
-	border: 0;
-	margin-top: -10px;
-	margin-bottom: 5px;
-	padding: 5px;
+    border: 0;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
 .index_category .desc, .index_category .desc a{
-	font-weight: normal !important;
-	padding-left: 0;
-	margin-top: 5px;
-	margin-bottom: 0;
+    font-weight: normal !important;
+    padding-left: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 .forum_table{
-	width: 100%;
+    width: 100%;
    display: table;
 }
 .forum_row {
@@ -203,17 +201,17 @@ width: 9%;
 .forum_lastpost {
 }
 .index_forum a{
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .index_forum span.item{
-	padding: 0;
-	margin: 0;
-	border: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 
 .index_forum span.extra{
-	margin: 0;
+    margin: 0;
 }
 /* END index_newbb.html */
 
@@ -328,25 +326,24 @@ width: 15%;
 width: 35%;
 }
 .block_full_reply, .block_full_view{
-width: 10%
+width: 10%;
 }
 .block_compact_topic{
 width: 50%;
 }
 .block_compact_reply {
-width: 10%
+width: 10%;
 }
 
 /* end*/
 div.karma
 {
-	background-color: transparent;
-	text-align: left;
-	border-top: 1px solid #DDDDFF;
-	border-left: 1px solid #DDDDFF;
-	border-right: 1px solid #AAAAAA;
-	border-bottom: 1px solid #AAAAAA;
-	padding: 10px;
+    background-color: transparent;
+    text-align: left;
+    border: 1px solid #DDDDFF;
+    border-right-color: #AAAAAA;
+    border-bottom-color: #AAAAAA;
+    padding: 10px;
 }
 
 span.digest
@@ -367,54 +364,54 @@ span.digest
 /* -- dropdown menu -- */
 
 div.dropdown .menu, div.dropdown .userbar{
-	font-weight: bold;
-	margin: 0 1px;
-	border: 0 !important;
-	padding: 0;
+    font-weight: bold;
+    margin: 0 1px;
+    border: 0 !important;
+    padding: 0;
 }
 
 div.dropdown .item{
-	font-weight: bold;
-	padding: 2px 5px;
-  	white-space: nowrap;
-  	border: 0 !important;
+    font-weight: bold;
+    padding: 2px 5px;
+      white-space: nowrap;
+      border: 0 !important;
 }
 
 div.dropdown ul, div.dropdown table {
-	width: 135px;
+    width: 135px;
 }
 /* -- dropdown menu -- */
 
 /* -- user level -- */
 table.userlevel{
-	width: 90%;
-	border: 0;
-	padding: 0;
-	border-collapse: collapse;
-	border-spacing: 0;
-	text-align: left;
+    width: 90%;
+    border: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
 }
 
 table.userlevel td{
-	height: 13px;
-	padding: 0;
+    height: 13px;
+    padding: 0;
 }
 
 table.userlevel td.end{
-	width: 3px;
+    width: 3px;
 }
 
 table.userlevel td.end img{
-	width: 3px;
-	height: 13px;
+    width: 3px;
+    height: 13px;
 }
 
 table.userlevel td.center{
-	width: 100%;
+    width: 100%;
 }
 
 table.userlevel td.center img{
-	height: 12px;
+    height: 12px;
 }
 /* -- user level -- */
 .online_block {

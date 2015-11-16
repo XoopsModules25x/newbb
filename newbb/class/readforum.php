@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . '/read.php';
@@ -33,16 +33,19 @@ include_once __DIR__ . '/read.php';
 /**
  * A handler for read/unread handling
  *
- * @package     newbb/cbb
+ * @package       newbb
  *
  * @author        D.J. (phppp, http://xoopsforge.com)
- * @copyright    copyright (c) 2005 XOOPS.org
+ * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Readforum extends Read
 {
-    public function Readforum()
+    /**
+     *
+     */
+    public function __construct()
     {
-        $this->Read("forum");
+        parent::__construct('forum');
     }
 }
 
@@ -52,11 +55,11 @@ class Readforum extends Read
 class NewbbReadforumHandler extends NewbbReadHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function NewbbReadforumHandler(&$db)
+    public function __construct(XoopsDatabase $db)
     {
-        $this->NewbbReadHandler($db, "forum");
+        parent::__construct($db, 'forum');
     }
 
     /**
@@ -66,26 +69,26 @@ class NewbbReadforumHandler extends NewbbReadHandler
      */
     public function cleanOrphan()
     {
-        parent::cleanOrphan($this->db->prefix("bb_posts"), "post_id");
+        parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
 
-        return parent::cleanOrphan($this->db->prefix("bb_forums"), "forum_id", "read_item");
+        return parent::cleanOrphan($this->db->prefix('bb_forums'), 'forum_id', 'read_item');
     }
 
     /**
-     * @param int $status
-     * @param null $uid
+     * @param  int  $status
+     * @param  null $uid
      * @return bool
      */
-    public function setRead_items($status = 0, $uid = null)
+    public function setReadItems($status = 0, $uid = null)
     {
         if (empty($this->mode)) {
             return true;
         }
 
-        if ($this->mode === 1) {
-            return $this->setRead_items_cookie($status);
+        if ($this->mode == 1) {
+            return $this->setReadItemsCookie($status);
         } else {
-            return $this->setRead_items_db($status, $uid);
+            return $this->setReadItemsDb($status, $uid);
         }
     }
 
@@ -94,13 +97,13 @@ class NewbbReadforumHandler extends NewbbReadHandler
      * @param $items
      * @return bool
      */
-    public function setRead_items_cookie($status, $items)
+    public function setReadItemsCookie($status, $items)
     {
-        $cookie_name = "LF";
+        $cookie_name = 'LF';
         $items       = array();
         if (!empty($status)) {
-            $item_handler =& xoops_getmodulehandler('forum', 'newbb');
-            $items_id     = $item_handler->getIds();
+            $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
+            $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
                 $items[$key] = time();
             }
@@ -115,25 +118,25 @@ class NewbbReadforumHandler extends NewbbReadHandler
      * @param $uid
      * @return bool
      */
-    public function setRead_items_db($status, $uid)
+    public function setReadItemsDb($status, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS["xoopsUser"])) {
-                $uid = $GLOBALS["xoopsUser"]->getVar("uid");
+            if (is_object($GLOBALS['xoopsUser'])) {
+                $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
             }
         }
         if (empty($status)) {
-            $this->deleteAll(new Criteria("uid", $uid));
+            $this->deleteAll(new Criteria('uid', $uid));
 
             return true;
         }
 
-        $item_handler =& xoops_getmodulehandler('forum', 'newbb');
-        $items_obj    =& $item_handler->getAll(null, array("forum_last_post_id"));
+        $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $items_obj   =& $itemHandler->getAll(null, array('forum_last_post_id'));
         foreach (array_keys($items_obj) as $key) {
-            $this->setRead_db($key, $items_obj[$key]->getVar("forum_last_post_id"), $uid);
+            $this->setRead_db($key, $items_obj[$key]->getVar('forum_last_post_id'), $uid);
         }
         unset($items_obj);
 
@@ -142,6 +145,6 @@ class NewbbReadforumHandler extends NewbbReadHandler
 
     public function synchronization()
     {
-        return;
+//        return;
     }
 }

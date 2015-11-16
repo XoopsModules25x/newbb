@@ -1,22 +1,22 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    The XOOPS Project http://xoops.sf.net
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
-define("NEWBB_FUNCTIONS_STATS_LOADED", true);
+defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+define('NEWBB_FUNCTIONS_STATS_LOADED', true);
 
-if (!defined("NEWBB_FUNCTIONS_STATS")) {
-    define("NEWBB_FUNCTIONS_STATS", 1);
+if (!defined('NEWBB_FUNCTIONS_STATS')) {
+    define('NEWBB_FUNCTIONS_STATS', 1);
 
     /**
      * @return mixed
@@ -24,14 +24,14 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
     function newbb_get_stats()
     {
         $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
-        $stats         = $statsHandler->getStats();
+        $stats        = $statsHandler->getStats();
 
         return $stats;
     }
 
     /**
-     * @param $id
-     * @param $type
+     * @param     $id
+     * @param     $type
      * @param int $increment
      * @return mixed
      */
@@ -49,12 +49,12 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      * @param string $forum_id
      * @return mixed
      */
-    function getTotalTopics($forum_id = "")
+    function getTotalTopics($forum_id = '')
     {
         $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-        $criteria      = new CriteriaCompo(new Criteria("approved", 0, ">"));
+        $criteria     = new CriteriaCompo(new Criteria('approved', 0, '>'));
         if ($forum_id) {
-            $criteria->add(new Criteria("forum_id", (int) ($forum_id)));
+            $criteria->add(new Criteria('forum_id', (int)($forum_id)));
         }
 
         return $topicHandler->getCount($criteria);
@@ -65,23 +65,23 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
     * Also can return the number of users on the system.
     */
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $type
      * @return mixed
      */
-    function getTotalPosts($id = 0, $type = "all")
+    function getTotalPosts($id = 0, $type = 'all')
     {
         $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $criteria     = new CriteriaCompo(new Criteria("approved", 0, ">"));
+        $criteria    = new CriteriaCompo(new Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':
                 if ($id > 0) {
-                    $criteria->add(new Criteria("forum_id", (int) ($id)));
+                    $criteria->add(new Criteria('forum_id', (int)($id)));
                 }
                 break;
             case 'topic':
                 if ($id > 0) {
-                    $criteria->add(new Criteria("topic_id", (int) ($id)));
+                    $criteria->add(new Criteria('topic_id', (int)($id)));
                 }
                 break;
             case 'all':
@@ -97,7 +97,7 @@ if (!defined("NEWBB_FUNCTIONS_STATS")) {
      */
     function getTotalViews()
     {
-        $sql = "SELECT sum(topic_views) FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . "";
+        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }

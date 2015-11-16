@@ -9,15 +9,23 @@
 - replaced $_POST and $_GET with XoopsRequest (mamba)
 - replaced XOOPS_ROOT_PATH  with $GLOBALS['xoops']->path (mamba)
 - added/fixed phpDoc headers (mamba)
+- fixes by Bleekk
 - replaced intval() with (int) (mamba)
 - enforcing strict comparison (mamba)
-
+- check for existence of Categories and Forums (cesagonchu/mamba)
+- some PSR-2 code clean-up (mamba)
+- bug fix: $cat_image in /index.php (mamba)
+- bug fix: RSS (mamba)
+- bug fix: in deleting posts (slider84/mamba)
+- added conversion of "poster_ip" field to IPv6 format: varchar(45) (trabis/mamba)
+- fix notices in Search (slider84/mamba)
+- fix in toggle_script (footer.php) (slider84)
 
 4.33         11/20/2012 (changes by Irmtfan)
 ===========================================
 - fixed .htaccess (Trabis)
 - Changing TYPE to ENGINE (mamba)
-- fixing bug in Prune function (mamba)
+- bug fix: Prune function (mamba)
 - New topic list block using NewbbTopicRenderer class, fix topic type and prune system
 - bug fix: undefined forumCookie in footer
 - bug fix: dont show topic title in list.topic.php
@@ -77,10 +85,10 @@
 - improve:  rewrite forum cleanOrphan function. add parent_forum and cat_id orphan check in newbb/class/forum.php
 - enhance: rewrite admin > sync and recon functions. remove hard-codes access to db. in newbb/admin/admin_synchronization.php and newbb/include/functions.recon.php
 - improve:  irmtfan - move cleanOrphan to synchronization function  in newbb/include/functions.recon.php and newbb/class/topic.php
-- bug fix:  check if xoops poll module is available in newbb/admin/index.php (Cesag)
+- bug fix:  check if xoops poll module is available in newbb/admin/index.php (cesagonchu)
 - bug fix: single quotes inside language definitions break onClick event
-- Notice: Undefined index: fct in file /modules/newbb/xoops_version.php line 767 (Cesag)
-- Updated the standard norms of the English folder (cesag)
+- Notice: Undefined index: fct in file /modules/newbb/xoops_version.php line 767 (cesagonchu)
+- Updated the standard norms of the English folder (cesagonchu)
 
 4.3                         08/25/2012
 ===========================================

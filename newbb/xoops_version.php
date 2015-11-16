@@ -1,11 +1,11 @@
 <?php
 /**
- * CBB 4.0, or newbb, the forum module for XOOPS project
+ * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -26,11 +26,11 @@ $modversion['status_version']  = '4.33';
 
 //about
 $modversion['module_status']       = 'RC10';
-$modversion['release_date']        = '2015/07/27';
+$modversion['release_date']        = '2015/11/15';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.3.7';
-$modversion['min_xoops']           = '2.5.7';
+$modversion['min_php']             = '5.4';
+$modversion['min_xoops']           = '2.5.7.1';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0', 'mysqli' => '5.0');
 $modversion['system_menu']         = 1;
@@ -41,12 +41,12 @@ $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 
 $modversion['warning'] = 'Only For XOOPS >= 2.5.0 ';
 
-$modversion['demo_site_url']        = 'http://xoops.org/newbb/';
-$modversion['demo_site_name']        = 'XOOPS Project';
-$modversion['support_site_url']    = 'http://xoops.org/newbb/';
-$modversion['support_site_name']    = 'XOOPS Project';
-$modversion['submit_feature']        = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
-$modversion['submit_bug']            = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
+$modversion['demo_site_url']     = 'http://xoops.org/newbb/';
+$modversion['demo_site_name']    = 'XOOPS Project';
+$modversion['support_site_url']  = 'http://xoops.org/newbb/';
+$modversion['support_site_name'] = 'XOOPS Project';
+$modversion['submit_feature']    = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
+$modversion['submit_bug']        = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
 
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.ini.php');
 // Is performing module install/update?
@@ -74,8 +74,7 @@ $modversion['tables'] = array(
     'bb_type',
     'bb_type_forum',
     'bb_stats',
-    'bb_user_stats',
-);
+    'bb_user_stats');
 
 // Admin things
 $modversion['hasAdmin']   = 1;
@@ -96,11 +95,9 @@ $modversion['templates'] = array(
 
     array('file' => 'newbb_index_menu.tpl', 'description' => ''),
     array('file' => 'newbb_index.tpl', 'description' => ''),
-
     array('file' => 'newbb_viewforum_subforum.tpl', 'description' => ''),
     array('file' => 'newbb_viewforum_menu.tpl', 'description' => ''),
     array('file' => 'newbb_viewforum.tpl', 'description' => ''),
-
     array('file' => 'newbb_viewtopic.tpl', 'description' => ''),
     array('file' => 'newbb_thread.tpl', 'description' => ''),
     array('file' => 'newbb_edit_post.tpl', 'description' => ''),
@@ -108,14 +105,11 @@ $modversion['templates'] = array(
     array('file' => 'newbb_poll_view.tpl', 'description' => ''),
     array('file' => 'newbb_searchresults.tpl', 'description' => ''),
     array('file' => 'newbb_search.tpl', 'description' => ''),
-
     array('file' => 'newbb_viewall.tpl', 'description' => ''),
     array('file' => 'newbb_viewpost.tpl', 'description' => ''),
     array('file' => 'newbb_online.tpl', 'description' => ''),
     array('file' => 'newbb_rss.tpl', 'description' => ''),
-
-    array('file' => 'newbb_notification_select.tpl', 'description' => ''),
-);
+    array('file' => 'newbb_notification_select.tpl', 'description' => ''));
 
 // Blocks
 
@@ -199,8 +193,7 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_cloud_show',
     'edit_func'   => 'newbb_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
-    'template'    => 'newbb_tag_block_cloud.tpl',
-);
+    'template'    => 'newbb_tag_block_cloud.tpl');
 
 /*
  * $options:
@@ -215,8 +208,7 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_top_show',
     'edit_func'   => 'newbb_tag_block_top_edit',
     'options'     => '50|0|c',
-    'template'    => 'newbb_tag_block_top.tpl',
-);
+    'template'    => 'newbb_tag_block_top.tpl');
 // irmtfan START add list topic block
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -312,8 +304,8 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => array(
-        _MI_PAGENAV_NUMBER   => 'number',
-        _MI_PAGENAV_IMAGE   => 'image',
+        _MI_PAGENAV_NUMBER => 'number',
+        _MI_PAGENAV_IMAGE  => 'image',
         _MI_PAGENAV_SELECT => 'select'),
     'default'     => 'number');
 
@@ -377,8 +369,7 @@ $modversion['config'][] = array(
         _MI_MAGICK => 1,
         _MI_NETPBM => 2,
         _MI_GD1    => 3,
-        _MI_GD2    => 4)
-);
+        _MI_GD2    => 4));
 
 $modversion['config'][] = array(
     'name'        => 'show_userattach',
@@ -438,8 +429,7 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NULL    => 0,
         _MI_TEXT    => 1,
-        _MI_GRAPHIC => 2)
-);
+        _MI_GRAPHIC => 2));
 
 $modversion['config'][] = array(
     'name'        => 'show_realname',
@@ -524,8 +514,7 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NEWBB_INFOBOX_NONE   => 0,
         _MI_NEWBB_INFOBOX_HIDDEN => 1,
-        _MI_NEWBB_INFOBOX_SHOW   => 2)
-);
+        _MI_NEWBB_INFOBOX_SHOW   => 2));
 
 $modversion['config'][] = array(
     'name'        => 'show_sociallinks',
@@ -569,8 +558,7 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NEWBB_EMAIL_NONE   => 0,
         _MI_NEWBB_EMAIL_DAILY  => 1,
-        _MI_NEWBB_EMAIL_WEEKLY => 2)
-);
+        _MI_NEWBB_EMAIL_WEEKLY => 2));
 
 $modversion['config'][] = array(
     'name'        => 'show_ip',
@@ -695,8 +683,7 @@ $modversion['config'][] = array(
         _NONE       => 0,
         _MI_POST    => 1,
         _MI_REPLY   => 2,
-        _MI_OP_BOTH => 3)
-);
+        _MI_OP_BOTH => 3));
 
 $modversion['config'][] = array(
     'name'        => 'disclaimer',
@@ -739,11 +726,10 @@ $dir_def  = 0;
 $formtype = 'select';
 // if in install, update
 if ($isModuleAction) {
-    $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
-    $pollDirs      = $topicHandler->getActivePolls();
+    $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
+    $pollDirs     = $topicHandler->getActivePolls();
     // priorities for default poll module : 1- xoopspoll 2- last element in array 3- if no poll module => 0
-    $dir_def = !empty($pollDirs) ? (!empty($pollDirs['xoopspoll']) ? $pollDirs['xoopspoll'] : end($pollDirs))
-        : 0;
+    $dir_def = !empty($pollDirs) ? (!empty($pollDirs['xoopspoll']) ? $pollDirs['xoopspoll'] : end($pollDirs)) : 0;
     //Now check all topics and try to find the poll module
     if ('update_ok' === XoopsRequest::getCmd('op', '', 'POST')) {
         $dir_in_update = $topicHandler->findPollModule($pollDirs);
@@ -758,17 +744,13 @@ if ($isModuleAction) {
     }
 }
 
-$isPref = (
-    // action module "system"
-    is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')
-    &&
-    // current action
-    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === 'preferences'
-);
+$isPref = (// action module "system"
+    is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') && // current action
+    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === 'preferences');
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
-    $hModConfig = xoops_gethandler('config');
+    $hModConfig = &xoops_gethandler('config');
     $criteria   = new CriteriaCompo();
     $criteria->add(new Criteria('conf_name', 'poll_module', '='), 'AND');
     $criteria->add(new Criteria('conf_formtype', 'select', '='), 'AND'); // not hidden
@@ -776,8 +758,8 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
     if (is_object($pollOptions) && $pollOptions->getVar('conf_value') !== '0') {
-        $topicHandler = xoops_getmodulehandler('topic', $modversion['dirname']);
-        $topicPolls    = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
+        $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
+        $topicPolls   = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
         if ($topicPolls > 0) {
             $poll_module_in_use = $topicHandler->findPollModule();
             if (is_string($poll_module_in_use)) {
@@ -788,8 +770,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
                     //echo "error: poll_module is in danger!!!";
                 }
                 // I have to redirect back to prevent system module to save bad $_POST['poll_module'] setting!!!
-                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . '<br/>' .
-                                                             _AM_NEWBB_POLLMODULE . ' ' . _AM_NEWBB_POLL_OK . ' :(' . $poll_module_in_use . ')');
+                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . '<br/>' . _AM_NEWBB_POLLMODULE . ' ' . _AM_NEWBB_POLL_OK . ' :(' . $poll_module_in_use . ')');
             }
         }
     }

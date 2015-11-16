@@ -23,7 +23,7 @@
     <{assign var=minwidth value=$minwidth+100}>
     <{assign var=topicwidth value=$topicwidth-20}>
 <{/if}>
-<{assign var=block_topic value=width$topicwidth}> <!-- block topic width after reduction above -->
+<{assign var=block_topic value=$topicwidth}> <!-- block topic width after reduction above -->
 <div class="outer" style="min-width: <{$minwidth}>px;">
     <div class="head border x-small">
         <div class="<{$block_topic}> floatleft center"><{$block.headers.topic}></div>

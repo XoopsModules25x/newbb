@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000 XOOPS.org                           //
-// <http://www.xoops.org/>                             //
+// <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,10 +25,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/class/xoopsformloader.php");
+include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
 
 xoops_cp_header();
-echo "<fieldset>";
+echo '<fieldset>';
 if ($newXoopsModuleGui) {
     echo $indexAdmin->addNavigation('admin_forum_prune.php');
 }
@@ -44,44 +44,45 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $posts_number    = 0;
     $selected_forums = '';
     // irmtfan fix if it is array
-    if (!XoopsRequest::getArray('forums', 0, 'POST') || !XoopsRequest::getArray('forums'[0], 0, 'POST')) {
-        redirect_header("./admin_forum_prune.php", 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
+    $temp = XoopsRequest::getArray('forums', null, 'POST');
+    if (!$temp || !($temp[0])) {
+        redirect_header('admin_forum_prune.php', 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
     } elseif (is_array(XoopsRequest::getArray('forums', '', 'POST'))) {
-        $selected_forums = implode(",", XoopsRequest::getArray('forums', array(), 'POST'));
+        $selected_forums = implode(',', XoopsRequest::getArray('forums', null, 'POST'));
     } else {
-        $selected_forums = XoopsRequest::getArray('forums', '', 'POST');
+        $selected_forums = XoopsRequest::getArray('forums', null, 'POST');
     }
 
     $prune_days  = $myts->addSlashes(XoopsRequest::getInt('days', 0, 'POST'));
     $prune_ddays = time() - $prune_days;
-    $archive     = $myts->addSlashes(XoopsRequest::getInt('archive', 0, 'POST'));//$_POST["archive"]);
-    $sticky      = $myts->addSlashes(XoopsRequest::getInt('sticky', 0, 'POST'));//$_POST["sticky"]);
-    $digest      = $myts->addSlashes(XoopsRequest::getInt('digest', 0, 'POST'));//$_POST["digest"]);
-    $lock        = $myts->addSlashes(XoopsRequest::getInt('lock', 0, 'POST'));//$_POST["lock"]);
-    $hot         = $myts->addSlashes(XoopsRequest::getInt('hot', 0, 'POST'));//$_POST["hot"]);
+    $archive     = XoopsRequest::getInt('archive', 0, 'POST');//$_POST["archive"]);
+    $sticky      = XoopsRequest::getInt('sticky', 0, 'POST');//$_POST["sticky"]);
+    $digest      = XoopsRequest::getInt('digest', 0, 'POST');//$_POST["digest"]);
+    $lock        = XoopsRequest::getInt('lock', 0, 'POST');//$_POST["lock"]);
+    $hot         = XoopsRequest::getInt('hot', 0, 'POST');//$_POST["hot"]);
     $store       = null; //irmtfan define to fix
     if (XoopsRequest::getInt('store', 0, 'POST')) {
         $store = $myts->addSlashes(XoopsRequest::getInt('store', 0, 'POST'));
     }
 
-    $sql = "SELECT t.topic_id FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " t, " . $GLOBALS['xoopsDB']->prefix("bb_posts") . "  p
-                    WHERE t.forum_id IN (" . $selected_forums . ")
-                    AND p.post_id =t.topic_last_post_id ";
+    $sql = 'SELECT t.topic_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '  p
+                    WHERE t.forum_id IN (' . $selected_forums . ')
+                    AND p.post_id =t.topic_last_post_id ';
 
     if ($sticky) {
-        $sql .= " AND t.topic_sticky <> 1 ";
+        $sql .= ' AND t.topic_sticky <> 1 ';
     }
     if ($digest) {
-        $sql .= " AND t.topic_digest <> 1 ";
+        $sql .= ' AND t.topic_digest <> 1 ';
     }
     if ($lock) {
-        $sql .= " AND t.topic_status <> 1 ";
+        $sql .= ' AND t.topic_status <> 1 ';
     }
     if ($hot !== 0) {
-        $sql .= " AND t.topic_replies < " . $hot . " ";
+        $sql .= ' AND t.topic_replies < ' . $hot . ' ';
     }
 
-    $sql .= " AND p.post_time<= " . $prune_ddays . " ";
+    $sql .= ' AND p.post_time<= ' . $prune_ddays . ' ';
     // Ok now we have the sql query completed, go for topic_id's and posts_id's
     $topics = array();
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -93,10 +94,10 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     }
     $topics_number = count($topics);
     $topic_list    = implode(',', $topics);
+    $post_list     = '';
 
-    if (null !== $topic_list) {
-        $sql = "SELECT post_id FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . "
-                    WHERE topic_id IN (" . $topic_list . ")";
+    if ('' !== $topic_list) {
+        $sql = 'SELECT post_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE topic_id IN (' . $topic_list . ')';
 
         $posts = array();
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -110,43 +111,38 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         $post_list    = implode(',', $posts);
     }
     // OKZ Now we have al posts id and topics id
-    if (null !== $post_list) {
+    if ('' !== $post_list) {
         // COPY POSTS TO OTHER FORUM
         if (null !== $store) {
-            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                return _AM_NEWBB_ERROR;
+                return _MD_ERROR;
             }
 
-            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . " SET forum_id=$store WHERE topic_id IN ($topic_list)";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
         } else {
             // ARCHIVING POSTS
-            if ($archive === 1) {
-                $result = $GLOBALS['xoopsDB']->query(
-                    "SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " p, "
-                    . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id"
-                );
+            if ($archive == 1) {
+                $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
                 while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-                    $sql = $GLOBALS['xoopsDB']->query(
-                        "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, '$post_text')"
-                    );
+                    $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
                 }
             }
             // DELETE POSTS
-            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts") . " WHERE topic_id IN ($topic_list)";
+            $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " WHERE topic_id IN ($topic_list)";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
             // DELETE TOPICS
-            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_topics") . " WHERE topic_id IN ($topic_list)";
+            $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . " WHERE topic_id IN ($topic_list)";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
             // DELETE POSTS_TEXT
-            $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " WHERE post_id IN ($post_list)";
+            $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . " WHERE post_id IN ($post_list)";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 return _MD_ERROR;
             }
@@ -157,13 +153,13 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         }
     }
 
-    $tform = new XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, "prune_results", xoops_getenv('PHP_SELF'));
+    $tform = new XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, 'prune_results', xoops_getenv('PHP_SELF'));
     $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_FORUMS, $selected_forums));
     $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_TOPICS, $topics_number));
     $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_POSTS, $posts_number));
     $tform->display();
 } else {
-    $sform = new XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, "prune", xoops_getenv('PHP_SELF'));
+    $sform = new XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, 'prune', xoops_getenv('PHP_SELF'));
     $sform->setExtra('enctype="multipart/form-data"');
 
     /* Let User select the number of days
@@ -173,26 +169,23 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
     $days = new XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
-    $days->addOptionArray(
-        array(
-            604800   => _AM_NEWBB_PRUNE_WEEK,
-            1209600  => _AM_NEWBB_PRUNE_2WEEKS,
-            2592000  => _AM_NEWBB_PRUNE_MONTH,
-            5184000  => _AM_NEWBB_PRUNE_2MONTH,
-            10368000 => _AM_NEWBB_PRUNE_4MONTH,
-            31536000 => _AM_NEWBB_PRUNE_YEAR,
-            63072000 => _AM_NEWBB_PRUNE_2YEARS
-        )
-    );
+    $days->addOptionArray(array(
+                              604800   => _AM_NEWBB_PRUNE_WEEK,
+                              1209600  => _AM_NEWBB_PRUNE_2WEEKS,
+                              2592000  => _AM_NEWBB_PRUNE_MONTH,
+                              5184000  => _AM_NEWBB_PRUNE_2MONTH,
+                              10368000 => _AM_NEWBB_PRUNE_4MONTH,
+                              31536000 => _AM_NEWBB_PRUNE_YEAR,
+                              63072000 => _AM_NEWBB_PRUNE_2YEARS));
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
-    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar("dirname") . "/footer.php"); // to include js files
-    mod_loadFunctions("forum", "newbb");
+    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
+    mod_loadFunctions('forum', 'newbb');
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
-    $forumSelBox    = "<option value = 0 >-- " . _AM_NEWBB_PERM_FORUMS . " --</option>";
-    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$accessForums = nothing, $permission = "access", $delimitor_category = false
-    $forumSelBox .= "</select>";
+    $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
+    $forumSelBox .= newbb_forumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
+    $forumSelBox .= '</select>';
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
     $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
     /* irmtfan remove hardcode
@@ -234,17 +227,14 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $sform->addElement($lock_confirmation);
 
     $hot_confirmation = new XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
-    $hot_confirmation->addOptionArray(
-        array(
-            '0'  => 0,
-            '5'  => 5,
-            '10' => 10,
-            '15' => 15,
-            '20' => 20,
-            '25' => 25,
-            '30' => 30
-        )
-    );
+    $hot_confirmation->addOptionArray(array(
+                                          '0'  => 0,
+                                          '5'  => 5,
+                                          '10' => 10,
+                                          '15' => 15,
+                                          '20' => 20,
+                                          '25' => 25,
+                                          '30' => 30));
     $sform->addElement($hot_confirmation);
 
     $sform->addElement(/*$radiobox*/
@@ -263,6 +253,6 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $sform->display();
 }
 
-echo "</td></tr></table>";
-echo "</fieldset>";
+echo '</td></tr></table>';
+echo '</fieldset>';
 xoops_cp_footer();

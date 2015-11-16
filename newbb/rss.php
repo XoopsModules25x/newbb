@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,16 +25,16 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 // Author: phppp (D.J., infomax@gmail.com)                                  //
-// URL: http://xoopsforge.com, http://xoops.org.cn                          //
+//  URL: http://xoops.org                                                    //
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-include_once __DIR__ . "/header.php";
+include_once __DIR__ . '/header.php';
 include_once $GLOBALS['xoops']->path('class/template.php');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once "seo_url.php";
+    include_once 'seo_url.php';
 }
 /* for seo */
 
@@ -42,10 +42,10 @@ error_reporting(0);
 $xoopsLogger->activated = false;
 
 $forums   = array();
-$category = XoopsRequest::getString('c', '', 'POST');
+$category = XoopsRequest::getString('c', '', 'GET');
 if (XoopsRequest::getString('f', 0, 'GET')) {
-    $forums = array_map("intval", array_map("trim", explode("|", XoopsRequest::getString('f', 0, 'GET'))));
-    //$forums[] = (int) ($_GET["f"]);
+    $forums = array_map('intval', array_map('trim', explode('|', XoopsRequest::getString('f', 0, 'GET'))));
+    //$forums[] = (int)($_GET["f"]);
 }
 
 $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
@@ -55,9 +55,9 @@ $validForums  = $forumHandler->getIdsByPermission(); // get all accessible forum
 if (is_array($forums) && count($forums) > 0) {
     $validForums = array_intersect($forums, $validForums);
 } elseif ($category > 0) {
-    $crit_top = new CriteriaCompo(new Criteria("cat_id", $category));
-    $crit_top->add(new Criteria("forum_id", "(" . implode(", ", $validForums) . ")", "IN"));
-    $forums_top   = $forumHandler->getIds($crit_top);
+    $crit_top = new CriteriaCompo(new Criteria('cat_id', $category));
+    $crit_top->add(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'));
+    $forums_top  = $forumHandler->getIds($crit_top);
     $validForums = array_intersect($forums_top, $validForums);
 }
 if (count($validForums) === 0) {
@@ -74,11 +74,11 @@ if (!empty($GLOBALS['xoopsConfig']['rewrite'])) {
     $tpl->load_filter('output', 'xoRewriteModule');
 }
 
-mod_loadFunctions("cache");
+mod_loadFunctions('cache');
 $xoopsCachedTemplateId = md5(mod_generateCacheId_byGroup() . str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']));
 $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
-    mod_loadFunctions("time", "newbb");
+    mod_loadFunctions('time', 'newbb');
 
     $xmlrss_handler =& xoops_getmodulehandler('xmlrss', 'newbb');
     $rss            = $xmlrss_handler->create();
@@ -93,21 +93,21 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     $rss->channel_webmaster = $GLOBALS['xoopsConfig']['adminmail'];
     $rss->channel_editor    = $GLOBALS['xoopsConfig']['adminmail'];
     $rss->setVarRss('channel_category', $xoopsModule->getVar('name'));
-    $rss->channel_generator = "CBB " . $xoopsModule->getInfo('version');
+    $rss->channel_generator = 'NewBB ' . $xoopsModule->getInfo('version');
     $rss->channel_language  = _LANGCODE;
     $rss->xml_encoding      = $charset;
     $rss->image_url         = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image');
 
-    $dimention = @getimagesize($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image')));
-    if (empty($dimention[0])) {
+    $dimension = @getimagesize($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('image')));
+    if (empty($dimension[0])) {
         $width = 88;
     } else {
-        $width = ($dimention[0] > 144) ? 144 : $dimention[0];
+        $width = ($dimension[0] > 144) ? 144 : $dimension[0];
     }
-    if (empty($dimention[1])) {
+    if (empty($dimension[1])) {
         $height = 31;
     } else {
-        $height = ($dimention[1] > 400) ? 400 : $dimention[1];
+        $height = ($dimension[1] > 400) ? 400 : $dimension[1];
     }
     $rss->image_width  = $width;
     $rss->image_height = $height;
@@ -119,21 +119,8 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     unset($validForums);
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
-    $query = 'SELECT' .
-             '    f.forum_id, f.forum_name,' .
-             '    t.topic_id, t.topic_title, t.type_id,' .
-             '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' .
-             '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' .
-             '    pt.post_text' .
-             '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' .
-             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' .
-             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id' .
-             '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=p.forum_id' .
-             '    WHERE 1=1 ' .
-             $forumCriteria .
-             $approveCriteria .
-             ' ORDER BY p.post_id DESC';
-    $limit = (int) ($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
+    $query = 'SELECT' . '    f.forum_id, f.forum_name,' . '    t.topic_id, t.topic_title, t.type_id,' . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' . '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' . '    pt.post_text' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=p.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . ' ORDER BY p.post_id DESC';
+    $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
     if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
         newbb_trackback_response(1, _MD_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
@@ -155,8 +142,8 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbb_getUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-        $type_handler = xoops_getmodulehandler('type', 'newbb');
-        $type_list    = $type_handler->getList(new Criteria("type_id", "(" . implode(", ", array_keys($types)) . ")", "IN"));
+        $typeHandler = &xoops_getmodulehandler('type', 'newbb');
+        $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
     foreach ($rows as $topic) {
@@ -169,21 +156,21 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = ($topic['poster_name']) ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS["xoopsConfig"]["anonymous"]);
+            $topic['uname'] = ($topic['poster_name']) ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
-        $description            = $topic["forum_name"] . "::";
-        $topic['topic_subject'] = empty($type_list[$topic["type_id"]]) ? "" : "[" . $type_list[$topic["type_id"]] . "] ";
+        $description            = $topic['forum_name'] . '::';
+        $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';
         $description .= $topic['topic_subject'] . $topic['topic_title'] . "<br />\n";
         $description .= $myts->displayTarea($topic['post_text'], $topic['dohtml'], $topic['dosmiley'], $topic['doxcode'], $topic['dobr']);
-        $label = _MD_BY . " " . $topic['uname'];
-        $time  = newbb_formatTimestamp($topic['post_time'], "rss");
-        $link  = XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
+        $label = _MD_BY . ' ' . $topic['uname'];
+        $time  = newbb_formatTimestamp($topic['post_time'], 'rss');
+        $link  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
         if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-            $link   = XOOPS_URL . "/" . REAL_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
-            $oldurl = "<a href=\"" . $link . "\">";
+            $link   = XOOPS_URL . '/' . REAL_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
+            $oldurl = '<a href=\'' . $link . '\'>';
             $newurl = seo_urls($oldurl);
-            $newurl = str_replace("<a href=\"", "", $newurl);
-            $newurl = str_replace("\">", "", $newurl);
+            $newurl = str_replace('<a href=\'', '', $newurl);
+            $newurl = str_replace('\'>', '', $newurl);
             $link   = $newurl;
         }
         $title = $topic['subject'];

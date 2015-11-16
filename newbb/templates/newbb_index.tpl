@@ -341,7 +341,7 @@
             <{$rss_button}>
         </a>
         <br/>
-        <span style='font-size: 0.7em;'><a href="http://www.simple-xoops.de">NewBB Version  <{$version/100}></a></span>
+        <span style='font-size: 0.7em;'><a href="http://www.xoops.org">NewBB Version  <{$version/100}></a></span>
         <br/>
     <{/if}>
 </div>
