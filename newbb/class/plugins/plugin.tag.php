@@ -21,9 +21,9 @@
  * uname
  * tags
  *
- * @var        array $items associative array of items: [modid][catid][itemid]
+ * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return    boolean
+ * @return boolean
  *
  */
 function newbb_tag_iteminfo(&$items)
@@ -76,24 +76,24 @@ function newbb_tag_synchronization($mid)
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4) {
         $sql = "    DELETE FROM {$link_handler->table}" .
-               "    WHERE " .
+               '    WHERE ' .
                "        tag_modid = {$mid}" .
-               "        AND " .
-               "        ( tag_itemid NOT IN " .
+               '        AND ' .
+               '        ( tag_itemid NOT IN ' .
                "            ( SELECT DISTINCT {$itemHandler->keyName} " .
                "                FROM {$itemHandler->table} " .
                "                WHERE {$itemHandler->table}.approved > 0" .
-               "            ) " .
-               "        )";
+               '            ) ' .
+               '        )';
     } else {
         $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
                "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " .
-               "    WHERE " .
+               '    WHERE ' .
                "        tag_modid = {$mid}" .
-               "        AND " .
+               '        AND ' .
                "        ( aa.{$itemHandler->keyName} IS NULL" .
-               "            OR aa.approved < 1" .
-               "        )";
+               '            OR aa.approved < 1' .
+               '        )';
     }
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());

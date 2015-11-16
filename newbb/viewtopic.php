@@ -477,7 +477,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 
                 /* check to see if user has rights to view the results */
                 $vis_return = $poll_obj->isResultVisible();
-                $isVisible  = (true === $vis_return) ? true : false;
+                $isVisible  = $vis_return;
                 $visibleMsg = ($isVisible) ? '' : $vis_return;
 
                 /* setup the module config handler */

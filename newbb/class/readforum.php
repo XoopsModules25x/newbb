@@ -145,6 +145,6 @@ class NewbbReadforumHandler extends NewbbReadHandler
 
     public function synchronization()
     {
-        return;
+//        return;
     }
 }

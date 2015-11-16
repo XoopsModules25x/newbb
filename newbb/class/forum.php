@@ -209,7 +209,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         $topic_lastread = newbb_getcookie('LT', true);
-
+        $criteria_forum = '';
         if (is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
             $hot_threshold  = $forum->getVar('hot_threshold');
@@ -219,8 +219,6 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $criteria_forum = ' AND t.forum_id IN (' . implode(',', array_keys($forum)) . ')';
             } elseif (!empty($forum)) {
                 $criteria_forum = ' AND t.forum_id =' . (int)($forum);
-            } else {
-                $criteria_forum = '';
             }
         }
 
@@ -417,6 +415,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 'topic_page_jump'        => $topic_page_jump,
                 'topic_page_jump_icon'   => $topic_page_jump_icon,
                 'topic_replies'          => $myrow['topic_replies'],
+
+                'topic_digest'          => $myrow['topic_digest'], //mb
+
                 'topic_poster_uid'       => $myrow['topic_poster'],
                 'topic_poster_name'      => $myts->htmlSpecialChars(($myrow['poster_name']) ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_views'            => $myrow['topic_views'],
@@ -522,7 +523,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     } else {
                     }
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
-                } elseif ($GLOBALS['xoopsModuleConfig']["read_mode"] == 1) {
+                } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
@@ -554,6 +555,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $criteria_post = ' (p.post_time > ' . $startdate . ' OR t.topic_sticky=1)';
                 break;
         }
+        $criteria_forum = '';
         if (is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
         } else {
@@ -561,8 +563,6 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $criteria_forum = ' AND t.forum_id IN (' . implode(',', array_keys($forum)) . ')';
             } elseif (!empty($forum)) {
                 $criteria_forum = ' AND t.forum_id =' . (int)($forum);
-            } else {
-                $criteria_forum = '';
             }
         }
 
@@ -622,7 +622,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         //} else {
         $forum_id    = $forum->getVar('forum_id');
         $permHandler =& xoops_getmodulehandler('permission', 'newbb');
-        $permission  = $permHandler->getPermission("forum", $type, $forum_id);
+        $permission  = $permHandler->getPermission('forum', $type, $forum_id);
         //}
         // END irmtfan commented and removed
         return $permission;
@@ -967,7 +967,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         foreach (array_keys($forums_structured) as $cid) {
-            $tree              = new newbbObjectTree($forums_structured[$cid]);
+            $tree              = new NewbbObjectTree($forums_structured[$cid]);
             $forum_array[$cid] = $tree->makeTree($prefix, $pid, $tags);
             unset($tree);
         }
@@ -1003,7 +1003,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $forums_structured[$forum_obj->getVar('cat_id')][$key] =& $forums_obj[$key];
         }
         foreach (array_keys($forums_structured) as $cid) {
-            $tree              = new newbbObjectTree($forums_structured[$cid]);
+            $tree              = new NewbbObjectTree($forums_structured[$cid]);
             $forum_array[$cid] = $tree->makeArrayTree($pid, $tags, $depth);
             unset($tree);
         }

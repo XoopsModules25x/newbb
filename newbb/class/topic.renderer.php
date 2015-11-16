@@ -631,9 +631,9 @@ class NewbbTopicRenderer
         $selection['sort'] .= '</select>';
 
         $selection['order'] = "<select name='order'>";
-        $selection['order'] .= "<option value='0' " . (empty($this->vars['order']) ? " selected='selected'" : "") . ">" . _DESCENDING . '</option>';
-        $selection['order'] .= "<option value='1' " . (!empty($this->vars['order']) ? " selected='selected'" : "") . ">" . _ASCENDING . '</option>';
-        $selection['order'] .= "</select>";
+        $selection['order'] .= "<option value='0' " . (empty($this->vars['order']) ? " selected='selected'" : '') . '>' . _DESCENDING . '</option>';
+        $selection['order'] .= "<option value='1' " . (!empty($this->vars['order']) ? " selected='selected'" : '') . '>' . _ASCENDING . '</option>';
+        $selection['order'] .= '</select>';
 
         $since              = isset($this->vars['since']) ? $this->vars['since'] : $this->config['since_default'];
         $selection['since'] = newbb_sinceSelectBox($since);
@@ -1060,7 +1060,7 @@ class NewbbTopicRenderer
             //if ($topic_digest) {
             //    $topic_folder = 'topic_digest';
             //    $topic_folder_text = _MD_TOPICDIGEST;
-            if ($topics[$id]["topic_replies"] >= $forum_list[$topics[$id]["topic_forum"]]["hot_threshold"]) {
+            if ($topics[$id]['topic_replies'] >= $forum_list[$topics[$id]['topic_forum']]['hot_threshold']) {
                 $topic_folder      = empty($topic_isRead[$id]) ? 'topic_hot_new' : 'topic_hot';
                 $topic_folder_text = empty($topic_isRead[$id]) ? _MD_MORETHAN : _MD_MORETHAN2;
             } else {

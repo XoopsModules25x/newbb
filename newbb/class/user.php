@@ -63,10 +63,9 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
     }
     $maxmp = floor($maxmp);
     $mp    = floor($mp);
+    $zmp = $maxmp;
     if ($maxmp <= 0) {
         $zmp = 1;
-    } else {
-        $zmp = $maxmp;
     }
     $mpf = floor(100 * ($mp / $zmp)) - 1;
     if ($hpf >= 98) {
@@ -94,9 +93,9 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
 }
 
 /**
- * Class newbbUser
+ * Class NewbbUser
  */
-class newbbUser
+class NewbbUser
 {
     public $user;
 
@@ -120,7 +119,7 @@ class newbbUser
         $userbar['profile'] = array('link' => XOOPS_URL . '/userinfo.php?uid=' . $user->getVar('uid'), 'name' => _PROFILE);
 
         if (is_object($GLOBALS['xoopsUser'])) {
-            $userbar['pm'] = array('link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar("uid") . "', 'pmlite', 450, 380);", 'name' => _MD_PM);
+            $userbar['pm'] = array('link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);", 'name' => _MD_PM);
         }
         if ($user->getVar('user_viewemail') || $isadmin) {
             $userbar['email'] = array('link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');", 'name' => _MD_EMAIL);
@@ -132,10 +131,10 @@ class newbbUser
             $userbar['icq'] = array('link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');", 'name' => _MD_ICQ);
         }
         if ($aim = $user->getVar('user_aim')) {
-            $userbar['aim'] = array('link' => "javascript:void window.open('aim:goim?screenname=" . $aim . "&amp;message=Hi+" . $aim . "+Are+you+there?" . "', 'new');", 'name' => _MD_AIM);
+            $userbar['aim'] = array('link' => "javascript:void window.open('aim:goim?screenname=" . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there?' . "', 'new');", 'name' => _MD_AIM);
         }
         if ($yim = $user->getVar('user_yim')) {
-            $userbar['yim'] = array('link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . "&.src=pg" . "', 'new');", 'name' => _MD_YIM);
+            $userbar['yim'] = array('link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');", 'name' => _MD_YIM);
         }
         if ($msn = $user->getVar('user_msnm')) {
             $userbar['msnm'] = array('link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');", 'name' => _MD_MSNM);
@@ -272,7 +271,7 @@ class NewbbUserHandler
         if (class_exists('User_language')) {
             $handler = new User_language();
         } else {
-            $handler = new newbbUser();
+            $handler = new NewbbUser();
         }
         foreach (array_keys($this->users) as $uid) {
             $this->userlist[$uid] = $handler->getInfo($this->users[$uid]);

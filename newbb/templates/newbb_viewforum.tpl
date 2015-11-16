@@ -92,7 +92,7 @@
     <table class="outer" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
         <!-- irmtfan hardcode removed align="left" -->
         <tr class="head" class="align_left">
-            <td width="5%" colspan="2">
+            <td width="5%" colspan="3">
                 <{if $mode gt 1}>
                     <{$smarty.const._ALL}>:
                     <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');"/>
@@ -115,7 +115,7 @@
 
         <{if $sticky > 0}>
             <tr class="head">
-                <td colspan="2">&nbsp;</td>
+                <td colspan="3">&nbsp;</td>
                 <{if $rating_enable}>
                     <td colspan="7"><strong><{$smarty.const._MD_IMTOPICS}></strong></td>
                 <{else}>
@@ -130,7 +130,7 @@
 
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
             <tr class="head">
-                <td colspan="2">&nbsp;</td>
+                <td colspan="3">&nbsp;</td>
                 <{if $rating_enable}>
                     <td colspan="7"><strong><{$smarty.const._MD_NOTIMTOPICS}></strong></td>
                 <{else}>
@@ -140,6 +140,7 @@
         <{/if}>
         <tr class="<{cycle values="even,odd"}>">
             <!-- irmtfan add topic-read/topic-new smarty variable  -->
+
             <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
                 <{if $mode gt 1}>
                     <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"/>
@@ -147,10 +148,31 @@
                     <{$topic.topic_folder}>
                 <{/if}>
             </td>
+
+
             <td width="4%" align="center"><{$topic.topic_icon}></td>
+
+            <{*mamba: add digest icon*}>
+            <{*<{if $topic.topic_replies eq 1}>*}>
+            <{*<td width="4%" align="center">*}>
+            <{*<{$img_digest}>*}>
+            <{*</td>*}>
+            <{*<{/if}>*}>
+            <td width="4%" align="center">
+                <{if $topic.topic_digest eq 1}>
+                    <{$img_digest}>
+                <{/if}>
+            </td>
+
+
+            <{*<td width="4%" align="center">zzzz</td>*}>
+
+
             <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
                     <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
             </td>
+
+
             <td align="center" valign="middle"><{$topic.topic_poster}></td>
             <td align="center" valign="middle"><{$topic.topic_time}></td>
             <td align="center" valign="middle"><{$topic.topic_replies}></td>
@@ -233,7 +255,7 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
                 <{$rss_button}>
             </a>
-            <span style="font-size:0.7em;"><a href="http://xoops.org">NewBB Version  <{$version/100}></a></span>
+            <span style="font-size:0.7em;"><a href="http://xoops.org">NewBB Version <{$version/100}></a></span>
             <br style="clear: both;"/>
             <br/>
         <{/if}>

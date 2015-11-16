@@ -85,7 +85,7 @@ define('_AM_NEWBB_DELETE', 'Delete');
 define('_AM_NEWBB_ADD', 'Add');
 define('_AM_NEWBB_MOVE', 'Move');
 define('_AM_NEWBB_ORDER', 'Order');
-define('_AM_NEWBB_TWDAFAP', "Note: This will remove the forum and all posts in it.<br /><br />WARNING: Are you sure you want to delete this Forum?");
+define('_AM_NEWBB_TWDAFAP', 'Note: This will remove the forum and all posts in it.<br /><br />WARNING: Are you sure you want to delete this Forum?');
 define('_AM_NEWBB_FORUMREMOVED', 'Forum Removed.');
 define('_AM_NEWBB_CREATENEWFORUM', 'Create a New Forum');
 define('_AM_NEWBB_EDITTHISFORUM', 'Editing Forum:');
@@ -117,7 +117,7 @@ define('_AM_NEWBB_IMAGE', 'Image:');
 //define('_AM_NEWBB_SPONSORIMAGE', 'Sponsor Image:');
 define('_AM_NEWBB_SPONSORLINK', 'Sponsor Link:');
 define('_AM_NEWBB_DELCAT', 'Delete Category');
-define('_AM_NEWBB_WAYSYWTDTTAL', "Note: This will NOT remove the forums under the category, you must do that via the Edit Forum section.<br /><br />WARNING: Are you sure you want to delete this Category?");
+define('_AM_NEWBB_WAYSYWTDTTAL', 'Note: This will NOT remove the forums under the category, you must do that via the Edit Forum section.<br /><br />WARNING: Are you sure you want to delete this Category?');
 //%%%%%%        File Name  admin_forums.php           %%%%%
 define('_AM_NEWBB_FORUMNAME', 'Forum Name:');
 define('_AM_NEWBB_FORUMDESCRIPTION', 'Forum Description:');

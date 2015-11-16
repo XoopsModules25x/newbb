@@ -46,7 +46,7 @@ class Newbbtree extends XoopsTree
      * @param string $id_name
      * @param string $pid_name
      */
-    public function NewBBTree($table_name, $id_name = "post_id", $pid_name = "pid")
+    public function NewBBTree($table_name, $id_name = 'post_id', $pid_name = 'pid')
     {
         $this->XoopsTree($table_name, $id_name, $pid_name);
     }

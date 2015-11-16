@@ -123,24 +123,23 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function getPermission($type, $gperm_name = 'access', $id = 0)
     {
         global $xoopsModule;
-
+        $ret = false;
         if ($GLOBALS['xoopsUserIsAdmin'] && $xoopsModule->getVar('dirname') === 'newbb') {
-            return true;
+            $ret =  true;
         }
 
         $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
         if (!$groups) {
-            return false;
+            $ret =  false;
         }
         if (!$allowed_groups = & $this->getGroups("{$type}_{$gperm_name}", $id)) {
-            return false;
+            $ret =  false;
         }
 
         if (count(array_intersect($allowed_groups, $groups)) > 0) {
-            return true;
+            $ret =  true;
         }
-
-        return false;
+        return $ret;
     }
 
     /**
@@ -158,9 +157,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      * @param  string $perm_name
      * @return array
      */
-    public function getForums($perm_name = "access")
+    public function getForums($perm_name = 'access')
     {
-        $ret = $this->getAllowedItems("forum", "forum_{$perm_name}");
+        $ret = $this->getAllowedItems('forum', "forum_{$perm_name}");
 
         return $ret;
     }
@@ -206,7 +205,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function &getGroups($gperm_name, $id = 0)
     {
-        $_cachedPerms = $this->loadPermData($gperm_name);
+        $_cachedPerms =& $this->loadPermData($gperm_name);
         $groups       = empty($_cachedPerms[$id]) ? array() : array_unique($_cachedPerms[$id]);
         unset($_cachedPerms);
 
@@ -321,6 +320,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function _checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
     {
+        $ret = false;
         $criteria = new CriteriaCompo(new Criteria('gperm_modid', $gperm_modid));
         $criteria->add(new Criteria('gperm_name', $gperm_name));
         $gperm_itemid = (int)($gperm_itemid);
@@ -337,10 +337,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             $criteria->add(new Criteria('gperm_groupid', $gperm_groupid));
         }
         if ($this->getCount($criteria) > 0) {
-            return true;
+            $ret =  true;
         }
 
-        return false;
+        return $ret;
     }
 
     /**
@@ -363,7 +363,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
                 unset($mod);
             }
         }
-        if (is_callable(array(&$this->XoopsGroupPermHandler, "deleteRight"))) {
+        if (is_callable(array(&$this->XoopsGroupPermHandler, 'deleteRight'))) {
             return parent::deleteRight($perm, $itemid, $groupid, $mid);
         } else {
             $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));

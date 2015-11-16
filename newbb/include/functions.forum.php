@@ -123,7 +123,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);
         require_once($GLOBALS['xoops']->path('modules/newbb/class/tree.php'));
-        $tree        = new newbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
+        $tree        = new NewbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
         $forum_array = array();
         foreach (array_keys($forums_obj) as $key) {
             if (!$child = array_keys($tree->getAllChild($forums_obj[$key]->getVar('forum_id')))) {
@@ -172,7 +172,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);
         require_once($GLOBALS['xoops']->path('modules/newbb/class/tree.php'));
-        $tree        = new newbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
+        $tree        = new NewbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
         $forum_array = array();
         foreach (array_keys($forums_obj) as $key) {
             $parent_forum = $forums_obj[$key]->getVar('parent_forum');

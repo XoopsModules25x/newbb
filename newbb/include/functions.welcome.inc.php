@@ -59,7 +59,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     // Add core fields
     $categories[0]['cat_title'] = sprintf(_PROFILE_MA_ALLABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
     $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
-    if (!empty($avatar) && $avatar !== "blank.gif") {
+    if (!empty($avatar) && $avatar !== 'blank.gif') {
         $categories[0]['fields'][] = array('title' => _PROFILE_MA_AVATAR, 'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />");
         $weights[0][]              = 0;
     }

@@ -49,13 +49,13 @@ class NewbbIconHandler
     /**
      * prefix
      */
-    public $prefix = "";
+    public $prefix = '';
 
     /**
      * postfix, including extension
      */
     //var $postfix = ".gif";
-    public $postfix = ".png";
+    public $postfix = '.png';
 
     /**
      * images to be assigned to template
@@ -93,7 +93,7 @@ class NewbbIconHandler
      */
     // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir
     public function getPath(/*$set, */
-        $type, $dirname = "newbb", $default = "", $endDir = "images"
+        $type, $dirname = 'newbb', $default = '', $endDir = 'images'
     ) {
         static $paths;
         if (isset($paths[$endDir . '/' . $type])) {
@@ -112,7 +112,7 @@ class NewbbIconHandler
             ); // $theme_path {$default}
         }
         // END irmtfan add default for all pathes
-        $paths[$endDir . '/' . $type] = str_replace(XOOPS_ROOT_PATH, "", str_replace('\\', '/', $path));
+        $paths[$endDir . '/' . $type] = str_replace(XOOPS_ROOT_PATH, '', str_replace('\\', '/', $path));
 
         return $paths[$endDir . '/' . $type];
     }
@@ -124,14 +124,14 @@ class NewbbIconHandler
      * @param string $dirname
      */
     public function init(/*$set = "default", */
-        $language = "english", $dirname = "newbb"
+        $language = 'english', $dirname = 'newbb'
     ) {
         $this->forumImage = include $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
         $this->forumImage['icon']     = XOOPS_URL . $this->getPath(/*$set, */
-                "icon", $dirname) . "/";
+                'icon', $dirname) . '/';
         $this->forumImage['language'] = XOOPS_URL . $this->getPath(/*$set, */
-                "language/{$language}", $dirname, "language/english") . "/";
+                "language/{$language}", $dirname, 'language/english') . '/';
     }
 
     /**
@@ -139,7 +139,7 @@ class NewbbIconHandler
      * @param string $alt
      * @param string $extra
      */
-    public function setImage($image, $alt = "", $extra = "")
+    public function setImage($image, $alt = '', $extra = '')
     {
         if (!isset($this->images[$image])) {
             $imageSource = $this->getImageSource($image);
@@ -159,12 +159,12 @@ class NewbbIconHandler
     }
 
     /**
-     * @param        $image
-     * @param string $alt
-     * @param string $extra
+     * @param         $image
+     * @param  string $alt
+     * @param  string $extra
      * @return mixed
      */
-    public function getImage($image, $alt = "", $extra = "")
+    public function getImage($image, $alt = '', $extra = '')
     {
         $this->setImage($image, $alt, $extra);
 
@@ -172,16 +172,16 @@ class NewbbIconHandler
     }
 
     /**
-     * @param        $image
-     * @param string $alt
-     * @param string $extra
+     * @param         $image
+     * @param  string $alt
+     * @param  string $extra
      * @return string
      */
-    public function assignImage($image, $alt = "", $extra = "")
+    public function assignImage($image, $alt = '', $extra = '')
     {
         $this->setImage($image, $alt, $extra);
         // START hacked by irmtfan - improve function to CSS3 buttons - add alt and title attributes - use span instead of button to support IE7&8
-        $tag = "span";
+        $tag = 'span';
         if ($extra === "class='forum_icon'" && in_array(substr($image, 0, 2), array('t_', 'p_', 'up'))) {
             $extra = "class='forum_icon forum_button'";
         }

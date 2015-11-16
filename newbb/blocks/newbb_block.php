@@ -635,27 +635,27 @@ function b_newbb_edit($options)
 
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
-    if ($options[0] === "time") {
+    if ($options[0] === 'time') {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
     $form .= '</select>';
     $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>" . _MB_NEWBB_TIME_DESC . "</small>";
+    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
         $form .= " checked='checked'";
     }
-    $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
+    $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
     if (1 == $options[3]) {
         $form .= " checked='checked'";
     }
-    $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
+    $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
     if (2 == $options[3]) {
         $form .= " checked='checked'";
     }
-    $form .= " />&nbsp;" . _MB_NEWBB_DISPLAYMODE_LITE;
+    $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
     $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
     if (1 == $options[4]) {
@@ -721,7 +721,7 @@ function b_newbb_topic_edit($options)
     $form .= '</select>';
     $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>" . _MB_NEWBB_TIME_DESC . "</small>";
+    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
         $form .= " checked='checked'";
@@ -786,7 +786,7 @@ function b_newbb_post_edit($options)
     $form .= '</select>';
     $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . "</small>";
+    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
         $form .= " checked='checked'";
@@ -860,7 +860,7 @@ function b_newbb_author_edit($options)
     $form .= '</select>';
     $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
     $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . "</small>";
+    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
     $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
         $form .= " checked='checked'";

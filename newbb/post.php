@@ -237,7 +237,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new newbb_uploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
+        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
 
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
@@ -405,7 +405,7 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new newbb_uploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
+        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)($maxfilesize), (int)($GLOBALS['xoopsModuleConfig']['max_img_width']), (int)($GLOBALS['xoopsModuleConfig']['max_img_height']));
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
                 case 1:
@@ -446,13 +446,13 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
         $attachments_tmp = unserialize(base64_decode(XoopsRequest::getString('attachments_tmp', '', 'POST')));
     }
 
-    $p_subject = &$myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
+    $p_subject =& $myts->htmlSpecialChars($myts->stripSlashesGPC(XoopsRequest::getString('subject', '', 'POST')));
     $dosmiley  = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml    = XoopsRequest::getInt('dohtml', 0, 'POST');
     $doxcode   = XoopsRequest::getInt('doxcode', 0, 'POST');
     $dobr      = XoopsRequest::getInt('dobr', 0, 'POST');
     $p_message = XoopsRequest::getString('message', '', 'POST');
-    $p_message = &$myts->previewTarea($p_message, $dohtml, $dosmiley, $doxcode, 1, $dobr);
+    $p_message =& $myts->previewTarea($p_message, $dohtml, $dosmiley, $doxcode, 1, $dobr);
     $p_date    = formatTimestamp(time());
     if ($post_obj->isNew()) {
         if (is_object($GLOBALS['xoopsUser'])) {

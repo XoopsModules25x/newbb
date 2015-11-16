@@ -215,7 +215,7 @@ switch ($op) {
     case 'addforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, _AM_NEWBB_CREATENEWFORUM);
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWFORUM . '</legend>';
-        echo "<br />";
+        echo '<br />';
         $parent_forum = XoopsRequest::getInt('forum', 0, 'GET');
         $cat_id       = XoopsRequest::getInt('cat_id', 0, 'GET');
         if (!$parent_forum && !$cat_id) {
@@ -283,16 +283,16 @@ switch ($op) {
             $i = 0;
             foreach (array_keys($forums[$c]) as $f) {
                 $forum        = $forums[$c][$f];
-                $f_link       = $forum["prefix"] . "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar("dirname", "n") . "/viewforum.php?forum=" . $f . "\">" . $forum["forum_name"] . '</a>';
+                $f_link       = $forum['prefix'] . "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewforum.php?forum=' . $f . "\">" . $forum['forum_name'] . '</a>';
                 $f_edit_link  = "<a href=\"admin_forum_manager.php?op=mod&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_edit', _AM_NEWBB_EDIT) . '</a>';
                 $f_del_link   = "<a href=\"admin_forum_manager.php?op=del&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_delete', _AM_NEWBB_DELETE) . '</a>';
-                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . "&forum=" . $f . "\">" . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . '</a>';
+                $sf_add_link  = "<a href=\"admin_forum_manager.php?op=addforum&amp;cat_id=" . $c . '&forum=' . $f . "\">" . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . '</a>';
                 $f_move_link  = "<a href=\"admin_forum_manager.php?op=moveforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_move', _AM_NEWBB_MOVE) . '</a>';
                 $f_merge_link = "<a href=\"admin_forum_manager.php?op=mergeforum&amp;forum=" . $f . "\">" . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . '</a>';
 
-                $class = (($i++) % 2) ? "odd" : "even";
+                $class = (($i++) % 2) ? 'odd' : 'even';
                 $echo .= "<tr class='" . $class . "' align='left'><td></td>";
-                $echo .= "<td><strong>" . $f_link . "</strong></td>";
+                $echo .= '<td><strong>' . $f_link . '</strong></td>';
                 $echo .= "<td align='center'>" . $f_edit_link . '</td>';
                 $echo .= "<td align='center'>" . $f_del_link . '</td>';
                 $echo .= "<td align='center'>" . $sf_add_link . '</td>';

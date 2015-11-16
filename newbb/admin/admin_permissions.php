@@ -149,7 +149,7 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
     public function _renderOptionTree(&$tree, $option, $prefix, array $parentIds = array())
     {
         if ($option['id'] > 0) {
-            $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
+            $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
             foreach ($parentIds as $pid) {
                 if ($pid <= 0) {
                     continue;
@@ -165,9 +165,9 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
             if (in_array($option['id'], $this->_value)) {
                 $tree .= ' checked="checked"';
             }
-            $tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $this->getName() . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $this->getName() . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
+            $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $this->getName() . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $this->getName() . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
         } else {
-            $tree .= $prefix . $option['name'] . "<input type=\"hidden\" id=\"" . $this->getName() . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" /><br />\n";
+            $tree .= $prefix . $option['name'] . "<input type=\"hidden\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br />\n";
         }
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
@@ -222,10 +222,10 @@ switch ($action) {
                 $checked      = in_array('forum_' . $perm, $selected) ? " checked='checked'" : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant("_AM_NEWBB_CAN_" . strtoupper($perm)) . '<br></td>';
+                $ret_ele .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . strtoupper($perm)) . '<br></td>';
             }
             $ret_ele .= '</tr></table></td><td class="even">';
-            $ret_ele .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(", ", $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
+            $ret_ele .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
             $ret_ele .= '</td></tr></table>';
             $ret_ele .= '</td></tr>';
             $elements[] = $ret_ele;
@@ -371,7 +371,7 @@ switch ($action) {
 
         $perm_desc = '';
 
-        $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]["anonymous"]);
+        $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
         $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));

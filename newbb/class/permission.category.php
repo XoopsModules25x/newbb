@@ -54,7 +54,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
             return false;
         }
         $gpermHandler =& xoops_gethandler('groupperm');
-        $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS["xoopsModule"]->getVar('mid')));
+        $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $criteria->add(new Criteria('gperm_name', 'category_access'));
         $criteria->add(new Criteria('gperm_itemid', $cat_id));
 
@@ -68,26 +68,26 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function setCategoryPermission($category, array $groups = array())
     {
-        if (is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname") === "newbb") {
-            $mid = $GLOBALS["xoopsModule"]->getVar("mid");
+        if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+            $mid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
             $module_handler =& xoops_gethandler('module');
             $newbb          =& $module_handler->getByDirname('newbb');
-            $mid            = $newbb->getVar("mid");
+            $mid            = $newbb->getVar('mid');
         }
         if (empty($groups)) {
             $memberHandler =& xoops_gethandler('member');
             $glist         = $memberHandler->getGroupList();
             $groups        = array_keys($glist);
         }
-        $ids     = $this->getGroupIds("category_access", $category, $mid);
+        $ids     = $this->getGroupIds('category_access', $category, $mid);
         $ids_add = array_diff($groups, $ids);
         $ids_rmv = array_diff($ids, $groups);
         foreach ($ids_add as $group) {
-            $this->addRight("category_access", $category, $group, $mid);
+            $this->addRight('category_access', $category, $group, $mid);
         }
         foreach ($ids_rmv as $group) {
-            $this->deleteRight("category_access", $category, $group, $mid);
+            $this->deleteRight('category_access', $category, $group, $mid);
         }
 
         return true;

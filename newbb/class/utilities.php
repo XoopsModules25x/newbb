@@ -9,8 +9,8 @@ class NewbbUtilities
      * Verify that a mysql table exists
      *
      * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
+     * @author        HervÃ© Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) HervÃ© Thouzard
      * @param $tablename
      * @return bool
      */
@@ -26,8 +26,8 @@ class NewbbUtilities
      * Verify that a field exists inside a mysql table
      *
      * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
+     * @author        HervÃ© Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) HervÃ© Thouzard
      * @param $fieldname
      * @param $table
      * @return bool
@@ -44,8 +44,8 @@ class NewbbUtilities
      * Add a field to a mysql table
      *
      * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
+     * @author        HervÃ© Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) HervÃ© Thouzard
      * @param $field
      * @param $table
      * @return

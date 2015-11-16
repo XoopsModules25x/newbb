@@ -131,10 +131,10 @@ class NewbbReadHandler extends ArtObjectHandler
 
         /* for MySQL 4.1+ */
         if ($this->mysql_major_version() >= 4) {
-            $sql = "DELETE bb FROM " . $this->table . " AS bb" . " LEFT JOIN " . $this->table . " AS aa ON bb.read_item = aa.read_item " . " WHERE aa.post_id > bb.post_id";
+            $sql = 'DELETE bb FROM ' . $this->table . ' AS bb' . ' LEFT JOIN ' . $this->table . ' AS aa ON bb.read_item = aa.read_item ' . ' WHERE aa.post_id > bb.post_id';
         } else {
             // for 4.0+
-            $sql = 'DELETE ' . $this->table . ' FROM ' . $this->table . ' LEFT JOIN ' . $this->table . " AS aa ON " . $this->table . ".read_item = aa.read_item " . " WHERE aa.post_id > " . $this->table . ".post_id";
+            $sql = 'DELETE ' . $this->table . ' FROM ' . $this->table . ' LEFT JOIN ' . $this->table . ' AS aa ON ' . $this->table . '.read_item = aa.read_item ' . ' WHERE aa.post_id > ' . $this->table . '.post_id';
         }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -146,7 +146,7 @@ class NewbbReadHandler extends ArtObjectHandler
         }
         // irmtfan move here and rephrase
         $expire = time() - (int)($this->lifetime);
-        $sql    = "DELETE FROM " . $this->table . " WHERE read_time < " . $expire;
+        $sql    = 'DELETE FROM ' . $this->table . ' WHERE read_time < ' . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
             return false;
@@ -256,7 +256,7 @@ class NewbbReadHandler extends ArtObjectHandler
             }
         }
 
-        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)($post_id) . ',' . '     read_time =' . time() . ' WHERE read_item = ' . (int)($read_item) . "     AND uid = " . (int)($uid);
+        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)($post_id) . ',' . '     read_time =' . time() . ' WHERE read_item = ' . (int)($read_item) . '     AND uid = ' . (int)($uid);
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }

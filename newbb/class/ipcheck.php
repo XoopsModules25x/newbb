@@ -5,7 +5,7 @@
 /**
  * Class IpCheck
  */
-class ipcheck
+class IpCheck
 {
     public $ipin;
     public $ipout;
@@ -30,7 +30,7 @@ class ipcheck
         if (filter_var($this->ipin, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
 
             // Look for embedded IPv4 in an embedded IPv6 address, where FFFF is appended.
-            if (strpos($this->ipin, "::FFFF:") === 0) {
+            if (strpos($this->ipin, '::FFFF:') === 0) {
                 $ipv4addr = substr($this->ipin, 7);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;
@@ -38,7 +38,7 @@ class ipcheck
                 }
 
                 // Look for an IPv4 address embedded as ::x.x.x.x
-            } elseif (strpos($this->ipin, "::") === 0) {
+            } elseif (strpos($this->ipin, '::') === 0) {
                 $ipv4addr = substr($this->ipin, 2);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;
@@ -61,12 +61,11 @@ class ipcheck
      */
     public function isValidIpAddress($ip)
     {
+        $value = 0;
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             $value = 'A';
         } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             $value = 'AAAA';
-        } else {
-            $value = 0;
         }
 
         return $value;

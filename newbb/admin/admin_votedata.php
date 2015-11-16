@@ -39,7 +39,7 @@ switch ($op) {
         $sql      = $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE ratingid = $rid");
         $GLOBALS['xoopsDB']->query($sql);
 
-        $query       = "select rating FROM " . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
+        $query       = 'select rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
@@ -48,7 +48,7 @@ switch ($op) {
         }
         $finalrating = $totalrating / $votesDB;
         $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf("UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
+        $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
         $GLOBALS['xoopsDB']->queryF($sql);
 
         redirect_header('admin_votedata.php', 1, _AM_NEWBB_VOTEDELETED);

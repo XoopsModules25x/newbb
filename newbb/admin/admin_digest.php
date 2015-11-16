@@ -72,13 +72,13 @@ switch ($op) {
         $digests       =& $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
-            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", "<br />", $digest['digest_content']) . '</td>';
+            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", '<br />', $digest['digest_content']) . '</td>';
             echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' /></td>";
             echo '</tr>';
             echo "<tr colspan='2'><td height='2'></td></tr>";
         }
         $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
-        echo "<tr colspan='2'><td align='center'>" . $submit->render() . "</td></tr>";
+        echo "<tr colspan='2'><td align='center'>" . $submit->render() . '</td></tr>';
         $hidden = new XoopsFormHidden('op', 'delete');
         echo $hidden->render();
         $hidden = new XoopsFormHidden('item', $item);

@@ -165,14 +165,14 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $folderHandler->delete($imagesDirectory);
 
         //remove old changelogs
-        array_map('unlink', glob(dirname(__DIR__) ."/docs/changelog-rev*.txt"));
+        array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
 
 //        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
 //        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
 //        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
     }
 
-    if (!empty($newbbConfig["syncOnUpdate"])) {
+    if (!empty($newbbConfig['syncOnUpdate'])) {
         mod_loadFunctions('recon', 'newbb');
         newbb_synchronization();
     }
@@ -195,7 +195,7 @@ function xoops_module_pre_update_newbb(XoopsModule $module)
  */
 function xoops_module_pre_install_newbb(XoopsModule $module)
 {
-    $mod_tables = $module->getInfo('tables');
+    $mod_tables =& $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }

@@ -12,7 +12,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
 /**
@@ -25,7 +25,7 @@ class NewbbUserstats extends ArtObject
      */
     public function __construct()
     {
-        parent::__construct("bb_user_stats");
+        parent::__construct('bb_user_stats');
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('user_topics', XOBJ_DTYPE_INT);
         $this->initVar('user_digests', XOBJ_DTYPE_INT);
@@ -101,7 +101,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         if (empty($id)) {
             return null;
         }
-        $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->keyName . " = " . (int)($id);
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->keyName . ' = ' . (int)($id);
         if (!$result = $this->db->query($sql)) {
             return null;
         }

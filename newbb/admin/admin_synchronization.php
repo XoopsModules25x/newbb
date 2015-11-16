@@ -167,7 +167,7 @@ $form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
 $form .= '</div>';
 $form .= '</form>';
 
-$form .= "</fieldset>";
+$form .= '</fieldset>';
 
 echo $form;
 xoops_cp_footer();

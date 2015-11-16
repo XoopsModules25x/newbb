@@ -31,7 +31,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 newbb_load_object();
 
 /**
@@ -44,7 +44,7 @@ class Nrate extends ArtObject
      */
     public function __construct()
     {
-        parent::__construct("bb_votedata");
+        parent::__construct('bb_votedata');
         $this->initVar('ratingid', XOBJ_DTYPE_INT);
         $this->initVar('topic_id', XOBJ_DTYPE_INT);
         $this->initVar('ratinguser', XOBJ_DTYPE_INT);
@@ -69,7 +69,7 @@ class NewbbRateHandler extends ArtObjectHandler
 
     public function synchronization()
     {
-        return;
+//        return;
     }
 
     /**
@@ -79,6 +79,6 @@ class NewbbRateHandler extends ArtObjectHandler
      */
     public function cleanOrphan()
     {
-        return parent::cleanOrphan($this->db->prefix("bb_topics"), "topic_id");
+        return parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id');
     }
 }

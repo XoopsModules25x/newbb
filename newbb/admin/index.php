@@ -282,7 +282,7 @@ switch ($op) {
             echo '</fieldset><br />';
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_REPORT . '</legend>';
             echo "<div style='padding: 12px;'><a href='admin_report.php'>" . _AM_NEWBB_REPORT_PENDING . '</a> <strong>' . $reportHandler->getCount(new Criteria('report_result', 0)) . '</strong> | ';
-            echo _AM_NEWBB_REPORT_PROCESSED . " <strong>" . $reportHandler->getCount(new Criteria('report_result', 1)) . '</strong>';
+            echo _AM_NEWBB_REPORT_PROCESSED . ' <strong>' . $reportHandler->getCount(new Criteria('report_result', 1)) . '</strong>';
             echo '</div>';
             echo '</fieldset><br />';
 
@@ -291,7 +291,7 @@ switch ($op) {
                 echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_DIGEST . '</legend>';
                 $due    = ($digestHandler->checkStatus()) / 60; // minutes
                 $prompt = ($due > 0) ? sprintf(_AM_NEWBB_DIGEST_PAST, $due) : sprintf(_AM_NEWBB_DIGEST_NEXT, abs($due));
-                echo "<div style='padding: 12px;'><a href='index.php?op=senddigest'>" . $prompt . "</a> | ";
+                echo "<div style='padding: 12px;'><a href='index.php?op=senddigest'>" . $prompt . '</a> | ';
                 echo "<a href='admin_digest.php'>" . _AM_NEWBB_DIGEST_ARCHIVE . '</a> <strong>' . $digestHandler->getDigestCount() . '</strong>';
                 echo '</div>';
                 echo '</fieldset><br />';
@@ -376,8 +376,8 @@ switch ($op) {
             <a class='tooltip' href='admin_groupmod.php' title='" . _MI_NEWBB_ADMENU_GROUPMOD . "'><img src='" . XOOPS_URL . "/modules/newbb/assets/images/menu/groupmod.png' /><span>" . _MI_NEWBB_ADMENU_GROUPMOD . "</span></a>
             <a class='tooltip' href='admin_blocks.php' title='" . _MI_NEWBB_ADMENU_BLOCK . "'><img src='" . XOOPS_URL . "/modules/newbb/assets/images/menu/blocks.png' /><span>" . _MI_NEWBB_ADMENU_BLOCK . "</span></a>
             <a class='tooltip' href='admin_synchronization.php' title='" . _MI_NEWBB_ADMENU_SYNC . "'><img src='" . XOOPS_URL . "/modules/newbb/assets/images/menu/synchronization.png' /><span>" . _MI_NEWBB_ADMENU_SYNC . "</span></a>
-            <a class='tooltip' href='about.php' title='" . _MI_NEWBB_ADMENU_ABOUT . "'><img src='" . XOOPS_URL . "/modules/newbb/assets/images/menu/about.png' /><span>" . _MI_NEWBB_ADMENU_ABOUT . "</span></a>
-        </div>";
+            <a class='tooltip' href='about.php' title='" . _MI_NEWBB_ADMENU_ABOUT . "'><img src='" . XOOPS_URL . "/modules/newbb/assets/images/menu/about.png' /><span>" . _MI_NEWBB_ADMENU_ABOUT . '</span></a>
+        </div>';
             echo '</td>';
             echo '</tr></table>';
             echo '<br /><br />';

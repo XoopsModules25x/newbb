@@ -958,7 +958,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             }
             /* delete pending post directly */
         } else {
-            $sql = sprintf("DELETE FROM %s WHERE post_id = %u", $this->db->prefix('bb_posts'), $post->getVar('post_id'));
+            $sql = sprintf('DELETE FROM %s WHERE post_id = %u', $this->db->prefix('bb_posts'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('delete post error: ' . $sql);
 
@@ -966,7 +966,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             }
             $post->deleteAttachment();
 
-            $sql = sprintf("DELETE FROM %s WHERE post_id = %u", $this->db->prefix('bb_posts_text'), $post->getVar('post_id'));
+            $sql = sprintf('DELETE FROM %s WHERE post_id = %u', $this->db->prefix('bb_posts_text'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('Could not remove post text: ' . $sql);
 
@@ -994,21 +994,21 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
                     // END irmtfan poll_module
                 }
 
-                $sql = sprintf("DELETE FROM %s WHERE topic_id = %u", $this->db->prefix('bb_topics'), $post->getVar('topic_id'));
+                $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->db->prefix('bb_topics'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
-                $sql = sprintf("DELETE FROM %s WHERE topic_id = %u", $this->db->prefix('bb_votedata'), $post->getVar('topic_id'));
+                $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->db->prefix('bb_votedata'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
             }
         } else {
-            $sql = 'UPDATE ' . $this->db->prefix('bb_topics') . " t
-                            LEFT JOIN " . $this->db->prefix("bb_posts") . " p ON p.topic_id = t.topic_id
+            $sql = 'UPDATE ' . $this->db->prefix('bb_topics') . ' t
+                            LEFT JOIN ' . $this->db->prefix('bb_posts') . ' p ON p.topic_id = t.topic_id
                             SET t.topic_last_post_id = p.post_id
-                            WHERE t.topic_last_post_id = " . $post->getVar('post_id') . "
-                                    AND p.post_id = (SELECT MAX(post_id) FROM " . $this->db->prefix("bb_posts") . " WHERE topic_id=t.topic_id)";
+                            WHERE t.topic_last_post_id = ' . $post->getVar('post_id') . '
+                                    AND p.post_id = (SELECT MAX(post_id) FROM ' . $this->db->prefix('bb_posts') . ' WHERE topic_id=t.topic_id)';
             if (!$result = $this->db->queryF($sql)) {
             }
         }
@@ -1052,7 +1052,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             return parent::getCount($criteria);
         }
 
-        $sql = 'SELECT COUNT(*) as count' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . " AS t ON t.post_id = p.post_id";
+        $sql = 'SELECT COUNT(*) as count' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' AS t ON t.post_id = p.post_id';
         // LEFT JOIN
         $sql .= $join;
         // WHERE
@@ -1082,7 +1082,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     public function &getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
     {
         $ret = array();
-        $sql = 'SELECT p.*, t.* ' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . " AS t ON t.post_id = p.post_id";
+        $sql = 'SELECT p.*, t.* ' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' AS t ON t.post_id = p.post_id';
         if (!empty($join)) {
             $sql .= $join;
         }

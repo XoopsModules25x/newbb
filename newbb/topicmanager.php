@@ -193,7 +193,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             $topicHandler->insert($topic_obj, true);
             $topic_obj->loadFilters('update');
 
-            $sql = sprintf("UPDATE %s SET forum_id = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('bb_posts'), $newforum, $topic_id);
+            $sql = sprintf('UPDATE %s SET forum_id = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
                 return false;
             }
@@ -286,7 +286,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo "<input type='hidden' name='topic_id' value='" . $topic_id . "' />";
     echo "<input type='hidden' name='forum' value='" . $forum . "' />";
     echo "<input type='submit' name='submit' value='" . $action[$mode]['submit'] . "' />";
-    echo "</td></tr></form></table></td></tr></table>";
+    echo '</td></tr></form></table></td></tr></table>';
 }
 // irmtfan move to footer.php
 include_once __DIR__ . '/footer.php';

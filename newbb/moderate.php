@@ -224,7 +224,7 @@ if (newbb_isAdmin()) {
     $forumSel .= newbb_forumSelectBox($forum_id, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = true
     $forumSel .= '</select>';
     $forumEle                         = new XoopsFormLabel(_MD_SELFORUM, $forumSel);
-    $forumEle->customValidationCode[] = "if (document.suspend.forum.value < 0) {return false;} ";
+    $forumEle->customValidationCode[] = 'if (document.suspend.forum.value < 0) {return false;} ';
     $forum_form->addElement($forumEle);
 } else {
     $forum_form->addElement(new XoopsFormHidden('forum', $forum_id));

@@ -28,11 +28,11 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 require_once $GLOBALS['xoops']->path('class/tree.php');
 
-if (!class_exists("newbbObjectTree")) {
+if (!class_exists('NewbbObjectTree')) {
     /**
-     * Class newbbObjectTree
+     * Class NewbbObjectTree
      */
-    class newbbObjectTree extends XoopsObjectTree
+    class NewbbObjectTree extends XoopsObjectTree
     {
         /**
          * @param      $objectArr
@@ -40,7 +40,7 @@ if (!class_exists("newbbObjectTree")) {
          */
         public function __construct(&$objectArr, $rootId = null)
         {
-            parent::__construct($objectArr, "forum_id", "parent_forum", $rootId);
+            parent::__construct($objectArr, 'forum_id', 'parent_forum', $rootId);
         }
 
         /**
@@ -64,9 +64,9 @@ if (!class_exists("newbbObjectTree")) {
                         $ret[$key][$tag] = $this->_tree[$key]['obj']->getVar($tag);
                     }
                 } else {
-                    $ret[$key]["forum_name"] = $this->_tree[$key]['obj']->getVar("forum_name");
+                    $ret[$key]['forum_name'] = $this->_tree[$key]['obj']->getVar('forum_name');
                 }
-                $ret[$key]["prefix"] = $prefix_curr;
+                $ret[$key]['prefix'] = $prefix_curr;
                 $prefix_curr .= $prefix_orig;
             }
             if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
@@ -116,7 +116,7 @@ if (!class_exists("newbbObjectTree")) {
             if (!empty($addEmptyOption)) {
                 $ret .= '<option value="0">' . (is_string($EmptyOption) ? $EmptyOption : '') . '</option>';
             }
-            $this->_makeSelBoxOptions("forum_name", $selected, $key, $ret, $prefix);
+            $this->_makeSelBoxOptions('forum_name', $selected, $key, $ret, $prefix);
             $ret .= '</select>';
 
             return $ret;
@@ -189,7 +189,7 @@ if (!class_exists("newbbObjectTree")) {
                                 $ret['child'][$childkey][$tag] = $this->_tree[$childkey]['obj']->getVar($tag);
                             }
                         } else {
-                            $ret['child'][$childkey]["forum_name"] = $this->_tree[$childkey]['obj']->getVar("forum_name");
+                            $ret['child'][$childkey]['forum_name'] = $this->_tree[$childkey]['obj']->getVar('forum_name');
                         }
                     }
 

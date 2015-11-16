@@ -21,9 +21,9 @@
 
 /**
  * Function to a list of user names associated with their user IDs
- * @param      $uid
- * @param int  $usereal
- * @param bool $linked
+ * @param        $uid
+ * @param  int   $usereal
+ * @param  bool  $linked
  * @return array
  */
 function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
@@ -35,9 +35,9 @@ function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
 }
 
 /**
- * @param      $uid
- * @param int  $usereal
- * @param bool $linked
+ * @param         $uid
+ * @param  int    $usereal
+ * @param  bool   $linked
  * @return string
  */
 function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
@@ -49,7 +49,7 @@ function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
 
 // Adapted from PMA_getIp() [phpmyadmin project]
 /**
- * @param bool $asString
+ * @param  bool  $asString
  * @return mixed
  */
 function newbb_getIP($asString = false)
@@ -57,13 +57,14 @@ function newbb_getIP($asString = false)
     xoops_load('xoopsuserutility');
 
     return XoopsUserUtility::getIP($asString);
+//    return '2001:cdba:0000:0000:0000:0000:3257:9652'; //for testing
 }
 
 /**
  * Function to check if a user is an administrator of the module
  *
- * @param int $user
- * @param int $mid
+ * @param  int  $user
+ * @param  int  $mid
  * @return bool
  */
 function newbb_isAdministrator($user = -1, $mid = 0)
@@ -79,7 +80,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
     $uid = (is_object($user)) ? $user->getVar('uid') : (int)($user);
 
     if (!$mid) {
-        if (is_object($xoopsModule) && 'newbb' == $xoopsModule->getVar('dirname', 'n')) {
+        if (is_object($xoopsModule) && 'newbb' === $xoopsModule->getVar('dirname', 'n')) {
             $mid = $xoopsModule->getVar('mid', 'n');
         } else {
             $modhandler   =& xoops_gethandler('module');
@@ -104,8 +105,8 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 /**
  * Function to check if a user is a moderator of a forum
  *
- * @param     $forum
- * @param int $user
+ * @param       $forum
+ * @param  int  $user
  * @return bool
  */
 function newbb_isModerator(&$forum, $user = -1)
@@ -133,7 +134,7 @@ function newbb_isModerator(&$forum, $user = -1)
 /**
  * Function to check if a user has moderation permission over a forum
  *
- * @param int $forum
+ * @param  int  $forum
  * @return bool
  */
 function newbb_isAdmin($forum = 0)
@@ -167,7 +168,7 @@ function newbb_isAdmin($forum = 0)
 
 /* use hardcoded DB query to save queries */
 /**
- * @param array $uid
+ * @param  array $uid
  * @return array
  */
 function newbb_isModuleAdministrators(array $uid = array())
@@ -180,7 +181,7 @@ function newbb_isModuleAdministrators(array $uid = array())
     }
     $mid = $xoopsModule->getVar('mid');
 
-    $sql = "SELECT COUNT(l.groupid) AS count, l.uid FROM " . $GLOBALS['xoopsDB']->prefix('groups_users_link') . ' AS l' . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' AS p ON p.gperm_groupid=l.groupid' . ' WHERE l.uid IN (' . implode(', ', array_map('intval', $uid)) . ')' . "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" . (int)($mid) . "'" . ' GROUP BY l.uid';
+    $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM ' . $GLOBALS['xoopsDB']->prefix('groups_users_link') . ' AS l' . ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' AS p ON p.gperm_groupid=l.groupid' . ' WHERE l.uid IN (' . implode(', ', array_map('intval', $uid)) . ')' . "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" . (int)($mid) . "'" . ' GROUP BY l.uid';
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             if (!empty($myrow['count'])) {
@@ -194,8 +195,8 @@ function newbb_isModuleAdministrators(array $uid = array())
 
 /* use hardcoded DB query to save queries */
 /**
- * @param array $uid
- * @param int   $mid
+ * @param  array $uid
+ * @param  int   $mid
  * @return array
  */
 function newbb_isForumModerators(array $uid = array(), $mid = 0)

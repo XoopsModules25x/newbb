@@ -73,7 +73,7 @@ if ($newXoopsModuleGui) {
     if ($versioninfo->getInfo('author_website_url') !== '') {
         echo '<tr>';
         echo "<td class='head' width='150px' align='left'>" . _AM_NEWBB_AUTHOR_WEBSITE . '</td>';
-        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('author_website_url') . "' target='_blank'>" . $versioninfo->getInfo('author_website_name') . "</a></td>";
+        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('author_website_url') . "' target='_blank'>" . $versioninfo->getInfo('author_website_name') . '</a></td>';
         echo '</tr>';
     }
     if ($versioninfo->getInfo('author_email') !== '') {
@@ -108,14 +108,14 @@ if ($newXoopsModuleGui) {
     if ($versioninfo->getInfo('demo_site_url') !== '') {
         echo '<tr>';
         echo "<td class='head' align='left'>" . _AM_NEWBB_MODULE_DEMO . '</td>';
-        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('demo_site_url') . "' target='blank'>" . $versioninfo->getInfo('demo_site_name') . "</a></td>";
+        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('demo_site_url') . "' target='blank'>" . $versioninfo->getInfo('demo_site_name') . '</a></td>';
         echo '</tr>';
     }
 
     if ($versioninfo->getInfo('support_site_url') !== '') {
         echo '<tr>';
         echo "<td class='head' align='left'>" . _AM_NEWBB_MODULE_SUPPORT . '</td>';
-        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('support_site_url') . "' target='blank'>" . $versioninfo->getInfo('support_site_name') . "</a></td>";
+        echo "<td class='even' align='left'><a href='" . $versioninfo->getInfo('support_site_url') . "' target='blank'>" . $versioninfo->getInfo('support_site_name') . '</a></td>';
         echo '</tr>';
     }
 

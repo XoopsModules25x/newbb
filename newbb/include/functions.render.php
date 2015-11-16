@@ -27,7 +27,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      */
     function newbb_htmlspecialchars(&$text)
     {
-        return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text));
+        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), htmlspecialchars($text));
     }
 
     /**
@@ -57,14 +57,14 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
             // decode xcode
             if ($image !== 0) {
                 // image allowed
-                $text = &$myts->xoopsCodeDecode($text);
+                $text =& $myts->xoopsCodeDecode($text);
             } else {
                 // image not allowed
-                $text = &$myts->xoopsCodeDecode($text, 0);
+                $text =& $myts->xoopsCodeDecode($text, 0);
             }
         }
         if ($br !== 0) {
-            $text = &$myts->nl2Br($text);
+            $text =& $myts->nl2Br($text);
         }
         $text = $myts->codeConv($text, $xcode, $image);    // Ryuji_edit(2003-11-18)
 

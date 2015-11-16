@@ -70,7 +70,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     {
         parent::__construct($db, 'topic');
         $newbbConfig           = newbbLoadConfig();
-        $this->items_per_forum = isset($newbbConfig["read_items"]) ? (int)($newbbConfig["read_items"]) : 100;
+        $this->items_per_forum = isset($newbbConfig['read_items']) ? (int)($newbbConfig['read_items']) : 100;
     }
 
     /**
@@ -170,14 +170,14 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $criteria_topic->setSort('topic_last_post_id');
         $criteria_topic->setOrder('DESC');
         $criteria_topic->setLimit($this->items_per_forum);
-        $criteria_sticky = new CriteriaCompo(new Criteria("forum_id", $forum_id));
-        $criteria_sticky->add(new Criteria("topic_sticky", 1));
+        $criteria_sticky = new CriteriaCompo(new Criteria('forum_id', $forum_id));
+        $criteria_sticky->add(new Criteria('topic_sticky', 1));
 
         if (empty($status)) {
             $items_id  = $itemHandler->getIds($criteria_topic);
             $sticky_id = $itemHandler->getIds($criteria_sticky);
             $items     = $items_id + $sticky_id;
-            $criteria  = new CriteriaCompo(new Criteria("uid", $uid));
+            $criteria  = new CriteriaCompo(new Criteria('uid', $uid));
             $criteria->add(new Criteria('read_item', '(' . implode(', ', $items) . ')', 'IN'));
             $this->deleteAll($criteria, true);
 
@@ -201,6 +201,6 @@ class NewbbReadtopicHandler extends NewbbReadHandler
 
     public function synchronization()
     {
-        return;
+//        return;
     }
 }

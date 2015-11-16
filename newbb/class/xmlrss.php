@@ -12,13 +12,13 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("NEWBB_FUNCTIONS_INI") || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-load_functions("locale");
+defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+load_functions('locale');
 
 /**
  * Description
  *
- * @param type $var description
+ * @param  type $var description
  * @return type description
  * @link
  */
@@ -74,11 +74,11 @@ class Xmlrss
     }
 
     /**
-     * @param        $title
-     * @param        $link
-     * @param string $description
-     * @param string $label
-     * @param int    $pubdate
+     * @param         $title
+     * @param         $link
+     * @param  string $description
+     * @param  string $label
+     * @param  int    $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)
@@ -103,14 +103,14 @@ class Xmlrss
     }
 
     /**
-     * @param     $text
-     * @param int $trim
+     * @param               $text
+     * @param  int          $trim
      * @return mixed|string
      */
     public function cleanup($text, $trim = 0)
     {
-        if (strtolower($this->xml_encoding) === "utf-8" && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
-            $text = XoopsLocal::convert_encoding($text, "utf-8");
+        if (strtolower($this->xml_encoding) === 'utf-8' && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
+            $text = XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {
             $text = xoops_substr($text, 0, (int)($trim));

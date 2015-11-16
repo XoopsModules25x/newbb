@@ -117,7 +117,7 @@ switch ($op) {
         } else {
             echo $indexAdmin->addNavigation('admin_cat_manager.php');
         }
-        echo "<br />";
+        echo '<br />';
         editCategory($category_obj);
         break;
 

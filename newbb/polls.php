@@ -137,7 +137,7 @@ switch ($op) {
                 $option_tray->addElement($option_text);
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
-                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" . $GLOBALS['xoopsModuleConfig']["poll_module"] . "/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
+                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" . $GLOBALS['xoopsModuleConfig']['poll_module'] . "/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
                 $color_label = new XoopsFormLabel('', "<img src='" . XOOPS_URL . '/modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/' . $current_bar . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br />");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);

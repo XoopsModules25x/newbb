@@ -222,7 +222,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         if (!empty($var) && is_string($var)) {
             $tags = array($var);
         }
-        if (!$topic_obj = parent::get($id, $tags)) {
+        if (!$topic_obj =& parent::get($id, $tags)) {
             return $ret;
         }
         $ret =& $topic_obj;
@@ -249,7 +249,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
-            if ($tag_handler = tag_getTagHandler()) {
+            if ($tag_handler =& tag_getTagHandler()) {
                 $tag_handler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
         }
@@ -378,9 +378,9 @@ class NewbbTopicHandler extends ArtObjectHandler
     {
         $post = null;
         $sql  = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p,
-            ' . $this->db->prefix('bb_posts_text') . " t
+            ' . $this->db->prefix('bb_posts_text') . ' t
             WHERE
-            p.topic_id = " . $topic_id . ' AND p.pid = 0
+            p.topic_id = ' . $topic_id . ' AND p.pid = 0
             AND t.post_id = p.post_id';
 
         $result = $this->db->query($sql);
@@ -664,10 +664,10 @@ class NewbbTopicHandler extends ArtObjectHandler
         $last_post     = max($post_ids);
         $top_post      = min($post_ids);
         $topic_replies = count($post_ids) - 1;
-        if ($object->getVar('topic_last_post_id') !== $last_post) {
+        if ($object->getVar('topic_last_post_id') != $last_post) {
             $object->setVar('topic_last_post_id', $last_post);
         }
-        if ($object->getVar('topic_replies') !== $topic_replies) {
+        if ($object->getVar('topic_replies') != $topic_replies) {
             $object->setVar('topic_replies', $topic_replies);
         }
         $b1 = $this->insert($object, $force);

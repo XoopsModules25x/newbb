@@ -65,9 +65,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         $store = $myts->addSlashes(XoopsRequest::getInt('store', 0, 'POST'));
     }
 
-    $sql = 'SELECT t.topic_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . "  p
-                    WHERE t.forum_id IN (" . $selected_forums . ")
-                    AND p.post_id =t.topic_last_post_id ";
+    $sql = 'SELECT t.topic_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '  p
+                    WHERE t.forum_id IN (' . $selected_forums . ')
+                    AND p.post_id =t.topic_last_post_id ';
 
     if ($sticky) {
         $sql .= ' AND t.topic_sticky <> 1 ';
@@ -126,9 +126,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         } else {
             // ARCHIVING POSTS
             if ($archive == 1) {
-                $result = $GLOBALS['xoopsDB']->query("SELECT p.topic_id, p.post_id, t.post_text FROM " . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix("bb_posts_text") . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
+                $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
                 while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-                    $sql = $GLOBALS['xoopsDB']->query("INSERT INTO " . $GLOBALS['xoopsDB']->prefix("bb_archive") . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
+                    $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
                 }
             }
             // DELETE POSTS
@@ -184,7 +184,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
-    $forumSelBox .= newbb_forumSelectBox(null, "access", false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
+    $forumSelBox .= newbb_forumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
     $forumSelBox .= '</select>';
     $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
     $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);

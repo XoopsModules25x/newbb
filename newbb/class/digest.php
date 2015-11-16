@@ -366,7 +366,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
             }
             $summary = xoops_substr(newbb_html2text($topic['post_text']), 0, SUMMARY_LENGTH);
             $author  = $topic['uname'] . ' (' . formatTimestamp($topic['topic_time']) . ')';
-            $link    = XOOPS_URL . "/modules/" . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
+            $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];
             $digest->addItem($title, $link, $author, $summary);
         }
