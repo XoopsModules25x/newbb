@@ -25,7 +25,7 @@ $modversion['author_email']    = '';
 $modversion['status_version']  = '4.33';
 
 //about
-$modversion['module_status']       = 'RC10';
+$modversion['module_status']       = 'RC11';
 $modversion['release_date']        = '2015/11/15';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
