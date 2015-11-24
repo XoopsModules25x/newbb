@@ -49,8 +49,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     if ($oldversion == round($module->getInfo('version') * 100, 2)) {
         $module->setErrors('You have the latest ' . $module->getInfo('name') . ' module (' . $module->getInfo('dirname') . ' version ' . $module->getInfo('version') . ') and update is not necessary');
         //        print_r($module->getErrors());
-        echo($module->getErrors());
-
+        redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/admin/index.php', 2, implode($module->getErrors()));
         return true;
     }
     //  END irmtfan to dont run update script if user has the latest version.
