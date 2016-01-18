@@ -48,7 +48,7 @@ class Post extends ArtObject
     public function __construct()
     {
         parent::__construct('bb_posts');
-        //$this->XoopsObject();
+        //parent::__construct();
         $this->initVar('post_id', XOBJ_DTYPE_INT);
         $this->initVar('topic_id', XOBJ_DTYPE_INT, 0, true);
         $this->initVar('forum_id', XOBJ_DTYPE_INT, 0, true);
