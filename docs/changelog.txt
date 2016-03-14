@@ -1,4 +1,4 @@
-4.33 RC 11                   (NOT RELEASED)
+4.33 RC 11  (XOOPS 2.5.8)      (2016-03-14)
 ===========================================
 - issue 14: SEO images (slider84/montuy337513)
 - issue 18: Array to string (cesagonchu/mamba)
