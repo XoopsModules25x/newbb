@@ -40,7 +40,7 @@ xoops_cp_header();
 $op       = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $forum_id = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET'); //(int)( !empty($_GET['forum'])? $_GET['forum'] : (!empty($_POST['forum'])?$_POST['forum']:0) );
 
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 switch ($op) {
     case 'moveforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
@@ -48,15 +48,15 @@ switch ($op) {
         if (XoopsRequest::getInt('dest_forum', 0, 'POST')) {
             $dest = XoopsRequest::getInt('dest_forum', 0, 'POST');
             if ($dest > 0) {
-                $pid        = (int)($dest);
-                $forum_dest =& $forumHandler->get($pid);
+                $pid        = (int)$dest;
+                $forum_dest = $forumHandler->get($pid);
                 $cid        = $forum_dest->getVar('cat_id');
                 unset($forum_dest);
             } else {
-                $cid = abs((int)($dest));
+                $cid = abs((int)$dest);
                 $pid = 0;
             }
-            $forum_obj =& $forumHandler->get($forum_id);
+            $forum_obj = $forumHandler->get($forum_id);
             $forum_obj->setVar('cat_id', $cid);
             $forum_obj->setVar('parent_forum', $pid);
             $forumHandler->insert($forum_obj);
@@ -93,7 +93,7 @@ switch ($op) {
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
 
         if (XoopsRequest::getString('dest_forum', '', 'POST')) {
-            $forum_dest =& $forumHandler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
+            $forum_dest = $forumHandler->get(XoopsRequest::getString('dest_forum', '', 'POST'));
             if (is_object($forum_dest)) {
                 $cid         = $forum_dest->getVar('cat_id');
                 $sql         = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '    SET forum_id=' . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
@@ -102,7 +102,7 @@ switch ($op) {
                 $sql          = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '    SET forum_id=' . XoopsRequest::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_topic = $GLOBALS['xoopsDB']->queryF($sql);
 
-                $forum_obj =& $forumHandler->get($forum_id);
+                $forum_obj = $forumHandler->get($forum_id);
                 $forumHandler->updateAll('parent_forum', XoopsRequest::getInt('dest_forum', 0, 'POST'), new Criteria('parent_forum', $forum_id));
                 if ($cid !== $forum_obj->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
@@ -142,10 +142,10 @@ switch ($op) {
     case 'save':
 
         if ($forum_id) {
-            $forum_obj =& $forumHandler->get($forum_id);
+            $forum_obj = $forumHandler->get($forum_id);
             $message   = _AM_NEWBB_FORUMUPDATE;
         } else {
-            $forum_obj =& $forumHandler->create();
+            $forum_obj = $forumHandler->create();
             $message   = _AM_NEWBB_FORUMCREATED;
         }
 
@@ -158,7 +158,7 @@ switch ($op) {
         $forum_obj->setVar('attach_ext', XoopsRequest::getString('attach_ext', '', 'POST'));
         $forum_obj->setVar('hot_threshold', XoopsRequest::getInt('hot_threshold', 0, 'POST'));
         if (XoopsRequest::getInt('parent_forum', 0, 'POST')) {
-            $parent_obj      =& $forumHandler->get(XoopsRequest::getInt('parent_forum', 0, 'POST'), array('cat_id'));
+            $parent_obj      = $forumHandler->get(XoopsRequest::getInt('parent_forum', 0, 'POST'), array('cat_id'));
             $_POST['cat_id'] = $parent_obj->getVar('cat_id');
         }
         $forum_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
@@ -166,9 +166,9 @@ switch ($op) {
         if ($forumHandler->insert($forum_obj)) {
             mod_clearCacheFile('forum', 'newbb');
             if (XoopsRequest::getInt('perm_template', 0, 'POST')) {
-                $grouppermHandler = &xoops_getmodulehandler('permission', $xoopsModule->getVar('dirname'));
+                $grouppermHandler = xoops_getModuleHandler('permission', $xoopsModule->getVar('dirname'));
                 $perm_template    = $grouppermHandler->getTemplate();
-                $memberHandler    =& xoops_gethandler('member');
+                $memberHandler    = xoops_getHandler('member');
                 $glist            = $memberHandler->getGroupList();
                 $perms            = $grouppermHandler->getValidForumPerms(true);
                 foreach (array_keys($glist) as $group) {
@@ -191,7 +191,7 @@ switch ($op) {
         break;
 
     case 'mod':
-        $forum_obj =& $forumHandler->get($forum_id);
+        $forum_obj = $forumHandler->get($forum_id);
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, _AM_NEWBB_EDITTHISFORUM . $forum_obj->getVar('forum_name'));
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITTHISFORUM . '</legend>';
 
@@ -205,7 +205,7 @@ switch ($op) {
             xoops_confirm(array('op' => 'del', 'forum' => XoopsRequest::getInt('forum', 0, 'GET'), 'confirm' => 1), 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
             break;
         } else {
-            $forum_obj =& $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'));
+            $forum_obj = $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'));
             $forumHandler->delete($forum_obj);
             mod_clearCacheFile('forum', 'newbb');
             redirect_header('admin_forum_manager.php?op=manage', 1, _AM_NEWBB_FORUMREMOVED);
@@ -221,7 +221,7 @@ switch ($op) {
         if (!$parent_forum && !$cat_id) {
             break;
         }
-        $forum_obj =& $forumHandler->create();
+        $forum_obj = $forumHandler->create();
         $forum_obj->setVar('parent_forum', $parent_forum);
         $forum_obj->setVar('cat_id', $cat_id);
         include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
@@ -232,7 +232,7 @@ switch ($op) {
 
     default:
 
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -257,7 +257,7 @@ switch ($op) {
         $echo .= "<th class='bg3'>" . _AM_NEWBB_MERGE . '</th>';
         $echo .= '</tr>';
 
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);

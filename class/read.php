@@ -42,7 +42,7 @@ newbb_load_object();
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
-class Read extends ArtObject
+class Read extends XoopsObject //ArtObject
 {
     /**
      * @param $type
@@ -112,7 +112,7 @@ class NewbbReadHandler extends ArtObjectHandler
         $this->type  = $type;
         $newbbConfig = newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
-        $this->lifetime = isset($newbbConfig['read_expire']) ? (int)($newbbConfig['read_expire']) * 24 * 3600 : 30 * 24 * 3600;
+        $this->lifetime = isset($newbbConfig['read_expire']) ? (int)$newbbConfig['read_expire'] * 24 * 3600 : 30 * 24 * 3600;
         $this->mode     = isset($newbbConfig['read_mode']) ? $newbbConfig['read_mode'] : 2;
     }
 
@@ -145,7 +145,7 @@ class NewbbReadHandler extends ArtObjectHandler
             return true;
         }
         // irmtfan move here and rephrase
-        $expire = time() - (int)($this->lifetime);
+        $expire = time() - (int)$this->lifetime;
         $sql    = 'DELETE FROM ' . $this->table . ' WHERE read_time < ' . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -158,7 +158,7 @@ class NewbbReadHandler extends ArtObjectHandler
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
     /**
      * @param                  $read_item
-     * @param  null            $uid
+     * @param  null $uid
      * @return bool|mixed|null
      */
     public function getRead($read_item, $uid = null)
@@ -201,7 +201,7 @@ class NewbbReadHandler extends ArtObjectHandler
                 return false;
             }
         }
-        $sql = 'SELECT post_id ' . ' FROM ' . $this->table . ' WHERE read_item = ' . (int)($read_item) . '     AND uid = ' . (int)($uid);
+        $sql = 'SELECT post_id ' . ' FROM ' . $this->table . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
         if (!$result = $this->db->queryF($sql, 1)) {
             return null;
         }
@@ -213,7 +213,7 @@ class NewbbReadHandler extends ArtObjectHandler
     /**
      * @param                  $read_item
      * @param                  $post_id
-     * @param  null            $uid
+     * @param  null $uid
      * @return bool|mixed|void
      */
     public function setRead($read_item, $post_id, $uid = null)
@@ -256,11 +256,11 @@ class NewbbReadHandler extends ArtObjectHandler
             }
         }
 
-        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)($post_id) . ',' . '     read_time =' . time() . ' WHERE read_item = ' . (int)($read_item) . '     AND uid = ' . (int)($uid);
+        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)$post_id . ',' . '     read_time =' . time() . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }
-        $object =& $this->create();
+        $object = $this->create();
         $object->setVar('read_item', $read_item, true);
         $object->setVar('post_id', $post_id, true);
         $object->setVar('uid', $uid, true);
@@ -271,7 +271,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     /**
      * @param             $items
-     * @param  null       $uid
+     * @param  null $uid
      * @return array|null
      */
     public function isRead_items(&$items, $uid = null)
@@ -329,7 +329,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
         $criteria = new CriteriaCompo(new Criteria('uid', $uid));
         $criteria->add(new Criteria('read_item', '(' . implode(', ', array_map('intval', array_keys($items))) . ')', 'IN'));
-        $items_obj =& $this->getAll($criteria, array('read_item', 'post_id'));
+        $items_obj = $this->getAll($criteria, array('read_item', 'post_id'));
 
         $items_list = array();
         foreach (array_keys($items_obj) as $key) {

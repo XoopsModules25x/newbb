@@ -42,20 +42,20 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     }
 
     /**
-     * @param      $name
-     * @param bool $isArray
+     * @param             $name
+     * @param  bool $isArray
      * @return array|bool
      */
     function newbb_getsession($name, $isArray = false)
     {
         $value = !empty($_SESSION['newbb_' . $name]) ? $_SESSION['newbb_' . $name] : false;
         if ($isArray) {
-            $_value = ($value) ? explode(',', $value) : array();
+            $_value = $value ? explode(',', $value) : array();
             $value  = array();
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $key         = substr($string, 0, strpos($string, '|'));
-                    $val         = substr($string, (strpos($string, '|') + 1));
+                    $val         = substr($string, strpos($string, '|') + 1);
                     $value[$key] = $val;
                 }
             }
@@ -68,7 +68,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     /**
      * @param        $name
      * @param string $string
-     * @param int    $expire
+     * @param int $expire
      */
     function newbb_setcookie($name, $string = '', $expire = 0)
     {
@@ -80,12 +80,12 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             }
             $string = implode(',', $value);
         }
-        setcookie($forumCookie['prefix'] . $name, $string, (int)($expire), $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
+        setcookie($forumCookie['prefix'] . $name, $string, (int)$expire, $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
     }
 
     /**
-     * @param      $name
-     * @param bool $isArray
+     * @param             $name
+     * @param  bool $isArray
      * @return array|null
      */
     function newbb_getcookie($name, $isArray = false)
@@ -95,7 +95,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
         $value = XoopsRequest::getString($forumCookie['prefix'] . $name, null, 'COOKIE');
 
         if ($isArray) {
-            $_value = ($value) ? explode(',', $value) : array();
+            $_value = $value ? explode(',', $value) : array();
             $value  = array();
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
@@ -104,7 +104,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
                         $value[] = $string;
                     } else {
                         $key         = substr($string, 0, $sep);
-                        $val         = substr($string, ($sep + 1));
+                        $val         = substr($string, $sep + 1);
                         $value[$key] = $val;
                     }
                 }

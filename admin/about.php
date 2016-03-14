@@ -33,13 +33,13 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 if ($newXoopsModuleGui) {
-    $module_info =& $module_handler->get($xoopsModule->getVar('mid'));
+    $module_info = $module_handler->get($xoopsModule->getVar('mid'));
     $aboutAdmin  = new ModuleAdmin();
     echo $aboutAdmin->addNavigation('about.php');
     echo $aboutAdmin->renderAbout('PBQZ7D6LT6UBC', true);
 } else {
-    $module_handler =& xoops_gethandler('module');
-    $versioninfo    =& $module_handler->get($xoopsModule->getVar('mid'));
+    $module_handler = xoops_getHandler('module');
+    $versioninfo    = $module_handler->get($xoopsModule->getVar('mid'));
 
     //loadModuleAdminMenu(13, _AM_NEWBB_ABOUT . " " . $versioninfo->getInfo('name'));
 
@@ -156,7 +156,7 @@ if ($newXoopsModuleGui) {
         echo "<td class='bg3' align='left'><strong>" . _AM_NEWBB_AUTHOR_WORD . '</strong></td>';
         echo '</tr>';
 
-        $extra = (defined('_AM_NEWBB_AUTHOR_WORD_EXTRA')) ? _AM_NEWBB_AUTHOR_WORD_EXTRA : '';
+        $extra = defined('_AM_NEWBB_AUTHOR_WORD_EXTRA') ? _AM_NEWBB_AUTHOR_WORD_EXTRA : '';
         echo '<tr>';
         echo "<td class='even' align='left'>" . $versioninfo->getInfo('author_word') . '</td>';
         echo '</tr>';

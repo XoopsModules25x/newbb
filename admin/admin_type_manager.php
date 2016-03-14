@@ -40,7 +40,7 @@ if (!in_array($op, array('save_type', 'delete', 'template', 'save_template', 'ap
     $op = '';
 }
 
-$typeHandler =& xoops_getmodulehandler('type', 'newbb');
+$typeHandler = xoops_getModuleHandler('type', 'newbb');
 
 switch ($op) {
     case 'save_type':
@@ -133,7 +133,7 @@ switch ($op) {
                 $type_obj =& $types_obj[$key];
                 echo "<tr class='even' align='left'>";
                 echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' /></td>";
-                echo "<td><em style='color:" . $type_obj->getVar('type_color') . "'>" . $type_obj->getVar('type_name') . '</em></td>';
+                echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
                 echo '<td>' . $type_obj->getVar('type_description') . '</td>';
                 echo '</tr>';
                 unset($types_obj[$key]);
@@ -143,7 +143,7 @@ switch ($op) {
         foreach ($types_obj as $key => $type_obj) {
             echo "<tr class='odd' align='left'>";
             echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . "'>" . $type_obj->getVar('type_name') . '</em></td>';
+            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
             echo '<td>' . $type_obj->getVar('type_description') . '</td>';
             echo '</tr>';
         }
@@ -169,11 +169,11 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
 
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories   = $categoryHandler->getList($criteriaCategory);
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c] = '[' . $categories[$c] . ']';
@@ -225,7 +225,7 @@ switch ($op) {
             }
             $type_obj =& $types_obj[$key];
             echo "<tr class='even' align='left'>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . "'>" . $type_obj->getVar('type_name') . '</em></td>';
+            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
             echo '<td>' . $order . '</td>';
             echo '<td>' . $type_obj->getVar('type_description') . '</td>';
             echo '</tr>';
@@ -251,14 +251,14 @@ switch ($op) {
         break;
 
     case 'forum':
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories));
         if (empty($forums)) {
             redirect_header('admin_forum_manager.php', 2, _AM_NEWBB_CREATENEWFORUM);
@@ -301,11 +301,11 @@ switch ($op) {
         break;
 
     case 'edit_forum':
-        if (!(XoopsRequest::getInt('forum', 0, 'POST')) || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
+        if (!XoopsRequest::getInt('forum', 0, 'POST') || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
 
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         if (!$forum_obj = $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
@@ -378,7 +378,7 @@ switch ($op) {
         break;
 
     case 'save_forum':
-        if (!(XoopsRequest::getInt('forum', 0, 'POST')) || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
+        if (!XoopsRequest::getInt('forum', 0, 'POST') || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
         $typeHandler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getArray('type_order', null, 'POST'));

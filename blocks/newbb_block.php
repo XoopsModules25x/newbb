@@ -65,7 +65,7 @@ function b_newbb_show($options)
 
     mod_loadFunctions('time', 'newbb');
 
-    $myts          =& MyTextSanitizer::getInstance();
+    $myts          = MyTextSanitizer::getInstance();
     $block         = array();
     $i             = 0;
     $order         = '';
@@ -82,7 +82,7 @@ function b_newbb_show($options)
     }
 
     if (!isset($accessForums)) {
-        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getModuleHandler('permission', 'newbb');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -138,7 +138,7 @@ function b_newbb_show($options)
     $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
-        $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+        $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -165,7 +165,7 @@ function b_newbb_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars(($arr['poster_name']) ? : $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster']    = $topic_poster;
         $topic['topic_page_jump'] = $topic_page_jump;
@@ -194,7 +194,7 @@ function b_newbb_show($options)
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
     $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
-    $block['indexNav'] = (int)($options[4]);
+    $block['indexNav'] = (int)$options[4];
 
     return $block;
 }
@@ -259,7 +259,7 @@ function b_newbb_topic_show($options)
     }
 
     if (!isset($accessForums)) {
-        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getModuleHandler('permission', 'newbb');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -303,7 +303,7 @@ function b_newbb_topic_show($options)
     mod_loadFunctions('user', 'newbb');
     $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
-        $typeHandler = &xoops_getmodulehandler('type', 'newbb');
+        $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -326,7 +326,7 @@ function b_newbb_topic_show($options)
         if (!empty($author_name[$arr['topic_poster']])) {
             $topic_poster = $author_name[$arr['topic_poster']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars(($arr['poster_name']) ? : $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster'] = $topic_poster;
         // irmtfan remove $topic_page_jump because there is no last post
@@ -354,7 +354,7 @@ function b_newbb_topic_show($options)
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
     $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
-    $block['indexNav'] = (int)($options[4]);
+    $block['indexNav'] = (int)$options[4];
 
     return $block;
 }
@@ -401,7 +401,7 @@ function b_newbb_post_show($options)
     }
 
     if (!isset($accessForums)) {
-        $permHandler = &xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getModuleHandler('permission', 'newbb');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -480,7 +480,7 @@ function b_newbb_post_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars(($arr['poster_name']) ? : $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster'] = $topic_poster;
 
@@ -515,7 +515,7 @@ function b_newbb_post_show($options)
     $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
 
-    $block['indexNav'] = (int)($options[4]);
+    $block['indexNav'] = (int)$options[4];
 
     return $block;
 }
@@ -537,7 +537,7 @@ function b_newbb_author_show($options)
     global $accessForums;
     //    global $newbbConfig;
 
-    $myts  =& MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $block = array();
     //    $i              = 0;
     $type          = 'topic';
@@ -571,7 +571,7 @@ function b_newbb_author_show($options)
     }
 
     if (!isset($accessForums)) {
-        $permHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permHandler = xoops_getModuleHandler('permission', 'newbb');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -620,7 +620,7 @@ function b_newbb_author_show($options)
     }
     $block['authors']   =& $author;
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - lite view;
-    $block['indexNav']  = (int)($options[4]);
+    $block['indexNav']  = (int)$options[4];
 
     return $block;
 }
@@ -911,7 +911,7 @@ function b_newbb_custom($options)
     }
 
     $options = explode('|', $options);
-    $block   = &b_newbb_show($options);
+    $block   = b_newbb_show($options);
     if (count($block['topics']) < 1) {
         return false;
     }
@@ -936,7 +936,7 @@ function b_newbb_custom_topic($options)
     }
 
     $options = explode('|', $options);
-    $block   = &b_newbb_topic_show($options);
+    $block   = b_newbb_topic_show($options);
     if (count($block['topics']) < 1) {
         return false;
     }
@@ -961,7 +961,7 @@ function b_newbb_custom_post($options)
     }
 
     $options = explode('|', $options);
-    $block   = &b_newbb_post_show($options);
+    $block   = b_newbb_post_show($options);
     if (count($block['topics']) < 1) {
         return false;
     }
@@ -985,7 +985,7 @@ function b_newbb_custom_author($options)
     }
 
     $options = explode('|', $options);
-    $block   = & b_newbb_author_show($options);
+    $block   = b_newbb_author_show($options);
     if (count($block['authors']) < 1) {
         return false;
     }

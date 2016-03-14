@@ -16,13 +16,13 @@ if (!$forum = XoopsRequest::getString('forum', '', 'GET')) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_ERRORFORUM);
 }
 
-$forumHandler =& xoops_getmodulehandler('forum');
+$forumHandler = xoops_getModuleHandler('forum');
 $forum_obj    = $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _NOPERM);
 }
 
-$topicHandler =& xoops_getmodulehandler('topic');
+$topicHandler = xoops_getModuleHandler('topic');
 $topic_obj    = $topicHandler->create();
 $topic_obj->setVar('forum_id', $forum);
 if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
@@ -42,7 +42,7 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler =& xoops_getmodulehandler('online');
+    $onlineHandler = xoops_getModuleHandler('online');
     $onlineHandler->init($forum_obj);
 }
 
@@ -57,8 +57,8 @@ include_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler =& xoops_getmodulehandler("category");
-$category_obj =& $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
+$categoryHandler = xoops_getModuleHandler("category");
+$category_obj = $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
 $xoopsTpl->assign("parentforum", $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(

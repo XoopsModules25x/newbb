@@ -19,11 +19,11 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for select from a text where it have some keywords
      *
-     * @param  text   $text             , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
+     * @param  text $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
      * @param         $queryarray
-     * @param  int    $selectstartlag
-     * @param  int    $selectlength
-     * @param  bool   $striptags
+     * @param  int $selectstartlag
+     * @param  int $selectlength
+     * @param  bool $striptags
      * @param  string $excludetags
      * @param  string $start_trimmarker
      * @param  string $end_trimmarker
@@ -52,7 +52,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
             if ($pos == $endpos) {
                 break;
             }
-            $start  = max(($pos - $selectstartlag), ($startpos - $maxlengthquery), 0); // $startpos is the last position in the previous select text
+            $start  = max($pos - $selectstartlag, $startpos - $maxlengthquery, 0); // $startpos is the last position in the previous select text
             $length = $maxlengthquery + $selectlength; //xoops_local("strlen", $query) + 200;
             $select_text .= '<p>';
             $select_text .= ($start > 0) ? $start_trimmarker . ' ' : ' ';
@@ -68,7 +68,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlight a text when it have some keywords
      *
-     * @param  text $text       , array text $queryarray
+     * @param  text $text , array text $queryarray
      * @param       $queryarray
      * @return text $highlight_text
      */
@@ -92,7 +92,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlighting search results
      *
-     * @param  text    $query , int $i
+     * @param  text $query , int $i
      * @param          $i
      * @return unknown
      */

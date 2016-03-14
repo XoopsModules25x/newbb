@@ -25,7 +25,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
     {
         global $forum_obj;
         //$GLOBALS['xoopsModuleConfig']["welcome_forum"] = 1;
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forum_obj    = $forumHandler->get($GLOBALS['xoopsModuleConfig']['welcome_forum']);
         if (!$forumHandler->getPermission($forum_obj)) {
             unset($forum_obj);

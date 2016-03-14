@@ -42,7 +42,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
     }
 
     /**
-     * @param  int    $selected
+     * @param  int $selected
      * @return string
      */
     function newbb_sinceSelectBox($selected = 100)
@@ -54,7 +54,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         //$select_array = explode(',', $newbbConfig['since_options']);
         //$select_array = array_map('trim', $select_array);
         // irmtfan - if the array is empty do not show selection box
-        if (!(bool)($select_array)) {
+        if (!(bool)$select_array) {
             $since = $newbbConfig['since_default'];
             switch ($since) {
                 case 0:
@@ -113,9 +113,9 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         // irmtfan bad coding
         //if ($since==1000) return 0;
         if ($since > 0) {
-            return (int)($since) * 24 * 3600;
+            return (int)$since * 24 * 3600;
         } else {
-            return (int)(abs($since)) * 3600;
+            return (int)abs($since) * 3600;
         }
     }
 }

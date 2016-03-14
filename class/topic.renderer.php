@@ -74,14 +74,14 @@ class NewbbTopicRenderer
     //    public function NewbbTopicRenderer()
     public function __construct()
     {
-        $this->handler = &xoops_getmodulehandler('topic', 'newbb');
+        $this->handler = xoops_getModuleHandler('topic', 'newbb');
     }
 
     /**
      * Access the only instance of this class
      * @return NewbbTopicRenderer
      */
-    public static function &instance()
+    public static function instance()
     {
         static $instance;
         if (!isset($instance)) {
@@ -107,7 +107,7 @@ class NewbbTopicRenderer
         switch ($var) {
             case 'forum':
                 if (is_numeric($val)) {
-                    $val = (int)($val);
+                    $val = (int)$val;
                     // START irmtfan - if the forum is array
                 } elseif (is_array($val)) {
                     $val = implode('|', $val);
@@ -122,7 +122,7 @@ class NewbbTopicRenderer
             case 'order':
             case 'start':
             case 'since':
-                $val = (int)($val);
+                $val = (int)$val;
                 break;
 
             case 'uid': // irmtfan add multi topic poster
@@ -339,7 +339,7 @@ class NewbbTopicRenderer
     {
         switch ($var) {
             case 'forum':
-                $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
+                $forumHandler = xoops_getModuleHandler('forum', 'newbb');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
                 $accessForums = $forumHandler->getIdsByValues(array_map('intval', @explode('|', $val)));
@@ -457,8 +457,8 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param  null       $header
-     * @param  null       $var
+     * @param  null $header
+     * @param  null $var
      * @return array|null
      */
     public function getSort($header = null, $var = null)
@@ -547,7 +547,7 @@ class NewbbTopicRenderer
 
     // START irmtfan add Display topic headers function
     /**
-     * @param  null  $header
+     * @param  null $header
      * @return array
      */
     public function getHeader($header = null)
@@ -565,8 +565,8 @@ class NewbbTopicRenderer
 
     // END irmtfan add Display topic headers function
     /**
-     * @param  null  $type
-     * @param  null  $status
+     * @param  null $type
+     * @param  null $status
      * @return array
      */
     public function getStatus($type = null, $status = null)
@@ -704,14 +704,14 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param  null  $type_id
+     * @param  null $type_id
      * @return mixed
      */
     public function getTypes($type_id = null)
     {
         static $types;
         if (!isset($types)) {
-            $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+            $typeHandler = xoops_getModuleHandler('type', 'newbb');
             $types       = $typeHandler->getByForum(explode('|', @$this->vars['forum']));
         }
 
@@ -836,7 +836,7 @@ class NewbbTopicRenderer
     }
 
     /**
-     * @param  Smarty     $xoopsTpl
+     * @param  Smarty $xoopsTpl
      * @return array|void
      */
     public function renderTopics(Smarty $xoopsTpl = null)
@@ -1023,12 +1023,12 @@ class NewbbTopicRenderer
         /*
         $type_list = array();
         if (count($types) > 0) {
-            $typeHandler =& xoops_getmodulehandler('type', 'newbb');
+            $typeHandler = xoops_getModuleHandler('type', 'newbb');
             $type_list = $typeHandler->getAll(new Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
         }
         */
         $type_list    = $this->getTypes();
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
         if (count($forums) > 0) {
             $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), array('forum_name', 'hot_threshold'), false);
@@ -1097,7 +1097,7 @@ class NewbbTopicRenderer
     // START irmtfan to create an array from selected keys of an array
     /**
      * @param        $array
-     * @param  null  $keys
+     * @param  null $keys
      * @return array
      */
     public function getFromKeys($array, $keys = null)

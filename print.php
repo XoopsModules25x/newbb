@@ -52,8 +52,8 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
     }
 
     if (0 !== $post_id) {
-        $postHandler =& xoops_getmodulehandler('post', 'newbb');
-        $post        = &$postHandler->get($post_id);
+        $postHandler = xoops_getModuleHandler('post', 'newbb');
+        $post        = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
             exit(_MD_NORIGHTTOVIEW);
         }
@@ -68,8 +68,8 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
         }
     }
 
-    $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-    $topic_obj    =& $topicHandler->get($topic_id);
+    $topicHandler = xoops_getModuleHandler('topic', 'newbb');
+    $topic_obj    = $topicHandler->get($topic_id);
     $topic_id     = $topic_obj->getVar('topic_id');
     $forum        = $topic_obj->getVar('forum_id');
     if (!$approved = $topic_obj->getVar('approved')) {
@@ -81,9 +81,9 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
         exit(_MD_NORIGHTTOVIEW);
     }
 
-    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $forum        = $topic_obj->getVar('forum_id');
-    $forum_obj    =& $forumHandler->get($forum);
+    $forum_obj    = $forumHandler->get($forum);
     if (!$forumHandler->getPermission($forum_obj)) {
         exit(_MD_NORIGHTTOVIEW);
     }

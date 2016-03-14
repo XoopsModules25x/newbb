@@ -70,15 +70,18 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     {
         parent::__construct($db, 'topic');
         $newbbConfig           = newbbLoadConfig();
-        $this->items_per_forum = isset($newbbConfig['read_items']) ? (int)($newbbConfig['read_items']) : 100;
+        $this->items_per_forum = isset($newbbConfig['read_items']) ? (int)$newbbConfig['read_items'] : 100;
     }
 
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
 
@@ -99,8 +102,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     }
 
     /**
-     * @param  int  $status
-     * @param  int  $forum_id
+     * @param  int $status
+     * @param  int $forum_id
      * @param  null $uid
      * @return bool
      */
@@ -127,7 +130,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $cookie_name = 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
-        $itemHandler =& xoops_getmodulehandler('topic', 'newbb');
+        $itemHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria    = new CriteriaCompo(new Criteria('forum_id', $forum_id));
         $criteria->setSort('topic_last_post_id');
         $criteria->setOrder('DESC');
@@ -165,7 +168,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             }
         }
 
-        $itemHandler    =& xoops_getmodulehandler('topic', 'newbb');
+        $itemHandler    = xoops_getModuleHandler('topic', 'newbb');
         $criteria_topic = new CriteriaCompo(new Criteria('forum_id', $forum_id));
         $criteria_topic->setSort('topic_last_post_id');
         $criteria_topic->setOrder('DESC');
@@ -184,8 +187,8 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        $items_obj  =& $itemHandler->getAll($criteria_topic, array('topic_last_post_id'));
-        $sticky_obj =& $itemHandler->getAll($criteria_sticky, array('topic_last_post_id'));
+        $items_obj  = $itemHandler->getAll($criteria_topic, array('topic_last_post_id'));
+        $sticky_obj = $itemHandler->getAll($criteria_sticky, array('topic_last_post_id'));
         $items_obj += $sticky_obj;
         $items = array();
         foreach (array_keys($items_obj) as $key) {
@@ -199,8 +202,11 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         return true;
     }
 
+    /**
+     *
+     */
     public function synchronization()
     {
-//        return;
+        //        return;
     }
 }

@@ -18,7 +18,7 @@ newbb_load_object();
 /**
  * Class NewbbUserstats
  */
-class NewbbUserstats extends ArtObject
+class NewbbUserstats extends XoopsObject //ArtObject
 {
     /**
      *
@@ -38,7 +38,7 @@ class NewbbUserstats extends ArtObject
  * user stats
  *
  */
-class NewbbUserstatsHandler extends ArtObjectHandler
+class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -49,10 +49,10 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     }
 
     /**
-     * @param  null                  $db
+     * @param  null $db
      * @return NewbbUserstatsHandler
      */
-    public function &instance($db = null)
+    public function instance($db = null)
     {
         static $instance;
         if (!isset($instance)) {
@@ -63,16 +63,17 @@ class NewbbUserstatsHandler extends ArtObjectHandler
     }
 
     /**
-     * @param  mixed       $id
-     * @return null|object
+     * @param  mixed $id
+     * @param null $fields
+     * @return null|XoopsObject
      */
-    public function &get($id)
+    public function get($id = null, $fields = null) //get($id)
     {
         $object = null;
-        if (!$id = (int)($id)) {
+        if (!$id = (int)$id) {
             return $object;
         }
-        $object =& $this->create(false);
+        $object = $this->create(false);
         $object->setVar($this->keyName, $id);
         if (!$row = $this->getStats($id)) {
             return $object;
@@ -101,7 +102,7 @@ class NewbbUserstatsHandler extends ArtObjectHandler
         if (empty($id)) {
             return null;
         }
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->keyName . ' = ' . (int)($id);
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->keyName . ' = ' . (int)$id;
         if (!$result = $this->db->query($sql)) {
             return null;
         }

@@ -26,11 +26,11 @@ $modversion['status_version']  = '4.33';
 
 //about
 $modversion['module_status']       = 'RC11';
-$modversion['release_date']        = '2015/11/15';
+$modversion['release_date']        = '2016/03/14';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.7.2';
+$modversion['min_xoops']           = '2.5.8';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0', 'mysqli' => '5.0');
 $modversion['system_menu']         = 1;
@@ -696,7 +696,7 @@ $modversion['config'][] = array(
 xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
 if ($isModuleAction && 'update_ok' === XoopsRequest::getCmd('op', '', 'POST')) {
-    $forumHandler =& xoops_getmodulehandler('forum', 'newbb', true);
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb', true);
     if ($forums = $forumHandler->getForumsByCategory(0, 'access', false, array('parent_forum', 'cat_id', 'forum_name'))) {
         foreach (array_keys($forums) as $c) {
             foreach (array_keys($forums[$c]) as $f) {
@@ -726,7 +726,7 @@ $dir_def  = 0;
 $formtype = 'select';
 // if in install, update
 if ($isModuleAction) {
-    $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
+    $topicHandler = xoops_getModuleHandler('topic', $modversion['dirname']);
     $pollDirs     = $topicHandler->getActivePolls();
     // priorities for default poll module : 1- xoopspoll 2- last element in array 3- if no poll module => 0
     $dir_def = !empty($pollDirs) ? (!empty($pollDirs['xoopspoll']) ? $pollDirs['xoopspoll'] : end($pollDirs)) : 0;
@@ -750,7 +750,7 @@ $isPref = (// action module "system"
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
-    $hModConfig = &xoops_gethandler('config');
+    $hModConfig = xoops_getHandler('config');
     $criteria   = new CriteriaCompo();
     $criteria->add(new Criteria('conf_name', 'poll_module', '='), 'AND');
     $criteria->add(new Criteria('conf_formtype', 'select', '='), 'AND'); // not hidden
@@ -758,7 +758,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
     if (is_object($pollOptions) && $pollOptions->getVar('conf_value') !== '0') {
-        $topicHandler = &xoops_getmodulehandler('topic', $modversion['dirname']);
+        $topicHandler = xoops_getModuleHandler('topic', $modversion['dirname']);
         $topicPolls   = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
         if ($topicPolls > 0) {
             $poll_module_in_use = $topicHandler->findPollModule();

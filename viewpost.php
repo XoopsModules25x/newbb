@@ -40,16 +40,16 @@ $status = (XoopsRequest::getString('status', '', 'GET') && in_array(XoopsRequest
 $mode   = XoopsRequest::getInt('mode', 0, 'GET');
 $mode   = (!empty($status) && in_array($status, array('active', 'pending', 'deleted'), true)) ? 2 : $mode;
 
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$postHandler  =& xoops_getmodulehandler('post', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+$postHandler  = xoops_getModuleHandler('post', 'newbb');
 
 if (empty($forum_id)) {
     $forums       = $forumHandler->getByPermission(0, 'view');
     $accessForums = array_keys($forums);
     $isadmin      = $GLOBALS['xoopsUserIsAdmin'];
 } else {
-    $forum_obj         =& $forumHandler->get($forum_id);
-    $forums[$forum_id] =& $forum_obj;
+    $forum_obj         = $forumHandler->get($forum_id);
+    $forums[$forum_id] = $forum_obj;
     $accessForums      = array($forum_id);
     $isadmin           = newbb_isAdmin($forum_obj);
 }
@@ -111,14 +111,14 @@ switch ($status) {
             //$criteria_status_post->add(new Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
         } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
-            $criteria_count->add(new Criteria('post_time', (int)($last_visit), '>')); // irmtfan add new criteria
-            $criteria_post->add(new Criteria('p.post_time', (int)($last_visit), '>')); // irmtfan add new criteria
+            $criteria_count->add(new Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new criteria
+            $criteria_post->add(new Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
             $topics         = array();
             $topic_lastread = newbb_getcookie('LT', true);
             if (count($topic_lastread) > 0) {
                 foreach ($topic_lastread as $id => $time) {
-                    if ($time > (int)($last_visit)) {
+                    if ($time > (int)$last_visit) {
                         $topics[] = $id;
                     }
                 }
@@ -140,7 +140,7 @@ switch ($status) {
 //$criteria_count->add($criteria_status_count); // irmtfan commented and removed
 //$criteria_post->add($criteria_status_post); // irmtfan commented and removed
 // END irmtfan solve the status issues and specially status = new issue
-$karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
 $valid_modes     = array('flat', 'compact');
@@ -182,7 +182,7 @@ if (!empty($forum_id)) {
         redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
     }
     if ($forum_obj->getVar('parent_forum')) {
-        $parent_forum_obj =& $forumHandler->get($forum_obj->getVar('parent_forum'), array('forum_name'));
+        $parent_forum_obj = $forumHandler->get($forum_obj->getVar('parent_forum'), array('forum_name'));
         $parentforum      = array('id' => $forum_obj->getVar('parent_forum'), 'name' => $parent_forum_obj->getVar('forum_name'));
         unset($parent_forum_obj);
         $xoopsTpl->assign_by_ref('parentforum', $parentforum);
@@ -210,7 +210,7 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('anonym_avatar', newbbDisplayImage('anonym'));
 $userid_array = array();
 if (count($poster_array) > 0) {
-    $memberHandler =& xoops_gethandler('member');
+    $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
     $user_criteria = '(' . implode(',', $userid_array) . ')';
     $users         = $memberHandler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
@@ -223,7 +223,7 @@ $online = array();
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-        $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+        $onlineHandler = xoops_getModuleHandler('online', 'newbb');
         $onlineHandler->init($forum_id);
     }
 }
@@ -239,7 +239,7 @@ if (count($userid_array) > 0) {
 }
 
 $pn           = 0;
-$topicHandler = &xoops_getmodulehandler('topic', 'newbb');
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
 static $suspension = array();
 foreach (array_keys($posts) as $id) {
     ++$pn;
@@ -277,7 +277,7 @@ foreach (array_keys($posts) as $id) {
 
     if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
         if (!isset($suspension[$post->getVar('forum_id')])) {
-            $moderateHandler                       =& xoops_getmodulehandler('moderate', 'newbb');
+            $moderateHandler                       = xoops_getModuleHandler('moderate', 'newbb');
             $suspension[$post->getVar('forum_id')] = $moderateHandler->verifyUser(-1, '', $post->getVar('forum_id'));
         }
 
@@ -320,22 +320,22 @@ foreach (array_keys($posts) as $id) {
     $thread_action = array();
 
     $xoopsTpl->append('posts', array(
-                                 'post_id'         => $post->getVar('post_id'),
-                                 'topic_id'        => $post->getVar('topic_id'),
-                                 'forum_id'        => $post->getVar('forum_id'),
-                                 'post_date'       => newbb_formatTimestamp($post->getVar('post_time')),
-                                 'post_image'      => $post_image,
-                                 'post_title'      => $post_title,
-                                 'post_text'       => $post_text,
-                                 'post_attachment' => $post_attachment,
-                                 'post_edit'       => $post->displayPostEdit(),
-                                 'post_no'         => $start + $pn,
-                                 'post_signature'  => ($post->getVar('attachsig')) ? @$poster['signature'] : '',
-//                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
-                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
-                                 'thread_action'   => $thread_action,
-                                 'thread_buttons'  => $thread_buttons,
-                                 'poster'          => $poster));
+        'post_id'         => $post->getVar('post_id'),
+        'topic_id'        => $post->getVar('topic_id'),
+        'forum_id'        => $post->getVar('forum_id'),
+        'post_date'       => newbb_formatTimestamp($post->getVar('post_time')),
+        'post_image'      => $post_image,
+        'post_title'      => $post_title,
+        'post_text'       => $post_text,
+        'post_attachment' => $post_attachment,
+        'post_edit'       => $post->displayPostEdit(),
+        'post_no'         => $start + $pn,
+        'post_signature'  => $post->getVar('attachsig') ? @$poster['signature'] : '',
+        //                                 'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
+        'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
+        'thread_action'   => $thread_action,
+        'thread_buttons'  => $thread_buttons,
+        'poster'          => $poster));
 
     unset($thread_buttons, $poster);
 }
@@ -418,7 +418,7 @@ $xoopsTpl->assign_by_ref('viewmode_options', $viewmode_options);
 $xoopsTpl->assign('menumode', $menumode);
 $xoopsTpl->assign('menumode_other', $menumode_other);
 
-$xoopsTpl->assign('viewer_level', ($isadmin) ? 2 : is_object($GLOBALS['xoopsUser']));
+$xoopsTpl->assign('viewer_level', $isadmin ? 2 : is_object($GLOBALS['xoopsUser']));
 $xoopsTpl->assign('uid', $uid);
 $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);

@@ -37,7 +37,7 @@ newbb_load_object();
 /**
  * Class Post
  */
-class Post extends ArtObject
+class Post extends XoopsObject
 {
     //class Post extends XoopsObject {
     public $attachmentArray = array();
@@ -53,7 +53,7 @@ class Post extends ArtObject
         $this->initVar('topic_id', XOBJ_DTYPE_INT, 0, true);
         $this->initVar('forum_id', XOBJ_DTYPE_INT, 0, true);
         $this->initVar('post_time', XOBJ_DTYPE_INT, 0, true);
-//        $this->initVar('poster_ip', XOBJ_DTYPE_INT, 0);
+        //        $this->initVar('poster_ip', XOBJ_DTYPE_INT, 0);
         $this->initVar('poster_ip', XOBJ_DTYPE_TXTBOX, '');
         $this->initVar('poster_name', XOBJ_DTYPE_TXTBOX, '');
         $this->initVar('subject', XOBJ_DTYPE_TXTBOX, '', true);
@@ -103,9 +103,9 @@ class Post extends ArtObject
         if (!$attachKey) {
             return false;
         }
-        $this->attachmentArray[(string)($attachKey)]['numDownload']++;
+        $this->attachmentArray[(string)$attachKey]['numDownload']++;
 
-        return $this->attachmentArray[(string)($attachKey)]['numDownload'];
+        return $this->attachmentArray[(string)$attachKey]['numDownload'];
     }
 
     /**
@@ -167,7 +167,7 @@ class Post extends ArtObject
      * @param  string $name_saved
      * @param  string $nameDisplay
      * @param  string $mimetype
-     * @param  int    $numDownload
+     * @param  int $numDownload
      * @return bool
      */
     public function setAttachment($name_saved = '', $nameDisplay = '', $mimetype = '', $numDownload = 0)
@@ -180,7 +180,7 @@ class Post extends ArtObject
                 'name_saved'  => $name_saved,
                 'nameDisplay' => isset($nameDisplay) ? $nameDisplay : $name_saved,
                 'mimetype'    => $mimetype,
-                'numDownload' => isset($numDownload) ? (int)($numDownload) : 0);
+                'numDownload' => isset($numDownload) ? (int)$numDownload : 0);
         }
         $attachmentSave = null;
         if (is_array($this->attachmentArray)) {
@@ -193,7 +193,7 @@ class Post extends ArtObject
 
     /**
      * TODO: refactor
-     * @param  bool   $asSource
+     * @param  bool $asSource
      * @return string
      */
     public function displayAttachment($asSource = false)
@@ -226,7 +226,7 @@ class Post extends ArtObject
                 } else {
                     if (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
                         $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
-                    } elseif (($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0 && $GLOBALS['xoopsUser']->isactive())) {
+                    } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0 && $GLOBALS['xoopsUser']->isactive()) {
                         $post_attachment .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/dl_attachment.php?attachid=' . $key . '&amp;post_id=' . $this->getVar('post_id') . '"> <img src="' . $icon_filetype . '" alt="' . $filetype . '" /> ' . $att['nameDisplay'] . '</a> ' . _MD_FILESIZE . ': ' . $file_size . '; ' . _MD_HITS . ': ' . $att['numDownload'];
                     } else {
                         $post_attachment .= _MD_NEWBB_SEENOTGUEST;
@@ -299,7 +299,7 @@ class Post extends ArtObject
         }
         if (is_array($post_edits) && count($post_edits) > 0) {
             foreach ($post_edits as $postedit) {
-                $edit_time = (int)($postedit['edit_time']);
+                $edit_time = (int)$postedit['edit_time'];
                 $edit_user = $myts->stripSlashesGPC($postedit['edit_user']);
                 $edit_msg  = (!empty($postedit['edit_msg'])) ? $myts->stripSlashesGPC($postedit['edit_msg']) : '';
                 // Start irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
@@ -309,7 +309,7 @@ class Post extends ArtObject
                 // End irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
                 // START hacked by irmtfan
                 // display/save all edit records.
-                $post_edit .= _MD_EDITEDBY . ' ' . $edit_user . ' ' . _MD_ON . ' ' . formatTimestamp((int)($edit_time)) . '<br />';
+                $post_edit .= _MD_EDITEDBY . ' ' . $edit_user . ' ' . _MD_ON . ' ' . formatTimestamp((int)$edit_time) . '<br />';
                 // if reason is not empty
                 if ($edit_msg !== '') {
                     $post_edit .= _MD_EDITEDMSG . ' ' . $edit_msg . '<br />';
@@ -331,7 +331,7 @@ class Post extends ArtObject
         mod_loadFunctions('render', 'newbb');
 
         $uid          = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-        $karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+        $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
         $user_karma   = $karmaHandler->getUserKarma();
 
         $post               = array();
@@ -346,8 +346,8 @@ class Post extends ArtObject
         } else {
             $post['text'] = $post_text . '<br />' . $this->displayAttachment();
         }
-        $memberHandler =& xoops_gethandler('member');
-        $eachposter    =& $memberHandler->getUser($this->getVar('uid'));
+        $memberHandler = xoops_getHandler('member');
+        $eachposter    = $memberHandler->getUser($this->getVar('uid'));
         if (is_object($eachposter) && $eachposter->isActive()) {
             if ($GLOBALS['xoopsModuleConfig']['show_realname'] && $eachposter->getVar('name')) {
                 $post['author'] = $eachposter->getVar('name');
@@ -389,7 +389,7 @@ class Post extends ArtObject
     }
 
     /**
-     * @param  int  $uid
+     * @param  int $uid
      * @return bool
      */
     public function checkIdentity($uid = -1)
@@ -422,7 +422,7 @@ class Post extends ArtObject
         static $name_anonymous;
 
         if (!isset($name_anonymous)) {
-            $name_anonymous = & $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+            $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
 
         mod_loadFunctions('time', 'newbb');
@@ -470,7 +470,7 @@ class Post extends ArtObject
         $post_title = $this->getVar('subject');
         //        if (isset($_GET['keywords']) && !empty($_GET['keywords'])) {
         if (XoopsRequest::getString('keywords', '', 'GET')) {
-            $keywords   = & $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
+            $keywords   = $myts->htmlSpecialChars(trim(urldecode(XoopsRequest::getString('keywords', '', 'GET'))));
             $post_text  = newbb_highlightText($post_text, $keywords);
             $post_title = newbb_highlightText($post_title, $keywords);
         }
@@ -504,7 +504,7 @@ class Post extends ArtObject
         }
 
         if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
-            $topicHandler = &xoops_getmodulehandler('topic', 'newbb');
+            $topicHandler = xoops_getModuleHandler('topic', 'newbb');
             $topic_status = $topic_obj->getVar('topic_status');
             if ($topicHandler->getPermission($forum_id, $topic_status, 'edit')) {
                 $edit_ok = ($isadmin || ($this->checkIdentity() && $this->checkTimelimit('edit_timelimit')));
@@ -632,9 +632,9 @@ class Post extends ArtObject
             'post_attachment' => $post_attachment,
             'post_edit'       => $this->displayPostEdit(),
             'post_no'         => $post_no,
-            'post_signature'  => ($this->getVar('attachsig')) ? @$poster['signature'] : '',
-//            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($this->getVar('poster_ip')) : '',
-            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? ($this->getVar('poster_ip')) : '',
+            'post_signature'  => $this->getVar('attachsig') ? @$poster['signature'] : '',
+            //            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($this->getVar('poster_ip')) : '',
+            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $this->getVar('poster_ip') : '',
             'thread_action'   => $thread_action,
             'thread_buttons'  => $thread_buttons,
             'mod_buttons'     => $mod_buttons,
@@ -650,7 +650,8 @@ class Post extends ArtObject
 /**
  * Class NewbbPostHandler
  */
-class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends XoopsPersistableObjectHandler
+class NewbbPostHandler extends ArtObjectHandler //
+    //class NewbbPostHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -661,16 +662,17 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param  mixed       $id
-     * @return null|object
+     * @param  mixed $id
+     * @param null $var
+     * @return null|XoopsObject
      */
-    public function &get($id)
+    public function get($id = null, $var = null) //get($id)
     {
-        $id   = (int)($id);
+        $id   = (int)$id;
         $post = null;
         $sql  = 'SELECT p.*, t.* FROM ' . $this->db->prefix('bb_posts') . ' p LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
         if ($array = $this->db->fetchArray($this->db->query($sql))) {
-            $post =& $this->create(false);
+            $post = $this->create(false);
             $post->assignVars($array);
         }
 
@@ -678,18 +680,23 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param        $topic_id
-     * @param        $limit
-     * @param  int   $approved
+     * @param int $limit
+     * @param int $start
+     * @param CriteriaElement $criteria
+     * @param null $fields
+     * @param bool $asObject
+     * @param int $topic_id
+     * @param  int $approved
      * @return array
      */
-    public function &getByLimit($topic_id, $limit, $approved = 1)
+    //    public function getByLimit($topic_id, $limit, $approved = 1)
+    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true, $topic_id = 0, $approved = 1)
     {
         $sql    = 'SELECT p.*, t.*, tp.topic_status FROM ' . $this->db->prefix('bb_posts') . ' p LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' t ON p.post_id=t.post_id LEFT JOIN ' . $this->db->prefix('bb_topics') . ' tp ON tp.topic_id=p.topic_id WHERE p.topic_id=' . $topic_id . ' AND p.approved =' . $approved . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = array();
         while ($myrow = $this->db->fetchArray($result)) {
-            $post =& $this->create(false);
+            $post = $this->create(false);
             $post->assignVars($myrow);
 
             $ret[$myrow['post_id']] = $post;
@@ -728,7 +735,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             return false;
         }
         if (is_numeric($post)) {
-            $post =& $this->get($post);
+            $post = $this->get($post);
         }
         $post_id = $post->getVar('post_id');
 
@@ -740,8 +747,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         $post->setVar('approved', 1);
         $this->insert($post, true);
 
-        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-        $topic_obj    =& $topicHandler->get($post->getVar('topic_id'));
+        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
+        $topic_obj    = $topicHandler->get($post->getVar('topic_id'));
         if ($topic_obj->getVar('topic_last_post_id') < $post->getVar('post_id')) {
             $topic_obj->setVar('topic_last_post_id', $post->getVar('post_id'));
         }
@@ -752,8 +759,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         }
         $topicHandler->insert($topic_obj, true);
 
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $forum_obj    =& $forumHandler->get($post->getVar('forum_id'));
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        $forum_obj    = $forumHandler->get($post->getVar('forum_id'));
         if ($forum_obj->getVar('forum_last_post_id') < $post->getVar('post_id')) {
             $forum_obj->setVar('forum_last_post_id', $post->getVar('post_id'));
         }
@@ -765,8 +772,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
 
         // Update user stats
         if ($post->getVar('uid') > 0) {
-            $memberHandler =& xoops_gethandler('member');
-            $poster        =& $memberHandler->getUser($post->getVar('uid'));
+            $memberHandler = xoops_getHandler('member');
+            $poster        = $memberHandler->getUser($post->getVar('uid'));
             if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
                 $res = $memberHandler->insertUser($poster, true);
@@ -775,7 +782,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         }
 
         // Update forum stats
-        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
         $statsHandler->update($post->getVar('forum_id'), 'post');
         if ($post->isTopic()) {
             $statsHandler->update($post->getVar('forum_id'), 'topic');
@@ -785,11 +792,11 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param  object $post
-     * @param  bool   $force
+     * @param  XoopsObject $post
+     * @param  bool $force
      * @return bool
      */
-    public function insert(&$post, $force = true)
+    public function insert(XoopsObject $post, $force = true) //insert(&$post, $force = true)
     {
         // Set the post time
         // The time should be "publish" time. To be adjusted later
@@ -797,10 +804,10 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             $post->setVar('post_time', time());
         }
 
-        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         // Verify the topic ID
         if ($topic_id = $post->getVar('topic_id')) {
-            $topic_obj =& $topicHandler->get($topic_id);
+            $topic_obj = $topicHandler->get($topic_id);
             // Invalid topic OR the topic is no approved and the post is not top post
             if (!$topic_obj
                 //    || (!$post->isTopic() && $topic_obj->getVar("approved") < 1)
@@ -812,9 +819,9 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             $post->setVar('topic_id', 0);
             $post->setVar('pid', 0);
             $post->setNew();
-            $topic_obj =& $topicHandler->create();
+            $topic_obj = $topicHandler->create();
         }
-        $textHandler    =& xoops_getmodulehandler('text', 'newbb');
+        $textHandler    = xoops_getModuleHandler('text', 'newbb');
         $post_text_vars = array('post_text', 'post_edit', 'dohtml', 'doxcode', 'dosmiley', 'doimage', 'dobr');
         if ($post->isNew()) {
             if (!$topic_id = $post->getVar('topic_id')) {
@@ -841,11 +848,11 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
                 $post->setVar('pid', $pid);
             }
 
-            $text_obj =& $textHandler->create();
+            $text_obj = $textHandler->create();
             foreach ($post_text_vars as $key) {
                 $text_obj->vars[$key] = $post->vars[$key];
             }
-            $post->destoryVars($post_text_vars);
+            $post->destroyVars($post_text_vars);
             if (!$post_id = parent::insert($post, $force)) {
                 return false;
             }
@@ -877,12 +884,12 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
                     return false;
                 }
             }
-            $text_obj =& $textHandler->get($post->getVar('post_id'));
+            $text_obj = $textHandler->get($post->getVar('post_id'));
             $text_obj->setDirty();
             foreach ($post_text_vars as $key) {
                 $text_obj->vars[$key] = $post->vars[$key];
             }
-            $post->destoryVars($post_text_vars);
+            $post->destroyVars($post_text_vars);
             if (!$post_id = parent::insert($post, $force)) {
                 //xoops_error($post->getErrors());
                 return false;
@@ -899,12 +906,12 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param  object $post
-     * @param  bool   $isDeleteOne
-     * @param  bool   $force
+     * @param  XoopsObject $post
+     * @param  bool $isDeleteOne
+     * @param  bool $force
      * @return bool
      */
-    public function delete(&$post, $isDeleteOne = true, $force = false)
+    public function delete(XoopsObject $post, $isDeleteOne = true, $force = false)
     {
         if (!is_object($post) || $post->getVar('post_id') == 0) {
             return false;
@@ -927,7 +934,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
             $arr    = $mytree->getAllChild($post->getVar('post_id'));
             // irmtfan - delete childs in a reverse order
             for ($i = count($arr) - 1; $i >= 0; $i--) {
-                $childpost =& $this->create(false);
+                $childpost = $this->create(false);
                 $childpost->assignVars($arr[$i]);
                 $this->_delete($childpost, $force);
                 unset($childpost);
@@ -939,11 +946,11 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     }
 
     /**
-     * @param       $post
+     * @param  XoopsObject $post
      * @param  bool $force
      * @return bool
      */
-    public function _delete(&$post, $force = false)
+    public function _delete(XoopsObject $post, $force = false)
     {
         global $xoopsModule;
 
@@ -975,8 +982,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         }
 
         if ($post->isTopic()) {
-            $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-            $topic_obj    =& $topicHandler->get($post->getVar('topic_id'));
+            $topicHandler = xoops_getModuleHandler('topic', 'newbb');
+            $topic_obj    = $topicHandler->get($post->getVar('topic_id'));
             if (is_object($topic_obj) && $topic_obj->getVar('approved') > 0 && empty($force)) {
                 $topiccount_toupdate = 1;
                 $topic_obj->setVar('approved', -1);
@@ -1019,8 +1026,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
 
             // Update user stats
             if ($post->getVar('uid') > 0) {
-                $memberHandler =& xoops_gethandler('member');
-                $poster        =& $memberHandler->getUser($post->getVar('uid'));
+                $memberHandler = xoops_getHandler('member');
+                $poster        = $memberHandler->getUser($post->getVar('uid'));
                 if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                     $poster->setVar('posts', $poster->getVar('posts') - 1);
                     $res = $memberHandler->insertUser($poster, true);
@@ -1041,8 +1048,8 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
 
     // START irmtfan enhance getPostCount when there is join (read_mode = 2)
     /**
-     * @param  null     $criteria
-     * @param  null     $join
+     * @param  null $criteria
+     * @param  null $join
      * @return int|null
      */
     public function getPostCount($criteria = null, $join = null)
@@ -1073,13 +1080,13 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
      * TODO: combining viewtopic.php
      */
     /**
-     * @param  null  $criteria
-     * @param  int   $limit
-     * @param  int   $start
-     * @param  null  $join
+     * @param  null $criteria
+     * @param  int $limit
+     * @param  int $start
+     * @param  null $join
      * @return array
      */
-    public function &getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
+    public function getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
     {
         $ret = array();
         $sql = 'SELECT p.*, t.* ' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' AS t ON t.post_id = p.post_id';
@@ -1092,13 +1099,13 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
         }
-        $result = $this->db->query($sql, (int)($limit), (int)($start));
+        $result = $this->db->query($sql, (int)$limit, (int)$start);
         if (!$result) {
             //xoops_error($this->db->error());
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $post =& $this->create(false);
+            $post = $this->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;
             unset($post);
@@ -1119,9 +1126,12 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         $this->deleteAll(new Criteria('post_time', 0), true, true);
         parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id');
@@ -1133,7 +1143,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         } else {
             // for 4.0+
             $sql = 'DELETE ' . $this->db->prefix('bb_posts_text') . ' FROM ' . $this->db->prefix('bb_posts_text') . ' LEFT JOIN ' . $this->table . ' AS aa ON ' . $this->db->prefix('bb_posts_text') . '.post_id = aa.post_id ' . ' WHERE (aa.post_id IS NULL)';
-            
+
             // Alternative for 4.1+
             /*
             $sql =     "DELETE bb FROM ".$this->db->prefix("bb_posts_text")." AS bb".
@@ -1152,7 +1162,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
     /**
      * clean expired objects from database
      *
-     * @param  int  $expire time limit for expiration
+     * @param  int $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)
@@ -1160,7 +1170,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         // irmtfan if 0 no cleanup look include/plugin.php
         if (!func_num_args()) {
             $newbbConfig = newbbLoadConfig();
-            $expire      = isset($newbbConfig['pending_expire']) ? (int)($newbbConfig['pending_expire']) : 7;
+            $expire      = isset($newbbConfig['pending_expire']) ? (int)$newbbConfig['pending_expire'] : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
         if (empty($expire)) {
@@ -1168,7 +1178,7 @@ class NewbbPostHandler extends ArtObjectHandler //class NewbbPostHandler extends
         }
         $crit_expire = new CriteriaCompo(new Criteria('approved', 0, '<='));
         //if (!empty($expire)) {
-        $crit_expire->add(new Criteria('post_time', time() - (int)($expire), '<'));
+        $crit_expire->add(new Criteria('post_time', time() - (int)$expire, '<'));
 
         //}
         return $this->deleteAll($crit_expire, true/*, true*/);

@@ -30,8 +30,8 @@ $poll_id  = XoopsRequest::getInt('poll_id', XoopsRequest::getInt('poll_id', 0, '
 $topic_id = XoopsRequest::getInt('topic_id', XoopsRequest::getInt('topic_id', 0, 'POST'), 'GET');
 $forum    = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', 0, 'POST'), 'GET');
 
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj    =& $topicHandler->get($topic_id);
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$topic_obj    = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'vote')) {
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }
@@ -41,14 +41,14 @@ if (!XoopsRequest::getInt('option_id', 0, 'POST')) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
-$pollModuleHandler =& $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
+$pollModuleHandler = $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // new xoopspoll module
     if ($pollModuleHandler->getVar('version') >= 140) {
         xoops_load('constants', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        $xpPollHandler =& xoops_getmodulehandler('poll', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        $xpLogHandler  =& xoops_getmodulehandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+        $xpPollHandler = xoops_getModuleHandler('poll', $GLOBALS['xoopsModuleConfig']['poll_module']);
+        $xpLogHandler  = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
         $poll_obj      = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
@@ -77,7 +77,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
             //@todo:: add $url to all redirects
             //            $url = $GLOBALS['xoops']->buildUrl("index.php", array('poll_id' => $poll_id));
             if ($poll_obj->isAllowedToVote()) {
-                $thisVoter     = (is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : null;
+                $thisVoter     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : null;
                 $votedThisPoll = $xpLogHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $thisVoter);
                 if (!$votedThisPoll) {
                     /* user that hasn't voted before in this poll or module preferences allow it */

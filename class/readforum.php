@@ -38,7 +38,7 @@ include_once __DIR__ . '/read.php';
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
-class Readforum extends Read
+class ReadForum extends Read
 {
     /**
      *
@@ -50,9 +50,9 @@ class Readforum extends Read
 }
 
 /**
- * Class NewbbReadforumHandler
+ * Class NewbbReadForumHandler
  */
-class NewbbReadforumHandler extends NewbbReadHandler
+class NewbbReadForumHandler extends NewbbReadHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -65,9 +65,12 @@ class NewbbReadforumHandler extends NewbbReadHandler
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
 
@@ -75,7 +78,7 @@ class NewbbReadforumHandler extends NewbbReadHandler
     }
 
     /**
-     * @param  int  $status
+     * @param  int $status
      * @param  null $uid
      * @return bool
      */
@@ -102,7 +105,7 @@ class NewbbReadforumHandler extends NewbbReadHandler
         $cookie_name = 'LF';
         $items       = array();
         if (!empty($status)) {
-            $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
+            $itemHandler = xoops_getModuleHandler('forum', 'newbb');
             $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
                 $items[$key] = time();
@@ -133,8 +136,8 @@ class NewbbReadforumHandler extends NewbbReadHandler
             return true;
         }
 
-        $itemHandler =& xoops_getmodulehandler('forum', 'newbb');
-        $items_obj   =& $itemHandler->getAll(null, array('forum_last_post_id'));
+        $itemHandler = xoops_getModuleHandler('forum', 'newbb');
+        $items_obj   = $itemHandler->getAll(null, array('forum_last_post_id'));
         foreach (array_keys($items_obj) as $key) {
             $this->setRead_db($key, $items_obj[$key]->getVar('forum_last_post_id'), $uid);
         }
@@ -143,8 +146,11 @@ class NewbbReadforumHandler extends NewbbReadHandler
         return true;
     }
 
+    /**
+     *
+     */
     public function synchronization()
     {
-//        return;
+        //        return;
     }
 }

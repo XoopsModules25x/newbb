@@ -39,8 +39,8 @@ foreach (array('topic_id', 'rate', 'forum') as $var) {
     ${$var} = XoopsRequest::getInt($var, XoopsRequest::getInt($var, 0, 'POST'), 'GET');
 }
 
-$topicHandler = &xoops_getmodulehandler('topic', 'newbb');
-$topic_obj    = &$topicHandler->get($topic_id);
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$topic_obj    = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post') && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
@@ -49,12 +49,12 @@ if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->ge
 if (empty($rate)) {
     redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NOVOTERATE);
 }
-$rateHandler =& xoops_getmodulehandler('rate', $xoopsModule->getVar('dirname'));
+$rateHandler = xoops_getModuleHandler('rate', $xoopsModule->getVar('dirname'));
 if ($ratinguser !== 0) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post = new CriteriaCompo(new Criteria('topic_id', $topic_id));
     $crit_post->add(new Criteria('uid', $ratinguser));
-    $postHandler = &xoops_getmodulehandler('post', $xoopsModule->getVar('dirname'));
+    $postHandler = xoops_getModuleHandler('post', $xoopsModule->getVar('dirname'));
     if ($postHandler->getCount($crit_post)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_CANTVOTEOWN);
     }
@@ -81,7 +81,7 @@ $rate_obj->setVar('ratinguser', $ratinguser);
 $rate_obj->setVar('ratinghostname', $ip);
 $rate_obj->setVar('ratingtimestamp', time());
 
-$ratingid = $rateHandler->insert($rate_obj);;
+$ratingid = $rateHandler->insert($rate_obj);
 
 $query       = 'select rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);

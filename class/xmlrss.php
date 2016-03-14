@@ -78,7 +78,7 @@ class Xmlrss
      * @param         $link
      * @param  string $description
      * @param  string $label
-     * @param  int    $pubdate
+     * @param  int $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)
@@ -104,7 +104,7 @@ class Xmlrss
 
     /**
      * @param               $text
-     * @param  int          $trim
+     * @param  int $trim
      * @return mixed|string
      */
     public function cleanup($text, $trim = 0)
@@ -113,7 +113,7 @@ class Xmlrss
             $text = XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {
-            $text = xoops_substr($text, 0, (int)($trim));
+            $text = xoops_substr($text, 0, (int)$trim);
         }
         $text = htmlspecialchars($text, ENT_QUOTES);
 

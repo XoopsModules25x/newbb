@@ -2,6 +2,7 @@
 ===========================================
 - issue 14: SEO images (slider84/montuy337513)
 - issue 18: Array to string (cesagonchu/mamba)
+- PHP7 and XOOPS 2.5.8 updates (mamba)
 
 4.33 RC 10                   (2015-11-15)
 ===========================================

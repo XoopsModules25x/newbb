@@ -36,13 +36,13 @@ $forumCookie['domain'] = '';
 $forumCookie['path']   = '/';
 $forumCookie['secure'] = false;
 $forumCookie['expire'] = time() + 3600 * 24 * 30; // one month
-$forumCookie['prefix'] = 'newbb_' . ((is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . newbb_getIP()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
+$forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . newbb_getIP()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
 
 // set LastVisitTemp cookie, which only gets the time from the LastVisit cookie if it does not exist yet
 // otherwise, it gets the time from the LastVisitTemp cookie
 $last_visit = newbb_getsession('LV');
-$last_visit = ($last_visit) ? : newbb_getcookie('LV');
-$last_visit = ($last_visit) ? : time();
+$last_visit = $last_visit ?: newbb_getcookie('LV');
+$last_visit = $last_visit ?: time();
 
 // update LastVisit cookie.
 newbb_setcookie('LV', time(), $forumCookie['expire']); // set cookie life time to one month

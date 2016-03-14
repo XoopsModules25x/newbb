@@ -38,8 +38,8 @@ if (!$newXoopsModuleGui) {
 } else {
     echo $indexAdmin->addNavigation('admin_groupmod.php');
 }
-$memberHandler =& xoops_gethandler('member');
-$forumHandler  = &xoops_getmodulehandler('forum', 'newbb');
+$memberHandler = xoops_getHandler('member');
+$forumHandler  = xoops_getModuleHandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
     $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
@@ -48,7 +48,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         if ($fgroups !== '') {
             $gg = array();
             foreach ($fgroups as $k) {
-                $gg = &$memberHandler->getUsersByGroup($k, false);
+                $gg = $memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
                     if (!in_array($f, $fuser)) {
                         $fuser[] = $f;
@@ -74,7 +74,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo "<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
-$categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+$categoryHandler  = xoops_getModuleHandler('category', 'newbb');
 $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
 $criteriaCategory->setSort('cat_order');
 $categories = $categoryHandler->getAll($criteriaCategory, array('cat_id', 'cat_order', 'cat_title'));
@@ -93,7 +93,7 @@ foreach (array_keys($categories) as $c) {
 echo '</select>';
 echo "</td><tr><tr><td class='even'>";
 
-$groups =& $memberHandler->getGroups();
+$groups = $memberHandler->getGroups();
 foreach ($groups as $value) {
     echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br />';
 }

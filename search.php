@@ -30,8 +30,8 @@
 //  ------------------------------------------------------------------------ //
 include_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
-$configHandler     =& xoops_gethandler('config');
-$xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$configHandler     = xoops_getHandler('config');
+$xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if ($xoopsConfigSearch['enable_search'] !== 1) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
@@ -74,7 +74,7 @@ $show_search     = 'post_text';
 $search_username = trim($uname);
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init(0);
 }
 
@@ -164,12 +164,12 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $sortby                = XoopsRequest::getString('sortby', XoopsRequest::getString('sortby', null, 'POST'), 'GET');
     $next_search['sortby'] = $sortby;
     //$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  't.topic_last_post_id';
-    $sortby                  = (in_array(strtolower($sortby), $allowed)) ? $sortby : 'p.post_time';
+    $sortby                  = in_array(strtolower($sortby), $allowed) ? $sortby : 'p.post_time';
     $searchin                = XoopsRequest::getString('searchin', XoopsRequest::getString('searchin', 'both', 'GET'), 'POST');
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
     if (!empty($since)) {
-        $criteriaExtra->add(new Criteria('p.post_time', (time() - newbb_getSinceTime($since)), '>='), 'OR');
+        $criteriaExtra->add(new Criteria('p.post_time', time() - newbb_getSinceTime($since), '>='), 'OR');
     }
     if (is_numeric($topic) && !empty($topic)) {
         $criteriaExtra->add(new Criteria('p.topic_id', $topic), 'OR');

@@ -28,7 +28,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
 
     /**
      * @param        $mid
-     * @param  int   $id
+     * @param  int $id
      * @return array
      */
     public function getValidItems($mid, $id = 0)
@@ -49,11 +49,11 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function deleteByCategory($cat_id)
     {
-        $cat_id = (int)($cat_id);
+        $cat_id = (int)$cat_id;
         if (empty($cat_id)) {
             return false;
         }
-        $gpermHandler =& xoops_gethandler('groupperm');
+        $gpermHandler = xoops_getHandler('groupperm');
         $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $criteria->add(new Criteria('gperm_name', 'category_access'));
         $criteria->add(new Criteria('gperm_itemid', $cat_id));
@@ -71,12 +71,12 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
         if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
-            $module_handler =& xoops_gethandler('module');
-            $newbb          =& $module_handler->getByDirname('newbb');
+            $module_handler = xoops_getHandler('module');
+            $newbb          = $module_handler->getByDirname('newbb');
             $mid            = $newbb->getVar('mid');
         }
         if (empty($groups)) {
-            $memberHandler =& xoops_gethandler('member');
+            $memberHandler = xoops_getHandler('member');
             $glist         = $memberHandler->getGroupList();
             $groups        = array_keys($glist);
         }

@@ -21,7 +21,7 @@ if ($GLOBALS['xoopsModuleConfig']['email_digest'] == 0) {
 
     return false;
 }
-$digestHandler =& xoops_getmodulehandler('digest', 'newbb');
+$digestHandler = xoops_getModuleHandler('digest', 'newbb');
 $msg           = $digestHandler->process();
 $msg .= ob_get_contents();
 ob_end_clean();

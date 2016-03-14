@@ -51,7 +51,7 @@ function newbb_load_object()
 function &newbbLoadConfig()
 {
     static $moduleConfig;
-    if (null !== ($moduleConfig)) {
+    if (null !== $moduleConfig) {
         return $moduleConfig;
     }
 
@@ -68,8 +68,8 @@ function &newbbLoadConfig()
 // Backword compatible
 /**
  * @param $filename
- * @param  string     $module
- * @param  string     $default
+ * @param  string $module
+ * @param  string $default
  * @return bool|mixed
  */
 function newbb_load_lang_file($filename, $module = '', $default = 'english')

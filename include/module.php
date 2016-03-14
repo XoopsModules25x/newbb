@@ -40,7 +40,7 @@ newbb_load_object();
 
 /**
  * @param  XoopsModule $module
- * @param  null        $oldversion
+ * @param  null $oldversion
  * @return bool
  */
 function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
@@ -91,10 +91,10 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         xoops_module_update_newbb_v400($module);
     }
 
-//    if ($oldversion < 403) {
-//        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
-//        $GLOBALS['xoopsDB']->queryF($sql);
-//    }
+    //    if ($oldversion < 403) {
+    //        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
+    //        $GLOBALS['xoopsDB']->queryF($sql);
+    //    }
 
     if ($oldversion < 431) {
         $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.430.sql'));
@@ -117,7 +117,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 
         $sql    = 'SELECT post_id, poster_ip FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts');
         $result = $GLOBALS['xoopsDB']->query($sql);
-//        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        //        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
         while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $newIpValue = '';
             if ($MyIpCheck->isValidIpAddress(long2ip((float)$row['poster_ip']))) {
@@ -126,7 +126,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
             $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " SET poster_ip='" . $newIpValue . "' WHERE post_id=" . $row['post_id'];
             $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
             if ($result_sub) {
-                $sql2          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' SET updated=true WHERE post_id=' . $row['post_id'];
+                $sql2 = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' SET updated=true WHERE post_id=' . $row['post_id'];
                 $GLOBALS['xoopsDB']->queryF($sql2);
             } else {
                 $module->setErrors("Could not convert 'poster_ip' to varchar(45) for IPv6 " . $row['post_id']);
@@ -166,9 +166,9 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         //remove old changelogs
         array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
 
-//        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
-//        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
-//        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
+        //        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
+        //        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
+        //        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
     }
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
@@ -209,7 +209,7 @@ function xoops_module_pre_install_newbb(XoopsModule $module)
 function xoops_module_install_newbb(XoopsModule $module)
 {
     /* Create a test category */
-    $categoryHandler = &xoops_getmodulehandler('category', $module->getVar('dirname'));
+    $categoryHandler = xoops_getModuleHandler('category', $module->getVar('dirname'));
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
@@ -220,7 +220,7 @@ function xoops_module_install_newbb(XoopsModule $module)
     }
 
     /* Create a forum for test */
-    $forumHandler = &xoops_getmodulehandler('forum', $module->getVar('dirname'));
+    $forumHandler = xoops_getModuleHandler('forum', $module->getVar('dirname'));
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
@@ -234,7 +234,7 @@ function xoops_module_install_newbb(XoopsModule $module)
 
     /* Set corresponding permissions for the category and the forum */
     $module_id    = $module->getVar('mid');
-    $gpermHandler = &xoops_gethandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
     $groups_view  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
     $groups_post  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
@@ -252,7 +252,7 @@ function xoops_module_install_newbb(XoopsModule $module)
 
     /* Create a test post */
     mod_loadFunctions('user', 'newbb');
-    $postHandler = &xoops_getmodulehandler('post', $module->getVar('dirname'));
+    $postHandler = xoops_getModuleHandler('post', $module->getVar('dirname'));
     $forumpost   = $postHandler->create();
     $forumpost->setVar('poster_ip', newbb_getIP());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));

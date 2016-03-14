@@ -34,7 +34,7 @@ include_once $GLOBALS['xoops']->path('class/template.php');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once 'seo_url.php';
+    include_once __DIR__ . '/seo_url.php';
 }
 /* for seo */
 
@@ -48,8 +48,8 @@ if (XoopsRequest::getString('f', 0, 'GET')) {
     //$forums[] = (int)($_GET["f"]);
 }
 
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $validForums  = $forumHandler->getIdsByPermission(); // get all accessible forums
 
 if (is_array($forums) && count($forums) > 0) {
@@ -80,7 +80,7 @@ $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     mod_loadFunctions('time', 'newbb');
 
-    $xmlrss_handler =& xoops_getmodulehandler('xmlrss', 'newbb');
+    $xmlrss_handler = xoops_getModuleHandler('xmlrss', 'newbb');
     $rss            = $xmlrss_handler->create();
 
     $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_FORUM);
@@ -142,7 +142,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbb_getUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-        $typeHandler = &xoops_getmodulehandler('type', 'newbb');
+        $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -156,7 +156,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = ($topic['poster_name']) ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+            $topic['uname'] = $topic['poster_name'] ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';

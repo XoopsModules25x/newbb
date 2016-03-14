@@ -5,8 +5,8 @@
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
-$seoOp    = XoopsRequest::getString('seoOp', '', 'GET') = checker(XoopsRequest::getString('seoOp', '', 'GET'));
-$seoArg   = XoopsRequest::getInt('seoArg', 0, 'GET');
+$seoOp = XoopsRequest::getString('seoOp', '', 'GET')       = checker(XoopsRequest::getString('seoOp', '', 'GET'));
+$seoArg                                                    = XoopsRequest::getInt('seoArg', 0, 'GET');
 $seoOther = XoopsRequest::getString('seoOther', '', 'GET') = checker(XoopsRequest::getString('seoOther', '', 'GET'));
 
 $seos = array('c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf');
@@ -19,14 +19,13 @@ $seoMap = array(
     'rc'  => 'rss.php',
     'rf'  => 'rss.php',
     'pr'  => 'print.php',
-    'pdf' => 'makepdf.php'
-);
+    'pdf' => 'makepdf.php');
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
     $ori_self               = $_SERVER['PHP_SELF'];
-    $ori_self               = explode("modules/newbb", $ori_self);
+    $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
     $_ENV['PHP_SELF']       = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
@@ -62,9 +61,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     include($seoMap[$seoOp]);
 
 } else {
-    $last = $seoOp . "/" . $seoArg;
+    $last = $seoOp . '/' . $seoArg;
     if ($seoOther !== '') {
-        $last .= "/" . $seoOther;
+        $last .= '/' . $seoOther;
     }
     include $last;
 }
@@ -89,7 +88,6 @@ function checker(&$value)
     if (false !== strpos($value, '<script')) {
         $value = '';
     }
-
 
     // pruefe auf Kommentare (SQL-Injections)
     if (false !== strpos($value, '/*')) {

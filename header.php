@@ -18,11 +18,11 @@ $dirname = $xoopsModule->getVar('dirname');
 xoops_load('XoopsRequest');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once 'seo_url.php';
+    include_once __DIR__ . '/seo_url.php';
     /* for seo */
     $toseo_url = array('index.php', 'viewforum.php', 'viewtopic.php', 'rss.php');
 
-    if ((!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0) && (strpos(getenv('REQUEST_URI'), '.html') === false))) {
+    if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0) && (strpos(getenv('REQUEST_URI'), '.html') === false)) {
         $redir = false;
         if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
             // Mark Forums
@@ -125,8 +125,8 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['we
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
-//$module_handler = &xoops_gethandler('module');
-$xoopspoll = &$module_handler->getByDirname($pollmodules);
+//$module_handler = xoops_getHandler('module');
+$xoopspoll = $module_handler->getByDirname($pollmodules);
 /*
 if (is_object($xoopspoll) && $xoopspoll->getVar('isactive')) {
         $pollmodules = 'xoopspoll';

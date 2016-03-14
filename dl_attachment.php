@@ -21,19 +21,19 @@ if (!$post_id || !$attach_id) {
     exit(_MD_NO_SUCH_FILE . ': post_id:' . $post_id . '; attachid' . $attachid);
 }
 
-$postHandler =& xoops_getmodulehandler('post', 'newbb');
+$postHandler = xoops_getModuleHandler('post', 'newbb');
 $forumpost   =& $postHandler->get($post_id);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$topic_obj    =& $topicHandler->getByPost($post_id);
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$topic_obj    = $topicHandler->getByPost($post_id);
 $topic_id     = $topic_obj->getVar('topic_id');
 if (!$approved = $topic_obj->getVar('approved')) {
     exit(_MD_NORIGHTTOVIEW);
 }
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$forum_obj    =& $forumHandler->get($topic_obj->getVar('forum_id'));
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+$forum_obj    = $forumHandler->get($topic_obj->getVar('forum_id'));
 if (!$forumHandler->getPermission($forum_obj)) {
     exit(_MD_NORIGHTTOACCESS);
 }

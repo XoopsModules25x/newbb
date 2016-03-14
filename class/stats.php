@@ -49,7 +49,7 @@ class NewbbStatsHandler
     }
 
     /**
-     * @param  null              $db
+     * @param  null $db
      * @return NewbbStatsHandler
      */
     public function &instance($db = null)
@@ -65,13 +65,13 @@ class NewbbStatsHandler
     /**
      * @param       $id
      * @param       $type
-     * @param  int  $increment
+     * @param  int $increment
      * @return bool
      */
     public function update($id, $type, $increment = 1)
     {
-        $id        = (int)($id);
-        $increment = (int)($increment);
+        $id        = (int)$id;
+        $increment = (int)$increment;
 
         if (empty($increment) || false === ($type = array_search($type, $this->param['type']))) {
             return false;
@@ -114,7 +114,7 @@ class NewbbStatsHandler
         $result = $this->db->query($sql);
 
         while ($row = $this->db->fetchArray($result)) {
-            $ret[(string)($row['stats_id'])][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
+            $ret[(string)$row['stats_id']][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
         }
 
         return $ret;

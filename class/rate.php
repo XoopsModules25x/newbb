@@ -37,7 +37,7 @@ newbb_load_object();
 /**
  * Class Nrate
  */
-class Nrate extends ArtObject
+class Nrate extends XoopsObject
 {
     /**
      *
@@ -57,7 +57,7 @@ class Nrate extends ArtObject
 /**
  * Class NewbbRateHandler
  */
-class NewbbRateHandler extends ArtObjectHandler
+class NewbbRateHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -67,17 +67,23 @@ class NewbbRateHandler extends ArtObjectHandler
         parent::__construct($db, 'bb_votedata', 'Nrate', 'ratingid', '');
     }
 
+    /**
+     *
+     */
     public function synchronization()
     {
-//        return;
+        //        return;
     }
 
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id');
     }

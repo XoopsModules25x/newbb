@@ -118,7 +118,7 @@ define('_MI_KARMA_OPTIONS', 'Karma options for post');
 define('_MI_KARMA_OPTIONS_DESC', "Use ', ' as delimiter for multi-options.");
 // irmtfan rewise since
 define('_MI_SINCE_OPTIONS', "'Since' options for creating a selection box in 'viewform.php', 'list.topic.php' and 'search.php'");
-define('_MI_SINCE_OPTIONS_DESC', 'Positive value for days and negative value for hours. Use ',' as delimiter for multi-options. (0=From the beginning) (365=From the last year)');
+define('_MI_SINCE_OPTIONS_DESC', 'Positive value for days and negative value for hours. Use ', ' as delimiter for multi-options. (0=From the beginning) (365=From the last year)');
 define('_MI_SINCE_DEFAULT', "'Since' default value in selection box");
 define('_MI_SINCE_DEFAULT_DESC', 'Default value in the selection box if not specified by users. Positive value for days and negative value for hours. (0=From the beginning) (365=From the last year)');
 define('_MI_MODERATOR_HTML', 'Allow HTML tags for moderators');
@@ -211,14 +211,14 @@ define('_MI_NEWBB_INSTALL_FORUM_NAME', 'Forum Test');
 define('_MI_NEWBB_INSTALL_FORUM_DESC', 'Forum for test.');
 define('_MI_NEWBB_INSTALL_POST_SUBJECT', 'Congratulations! The forum is working.');
 define('_MI_NEWBB_INSTALL_POST_TEXT', '
-    Welcome to ' . (htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)) . ' forum.
+    Welcome to ' . htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
     Feel free to register and login to start your topics.
 
     If you have any question concerning NewBB usage, plz visit your local support site or [url=http://xoops.org/modules/newbb/]XOOPS Support Site[/url].
     ');
 define('_MI_NEWBB_ADMENU_GROUPMOD', 'Group moderate');
 define('_MI_SUBJECT_PREFIX', 'Add a prefix to the topic subject');
-define('_MI_SUBJECT_PREFIX_DESC', 'Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ',' as the separator. NONE is no prefix.');
+define('_MI_SUBJECT_PREFIX_DESC', 'Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ', ' as the separator. NONE is no prefix.');
 define('_MI_SUBJECT_PREFIX_DEFAULT', "<span style='color:#00CC00;'> [solved] </span> <span style='color:#00CC00;'> [done] </span> <span style='color:#FF0000;'> [request] </span> , <span style='color:#FF0000;'> [bug report] </span> <span style='color:#FF0000;'> [unsolved] </span>");
 define('_MI_SUBJECT_PREFIX_LEVEL', 'Permissions for use of prefixes');
 define('_MI_SUBJECT_PREFIX_LEVEL_DESC', 'The group (s) select the prefixes to use it.');

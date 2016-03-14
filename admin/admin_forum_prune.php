@@ -45,7 +45,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $selected_forums = '';
     // irmtfan fix if it is array
     $temp = XoopsRequest::getArray('forums', null, 'POST');
-    if (!$temp || !($temp[0])) {
+    if (!$temp || !$temp[0]) {
         redirect_header('admin_forum_prune.php', 1, _AM_NEWBB_PRUNE_FORUMSELERROR);
     } elseif (is_array(XoopsRequest::getArray('forums', '', 'POST'))) {
         $selected_forums = implode(',', XoopsRequest::getArray('forums', null, 'POST'));
@@ -147,7 +147,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                 return _MD_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-            $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:
         }

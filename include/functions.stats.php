@@ -23,21 +23,21 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbb_get_stats()
     {
-        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
         $stats        = $statsHandler->getStats();
 
         return $stats;
     }
 
     /**
-     * @param     $id
-     * @param     $type
-     * @param int $increment
+     * @param        $id
+     * @param        $type
+     * @param  int $increment
      * @return mixed
      */
     function newbb_update_stats($id, $type, $increment = 1)
     {
-        $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
 
         return $statsHandler->update($id, $type, $increment);
     }
@@ -46,15 +46,15 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     * Gets the total number of topics in a form
     */
     /**
-     * @param string $forum_id
+     * @param  string $forum_id
      * @return mixed
      */
     function getTotalTopics($forum_id = '')
     {
-        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria     = new CriteriaCompo(new Criteria('approved', 0, '>'));
         if ($forum_id) {
-            $criteria->add(new Criteria('forum_id', (int)($forum_id)));
+            $criteria->add(new Criteria('forum_id', (int)$forum_id));
         }
 
         return $topicHandler->getCount($criteria);
@@ -65,23 +65,23 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     * Also can return the number of users on the system.
     */
     /**
-     * @param int    $id
-     * @param string $type
+     * @param  int $id
+     * @param  string $type
      * @return mixed
      */
     function getTotalPosts($id = 0, $type = 'all')
     {
-        $postHandler =& xoops_getmodulehandler('post', 'newbb');
+        $postHandler = xoops_getModuleHandler('post', 'newbb');
         $criteria    = new CriteriaCompo(new Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('forum_id', (int)($id)));
+                    $criteria->add(new Criteria('forum_id', (int)$id));
                 }
                 break;
             case 'topic':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('topic_id', (int)($id)));
+                    $criteria->add(new Criteria('topic_id', (int)$id));
                 }
                 break;
             case 'all':

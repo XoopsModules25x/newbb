@@ -56,9 +56,9 @@ $status   = (XoopsRequest::getString('status', '', 'GET') && in_array(XoopsReque
 $mode = (XoopsRequest::getString('status', '', 'GET') && in_array(XoopsRequest::getString('status', '', 'GET'), array(
         'active',
         'pending',
-        'deleted'), true)) ? 2 : (XoopsRequest::getInt('mode', 0, 'GET')); // (!empty($status) && in_array($status, array("active", "pending", "deleted"))) ? 2 : (!empty($_GET['mode']) ? (int)($_GET['mode']) : 0);
+        'deleted'), true)) ? 2 : XoopsRequest::getInt('mode', 0, 'GET'); // (!empty($status) && in_array($status, array("active", "pending", "deleted"))) ? 2 : (!empty($_GET['mode']) ? (int)($_GET['mode']) : 0);
 
-$forumHandler = &xoops_getmodulehandler('forum', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 $forum_obj    = $forumHandler->get($forum_id);
 
 if (!$forum_obj) {
@@ -90,7 +90,7 @@ $xoopsTpl->assign('forum_id', $forum_id);
 $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
 
 $isadmin = newbb_isAdmin($forum_obj);
-$xoopsTpl->assign('viewer_level', ($isadmin) ? 2 : is_object($GLOBALS['xoopsUser']));
+$xoopsTpl->assign('viewer_level', $isadmin ? 2 : is_object($GLOBALS['xoopsUser']));
 /* Only admin has access to admin mode */
 if (!$isadmin) {
     $status = (!empty($status) && in_array($status, array('active', 'pending', 'deleted'), true)) ? '' : $status;
@@ -105,7 +105,7 @@ if ($isadmin) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forum_obj);
     $xoopsTpl->assign('online', $onlineHandler->show_online());
 }
@@ -141,8 +141,8 @@ if ($forums = $forumHandler->getAll($criteria, null, false)) {
     $xoopsTpl->assign_by_ref('subforum', $subforum);
 }
 
-$categoryHandler =& xoops_getmodulehandler('category');
-$category_obj    =& $categoryHandler->get($forum_obj->getVar('cat_id'), array('cat_title'));
+$categoryHandler = xoops_getModuleHandler('category');
+$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), array('cat_title'));
 $xoopsTpl->assign('category', array('id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')));
 
 $xoopsTpl->assign('forum_index_title', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
@@ -228,7 +228,7 @@ $query_type = $query_array;
 unset($query_type['type']);
 $page_query_type = implode('&amp;', array_values($query_type));
 unset($query_type);
-$typeHandler =& xoops_getmodulehandler('type', 'newbb');
+$typeHandler = xoops_getModuleHandler('type', 'newbb');
 $typeOptions = null;
 $types       = array();
 if ($types = $typeHandler->getByForum($forum_id)) {
@@ -304,7 +304,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
-    $permHandler      = &xoops_getmodulehandler('permission', 'newbb');
+    $permHandler      = xoops_getModuleHandler('permission', 'newbb');
     $permission_table = $permHandler->permission_table($forum_id, false, $isadmin);
     $xoopsTpl->assign_by_ref('permission_table', $permission_table);
     unset($permission_table);
