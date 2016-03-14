@@ -57,7 +57,7 @@ function newbb_admin_getPathStatus($path = '')
 
 /**
  * @param       $target
- * @param  int  $mode
+ * @param  int $mode
  * @return bool
  */
 function newbb_admin_mkdir($target, $mode = 0777)
@@ -70,7 +70,7 @@ function newbb_admin_mkdir($target, $mode = 0777)
 
 /**
  * @param       $target
- * @param  int  $mode
+ * @param  int $mode
  * @return bool
  */
 function newbb_admin_chmod($target, $mode = 0777)
@@ -132,21 +132,21 @@ switch ($op) {
     case 'createdir':
         $path = XoopsRequest::getString('path', '', 'GET');// $_GET['path'];
         $res  = newbb_admin_mkdir($path);
-        $msg  = ($res) ? _AM_NEWBB_DIRCREATED : _AM_NEWBB_DIRNOTCREATED;
+        $msg  = $res ? _AM_NEWBB_DIRCREATED : _AM_NEWBB_DIRNOTCREATED;
         redirect_header('index.php', 2, $msg . ': ' . $path);
         break;
 
     case 'setperm':
         $path = XoopsRequest::getString('path', '', 'GET');// $_GET['path'];
         $res  = newbb_admin_chmod($path, 0777);
-        $msg  = ($res) ? _AM_NEWBB_PERMSET : _AM_NEWBB_PERMNOTSET;
+        $msg  = $res ? _AM_NEWBB_PERMSET : _AM_NEWBB_PERMNOTSET;
         redirect_header('index.php', 2, $msg . ': ' . $path);
         break;
 
     case 'senddigest':
-        $digestHandler = &xoops_getmodulehandler('digest', 'newbb');
+        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         $res           = $digestHandler->process(true);
-        $msg           = ($res) ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
+        $msg           = $res ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
         redirect_header('index.php', 2, $msg);
         break;
 
@@ -155,13 +155,13 @@ switch ($op) {
         xoops_cp_header();
         echo '<fieldset>';
         $imageLibs      = newbb_getImageLibs();
-        $module_handler = &xoops_gethandler('module');
-        $reportHandler  = &xoops_getmodulehandler('report', 'newbb');
+        $module_handler = xoops_getHandler('module');
+        $reportHandler  = xoops_getModuleHandler('report', 'newbb');
 
         $isOK = false;
         // START irmtfan add a poll_module config
         //XOOPS_POLL
-        $xoopspoll = &$module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
+        $xoopspoll = $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
         if (is_object($xoopspoll)) {
             $isOK = $xoopspoll->getVar('isactive');
         }
@@ -198,7 +198,7 @@ switch ($op) {
             }
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_POLLMODULE . ': %s' . '</infotext>', $pollLink, 'Green');
             // END irmtfan better poll module display link and version - check if xoops poll module is available
-            $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_IMAGEMAGICK . ' %s' . '</infotext>', (array_key_exists('imagemagick', $imageLibs)) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
+            $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_IMAGEMAGICK . ' %s' . '</infotext>', array_key_exists('imagemagick', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . 'NetPBM' . ': %s' . '</infotext>', array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB1 . ' %s' . '</infotext>', array_key_exists('gd1', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] : _AM_NEWBB_NOTAVAILABLE, 'Red');
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB2 . ' %s' . '</infotext>', array_key_exists('gd2', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
@@ -214,7 +214,7 @@ switch ($op) {
             $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, '<infolabel>' . _AM_NEWBB_REPORT_PROCESSED . ': %s' . '</infolabel>', $reportHandler->getCount(new Criteria('report_result', 1)), 'Green');
 
             foreach (array_keys($folder) as $i) {
-                if (!(newbb_admin_getPathStatus($folder[$i])) === '') {
+                if (!newbb_admin_getPathStatus($folder[$i]) === '') {
                     $indexAdmin->addConfigBoxLine($folder[$i] . ' ' . newbb_admin_getPathStatus($folder[$i]), 'folder');
                 } else {
                     $indexAdmin->addConfigBoxLine($folder[$i], 'folder');
@@ -233,7 +233,7 @@ switch ($op) {
 
             echo "<div style='padding: 12px;'>" . _AM_NEWBB_POLLMODULE . ': ';
 
-            echo ($isOK) ? _AM_NEWBB_AVAILABLE . ': (Module: ' . $xoopspoll->getVar('name') . ')' : _AM_NEWBB_NOTAVAILABLE;
+            echo $isOK ? _AM_NEWBB_AVAILABLE . ': (Module: ' . $xoopspoll->getVar('name') . ')' : _AM_NEWBB_NOTAVAILABLE;
             echo '</div>';
             echo "<div style='padding: 8px;'>";
             echo "<a href='http://www.imagemagick.org' target='_blank'>" . _AM_NEWBB_IMAGEMAGICK . '&nbsp;</a>';
@@ -287,9 +287,9 @@ switch ($op) {
             echo '</fieldset><br />';
 
             if ($GLOBALS['xoopsModuleConfig']['email_digest'] > 0) {
-                $digestHandler = &xoops_getmodulehandler('digest', 'newbb');
+                $digestHandler = xoops_getModuleHandler('digest', 'newbb');
                 echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_DIGEST . '</legend>';
-                $due    = ($digestHandler->checkStatus()) / 60; // minutes
+                $due    = $digestHandler->checkStatus() / 60; // minutes
                 $prompt = ($due > 0) ? sprintf(_AM_NEWBB_DIGEST_PAST, $due) : sprintf(_AM_NEWBB_DIGEST_NEXT, abs($due));
                 echo "<div style='padding: 12px;'><a href='index.php?op=senddigest'>" . $prompt . '</a> | ';
                 echo "<a href='admin_digest.php'>" . _AM_NEWBB_DIGEST_ARCHIVE . '</a> <strong>' . $digestHandler->getDigestCount() . '</strong>';
@@ -386,7 +386,7 @@ switch ($op) {
                 * Not good but works
             */
             if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate'])) {
-                $moderateHandler =& xoops_getmodulehandler('moderate', 'newbb');
+                $moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
                 $moderateHandler->clearGarbage();
             }
         }
@@ -399,7 +399,7 @@ mod_clearCacheFile('permission', 'newbb');
 
 /**
  * @param             $sizeAsString
- * @param  bool       $b
+ * @param  bool $b
  * @return int|string
  */
 function return_bytes($sizeAsString, $b = false)

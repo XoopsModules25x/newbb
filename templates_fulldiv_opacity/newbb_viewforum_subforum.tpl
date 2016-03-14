@@ -17,7 +17,7 @@
                 <{$sforum.forum_desc}>
                 <{if $sforum.forum_moderators}>
                     <br/>
-                    <span class="extra"><{$smarty.const._MD_MODERATOR}>:&nbsp;</strong><{$sforum.forum_moderators}>
+                    <span class="extra"><{$smarty.const._MD_MODERATOR}>:&nbsp;</span><{$sforum.forum_moderators}>
                 <{/if}>
             </div>
            </div>
@@ -29,7 +29,7 @@
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
                     <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
                     <{$sforum.forum_lastpost_icon}>
-                </a>                       
+                </a>
             <{else}>
                 <{$smarty.const._MD_NONEWPOSTS}>
               <{/if}>

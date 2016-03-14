@@ -20,7 +20,7 @@ if (!$isadmin) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
-$moderateHandler  = &xoops_getmodulehandler('moderate', 'newbb');
+$moderateHandler  = xoops_getModuleHandler('moderate', 'newbb');
 
 if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expire', 0, 'POST')) {
     if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) {
@@ -37,7 +37,7 @@ if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expir
         $moderate_obj->setVar('mod_desc', XoopsRequest::getString('desc', '', 'POST'));
         $res = $moderateHandler->insert($moderate_obj);
         if (XoopsRequest::getInt('uid', 0, 'POST') > 0) {
-            $onlineHandler = &xoops_gethandler('online');
+            $onlineHandler = xoops_getHandler('online');
             $onlines       =& $onlineHandler->getAll(new Criteria('online_uid', XoopsRequest::getInt('uid', 0, 'POST')));
             if (false !== $onlines) {
                 $online_ip = $onlines[0]['online_ip'];
@@ -92,7 +92,7 @@ $criteria->setLimit($GLOBALS['xoopsModuleConfig']['topics_per_page']);
 $criteria->setStart($start);
 $criteria->setSort($sort);
 $criteria->setOrder($order);
-$moderate_objs  =& $moderateHandler->getObjects($criteria);
+$moderate_objs  = $moderateHandler->getObjects($criteria);
 $moderate_count = $moderateHandler->getCount($criteria);
 
 include $GLOBALS['xoops']->path('header.php');
@@ -144,7 +144,7 @@ if (!empty($moderate_count)) {
         </tr>
     ';
     // START irmtfan add forum name in moderate.php
-    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $forum_list   = $forumHandler->getAll(null, array('forum_name'), false);
     // END irmtfan add forum name in moderate.php
     foreach (array_keys($moderate_objs) as $id) {
@@ -154,10 +154,10 @@ if (!empty($moderate_count)) {
                     ' . ($moderate_objs[$id]->getVar('uid') ? (isset($users[$moderate_objs[$id]->getVar('uid')]) ? $users[$moderate_objs[$id]->getVar('uid')] : $moderate_objs[$id]->getVar('uid')) : $moderate_objs[$id]->getVar('ip')) . '
                     </td>
                 <td width="10%" align="center">
-                    ' . (formatTimestamp($moderate_objs[$id]->getVar('mod_start'))) . '
+                    ' . formatTimestamp($moderate_objs[$id]->getVar('mod_start')) . '
                     </td>
                 <td width="10%" align="center">
-                    ' . (formatTimestamp($moderate_objs[$id]->getVar('mod_end'))) . '
+                    ' . formatTimestamp($moderate_objs[$id]->getVar('mod_end')) . '
                     </td>
                 <td width="10%" align="center">
                     ' . ($moderate_objs[$id]->getVar('forum_id') ? $forum_list[$moderate_objs[$id]->getVar('forum_id')]['forum_name'] /*irmtfan add forum name in moderate.php*/ : _ALL) . '

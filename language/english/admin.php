@@ -294,3 +294,5 @@ define('_AM_NEWBB_SYNC_TYPE_READ', 'Read Data');
 define('_AM_NEWBB_DATABASEUPDATED', 'Database Updated Successfully!');
 define('_AM_NEWBB_CAN_PDF', 'Can create PDF files');
 define('_AM_NEWBB_CAN_PRINT', 'Can get print page');
+//4.33
+define('_AM_NEWBB_INDEX_PAGE', 'Index Page');

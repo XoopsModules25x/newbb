@@ -8,13 +8,13 @@
  * @since          4.00
  * @version        $Id $
  * @package        module::newbb
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 
 function xoops_module_update_newbb_v400(XoopsModule $module)
 {
-    $statsHandler =& xoops_getmodulehandler('stats', 'newbb');
+    $statsHandler = xoops_getModuleHandler('stats', 'newbb');
 
     $result = $GLOBALS['xoopsDB']->query('SELECT `forum_id`, `forum_topics`, `forum_posts` FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums'));
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -75,7 +75,7 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
     }
 
     @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php');
-    if (function_exists('tag_getTagHandler') && $tag_handler =& tag_getTagHandler()) {
+    if (function_exists('tag_getTagHandler') && $tag_handler = tag_getTagHandler()) {
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
         $sql = '    SELECT topic_id, topic_tags' . "    FROM {$table_topic}";

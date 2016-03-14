@@ -36,13 +36,13 @@ $op   = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST')
 $item = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 
 $start = XoopsRequest::getInt('start', 0, 'GET');
-//$reportHandler =& xoops_getmodulehandler('report', 'newbb');
+//$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
 xoops_cp_header();
 switch ($op) {
     case 'delete':
         $digest_ids    = XoopsRequest::getArray('digest_id', '', 'POST');
-        $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
+        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         if ($digest_ids !== '') {
             foreach ($digest_ids as $did => $value) {
                 $digestHandler->delete($did);
@@ -68,8 +68,8 @@ switch ($op) {
         echo '</tr>';
 
         $digests       = array();
-        $digestHandler =& xoops_getmodulehandler('digest', 'newbb');
-        $digests       =& $digestHandler->getAllDigests($start, $limit);
+        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+        $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
             echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", '<br />', $digest['digest_content']) . '</td>';

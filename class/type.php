@@ -66,7 +66,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
     {
         $ret = array();
 
-        $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : array((int)($forums))));
+        $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : array((int)$forums)));
 
         $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order' . '     FROM ' . $this->db->prefix('bb_type_forum') . ' AS l ' . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " . '     WHERE ' . '        l.forum_id ' . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')') . '         ORDER BY l.type_order ASC';
         if (($result = $this->db->query($sql)) === false) {
@@ -89,12 +89,12 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * Update types linked to a forum
      *
      * @param  integer $forum_id
-     * @param  array   $types
+     * @param  array $types
      * @return boolean
      */
     public function updateByForum($forum_id, $types)
     {
-        $forum_id = (int)($forum_id);
+        $forum_id = (int)$forum_id;
         if (empty($forum_id)) {
             return false;
         }
@@ -160,11 +160,11 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
     /**
      * delete an object as well as links relying on it
      *
-     * @param  object $object {@link NewbbType}
-     * @param  bool   $force  flag to force the query execution despite security settings
+     * @param  XoopsObject $object {@link NewbbType}
+     * @param  bool $force         flag to force the query execution despite security settings
      * @return bool
      */
-    public function delete(&$object, $force = true)
+    public function delete(XoopsObject $object, $force = true)
     {
         if (!is_object($object) || !$object->getVar($this->keyName)) {
             return false;
@@ -193,9 +193,12 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
     /**
      * clean orphan links from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         /* clear forum-type links */
         if ($this->mysql_major_version() >= 4) {

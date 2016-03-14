@@ -54,7 +54,7 @@ class NewbbReportHandler extends ArtObjectHandler
      * @param $posts
      * @return array
      */
-    public function &getByPost($posts)
+    public function getByPost($posts)
     {
         $ret = array();
         if (!$posts) {
@@ -64,21 +64,21 @@ class NewbbReportHandler extends ArtObjectHandler
             $posts = array($posts);
         }
         $post_criteria = new Criteria('post_id', '(' . implode(', ', $posts) . ')', 'IN');
-        $ret           =& $this->getAll($post_criteria);
+        $ret           = $this->getAll($post_criteria);
 
         return $ret;
     }
 
     /**
-     * @param  int    $forums
+     * @param  int $forums
      * @param  string $order
-     * @param  int    $perpage
+     * @param  int $perpage
      * @param         $start
-     * @param  int    $report_result
-     * @param  int    $report_id
+     * @param  int $report_result
+     * @param  int $report_id
      * @return array
      */
-    public function &getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $report_id = 0)
+    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $report_id = 0)
     {
         if ($order === 'DESC') {
             $operator_for_position = '>';
@@ -116,7 +116,7 @@ class NewbbReportHandler extends ArtObjectHandler
         $sql    = 'SELECT r.*, p.subject, p.topic_id, p.forum_id' . $tables_criteria . $forumCriteria . $result_criteria . $order_criteria;
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = array();
-        //$reportHandler = &xoops_getmodulehandler('report', 'newbb');
+        //$reportHandler = xoops_getModuleHandler('report', 'newbb');
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
@@ -124,17 +124,23 @@ class NewbbReportHandler extends ArtObjectHandler
         return $ret;
     }
 
+    /**
+     *
+     */
     public function synchronization()
     {
-//        return;
+        //        return;
     }
 
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
     }

@@ -35,7 +35,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite topic sync
     case 'topic':
         $limit        = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
-        $topicHandler =& xoops_getmodulehandler('topic', 'newbb');
+        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria     = new Criteria('approved', 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
             break;
@@ -60,7 +60,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan - user is not in recon functions - only here
     case 'user':
         $limit       = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
-        $userHandler =& xoops_gethandler('user');
+        $userHandler = xoops_getHandler('user');
         if ($start >= ($count = $userHandler->getCount())) {
             break;
         }

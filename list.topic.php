@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -28,7 +28,7 @@ mod_loadFunctions('time', 'newbb');
 mod_loadFunctions('render', 'newbb');
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
-require_once './class/topic.renderer.php';
+require_once __DIR__ . '/./class/topic.renderer.php';
 $topic_renderer            = NewbbTopicRenderer::instance();
 $topic_renderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']);
 // irmtfan if list topic block is in the page then force to parse
@@ -37,7 +37,7 @@ if (defined('LIST_TOPIC_DEFINED')) {
 }
 
 $topic_renderer->is_multiple = true;
-$topic_renderer->config      =& $GLOBALS['xoopsModuleConfig'];
+$topic_renderer->config      = $GLOBALS['xoopsModuleConfig'];
 $topic_renderer->setVars(@$_GET);
 
 $type   = XoopsRequest::getInt('type', 0, 'GET');
@@ -45,7 +45,7 @@ $status = explode(',', $topic_renderer->vars['status']); // irmtfan to accept mu
 //irmtfan parse status for rendering topic correctly - remove here and move to topic.renderer.php
 //$topic_renderer->parseVar('status',$status);
 // irmtfan to accept multiple status
-$mode = count(array_intersect($status, array('active', 'pending', 'deleted'))) > 0 ? 2 : (XoopsRequest::getInt('mode', 0, 'GET'));
+$mode = count(array_intersect($status, array('active', 'pending', 'deleted'))) > 0 ? 2 : XoopsRequest::getInt('mode', 0, 'GET');
 
 //$isadmin = $GLOBALS["xoopsUserIsAdmin"];
 /* Only admin has access to admin mode */
@@ -54,7 +54,7 @@ if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init();
     $onlineHandler->render($xoopsTpl);
 }

@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
- * @since        4.3
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
+ * @since          4.3
  * @version        $Id $
  * @package        module::newbb
  */
@@ -14,15 +14,15 @@
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
- * @param                      $queryarray
- * @param                      $andor
- * @param                      $limit
- * @param                      $offset
- * @param                      $userid
- * @param int                  $forums
- * @param int                  $sortby
- * @param string               $searchin
- * @param CriteriaCompo        $criteriaExtra
+ * @param                $queryarray
+ * @param                $andor
+ * @param                $limit
+ * @param                $offset
+ * @param                $userid
+ * @param  int $forums
+ * @param  int $sortby
+ * @param  string $searchin
+ * @param  CriteriaCompo $criteriaExtra
  * @return array
  */
 function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', CriteriaCompo $criteriaExtra = null)
@@ -36,7 +36,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module']) && $GLOBALS['module']->getVar('dirname') === 'newbb') {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
-    $forumHandler = & xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new CriteriaCompo();
@@ -110,8 +110,8 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
     }
     $criteria->setOrder($order);
 
-    $postHandler =& xoops_getmodulehandler('post', 'newbb');
-    $posts        = $postHandler->getPostsByLimit($criteria, $limit, $offset);
+    $postHandler = xoops_getModuleHandler('post', 'newbb');
+    $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = array();
     $i   = 0;
@@ -122,7 +122,7 @@ function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0
         $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $hightlight_key; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = &$myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);
+        $ret[$i]['forum_name'] = $myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);
         $ret[$i]['forum_link'] = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

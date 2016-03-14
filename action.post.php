@@ -2,10 +2,10 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (http://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
- * @since        4.00
+ * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
+ * @since          4.00
  * @version        $Id $
  * @package        module::newbb
  */
@@ -24,20 +24,20 @@ if (0 === count($post_id) || 0 === count($op)) {
     redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NORIGHTTOACCESS);
 }
 
-$postHandler  =& xoops_getmodulehandler('post', 'newbb');
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+$postHandler  = xoops_getModuleHandler('post', 'newbb');
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 if (empty($topic_id)) {
     $forum_obj = null;
 } else {
-    $topic_obj =& $topicHandler->get($topic_id);
+    $topic_obj = $topicHandler->get($topic_id);
     $forum_id  = $topic_obj->getVar('forum_id');
-    $forum_obj =& $forumHandler->get($forum_id);
+    $forum_obj = $forumHandler->get($forum_id);
 }
 $isadmin = newbb_isAdmin($forum_obj);
 
 if (!$isadmin) {
-    redirect_header(XOOPS_URL .'/index.php', 2, _MD_NORIGHTTOACCESS);
+    redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 
 switch ($op) {
@@ -47,7 +47,7 @@ switch ($op) {
         $topics = array();
         $forums = array();
         foreach ($post_id as $post) {
-            $post_obj =& $postHandler->get($post);
+            $post_obj = $postHandler->get($post);
             if ($post_obj->getVar('topic_id') < 1) {
                 continue;
             }
@@ -71,7 +71,7 @@ switch ($op) {
         $criteria  = new Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
         $posts_obj =& $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
-            $post_obj =& $posts_obj[$post];
+            $post_obj = $posts_obj[$post];
             if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {
                 continue;
             }
@@ -91,13 +91,13 @@ switch ($op) {
         }
 
         $criteria_topic = new Criteria('topic_id', '(' . implode(',', array_keys($topics)) . ')', 'IN');
-        $topic_list     =& $topicHandler->getList($criteria_topic, true);
+        $topic_list     = $topicHandler->getList($criteria_topic, true);
 
         $criteria_forum = new Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
-        $forum_list     =& $forumHandler->getList($criteria_forum);
+        $forum_list     = $forumHandler->getList($criteria_forum);
 
-        include_once 'include/notification.inc.php';
-        $notificationHandler =& xoops_gethandler('notification');
+        include_once __DIR__ . '/include/notification.inc.php';
+        $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
             $tags                = array();
             $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
@@ -120,7 +120,7 @@ switch ($op) {
         $topics = array();
         $forums = array();
         foreach ($post_id as $post) {
-            $post_obj =& $postHandler->get($post);
+            $post_obj = $postHandler->get($post);
             if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {
                 continue;
             }
@@ -143,7 +143,7 @@ switch ($op) {
         }
         $topic_id = $post_obj->getVar('topic_id');
 
-        $newtopic =& $topicHandler->create();
+        $newtopic = $topicHandler->create();
         $newtopic->setVar('topic_title', $post_obj->getVar('subject'), true);
         $newtopic->setVar('topic_poster', $post_obj->getVar('uid'), true);
         $newtopic->setVar('forum_id', $post_obj->getVar('forum_id'), true);
@@ -183,12 +183,13 @@ switch ($op) {
             $criteria = new CriteriaCompo(new Criteria('topic_id', $new_topic_id));
             $criteria->add(new Criteria('post_id', $post_id, '>'));
             $postHandler->identifierName = 'pid';
-            $posts                        = $postHandler->getList($criteria);
+            $posts                       = $postHandler->getList($criteria);
 
             unset($criteria);
             $post_update = array();
             foreach ($posts as $postid => $pid) {
-                if (!in_array($pid, array_keys($posts))) {
+                //                if (!in_array($pid, array_keys($posts))) {
+                if (!array_key_exists($pid, $posts)) {
                     $post_update[] = $pid;
                 }
                 if (!array_key_exists($pid, $posts)) {

@@ -40,8 +40,8 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
      */
     function newbb_notify_iteminfo($category, $item_id)
     {
-        $module_handler =& xoops_gethandler('module');
-        $module         =& $module_handler->getByDirname('newbb');
+        $module_handler = xoops_getHandler('module');
+        $module         = $module_handler->getByDirname('newbb');
 
         if ($category === 'global') {
             $item['name'] = '';
@@ -49,7 +49,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
 
             return $item;
         }
-        $item_id = (int)($item_id);
+        $item_id = (int)$item_id;
 
         if ($category === 'forum') {
             // Assume we have a valid forum id

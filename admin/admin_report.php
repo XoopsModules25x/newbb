@@ -35,7 +35,7 @@ include_once $GLOBALS['xoops']->path('class/pagenav.php');
 $op            = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
 $item          = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 $start         = XoopsRequest::getInt('start', XoopsRequest::getInt('start', 0, 'GET'), 'POST'); //$start = !empty($_POST['start']) ?  (int)( $_POST['start'] ) : (int)( @$_GET['start'] );
-$reportHandler =& xoops_getmodulehandler('report', 'newbb');
+$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
 xoops_cp_header();
 echo '<fieldset>';
@@ -121,7 +121,7 @@ switch ($op) {
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
-                $memo = & $myts->htmlSpecialChars($report['report_memo']);
+                $memo = $myts->htmlSpecialChars($report['report_memo']);
             }
 
             echo "<tr class='odd' align='left'>";
@@ -130,7 +130,7 @@ switch ($op) {
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
-            $uid           = (int)($report['reporter_uid']);
+            $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbb_getUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br />' : '';
 

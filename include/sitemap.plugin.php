@@ -14,7 +14,7 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = array();
 
-    $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
 
@@ -28,7 +28,7 @@ function b_sitemap_newbb()
     }
 
     $forums_sub_id = array();
-    if ((bool)($forums_top_id) && $sitemap_configs['show_subcategoris']) {
+    if ((bool)$forums_top_id && $sitemap_configs['show_subcategoris']) {
         $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top_id) . ')', 'IN'));
         $crit_sub->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
         $forums_sub_id = $forumHandler->getIds($crit_sub);
@@ -37,7 +37,7 @@ function b_sitemap_newbb()
     /* Fetch forum data */
     $forums_available = array_merge($forums_top_id, $forums_sub_id);
     $forums_array     = array();
-    if ((bool)($forums_available)) {
+    if ((bool)$forums_available) {
         $crit_forum = new Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
         $crit_forum->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $crit_forum->setOrder('ASC');
@@ -46,7 +46,7 @@ function b_sitemap_newbb()
 
     $forums = array();
     foreach ($forums_array as $forumid => $forum) {
-        if ((bool)($forum['parent_forum'])) {
+        if ((bool)$forum['parent_forum']) {
             $forums[$forum['parent_forum']]['fchild'][$forumid] = array(
                 'id'    => $forumid,
                 'url'   => 'viewforum.php?forum=' . $forumid,
@@ -61,7 +61,7 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs['show_subcategoris']) {
-        $categoryHandler =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler = xoops_getModuleHandler('category', 'newbb');
         $categories      = array();
         $categories      = $categoryHandler->getByPermission('access', array('cat_id', 'cat_title'), false);
 

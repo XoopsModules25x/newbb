@@ -57,7 +57,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
 
     public function __construct($title, $modid, $permname, $permdesc, $url = '')
     {
-        $this->XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url);
+        parent::__construct($title, $modid, $permname, $permdesc, $url);
     }
 
     /**
@@ -85,9 +85,9 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
             $this->_itemTree[$item_id]['allchild'] = array();
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
-        $gpermHandler  = &xoops_gethandler('groupperm');
-        $memberHandler = &xoops_gethandler('member');
-        $glist         =& $memberHandler->getGroupList();
+        $gpermHandler  = xoops_getHandler('groupperm');
+        $memberHandler = xoops_getHandler('member');
+        $glist         = $memberHandler->getGroupList();
         foreach (array_keys($glist) as $i) {
             // get selected item id(s) for each group
             $selected = $gpermHandler->getItemIds($this->_permName, $i, $this->_modid);
@@ -102,7 +102,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
         $this->addElement($tray);
         $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
         $ret .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
-        $elements = &$this->getElements();
+        $elements = $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
             if (!is_object($elements[$i])) {
@@ -137,16 +137,16 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
      */
     public function __construct($caption, $name, $groupId, $values = null)
     {
-        $this->XoopsGroupFormCheckBox($caption, $name, $groupId, $values);
+        parent::__construct($caption, $name, $groupId, $values);
     }
 
     /**
      * @param string $tree
-     * @param array  $option
+     * @param array $option
      * @param string $prefix
-     * @param array  $parentIds
+     * @param array $parentIds
      */
-    public function _renderOptionTree(&$tree, $option, $prefix, array $parentIds = array())
+    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         if ($option['id'] > 0) {
             $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
@@ -184,7 +184,7 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
 $action           = strtolower(XoopsRequest::getCmd('action', ''));
 $module_id        = $xoopsModule->getVar('mid');
-$newbbpermHandler =& xoops_getmodulehandler('permission', 'newbb');
+$newbbpermHandler = xoops_getModuleHandler('permission', 'newbb');
 $perms            = $newbbpermHandler->getValidForumPerms();
 
 switch ($action) {
@@ -203,7 +203,7 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-        $memberHandler =& xoops_gethandler('member');
+        $memberHandler = xoops_getHandler('member');
         $glist         = $memberHandler->getGroupList();
         $elements      = array();
         $perm_template = $newbbpermHandler->getTemplate();
@@ -271,12 +271,12 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c - 1000] = ' ';
@@ -317,7 +317,7 @@ switch ($action) {
     default:
         xoops_cp_header();
 
-        $categoryHandler  =& xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -326,7 +326,7 @@ switch ($action) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-        $forumHandler =& xoops_getmodulehandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
         if (0 === count($forums)) {
@@ -373,7 +373,7 @@ switch ($action) {
 
         $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
-        $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -383,7 +383,7 @@ switch ($action) {
             }
             unset($categories);
         } else {
-            $forumHandler = &xoops_getmodulehandler('forum', 'newbb');
+            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
             if (count($forums) > 0) {
                 foreach (array_keys($forums) as $c) {
@@ -400,7 +400,7 @@ switch ($action) {
         $form->display();
 
         // Since we can not control the permission update, a trick is used here
-        $permissionHandler =& xoops_getmodulehandler('permission', 'newbb');
+        $permissionHandler = xoops_getModuleHandler('permission', 'newbb');
         $permissionHandler->createPermData();
         mod_clearCacheFile('permission', 'newbb');
         xoops_cp_footer();

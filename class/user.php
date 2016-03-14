@@ -51,7 +51,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
     }
     $hp    = floor($hp);
     $maxhp = floor($maxhp);
-    $zhp = $maxhp;
+    $zhp   = $maxhp;
     if ($maxhp <= 0) {
         $zhp = 1;
     }
@@ -63,7 +63,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
     }
     $maxmp = floor($maxmp);
     $mp    = floor($mp);
-    $zmp = $maxmp;
+    $zmp   = $maxmp;
     if ($maxmp <= 0) {
         $zmp = 1;
     }
@@ -186,9 +186,9 @@ class NewbbUser
         global $myts;
         static $name_anonymous;
 
-        if (!(is_object($user)) || !($user->isActive())) {
+        if (!is_object($user) || !$user->isActive()) {
             if (!isset($name_anonymous)) {
-                $name_anonymous = & $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+                $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
             }
 
             return array('name' => $name_anonymous, 'link' => $name_anonymous);
@@ -215,8 +215,8 @@ class NewbbUser
         // START hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         //checks for user's groups
         $userinfo['groups'] = array();
-        $memberHandler      =& xoops_gethandler('member');
-        $usergroups         =& $memberHandler->getGroupsByUser($userinfo['uid'], true);
+        $memberHandler      = xoops_getHandler('member');
+        $usergroups         = $memberHandler->getGroupsByUser($userinfo['uid'], true);
         foreach ($usergroups as $group) {
             $userinfo['groups'][] = $group->getVar('name');
         }
@@ -287,7 +287,7 @@ class NewbbUserHandler
         $image_online  = newbbDisplayImage('online', _MD_ONLINE);
         $image_offline = newbbDisplayImage('offline', _MD_OFFLINE);
 
-        $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+        $onlineHandler = xoops_getModuleHandler('online', 'newbb');
         $onlines       = $onlineHandler->checkStatus(array_keys($this->users));
 
         foreach (array_keys($this->users) as $uid) {
@@ -310,7 +310,7 @@ class NewbbUserHandler
         $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . ' WHERE uid IN( ' . implode(', ', array_keys($this->users)) . ')';
         $result = $GLOBALS['xoopsDB']->query($sql);
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            $this->userlist[$myrow['uid']]['digests'] = (int)($myrow['user_digests']);
+            $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
         }
     }
     // START irmtfan remove function

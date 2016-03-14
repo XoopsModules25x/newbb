@@ -48,9 +48,12 @@ class NewbbTextHandler extends ArtObjectHandler
     /**
      * clean orphan items from database
      *
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool true on success
      */
-    public function cleanOrphan()
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         return parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
     }

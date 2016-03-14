@@ -79,8 +79,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo "<td class='head' align='center'><strong>" . _AM_NEWBB_REORDERWEIGHT . '</strong></td>';
     echo '</tr>';
 
-    $forumHandler     = &xoops_getmodulehandler('forum', 'newbb');
-    $categoryHandler  = &xoops_getmodulehandler('category', 'newbb');
+    $forumHandler     = xoops_getModuleHandler('forum', 'newbb');
+    $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
     $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
     $criteriaCategory->setSort('cat_order');
     $categories = $categoryHandler->getAll($criteriaCategory, array('cat_id', 'cat_order', 'cat_title'));

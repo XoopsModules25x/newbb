@@ -119,7 +119,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             return false;
         }
 
-        $newWidth  = (int)(min($imginfo[0], $thumb_width));
+        $newWidth  = (int)min($imginfo[0], $thumb_width);
         $newHeight = (int)($imginfo[1] * $newWidth / $imginfo[0]);
 
         if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
@@ -172,7 +172,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             $supported_types[] = 3;
         }
 
-        $imageCreateFunction = (function_exists('imagecreatetruecolor')) ? 'imagecreatetruecolor' : 'imagecreate';
+        $imageCreateFunction = function_exists('imagecreatetruecolor') ? 'imagecreatetruecolor' : 'imagecreate';
 
         if (in_array($type, $supported_types)) {
             switch ($type) {

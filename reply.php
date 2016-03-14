@@ -40,27 +40,27 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_ERRORTOPIC);
 }
 
-$forumHandler =& xoops_getmodulehandler('forum', 'newbb');
-$topicHandler =& xoops_getmodulehandler('topic', 'newbb');
-$postHandler  =& xoops_getmodulehandler('post', 'newbb');
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$postHandler  = xoops_getModuleHandler('post', 'newbb');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);
 }
-$post_parent_obj =& $postHandler->get($pid);
+$post_parent_obj = $postHandler->get($pid);
 $topic_id        = $post_parent_obj->getVar('topic_id');
 $forum           = $post_parent_obj->getVar('forum_id');
-$post_obj        =& $postHandler->create();
+$post_obj        = $postHandler->create();
 $post_obj->setVar('pid', $pid);
 $post_obj->setVar('topic_id', $topic_id);
 $post_obj->setVar('forum_id', $forum);
 
-$forum_obj =& $forumHandler->get($forum);
+$forum_obj = $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forum_obj)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
 }
 
-$topic_obj    =& $topicHandler->get($topic_id);
+$topic_obj    = $topicHandler->get($topic_id);
 $topic_status = $topic_obj->getVar('topic_status');
 if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
     /*
@@ -80,7 +80,7 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler =& xoops_getmodulehandler('online', 'newbb');
+    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forum_obj);
 }
 
@@ -95,8 +95,8 @@ include_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler =& xoops_getmodulehandler("category");
-$category_obj =& $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
+$categoryHandler = xoops_getModuleHandler("category");
+$category_obj = $categoryHandler->get($forum_obj->getVar("cat_id"), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forum_obj->getVar("cat_id"), "title" => $category_obj->getVar('cat_title')));
 
 $form_title = _MD_REPLY.": <a href=\"viewtopic.php?topic_id={$topic_id}\">".$topic_obj->getVar("topic_title");
@@ -117,7 +117,7 @@ if ($post_parent_obj->getVar('uid')) {
     $r_name = newbb_getUnameFromId($post_parent_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $post_parent_obj->getVar('poster_name');
-    $r_name      = (empty($poster_name)) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
+    $r_name      = empty($poster_name) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
 }
 
 $r_subject = $post_parent_obj->getVar('subject', 'E');
@@ -158,11 +158,12 @@ $require_reply = 0;
 
 include __DIR__ . '/include/form.post.php';
 
-$karmaHandler =& xoops_getmodulehandler('karma', 'newbb');
+$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
-$posts_context     = array();
-$posts_context_obj = $postHandler->getByLimit($topic_id, 5);
+$posts_context = array();
+//$posts_context_obj = $postHandler->getByLimit($topic_id, 5); //mb
+$posts_context_obj = $postHandler->getByLimit(5, 0, null, null, true, $topic_id, 1);
 foreach ($posts_context_obj as $post_context_obj) {
     // Sorry, in order to save queries, we have to hide the non-open post_text even if you have replied or have adequate karma, even an admin.
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_context_obj->getVar('post_karma') > 0) {
@@ -177,7 +178,7 @@ foreach ($posts_context_obj as $post_context_obj) {
         $p_name = newbb_getUnameFromId($post_context_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     } else {
         $poster_name = $post_context_obj->getVar('poster_name');
-        $p_name      = (empty($poster_name)) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
+        $p_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
     }
     $p_date    = formatTimestamp($post_context_obj->getVar('post_time'));
     $p_subject = $post_context_obj->getVar('subject');
