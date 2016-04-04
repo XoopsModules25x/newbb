@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -32,7 +31,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     /**
      * @param        $id
      * @param        $type
-     * @param  int $increment
+     * @param  int   $increment
      * @return mixed
      */
     function newbb_update_stats($id, $type, $increment = 1)
@@ -65,7 +64,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     * Also can return the number of users on the system.
     */
     /**
-     * @param  int $id
+     * @param  int    $id
      * @param  string $type
      * @return mixed
      */

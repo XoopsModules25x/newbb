@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
+// 
 if (defined('NEWBB_ADMIN_DEFINED')) {
     return;
 } else {

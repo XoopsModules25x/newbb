@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -64,7 +63,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     }
 
     /**
-     * @param  int $forum
+     * @param  int  $forum
      * @param  bool $topic_locked
      * @param  bool $isadmin
      * @return mixed
@@ -117,7 +116,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     /**
      * @param         $type
      * @param  string $gperm_name
-     * @param  int $id
+     * @param  int    $id
      * @return bool
      */
     public function getPermission($type, $gperm_name = 'access', $id = 0)
@@ -139,6 +138,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         if (count(array_intersect($allowed_groups, $groups)) > 0) {
             $ret = true;
         }
+
         return $ret;
     }
 
@@ -200,7 +200,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
 
     /**
      * @param        $gperm_name
-     * @param  int $id
+     * @param  int   $id
      * @return array
      */
     public function getGroups($gperm_name, $id = 0)
@@ -311,10 +311,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     /**
      * Check permission (directly)
      *
-     * @param string $gperm_name Name of permission
-     * @param int $gperm_itemid  ID of an item
-     * @param int                /array $gperm_groupid A group ID or an array of group IDs
-     * @param int $gperm_modid   ID of a module
+     * @param string $gperm_name   Name of permission
+     * @param int    $gperm_itemid ID of an item
+     * @param        int           /array $gperm_groupid A group ID or an array of group IDs
+     * @param int    $gperm_modid  ID of a module
      *
      * @return bool TRUE if permission is enabled
      */
@@ -384,7 +384,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
 
     /**
      * @param        $forum
-     * @param  int $mid
+     * @param  int   $mid
      * @return mixed
      */
     public function applyTemplate($forum, $mid = 0)

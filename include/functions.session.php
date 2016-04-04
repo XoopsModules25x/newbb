@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -43,7 +42,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
 
     /**
      * @param             $name
-     * @param  bool $isArray
+     * @param  bool       $isArray
      * @return array|bool
      */
     function newbb_getsession($name, $isArray = false)
@@ -68,7 +67,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     /**
      * @param        $name
      * @param string $string
-     * @param int $expire
+     * @param int    $expire
      */
     function newbb_setcookie($name, $string = '', $expire = 0)
     {
@@ -85,7 +84,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
 
     /**
      * @param             $name
-     * @param  bool $isArray
+     * @param  bool       $isArray
      * @return array|null
      */
     function newbb_getcookie($name, $isArray = false)

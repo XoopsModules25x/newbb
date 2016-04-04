@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -18,7 +17,7 @@ newbb_load_object();
 /**
  * Class Report
  */
-class Report extends ArtObject
+class Report extends XoopsObject
 {
     /**
      *
@@ -40,7 +39,8 @@ class Report extends ArtObject
 /**
  * Class NewbbReportHandler
  */
-class NewbbReportHandler extends ArtObjectHandler
+//class NewbbReportHandler extends ArtObjectHandler
+class NewbbReportHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -70,12 +70,12 @@ class NewbbReportHandler extends ArtObjectHandler
     }
 
     /**
-     * @param  int $forums
+     * @param  int    $forums
      * @param  string $order
-     * @param  int $perpage
+     * @param  int    $perpage
      * @param         $start
-     * @param  int $report_result
-     * @param  int $report_id
+     * @param  int    $report_result
+     * @param  int    $report_id
      * @return array
      */
     public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $report_id = 0)
@@ -135,10 +135,10 @@ class NewbbReportHandler extends ArtObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

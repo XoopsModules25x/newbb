@@ -1,8 +1,8 @@
 <?php
-// $Id: module.v220.php 62 2012-08-17 10:15:26Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -30,7 +30,7 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * @param XoopsModule $module
+ * @param  XoopsModule $module
  * @return bool
  */
 function xoops_module_update_newbb_v220(XoopsModule $module)

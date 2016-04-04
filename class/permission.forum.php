@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -58,7 +57,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
     /**
      * @param        $mid
-     * @param  int $id
+     * @param  int   $id
      * @return array
      */
     public function getValidItems($mid, $id = 0)
@@ -151,7 +150,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param  int $forum
+     * @param  int  $forum
      * @param  bool $topic_locked
      * @param  bool $isadmin
      * @return array
@@ -203,7 +202,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
     /**
      * @param       $forum
-     * @param  int $mid
+     * @param  int  $mid
      * @return bool
      */
     public function applyTemplate($forum, $mid = 0)

@@ -57,4 +57,25 @@ class NewbbUtilities
 
         return $result;
     }
+
+    /**
+     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
+     *
+     * @param string $folder Le chemin complet du répertoire à vérifier
+     *
+     * @return void
+     */
+    public static function prepareFolder($folder)
+    {
+        try {
+            if (!@mkdir($folder) && !is_dir($folder)) {
+                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+            } else {
+                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+            }
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+        }
+        
+    }
 }

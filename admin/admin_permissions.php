@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_permissions.php 69 2012-08-21 19:33:07Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -142,9 +142,9 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 
     /**
      * @param string $tree
-     * @param array $option
+     * @param array  $option
      * @param string $prefix
-     * @param array $parentIds
+     * @param array  $parentIds
      */
     public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
@@ -190,7 +190,7 @@ $perms            = $newbbpermHandler->getValidForumPerms();
 switch ($action) {
     case 'template':
         xoops_cp_header();
-        echo $indexAdmin->addNavigation('admin_permissions.php');
+        echo $indexAdmin->addNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
         $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
@@ -242,7 +242,7 @@ switch ($action) {
         $ret .= '</td></tr>';
         $ret .= '</table></form>';
         echo $ret;
-        xoops_cp_footer();
+        include_once __DIR__ . '/admin_footer.php';
         break;
 
     case 'template_save':
@@ -262,7 +262,7 @@ switch ($action) {
             redirect_header('admin_permissions.php?action=template', 2, _AM_NEWBB_PERM_TEMPLATE);
         }
         xoops_cp_header();
-        echo $indexAdmin->addNavigation('admin_permissions.php');
+        echo $indexAdmin->addNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
         $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
@@ -297,7 +297,7 @@ switch ($action) {
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $fmform->addElement($tray);
         $fmform->display();
-        xoops_cp_footer();
+        include_once __DIR__ . '/admin_footer.php';
         break;
 
     case 'apply_save':
@@ -333,7 +333,7 @@ switch ($action) {
             redirect_header('admin_forum_manager.php', 2, _AM_NEWBB_CREATENEWFORUM);
         }
 
-        echo $indexAdmin->addNavigation('admin_permissions.php');
+        echo $indexAdmin->addNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
         $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
@@ -403,6 +403,6 @@ switch ($action) {
         $permissionHandler = xoops_getModuleHandler('permission', 'newbb');
         $permissionHandler->createPermData();
         mod_clearCacheFile('permission', 'newbb');
-        xoops_cp_footer();
+        include_once __DIR__ . '/admin_footer.php';
         break;
 }

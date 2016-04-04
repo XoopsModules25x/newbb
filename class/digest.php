@@ -7,7 +7,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 class Digest extends XoopsObject
@@ -180,7 +179,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param XoopsObject $digest
+     * @param  XoopsObject $digest
      * @return bool
      */
     public function notify(XoopsObject $digest)
@@ -196,7 +195,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
 
     /**
      * @param        $start
-     * @param  int $perpage
+     * @param  int   $perpage
      * @return array
      */
     public function getAllDigests($start = 0, $perpage = 5)
@@ -307,7 +306,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param XoopsObject $digest
+     * @param  XoopsObject $digest
      * @return bool
      */
     public function buildDigest(XoopsObject $digest)

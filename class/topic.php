@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -18,7 +17,7 @@ newbb_load_object();
 /**
  * Class Topic
  */
-class Topic extends ArtObject
+class Topic extends XoopsObject
 {
     /**
      *
@@ -163,7 +162,7 @@ class Topic extends ArtObject
      * get a poll object from a poll module.
      * note: can be used to find if a poll exist in a module
      * @access public
-     * @param  int $poll_id
+     * @param  int    $poll_id
      * @param  string $pollModule dirname of the poll module
      * @return XoopsObject poll
      */
@@ -200,7 +199,8 @@ class Topic extends ArtObject
 /**
  * Class NewbbTopicHandler
  */
-class NewbbTopicHandler extends ArtObjectHandler
+//class NewbbTopicHandler extends ArtObjectHandler
+class NewbbTopicHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param $db
@@ -212,7 +212,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param  mixed $id
-     * @param  null $var
+     * @param  null  $var
      * @return mixed|null
      */
     public function get($id = null, $var = null) //get($id, $var = null)
@@ -225,7 +225,7 @@ class NewbbTopicHandler extends ArtObjectHandler
         if (!$topic_obj = parent::get($id, $tags)) {
             return $ret;
         }
-        $ret =& $topic_obj;
+        $ret = $topic_obj;
         if (!empty($var) && is_string($var)) {
             $ret = @$topic_obj->getVar($var);
         }
@@ -235,7 +235,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param  XoopsObject $object
-     * @param  bool $force
+     * @param  bool        $force
      * @return mixed
      */
     public function insert(XoopsObject $object, $force = true)
@@ -416,9 +416,9 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * @param         $topic
      * @param  string $order
-     * @param  int $perpage
+     * @param  int    $perpage
      * @param         $start
-     * @param  int $post_id
+     * @param  int    $post_id
      * @param  string $type
      * @return array
      */
@@ -476,7 +476,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param        $postArray
-     * @param  int $pid
+     * @param  int   $pid
      * @return mixed
      */
     public function &getPostTree(&$postArray, $pid = 0)
@@ -524,7 +524,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param        $topic
-     * @param  bool $isApproved
+     * @param  bool  $isApproved
      * @return array
      */
     public function &getAllPosters(&$topic, $isApproved = true)
@@ -548,7 +548,7 @@ class NewbbTopicHandler extends ArtObjectHandler
 
     /**
      * @param  XoopsObject $topic
-     * @param  bool $force
+     * @param  bool        $force
      * @return bool
      */
     public function delete(XoopsObject $topic, $force = true)
@@ -574,7 +574,7 @@ class NewbbTopicHandler extends ArtObjectHandler
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
     /**
      * @param         $forum
-     * @param  int $topic_locked
+     * @param  int    $topic_locked
      * @param  string $type
      * @return bool
      */
@@ -604,10 +604,10 @@ class NewbbTopicHandler extends ArtObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

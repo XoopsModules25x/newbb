@@ -1,8 +1,8 @@
 <?php
-// $Id: readforum.php 62 2012-08-17 10:15:26Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -65,10 +65,10 @@ class NewbbReadForumHandler extends NewbbReadHandler
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
@@ -78,7 +78,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
     }
 
     /**
-     * @param  int $status
+     * @param  int  $status
      * @param  null $uid
      * @return bool
      */

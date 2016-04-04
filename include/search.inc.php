@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
- * @version        $Id $
  * @package        module::newbb
  */
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
@@ -19,9 +18,9 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param                $limit
  * @param                $offset
  * @param                $userid
- * @param  int $forums
- * @param  int $sortby
- * @param  string $searchin
+ * @param  int           $forums
+ * @param  int           $sortby
+ * @param  string        $searchin
  * @param  CriteriaCompo $criteriaExtra
  * @return array
  */

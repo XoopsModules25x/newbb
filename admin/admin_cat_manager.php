@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_cat_manager.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -111,12 +111,12 @@ function editCategory(XoopsObject $category_obj = null)
 switch ($op) {
     case 'mod':
         $category_obj = ($cat_id > 0) ? $categoryHandler->get($cat_id) : $categoryHandler->create();
-        if (!$newXoopsModuleGui) {
-            //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
-            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . '</legend>';
-        } else {
-            echo $indexAdmin->addNavigation('admin_cat_manager.php');
-        }
+        //        if (!$newXoopsModuleGui) {
+        //            //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
+        //            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . '</legend>';
+        //        } else {
+        echo $indexAdmin->addNavigation(basename(__FILE__));
+        //        }
         echo '<br />';
         editCategory($category_obj);
         break;
@@ -162,32 +162,20 @@ switch ($op) {
 
     default:
         if (!$categories = $categoryHandler->getByPermission('all')) {
-            if (!$newXoopsModuleGui) {
-                //loadModuleAdminMenu(1, _AM_NEWBB_CREATENEWCATEGORY);
-                echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWCATEGORY . '</legend>';
-            } else {
-                $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-                echo $indexAdmin->renderButton();
-            }
+            $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
+            echo $indexAdmin->renderButton();
+
             echo '<fieldset>';
             echo '<br />';
             newCategory();
             echo '</fieldset>';
             break;
         }
+        echo $indexAdmin->addNavigation(basename(__FILE__));
+        echo '<fieldset>';
+        $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
+        echo $indexAdmin->renderButton();
 
-        if (!$newXoopsModuleGui) {
-            //loadModuleAdminMenu(1, _AM_NEWBB_CATADMIN);
-            echo '<fieldset>';
-            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CATADMIN . '</legend>';
-            echo '<br />';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='admin_cat_manager.php?op=mod'>" . _AM_NEWBB_CREATENEWCATEGORY . '</a><br /><br />';
-        } else {
-            echo $indexAdmin->addNavigation('admin_cat_manager.php');
-            echo '<fieldset>';
-            $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-            echo $indexAdmin->renderButton();
-        }
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th align='left' class='bg3'>" . _AM_NEWBB_CATEGORY1 . '</th>';
@@ -212,4 +200,4 @@ switch ($op) {
 }
 mod_clearCacheFile('permission_category', 'newbb');
 echo '</fieldset>';
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

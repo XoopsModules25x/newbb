@@ -1,8 +1,8 @@
 <?php
-// $Id: module.php 62 2012-08-17 10:15:26Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -40,7 +40,7 @@ newbb_load_object();
 
 /**
  * @param  XoopsModule $module
- * @param  null $oldversion
+ * @param  null        $oldversion
  * @return bool
  */
 function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
@@ -50,6 +50,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $module->setErrors('You have the latest ' . $module->getInfo('name') . ' module (' . $module->getInfo('dirname') . ' version ' . $module->getInfo('version') . ') and update is not necessary');
         //        print_r($module->getErrors());
         redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/admin/index.php', 2, implode($module->getErrors()));
+
         return true;
     }
     //  END irmtfan to dont run update script if user has the latest version.

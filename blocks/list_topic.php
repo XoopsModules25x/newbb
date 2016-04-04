@@ -7,7 +7,6 @@
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @author         The Persian Xoops Support Site <www.xoops.ir>
  * @since          4.3
- * @version        $Id $
  * @package        module::newbb
  */
 

@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: polls.php 2175 2008-09-23 14:07:03Z phppp $
  */
 // rewrite by irmtfan and zyspec to accept xoopspoll 1.4 and all old xoopspoll and umfrage versions and all clones
 

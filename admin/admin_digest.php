@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_digest.php 62 2012-08-17 10:15:26Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -55,11 +55,10 @@ switch ($op) {
         include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
         echo '<fieldset>';
         $limit = 5;
-        if ($newXoopsModuleGui) {
-            echo $indexAdmin->addNavigation('admin_digest.php');
-        }
+            echo $indexAdmin->addNavigation(basename(__FILE__));
+
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
-        //    else echo $indexAdmin->addNavigation('admin_digest.php') ;
+        //    else echo $indexAdmin->addNavigation(basename(__FILE__));
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -93,4 +92,4 @@ switch ($op) {
 
         break;
 }
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

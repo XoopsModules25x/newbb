@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -28,7 +27,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
 
     /**
      * @param        $mid
-     * @param  int $id
+     * @param  int   $id
      * @return array
      */
     public function getValidItems($mid, $id = 0)

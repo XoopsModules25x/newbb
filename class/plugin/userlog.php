@@ -17,7 +17,6 @@
  * @since           4.31
  * @author          irmtfan (irmtfan@yahoo.com)
  * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
- * @version         $Id: userlog.php 4.31 2013/05/08 16:25:04Z irmtfan $
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 

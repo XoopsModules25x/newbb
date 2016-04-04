@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -65,7 +64,7 @@ class NewbbStatsHandler
     /**
      * @param       $id
      * @param       $type
-     * @param  int $increment
+     * @param  int  $increment
      * @return bool
      */
     public function update($id, $type, $increment = 1)

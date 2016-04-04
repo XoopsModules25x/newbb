@@ -1,8 +1,8 @@
 <?php
-// $Id: newbbtree.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -35,7 +35,7 @@ include_once $GLOBALS['xoops']->path('class/xoopstree.php');
 /**
  * Class Newbbtree
  */
-class Newbbtree extends XoopsTree
+class newbbtree extends XoopsTree
 {
     public $prefix    = '&nbsp;&nbsp;';
     public $increment = '&nbsp;&nbsp;';
@@ -80,7 +80,7 @@ class Newbbtree extends XoopsTree
     // returns an array of first child objects for a given id($sel_id)
     /**
      * @param         $postTree_array
-     * @param  int $pid
+     * @param  int    $pid
      * @param  string $prefix
      * @return bool
      */

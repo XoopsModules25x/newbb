@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_forum_reorder.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -61,13 +61,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     xoops_cp_header();
     echo '<fieldset>';
 
-    if (!$newXoopsModuleGui) {
-        //loadModuleAdminMenu(4, _AM_NEWBB_SETFORUMORDER);
-        echo '<fieldset>';
-        echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_SETFORUMORDER . '</legend>';
-    } else {
-        echo $indexAdmin->addNavigation('admin_forum_reorder.php');
-    }
+        echo $indexAdmin->addNavigation(basename(__FILE__));
+
 
     echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
     $tform = new XoopsThemeForm(_AM_NEWBB_SETFORUMORDER, '', '');
@@ -117,8 +112,5 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     echo '</form>';
     echo '</td></tr></table>';
     echo '</fieldset>';
-    if (!$newXoopsModuleGui) {
-        echo '</fieldset>';
-    }
 }
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

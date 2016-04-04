@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -1097,7 +1096,7 @@ class NewbbTopicRenderer
     // START irmtfan to create an array from selected keys of an array
     /**
      * @param        $array
-     * @param  null $keys
+     * @param  null  $keys
      * @return array
      */
     public function getFromKeys($array, $keys = null)
