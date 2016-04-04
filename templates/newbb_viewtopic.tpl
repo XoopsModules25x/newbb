@@ -110,7 +110,7 @@
 
 <div>
     <div class="dropdown">
-        <select name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}">
+        <select name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
             <{if $viewer_level gt 1}>
                 <{foreachq item=act from=$admin_actions}>
@@ -129,7 +129,7 @@
         <{if $rating_enable && $forum_post && $forum_reply}>
             <select
                     name="rate" id="rate"
-                    onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}">
+                    onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_RATE}></option>
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5"><{$smarty.const._MD_RATE5}></option>
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4"><{$smarty.const._MD_RATE4}></option>
@@ -141,7 +141,7 @@
 
         <select
                 name="viewmode" id="viewmode"
-                onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.location=this.options[this.selectedIndex].value;}">
+                onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
             <{foreachq item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
@@ -178,7 +178,7 @@
     <div class="resultMsg"><{$smarty.const._MD_TOPICLOCK}></div>
     <br/>
 <{/if}>
-<!-- irmtfan remove here and move to the newbb_thread.html
+<!-- irmtfan remove here and move to the newbb_thread.tpl
 <{*<{if $post_id == 0}><div id="aktuell"></div><{/if}> *}>
 -->
 <{foreachq item=topic_post from=$topic_posts}>

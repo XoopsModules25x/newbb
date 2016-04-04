@@ -1,5 +1,5 @@
 <?php
-// $Id: blocks.php,v 1.3 2005/10/19 17:20:33 phppp Exp $
+// 
 // Blocks
 if (defined('NEWBB_BLOCKS_DEFINED')) {
     return;

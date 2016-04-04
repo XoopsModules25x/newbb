@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: forum.php 62 2012-08-17 10:15:26Z alfred $
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
@@ -74,7 +73,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject $forum
-     * @param bool $force
+     * @param  bool        $force
      * @return bool
      */
     public function insert(XoopsObject $forum, $force = true) //insert($forum)
@@ -92,7 +91,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject $forum
-     * @param bool $force
+     * @param  bool        $force
      * @return bool
      */
     public function delete(XoopsObject $forum, $force = false) //delete(&$forum)
@@ -121,10 +120,10 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int $cat
+     * @param  int    $cat
      * @param  string $permission
-     * @param  null $tags
-     * @param  bool $asObject
+     * @param  null   $tags
+     * @param  bool   $asObject
      * @return array
      */
     public function &getByPermission($cat = 0, $permission = 'access', $tags = null, $asObject = true)
@@ -148,10 +147,10 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int $categoryid
+     * @param  int    $categoryid
      * @param  string $permission
-     * @param  bool $asObject
-     * @param  null $tags
+     * @param  bool   $asObject
+     * @param  null   $tags
      * @return array
      */
     public function &getForumsByCategory($categoryid = 0, $permission = '', $asObject = true, $tags = null)
@@ -192,7 +191,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param        $forum
-     * @param  null $criteria
+     * @param  null  $criteria
      * @return array
      */
     public function getAllTopics(&$forum, $criteria = null)
@@ -584,7 +583,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     /**
      * @param         $forum
      * @param  string $type
-     * @param  bool $checkCategory
+     * @param  bool   $checkCategory
      * @return bool
      */
     public function getPermission($forum, $type = 'access', $checkCategory = true)
@@ -669,11 +668,11 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
     /**
      * clean orphan forums from database
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @param  array $forum_ids forum IDs
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @param  array  $forum_ids forum IDs
+     * @return bool   true on success
      */
     // START irmtfan rewrite forum cleanOrphan function. add parent_forum and cat_id orphan check
     //    public function cleanOrphan(array $forum_ids = array())
@@ -782,7 +781,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $sub_forums = $_subforums;
         } else {
             foreach ($subforums as $id) {
-                $sub_forums[$id] =& $_subforums[$id];
+//                if (isset($_subforums[$id])) {
+                    $sub_forums[$id] = $_subforums[$id];
+//                }
             }
         }
 
@@ -822,8 +823,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param        $forums
-     * @param  int $length_title_index
-     * @param  int $count_subforum
+     * @param  int   $length_title_index
+     * @param  int   $count_subforum
      * @return array
      */
     public function &display($forums, $length_title_index = 30, $count_subforum = 1)
@@ -950,8 +951,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      *
      * {@link newbbTree}
      *
-     * @param  int $cat_id        category ID
-     * @param  int $pid           Top forum ID
+     * @param  int    $cat_id     category ID
+     * @param  int    $pid        Top forum ID
      * @param  string $permission permission type
      * @param  string $prefix     prefix for display
      * @param  string $tags       variables to fetch
@@ -969,7 +970,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         require_once __DIR__ . '/tree.php';
         $forums_structured = array();
         foreach (array_keys($forums_obj) as $key) {
-            $forums_structured[$forums_obj[$key]->getVar('cat_id')][$key] =& $forums_obj[$key];
+            $forums_structured[$forums_obj[$key]->getVar('cat_id')][$key] = $forums_obj[$key];
         }
 
         foreach (array_keys($forums_structured) as $cid) {
@@ -986,11 +987,11 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      *
      * {@link newbbTree}
      *
-     * @param  int $cat_id        category ID
-     * @param  int $pid           Top forum ID
-     * @param  string $permission permission type
-     * @param  string $tags       variables to fetch
-     * @param  integer $depth     level of subcategories
+     * @param  int     $cat_id     category ID
+     * @param  int     $pid        Top forum ID
+     * @param  string  $permission permission type
+     * @param  string  $tags       variables to fetch
+     * @param  integer $depth      level of subcategories
      * @return array   associative array of category IDs and sanitized titles
      */
     public function &getArrayTree($cat_id = 0, $pid = 0, $permission = 'access', $tags = null, $depth = 0)
@@ -1006,7 +1007,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $forums_structured = array();
         foreach (array_keys($forums_obj) as $key) {
             $forum_obj                                             =& $forums_obj[$key];
-            $forums_structured[$forum_obj->getVar('cat_id')][$key] =& $forums_obj[$key];
+            $forums_structured[$forum_obj->getVar('cat_id')][$key] = $forums_obj[$key];
         }
         foreach (array_keys($forums_structured) as $cid) {
             $tree              = new NewbbObjectTree($forums_structured[$cid]);
@@ -1046,8 +1047,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      * function for get forum Ids by positive and negative values
      *
      * @param  int|text $values : positive values = forums | negative values = cats | $values=0 = all valid forums, $permission , true/false $parse_cats
-     * @param  string $permission
-     * @param  bool $parse_cats
+     * @param  string   $permission
+     * @param  bool     $parse_cats
      * @return array|mixed $validForums
      */
     public function getIdsByValues($values = 0, $permission = 'access', $parse_cats = true)

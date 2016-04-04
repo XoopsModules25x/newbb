@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -22,9 +21,9 @@ if (!defined('NEWBB_FUNCTIONS_TOPIC')) {
      * Create full title of a topic
      *
      * the title is composed of [type_name] if type_id is greater than 0 plus topic Title
-     * @param      $topicTitle
-     * @param null $prefixName
-     * @param null $prefixColor
+     * @param         $topicTitle
+     * @param  null   $prefixName
+     * @param  null   $prefixColor
      * @return string
      */
     function newbb_getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)
@@ -33,9 +32,9 @@ if (!defined('NEWBB_FUNCTIONS_TOPIC')) {
     }
 
     /**
-     * @param      $topicTitle
-     * @param null $prefixName
-     * @param null $prefixColor
+     * @param         $topicTitle
+     * @param  null   $prefixName
+     * @param  null   $prefixColor
      * @return string
      */
     function getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)

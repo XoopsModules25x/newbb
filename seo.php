@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: seo.php,v 1.5 2006/08/15 19:52:08 malanciault Exp $
+ * 
  * Module: newbbss
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU

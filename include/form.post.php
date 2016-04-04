@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: form.post.php 2170 2008-09-23 13:40:23Z phppp $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -60,7 +59,7 @@ if ($topic_obj->isNew()) {
     $form_title = _MD_POSTNEW;
 } elseif ($post_obj->isNew()) {
     if (empty($post_parent_obj)) {
-        $post_parent_obj =& $postHandler->get($pid);
+        $post_parent_obj = $postHandler->get($pid);
     }
     $form_title = _MD_REPLY . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar('subject') . '</a>';
 } else {

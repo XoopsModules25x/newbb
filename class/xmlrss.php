@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -78,7 +77,7 @@ class Xmlrss
      * @param         $link
      * @param  string $description
      * @param  string $label
-     * @param  int $pubdate
+     * @param  int    $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)
@@ -104,7 +103,7 @@ class Xmlrss
 
     /**
      * @param               $text
-     * @param  int $trim
+     * @param  int          $trim
      * @return mixed|string
      */
     public function cleanup($text, $trim = 0)

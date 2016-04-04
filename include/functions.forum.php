@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -19,10 +18,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param  null $value
+     * @param  null   $value
      * @param  string $permission
-     * @param  bool $delimitorCategory
-     * @param  bool $see
+     * @param  bool   $delimitorCategory
+     * @param  bool   $see
      * @return string
      */
     function newbb_forumSelectBox($value = null, $permission = 'access', $delimitorCategory = true, $see = false)
@@ -90,7 +89,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      *
      * @int integer    $pid    parent forum ID
      *
-     * @param  int $pid
+     * @param  int  $pid
      * @param  bool $refresh
      * @return array
      */
@@ -118,7 +117,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbb_createSubForumList()
     {
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $criteria     = new CriteriaCompo('1', 1);
+        $criteria     = new CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);
@@ -139,7 +138,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param  int $forum_id
+     * @param  int  $forum_id
      * @param  bool $refresh
      * @return array|mixed|null
      */

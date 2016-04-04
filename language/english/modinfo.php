@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php,v 2.3 2012/02/08 16:20:00 dhcst Exp $
+// 
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) {
     return;

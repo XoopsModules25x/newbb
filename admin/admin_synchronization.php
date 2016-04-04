@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
- * @version        $Id: admin_synchronization.php 62 2012-08-17 10:15:26Z alfred $
  * @package        module::newbb
  */
 // irmtfan - TODO - should be changed completly with Newbb new function newbb_synchronization
@@ -14,12 +13,9 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 mod_loadFunctions('recon', 'newbb');
 $form = '<fieldset>';
+$form .= $indexAdmin->addNavigation(basename(__FILE__));
 
-if ($newXoopsModuleGui) {
-    $form .= $indexAdmin->addNavigation('admin_synchronization.php');
-}
-//if (!$newXoopsModuleGui) loadModuleAdminMenu(12, _AM_NEWBB_SYNCFORUM);
-//    else $form .= $indexAdmin->addNavigation('admin_synchronization.php');
+
 
 //if (!empty($_GET['type'])) {
 $start = XoopsRequest::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
@@ -170,4 +166,4 @@ $form .= '</form>';
 $form .= '</fieldset>';
 
 echo $form;
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

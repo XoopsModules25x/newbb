@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -64,7 +63,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHan
 
     /**
      * @param  mixed $id
-     * @param null $fields
+     * @param  null  $fields
      * @return null|XoopsObject
      */
     public function get($id = null, $fields = null) //get($id)

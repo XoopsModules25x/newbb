@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -85,10 +84,10 @@ class NewbbIconHandler
 
     /**
      * TODO: get compatible with new theme engine
-     * @param        $type
-     * @param string $dirname
-     * @param string $default
-     * @param string $endDir
+     * @param         $type
+     * @param  string $dirname
+     * @param  string $default
+     * @param  string $endDir
      * @return mixed
      */
     // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir

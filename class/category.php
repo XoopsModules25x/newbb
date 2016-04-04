@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -54,8 +53,8 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  string $permission
-     * @param  null $tags
-     * @param  bool $asObject
+     * @param  null   $tags
+     * @param  bool   $asObject
      * @return array
      */
     public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
@@ -73,7 +72,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject $category
-     * @param bool $force
+     * @param  bool        $force
      * @return mixed
      */
     public function insert(XoopsObject $category, $force = true)//insert(Category $category)
@@ -87,8 +86,8 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param XoopsObject $category
-     * @param bool $force
+     * @param  XoopsObject $category
+     * @param  bool        $force
      * @return bool|mixed
      * @internal param Category $category
      */

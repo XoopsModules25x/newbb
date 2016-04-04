@@ -1,8 +1,8 @@
 <?php
-// $Id: read.php 62 2012-08-17 10:15:26Z alfred $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -62,7 +62,8 @@ class Read extends XoopsObject //ArtObject
 /**
  * Class NewbbReadHandler
  */
-class NewbbReadHandler extends ArtObjectHandler
+//class NewbbReadHandler extends ArtObjectHandler
+class NewbbReadHandler extends XoopsPersistableObjectHandler
 {
     /**
      * Object type.
@@ -103,7 +104,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     /**
      * @param XoopsDatabase $db
-     * @param $type
+     * @param               $type
      */
     public function __construct(XoopsDatabase $db, $type)
     {
@@ -158,7 +159,7 @@ class NewbbReadHandler extends ArtObjectHandler
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
     /**
      * @param                  $read_item
-     * @param  null $uid
+     * @param  null            $uid
      * @return bool|mixed|null
      */
     public function getRead($read_item, $uid = null)
@@ -213,7 +214,7 @@ class NewbbReadHandler extends ArtObjectHandler
     /**
      * @param                  $read_item
      * @param                  $post_id
-     * @param  null $uid
+     * @param  null            $uid
      * @return bool|mixed|void
      */
     public function setRead($read_item, $post_id, $uid = null)
@@ -271,7 +272,7 @@ class NewbbReadHandler extends ArtObjectHandler
 
     /**
      * @param             $items
-     * @param  null $uid
+     * @param  null       $uid
      * @return array|null
      */
     public function isRead_items(&$items, $uid = null)

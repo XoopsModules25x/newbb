@@ -4,11 +4,10 @@
  *
  * To enable the plugin preferences, you must rename the file or copy it to 'plugin.php'
  *
- * @copyright    XOOPS Project (http://xoops.org)/
+ * @copyright      XOOPS Project (http://xoops.org)/
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author        Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since        4.00
- * @version        $Id $
+ * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since          4.00
  * @package        module::newbb
  */
 

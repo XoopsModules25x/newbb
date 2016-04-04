@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_forum_prune.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -29,11 +29,10 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 
 xoops_cp_header();
 echo '<fieldset>';
-if ($newXoopsModuleGui) {
-    echo $indexAdmin->addNavigation('admin_forum_prune.php');
-}
+    echo $indexAdmin->addNavigation(basename(__FILE__));
+
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(5, _AM_NEWBB_PRUNE_TITLE);
-//    else echo $indexAdmin->addNavigation('admin_forum_prune.php') ;
+//    else echo $indexAdmin->addNavigation(basename(__FILE__));
 
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 
@@ -255,4 +254,4 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
 echo '</td></tr></table>';
 echo '</fieldset>';
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

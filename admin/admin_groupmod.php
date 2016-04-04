@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_groupmod.php,v 4.0 2010/01/06 16:43:32 dhcst$
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -32,12 +32,7 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 echo '<fieldset>';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-if (!$newXoopsModuleGui) {
-    //loadModuleAdminMenu(10,_AM_NEWBB_GROUPMOD_TITLE);
-    echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_GROUPMOD_TITLE . '</legend>';
-} else {
-    echo $indexAdmin->addNavigation('admin_groupmod.php');
-}
+    echo $indexAdmin->addNavigation(basename(__FILE__));
 $memberHandler = xoops_getHandler('member');
 $forumHandler  = xoops_getModuleHandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
@@ -103,4 +98,4 @@ echo '<input type="submit" value="' . _SUBMIT . '" name="submit" />';
 echo '</td></tr></table>';
 echo '</form></fieldset>';
 echo '</fieldset>';
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

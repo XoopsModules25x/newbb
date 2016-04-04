@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -22,7 +21,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param        $type
      * @param        $item_id
      * @param        $post_id
-     * @param  null $uid
+     * @param  null  $uid
      * @return mixed
      */
     function newbb_setRead($type, $item_id, $post_id, $uid = null)
@@ -35,7 +34,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     /**
      * @param        $type
      * @param        $item_id
-     * @param  null $uid
+     * @param  null  $uid
      * @return mixed
      */
     function newbb_getRead($type, $item_id, $uid = null)
@@ -46,7 +45,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     }
 
     /**
-     * @param  int $status
+     * @param  int  $status
      * @param  null $uid
      * @return mixed
      */
@@ -58,8 +57,8 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     }
 
     /**
-     * @param  int $status
-     * @param  int $forum_id
+     * @param  int  $status
+     * @param  int  $forum_id
      * @param  null $uid
      * @return mixed
      */
@@ -73,7 +72,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     /**
      * @param        $type
      * @param        $items
-     * @param  null $uid
+     * @param  null  $uid
      * @return mixed
      */
     function newbb_isRead($type, &$items, $uid = null)

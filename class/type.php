@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -89,7 +88,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * Update types linked to a forum
      *
      * @param  integer $forum_id
-     * @param  array $types
+     * @param  array   $types
      * @return boolean
      */
     public function updateByForum($forum_id, $types)
@@ -161,7 +160,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      * delete an object as well as links relying on it
      *
      * @param  XoopsObject $object {@link NewbbType}
-     * @param  bool $force         flag to force the query execution despite security settings
+     * @param  bool        $force  flag to force the query execution despite security settings
      * @return bool
      */
     public function delete(XoopsObject $object, $force = true)
@@ -193,10 +192,10 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
     /**
      * clean orphan links from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

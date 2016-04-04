@@ -1,5 +1,5 @@
 <?php
-// $Id: tree.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -46,11 +46,11 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make options for a select box from
          *
-         * @param int $key            ID of the object to display as the root of select options
+         * @param int    $key         ID of the object to display as the root of select options
          * @param string $ret         (reference to a string when called from outside) Result from previous recursions
          * @param string $prefix_orig String to indent items at deeper levels
          * @param string $prefix_curr String to indent the current item
-         * @param null $tags
+         * @param null   $tags
          * @internal  param string $fieldName Name of the member variable from the
          *                            node objects that should be used as the title for the options.
          * @internal  param string $selected Value to display as selected
@@ -79,9 +79,9 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string $prefix          String to indent deeper levels
+         * @param  string  $prefix         String to indent deeper levels
          * @param  integer $key            ID of the object to display as the root of select options
-         * @param  null $tags
+         * @param  null    $tags
          * @return string  HTML select box
          * @internal param string $name Name of the select box
          * @internal param string $fieldName Name of the member variable from the
@@ -100,14 +100,14 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string $name            Name of the select box
-         * @param string $fieldName
-         * @param  string $prefix          String to indent deeper levels
-         * @param  string $selected        Value to display as selected
-         * @param bool $addEmptyOption
+         * @param  string  $name           Name of the select box
+         * @param  string  $fieldName
+         * @param  string  $prefix         String to indent deeper levels
+         * @param  string  $selected       Value to display as selected
+         * @param  bool    $addEmptyOption
          * @param  integer $key            ID of the object to display as the root of select options
-         * @param string $extra
-         * @return string HTML select box
+         * @param  string  $extra
+         * @return string  HTML select box
          * @internal param bool $EmptyOption
          * @internal param string $fieldName Name of the member variable from the
          *                                 node objects that should be used as the title for the options.
@@ -129,8 +129,8 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a tree for the array of a given category
          *
-         * @param  string $key    top key of the tree
-         * @param  array $ret     the tree
+         * @param  string  $key   top key of the tree
+         * @param  array   $ret   the tree
          * @param  integer $depth level of subcategories
          * @return array
          * @internal param array $tags fields to be used
@@ -154,8 +154,8 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a tree for the array
          *
-         * @param  int|string $key top key of the tree
-         * @param  integer $depth  level of subcategories
+         * @param  int|string $key   top key of the tree
+         * @param  integer    $depth level of subcategories
          * @return array
          * @internal param array $tags fields to be used
          */
@@ -173,9 +173,9 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a tree for the array of a given category
          *
-         * @param  string $key    top key of the tree
-         * @param  array $ret     the tree
-         * @param  array $tags    fields to be used
+         * @param  string  $key   top key of the tree
+         * @param  array   $ret   the tree
+         * @param  array   $tags  fields to be used
          * @param  integer $depth level of subcategories
          * @return array
          **/
@@ -205,9 +205,9 @@ if (!class_exists('NewbbObjectTree')) {
         /**
          * Make a tree for the array
          *
-         * @param  int|string $key top key of the tree
-         * @param  array $tags     fields to be used
-         * @param  integer $depth  level of subcategories
+         * @param  int|string $key   top key of the tree
+         * @param  array      $tags  fields to be used
+         * @param  integer    $depth level of subcategories
          * @return array
          */
         public function &makeArrayTree($key = 0, $tags = null, $depth = 0)
@@ -224,9 +224,9 @@ if (!class_exists('NewbbObjectTree')) {
         /**#@+
          * get all parent forums
          *
-         * @param  string $key  ID of the child object
-         * @param  array $ret   (empty when called from outside) Result from previous recursions
-         * @param  int $uplevel (empty when called from outside) level of recursion
+         * @param  string $key     ID of the child object
+         * @param  array  $ret     (empty when called from outside) Result from previous recursions
+         * @param  int    $uplevel (empty when called from outside) level of recursion
          * @return array  Array of parent nodes.
          */
         public function &_getParentForums($key, array $ret = array(), $uplevel = 0)
@@ -237,7 +237,7 @@ if (!class_exists('NewbbObjectTree')) {
                     //$parents = $this->getParentForums($this->_tree[$key]['parent'], $ret, $uplevel+1);
                     $parents = $this->getParentForums($this->_tree[$key]['parent']);
                     foreach (array_keys($parents) as $newkey) {
-                        $ret[$newkey] =& $parents[$newkey];
+                        $ret[$newkey] = $parents[$newkey];
                     }
                 }
             }
@@ -247,7 +247,7 @@ if (!class_exists('NewbbObjectTree')) {
 
         /**
          * @param        $key
-         * @param  bool $reverse
+         * @param  bool  $reverse
          * @return array
          */
         public function &getParentForums($key, $reverse = true)

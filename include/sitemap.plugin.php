@@ -1,5 +1,5 @@
 <?php
-// $Id: sitemap.plugin.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // FILE        ::    newbb.php
 // AUTHOR    ::    Ryuji AMANO <info@ryus.biz>
 // WEB        ::    Ryu's Planning <http://ryus.biz/>

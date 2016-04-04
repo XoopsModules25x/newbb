@@ -7,7 +7,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
- * @version        $Id: admin_type_manager.php 62 2012-08-17 10:15:26Z alfred $
  * @package        module::newbb
  */
 
@@ -16,12 +15,9 @@ xoops_cp_header();
 echo '<fieldset>';
 echo '<br />';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 
-if ($newXoopsModuleGui) {
-    echo $indexAdmin->addNavigation('admin_type_manager.php');
-}
-//if (!$newXoopsModuleGui) loadModuleAdminMenu(9, _AM_NEWBB_TYPE_TEMPLATE);
-//    else echo $indexAdmin->addNavigation('admin_type_manager.php');
+
 
 /*
  * The 'op' could be
@@ -465,4 +461,4 @@ switch ($op) {
         break;
 }
 
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

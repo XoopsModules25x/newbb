@@ -16,7 +16,6 @@
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
  * @author          The Persian Xoops Support Site<www.xoops.ir>
- * @version         $Id: footer.php 1.11 2012-09-23 20:24:01
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

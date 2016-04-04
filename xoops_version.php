@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -17,16 +16,16 @@ $modversion['credits']     = 'NewBB 2 developed by Marko Schmuck (predator) / D.
 $modversion['author']      = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / xoops.org (irmtfan)';
 $modversion['license']     = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image']       = 'assets/images/xoopsbb_slogo.png';
-$modversion['dirname']     = 'newbb';
+$modversion['image']       = 'assets/images/logo_module.png';
+$modversion['dirname']     = basename(__DIR__);
 
 $modversion['author_realname'] = 'NewBB Dev Team';
 $modversion['author_email']    = '';
 $modversion['status_version']  = '4.33';
 
 //about
-$modversion['module_status']       = 'RC11';
-$modversion['release_date']        = '2016/03/14';
+$modversion['module_status']       = 'RC12';
+$modversion['release_date']        = '2016/04/03';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
@@ -35,9 +34,11 @@ $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0', 'mysqli' => '5.0');
 $modversion['system_menu']         = 1;
 
-$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
-$modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
+$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses/moduleadmin';
+$modversion['sysicons16']     = 'Frameworks/moduleclasses/icons/16';
+$modversion['sysicons32']     = 'Frameworks/moduleclasses/icons/32';
+$modversion['modicons16']     = 'assets/images/icons/16';
+$modversion['modicons32']     = 'assets/images/icons/32';
 
 $modversion['warning'] = 'Only For XOOPS >= 2.5.0 ';
 

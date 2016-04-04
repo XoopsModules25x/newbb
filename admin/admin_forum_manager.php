@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_forum_manager.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -240,13 +240,9 @@ switch ($op) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-        if (!$newXoopsModuleGui) {
-            //loadModuleAdminMenu(2, _AM_NEWBB_FORUM_MANAGER);
-            $echo = "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_FORUM_MANAGER . '</legend>';
-        } else {
-            $echo = $indexAdmin->addNavigation('admin_forum_manager.php');
+            $echo = $indexAdmin->addNavigation(basename(__FILE__));
             $echo .= '<fieldset>';
-        }
+
         $echo .= "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         $echo .= "<tr align='center'>";
         $echo .= "<th class='bg3' colspan='2'>" . _AM_NEWBB_NAME . '</th>';
@@ -308,4 +304,4 @@ switch ($op) {
         echo '</fieldset>';
         break;
 }
-xoops_cp_footer();
+include_once __DIR__ . '/admin_footer.php';

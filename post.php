@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: post.php 62 2012-08-17 10:15:26Z alfred $
  */
 
 include_once __DIR__ . '/header.php';
@@ -223,7 +222,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             }
         }
     }
-    if ($attachments_tmp && count($attachments_tmp)) {
+    if (isset($attachments_tmp) && count($attachments_tmp)) {
         foreach ($attachments_tmp as $key => $attach) {
             if (rename(XOOPS_CACHE_PATH . '/' . $attachments_tmp[$key][0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]))) {
                 $post_obj->setAttachment($attach[0], $attach[1], $attach[2]);

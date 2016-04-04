@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -19,11 +18,11 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for select from a text where it have some keywords
      *
-     * @param  text $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
+     * @param  text   $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
      * @param         $queryarray
-     * @param  int $selectstartlag
-     * @param  int $selectlength
-     * @param  bool $striptags
+     * @param  int    $selectstartlag
+     * @param  int    $selectlength
+     * @param  bool   $striptags
      * @param  string $excludetags
      * @param  string $start_trimmarker
      * @param  string $end_trimmarker
@@ -92,7 +91,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlighting search results
      *
-     * @param  text $query , int $i
+     * @param  text    $query , int $i
      * @param          $i
      * @return unknown
      */

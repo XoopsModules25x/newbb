@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: functions.user.php 62 2012-08-17 10:15:26Z alfred $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -22,8 +21,8 @@
 /**
  * Function to a list of user names associated with their user IDs
  * @param        $uid
- * @param  int $usereal
- * @param  bool $linked
+ * @param  int   $usereal
+ * @param  bool  $linked
  * @return array
  */
 function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
@@ -36,8 +35,8 @@ function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
 
 /**
  * @param         $uid
- * @param  int $usereal
- * @param  bool $linked
+ * @param  int    $usereal
+ * @param  bool   $linked
  * @return string
  */
 function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
@@ -106,7 +105,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
  * Function to check if a user is a moderator of a forum
  *
  * @param       $forum
- * @param  int $user
+ * @param  int  $user
  * @return bool
  */
 function newbb_isModerator(&$forum, $user = -1)
@@ -196,7 +195,7 @@ function newbb_isModuleAdministrators(array $uid = array())
 /* use hardcoded DB query to save queries */
 /**
  * @param  array $uid
- * @param  int $mid
+ * @param  int   $mid
  * @return array
  */
 function newbb_isForumModerators(array $uid = array(), $mid = 0)

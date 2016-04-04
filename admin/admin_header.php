@@ -1,8 +1,8 @@
 <?php
-// $Id: admin_header.php 62 2012-08-17 10:15:26Z alfred $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// Copyright (c) 2000-2016 XOOPS.org                           //
 // <http://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
@@ -36,17 +36,25 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
+
+include_once dirname(__DIR__) . '/include/config.php';
+
 xoops_load('XoopsRequest');
+
+$moduleDirName = basename(dirname(__DIR__));
 
 xoops_loadLanguage('main', 'newbb');
 xoops_loadLanguage('modinfo', 'newbb');
-$newXoopsModuleGui = false;
-if (file_exists($GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
-    include_once $GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-    $moduleInfo        = $module_handler->get($xoopsModule->getVar('mid'));
-    $pathIcon16        = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
-    $pathIcon32        = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
-    $newXoopsModuleGui = true;
-    $indexAdmin        = new ModuleAdmin();
-}
+
+$moduleHandler = xoops_getHandler('module');
+$module        = $moduleHandler->getByDirname($moduleDirName);
+$pathIcon16    = XOOPS_URL . '/' . $module->getInfo('sysicons16');
+$pathIcon32    = XOOPS_URL . '/' . $module->getInfo('sysicons32');
+$pathModIcon32 = XOOPS_URL . '/' . $module->getInfo('modicons32');
+
+$xoopsModuleAdminPath = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
+require_once $xoopsModuleAdminPath . '/moduleadmin.php';
+
+$indexAdmin        = new ModuleAdmin();
+
 $myts = MyTextSanitizer::getInstance();

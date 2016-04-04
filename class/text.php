@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -18,7 +17,7 @@ newbb_load_object();
 /**
  * Class Ntext
  */
-class Ntext extends ArtObject
+class Ntext extends XoopsObject
 {
     /**
      *
@@ -35,7 +34,8 @@ class Ntext extends ArtObject
 /**
  * Class NewbbTextHandler
  */
-class NewbbTextHandler extends ArtObjectHandler
+//class NewbbTextHandler extends ArtObjectHandler
+class NewbbTextHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -48,10 +48,10 @@ class NewbbTextHandler extends ArtObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

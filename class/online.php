@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -202,7 +201,7 @@ class NewbbOnlineHandler
     /**
      * Write online information to the database
      *
-     * @param  int $uid         UID of the active user
+     * @param  int    $uid      UID of the active user
      * @param  string $uname    Username
      * @param         $time
      * @param  string $forum_id Current forum_id
@@ -277,7 +276,7 @@ class NewbbOnlineHandler
      * Get an array of online information
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
-     * @return array  Array of associative arrays of online information
+     * @return array           Array of associative arrays of online information
      */
     public function getAll(CriteriaElement $criteria = null)
     {

@@ -6,7 +6,6 @@
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @version        $Id $
  * @package        module::newbb
  */
 
@@ -71,9 +70,9 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param  int $uid   user id
-     * @param  string $ip user ip
-     * @param  int $forum
+     * @param  int    $uid user id
+     * @param  string $ip  user ip
+     * @param  int    $forum
      * @return bool
      */
     public function verifyUser($uid = -1, $ip = '', $forum = 0)
@@ -117,8 +116,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Store the list into session if module cache is enabled
      *
      *
-     * @param  int $uid   user id
-     * @param  string $ip user ip
+     * @param  int    $uid user id
+     * @param  string $ip  user ip
      * @return array
      */
     public function forumList($uid = -1, $ip = '')
@@ -168,7 +167,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      * Get latest expiration for a user moderation
      *
      *
-     * @param  mix $item user id or ip
+     * @param  mix  $item user id or ip
      * @param  bool $isUid
      * @return int
      */
@@ -196,10 +195,10 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

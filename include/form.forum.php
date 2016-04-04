@@ -14,7 +14,6 @@
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: form.forum.php 62 2012-08-17 10:15:26Z alfred $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

@@ -1,8 +1,8 @@
 <?php
-// $Id: post.php,v 1.3 2005/10/19 17:20:32 phppp Exp $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
 //                       <http://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -167,7 +167,7 @@ class Post extends XoopsObject
      * @param  string $name_saved
      * @param  string $nameDisplay
      * @param  string $mimetype
-     * @param  int $numDownload
+     * @param  int    $numDownload
      * @return bool
      */
     public function setAttachment($name_saved = '', $nameDisplay = '', $mimetype = '', $numDownload = 0)
@@ -650,8 +650,8 @@ class Post extends XoopsObject
 /**
  * Class NewbbPostHandler
  */
-class NewbbPostHandler extends ArtObjectHandler //
-    //class NewbbPostHandler extends XoopsPersistableObjectHandler
+//class NewbbPostHandler extends ArtObjectHandler
+class NewbbPostHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param XoopsDatabase $db
@@ -663,7 +663,7 @@ class NewbbPostHandler extends ArtObjectHandler //
 
     /**
      * @param  mixed $id
-     * @param null $var
+     * @param  null  $var
      * @return null|XoopsObject
      */
     public function get($id = null, $var = null) //get($id)
@@ -680,13 +680,13 @@ class NewbbPostHandler extends ArtObjectHandler //
     }
 
     /**
-     * @param int $limit
-     * @param int $start
-     * @param CriteriaElement $criteria
-     * @param null $fields
-     * @param bool $asObject
-     * @param int $topic_id
-     * @param  int $approved
+     * @param  int             $limit
+     * @param  int             $start
+     * @param  CriteriaElement $criteria
+     * @param  null            $fields
+     * @param  bool            $asObject
+     * @param  int             $topic_id
+     * @param  int             $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -793,7 +793,7 @@ class NewbbPostHandler extends ArtObjectHandler //
 
     /**
      * @param  XoopsObject $post
-     * @param  bool $force
+     * @param  bool        $force
      * @return bool
      */
     public function insert(XoopsObject $post, $force = true) //insert(&$post, $force = true)
@@ -853,9 +853,17 @@ class NewbbPostHandler extends ArtObjectHandler //
                 $text_obj->vars[$key] = $post->vars[$key];
             }
             $post->destroyVars($post_text_vars);
+
+            //            if (!$post_id = parent::insert($post, $force)) {
+            //                return false;
+            //            }
+
             if (!$post_id = parent::insert($post, $force)) {
                 return false;
+            } else {
+                $post->unsetNew();
             }
+
             $text_obj->setVar('post_id', $post_id);
             if (!$textHandler->insert($text_obj, $force)) {
                 $this->delete($post);
@@ -893,6 +901,8 @@ class NewbbPostHandler extends ArtObjectHandler //
             if (!$post_id = parent::insert($post, $force)) {
                 //xoops_error($post->getErrors());
                 return false;
+            } else {
+                $post->unsetNew();
             }
             if (!$textHandler->insert($text_obj, $force)) {
                 $post->setErrors('update post text error');
@@ -907,8 +917,8 @@ class NewbbPostHandler extends ArtObjectHandler //
 
     /**
      * @param  XoopsObject $post
-     * @param  bool $isDeleteOne
-     * @param  bool $force
+     * @param  bool        $isDeleteOne
+     * @param  bool        $force
      * @return bool
      */
     public function delete(XoopsObject $post, $isDeleteOne = true, $force = false)
@@ -947,7 +957,7 @@ class NewbbPostHandler extends ArtObjectHandler //
 
     /**
      * @param  XoopsObject $post
-     * @param  bool $force
+     * @param  bool        $force
      * @return bool
      */
     public function _delete(XoopsObject $post, $force = false)
@@ -1081,8 +1091,8 @@ class NewbbPostHandler extends ArtObjectHandler //
      */
     /**
      * @param  null $criteria
-     * @param  int $limit
-     * @param  int $start
+     * @param  int  $limit
+     * @param  int  $start
      * @param  null $join
      * @return array
      */
@@ -1126,10 +1136,10 @@ class NewbbPostHandler extends ArtObjectHandler //
     /**
      * clean orphan items from database
      *
-     * @param string $table_link
-     * @param string $field_link
-     * @param string $field_object
-     * @return bool true on success
+     * @param  string $table_link
+     * @param  string $field_link
+     * @param  string $field_object
+     * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {

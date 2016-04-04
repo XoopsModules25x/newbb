@@ -6,7 +6,6 @@
  * @module         newbb
  * @since           4.3
  * @author          irmtfan
- * @version         $Id$
  */
 
 /**
