@@ -36,7 +36,8 @@ $order    = XoopsRequest::getString('order', 'DESC', 'GET');
 
 $uid = XoopsRequest::getInt('uid', 0, 'GET');
 
-$status = (XoopsRequest::getString('status', '', 'GET') && in_array(XoopsRequest::getString('status', '', 'GET'), array('active', 'pending', 'deleted', 'new', 'all', 'digest'), true)) ? XoopsRequest::getString('status', '', 'GET') : '';
+$status = (XoopsRequest::getString('status', '', 'GET') &&
+           in_array(XoopsRequest::getString('status', '', 'GET'), array('active', 'pending', 'deleted', 'new', 'all', 'digest'), true)) ? XoopsRequest::getString('status', '', 'GET') : '';
 $mode   = XoopsRequest::getInt('mode', 0, 'GET');
 $mode   = (!empty($status) && in_array($status, array('active', 'pending', 'deleted'), true)) ? 2 : $mode;
 
@@ -195,8 +196,19 @@ if (!empty($forum_id)) {
     // irmtfan new method
     if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
         $xoopsTpl->assign('xoops_module_header', '
-            <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forum_obj->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" />
-            ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+            <link rel="alternate" type="application/xml+rss" title="' .
+                                                 $xoopsModule->getVar('name') .
+                                                 '-' .
+                                                 $forum_obj->getVar('forum_name') .
+                                                 '" href="' .
+                                                 XOOPS_URL .
+                                                 '/modules/' .
+                                                 $xoopsModule->getVar('dirname') .
+                                                 '/rss.php?f=' .
+                                                 $forum_id .
+                                                 '" />
+            ' .
+                                                 @$xoopsTpl->get_template_vars('xoops_module_header'));
     }
 } elseif (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
@@ -255,7 +267,8 @@ foreach (array_keys($posts) as $id) {
     $poster = array(
         'uid'  => 0,
         'name' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
-        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']));
+        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous'])
+    );
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
     }
@@ -283,26 +296,31 @@ foreach (array_keys($posts) as $id) {
 
         if ($isadmin || (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('delete_timelimit'))) {
             $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
-            $thread_buttons['delete']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
+            $thread_buttons['delete']['link']  =
+                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['delete']['name']  = _DELETE;
         }
         if ($isadmin || !$suspension[$post->getVar('forum_id')] && $post->checkIdentity() && $post->checkTimelimit('edit_timelimit')) {
             $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
-            $thread_buttons['edit']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
+            $thread_buttons['edit']['link']  =
+                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['edit']['name']  = _EDIT;
         }
         if (is_object($GLOBALS['xoopsUser']) && !$suspension[$post->getVar('forum_id')]) {
             $thread_buttons['reply']['image'] = newbbDisplayImage('p_reply', _MD_REPLY);
-            $thread_buttons['reply']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/reply.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
+            $thread_buttons['reply']['link']  =
+                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/reply.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['reply']['name']  = _MD_REPLY;
 
             $thread_buttons['quote']['image'] = newbbDisplayImage('p_quote', _MD_QUOTE);
-            $thread_buttons['quote']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/reply.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id') . '&amp;quotedac=1';
+            $thread_buttons['quote']['link']  =
+                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/reply.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id') . '&amp;quotedac=1';
             $thread_buttons['quote']['name']  = _MD_QUOTE;
         }
     } else {
         $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
-        $thread_buttons['delete']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
+        $thread_buttons['delete']['link']  =
+            XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
         $thread_buttons['delete']['name']  = _DELETE;
         $thread_buttons['edit']['image']   = newbbDisplayImage('p_edit', _EDIT);
         $thread_buttons['edit']['link']    = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
@@ -314,7 +332,8 @@ foreach (array_keys($posts) as $id) {
 
     if (!$isadmin && $GLOBALS['xoopsModuleConfig']['reportmod_enabled']) {
         $thread_buttons['report']['image'] = newbbDisplayImage('p_report', _MD_REPORT);
-        $thread_buttons['report']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/report.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
+        $thread_buttons['report']['link']  =
+            XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/report.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
         $thread_buttons['report']['name']  = _MD_REPORT;
     }
     $thread_action = array();
@@ -335,7 +354,8 @@ foreach (array_keys($posts) as $id) {
         'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
         'thread_action'   => $thread_action,
         'thread_buttons'  => $thread_buttons,
-        'poster'          => $poster));
+        'poster'          => $poster
+    ));
 
     unset($thread_buttons, $poster);
 }
@@ -348,7 +368,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 
 if ($postCount > $post_perpage) {
     include $GLOBALS['xoops']->path('class/pagenav.php');
-    $nav = new XoopsPageNav($postCount, $post_perpage, $start, 'start', 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
+    $nav = new XoopsPageNav($postCount, $post_perpage, $start, 'start',
+                            'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . $nav->url;
     if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
         $navi = $nav->renderSelect();

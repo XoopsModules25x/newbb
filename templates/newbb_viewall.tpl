@@ -62,9 +62,9 @@
 -->
             <{/if}>
         </div>
-        <br/>
+        <br>
     <{else}>
-        <br/>
+        <br>
     <{/if}>
     <div class="clear"></div>
 
@@ -140,8 +140,8 @@
         </div>
     </div>
     <div class="clear"></div>
-    <br/>
-    <br/>
+    <br>
+    <br>
 
     <table class="outer" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
         <!-- irmtfan hardcode removed align="left" -->
@@ -175,7 +175,7 @@
                 <{/if}>
             </td>
             <!-- irmtfan add sticky, digest, poll -->
-            <td width="4%" align="center"><{$topic.topic_icon}><{$topic.sticky}><br/><{$topic.digest}><{$topic.poll}></td>
+            <td width="4%" align="center"><{$topic.topic_icon}><{$topic.sticky}><br><{$topic.digest}><{$topic.poll}></td>
             <!-- irmtfan remove topic_link hardcode and add topic_excerpt -->
             <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
                     <!-- irmtfan remove
@@ -184,7 +184,7 @@
         <{/if}> -->
                     <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
                 <!-- irmtfan add topic publish time and rating -->
-                <br/>
+                <br>
         <span>
             <{$headers.publish.title}>: <{$topic.topic_time}>
         </span>
@@ -201,7 +201,7 @@
             <td align="center" valign="middle"><{$topic.topic_poster}></td>
             <td align="center" valign="middle"><{$topic.topic_views}></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right" valign="middle"><{$topic.topic_last_posttime}><br/>
+            <td class="align_right" valign="middle"><{$topic.topic_last_posttime}><br>
                 <{$smarty.const._MD_BY}> <{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
             </td>
         </tr>
@@ -238,17 +238,17 @@
 <{if $pagenav}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
-    <br/>
+    <br>
 <{/if}>
 <div class="clear"></div>
 
 <div>
     <div class="left floatleft">
-        <{$img_newposts}> = <{$smarty.const._MD_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_MORETHAN}>) <br/>
-        <{$img_folder}> = <{$smarty.const._MD_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_MORETHAN2}>) <br/>
-        <{$img_locked}> = <{$smarty.const._MD_TOPICLOCKED}> <br/>
-        <{$img_sticky}> = <{$smarty.const._MD_TOPICSTICKY}> <br/>
-        <{$img_digest}> = <{$smarty.const._MD_TOPICDIGEST}> <br/>
+        <{$img_newposts}> = <{$smarty.const._MD_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_MORETHAN}>) <br>
+        <{$img_folder}> = <{$smarty.const._MD_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_MORETHAN2}>) <br>
+        <{$img_locked}> = <{$smarty.const._MD_TOPICLOCKED}> <br>
+        <{$img_sticky}> = <{$smarty.const._MD_TOPICSTICKY}> <br>
+        <{$img_digest}> = <{$smarty.const._MD_TOPICDIGEST}> <br>
         <{$img_poll}> = <{$smarty.const._MD_TOPICHASPOLL}>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
@@ -261,10 +261,10 @@
                     <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
                 <{/if}>
             <{/foreach}>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
-        <br/>
+        <br>
         <!-- START irmtfan add forum selection box -->
         <{if $forum_jumpbox }>
             <form method="get" action="<{$selection.action}>">
@@ -276,14 +276,14 @@
                 <{/foreach}>
                 <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
             </form>
-            <br/>
+            <br>
             <{$forum_jumpbox}>
         <{/if}>
         <!-- END irmtfan add forum selection box -->
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <{if $online}><{includeq file="db:newbb_online.tpl"}><{/if}>
 <{includeq file='db:newbb_notification_select.tpl'}>

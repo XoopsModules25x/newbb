@@ -76,7 +76,8 @@ function newbb_list_topic_show($options)
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $optionsForum));
+                                'forum'      => $optionsForum
+                            ));
     $block = array();
     // headers to display in block
     $block['headers'] = $topicRenderer->getHeader($options[8]);

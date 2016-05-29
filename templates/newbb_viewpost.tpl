@@ -44,14 +44,14 @@
     </div>
 <{/if}>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div style="padding: 5px;">
     <!-- irmtfan remove prev and next icons -->
     <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_BOTTOM}></a>
 </div>
 
-<br/>
+<br>
 <div>
     <div class="dropdown">
         <select
@@ -86,8 +86,8 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{foreachq item=post from=$posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$post}>
@@ -100,15 +100,15 @@
     <{/if}>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 <{/foreach}>
 
 <{if $mode gt 1}>
     </form>
 <{/if}>
 
-<br/>
+<br>
 <div>
     <!-- irmtfan hardcode removed style="float: left; text-align:left;" -->
     <div class="icon_left">
@@ -122,8 +122,8 @@
 </div>
 <div class="clear"></div>
 
-<br/>
-<br/>
+<br>
+<br>
 <div>
     <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
     <div class="icon_left">
@@ -132,7 +132,7 @@
             <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
             <input type="hidden" name="action" id="action" value="yes"/>
             <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
     </div>
@@ -142,9 +142,9 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{if $online}>
-    <br/>
+    <br>
     <{includeq file="db:newbb_online.tpl"}>
 <{/if}>
 <{includeq file='db:newbb_notification_select.tpl'}>

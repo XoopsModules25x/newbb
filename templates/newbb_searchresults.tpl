@@ -1,5 +1,5 @@
 <div class="resultMsg"> <{$search_info}> </div>
-<br/>
+<br>
 <{if $results}>
     <table class="outer" border="0" cellpadding="0" cellspacing="0" align="center" width="95%">
         <tr>
@@ -53,8 +53,8 @@
             </tr>
         <{/if}>
     </table>
-    <br/>
+    <br>
 <{elseif $lang_nomatch}>
     <div class="resultMsg"> <{$lang_nomatch}> </div>
-    <br/>
+    <br>
 <{/if}>

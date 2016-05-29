@@ -156,11 +156,11 @@ if ($post_obj->getVar('uid')) {
     $poster_name = $post_obj->getVar('poster_name');
     $r_name      = empty($poster_name) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlSpecialChars($poster_name);
 }
-$r_content = _MD_SUBJECTC . ' ' . $r_subject . '<br />';
-$r_content .= _MD_BY . ' ' . $r_name . ' ' . _MD_ON . ' ' . $r_date . '<br /><br />';
+$r_content = _MD_SUBJECTC . ' ' . $r_subject . '<br>';
+$r_content .= _MD_BY . ' ' . $r_name . ' ' . _MD_ON . ' ' . $r_date . '<br><br>';
 $r_content .= $r_message;
 
-echo "<br /><table cellpadding='4' cellspacing='1' width='98%' class='outer'><tr><td class='head'>" . $r_subject . '</td></tr>';
-echo '<tr><td><br />' . $r_content . '<br /></td></tr></table>';
+echo "<br><table cellpadding='4' cellspacing='1' width='98%' class='outer'><tr><td class='head'>" . $r_subject . '</td></tr>';
+echo '<tr><td><br>' . $r_content . '<br></td></tr></table>';
 
 include $GLOBALS['xoops']->path('footer.php');

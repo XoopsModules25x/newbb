@@ -29,7 +29,7 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 
 xoops_cp_header();
 echo '<fieldset>';
-    echo $indexAdmin->addNavigation(basename(__FILE__));
+echo $indexAdmin->addNavigation(basename(__FILE__));
 
 //if (!$newXoopsModuleGui) loadModuleAdminMenu(5, _AM_NEWBB_PRUNE_TITLE);
 //    else echo $indexAdmin->addNavigation(basename(__FILE__));
@@ -175,7 +175,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                               5184000  => _AM_NEWBB_PRUNE_2MONTH,
                               10368000 => _AM_NEWBB_PRUNE_4MONTH,
                               31536000 => _AM_NEWBB_PRUNE_YEAR,
-                              63072000 => _AM_NEWBB_PRUNE_2YEARS));
+                              63072000 => _AM_NEWBB_PRUNE_2YEARS
+                          ));
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
@@ -233,7 +234,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                                           '15' => 15,
                                           '20' => 20,
                                           '25' => 25,
-                                          '30' => 30));
+                                          '30' => 30
+                                      ));
     $sform->addElement($hot_confirmation);
 
     $sform->addElement(/*$radiobox*/

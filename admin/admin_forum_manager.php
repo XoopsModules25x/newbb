@@ -215,7 +215,7 @@ switch ($op) {
     case 'addforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, _AM_NEWBB_CREATENEWFORUM);
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_CREATENEWFORUM . '</legend>';
-        echo '<br />';
+        echo '<br>';
         $parent_forum = XoopsRequest::getInt('forum', 0, 'GET');
         $cat_id       = XoopsRequest::getInt('cat_id', 0, 'GET');
         if (!$parent_forum && !$cat_id) {
@@ -240,8 +240,8 @@ switch ($op) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-            $echo = $indexAdmin->addNavigation(basename(__FILE__));
-            $echo .= '<fieldset>';
+        $echo = $indexAdmin->addNavigation(basename(__FILE__));
+        $echo .= '<fieldset>';
 
         $echo .= "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         $echo .= "<tr align='center'>";

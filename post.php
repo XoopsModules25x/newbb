@@ -26,7 +26,9 @@ foreach (array(
              'pid',
              'start',
              'isreply',
-             'isedit') as $getint) {
+             'isedit'
+         ) as $getint
+) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
 }
 
@@ -134,7 +136,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $topic_status = $topic_obj->getVar('topic_status');
         if ($topicHandler->getPermission($forum_obj, $topic_status, 'edit') && ($isadmin || ($post_obj->checkTimelimit('edit_timelimit') && $post_obj->checkIdentity()))) {
         } else {
-            redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NORIGHTTOEDIT);
+            redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2,
+                            _MD_NORIGHTTOEDIT);
         }
 
         $delete_attach = XoopsRequest::getArray('delete_attach', array(), 'POST');
@@ -145,7 +148,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         if ($topic_id) {
             $topic_status = $topic_obj->getVar('topic_status');
             if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
-                redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NORIGHTTOREPLY);
+                redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2,
+                                _MD_NORIGHTTOREPLY);
             }
         } else {
             $topic_status = 0;
@@ -185,7 +189,9 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     $dosmiley      = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $doxcode       = XoopsRequest::getInt('doxcode', 0, 'POST') ? 1 : 0;
     $dobr          = XoopsRequest::getInt('dobr', 0, 'POST') ? 1 : 0;
-    $icon          = (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '', 'POST') : '');
+    $icon          =
+        (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '',
+                                                                                                                                                                                    'POST') : '');
     $attachsig     = XoopsRequest::getBool('attachsig', false, 'POST') && $topicHandler->getPermission($forum_obj, $topic_status, 'signature');
     $view_require  = XoopsRequest::getString('view_require', '', 'POST');
     $post_karma    = ($view_require === 'require_karma') ? XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
@@ -236,7 +242,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'],
+                                      (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
 
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
@@ -260,7 +267,8 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                     $error_message[] = $error_upload = $uploader->getErrors();
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
-                        if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
+                        if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(),
+                                   $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
                             $post_obj->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
                         }
                     }
@@ -361,14 +369,16 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' .
+                                        $GLOBALS['xoopsDB']->prefix('bb_user_stats') .
+                                        "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $postid;
-        $message  = _MD_THANKSSUBMIT . '<br />' . $error_upload;
+        $message  = _MD_THANKSSUBMIT . '<br>' . $error_upload;
     } else {
         $redirect = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post_obj->getVar('forum_id');
-        $message  = _MD_THANKSSUBMIT . '<br />' . _MD_WAITFORAPPROVAL . '<br />' . $error_upload;
+        $message  = _MD_THANKSSUBMIT . '<br>' . _MD_WAITFORAPPROVAL . '<br>' . $error_upload;
     }
 
     if ($op === 'add') {
@@ -404,7 +414,8 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'],
+                                      (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
                 case 1:
@@ -430,7 +441,8 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
                         $attachments_tmp[(string)time()] = array(
                             $uploader->getSavedFileName(),
                             $uploader->getMediaName(),
-                            $uploader->getMediaType());
+                            $uploader->getMediaType()
+                        );
                     }
                 }
             } else {
@@ -470,11 +482,16 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
     $post_preview = array(
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
-        'content' => $p_message);
+        'content' => $p_message
+    );
     $xoopsTpl->assign_by_ref('post_preview', $post_preview);
 }
 
-if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'POST') || XoopsRequest::getString('contents_preview', null, 'GET') || XoopsRequest::getString('editor', '', 'POST')) {
+if (XoopsRequest::getString('contents_upload', null, 'POST') ||
+    XoopsRequest::getString('contents_preview', null, 'POST') ||
+    XoopsRequest::getString('contents_preview', null, 'GET') ||
+    XoopsRequest::getString('editor', '', 'POST')
+) {
     $editor        = XoopsRequest::getString('editor', '', 'POST');
     $dosmiley      = XoopsRequest::getInt('dosmiley', 0, 'POST');
     $dohtml        = XoopsRequest::getInt('dohtml', 0, 'POST');
@@ -488,7 +505,9 @@ if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::ge
     $attachsig     = XoopsRequest::getInt('attachsig', 0, 'POST');//!empty($_POST['attachsig']) ? 1 : 0;
     $isreply       = XoopsRequest::getInt('isreply', 0, 'POST'); //!empty($_POST['isreply']) ? 1 : 0;
     $isedit        = XoopsRequest::getInt('isedit', 0, 'POST'); //!empty($_POST['isedit']) ? 1 : 0;
-    $icon          = (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '', 'POST') : '');
+    $icon          =
+        (XoopsRequest::getString('icon', '', 'POST') && is_file($GLOBALS['xoops']->path('images/subject/' . XoopsRequest::getString('icon', '', 'POST'))) ? XoopsRequest::getString('icon', '',
+                                                                                                                                                                                    'POST') : '');
     $view_require  = XoopsRequest::getString('view_require', '', 'POST');
     $post_karma    = (($view_require === 'require_karma') && !XoopsRequest::getInt('post_karma', 0, 'POST')) ? XoopsRequest::getInt('post_karma', 0, 'POST') : 0;
     $require_reply = ($view_require === 'require_reply') ? 1 : 0;
@@ -497,7 +516,7 @@ if (XoopsRequest::getString('contents_upload', null, 'POST') || XoopsRequest::ge
         $contents_preview = 1;
     }
     $attachments = $post_obj->getAttachment();
-    $xoopsTpl->assign('error_message', implode('<br />', $error_message));
+    $xoopsTpl->assign('error_message', implode('<br>', $error_message));
 
     include __DIR__ . '/include/form.post.php';
 }

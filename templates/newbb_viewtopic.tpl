@@ -19,14 +19,14 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{if $tagbar}>
     <div class="taglist" style="padding: 5px;">
         <{includeq file="db:tag_bar.tpl"}>
     </div>
 <{/if}>
 
-<br/>
+<br>
 
 <{if $online}>
     <div class="left" style="padding: 5px;">
@@ -46,7 +46,7 @@
             &nbsp;<{$online.num_anonymous}> <{$smarty.const._MD_ANONYMOUS_USERS}>
         <{/if}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 
 <{if $viewer_level gt 1}>
@@ -75,10 +75,10 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 <div class="clear"></div>
-<br/>
+<br>
 <!-- irmtfan add to not show polls in admin mode -->
 <{if $mode lte 1}>
     <{if $topic_poll}>
@@ -90,7 +90,7 @@
     <{/if}>
 <{/if}>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div style="padding: 5px;">
     <!-- irmtfan hardcode removed style="float: left; text-align:left;"" -->
@@ -106,7 +106,7 @@
 </span>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div>
     <div class="dropdown">
@@ -171,20 +171,20 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{if $viewer_level gt 1 && $topic_status == 1}>
     <div class="resultMsg"><{$smarty.const._MD_TOPICLOCK}></div>
-    <br/>
+    <br>
 <{/if}>
 <!-- irmtfan remove here and move to the newbb_thread.tpl
 <{*<{if $post_id == 0}><div id="aktuell"></div><{/if}> *}>
 -->
 <{foreachq item=topic_post from=$topic_posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
-<br/>
-<br/>
+<br>
+<br>
 <{foreachelse}>
 <div style="text-align: center;width:100%;font-size:1.5em;padding:5px;"><{$smarty.const._MD_ERRORPOST}></div>
 <{/foreach}>
@@ -193,7 +193,7 @@
 </form>
 <{/if}>
 
-<br/>
+<br>
 <div class="forum_header">
     <div class="forum_title">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
@@ -212,7 +212,7 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div>
     <div class="left">
@@ -227,14 +227,14 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div class="left" style="padding: 5px;">
     <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{if $quickreply.show}>
     <div>
@@ -244,13 +244,13 @@
             <{$quickreply.displayImage}>
         </a>
     </div>
-    <br/>
+    <br>
     <!-- irmtfan move semicolon -->
     <div id="qr" style="display: <{$quickreply.style}>;">
         <div><{$quickreply.form}></div>
     </div>
-    <br/>
-    <br/>
+    <br>
+    <br>
 <{/if}>
 
 <div>
@@ -269,15 +269,15 @@
             <input type="hidden" name="since" id="since" value="<{$forum_since}>"/>
             <input type="hidden" name="action" id="action" value="yes"/>
             <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
-        <br/>
+        <br>
         <{$forum_jumpbox}>
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <{includeq file='db:newbb_notification_select.tpl'}>
 <!-- irmtfan remove

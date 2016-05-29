@@ -87,7 +87,7 @@ function editCategory(XoopsObject $category_obj = null)
     $cat_image_select->setExtra("onchange=\"showImgSelected('img', 'cat_image', '/" . $imgdir . "/', '', '" . XOOPS_URL . "')\"");
     $cat_image_tray = new XoopsFormElementTray(_AM_NEWBB_IMAGE, '&nbsp;');
     $cat_image_tray->addElement($cat_image_select);
-    $cat_image_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' />"));
+    $cat_image_tray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' />"));
     $sform->addElement($cat_image_tray);
 
     $sform->addElement(new XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $category_obj->getVar('cat_url', 'E')), false);
@@ -117,7 +117,7 @@ switch ($op) {
         //        } else {
         echo $indexAdmin->addNavigation(basename(__FILE__));
         //        }
-        echo '<br />';
+        echo '<br>';
         editCategory($category_obj);
         break;
 
@@ -166,7 +166,7 @@ switch ($op) {
             echo $indexAdmin->renderButton();
 
             echo '<fieldset>';
-            echo '<br />';
+            echo '<br>';
             newCategory();
             echo '</fieldset>';
             break;

@@ -100,7 +100,8 @@ switch ($op) {
         foreach ($post_id as $post) {
             $tags                = array();
             $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
-            $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $posts_obj[$post]->getVar('topic_id') . '&amp;forum=' . $posts_obj[$post]->getVar('forum_id');
+            $tags['THREAD_URL']  =
+                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $posts_obj[$post]->getVar('topic_id') . '&amp;forum=' . $posts_obj[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$posts_obj[$post]->getVar('forum_id')];
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $posts_obj[$post]->getVar('forum_id');
             $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post;

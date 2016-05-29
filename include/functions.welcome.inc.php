@@ -35,8 +35,8 @@ $post_obj->setVar('post_time', time());
 
 $categories = array();
 
-$module_handler = xoops_getHandler('module');
-if ($mod = @$module_handler->getByDirname('profile', true)) {
+$moduleHandler = xoops_getHandler('module');
+if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $gpermHandler = xoops_getHandler('groupperm');
     $groups       = array(XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS);
 
@@ -59,7 +59,10 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
     $categories[0]['cat_title'] = sprintf(_PROFILE_MI_ABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
     $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
     if (!empty($avatar) && $avatar !== 'blank.gif') {
-        $categories[0]['fields'][] = array('title' => _AM_SYSTEM_AVATARS, 'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />");
+        $categories[0]['fields'][] = array(
+            'title' => _AM_SYSTEM_AVATARS,
+            'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />"
+        );
         $weights[0][]              = 0;
     }
     if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
@@ -74,7 +77,7 @@ if ($mod = @$module_handler->getByDirname('profile', true)) {
             $catid = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? $fieldcats[$fields[$i]->getVar('fieldid')]['catid'] : 0;
             $value = $fields[$i]->getOutputValue($GLOBALS['xoopsUser']);
             if (is_array($value)) {
-                $value = implode('<br />', array_values($value));
+                $value = implode('<br>', array_values($value));
             }
 
             if (empty($value)) {
@@ -113,7 +116,8 @@ $post_id = $postHandler->insert($post_obj);
 if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags                = array();
     $tags['THREAD_NAME'] = $subject;
-    $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;
+    $tags['THREAD_URL']  =
+        XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;
     $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post_id;
     include_once __DIR__ . '/include/notification.inc.php';
     $forum_info          = newbb_notify_iteminfo('forum', $forum_id);

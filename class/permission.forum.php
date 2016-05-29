@@ -109,8 +109,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
-            $module_handler = xoops_getHandler('module');
-            $xoopsNewBB     = $module_handler->getByDirname('newbb');
+            $moduleHandler = xoops_getHandler('module');
+            $xoopsNewBB     = $moduleHandler->getByDirname('newbb');
             $modid          = $xoopsNewBB->getVar('mid');
             unset($xoopsNewBB);
         }
@@ -215,8 +215,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
-                $module_handler = xoops_getHandler('module');
-                $newbb          = $module_handler->getByDirname('newbb');
+                $moduleHandler = xoops_getHandler('module');
+                $newbb          = $moduleHandler->getByDirname('newbb');
                 $mid            = $newbb->getVar('mid');
                 unset($newbb);
             }

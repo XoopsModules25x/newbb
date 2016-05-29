@@ -1,5 +1,5 @@
 <div class="resultMsg"> <{$search_info}> </div>
-<br/>
+<br>
 <{if $results}>
     <div class="outer">
         <div class="head align_center">
@@ -36,8 +36,8 @@
         <{/if}>
     </div>
     <div class="clear"></div>
-    <br/>
+    <br>
 <{elseif $lang_nomatch}>
     <div class="resultMsg"> <{$lang_nomatch}> </div>
-    <br/>
+    <br>
 <{/if}>

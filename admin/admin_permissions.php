@@ -100,8 +100,18 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
         $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $this->addElement($tray);
-        $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
-        $ret .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
+        $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br>';
+        $ret .= "<form name='" .
+                $this->getName() .
+                "' id='" .
+                $this->getName() .
+                "' action='" .
+                $this->getAction() .
+                "' method='" .
+                $this->getMethod() .
+                "'" .
+                $this->getExtra() .
+                ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
         $elements = $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
@@ -110,7 +120,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
             } elseif (!$elements[$i]->isHidden()) {
                 $ret .= "<tr valign='top' align='left'><td class='head'>" . $elements[$i]->getCaption();
                 if ($elements[$i]->getDescription() !== '') {
-                    $ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
+                    $ret .= '<br><br><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
             } else {
@@ -149,7 +159,20 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
     public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         if ($option['id'] > 0) {
-            $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
+            $tree .= $prefix .
+                     "<input type=\"checkbox\" name=\"" .
+                     $this->getName() .
+                     '[groups][' .
+                     $this->_groupId .
+                     '][' .
+                     $option['id'] .
+                     "]\" id=\"" .
+                     $this->getName() .
+                     '[groups][' .
+                     $this->_groupId .
+                     '][' .
+                     $option['id'] .
+                     "]\" onclick=\"";
             foreach ($parentIds as $pid) {
                 if ($pid <= 0) {
                     continue;
@@ -165,9 +188,23 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
             if (in_array($option['id'], $this->_value)) {
                 $tree .= ' checked="checked"';
             }
-            $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $this->getName() . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $this->getName() . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
+            $tree .= ' />' .
+                     $option['name'] .
+                     "<input type=\"hidden\" name=\"" .
+                     $this->getName() .
+                     '[parents][' .
+                     $option['id'] .
+                     "]\" value=\"" .
+                     implode(':', $parentIds) .
+                     "\" /><input type=\"hidden\" name=\"" .
+                     $this->getName() .
+                     '[itemname][' .
+                     $option['id'] .
+                     "]\" value=\"" .
+                     htmlspecialchars($option['name']) .
+                     "\" /><br>\n";
         } else {
-            $tree .= $prefix . $option['name'] . "<input type=\"hidden\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br />\n";
+            $tree .= $prefix . $option['name'] . "<input type=\"hidden\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br>\n";
         }
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
@@ -199,7 +236,8 @@ switch ($action) {
                                        'no'       => _SELECT,
                                        'template' => _AM_NEWBB_PERM_TEMPLATE,
                                        'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP));
+                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP
+                                   ));
         $opform->addElement($op_select);
         $opform->display();
 
@@ -222,10 +260,28 @@ switch ($action) {
                 $checked      = in_array('forum_' . $perm, $selected) ? " checked='checked'" : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . strtoupper($perm)) . '<br></td>';
+                $ret_ele .= '<td><input name="perms[' .
+                            $i .
+                            '][' .
+                            'forum_' .
+                            $perm .
+                            ']" id="' .
+                            $option_id .
+                            '" onclick="" value="1" type="checkbox"' .
+                            $checked .
+                            '>' .
+                            constant('_AM_NEWBB_CAN_' . strtoupper($perm)) .
+                            '<br></td>';
             }
             $ret_ele .= '</tr></table></td><td class="even">';
-            $ret_ele .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
+            $ret_ele .= _ALL .
+                        ' <input id="checkall[' .
+                        $i .
+                        ']" type="checkbox" value="" onclick="var optionids = new Array(' .
+                        implode(', ', $option_ids) .
+                        '); xoopsCheckAllElements(optionids, \'checkall[' .
+                        $i .
+                        ']\')" />';
             $ret_ele .= '</td></tr></table>';
             $ret_ele .= '</td></tr>';
             $elements[] = $ret_ele;
@@ -234,7 +290,7 @@ switch ($action) {
         $tray->addElement(new XoopsFormHidden('action', 'template_save'));
         $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
-        $ret = '<h4>' . _AM_NEWBB_PERM_TEMPLATE . '</h4>' . _AM_NEWBB_PERM_TEMPLATE_DESC . '<br /><br /><br />';
+        $ret = '<h4>' . _AM_NEWBB_PERM_TEMPLATE . '</h4>' . _AM_NEWBB_PERM_TEMPLATE_DESC . '<br><br><br>';
         $ret .= "<form name='template' id='template' method='post'>\n<table width='100%' class='outer' cellspacing='1'>\n";
         $ret .= implode("\n", $elements);
         $ret .= '<tr align="left" valign="top"><td class="head"></td><td class="even">';
@@ -342,7 +398,8 @@ switch ($action) {
                                        'no'       => _SELECT,
                                        'template' => _AM_NEWBB_PERM_TEMPLATE,
                                        'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP));
+                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP
+                                   ));
         $opform->addElement($op_select);
         $opform->display();
 

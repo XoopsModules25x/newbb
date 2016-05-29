@@ -170,7 +170,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $forum                                                  =& $forums[$forumid];
             $forums_array[$forum->getVar('parent_forum')][$forumid] = array(
                 'cid'   => $forum->getVar('cat_id'),
-                'title' => $forum->getVar('forum_name'));
+                'title' => $forum->getVar('forum_name')
+            );
         }
         if (!isset($forums_array[0])) {
             $ret = array();
@@ -334,7 +335,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             if ($myrow['topic_haspoll']) {
                 if ($myrow['topic_sticky']) {
-                    $topic_icon = newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY) . '<br />' . newbbDisplayImage('poll', _MD_TOPICHASPOLL);
+                    $topic_icon = newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY) . '<br>' . newbbDisplayImage('poll', _MD_TOPICHASPOLL);
                 } else {
                     $topic_icon = newbbDisplayImage('poll', _MD_TOPICHASPOLL);
                 }
@@ -370,7 +371,15 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                             $append = true;
                         }
                     } else {
-                        $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '">' . $i . '</a>]';
+                        $topic_page_jump .= '[<a href="' .
+                                            XOOPS_URL .
+                                            '/modules/newbb/viewtopic.php?topic_id=' .
+                                            $myrow['topic_id'] .
+                                            '&amp;start=' .
+                                            (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) .
+                                            '">' .
+                                            $i .
+                                            '</a>]';
                         // irmtfan remove here and move
                         //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . '</a>';
                     }
@@ -455,7 +464,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
             //$topic_prefix =  (!empty($typen[$myrow['type_id']])) ? getTopicTitle("", $typen[$myrow['type_id']]["type_name"], $typen[$myrow['type_id']]["type_color"]) : "";
             $topics[$id]['topic_poster']      = !empty($posters_name[$topics[$id]['topic_poster_uid']]) ? $posters_name[$topics[$id]['topic_poster_uid']] : $topics[$id]['topic_poster_name'];
-            $topics[$id]['topic_last_poster'] = !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
+            $topics[$id]['topic_last_poster'] =
+                !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
 
             // ------------------------------------------------------
             // topic_folder: priority: newhot -> hot/new -> regular
@@ -570,7 +580,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $sql = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix('bb_topics') . ' t ' . $leftjoin;
         $sql .= ' WHERE ' . $criteria_post . $criteria_forum . $criteria_extra . $criteria_approve;
         if (!$result = $this->db->query($sql)) {
-            //xoops_error($this->db->error().'<br />'.$sql);
+            //xoops_error($this->db->error().'<br>'.$sql);
             return null;
         }
         $myrow = $this->db->fetchArray($result);
@@ -736,7 +746,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (!$object->getVar('forum_id')) {
             return false;
         }
-        $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM ' . $this->db->prefix('bb_posts') . ' AS p LEFT JOIN  ' . $this->db->prefix('bb_topics') . ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = ' . $object->getVar('forum_id');
+        $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM ' .
+               $this->db->prefix('bb_posts') .
+               ' AS p LEFT JOIN  ' .
+               $this->db->prefix('bb_topics') .
+               ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = ' .
+               $object->getVar('forum_id');
 
         if ($result = $this->db->query($sql)) {
             $last_post = 0;
@@ -781,9 +796,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $sub_forums = $_subforums;
         } else {
             foreach ($subforums as $id) {
-//                if (isset($_subforums[$id])) {
-                    $sub_forums[$id] = $_subforums[$id];
-//                }
+                //                if (isset($_subforums[$id])) {
+                $sub_forums[$id] = $_subforums[$id];
+                //                }
             }
         }
 
@@ -1022,7 +1037,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      * @param $object
      * @return array|null
      */
-    public function &getParents(&$object)
+    public function &getParents($object)
     {
         $ret = null;
         if (!$object->getVar('forum_id')) {

@@ -7,7 +7,7 @@
 </div>
 <div class="clear"></div>
 <{if $viewer_level gt 1}>
-    <br/>
+    <br>
     <div class="forum_stats">
         <div class="forum_stats_col left floatleft">
             <{$smarty.const._MD_TOPIC}>:
@@ -17,7 +17,7 @@
                     ) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(
                     <span style="color:red;"><b><{$delete_topic}></b></span>
-                    ) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br/>
+                    ) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br>
             <{$smarty.const._MD_POST2}>:
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(
@@ -29,7 +29,7 @@
         </div>
         <div class="forum_stats_col right floatright">
             <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
-            <br/><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> |
+            <br><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_ADMINCP}>"><{$smarty.const._MD_ADMINCP}></a>
         </div>
         <div class="clear"></div>
@@ -39,7 +39,7 @@
     <{includeq file="db:newbb_index_menu.tpl"}>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <!-- start index categories -->
 <div class="index_category">
@@ -86,7 +86,7 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank" title="RSS feed">RSS</a>
             )
         <{/if}>
-        <br/><{$forum.forum_desc}>
+        <br><{$forum.forum_desc}>
     </span>
                             <{if $forum.forum_moderators}>
                                 <span class="extra left floatright">
@@ -114,7 +114,7 @@
                     <div class="forum_lastpost even right">
                         <{if $forum.forum_lastpost_subject}>
                             <{$forum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$forum.forum_lastpost_user}>
-                            <br/>
+                            <br>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
                                 <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;<{$forum.forum_lastpost_icon}>
                             </a>
@@ -151,7 +151,7 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$subforum.forum_id}>" target="_blank" title="RSS feed">RSS</a>
         )
     <{/if}>
-    <br/><{$subforum.forum_desc}>
+    <br><{$subforum.forum_desc}>
 </span>
                                     <{if $subforum.forum_moderators}>
                                         <span class="extra left floatright">
@@ -172,7 +172,7 @@
                             <div class="forum_lastpost even right">
                                 <{if $subforum.forum_lastpost_subject}>
                                     <{$subforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$subforum.forum_lastpost_user}>
-                                    <br/>
+                                    <br>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$subforum.forum_lastpost_id}>">
                                         <{$subforum.forum_lastpost_subject}>&nbsp;&nbsp;<{$subforum.forum_lastpost_icon}>
                                     </a>
@@ -191,7 +191,7 @@
         <!-- end forums -->
     </div>
     <!-- end cat display toggle-->
-    <br/>
+    <br>
     <{/foreach}>
     <!-- end forum categories -->
 </div>
@@ -199,8 +199,8 @@
 <!-- end index categories -->
 
 <div class="icon_left">
-    <{$img_forum_new}> = <{$smarty.const._MD_NEWPOSTS}><br/>
-    <{$img_forum}> = <{$smarty.const._MD_NONEWPOSTS}><br/>
+    <{$img_forum_new}> = <{$smarty.const._MD_NEWPOSTS}><br>
+    <{$img_forum}> = <{$smarty.const._MD_NONEWPOSTS}><br>
 </div>
 <div class="icon_right">
     <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="post" name="search" id="search">
@@ -209,17 +209,17 @@
         <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
         <input type="hidden" name="searchin" id="searchin" value="both"/>
         <input type="submit" id="submit" value="<{$smarty.const._MD_SEARCH}>"/>
-        <br/>
+        <br>
         [ <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a> ]
     </form>
     <{if $rss_button}>
-        <br/>
+        <br>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
             <{$rss_button}>
         </a>
-        <br/>
+        <br>
         <span style="font-size:0.7em;"><a href="http://xoops.org">NewBB Version  <{$version/100}></a></span>
-        <br/>
+        <br>
     <{/if}>
 </div>
 <div class="clear"></div>
@@ -231,8 +231,8 @@
         </div>
         <div class="index_stat_foot forum_stats odd">
             <div class="forum_stats_col odd left floatleft">
-                <{$currenttime}><br/>
-                <{$lastvisit}><br/>
+                <{$currenttime}><br>
+                <{$lastvisit}><br>
                 <{$smarty.const._MD_TOTALTOPICSC}>
                 <strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_ALL}>"><{$stats[0].topic.total}></a></strong>
                 | <{$smarty.const._MD_TOTALPOSTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_ALLPOSTS}>"><{$stats[0].post.total}></a></strong>
@@ -240,21 +240,21 @@
                     | <{$smarty.const._MD_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
                 <{/if}>
                 <{if $userstats}>
-                    <br/>
-                    <br/>
+                    <br>
+                    <br>
                     <{*$userstats.lastvisit*}>
-                    <br/>
+                    <br>
                     <{$userstats.lastpost}>
                 <{/if}>
             </div>
             <div class="forum_stats_col odd right floatright">
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new" title="<{$smarty.const._MD_VIEW_NEWPOSTS}>"><{$smarty.const._MD_VIEW_NEWPOSTS}></a><br/>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new" title="<{$smarty.const._MD_VIEW_NEWPOSTS}>"><{$smarty.const._MD_VIEW_NEWPOSTS}></a><br>
                 <{$smarty.const._MD_TODAYTOPICSC}><strong><{$stats[0].topic.day|default:0}></strong>
                 | <{$smarty.const._MD_TODAYPOSTSC}><strong><{$stats[0].post.day|default:0}></strong>
                 <{if $userstats}>
-                    <br/>
-                    <br/>
-                    <{$userstats.topics}> | <{$userstats.posts}><{if $userstats.digests}><br/><{$userstats.digests}><{/if}>
+                    <br>
+                    <br>
+                    <{$userstats.topics}> | <{$userstats.posts}><{if $userstats.digests}><br><{$userstats.digests}><{/if}>
                 <{/if}>
             </div>
             <div class="clear"></div>

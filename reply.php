@@ -111,7 +111,8 @@ $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
 
 $xoopsTpl->assign(array(
                       'forum_id'   => $forum_obj->getVar('forum_id'),
-                      'forum_name' => $forum_obj->getVar('forum_name')));
+                      'forum_name' => $forum_obj->getVar('forum_name')
+                  ));
 
 if ($post_parent_obj->getVar('uid')) {
     $r_name = newbb_getUnameFromId($post_parent_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
@@ -128,7 +129,9 @@ if (!preg_match('/^(Re|' . _MD_RE . '):/i', $r_subject)) {
 }
 
 $q_message = $post_parent_obj->getVar('post_text', 'e');
-if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma')) && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))) {
+if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma')) &&
+    (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))
+) {
     if (1 === XoopsRequest::getInt('quotedac', 0, 'GET')) {
         $message = "[quote]\n";
         $message .= sprintf(_MD_USERWROTE, $r_name);
@@ -186,7 +189,8 @@ foreach ($posts_context_obj as $post_context_obj) {
     $posts_context[] = array(
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
-        'content' => $p_message);
+        'content' => $p_message
+    );
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php

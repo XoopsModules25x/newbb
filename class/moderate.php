@@ -102,7 +102,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         }
         $forumCriteria   = empty($forum) ? 'forum_id=0' : 'forum_id=0 OR forum_id=' . (int)$forum;
         $expire_criteria = 'mod_end > ' . time();
-        $sql             = sprintf('SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
+        $sql             =
+            sprintf('SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -145,7 +146,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             $ip_criteria = '1=1';
         }
         $expire_criteria = 'mod_end > ' . time();
-        $sql             = sprintf('SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $expire_criteria);
+        $sql             =
+            sprintf('SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return $forums[$uid][$ip] = array();
         }
@@ -208,7 +210,18 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             // for 4.0 +
             /* */
-            $sql = 'DELETE ' . $this->table . ' FROM ' . $this->table . ' LEFT JOIN ' . $this->db->prefix('bb_forums') . ' AS aa ON ' . $this->table . '.forum_id = aa.forum_id ' . ' WHERE ' . $this->table . '.forum_id > 0 AND (aa.forum_id IS NULL)';
+            $sql = 'DELETE ' .
+                   $this->table .
+                   ' FROM ' .
+                   $this->table .
+                   ' LEFT JOIN ' .
+                   $this->db->prefix('bb_forums') .
+                   ' AS aa ON ' .
+                   $this->table .
+                   '.forum_id = aa.forum_id ' .
+                   ' WHERE ' .
+                   $this->table .
+                   '.forum_id > 0 AND (aa.forum_id IS NULL)';
             /* */
             // for 4.1+
             /*

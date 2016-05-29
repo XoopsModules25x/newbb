@@ -15,8 +15,6 @@ mod_loadFunctions('recon', 'newbb');
 $form = '<fieldset>';
 $form .= $indexAdmin->addNavigation(basename(__FILE__));
 
-
-
 //if (!empty($_GET['type'])) {
 $start = XoopsRequest::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
 
@@ -25,7 +23,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     case 'forum':
         $result = newbb_synchronization('forum');
         if (!empty($result)) {
-            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_FORUM . '<br />' . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_FORUM . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan rewrite topic sync
@@ -50,7 +48,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     case 'post':
         $result = newbb_synchronization('post');
         if (!empty($result)) {
-            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_POST . '<br />' . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_POST . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan - user is not in recon functions - only here
@@ -76,7 +74,9 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' .
+                                        $GLOBALS['xoopsDB']->prefix('bb_user_stats') .
+                                        "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
@@ -89,7 +89,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
     case 'read':
         $result = newbb_synchronization(array('readtopic', 'readforum'));
         if (!empty($result)) {
-            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_READ . '<br />' . _AM_NEWBB_DATABASEUPDATED);
+            redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_READ . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
         exit();
     // END irmtfan add read sync

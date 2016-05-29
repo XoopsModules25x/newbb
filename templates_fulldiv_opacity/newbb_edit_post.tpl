@@ -18,29 +18,29 @@
     </div>
 </div>
 <div class="clear"></div>
-<br />
+<br>
 
 <{if $disclaimer}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
-    <br />
+    <br>
 <{/if}>
 
 <{if $error_message}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
-    <br />
+    <br>
 <{/if}>
 
 <{if $post_preview}>
 <div class='outer'>
     <div class="head"><{$post_preview.subject}></div>
-    <div class=""><{$post_preview.meta}><br /><br />
+    <div class=""><{$post_preview.meta}><br><br>
         <{$post_preview.content}>
     </div>
 </div>
 <div class="clear"></div>
-<br />
+<br>
 <{/if}>
 
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>" method="<{$form_post.method}>" <{$form_post.extra}> >
@@ -67,13 +67,13 @@
 </form>
 <{$form_post.javascript}>
 <div class="clear"></div>
-<br />
+<br>
 
 <{if $posts_context}>
 <div class='outer'>
 <{foreachq item=post from=$posts_context}>
     <div class="head"><{$post.subject}></div>
-    <div class="<{cycle values="even,odd"}>"><{$post.meta}><br /><br />
+    <div class="<{cycle values="even,odd"}>"><{$post.meta}><br><br>
         <{$post.content}>
     </div>
 <{/foreach}>

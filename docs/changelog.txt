@@ -1,3 +1,8 @@
+4.33 RC 13  (XOOPS 2.5.8)      (NOT RELEASED)
+===========================================
+- code cosmetics (mamba0
+- replaced "<br />" with "<br>" (mamba)
+
 4.33 RC 12  (XOOPS 2.5.8)      (2016-04-03)
 ===========================================
 - removed @version (mamba)

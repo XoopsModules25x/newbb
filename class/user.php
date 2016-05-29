@@ -118,7 +118,8 @@ class NewbbUser
         $userbar['profile'] = array('link' => XOOPS_URL . '/userinfo.php?uid=' . $user->getVar('uid'), 'name' => _PROFILE);
 
         if (is_object($GLOBALS['xoopsUser'])) {
-            $userbar['pm'] = array('link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);", 'name' => _MD_PM);
+            $userbar['pm'] =
+                array('link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);", 'name' => _MD_PM);
         }
         if ($user->getVar('user_viewemail') || $isadmin) {
             $userbar['email'] = array('link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');", 'name' => _MD_EMAIL);
@@ -162,14 +163,20 @@ class NewbbUser
                 }
             }
             // irmtfan hardcore removed align="left"
-            $table = "<table class='userlevel'><tr><td class='end'><img src='" . $rpg_images['img_left'] . "' alt='' /></td><td class='center' background='" . $rpg_images['img_backing'] . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='" . $rpg_images['img_right'] . "' alt='' /></td></tr></table>";
+            $table = "<table class='userlevel'><tr><td class='end'><img src='" .
+                     $rpg_images['img_left'] .
+                     "' alt='' /></td><td class='center' background='" .
+                     $rpg_images['img_backing'] .
+                     "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='" .
+                     $rpg_images['img_right'] .
+                     "' alt='' /></td></tr></table>";
 
-            $info = _MD_LEVEL . ' ' . $level['level'] . '<br />' . _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br />' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
-            $info .= _MD_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '<br />' . sprintf($table, $rpg_images['green'], $level['mp_width']);
-            $info .= _MD_EXP . ' ' . $level['exp'] . '<br />' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
+            $info = _MD_LEVEL . ' ' . $level['level'] . '<br>' . _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
+            $info .= _MD_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '<br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);
+            $info .= _MD_EXP . ' ' . $level['exp'] . '<br>' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
         } else {
-            $info = _MD_LEVEL . ' ' . $level['level'] . '; ' . _MD_EXP . ' ' . $level['exp'] . '<br />';
-            $info .= _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br />';
+            $info = _MD_LEVEL . ' ' . $level['level'] . '; ' . _MD_EXP . ' ' . $level['exp'] . '<br>';
+            $info .= _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>';
             $info .= _MD_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'];
         }
 

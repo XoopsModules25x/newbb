@@ -6,7 +6,7 @@
     <div id="<{$forum_post_prefix}>0"></div>
 <{/if}>
 <!-- END irmtfan assign forum_post_prefix smarty -->
-<!-- irmtfan removed  
+<!-- irmtfan removed
 <{*<{if $post_id == $topic_post.post_id}><div id="aktuell"></div><{/if}>*}>
 -->
 <table class="outer" cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="border-bottom-width: 0;">
@@ -35,18 +35,18 @@
         <td width="20%" class="odd" rowspan="2" valign="top">
             <{if $topic_post.poster.uid != 0}>
                 <!-- START hacked by irmtfan rank_title -> rank.title -->
-                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br/><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
+                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
                 <!-- END hacked by irmtfan -->
 
                 <{if $topic_post.poster.avatar != "blank.gif"}>
-                    <br/>
+                    <br>
                     <img class="comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt=""/>
                 <{else}>
                     <!-- irmtfan remove icon_path -->
-                    <br/>
+                    <br>
                     <{$anonym_avatar}>
                 <{/if}>
-                <br/>
+                <br>
                 <{if $infobox.show}>
                     <!-- irmtfan simplify onclick method (this.children[0] for IE7&8) - remove hardcode style="padding:2px;"-->
                     <span class="pointer"
@@ -55,15 +55,15 @@
 </span>
                     <!-- irmtfan move semicolon -->
                     <div id="<{$topic_post.post_id}>" style="display: <{$infobox.style}>;">
-                        <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br/><{$topic_post.poster.regdate}><br/><span class="comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>
-                                :</span><br/><{$topic_post.poster.last_login}></div>
+                        <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br><{$topic_post.poster.regdate}><br><span class="comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>
+                                :</span><br><{$topic_post.poster.last_login}></div>
                         <!-- irmtfan add last_login -->
                         <{if $topic_post.poster.from}>
                             <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_FROM}></span> <{$topic_post.poster.from}></div>
                         <{/if}>
                         <{if $topic_post.poster.groups}>
                             <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_GROUP}></span>
-                                <{foreachq item=group from=$topic_post.poster.groups}> <br/><{$group}><{/foreach}>
+                                <{foreachq item=group from=$topic_post.poster.groups}> <br><{$group}><{/foreach}>
                             </div>
                         <{/if}>
                         <div class="comUserStat">
@@ -101,7 +101,7 @@
                 <div class="comText"><{$topic_post.post_attachment}></div>
             <{/if}>
             <div class="clear"></div>
-            <br/>
+            <br>
             <!-- irmtfan hardcode removed style="float: right; padding: 5px; margin-top: 10px;" -->
             <div class="post_ip">
                 <{if $topic_post.poster_ip}>
@@ -114,7 +114,7 @@
             <{/if}>
             <{if $topic_post.post_edit}>
                 <div class="clear"></div>
-                <br/>
+                <br>
                 <!-- irmtfan hardcode removed style="float: right; padding: 5px; margin-top: 10px; border:1px solid #000;" -->
                 <div class="post_edit">
                     <!-- irmtfan hardcode removed -->
@@ -132,7 +132,7 @@
             <{/if}>
             <{if $topic_post.post_signature}>
                 <div class="signature">
-                    <!-- irmtfan hardcode removed hardcode ____________________<br /> -->
+                    <!-- irmtfan hardcode removed hardcode ____________________<br> -->
                     <{$topic_post.post_signature}>
                 </div>
             <{/if}>

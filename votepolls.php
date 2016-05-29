@@ -41,7 +41,7 @@ if (!XoopsRequest::getInt('option_id', 0, 'POST')) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
-$pollModuleHandler = $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
+$pollModuleHandler = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // new xoopspoll module
     if ($pollModuleHandler->getVar('version') >= 140) {
@@ -90,7 +90,8 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                         $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_THANKSFORVOTE');
                     } else {
                         /* there was a problem registering the vote */
-                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', array('poll_id' => $poll_id)), $classConstants::REDIRECT_DELAY_MEDIUM, constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE_ERROR'));
+                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', array('poll_id' => $poll_id)), $classConstants::REDIRECT_DELAY_MEDIUM,
+                                        constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE_ERROR'));
                     }
                 } else {
                     $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_ALREADYVOTED');

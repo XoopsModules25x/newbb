@@ -18,25 +18,25 @@
         <div class="thread_userinfo odd forum_cell">
             <{if $topic_post.poster.uid gt 0}>
                 <div class="thread_poster comUserName"><{$topic_post.poster.link}></div>
-                <div class="thread_poster_rank comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br /><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
+                <div class="thread_poster_rank comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
                 <{if $topic_post.poster.avatar != "blank.gif"}>
-                    <br /><img class="thread_poster_img comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" />
+                    <br><img class="thread_poster_img comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" />
                 <{else}>
-                    <br /><{$anonym_avatar}>
+                    <br><{$anonym_avatar}>
                 <{/if}>
                 <{if $infobox.show}>
-                    <br />
+                    <br>
                     <span class="pointer" onclick="ToggleBlockCategory('toggle-<{$topic_post.post_id}>',(this.firstElementChild || this.children[0]) , '<{$infobox.icon.expand}>', '<{$infobox.icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDEUSERDATA|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEEUSERDATA|escape:'quotes'}>','toggle_block','toggle_none');">
                         <{$infobox.displayImage}>
                     </span>
                     <div id="toggle-<{$topic_post.post_id}>" class="toggle_<{$infobox.style}>">
-                        <div class="thread_poster_stat comUserStat"><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br /><{$topic_post.poster.regdate}><br /><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>:</span><br /><{$topic_post.poster.last_login}></div>
+                        <div class="thread_poster_stat comUserStat"><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br><{$topic_post.poster.regdate}><br><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>:</span><br><{$topic_post.poster.last_login}></div>
                         <{if $topic_post.poster.from}>
                             <div class="thread_poster_stat comUserStat"><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._MD_FROM}></span> <{$topic_post.poster.from}></div>
                         <{/if}>
                         <{if $topic_post.poster.groups}>
                             <div class="thread_poster_stat comUserStat"><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._MD_GROUP}></span>
-                                <{foreachq item=group from=$topic_post.poster.groups}><br /><{$group}><{/foreach}>
+                                <{foreachq item=group from=$topic_post.poster.groups}><br><{$group}><{/foreach}>
                             </div>
                         <{/if}>
                         <div class="thread_poster_stat comUserStat">
@@ -75,7 +75,7 @@
                 <div class="thread_attach comText"><{$topic_post.post_attachment}></div>
                 <div class="clear"></div>
             <{/if}>
-            <br />
+            <br>
             <div class="thread_poster_ip floatright">
                 <{if $topic_post.poster_ip}>
                     IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
@@ -83,14 +83,14 @@
             </div>
             <div class="clear"></div>
             <{if $topic_post.post_edit}>
-                <br />
+                <br>
                 <div class="thread_edit floatright">
                    <{$topic_post.post_edit}>
                 </div>
                 <div class="clear"></div>
             <{/if}>
             <{if $topic_post.post_signature}>
-                <br />
+                <br>
                 <div class="thread_signature odd">
                     <{$topic_post.post_signature}>
                 </div>

@@ -61,8 +61,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     xoops_cp_header();
     echo '<fieldset>';
 
-        echo $indexAdmin->addNavigation(basename(__FILE__));
-
+    echo $indexAdmin->addNavigation(basename(__FILE__));
 
     echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
     $tform = new XoopsThemeForm(_AM_NEWBB_SETFORUMORDER, '', '');

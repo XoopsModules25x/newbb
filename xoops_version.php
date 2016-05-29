@@ -75,7 +75,8 @@ $modversion['tables'] = array(
     'bb_type',
     'bb_type_forum',
     'bb_stats',
-    'bb_user_stats');
+    'bb_user_stats'
+);
 
 // Admin things
 $modversion['hasAdmin']   = 1;
@@ -110,7 +111,8 @@ $modversion['templates'] = array(
     array('file' => 'newbb_viewpost.tpl', 'description' => ''),
     array('file' => 'newbb_online.tpl', 'description' => ''),
     array('file' => 'newbb_rss.tpl', 'description' => ''),
-    array('file' => 'newbb_notification_select.tpl', 'description' => ''));
+    array('file' => 'newbb_notification_select.tpl', 'description' => '')
+);
 
 // Blocks
 
@@ -128,7 +130,8 @@ $modversion['blocks'][1] = array(
     'show_func'   => 'b_newbb_show',
     'options'     => 'time|5|360|0|1|0',
     'edit_func'   => 'b_newbb_edit',
-    'template'    => 'newbb_block.tpl');
+    'template'    => 'newbb_block.tpl'
+);
 
 // options[0] - Citeria valid: time(by default), views, replies, digest, sticky
 // options[1] - NumberToDisplay: any positive integer
@@ -145,7 +148,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_newbb_topic_show',
     'options'     => 'time|5|0|0|1|0|0',
     'edit_func'   => 'b_newbb_topic_edit',
-    'template'    => 'newbb_block_topic.tpl');
+    'template'    => 'newbb_block_topic.tpl'
+);
 
 // options[0] - Citeria valid: title(by default), text
 // options[1] - NumberToDisplay: any positive integer
@@ -162,7 +166,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_newbb_post_show',
     'options'     => 'title|10|0|0|1|0|0',
     'edit_func'   => 'b_newbb_post_edit',
-    'template'    => 'newbb_block_post.tpl');
+    'template'    => 'newbb_block_post.tpl'
+);
 
 // options[0] - Citeria valid: post(by default), topic, digest, sticky
 // options[1] - NumberToDisplay: any positive integer
@@ -178,7 +183,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_newbb_author_show',
     'options'     => 'topic|5|0|0|1|0',
     'edit_func'   => 'b_newbb_author_edit',
-    'template'    => 'newbb_block_author.tpl');
+    'template'    => 'newbb_block_author.tpl'
+);
 
 /*
  * $options:
@@ -194,7 +200,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_cloud_show',
     'edit_func'   => 'newbb_tag_block_cloud_edit',
     'options'     => '100|0|150|80',
-    'template'    => 'newbb_tag_block_cloud.tpl');
+    'template'    => 'newbb_tag_block_cloud.tpl'
+);
 
 /*
  * $options:
@@ -209,7 +216,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_tag_block_top_show',
     'edit_func'   => 'newbb_tag_block_top_edit',
     'options'     => '50|0|c',
-    'template'    => 'newbb_tag_block_top.tpl');
+    'template'    => 'newbb_tag_block_top.tpl'
+);
 // irmtfan START add list topic block
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -232,7 +240,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'newbb_list_topic_show',
     'options'     => 'all|-1|-1|0|lastpost|0|5|360|topic,forum,replies,lastpost,lastposttime,lastposter,lastpostmsgicon,publish|1|0|200|0',
     'edit_func'   => 'newbb_list_topic_edit',
-    'template'    => 'newbb_block_list_topic.tpl');
+    'template'    => 'newbb_block_list_topic.tpl'
+);
 // irmtfan END add list topic block
 
 // Search
@@ -252,7 +261,8 @@ $modversion['config'][] = array(
     'description' => '_MI_DO_REWRITE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'pngforie_enabled',
@@ -260,7 +270,8 @@ $modversion['config'][] = array(
     'description' => '_MI_PNGFORIE_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'subforum_display',
@@ -271,8 +282,10 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_SUBFORUM_EXPAND   => 'expand',
         _MI_SUBFORUM_COLLAPSE => 'collapse',
-        _MI_SUBFORUM_HIDDEN   => 'hidden'),
-    'default'     => 'collapse');
+        _MI_SUBFORUM_HIDDEN   => 'hidden'
+    ),
+    'default'     => 'collapse'
+);
 
 $modversion['config'][] = array(
     'name'        => 'post_excerpt',
@@ -280,7 +293,8 @@ $modversion['config'][] = array(
     'description' => '_MI_POST_EXCERPT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 100);
+    'default'     => 100
+);
 
 $modversion['config'][] = array(
     'name'        => 'topics_per_page',
@@ -288,7 +302,8 @@ $modversion['config'][] = array(
     'description' => '_MI_TOPICSPERPAGE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 20);
+    'default'     => 20
+);
 
 $modversion['config'][] = array(
     'name'        => 'posts_per_page',
@@ -296,7 +311,8 @@ $modversion['config'][] = array(
     'description' => '_MI_POSTSPERPAGE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 10);
+    'default'     => 10
+);
 
 $modversion['config'][] = array(
     'name'        => 'pagenav_display',
@@ -307,8 +323,10 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_PAGENAV_NUMBER => 'number',
         _MI_PAGENAV_IMAGE  => 'image',
-        _MI_PAGENAV_SELECT => 'select'),
-    'default'     => 'number');
+        _MI_PAGENAV_SELECT => 'select'
+    ),
+    'default'     => 'number'
+);
 
 $modversion['config'][] = array(
     'name'        => 'cache_enabled',
@@ -316,7 +334,8 @@ $modversion['config'][] = array(
     'description' => '_MI_CACHE_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'statistik_enabled',
@@ -324,7 +343,8 @@ $modversion['config'][] = array(
     'description' => '_MI_STATISTIK_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'dir_attachments',
@@ -332,7 +352,8 @@ $modversion['config'][] = array(
     'description' => '_MI_DIR_ATTACHMENT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => 'uploads/newbb');
+    'default'     => 'uploads/newbb'
+);
 
 $modversion['config'][] = array(
     'name'        => 'media_allowed',
@@ -340,7 +361,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MEDIA_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'path_magick',
@@ -348,7 +370,8 @@ $modversion['config'][] = array(
     'description' => '_MI_PATH_MAGICK_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '/usr/bin/X11');
+    'default'     => '/usr/bin/X11'
+);
 
 $modversion['config'][] = array(
     'name'        => 'path_netpbm',
@@ -356,7 +379,8 @@ $modversion['config'][] = array(
     'description' => '_MI_PATH_NETPBM_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '/usr/bin');
+    'default'     => '/usr/bin'
+);
 
 $modversion['config'][] = array(
     'name'        => 'image_lib',
@@ -370,7 +394,9 @@ $modversion['config'][] = array(
         _MI_MAGICK => 1,
         _MI_NETPBM => 2,
         _MI_GD1    => 3,
-        _MI_GD2    => 4));
+        _MI_GD2    => 4
+    )
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_userattach',
@@ -378,7 +404,8 @@ $modversion['config'][] = array(
     'description' => '_MI_USERATTACH_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'max_img_width',
@@ -386,7 +413,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MAX_IMG_WIDTH_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 800);
+    'default'     => 800
+);
 
 $modversion['config'][] = array(
     'name'        => 'max_img_height',
@@ -394,7 +422,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MAX_IMG_HEIGHT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 640);
+    'default'     => 640
+);
 
 $modversion['config'][] = array(
     'name'        => 'max_image_width',
@@ -402,7 +431,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MAX_IMAGE_WIDTH_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 150);
+    'default'     => 150
+);
 
 $modversion['config'][] = array(
     'name'        => 'max_image_height',
@@ -410,7 +440,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MAX_IMAGE_HEIGHT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 150);
+    'default'     => 150
+);
 
 $modversion['config'][] = array(
     'name'        => 'wol_enabled',
@@ -418,7 +449,8 @@ $modversion['config'][] = array(
     'description' => '_MI_WOL_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'user_level',
@@ -430,7 +462,9 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NULL    => 0,
         _MI_TEXT    => 1,
-        _MI_GRAPHIC => 2));
+        _MI_GRAPHIC => 2
+    )
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_realname',
@@ -438,7 +472,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SHOW_REALNAME_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'groupbar_enabled',
@@ -446,7 +481,8 @@ $modversion['config'][] = array(
     'description' => '_MI_GROUPBAR_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'rating_enabled',
@@ -454,7 +490,8 @@ $modversion['config'][] = array(
     'description' => '_MI_RATING_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'reportmod_enabled',
@@ -462,7 +499,8 @@ $modversion['config'][] = array(
     'description' => '_MI_REPORTMOD_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'quickreply_enabled',
@@ -470,7 +508,8 @@ $modversion['config'][] = array(
     'description' => '_MI_QUICKREPLY_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'rss_enable',
@@ -478,7 +517,8 @@ $modversion['config'][] = array(
     'description' => '_MI_RSS_ENABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'rss_maxitems',
@@ -486,7 +526,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 10);
+    'default'     => 10
+);
 
 $modversion['config'][] = array(
     'name'        => 'rss_maxdescription',
@@ -494,7 +535,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'rss_cachetime',
@@ -502,7 +544,8 @@ $modversion['config'][] = array(
     'description' => '_MI_RSS_CACHETIME_DESCRIPTION',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 30);
+    'default'     => 30
+);
 
 // 4.05
 $modversion['config'][] = array(
@@ -515,7 +558,9 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NEWBB_INFOBOX_NONE   => 0,
         _MI_NEWBB_INFOBOX_HIDDEN => 1,
-        _MI_NEWBB_INFOBOX_SHOW   => 2));
+        _MI_NEWBB_INFOBOX_SHOW   => 2
+    )
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_sociallinks',
@@ -523,7 +568,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SHOW_SOCIALLINKS_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_advertising',
@@ -531,7 +577,8 @@ $modversion['config'][] = array(
     'description' => '_MI_ADVERTISING_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_jump',
@@ -539,7 +586,8 @@ $modversion['config'][] = array(
     'description' => '_MI_JUMPBOXDESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_permissiontable',
@@ -547,7 +595,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SHOW_PERMISSIONTABLE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'email_digest',
@@ -559,7 +608,9 @@ $modversion['config'][] = array(
     'options'     => array(
         _MI_NEWBB_EMAIL_NONE   => 0,
         _MI_NEWBB_EMAIL_DAILY  => 1,
-        _MI_NEWBB_EMAIL_WEEKLY => 2));
+        _MI_NEWBB_EMAIL_WEEKLY => 2
+    )
+);
 
 $modversion['config'][] = array(
     'name'        => 'show_ip',
@@ -567,7 +618,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SHOW_IP_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'enable_karma',
@@ -575,7 +627,8 @@ $modversion['config'][] = array(
     'description' => '_MI_ENABLE_KARMA_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'karma_options',
@@ -583,7 +636,8 @@ $modversion['config'][] = array(
     'description' => '_MI_KARMA_OPTIONS_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '0, 10, 50, 100, 500, 1000, 5000, 10000');
+    'default'     => '0, 10, 50, 100, 500, 1000, 5000, 10000'
+);
 // irmtfan - add 365 = one year
 $modversion['config'][] = array(
     'name'        => 'since_options',
@@ -591,7 +645,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SINCE_OPTIONS_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '-1, -2, -6, -12, 0, 1, 2, 5, 10, 20, 30, 60, 100, 365');
+    'default'     => '-1, -2, -6, -12, 0, 1, 2, 5, 10, 20, 30, 60, 100, 365'
+);
 
 $modversion['config'][] = array(
     'name'        => 'since_default',
@@ -599,7 +654,8 @@ $modversion['config'][] = array(
     'description' => '_MI_SINCE_DEFAULT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'allow_user_anonymous',
@@ -607,7 +663,8 @@ $modversion['config'][] = array(
     'description' => '_MI_USER_ANONYMOUS_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'anonymous_prefix',
@@ -615,7 +672,8 @@ $modversion['config'][] = array(
     'description' => '_MI_ANONYMOUS_PRE_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => $GLOBALS['xoopsConfig']['anonymous'] . '-');
+    'default'     => $GLOBALS['xoopsConfig']['anonymous'] . '-'
+);
 
 $modversion['config'][] = array(
     'name'        => 'allow_require_reply',
@@ -623,7 +681,8 @@ $modversion['config'][] = array(
     'description' => '_MI_REQUIRE_REPLY_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'edit_timelimit',
@@ -631,7 +690,8 @@ $modversion['config'][] = array(
     'description' => '_MI_EDIT_TIMELIMIT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 60);
+    'default'     => 60
+);
 
 $modversion['config'][] = array(
     'name'        => 'recordedit_timelimit',
@@ -639,7 +699,8 @@ $modversion['config'][] = array(
     'description' => '_MI_RECORDEDIT_TIMELIMIT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 15);
+    'default'     => 15
+);
 
 $modversion['config'][] = array(
     'name'        => 'delete_timelimit',
@@ -647,7 +708,8 @@ $modversion['config'][] = array(
     'description' => '_MI_DELETE_TIMELIMIT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 60);
+    'default'     => 60
+);
 
 $modversion['config'][] = array(
     'name'        => 'post_timelimit',
@@ -655,7 +717,8 @@ $modversion['config'][] = array(
     'description' => '_MI_POST_TIMELIMIT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 30);
+    'default'     => 30
+);
 
 $modversion['config'][] = array(
     'name'        => 'enable_permcheck',
@@ -663,7 +726,8 @@ $modversion['config'][] = array(
     'description' => '_MI_PERMCHECK_ONDISPLAY_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1
+);
 
 $modversion['config'][] = array(
     'name'        => 'enable_usermoderate',
@@ -671,7 +735,8 @@ $modversion['config'][] = array(
     'description' => '_MI_USERMODERATE_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 $modversion['config'][] = array(
     'name'        => 'disc_show',
@@ -684,7 +749,9 @@ $modversion['config'][] = array(
         _NONE       => 0,
         _MI_POST    => 1,
         _MI_REPLY   => 2,
-        _MI_OP_BOTH => 3));
+        _MI_OP_BOTH => 3
+    )
+);
 
 $modversion['config'][] = array(
     'name'        => 'disclaimer',
@@ -692,7 +759,8 @@ $modversion['config'][] = array(
     'description' => '_MI_DISCLAIMER_DESC',
     'formtype'    => 'textarea',
     'valuetype'   => 'text',
-    'default'     => _MI_DISCLAIMER_TEXT);
+    'default'     => _MI_DISCLAIMER_TEXT
+);
 
 xoops_load('XoopsRequest');
 $forum_options = array(_NONE => 0);
@@ -720,7 +788,8 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => $forum_options);
+    'options'     => $forum_options
+);
 // START irmtfan add a poll_module config
 $pollDirs = array();
 $dir_def  = 0;
@@ -771,7 +840,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
                     //echo "error: poll_module is in danger!!!";
                 }
                 // I have to redirect back to prevent system module to save bad $_POST['poll_module'] setting!!!
-                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . '<br/>' . _AM_NEWBB_POLLMODULE . ' ' . _AM_NEWBB_POLL_OK . ' :(' . $poll_module_in_use . ')');
+                redirect_header($_SERVER['HTTP_REFERER'], 2, _AM_SYSTEM_DBUPDATED . '<br>' . _AM_NEWBB_POLLMODULE . ' ' . _AM_NEWBB_POLL_OK . ' :(' . $poll_module_in_use . ')');
             }
         }
     }

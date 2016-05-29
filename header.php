@@ -124,14 +124,14 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['we
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
-//$module_handler = xoops_getHandler('module');
-$xoopspoll = $module_handler->getByDirname($pollmodules);
+//$moduleHandler = xoops_getHandler('module');
+$xoopspoll = $moduleHandler->getByDirname($pollmodules);
 /*
 if (is_object($xoopspoll) && $xoopspoll->getVar('isactive')) {
         $pollmodules = 'xoopspoll';
 } else {
     //Umfrage
-    $xoopspoll = &$module_handler->getByDirname('umfrage');
+    $xoopspoll = &$moduleHandler->getByDirname('umfrage');
     if (is_object($xoopspoll) && $xoopspoll->getVar('isactive'))
         $pollmodules = 'umfrage';
 }

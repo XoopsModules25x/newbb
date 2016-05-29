@@ -51,13 +51,12 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHan
      * @param  null $db
      * @return NewbbUserstatsHandler
      */
-    public function instance($db = null)
+    public static function getInstance($db = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new NewbbUserstatsHandler($db);
+            $instance = new static($db);
         }
-
         return $instance;
     }
 

@@ -32,7 +32,7 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 echo '<fieldset>';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-    echo $indexAdmin->addNavigation(basename(__FILE__));
+echo $indexAdmin->addNavigation(basename(__FILE__));
 $memberHandler = xoops_getHandler('member');
 $forumHandler  = xoops_getModuleHandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
@@ -59,15 +59,15 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         if (is_array($fuser) && $GLOBALS['xoopsDB']->queryF($sql)) {
             $mess = _AM_NEWBB_GROUPMOD_ADDMOD;
         } else {
-            $mess = _AM_NEWBB_GROUPMOD_ERRMOD . '<br /><small>( ' . $sql . ' )</small>';
+            $mess = _AM_NEWBB_GROUPMOD_ERRMOD . '<br><small>( ' . $sql . ' )</small>';
         }
         redirect_header('admin_groupmod.php', 1, $mess);
-        //        echo '<div class="confirmMsg">' . $mess . '</div><br /><br />';
+        //        echo '<div class="confirmMsg">' . $mess . '</div><br><br>';
     }
 }
 
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
-echo "<br /><br /><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
+echo "<br><br><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
 $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
 $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
@@ -90,7 +90,7 @@ echo "</td><tr><tr><td class='even'>";
 
 $groups = $memberHandler->getGroups();
 foreach ($groups as $value) {
-    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br />';
+    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br>';
 }
 echo "</td><tr><tr><td class='odd'>";
 

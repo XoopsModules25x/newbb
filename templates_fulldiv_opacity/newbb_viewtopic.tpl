@@ -18,12 +18,12 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{if $tagbar}>
     <div class="taglist">
         <{includeq file="db:tag_bar.tpl"}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 <{if $online}>
     <div class="online_block">
@@ -43,7 +43,7 @@
             &nbsp;<{$online.num_anonymous}> <{$smarty.const._MD_ANONYMOUS_USERS}>
         <{/if}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 <{if $viewer_level gt 1}>
     <div class="icon_right" id="admin">
@@ -70,10 +70,10 @@
             <{/if}>
     </div>
     <div class="clear"></div>
-    <br/>
+    <br>
 <{/if}>
 <{if $mode lte 1}>
-    <br/>
+    <br>
     <{if $topic_poll}>
         <{if $topic_pollresult}>
             <{includeq file="db:newbb_poll_results.tpl" poll=$poll}>
@@ -81,7 +81,7 @@
             <{includeq file="db:newbb_poll_view.tpl" poll=$poll}>
         <{/if}>
         <div class="clear"></div>
-        <br/>
+        <br>
     <{/if}>
 <{/if}>
 <div class="topic_top">
@@ -95,11 +95,11 @@
 </span>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <div>
     <div class="dropdown floatleft">
         <{if $viewer_level gt 1}>
-            <select name="topicoption" id="topicoption" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}">
+            <select name="topicoption" id="topicoption" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
                 <{foreachq item=act from=$admin_actions}>
                 <option value="<{$act.link}>"><{$act.name}></option>
@@ -123,7 +123,7 @@
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1"><{$smarty.const._MD_RATE1}></option>
             </select>
         <{/if}>
-        <select name="viewmode" id="viewmode" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.location=this.options[this.selectedIndex].value;}">
+        <select name="viewmode" id="viewmode" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
             <{foreachq item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
@@ -152,16 +152,16 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 <{if $viewer_level gt 1 && $topic_status == 1}>
     <div class="resultMsg"><{$smarty.const._MD_TOPICLOCK}></div>
-    <br/>
+    <br>
 <{/if}>
 <{foreachq item=topic_post from=$topic_posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
-<br/>
-<br/>
+<br>
+<br>
 <{foreachelse}>
 <div class="topic_error"><{$smarty.const._MD_ERRORPOST}></div>
 <{/foreach}>
@@ -169,7 +169,7 @@
 <{if $mode gt 1}>
     </form>
 <{/if}>
-<br/>
+<br>
 <div class="forum_header">
     <div class="forum_title">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
@@ -188,7 +188,7 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div>
     <div class="icon_left">
@@ -201,13 +201,13 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <div class="icon_left">
     <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{if $quickreply.show}>
     <div>
@@ -216,12 +216,12 @@
             <{$quickreply.displayImage}>
         </a>
     </div>
-    <br/>
+    <br>
     <div id="qr" class="toggle_<{$quickreply.style}>">
         <{$quickreply.form}>
     </div>
-    <br/>
-    <br/>
+    <br>
+    <br>
 <{/if}>
 
 <div>
@@ -238,15 +238,15 @@
             <input type="hidden" name="since" id="since" value="<{$forum_since}>"/>
             <input type="hidden" name="action" id="action" value="yes"/>
             <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
-        <br/>
+        <br>
         <{$forum_jumpbox}>
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{includeq file='db:newbb_notification_select.tpl'}>
 <!-- Add scroll js function to scroll down to current post -->
 <script type="text/javascript">

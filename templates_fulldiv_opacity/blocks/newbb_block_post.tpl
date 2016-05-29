@@ -10,7 +10,7 @@
         <div class="<{cycle values="even,odd"}>">
             <div class="block_full_forum floatleft left"><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a></div>
             <div class="block_full_topic floatleft left"><a href="<{$topic.seo_url}>"><{$topic.title}></a></div>
-            <div class="_col_end right"><{$topic.time}><br /><{$topic.topic_poster}></div>
+            <div class="_col_end right"><{$topic.time}><br><{$topic.topic_poster}></div>
             <div class="clear"></div>
         </div>
     <{/foreach}>
@@ -23,7 +23,7 @@
     <{foreachq item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}>">
         <div class="block_compact_topic floatleft left"><a href="<{$topic.seo_url}>"><{$topic.title}></a></div>
-        <div class="_col_end right"><{$topic.time}><br /><{$topic.topic_poster}></div>
+        <div class="_col_end right"><{$topic.time}><br><{$topic.topic_poster}></div>
         <div class="clear"></div>
     </div>
     <{/foreach}>
@@ -39,7 +39,7 @@
         <{foreachq item=topic from=$block.topics}>
             <div><strong><a href="<{$topic.seo_url}>"><{$topic.title}></a></strong></div>
             <div>
-                <a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a> | 
+                <a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a> |
                 <{$topic.topic_poster}> | <{$topic.time}>
             </div>
             <div class="post_text"><{$topic.post_text}></div>

@@ -48,7 +48,8 @@ $xoopsTpl->assign('category', array('id' => $forum_obj->getVar('cat_id'), 'title
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
 $xoopsTpl->assign(array(
                       'forum_id'   => $forum_obj->getVar('forum_id'),
-                      'forum_name' => $forum_obj->getVar('forum_name')));
+                      'forum_name' => $forum_obj->getVar('forum_name')
+                  ));
 
 if (!is_object($topic_obj)) {
     $topic_obj = $topicHandler->create();
@@ -75,7 +76,9 @@ foreach (array(
              'pid',
              'isreply',
              'isedit',
-             'contents_preview') as $getint) {
+             'contents_preview'
+         ) as $getint
+) {
     ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
 foreach (array(
@@ -84,7 +87,9 @@ foreach (array(
              'hidden',
              'newbb_form',
              'icon',
-             'op') as $getstr) {
+             'op'
+         ) as $getstr
+) {
     ${$getstr} = XoopsRequest::getString($getstr, ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
@@ -177,7 +182,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $pos
     }
 }
 
-$options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br />');
+$options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br>');
 if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
     $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
@@ -237,18 +242,28 @@ if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
     $upload_tray = new XoopsFormElementTray(_MD_ATTACHMENT);
     $upload_tray->addElement(new XoopsFormFile('', 'userfile', $forum_obj->getVar('attach_maxkb') * 1024));
     $upload_tray->addElement(new XoopsFormButton('', 'contents_upload', _MD_UPLOAD, 'submit'));
-    $upload_tray->addElement(new XoopsFormLabel('<br /><br />' . _MD_MAX_FILESIZE . ':', $forum_obj->getVar('attach_maxkb') . 'Kb; '));
+    $upload_tray->addElement(new XoopsFormLabel('<br><br>' . _MD_MAX_FILESIZE . ':', $forum_obj->getVar('attach_maxkb') . 'Kb; '));
     $extensions = trim(str_replace('|', ' ', $forum_obj->getVar('attach_ext')));
     $extensions = (empty($extensions) || $extensions === '*') ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ':', $extensions));
-    $upload_tray->addElement(new XoopsFormLabel('<br />' . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
+    $upload_tray->addElement(new XoopsFormLabel('<br>' . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
     $forum_form->addElement($upload_tray);
 }
 
 if (!empty($attachments) && is_array($attachments) && count($attachments)) {
     $delete_attach_checkbox = new XoopsFormCheckBox(_MD_THIS_FILE_WAS_ATTACHED_TO_THIS_POST, 'delete_attach[]');
     foreach ($attachments as $key => $attachment) {
-        $attach = ' ' . _DELETE . ' <a href=' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachment['name_saved'] . ' rel="external">' . $attachment['nameDisplay'] . '</a><br />';
+        $attach = ' ' .
+                  _DELETE .
+                  ' <a href=' .
+                  XOOPS_URL .
+                  '/' .
+                  $GLOBALS['xoopsModuleConfig']['dir_attachments'] .
+                  '/' .
+                  $attachment['name_saved'] .
+                  ' rel="external">' .
+                  $attachment['nameDisplay'] .
+                  '</a><br>';
         $delete_attach_checkbox->addOption($key, $attach);
     }
     $forum_form->addElement($delete_attach_checkbox);
@@ -259,7 +274,7 @@ if (!empty($attachments_tmp) && is_array($attachments_tmp) && count($attachments
     $delete_attach_checkbox = new XoopsFormCheckBox(_MD_REMOVE, 'delete_tmp[]');
     $url_prefix             = str_replace(XOOPS_ROOT_PATH, XOOPS_URL, XOOPS_CACHE_PATH);
     foreach ($attachments_tmp as $key => $attachment) {
-        $attach = ' <a href="' . $url_prefix . '/' . $attachment[0] . '" rel="external">' . $attachment[1] . '</a><br />';
+        $attach = ' <a href="' . $url_prefix . '/' . $attachment[0] . '" rel="external">' . $attachment[1] . '</a><br>';
         $delete_attach_checkbox->addOption($key, $attach);
     }
     $forum_form->addElement($delete_attach_checkbox);

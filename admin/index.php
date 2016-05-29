@@ -157,20 +157,20 @@ switch ($op) {
 
         echo '<fieldset>';
         $imageLibs      = newbb_getImageLibs();
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $reportHandler  = xoops_getModuleHandler('report', 'newbb');
 
         $isOK = false;
         // START irmtfan add a poll_module config
         //XOOPS_POLL
-        $xoopspoll = $module_handler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
+        $xoopspoll = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
         if (is_object($xoopspoll)) {
             $isOK = $xoopspoll->getVar('isactive');
         }
         /*
         else {
             //Umfrage
-            $xoopspoll = &$module_handler->getByDirname('umfrage');
+            $xoopspoll = &$moduleHandler->getByDirname('umfrage');
             if (is_object($xoopspoll)) $isOK = $xoopspoll->getVar('isactive');
         }
         */
@@ -199,10 +199,14 @@ switch ($op) {
         }
         $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_POLLMODULE . ': %s' . '</infotext>', $pollLink, 'Green');
         // END irmtfan better poll module display link and version - check if xoops poll module is available
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_IMAGEMAGICK . ' %s' . '</infotext>', array_key_exists('imagemagick', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . 'NetPBM' . ': %s' . '</infotext>', array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB1 . ' %s' . '</infotext>', array_key_exists('gd1', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] : _AM_NEWBB_NOTAVAILABLE, 'Red');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB2 . ' %s' . '</infotext>', array_key_exists('gd2', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
+        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_IMAGEMAGICK . ' %s' . '</infotext>',
+                                    array_key_exists('imagemagick', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
+        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . 'NetPBM' . ': %s' . '</infotext>',
+                                    array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
+        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB1 . ' %s' . '</infotext>',
+                                    array_key_exists('gd1', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] : _AM_NEWBB_NOTAVAILABLE, 'Red');
+        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB2 . ' %s' . '</infotext>',
+                                    array_key_exists('gd2', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
         $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_UPLOAD . ' %s' . '</infotext>', $uploadlimit, $uploadfarbe);
 
         $indexAdmin->addInfoBox(_AM_NEWBB_BOARDSUMMARY);
@@ -214,16 +218,16 @@ switch ($op) {
         $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, '<infolabel>' . _AM_NEWBB_REPORT_PENDING . ': %s' . '</infolabel>', $reportHandler->getCount(new Criteria('report_result', 0)), 'Green');
         $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, '<infolabel>' . _AM_NEWBB_REPORT_PROCESSED . ': %s' . '</infolabel>', $reportHandler->getCount(new Criteria('report_result', 1)), 'Green');
 
-//        foreach (array_keys($folder) as $i) {
-//            if (!newbb_admin_getPathStatus($folder[$i]) == '') {
-//                $indexAdmin->addConfigBoxLine($folder[$i] . ' ' . newbb_admin_getPathStatus($folder[$i]), 'folder');
-//            } else {
-//                $indexAdmin->addConfigBoxLine($folder[$i], 'folder');
-//            }
-//            $indexAdmin->addConfigBoxLine(array($folder[$i], '755'), 'chmod');
-//        }
+        //        foreach (array_keys($folder) as $i) {
+        //            if (!newbb_admin_getPathStatus($folder[$i]) == '') {
+        //                $indexAdmin->addConfigBoxLine($folder[$i] . ' ' . newbb_admin_getPathStatus($folder[$i]), 'folder');
+        //            } else {
+        //                $indexAdmin->addConfigBoxLine($folder[$i], 'folder');
+        //            }
+        //            $indexAdmin->addConfigBoxLine(array($folder[$i], '755'), 'chmod');
+        //        }
 
-//        $indexAdmin = new ModuleAdmin();
+        //        $indexAdmin = new ModuleAdmin();
         foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             NewbbUtilities::prepareFolder($uploadFolders[$i]);
             $indexAdmin->addConfigBoxLine($uploadFolders[$i], 'folder');
@@ -234,7 +238,7 @@ switch ($op) {
         echo $indexAdmin->renderIndex();
 
         echo '</fieldset>';
-       include_once __DIR__ . '/admin_footer.php';
+        include_once __DIR__ . '/admin_footer.php';
         break;
 }
 mod_clearCacheFile('config', 'newbb');

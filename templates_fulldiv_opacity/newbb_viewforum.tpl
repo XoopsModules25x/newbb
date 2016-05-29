@@ -20,11 +20,11 @@
     </div>
     <div class="clear"></div>
 </div>
-<br />
+<br>
 
 <{if $subforum}>
     <{includeq file="db:newbb_viewforum_subforum.tpl"}>
-    <br />
+    <br>
 <{/if}>
 
 <{if $mode gt 1}>
@@ -66,7 +66,7 @@
     </div>
 <{/if}>
 <div class="clear"></div>
-<br />
+<br>
 
 <div>
     <div class="dropdown floatleft">
@@ -77,7 +77,7 @@
     </div>
     <div class="clear"></div>
 </div>
-<br />
+<br>
 <div class="topic_list outer">
     <div class="head">
         <div class="topic_folder floatleft align_center">
@@ -153,7 +153,7 @@
         <{/if}>
         </div>
         <div class="_col_end right">
-            <{$topic.topic_last_posttime}><br />
+            <{$topic.topic_last_posttime}><br>
             <{$smarty.const._MD_BY}>&nbsp;<{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
         </div>
         <div class="clear"></div>
@@ -178,7 +178,7 @@
     </div>
 </div>
 <!-- end forum main table -->
-<br />
+<br>
 <div>
     <div class="icon_left">
         <{$forum_addpoll}> <{$forum_post_or_register}>
@@ -188,14 +188,14 @@
     </div>
 </div>
 <div class="clear"></div>
-<br />
+<br>
 <div>
     <div class="icon_left">
-        <{$img_newposts}> = <{$smarty.const._MD_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_MORETHAN}>) <br />
-        <{$img_folder}> = <{$smarty.const._MD_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_MORETHAN2}>) <br />
-        <{$img_locked}> = <{$smarty.const._MD_TOPICLOCKED}> <br />
-        <{$img_sticky}> = <{$smarty.const._MD_TOPICSTICKY}> <br />
-        <{$img_digest}> = <{$smarty.const._MD_TOPICDIGEST}> <br />
+        <{$img_newposts}> = <{$smarty.const._MD_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_MORETHAN}>) <br>
+        <{$img_folder}> = <{$smarty.const._MD_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_MORETHAN2}>) <br>
+        <{$img_locked}> = <{$smarty.const._MD_TOPICLOCKED}> <br>
+        <{$img_sticky}> = <{$smarty.const._MD_TOPICSTICKY}> <br>
+        <{$img_digest}> = <{$smarty.const._MD_TOPICDIGEST}> <br>
         <{$img_poll}> = <{$smarty.const._MD_TOPICHASPOLL}>
     </div>
     <div class="icon_right">
@@ -206,11 +206,11 @@
             <input type="hidden" name="since" id="since" value="<{$forum_since}>" />
             <input type="hidden" name="action" id="action" value="yes" />
             <input type="hidden" name="searchin" id="searchin" value="both" />
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>" /><br />
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>" /><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
-        </form><br />
+        </form><br>
         <{if $rss_button}>
-            <br />
+            <br>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
                 <{$rss_button}>
             </a>
@@ -221,7 +221,7 @@
     </div>
 </div>
 <div class="clear"></div>
-<br />
+<br>
 
 <div>
     <div class="floatleft">
@@ -231,9 +231,9 @@
     </div>
 </div>
 <div class="clear"></div>
-<br />
+<br>
 <{if $online}>
-    <br />
+    <br>
     <{includeq file="db:newbb_online.tpl"}>
 <{/if}>
 <{includeq file='db:newbb_notification_select.tpl'}>
