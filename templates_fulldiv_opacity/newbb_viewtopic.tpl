@@ -64,9 +64,12 @@
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
     <div class="clear"></div>
@@ -99,7 +102,8 @@
 <div>
     <div class="dropdown floatleft">
         <{if $viewer_level gt 1}>
-            <select name="topicoption" id="topicoption" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
+            <select name="topicoption" id="topicoption" class="menu"
+                    onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
                 <{foreachq item=act from=$admin_actions}>
                 <option value="<{$act.link}>"><{$act.name}></option>
@@ -193,7 +197,8 @@
 <div>
     <div class="icon_left">
         <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_TOP}>" title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-                href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
+                href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
+        &nbsp;<a
                 href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
     </div>
     <div class="pagenav">

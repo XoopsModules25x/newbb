@@ -35,7 +35,9 @@
         <td width="20%" class="odd" rowspan="2" valign="top">
             <{if $topic_post.poster.uid != 0}>
                 <!-- START hacked by irmtfan rank_title -> rank.title -->
-                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
+                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}>
+                        <br>
+                        <img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>"alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
                 <!-- END hacked by irmtfan -->
 
                 <{if $topic_post.poster.avatar != "blank.gif"}>
@@ -55,7 +57,8 @@
 </span>
                     <!-- irmtfan move semicolon -->
                     <div id="<{$topic_post.post_id}>" style="display: <{$infobox.style}>;">
-                        <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br><{$topic_post.poster.regdate}><br><span class="comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>
+                        <div class="comUserStat"><span class="comUserStatCaption"><{$smarty.const._MD_JOINED}>:</span><br><{$topic_post.poster.regdate}><br><span
+                                    class="comUserStatCaption"><{$smarty.const._US_LASTLOGIN}>
                                 :</span><br><{$topic_post.poster.last_login}></div>
                         <!-- irmtfan add last_login -->
                         <{if $topic_post.poster.from}>
@@ -69,7 +72,8 @@
                         <div class="comUserStat">
                             <span class="comUserStatCaption"><{$smarty.const._MD_POSTS}>:</span>
                             <{if $topic_post.poster.posts gt 0}>
-                                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>" target="_self"><{$topic_post.poster.posts}></a>
+                                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$topic_post.poster.uid}>" title="<{$smarty.const._ALL}>"
+                                   target="_self"><{$topic_post.poster.posts}></a>
                             <{else}>
                                 0
                             <{/if}>
@@ -156,11 +160,14 @@
                     <td class="right">
                         <!--  irmtfan if the post is not advertise -->
                         <{if $mode gt 1 && $topic_post.poster.uid gt -1}>
-                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self" title="<{$smarty.const._MD_SPLIT_ONE}>"><{$smarty.const._MD_SPLIT_ONE}></a>
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self"
+                               title="<{$smarty.const._MD_SPLIT_ONE}>"><{$smarty.const._MD_SPLIT_ONE}></a>
                             |
-                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self" title="<{$smarty.const._MD_SPLIT_TREE}>"><{$smarty.const._MD_SPLIT_TREE}></a>
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self"
+                               title="<{$smarty.const._MD_SPLIT_TREE}>"><{$smarty.const._MD_SPLIT_TREE}></a>
                             |
-                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_SPLIT_ALL}>"><{$smarty.const._MD_SPLIT_ALL}></a>
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self"
+                               title="<{$smarty.const._MD_SPLIT_ALL}>"><{$smarty.const._MD_SPLIT_ALL}></a>
                             |
                             <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>"/>
                         <{else}>

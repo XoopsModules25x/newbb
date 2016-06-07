@@ -76,6 +76,5 @@ class NewbbUtilities
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
-
     }
 }

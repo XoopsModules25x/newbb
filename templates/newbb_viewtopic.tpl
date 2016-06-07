@@ -70,9 +70,12 @@
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
     <br>
@@ -97,7 +100,8 @@
 <span class="icon_left">
         <!-- irmtfan correct prev and next icons -->
 <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_BOTTOM}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
+            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
+    &nbsp;<a
             href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
 </span>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;"" -->
@@ -190,7 +194,7 @@
 <{/foreach}>
 
 <{if $mode gt 1}>
-</form>
+    </form>
 <{/if}>
 
 <br>
@@ -219,7 +223,8 @@
         <!-- irmtfan correct prev and next icons add up-->
         <a id="threadbottom"></a><{$p_up}><a href="#threadtop"><{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
                 href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
-        &nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
+        &nbsp;<a
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;"" -->
     <div class="icon_right">

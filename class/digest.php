@@ -330,19 +330,19 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $karma_criteria = $GLOBALS['xoopsModuleConfig']['enable_karma'] ? ' AND p.post_karma=0' : '';
         $reply_criteria = $GLOBALS['xoopsModuleConfig']['allow_require_reply'] ? ' AND p.require_reply=0' : '';
 
-        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM ' .
-                 $this->db->prefix('bb_topics') .
-                 ' t, ' .
-                 $this->db->prefix('bb_posts_text') .
-                 ' pt, ' .
-                 $this->db->prefix('bb_posts') .
-                 ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 ' .
-                 $forumCriteria .
-                 $approveCriteria .
-                 $time_criteria .
-                 $karma_criteria .
-                 $reply_criteria .
-                 ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
+        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM '
+                 . $this->db->prefix('bb_topics')
+                 . ' t, '
+                 . $this->db->prefix('bb_posts_text')
+                 . ' pt, '
+                 . $this->db->prefix('bb_posts')
+                 . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 '
+                 . $forumCriteria
+                 . $approveCriteria
+                 . $time_criteria
+                 . $karma_criteria
+                 . $reply_criteria
+                 . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
         if (!$result = $this->db->query($query)) {
             //echo "<br>No result:<br>$query";
             return false;

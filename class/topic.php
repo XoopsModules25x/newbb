@@ -124,7 +124,7 @@ class Topic extends XoopsObject
         if (empty($poll_id)) {
             return false;
         }
-        $moduleHandler    = xoops_getHandler('module');
+        $moduleHandler     = xoops_getHandler('module');
         $newbbConfig       = newbbLoadConfig();
         $pollModuleHandler = $moduleHandler->getByDirname($newbbConfig['poll_module']);
         if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
@@ -172,7 +172,7 @@ class Topic extends XoopsObject
             return false;
         }
         $moduleHandler = xoops_getHandler('module');
-        $newbbConfig    = newbbLoadConfig();
+        $newbbConfig   = newbbLoadConfig();
         if (!empty($pollModule)) {
             $newbbConfig['poll_module'] = $pollModule;
         }
@@ -203,9 +203,9 @@ class Topic extends XoopsObject
 class NewbbTopicHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'bb_topics', 'Topic', 'topic_id', 'topic_title');
     }
@@ -308,16 +308,16 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     {
         $topic = null;
         if (!empty($action)) {
-            $sql = 'SELECT * FROM ' .
-                   $this->table .
-                   ' WHERE 1=1' .
-                   (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') .
-                   ' AND topic_id ' .
-                   (($action > 0) ? '>' : '<') .
-                   (int)$topic_id .
-                   ' ORDER BY topic_id ' .
-                   (($action > 0) ? 'ASC' : 'DESC') .
-                   ' LIMIT 1';
+            $sql = 'SELECT * FROM '
+                   . $this->table
+                   . ' WHERE 1=1'
+                   . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '')
+                   . ' AND topic_id '
+                   . (($action > 0) ? '>' : '<')
+                   . (int)$topic_id
+                   . ' ORDER BY topic_id '
+                   . (($action > 0) ? 'ASC' : 'DESC')
+                   . ' LIMIT 1';
             if ($result = $this->db->query($sql)) {
                 if ($row = $this->db->fetchArray($result)) {
                     $topic = $this->create(false);
@@ -456,12 +456,12 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
                 $operator_for_position = '<';
             }
             //$approveCriteria = ' AND approved = 1'; // any others?
-            $sql    = 'SELECT COUNT(*) FROM ' .
-                      $this->db->prefix('bb_posts') .
-                      ' AS p WHERE p.topic_id=' .
-                      (int)$topic->getVar('topic_id') .
-                      $approveCriteria .
-                      " AND p.post_id $operator_for_position $post_id";
+            $sql    = 'SELECT COUNT(*) FROM '
+                      . $this->db->prefix('bb_posts')
+                      . ' AS p WHERE p.topic_id='
+                      . (int)$topic->getVar('topic_id')
+                      . $approveCriteria
+                      . " AND p.post_id $operator_for_position $post_id";
             $result = $this->db->query($sql);
             if (!$result) {
                 //xoops_error($this->db->error());
@@ -471,15 +471,15 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             $start = (int)($position / $perpage) * $perpage;
         }
 
-        $sql    = 'SELECT p.*, t.* FROM ' .
-                  $this->db->prefix('bb_posts') .
-                  ' p, ' .
-                  $this->db->prefix('bb_posts_text') .
-                  ' t WHERE p.topic_id=' .
-                  $topic->getVar('topic_id') .
-                  ' AND p.post_id = t.post_id' .
-                  $approveCriteria .
-                  " ORDER BY p.post_id $order";
+        $sql    = 'SELECT p.*, t.* FROM '
+                  . $this->db->prefix('bb_posts')
+                  . ' p, '
+                  . $this->db->prefix('bb_posts_text')
+                  . ' t WHERE p.topic_id='
+                  . $topic->getVar('topic_id')
+                  . ' AND p.post_id = t.post_id'
+                  . $approveCriteria
+                  . " ORDER BY p.post_id $order";
         $result = $this->db->query($sql, $perpage, $start);
         if (!$result) {
             //xoops_error($this->db->error());
@@ -529,15 +529,15 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             $postArray['icon'] = '<a name="' . $postArray['post_id'] . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" /></a>';
         }
 
-        $postArray['subject'] = '<a href="viewtopic.php?viewmode=thread&amp;topic_id=' .
-                                $topic->getVar('topic_id') .
-                                '&amp;forum=' .
-                                $postArray['forum_id'] .
-                                '&amp;post_id=' .
-                                $postArray['post_id'] .
-                                '">' .
-                                $postArray['subject'] .
-                                '</a>';
+        $postArray['subject'] = '<a href="viewtopic.php?viewmode=thread&amp;topic_id='
+                                . $topic->getVar('topic_id')
+                                . '&amp;forum='
+                                . $postArray['forum_id']
+                                . '&amp;post_id='
+                                . $postArray['post_id']
+                                . '">'
+                                . $postArray['subject']
+                                . '</a>';
 
         $isActiveUser = false;
         if (isset($viewtopic_users[$postArray['uid']]['name'])) {

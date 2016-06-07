@@ -135,18 +135,18 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
             $sql = 'DELETE bb FROM ' . $this->table . ' AS bb' . ' LEFT JOIN ' . $this->table . ' AS aa ON bb.read_item = aa.read_item ' . ' WHERE aa.post_id > bb.post_id';
         } else {
             // for 4.0+
-            $sql = 'DELETE ' .
-                   $this->table .
-                   ' FROM ' .
-                   $this->table .
-                   ' LEFT JOIN ' .
-                   $this->table .
-                   ' AS aa ON ' .
-                   $this->table .
-                   '.read_item = aa.read_item ' .
-                   ' WHERE aa.post_id > ' .
-                   $this->table .
-                   '.post_id';
+            $sql = 'DELETE '
+                   . $this->table
+                   . ' FROM '
+                   . $this->table
+                   . ' LEFT JOIN '
+                   . $this->table
+                   . ' AS aa ON '
+                   . $this->table
+                   . '.read_item = aa.read_item '
+                   . ' WHERE aa.post_id > '
+                   . $this->table
+                   . '.post_id';
         }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());

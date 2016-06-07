@@ -36,8 +36,8 @@ $order    = XoopsRequest::getString('order', 'DESC', 'GET');
 
 $uid = XoopsRequest::getInt('uid', 0, 'GET');
 
-$status = (XoopsRequest::getString('status', '', 'GET') &&
-           in_array(XoopsRequest::getString('status', '', 'GET'), array('active', 'pending', 'deleted', 'new', 'all', 'digest'), true)) ? XoopsRequest::getString('status', '', 'GET') : '';
+$status = (XoopsRequest::getString('status', '', 'GET')
+           && in_array(XoopsRequest::getString('status', '', 'GET'), array('active', 'pending', 'deleted', 'new', 'all', 'digest'), true)) ? XoopsRequest::getString('status', '', 'GET') : '';
 $mode   = XoopsRequest::getInt('mode', 0, 'GET');
 $mode   = (!empty($status) && in_array($status, array('active', 'pending', 'deleted'), true)) ? 2 : $mode;
 
@@ -196,19 +196,19 @@ if (!empty($forum_id)) {
     // irmtfan new method
     if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
         $xoopsTpl->assign('xoops_module_header', '
-            <link rel="alternate" type="application/xml+rss" title="' .
-                                                 $xoopsModule->getVar('name') .
-                                                 '-' .
-                                                 $forum_obj->getVar('forum_name') .
-                                                 '" href="' .
-                                                 XOOPS_URL .
-                                                 '/modules/' .
-                                                 $xoopsModule->getVar('dirname') .
-                                                 '/rss.php?f=' .
-                                                 $forum_id .
-                                                 '" />
-            ' .
-                                                 @$xoopsTpl->get_template_vars('xoops_module_header'));
+            <link rel="alternate" type="application/xml+rss" title="'
+                                                 . $xoopsModule->getVar('name')
+                                                 . '-'
+                                                 . $forum_obj->getVar('forum_name')
+                                                 . '" href="'
+                                                 . XOOPS_URL
+                                                 . '/modules/'
+                                                 . $xoopsModule->getVar('dirname')
+                                                 . '/rss.php?f='
+                                                 . $forum_id
+                                                 . '" />
+            '
+                                                 . @$xoopsTpl->get_template_vars('xoops_module_header'));
     }
 } elseif (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '

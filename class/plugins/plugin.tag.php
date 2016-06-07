@@ -74,25 +74,25 @@ function newbb_tag_synchronization($mid)
 
     /* clear tag-item links */
     if ($link_handler->mysql_major_version() >= 4) {
-        $sql = "    DELETE FROM {$link_handler->table}" .
-               '    WHERE ' .
-               "        tag_modid = {$mid}" .
-               '        AND ' .
-               '        ( tag_itemid NOT IN ' .
-               "            ( SELECT DISTINCT {$itemHandler->keyName} " .
-               "                FROM {$itemHandler->table} " .
-               "                WHERE {$itemHandler->table}.approved > 0" .
-               '            ) ' .
-               '        )';
+        $sql = "    DELETE FROM {$link_handler->table}"
+               . '    WHERE '
+               . "        tag_modid = {$mid}"
+               . '        AND '
+               . '        ( tag_itemid NOT IN '
+               . "            ( SELECT DISTINCT {$itemHandler->keyName} "
+               . "                FROM {$itemHandler->table} "
+               . "                WHERE {$itemHandler->table}.approved > 0"
+               . '            ) '
+               . '        )';
     } else {
-        $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}" .
-               "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} " .
-               '    WHERE ' .
-               "        tag_modid = {$mid}" .
-               '        AND ' .
-               "        ( aa.{$itemHandler->keyName} IS NULL" .
-               '            OR aa.approved < 1' .
-               '        )';
+        $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}"
+               . "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} "
+               . '    WHERE '
+               . "        tag_modid = {$mid}"
+               . '        AND '
+               . "        ( aa.{$itemHandler->keyName} IS NULL"
+               . '            OR aa.approved < 1'
+               . '        )';
     }
     if (!$result = $link_handler->db->queryF($sql)) {
         //xoops_error($link_handler->db->error());

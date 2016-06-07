@@ -105,9 +105,9 @@ switch ($op) {
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else echo $indexAdmin->addNavigation(basename(__FILE__));
 
-        echo "<br><a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href=\"admin_report.php?item=$item_other\">" .
-             $title_other .
-             '</a><br><br>';
+        echo "<br><a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href=\"admin_report.php?item=$item_other\">"
+             . $title_other
+             . '</a><br><br>';
 
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -118,19 +118,19 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports(0, 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = "<a href=\"" .
-                         XOOPS_URL .
-                         '/modules/' .
-                         $xoopsModule->getVar('dirname') .
-                         '/viewtopic.php?post_id=' .
-                         $report['post_id'] .
-                         '&amp;topic_id=' .
-                         $report['topic_id'] .
-                         '&amp;forum=' .
-                         $report['forum_id'] .
-                         "&amp;viewmode=thread\" target=\"checkreport\">" .
-                         $myts->htmlSpecialChars($report['subject']) .
-                         '</a>';
+            $post_link = "<a href=\""
+                         . XOOPS_URL
+                         . '/modules/'
+                         . $xoopsModule->getVar('dirname')
+                         . '/viewtopic.php?post_id='
+                         . $report['post_id']
+                         . '&amp;topic_id='
+                         . $report['topic_id']
+                         . '&amp;forum='
+                         . $report['forum_id']
+                         . "&amp;viewmode=thread\" target=\"checkreport\">"
+                         . $myts->htmlSpecialChars($report['subject'])
+                         . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked="checked" />';
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';

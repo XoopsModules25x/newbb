@@ -226,51 +226,51 @@ class Post extends XoopsObject
                     $isDisplayed = true;
                 } else {
                     if (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
-                        $post_attachment .= '<a href="' .
-                                            XOOPS_URL .
-                                            '/modules/' .
-                                            $xoopsModule->getVar('dirname', 'n') .
-                                            '/dl_attachment.php?attachid=' .
-                                            $key .
-                                            '&amp;post_id=' .
-                                            $this->getVar('post_id') .
-                                            '"> <img src="' .
-                                            $icon_filetype .
-                                            '" alt="' .
-                                            $filetype .
-                                            '" /> ' .
-                                            $att['nameDisplay'] .
-                                            '</a> ' .
-                                            _MD_FILESIZE .
-                                            ': ' .
-                                            $file_size .
-                                            '; ' .
-                                            _MD_HITS .
-                                            ': ' .
-                                            $att['numDownload'];
+                        $post_attachment .= '<a href="'
+                                            . XOOPS_URL
+                                            . '/modules/'
+                                            . $xoopsModule->getVar('dirname', 'n')
+                                            . '/dl_attachment.php?attachid='
+                                            . $key
+                                            . '&amp;post_id='
+                                            . $this->getVar('post_id')
+                                            . '"> <img src="'
+                                            . $icon_filetype
+                                            . '" alt="'
+                                            . $filetype
+                                            . '" /> '
+                                            . $att['nameDisplay']
+                                            . '</a> '
+                                            . _MD_FILESIZE
+                                            . ': '
+                                            . $file_size
+                                            . '; '
+                                            . _MD_HITS
+                                            . ': '
+                                            . $att['numDownload'];
                     } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0 && $GLOBALS['xoopsUser']->isactive()) {
-                        $post_attachment .= '<a href="' .
-                                            XOOPS_URL .
-                                            '/modules/' .
-                                            $xoopsModule->getVar('dirname', 'n') .
-                                            '/dl_attachment.php?attachid=' .
-                                            $key .
-                                            '&amp;post_id=' .
-                                            $this->getVar('post_id') .
-                                            '"> <img src="' .
-                                            $icon_filetype .
-                                            '" alt="' .
-                                            $filetype .
-                                            '" /> ' .
-                                            $att['nameDisplay'] .
-                                            '</a> ' .
-                                            _MD_FILESIZE .
-                                            ': ' .
-                                            $file_size .
-                                            '; ' .
-                                            _MD_HITS .
-                                            ': ' .
-                                            $att['numDownload'];
+                        $post_attachment .= '<a href="'
+                                            . XOOPS_URL
+                                            . '/modules/'
+                                            . $xoopsModule->getVar('dirname', 'n')
+                                            . '/dl_attachment.php?attachid='
+                                            . $key
+                                            . '&amp;post_id='
+                                            . $this->getVar('post_id')
+                                            . '"> <img src="'
+                                            . $icon_filetype
+                                            . '" alt="'
+                                            . $filetype
+                                            . '" /> '
+                                            . $att['nameDisplay']
+                                            . '</a> '
+                                            . _MD_FILESIZE
+                                            . ': '
+                                            . $file_size
+                                            . '; '
+                                            . _MD_HITS
+                                            . ': '
+                                            . $att['numDownload'];
                     } else {
                         $post_attachment .= _MD_NEWBB_SEENOTGUEST;
                     }
@@ -291,9 +291,9 @@ class Post extends XoopsObject
      */
     public function setPostEdit($poster_name = '', $post_editmsg = '')
     {
-        if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit']) ||
-            (time() - $this->getVar('post_time')) < $GLOBALS['xoopsModuleConfig']['recordedit_timelimit'] * 60 ||
-            $this->getVar('approved') < 1
+        if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit'])
+            || (time() - $this->getVar('post_time')) < $GLOBALS['xoopsModuleConfig']['recordedit_timelimit'] * 60
+            || $this->getVar('approved') < 1
         ) {
             return true;
         }
@@ -741,17 +741,17 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
     //    public function getByLimit($topic_id, $limit, $approved = 1)
     public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true, $topic_id = 0, $approved = 1)
     {
-        $sql    = 'SELECT p.*, t.*, tp.topic_status FROM ' .
-                  $this->db->prefix('bb_posts') .
-                  ' p LEFT JOIN ' .
-                  $this->db->prefix('bb_posts_text') .
-                  ' t ON p.post_id=t.post_id LEFT JOIN ' .
-                  $this->db->prefix('bb_topics') .
-                  ' tp ON tp.topic_id=p.topic_id WHERE p.topic_id=' .
-                  $topic_id .
-                  ' AND p.approved =' .
-                  $approved .
-                  ' ORDER BY p.post_time DESC';
+        $sql    = 'SELECT p.*, t.*, tp.topic_status FROM '
+                  . $this->db->prefix('bb_posts')
+                  . ' p LEFT JOIN '
+                  . $this->db->prefix('bb_posts_text')
+                  . ' t ON p.post_id=t.post_id LEFT JOIN '
+                  . $this->db->prefix('bb_topics')
+                  . ' tp ON tp.topic_id=p.topic_id WHERE p.topic_id='
+                  . $topic_id
+                  . ' AND p.approved ='
+                  . $approved
+                  . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = array();
         while ($myrow = $this->db->fetchArray($result)) {
@@ -1211,16 +1211,16 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
             $sql = 'DELETE FROM ' . $this->db->prefix('bb_posts_text') . ' WHERE (post_id NOT IN ( SELECT DISTINCT post_id FROM ' . $this->table . ') )';
         } else {
             // for 4.0+
-            $sql = 'DELETE ' .
-                   $this->db->prefix('bb_posts_text') .
-                   ' FROM ' .
-                   $this->db->prefix('bb_posts_text') .
-                   ' LEFT JOIN ' .
-                   $this->table .
-                   ' AS aa ON ' .
-                   $this->db->prefix('bb_posts_text') .
-                   '.post_id = aa.post_id ' .
-                   ' WHERE (aa.post_id IS NULL)';
+            $sql = 'DELETE '
+                   . $this->db->prefix('bb_posts_text')
+                   . ' FROM '
+                   . $this->db->prefix('bb_posts_text')
+                   . ' LEFT JOIN '
+                   . $this->table
+                   . ' AS aa ON '
+                   . $this->db->prefix('bb_posts_text')
+                   . '.post_id = aa.post_id '
+                   . ' WHERE (aa.post_id IS NULL)';
 
             // Alternative for 4.1+
             /*

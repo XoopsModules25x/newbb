@@ -109,14 +109,14 @@ switch ($op) {
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new XoopsThemeForm(_MD_POLL_CREATNEWPOLL, 'poll_form', 'polls.php', 'post', true);
-            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR, is_object($GLOBALS['xoopsUser']) ? ("<a href='" .
-                                                                                                    XOOPS_URL .
-                                                                                                    '/userinfo.php?uid=' .
-                                                                                                    $GLOBALS['xoopsUser']->getVar('uid') .
-                                                                                                    "'>" .
-                                                                                                    newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'),
-                                                                                                                         $GLOBALS['xoopsModuleConfig']['show_realname']) .
-                                                                                                    '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
+            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR, is_object($GLOBALS['xoopsUser']) ? ("<a href='"
+                                                                                                    . XOOPS_URL
+                                                                                                    . '/userinfo.php?uid='
+                                                                                                    . $GLOBALS['xoopsUser']->getVar('uid')
+                                                                                                    . "'>"
+                                                                                                    . newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'),
+                                                                                                                           $GLOBALS['xoopsModuleConfig']['show_realname'])
+                                                                                                    . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
             $poll_form->addElement($author_label);
             $question_text = new XoopsFormText(_MD_POLL_POLLQUESTION, 'question', 50, 255);
             $poll_form->addElement($question_text);
@@ -144,18 +144,18 @@ switch ($op) {
                 $option_tray->addElement($option_text);
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
-                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" .
-                                        $GLOBALS['xoopsModuleConfig']['poll_module'] .
-                                        "/assets/images/colorbars\", \"\", \"" .
-                                        XOOPS_URL .
-                                        "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" .
-                                                      XOOPS_URL .
-                                                      '/modules/' .
-                                                      $GLOBALS['xoopsModuleConfig']['poll_module'] .
-                                                      '/assets/images/colorbars/' .
-                                                      $current_bar .
-                                                      "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
+                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/"
+                                        . $GLOBALS['xoopsModuleConfig']['poll_module']
+                                        . "/assets/images/colorbars\", \"\", \""
+                                        . XOOPS_URL
+                                        . "\")'");
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . XOOPS_URL
+                                                      . '/modules/'
+                                                      . $GLOBALS['xoopsModuleConfig']['poll_module']
+                                                      . '/assets/images/colorbars/'
+                                                      . $current_bar
+                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 if (!next($barcolor_array)) {
@@ -184,13 +184,14 @@ switch ($op) {
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new XoopsThemeForm(_MD_POLL_EDITPOLL, 'poll_form', 'polls.php', 'post', true);
-            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR, "<a href='" .
-                                                                XOOPS_URL .
-                                                                '/userinfo.php?uid=' .
-                                                                $poll_obj->getVar('user_id') .
-                                                                "'>" .
-                                                                newbb_getUnameFromId($poll_obj->getVar('user_id'), $GLOBALS['xoopsModuleConfig']['show_realname']) .
-                                                                '</a>');
+            $author_label = new XoopsFormLabel(_MD_POLL_AUTHOR,
+                                               "<a href='"
+                                               . XOOPS_URL
+                                               . '/userinfo.php?uid='
+                                               . $poll_obj->getVar('user_id')
+                                               . "'>"
+                                               . newbb_getUnameFromId($poll_obj->getVar('user_id'), $GLOBALS['xoopsModuleConfig']['show_realname'])
+                                               . '</a>');
             $poll_form->addElement($author_label);
             $question_text = new XoopsFormText(_MD_POLL_POLLQUESTION, 'question', 50, 255, $poll_obj->getVar('question', 'E'));
             $poll_form->addElement($question_text);
@@ -204,14 +205,14 @@ switch ($op) {
                 $poll_form->addElement($expire_text);
             } else {
                 // irmtfan full URL - add topic_id
-                $restart_label = new XoopsFormLabel(_MD_POLL_EXPIRATION, sprintf(_MD_POLL_EXPIREDAT, $date) .
-                                                                         "<br><a href='" .
-                                                                         XOOPS_URL .
-                                                                         '/modules/' .
-                                                                         $xoopsModule->getVar('dirname') .
-                                                                         "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" .
-                                                                         _MD_POLL_RESTART .
-                                                                         '</a>');
+                $restart_label = new XoopsFormLabel(_MD_POLL_EXPIRATION, sprintf(_MD_POLL_EXPIREDAT, $date)
+                                                                         . "<br><a href='"
+                                                                         . XOOPS_URL
+                                                                         . '/modules/'
+                                                                         . $xoopsModule->getVar('dirname')
+                                                                         . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>"
+                                                                         . _MD_POLL_RESTART
+                                                                         . '</a>');
                 $poll_form->addElement($restart_label);
             }
             $weight_text = new XoopsFormText(_MD_POLL_DISPLAYORDER, 'weight', 6, 5, $poll_obj->getVar('weight'));
@@ -233,27 +234,28 @@ switch ($op) {
                 $option_tray->addElement(new XoopsFormHidden('option_id[]', $option->getVar('option_id')));
                 $color_select = new XoopsFormSelect('', 'option_color[{$i}]', $option->getVar('option_color'));
                 $color_select->addOptionArray($barcolor_array);
-                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[" .
-                                        $i .
-                                        "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" .
-                                        XOOPS_URL .
-                                        "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" .
-                                                      $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E')) .
-                                                      "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color["
+                                        . $i
+                                        . "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \""
+                                        . XOOPS_URL
+                                        . "\")'");
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/"
+                                                                               . $option->getVar('option_color', 'E'))
+                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label);
                 ++$i;
             }
             // irmtfan full URL
-            $more_label = new XoopsFormLabel('', "<br><a href='" .
-                                                 XOOPS_URL .
-                                                 '/modules/' .
-                                                 $xoopsModule->getVar('dirname') .
-                                                 "/polls.php?op=addmore&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" .
-                                                 _MD_POLL_ADDMORE .
-                                                 '</a>');
+            $more_label = new XoopsFormLabel('', "<br><a href='"
+                                                 . XOOPS_URL
+                                                 . '/modules/'
+                                                 . $xoopsModule->getVar('dirname')
+                                                 . "/polls.php?op=addmore&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>"
+                                                 . _MD_POLL_ADDMORE
+                                                 . '</a>');
             $option_tray->addElement($more_label);
             $poll_form->addElement($option_tray);
             $poll_form->addElement(new XoopsFormHidden('op', 'update'));
@@ -528,12 +530,12 @@ switch ($op) {
                 $option_tray->addElement($option_text);
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
-                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" .
-                                        XOOPS_URL .
-                                        "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" .
-                                                      $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}") .
-                                                      "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \""
+                                        . XOOPS_URL
+                                        . "\")'");
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
+                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label, $option_text);
@@ -663,14 +665,14 @@ switch ($op) {
             $default_poll_duration = (86400 * 10);
         }
         $poll_form   = new XoopsThemeForm(_MD_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
-        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION .
-                                         '<br><small>' .
-                                         _MD_POLL_FORMAT .
-                                         '<br>' .
-                                         sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) .
-                                         '<br>' .
-                                         sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar('end_time'), 'Y-m-d H:i:s')) .
-                                         '</small>', 'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
+        $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION
+                                         . '<br><small>'
+                                         . _MD_POLL_FORMAT
+                                         . '<br>'
+                                         . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s'))
+                                         . '<br>'
+                                         . sprintf(_MD_POLL_EXPIREDAT, formatTimestamp($poll_obj->getVar('end_time'), 'Y-m-d H:i:s'))
+                                         . '</small>', 'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_NOTIFY, 'notify', 1));
         $poll_form->addElement(new XoopsFormRadioYN(_MD_POLL_RESET, 'reset', 0));

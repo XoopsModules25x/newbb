@@ -41,7 +41,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
     function newbb_notify_iteminfo($category, $item_id)
     {
         $moduleHandler = xoops_getHandler('module');
-        $module         = $moduleHandler->getByDirname('newbb');
+        $module        = $moduleHandler->getByDirname('newbb');
 
         if ($category === 'global') {
             $item['name'] = '';
@@ -67,13 +67,13 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
 
         if ($category === 'thread') {
             // Assume we have a valid topid id
-            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM ' .
-                   $GLOBALS['xoopsDB']->prefix('bb_topics') .
-                   ' t, ' .
-                   $GLOBALS['xoopsDB']->prefix('bb_forums') .
-                   ' f WHERE t.forum_id = f.forum_id AND t.topic_id = ' .
-                   $item_id .
-                   ' limit 1';
+            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM '
+                   . $GLOBALS['xoopsDB']->prefix('bb_topics')
+                   . ' t, '
+                   . $GLOBALS['xoopsDB']->prefix('bb_forums')
+                   . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = '
+                   . $item_id
+                   . ' limit 1';
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . 'index.php', 2, _MD_ERROROCCURED);

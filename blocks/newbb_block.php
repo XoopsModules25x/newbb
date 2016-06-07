@@ -109,26 +109,26 @@ function b_newbb_show($options)
         }
     }
 
-    $query = 'SELECT' .
-             '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,' .
-             '    f.forum_name,t.topic_status,' .
-             '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name' .
-             '    FROM ' .
-             $GLOBALS['xoopsDB']->prefix('bb_topics') .
-             ' AS t ' .
-             '    LEFT JOIN ' .
-             $GLOBALS['xoopsDB']->prefix('bb_posts') .
-             ' AS p ON t.topic_last_post_id=p.post_id' .
-             '    LEFT JOIN ' .
-             $GLOBALS['xoopsDB']->prefix('bb_forums') .
-             ' AS f ON f.forum_id=t.forum_id' .
-             '    WHERE 1=1 ' .
-             $forumCriteria .
-             $approveCriteria .
-             $extraCriteria .
-             ' ORDER BY ' .
-             $order .
-             ' DESC';
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,'
+             . '    f.forum_name,t.topic_status,'
+             . '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('bb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_posts')
+             . ' AS p ON t.topic_last_post_id=p.post_id'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
+             . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -297,22 +297,22 @@ function b_newbb_topic_show($options)
     $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $allowedForums) . ')';
     $approveCriteria = ' AND t.approved = 1';
 
-    $query = 'SELECT' .
-             '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,' .
-             '    f.forum_name' .
-             '    FROM ' .
-             $GLOBALS['xoopsDB']->prefix('bb_topics') .
-             ' AS t ' .
-             '    LEFT JOIN ' .
-             $GLOBALS['xoopsDB']->prefix('bb_forums') .
-             ' AS f ON f.forum_id=t.forum_id' .
-             '    WHERE 1=1 ' .
-             $forumCriteria .
-             $approveCriteria .
-             $extraCriteria .
-             ' ORDER BY ' .
-             $order .
-             ' DESC';
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,'
+             . '    f.forum_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('bb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
+             . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -468,13 +468,13 @@ function b_newbb_post_show($options)
     if ($options[0] === 'text') {
         $query .= '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr, pt.post_text,';
     }
-    $query .= '    f.forum_id, f.forum_name' .
-              '    FROM ' .
-              $GLOBALS['xoopsDB']->prefix('bb_posts') .
-              ' AS p ' .
-              '    LEFT JOIN ' .
-              $GLOBALS['xoopsDB']->prefix('bb_forums') .
-              ' AS f ON f.forum_id=p.forum_id';
+    $query .= '    f.forum_id, f.forum_name'
+              . '    FROM '
+              . $GLOBALS['xoopsDB']->prefix('bb_posts')
+              . ' AS p '
+              . '    LEFT JOIN '
+              . $GLOBALS['xoopsDB']->prefix('bb_forums')
+              . ' AS f ON f.forum_id=p.forum_id';
     if ($options[0] === 'text') {
         $query .= '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id';
     }

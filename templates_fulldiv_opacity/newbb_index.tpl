@@ -218,7 +218,7 @@
             <{$rss_button}>
         </a>
         <br>
-        <span style="font-size:0.7em;"><a href="http://xoops.org">NewBB Version  <{$version/100}></a></span>
+        <span style="font-size:0.7em;"><a href="http://xoops.org">NewBB Version <{$version/100}></a></span>
         <br>
     <{/if}>
 </div>
@@ -237,7 +237,8 @@
                 <strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_ALL}>"><{$stats[0].topic.total}></a></strong>
                 | <{$smarty.const._MD_TOTALPOSTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_ALLPOSTS}>"><{$stats[0].post.total}></a></strong>
                 <{if $stats[0].digest.total}>
-                    | <{$smarty.const._MD_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
+                    | <{$smarty.const._MD_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest"
+                                                                    title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
                 <{/if}>
                 <{if $userstats}>
                     <br>

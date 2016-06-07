@@ -369,9 +369,9 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' .
-                                        $GLOBALS['xoopsDB']->prefix('bb_user_stats') .
-                                        "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO '
+                                        . $GLOBALS['xoopsDB']->prefix('bb_user_stats')
+                                        . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $postid;
@@ -487,10 +487,10 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
     $xoopsTpl->assign_by_ref('post_preview', $post_preview);
 }
 
-if (XoopsRequest::getString('contents_upload', null, 'POST') ||
-    XoopsRequest::getString('contents_preview', null, 'POST') ||
-    XoopsRequest::getString('contents_preview', null, 'GET') ||
-    XoopsRequest::getString('editor', '', 'POST')
+if (XoopsRequest::getString('contents_upload', null, 'POST')
+    || XoopsRequest::getString('contents_preview', null, 'POST')
+    || XoopsRequest::getString('contents_preview', null, 'GET')
+    || XoopsRequest::getString('editor', '', 'POST')
 ) {
     $editor        = XoopsRequest::getString('editor', '', 'POST');
     $dosmiley      = XoopsRequest::getInt('dosmiley', 0, 'POST');

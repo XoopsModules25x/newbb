@@ -41,8 +41,8 @@ foreach (array('topic_id', 'rate', 'forum') as $var) {
 
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $topic_obj    = $topicHandler->get($topic_id);
-if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post') &&
-    !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
+if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post')
+    && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
 ) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);

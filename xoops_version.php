@@ -815,8 +815,10 @@ if ($isModuleAction) {
 }
 
 $isPref = (// action module "system"
-    is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') && // current action
-    !empty($_REQUEST['fct']) && $_REQUEST['fct'] === 'preferences');
+    is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')
+    && // current action
+    !empty($_REQUEST['fct'])
+    && $_REQUEST['fct'] === 'preferences');
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {

@@ -95,21 +95,21 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=apply'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=apply'>";
         echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
         echo '</fieldset>';
         echo '<br>';
@@ -197,21 +197,21 @@ switch ($op) {
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_TEMPLATE_APPLY);
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
         echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=apply'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=apply'>";
         echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
         echo '</fieldset>';
         echo '<br>';
@@ -294,17 +294,17 @@ switch ($op) {
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_FORUM);
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
         echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
         echo '</fieldset>';
         echo '<br>';
@@ -333,17 +333,17 @@ switch ($op) {
 
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
         echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-             xoops_getenv('PHP_SELF') .
-             "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+             . xoops_getenv('PHP_SELF')
+             . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
         echo '</fieldset>';
         echo '<br>';
@@ -420,17 +420,17 @@ switch ($op) {
         if ($op !== 'add') {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
             echo '<br>';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-                 xoops_getenv('PHP_SELF') .
-                 "?op=add'>";
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+                 . xoops_getenv('PHP_SELF')
+                 . "?op=add'>";
             echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-                 xoops_getenv('PHP_SELF') .
-                 "?op=template'>";
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+                 . xoops_getenv('PHP_SELF')
+                 . "?op=template'>";
             echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" .
-                 xoops_getenv('PHP_SELF') .
-                 "?op=forum'>";
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
+                 . xoops_getenv('PHP_SELF')
+                 . "?op=forum'>";
             echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
             echo '</fieldset>';
             echo '<br>';

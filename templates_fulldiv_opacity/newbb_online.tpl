@@ -7,9 +7,10 @@
         [ <span class="online_admin"><{$smarty.const._MD_ADMINISTRATOR}></span> ] [ <span class="online_moderator"><{$smarty.const._MD_MODERATOR}></span> ]
         <br><{$online.num_anonymous}> <{$smarty.const._MD_ANONYMOUS_USERS}>
         <{if $online.num_user}>
-            <br><{$online.num_user}> <{$smarty.const._MD_REGISTERED_USERS}>
+            <br>
+            <{$online.num_user}> <{$smarty.const._MD_REGISTERED_USERS}>
             <{foreachq item=user from=$online.users}>
-                <a href="<{$user.link}>">
+            <a href="<{$user.link}>">
                 <{if $user.level eq 2}>
                     <span class="online_admin"><{$user.uname}></span>
                 <{elseif $user.level eq 1}>
@@ -17,8 +18,8 @@
                 <{else}>
                     <{$user.uname}>
                 <{/if}>
-                </a>
-            <{/foreach}>
+            </a>
+        <{/foreach}>
         <{/if}>
     </div>
 </div>

@@ -67,15 +67,15 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
 
         $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : array((int)$forums)));
 
-        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order' .
-               '     FROM ' .
-               $this->db->prefix('bb_type_forum') .
-               ' AS l ' .
-               "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " .
-               '     WHERE ' .
-               '        l.forum_id ' .
-               (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')') .
-               '         ORDER BY l.type_order ASC';
+        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order'
+               . '     FROM '
+               . $this->db->prefix('bb_type_forum')
+               . ' AS l '
+               . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} "
+               . '     WHERE '
+               . '        l.forum_id '
+               . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')')
+               . '         ORDER BY l.type_order ASC';
         if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             return $ret;
@@ -130,16 +130,16 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         $types_update = array_filter($types_update);
 
         if (!empty($types_valid)) {
-            $sql = 'DELETE FROM ' .
-                   $this->db->prefix('bb_type_forum') .
-                   ' WHERE ' .
-                   ' forum_id = ' .
-                   $forum_id .
-                   ' AND ' .
-                   // irmtfan bug fix: delete other forums types when update the type for a specific forum
-                   "     {$this->keyName} NOT IN (" .
-                   implode(', ', $types_valid) .
-                   ')';
+            $sql = 'DELETE FROM '
+                   . $this->db->prefix('bb_type_forum')
+                   . ' WHERE '
+                   . ' forum_id = '
+                   . $forum_id
+                   . ' AND '
+                   . // irmtfan bug fix: delete other forums types when update the type for a specific forum
+                   "     {$this->keyName} NOT IN ("
+                   . implode(', ', $types_valid)
+                   . ')';
             if (($result = $this->db->queryF($sql)) === false) {
             }
         }
@@ -220,14 +220,14 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         if ($this->mysql_major_version() >= 4) {
             $sql = 'DELETE FROM ' . $this->db->prefix('bb_type_forum') . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
         } else {
-            $sql = 'DELETE ' .
-                   $this->db->prefix('bb_type_forum') .
-                   ' FROM ' .
-                   $this->db->prefix('bb_type_forum') .
-                   " LEFT JOIN {$this->table} AS aa ON " .
-                   $this->db->prefix('bb_type_forum') .
-                   ".{$this->keyName} = aa.{$this->keyName} " .
-                   " WHERE (aa.{$this->keyName} IS NULL)";
+            $sql = 'DELETE '
+                   . $this->db->prefix('bb_type_forum')
+                   . ' FROM '
+                   . $this->db->prefix('bb_type_forum')
+                   . " LEFT JOIN {$this->table} AS aa ON "
+                   . $this->db->prefix('bb_type_forum')
+                   . ".{$this->keyName} = aa.{$this->keyName} "
+                   . " WHERE (aa.{$this->keyName} IS NULL)";
         }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -237,17 +237,17 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         if ($this->mysql_major_version() >= 4) {
             $sql = 'UPATE ' . $this->db->prefix('bb_topics') . " SET {$this->keyName} = 0" . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
         } else {
-            $sql = 'UPATE ' .
-                   $this->db->prefix('bb_topics') .
-                   ' FROM ' .
-                   $this->db->prefix('bb_type_forum') .
-                   ' SET ' .
-                   $this->db->prefix('bb_topics') .
-                   ".{$this->keyName} = 0" .
-                   " LEFT JOIN {$this->table} AS aa ON " .
-                   $this->db->prefix('bb_topics') .
-                   ".{$this->keyName} = aa.{$this->keyName} " .
-                   " WHERE (aa.{$this->keyName} IS NULL)";
+            $sql = 'UPATE '
+                   . $this->db->prefix('bb_topics')
+                   . ' FROM '
+                   . $this->db->prefix('bb_type_forum')
+                   . ' SET '
+                   . $this->db->prefix('bb_topics')
+                   . ".{$this->keyName} = 0"
+                   . " LEFT JOIN {$this->table} AS aa ON "
+                   . $this->db->prefix('bb_topics')
+                   . ".{$this->keyName} = aa.{$this->keyName} "
+                   . " WHERE (aa.{$this->keyName} IS NULL)";
         }
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());

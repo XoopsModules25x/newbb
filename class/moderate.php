@@ -210,18 +210,18 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         } else {
             // for 4.0 +
             /* */
-            $sql = 'DELETE ' .
-                   $this->table .
-                   ' FROM ' .
-                   $this->table .
-                   ' LEFT JOIN ' .
-                   $this->db->prefix('bb_forums') .
-                   ' AS aa ON ' .
-                   $this->table .
-                   '.forum_id = aa.forum_id ' .
-                   ' WHERE ' .
-                   $this->table .
-                   '.forum_id > 0 AND (aa.forum_id IS NULL)';
+            $sql = 'DELETE '
+                   . $this->table
+                   . ' FROM '
+                   . $this->table
+                   . ' LEFT JOIN '
+                   . $this->db->prefix('bb_forums')
+                   . ' AS aa ON '
+                   . $this->table
+                   . '.forum_id = aa.forum_id '
+                   . ' WHERE '
+                   . $this->table
+                   . '.forum_id > 0 AND (aa.forum_id IS NULL)';
             /* */
             // for 4.1+
             /*

@@ -180,19 +180,19 @@ function newbb_isModuleAdministrators(array $uid = array())
     }
     $mid = $xoopsModule->getVar('mid');
 
-    $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM ' .
-           $GLOBALS['xoopsDB']->prefix('groups_users_link') .
-           ' AS l' .
-           ' LEFT JOIN ' .
-           $GLOBALS['xoopsDB']->prefix('group_permission') .
-           ' AS p ON p.gperm_groupid=l.groupid' .
-           ' WHERE l.uid IN (' .
-           implode(', ', array_map('intval', $uid)) .
-           ')' .
-           "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" .
-           (int)$mid .
-           "'" .
-           ' GROUP BY l.uid';
+    $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM '
+           . $GLOBALS['xoopsDB']->prefix('groups_users_link')
+           . ' AS l'
+           . ' LEFT JOIN '
+           . $GLOBALS['xoopsDB']->prefix('group_permission')
+           . ' AS p ON p.gperm_groupid=l.groupid'
+           . ' WHERE l.uid IN ('
+           . implode(', ', array_map('intval', $uid))
+           . ')'
+           . "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '"
+           . (int)$mid
+           . "'"
+           . ' GROUP BY l.uid';
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             if (!empty($myrow['count'])) {
@@ -231,3 +231,4 @@ function newbb_isForumModerators(array $uid = array(), $mid = 0)
     return array_unique($forum_moderators);
 }
 //ENDIF;
+

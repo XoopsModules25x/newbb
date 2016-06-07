@@ -253,17 +253,17 @@ if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
 if (!empty($attachments) && is_array($attachments) && count($attachments)) {
     $delete_attach_checkbox = new XoopsFormCheckBox(_MD_THIS_FILE_WAS_ATTACHED_TO_THIS_POST, 'delete_attach[]');
     foreach ($attachments as $key => $attachment) {
-        $attach = ' ' .
-                  _DELETE .
-                  ' <a href=' .
-                  XOOPS_URL .
-                  '/' .
-                  $GLOBALS['xoopsModuleConfig']['dir_attachments'] .
-                  '/' .
-                  $attachment['name_saved'] .
-                  ' rel="external">' .
-                  $attachment['nameDisplay'] .
-                  '</a><br>';
+        $attach = ' '
+                  . _DELETE
+                  . ' <a href='
+                  . XOOPS_URL
+                  . '/'
+                  . $GLOBALS['xoopsModuleConfig']['dir_attachments']
+                  . '/'
+                  . $attachment['name_saved']
+                  . ' rel="external">'
+                  . $attachment['nameDisplay']
+                  . '</a><br>';
         $delete_attach_checkbox->addOption($key, $attach);
     }
     $forum_form->addElement($delete_attach_checkbox);

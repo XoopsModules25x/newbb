@@ -371,15 +371,16 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                             $append = true;
                         }
                     } else {
-                        $topic_page_jump .= '[<a href="' .
-                                            XOOPS_URL .
-                                            '/modules/newbb/viewtopic.php?topic_id=' .
-                                            $myrow['topic_id'] .
-                                            '&amp;start=' .
-                                            (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) .
-                                            '">' .
-                                            $i .
-                                            '</a>]';
+                        $topic_page_jump .= '[<a href="'
+                                            . XOOPS_URL
+                                            . '/modules/newbb/viewtopic.php?topic_id='
+                                            . $myrow['topic_id']
+                                            . '&amp;start='
+                                            . (($i - 1)
+                                               * $GLOBALS['xoopsModuleConfig']['posts_per_page'])
+                                            . '">'
+                                            . $i
+                                            . '</a>]';
                         // irmtfan remove here and move
                         //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . '</a>';
                     }
@@ -746,12 +747,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (!$object->getVar('forum_id')) {
             return false;
         }
-        $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM ' .
-               $this->db->prefix('bb_posts') .
-               ' AS p LEFT JOIN  ' .
-               $this->db->prefix('bb_topics') .
-               ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = ' .
-               $object->getVar('forum_id');
+        $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM '
+               . $this->db->prefix('bb_posts')
+               . ' AS p LEFT JOIN  '
+               . $this->db->prefix('bb_topics')
+               . ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = '
+               . $object->getVar('forum_id');
 
         if ($result = $this->db->query($sql)) {
             $last_post = 0;

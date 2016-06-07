@@ -83,9 +83,10 @@ class NewbbTopicRenderer
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (null === $instance) {
             $instance = new static();
         }
+
         return $instance;
     }
 
@@ -840,18 +841,18 @@ class NewbbTopicRenderer
         $joins[]  = 'LEFT JOIN ' . $this->handler->db->prefix('bb_posts') . ' AS p ON p.post_id = t.topic_last_post_id';
         $wheres[] = '1 = 1';
 
-        $sql = '    SELECT ' .
-               implode(', ', $selects) .
-               '     FROM ' .
-               implode(', ', $froms) .
-               '        ' .
-               implode(' ', $joins) .
-               (!empty($this->query['join']) ? '        ' . implode(' ', $this->query['join']) : '') .
-               // irmtfan bug fix: Undefined index: join when post_excerpt = 0
-               '     WHERE ' .
-               implode(' AND ', $wheres) .
-               '        AND ' .
-               @implode(' AND ', @$this->query['where']);
+        $sql = '    SELECT '
+               . implode(', ', $selects)
+               . '     FROM '
+               . implode(', ', $froms)
+               . '        '
+               . implode(' ', $joins)
+               . (!empty($this->query['join']) ? '        ' . implode(' ', $this->query['join']) : '')
+               . // irmtfan bug fix: Undefined index: join when post_excerpt = 0
+               '     WHERE '
+               . implode(' AND ', $wheres)
+               . '        AND '
+               . @implode(' AND ', @$this->query['where']);
 
         if (!$result = $this->handler->db->query($sql)) {
             return 0;
@@ -902,20 +903,20 @@ class NewbbTopicRenderer
         }
         //if (empty($this->query["sort"])) $this->query["sort"][] = 't.topic_last_post_id DESC'; // irmtfan commented no need
 
-        $sql = '    SELECT ' .
-               implode(', ', $selects) .
-               '     FROM ' .
-               implode(', ', $froms) .
-               '        ' .
-               implode(' ', $joins) .
-               (!empty($this->query['join']) ? '        ' . implode(' ', $this->query['join']) : '') .
-               // irmtfan bug fix: Undefined index join when post_excerpt = 0
-               '     WHERE ' .
-               implode(' AND ', $wheres) .
-               '        AND ' .
-               @implode(' AND ', @$this->query['where']) .
-               '     ORDER BY ' .
-               implode(', ', $this->query['sort']);
+        $sql = '    SELECT '
+               . implode(', ', $selects)
+               . '     FROM '
+               . implode(', ', $froms)
+               . '        '
+               . implode(' ', $joins)
+               . (!empty($this->query['join']) ? '        ' . implode(' ', $this->query['join']) : '')
+               . // irmtfan bug fix: Undefined index join when post_excerpt = 0
+               '     WHERE '
+               . implode(' AND ', $wheres)
+               . '        AND '
+               . @implode(' AND ', @$this->query['where'])
+               . '     ORDER BY '
+               . implode(', ', $this->query['sort']);
 
         if (!$result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars['start'])) {
             if (is_object($xoopsTpl)) {
@@ -981,15 +982,15 @@ class NewbbTopicRenderer
                             $append = true;
                         }
                     } else {
-                        $topic_page_jump .= '[<a href="' .
-                                            XOOPS_URL .
-                                            '/modules/newbb/viewtopic.php?topic_id=' .
-                                            $myrow['topic_id'] .
-                                            '&amp;start=' .
-                                            (($i - 1) * $this->config['posts_per_page']) .
-                                            '">' .
-                                            $i .
-                                            '</a>]';
+                        $topic_page_jump .= '[<a href="'
+                                            . XOOPS_URL
+                                            . '/modules/newbb/viewtopic.php?topic_id='
+                                            . $myrow['topic_id']
+                                            . '&amp;start='
+                                            . (($i - 1) * $this->config['posts_per_page'])
+                                            . '">'
+                                            . $i
+                                            . '</a>]';
                         // irmtfan remove here and move
                         //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=" . $myrow['topic_id'] . "&amp;start=" . (($i - 1) * $this->config['posts_per_page']) . "" . "'>" . newbbDisplayImage('document',_MD_NEWBB_GOTOLASTPOST) . '</a>';
                     }

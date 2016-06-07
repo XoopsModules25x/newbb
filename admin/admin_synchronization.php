@@ -74,9 +74,9 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' .
-                                        $GLOBALS['xoopsDB']->prefix('bb_user_stats') .
-                                        "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO '
+                                        . $GLOBALS['xoopsDB']->prefix('bb_user_stats')
+                                        . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));

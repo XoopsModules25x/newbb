@@ -158,19 +158,19 @@ include_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
-    <link rel="alternate" type="application/rss+xml" title="' .
-                                             $xoopsModule->getVar('name') .
-                                             '-' .
-                                             $forum_obj->getVar('forum_name') .
-                                             '" href="' .
-                                             XOOPS_URL .
-                                             '/modules/' .
-                                             $xoopsModule->getVar('dirname') .
-                                             '/rss.php?f=' .
-                                             $forum_obj->getVar('forum_id') .
-                                             '" />
-    ' .
-                                             @$xoopsTpl->get_template_vars('xoops_module_header'));
+    <link rel="alternate" type="application/rss+xml" title="'
+                                             . $xoopsModule->getVar('name')
+                                             . '-'
+                                             . $forum_obj->getVar('forum_name')
+                                             . '" href="'
+                                             . XOOPS_URL
+                                             . '/modules/'
+                                             . $xoopsModule->getVar('dirname')
+                                             . '/rss.php?f='
+                                             . $forum_obj->getVar('forum_id')
+                                             . '" />
+    '
+                                             . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
@@ -210,15 +210,15 @@ $xoopsTpl->assign('infobox', $infobox);
 // END irmtfan improve infobox
 
 $xoopsTpl->assign(array(
-                      'topic_title'    => '<a href="' .
-                                          XOOPS_URL .
-                                          '/modules/' .
-                                          $xoopsModule->getVar('dirname', 'n') .
-                                          '/viewtopic.php?topic_id=' .
-                                          $topic_id .
-                                          '">' .
-                                          $topic_obj->getFullTitle() .
-                                          '</a>',
+                      'topic_title'    => '<a href="'
+                                          . XOOPS_URL
+                                          . '/modules/'
+                                          . $xoopsModule->getVar('dirname', 'n')
+                                          . '/viewtopic.php?topic_id='
+                                          . $topic_id
+                                          . '">'
+                                          . $topic_obj->getFullTitle()
+                                          . '</a>',
                       'forum_name'     => $forum_obj->getVar('forum_name'),
                       'lang_nexttopic' => _MD_NEXTTOPIC,
                       'lang_prevtopic' => _MD_PREVTOPIC,
@@ -624,28 +624,28 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                 'name'  => _MD_DELETEPOLL
             );
             $adminpoll_actions['restartpoll'] = array(
-                'link'  => XOOPS_URL .
-                           '/modules/' .
-                           $xoopsModule->getVar('dirname', 'n') .
-                           '/polls.php?op=restart&amp;poll_id=' .
-                           $topic_obj->getVar('poll_id') .
-                           '&amp;topic_id=' .
-                           $topic_id .
-                           '&amp;forum=' .
-                           $forum_id,
+                'link'  => XOOPS_URL
+                           . '/modules/'
+                           . $xoopsModule->getVar('dirname', 'n')
+                           . '/polls.php?op=restart&amp;poll_id='
+                           . $topic_obj->getVar('poll_id')
+                           . '&amp;topic_id='
+                           . $topic_id
+                           . '&amp;forum='
+                           . $forum_id,
                 'image' => $poll_restart,
                 'name'  => _MD_RESTARTPOLL
             );
             $adminpoll_actions['logpoll']     = array(
-                'link'  => XOOPS_URL .
-                           '/modules/' .
-                           $xoopsModule->getVar('dirname', 'n') .
-                           '/polls.php?op=log&amp;poll_id=' .
-                           $topic_obj->getVar('poll_id') .
-                           '&amp;topic_id=' .
-                           $topic_id .
-                           '&amp;forum=' .
-                           $forum_id,
+                'link'  => XOOPS_URL
+                           . '/modules/'
+                           . $xoopsModule->getVar('dirname', 'n')
+                           . '/polls.php?op=log&amp;poll_id='
+                           . $topic_obj->getVar('poll_id')
+                           . '&amp;topic_id='
+                           . $topic_id
+                           . '&amp;forum='
+                           . $forum_id,
                 'image' => $poll_log,
                 'name'  => _MD_POLL_VIEWLOG
             );
@@ -743,9 +743,9 @@ $xoopsTpl->assign('menumode_other', $menumode_other);
 // START irmtfan add verifyUser to quick reply
 //check banning
 $moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
-if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']) &&
-    $topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'reply') &&
-    !$moderateHandler->verifyUser(-1, '', $forum_obj->getVar('forum_id'))
+if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
+    && $topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'reply')
+    && !$moderateHandler->verifyUser(-1, '', $forum_obj->getVar('forum_id'))
 ) {
     // END irmtfan add verifyUser to quick reply
     $forum_form = new XoopsThemeForm(_MD_POSTREPLY, 'quick_reply', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/post.php', 'post', true);
@@ -795,9 +795,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']) &&
     $forum_form->addElement(new XoopsFormHidden('contents_submit', 1));
 
     $submit_button = new XoopsFormButton('', 'quick_submit', _SUBMIT, 'submit');
-    $submit_button->setExtra('onclick="if (document.forms.quick_reply.message.value === \'RE\' || document.forms.quick_reply.message.value === \'\') { alert(\'' .
-                             _MD_QUICKREPLY_EMPTY .
-                             '\'); return false;} else { return true;}"');
+    $submit_button->setExtra('onclick="if (document.forms.quick_reply.message.value === \'RE\' || document.forms.quick_reply.message.value === \'\') { alert(\''
+                             . _MD_QUICKREPLY_EMPTY
+                             . '\'); return false;} else { return true;}"');
     $forum_form->addElement($submit_button);
 
     $toggles = newbb_getcookie('G', true);
