@@ -124,7 +124,7 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['we
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
-//$moduleHandler = xoops_getHandler('module');
+$moduleHandler = xoops_getHandler('module');
 $xoopspoll = $moduleHandler->getByDirname($pollmodules);
 /*
 if (is_object($xoopspoll) && $xoopspoll->getVar('isactive')) {
