@@ -8,7 +8,7 @@ ADD `dobr` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1';
 
 ALTER TABLE `bb_posts`
 ADD INDEX `approved` (`approved`),
-CHANGE `attachment`  `attachment` TEXT NULL DEFAULT NULL;
+CHANGE `attachment`  `attachment` TEXT NULL;
 
 ALTER TABLE `bb_topics`
 CHANGE `topic_subject` `type_id` SMALLINT(4)         UNSIGNED NOT NULL DEFAULT '0',
