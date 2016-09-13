@@ -89,7 +89,9 @@ function newbb_isAdministrator($user = -1, $mid = 0)
         }
     }
 
-    if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid == $xoopsModule->getVar('mid', 'n') && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')) {
+    if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid == $xoopsModule->getVar('mid', 'n')
+        && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')
+    ) {
         return $GLOBALS['xoopsUserIsAdmin'];
     }
 
@@ -231,4 +233,3 @@ function newbb_isForumModerators(array $uid = array(), $mid = 0)
     return array_unique($forum_moderators);
 }
 //ENDIF;
-

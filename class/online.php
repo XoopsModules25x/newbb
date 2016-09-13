@@ -224,8 +224,16 @@ class NewbbOnlineHandler
         }
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
-            $sql =
-                'UPDATE ' . $this->db->prefix('bb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
+            $sql = 'UPDATE '
+                   . $this->db->prefix('bb_online')
+                   . " SET online_updated= '"
+                   . $time
+                   . "', online_forum = '"
+                   . $forum_id
+                   . "', online_topic = '"
+                   . $topic_id
+                   . "' WHERE online_uid = "
+                   . $uid;
             if ($uid == 0) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }

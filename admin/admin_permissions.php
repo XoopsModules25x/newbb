@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -186,7 +186,7 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
             }
             $tree .= '" value="1"';
             if (in_array($option['id'], $this->_value)) {
-                $tree .= ' checked="checked"';
+                $tree .= ' checked';
             }
             $tree .= ' />'
                      . $option['name']
@@ -257,7 +257,7 @@ switch ($action) {
                 if ($ii % 5 == 0) {
                     $ret_ele .= '</tr><tr>';
                 }
-                $checked      = in_array('forum_' . $perm, $selected) ? " checked='checked'" : '';
+                $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
                 $ret_ele .= '<td><input name="perms['
@@ -324,7 +324,11 @@ switch ($action) {
         $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
-        $op_select->addOptionArray(array('no' => _SELECT, 'template' => _AM_NEWBB_PERM_TEMPLATE, 'apply' => _AM_NEWBB_PERM_TEMPLATEAPP));
+        $op_select->addOptionArray(array(
+                                       'no'       => _SELECT,
+                                       'template' => _AM_NEWBB_PERM_TEMPLATE,
+                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP
+                                   ));
         $opform->addElement($op_select);
         $opform->display();
 
@@ -405,10 +409,22 @@ switch ($action) {
         $opform->display();
 
         $op_options = array('category' => _AM_NEWBB_CAT_ACCESS);
-        $fm_options = array('category' => array('title' => _AM_NEWBB_CAT_ACCESS, 'item' => 'category_access', 'desc' => '', 'anonymous' => true));
+        $fm_options = array(
+            'category' => array(
+                'title'     => _AM_NEWBB_CAT_ACCESS,
+                'item'      => 'category_access',
+                'desc'      => '',
+                'anonymous' => true
+            )
+        );
         foreach ($perms as $perm) {
             $op_options[$perm] = constant('_AM_NEWBB_CAN_' . strtoupper($perm));
-            $fm_options[$perm] = array('title' => constant('_AM_NEWBB_CAN_' . strtoupper($perm)), 'item' => 'forum_' . $perm, 'desc' => '', 'anonymous' => true);
+            $fm_options[$perm] = array(
+                'title'     => constant('_AM_NEWBB_CAN_' . strtoupper($perm)),
+                'item'      => 'forum_' . $perm,
+                'desc'      => '',
+                'anonymous' => true
+            );
         }
 
         $op_keys = array_keys($op_options);

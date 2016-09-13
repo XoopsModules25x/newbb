@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -206,7 +206,7 @@ class Post extends XoopsObject
         if (is_array($attachments) && count($attachments) > 0) {
             $iconHandler = newbbGetIconHandler();
             $mime_path   = $iconHandler->getPath('mime');
-            include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/include/functions.image.php');
+            include_once dirname(__DIR__) . '/include/functions.image.php';
             $image_extensions = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // need improve !!!
             $post_attachment .= '<br><strong>' . _MD_ATTACHMENT . '</strong>:';
             $post_attachment .= '<br><hr size="1" noshade="noshade" /><br>';
@@ -220,7 +220,9 @@ class Post extends XoopsObject
                 }
                 $file_size = @filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = number_format($file_size / 1024, 2) . ' KB';
-                if (in_array(strtolower($file_extension), $image_extensions) && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
+                if (in_array(strtolower($file_extension), $image_extensions)
+                    && $GLOBALS['xoopsModuleConfig']['media_allowed']
+                ) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . newbb_attachmentImage($att['name_saved']);
                     $isDisplayed = true;
@@ -248,7 +250,9 @@ class Post extends XoopsObject
                                             . _MD_HITS
                                             . ': '
                                             . $att['numDownload'];
-                    } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0 && $GLOBALS['xoopsUser']->isactive()) {
+                    } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0
+                              && $GLOBALS['xoopsUser']->isactive()
+                    ) {
                         $post_attachment .= '<a href="'
                                             . XOOPS_URL
                                             . '/modules/'
@@ -382,13 +386,16 @@ class Post extends XoopsObject
 
         $post               = array();
         $post['attachment'] = false;
-        $post_text          =
-            newbb_displayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'), $this->getVar('dobr'));
+        $post_text          = newbb_displayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'),
+                                                 $this->getVar('dobr'));
         if (newbb_isAdmin($this->getVar('forum_id')) || $this->checkIdentity()) {
             $post['text'] = $post_text . '<br>' . $this->displayAttachment();
         } elseif ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
             $post['text'] = sprintf(_MD_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma'));
-        } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply') && (!$uid || !isset($viewtopic_users[$uid]))) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply')
+                  && (!$uid
+                      || !isset($viewtopic_users[$uid]))
+        ) {
             $post['text'] = _MD_REPLY_REQUIREMENT;
         } else {
             $post['text'] = $post_text . '<br>' . $this->displayAttachment();
@@ -505,7 +512,10 @@ class Post extends XoopsObject
         } elseif ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
             $post_text       = "<div class='karma'>" . sprintf(_MD_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma')) . '</div>';
             $post_attachment = '';
-        } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply') && (!$uid || !in_array($uid, $viewtopic_posters))) {
+        } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply')
+                  && (!$uid
+                      || !in_array($uid, $viewtopic_posters))
+        ) {
             $post_text       = "<div class='karma'>" . _MD_REPLY_REQUIREMENT . '</div>';
             $post_attachment = '';
         } else {
@@ -542,7 +552,9 @@ class Post extends XoopsObject
         $thread_buttons = array();
         $mod_buttons    = array();
 
-        if ($isadmin && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') !== $this->getVar('uid')) && $this->getVar('uid') > 0) {
+        if ($isadmin && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') !== $this->getVar('uid'))
+            && $this->getVar('uid') > 0
+        ) {
             $mod_buttons['bann']['image']    = newbbDisplayImage('p_bann', _MD_SUSPEND_MANAGEMENT);
             $mod_buttons['bann']['link']     = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/moderate.php?forum=' . $forum_id . '&amp;fuid=' . $this->getVar('uid');
             $mod_buttons['bann']['name']     = _MD_SUSPEND_MANAGEMENT;
@@ -610,7 +622,9 @@ class Post extends XoopsObject
 
         $thread_action = array();
         // irmtfan add pdf permission
-        if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php') && $topicHandler->getPermission($forum_id, $topic_status, 'pdf')) {
+        if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php')
+            && $topicHandler->getPermission($forum_id, $topic_status, 'pdf')
+        ) {
             $thread_action['pdf']['image']  = newbbDisplayImage('pdf', _MD_PDF);
             $thread_action['pdf']['link']   = XOOPS_URL . '/modules/newbb/makepdf.php?type=post&amp;pageid=0';
             $thread_action['pdf']['name']   = _MD_PDF;
@@ -675,14 +689,16 @@ class Post extends XoopsObject
             'post_parent_id'  => $this->getVar('pid'),
             'post_date'       => newbb_formatTimestamp($this->getVar('post_time')),
             'post_image'      => $post_image,
-            'post_title'      => $post_title,        // irmtfan $post_title to add highlight keywords
+            'post_title'      => $post_title,
+            // irmtfan $post_title to add highlight keywords
             'post_text'       => $post_text,
             'post_attachment' => $post_attachment,
             'post_edit'       => $this->displayPostEdit(),
             'post_no'         => $post_no,
             'post_signature'  => $this->getVar('attachsig') ? @$poster['signature'] : '',
             //            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($this->getVar('poster_ip')) : '',
-            'poster_ip'       => ($isadmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $this->getVar('poster_ip') : '',
+            'poster_ip'       => ($isadmin
+                                  && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $this->getVar('poster_ip') : '',
             'thread_action'   => $thread_action,
             'thread_buttons'  => $thread_buttons,
             'mod_buttons'     => $mod_buttons,
@@ -739,8 +755,15 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true, $topic_id = 0, $approved = 1)
-    {
+    public function &getByLimit(
+        $limit = 0,
+        $start = 0,
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $asObject = true,
+        $topic_id = 0,
+        $approved = 1
+    ) {
         $sql    = 'SELECT p.*, t.*, tp.topic_status FROM '
                   . $this->db->prefix('bb_posts')
                   . ' p LEFT JOIN '

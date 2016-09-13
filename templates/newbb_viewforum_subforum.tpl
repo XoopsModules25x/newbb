@@ -10,8 +10,8 @@
     <{foreachq item=sforum from=$subforum}>
     <tr>
         <td class="even" align="center" valign="middle"><{$sforum.forum_folder}></td>
-        <td class="odd" onclick="window.location='<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>'"><a
-                    href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>"><strong><{$sforum.forum_name}></strong></a><br>
+        <td class="odd" onclick="window.location='<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>'">
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>"><strong><{$sforum.forum_name}></strong></a><br>
 
             <div id="index_forum">
                 <{$sforum.forum_desc}>

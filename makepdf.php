@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -119,13 +119,13 @@ if (function_exists('easiestml')) {
 }
 // END irmtfan to implement Xlanguage by phppp(DJ)
 
-require_once(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php');
+require_once XOOPS_PATH . '/vendor/tcpdf/tcpdf.php';
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // load $localLanguageOptions array with language specific definitions and apply
 if (is_file(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
-    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php');
+    require_once XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php';
 } else {
-    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/english.php');
+    require_once XOOPS_PATH . '/vendor/tcpdf/config/lang/english.php';
 }
 $pdf->setLanguageArray($localLanguageOptions);
 

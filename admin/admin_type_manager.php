@@ -30,7 +30,19 @@ echo $indexAdmin->addNavigation(basename(__FILE__));
  * </ol>
  */
 $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');// !empty($_GET['op'])? $_GET['op'] : ( !empty($_POST['op']) ? $_POST['op'] : "" );
-if (!in_array($op, array('save_type', 'delete', 'template', 'save_template', 'apply', 'save_apply', 'forum', 'edit_forum', 'save_forum', 'add'), true)) {
+if (!in_array($op, array(
+    'save_type',
+    'delete',
+    'template',
+    'save_template',
+    'apply',
+    'save_apply',
+    'forum',
+    'edit_forum',
+    'save_forum',
+    'add'
+), true)
+) {
     $op = '';
 }
 
@@ -451,7 +463,7 @@ switch ($op) {
         echo "<th align='left' class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        $isColorpicker = require_once($GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php'));
+        $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
 
         if ($op !== 'add') {
             foreach ($types_obj as $key => $type_obj) {

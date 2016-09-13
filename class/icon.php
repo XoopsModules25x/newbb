@@ -92,9 +92,11 @@ class NewbbIconHandler
      */
     // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir
     public function getPath(/*$set, */
-        $type, $dirname = 'newbb', $default = '', $endDir = 'images'
-    )
-    {
+        $type,
+        $dirname = 'newbb',
+        $default = '',
+        $endDir = 'images'
+    ) {
         static $paths;
         if (isset($paths[$endDir . '/' . $type])) {
             return $paths[$endDir . '/' . $type];
@@ -130,9 +132,9 @@ class NewbbIconHandler
      * @param string $dirname
      */
     public function init(/*$set = "default", */
-        $language = 'english', $dirname = 'newbb'
-    )
-    {
+        $language = 'english',
+        $dirname = 'newbb'
+    ) {
         $this->forumImage = include $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
         $this->forumImage['icon']     = XOOPS_URL . $this->getPath(/*$set, */

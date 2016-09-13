@@ -26,7 +26,8 @@ $categoryHandler = xoops_getModuleHandler('category');
 $category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), array('cat_title'));
 
 //check banning
-$moderated_id = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->uid() > 0) ? $GLOBALS['xoopsUser']->uid() : 0;
+$moderated_id = (is_object($GLOBALS['xoopsUser'])
+                 && $GLOBALS['xoopsUser']->uid() > 0) ? $GLOBALS['xoopsUser']->uid() : 0;
 // $moderated_isadmin = ( is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin() ) ? true : false; // irmtfan commented
 $moderated_ip    = $_SERVER['REMOTE_ADDR'];
 $moderated_forum = $forum_obj->getVar('forum_id');
@@ -77,8 +78,7 @@ foreach (array(
              'isreply',
              'isedit',
              'contents_preview'
-         ) as $getint
-) {
+         ) as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
 foreach (array(
@@ -88,8 +88,7 @@ foreach (array(
              'newbb_form',
              'icon',
              'op'
-         ) as $getstr
-) {
+         ) as $getstr) {
     ${$getstr} = XoopsRequest::getString($getstr, ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
@@ -106,7 +105,11 @@ if ($editby) {
 }
 
 $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-if (newbb_isAdmin($forum_obj) || ($topicHandler->getPermission($forum_obj, $topic_status, 'type') && ($topic_id == 0 || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
+if (newbb_isAdmin($forum_obj)
+    || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
+        && ($topic_id == 0
+            || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))
+) {
     $type_id     = $topicHandler->get(@$topic_id, 'type_id');
     $typeHandler = xoops_getModuleHandler('type', 'newbb');
     $types       = $typeHandler->getByForum($forum_obj->getVar('forum_id'));
@@ -227,7 +230,9 @@ if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['notificat
     } else {
         // Otherwise, check previous subscribed status...
         $notificationHandler = xoops_getHandler('notification');
-        if (!empty($topic_id) && $notificationHandler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))) {
+        if (!empty($topic_id)
+            && $notificationHandler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))
+        ) {
             $notify = 1;
         }
     }

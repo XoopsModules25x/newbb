@@ -17,7 +17,8 @@
                         <tr align="center">
                             <td class="even"><a href="<{$results[i].forum_link}>"><{$results[i].forum_name}></a></td>
                             <!-- irmtfan hardcode removed align="left" -->
-                            <td class="odd" id="align_left"><a href="<{$results[i].link}>"><{$results[i].title}></a></td>
+                            <td class="odd" id="align_left"><a href="<{$results[i].link}>"><{$results[i].title}></a>
+                            </td>
                             <td class="even"><{$results[i].poster}></a></td>
                             <td class="odd"><{$results[i].post_time}></td>
                         </tr>

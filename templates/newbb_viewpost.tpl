@@ -22,8 +22,10 @@
     <div class="right" id="admin">
         <{if $mode gt 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->
-        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+        <form name="form_posts_admin" action="action.post.php" method="POST"
+              onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1"
+                                           onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
@@ -35,13 +37,17 @@
             </select>
             <input type="hidden" name="uid" value="<{$uid}>"/> |
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self"
+               title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
@@ -85,7 +91,8 @@
     </div>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="pagenav">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>
@@ -120,7 +127,8 @@
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
     <div class="icon_right">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>

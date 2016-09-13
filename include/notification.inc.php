@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -94,8 +94,15 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
             }
             $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
             $item['name'] = $result_array['subject'];
-            $item['url']  =
-                XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/viewtopic.php?forum= ' . $result_array['forum_id'] . '&amp;topic_id=' . $result_array['topic_id'] . '#forumpost' . $item_id;
+            $item['url']  = XOOPS_URL
+                            . '/modules/'
+                            . $module->getVar('dirname')
+                            . '/viewtopic.php?forum= '
+                            . $result_array['forum_id']
+                            . '&amp;topic_id='
+                            . $result_array['topic_id']
+                            . '#forumpost'
+                            . $item_id;
 
             return $item;
         }

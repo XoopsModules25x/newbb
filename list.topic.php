@@ -12,7 +12,7 @@
 include_once __DIR__ . '/header.php';
 
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
-$xoopsOption['template_main'] = 'newbb_viewall.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'newbb_viewall.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method

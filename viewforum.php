@@ -175,7 +175,9 @@ $sel_sort_array = array(
     't.rating'             => _MD_RATINGS,
     't.topic_last_post_id' => _MD_LASTPOSTTIME
 );
-if (!XoopsRequest::getString('sort', '', 'GET') || !array_key_exists(XoopsRequest::getString('sort', '', 'GET'), $sel_sort_array)) {
+if (!XoopsRequest::getString('sort', '', 'GET')
+    || !array_key_exists(XoopsRequest::getString('sort', '', 'GET'), $sel_sort_array)
+) {
     $sort = 't.topic_last_post_id';
 } else {
     $sort = XoopsRequest::getString('sort', '', 'GET');
@@ -183,13 +185,14 @@ if (!XoopsRequest::getString('sort', '', 'GET') || !array_key_exists(XoopsReques
 
 $forum_selection_sort = '<select name="sort">';
 foreach ($sel_sort_array as $sort_k => $sort_v) {
-    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort == $sort_k) ? ' selected="selected"' : '') . '>' . $sort_v . '</option>';
+    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort == $sort_k) ? ' selected' : '') . '>' . $sort_v . '</option>';
 }
 $forum_selection_sort .= '</select>';
 
 $xoopsTpl->assign_by_ref('forum_selection_sort', $forum_selection_sort);
 
-$order                 = (!XoopsRequest::getString('order', '', 'GET') || XoopsRequest::getString('order', '', 'GET') !== 'ASC') ? 'DESC' : 'ASC';
+$order                 = (!XoopsRequest::getString('order', '', 'GET')
+                          || XoopsRequest::getString('order', '', 'GET') !== 'ASC') ? 'DESC' : 'ASC';
 $forum_selection_order = '<select name="order">';
 $forum_selection_order .= '<option value="ASC"' . (($order === 'ASC') ? ' selected' : '') . '>' . _MD_ASCENDING . '</option>';
 $forum_selection_order .= '<option value="DESC"' . (($order === 'DESC') ? ' selected' : '') . '>' . _MD_DESCENDING . '</option>';
@@ -220,7 +223,8 @@ $xoopsTpl->assign('h_rating_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$p
                                                                                                                                      === 'DESC') ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
 $xoopsTpl->assign('h_date_link',
                   XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (($sort === 't.topic_last_post_id' && $order === 'DESC') ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (($sort === 't.topic_id' && $order === 'DESC') ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (($sort === 't.topic_id'
+                                                                                                                                     && $order === 'DESC') ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('forum_since', $since); // For $since in search.php
 
 // irmtfan - if no since it should be 0
@@ -265,7 +269,10 @@ $types       = array();
 if ($types = $typeHandler->getByForum($forum_id)) {
     $typeOptions[] = array('title' => _ALL, 'link' => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}");
     foreach ($types as $key => $item) {
-        $typeOptions[] = array('title' => $item['type_name'], 'link' => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}");
+        $typeOptions[] = array(
+            'title' => $item['type_name'],
+            'link'  => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}"
+        );
     }
 }
 if ($type > 0) {
@@ -342,15 +349,16 @@ if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
-    $xoopsTpl->assign('rss_button', "<div align='right'><a href='"
-                                    . XOOPS_URL
-                                    . '/modules/'
-                                    . $xoopsModule->dirname()
-                                    . '/rss.php?f='
-                                    . $forum_id
-                                    . "' title='RSS feed' target='_blank'>"
-                                    . newbbDisplayImage('rss', 'RSS feed')
-                                    . '</a></div>');
+    $xoopsTpl->assign('rss_button',
+                      "<div align='right'><a href='"
+                      . XOOPS_URL
+                      . '/modules/'
+                      . $xoopsModule->dirname()
+                      . '/rss.php?f='
+                      . $forum_id
+                      . "' title='RSS feed' target='_blank'>"
+                      . newbbDisplayImage('rss', 'RSS feed')
+                      . '</a></div>');
 }
 // irmtfan move to footer.php
 include_once __DIR__ . '/footer.php';

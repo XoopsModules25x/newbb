@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -131,7 +131,7 @@ switch ($op) {
                          . "&amp;viewmode=thread\" target=\"checkreport\">"
                          . $myts->htmlSpecialChars($report['subject'])
                          . '</a>';
-            $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked="checked" />';
+            $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked />';
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {

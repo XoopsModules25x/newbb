@@ -89,7 +89,9 @@ include $GLOBALS['xoops']->path('header.php');
 if (is_object($GLOBALS['xoopsUser']) && !newbb_isAdmin($forum_obj)) {
     $perm = false;
     if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'addpoll')) {
-        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll') && ($GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster'))) {
+        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll')
+            && ($GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster'))
+        ) {
             $perm = true;
         } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') == $poll_obj->getVar('user_id'))) {
             $perm = true;
@@ -199,9 +201,8 @@ switch ($op) {
             $poll_form->addElement($desc_tarea);
             $date = formatTimestamp($poll_obj->getVar('end_time'), 'Y-m-d H:i:s'); // important "Y-m-d H:i:s" use in jdf function
             if (!$poll_obj->hasExpired()) {
-                $expire_text =
-                    new XoopsFormText(_MD_POLL_EXPIRATION . '<br><small>' . _MD_POLL_FORMAT . '<br>' . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '</small>', 'end_time',
-                                      20, 19, $date);
+                $expire_text = new XoopsFormText(_MD_POLL_EXPIRATION . '<br><small>' . _MD_POLL_FORMAT . '<br>' . sprintf(_MD_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '</small>',
+                                                 'end_time', 20, 19, $date);
                 $poll_form->addElement($expire_text);
             } else {
                 // irmtfan full URL - add topic_id
@@ -382,7 +383,9 @@ switch ($op) {
             $startTimestamp   = (!XoopsRequest::getString('xu_start_time', null, 'POST')) ? ($endTimestamp - $classConstants::DEFAULT_POLL_DURATION) : userTimeToServerTime($xuStartTimestamp);
 
             //  don't allow changing start time if there are votes in the log
-            if (($startTimestamp < $poll_obj->getVar('start_time')) && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)) {
+            if (($startTimestamp < $poll_obj->getVar('start_time'))
+                && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)
+            ) {
                 $startTimestamp = $poll_obj->getVar('start_time'); //don't change start time
             }
 

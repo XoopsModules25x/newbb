@@ -1,5 +1,5 @@
 <?php
-// 
+//
 if (defined('NEWBB_ADMIN_DEFINED')) {
     return;
 } else {

@@ -439,7 +439,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 'topic_forum_link'       => $forum_link,
                 'topic_excerpt'          => $topic_excerpt,
                 'stick'                  => empty($myrow['topic_sticky']),
-                'stats'                  => array($myrow['topic_status'], $myrow['topic_digest'], $myrow['topic_replies']),/* irmtfan uncomment use ib the for loop*/
+                'stats'                  => array(
+                    $myrow['topic_status'],
+                    $myrow['topic_digest'],
+                    $myrow['topic_replies']
+                ),
+                /* irmtfan uncomment use ib the for loop*/
                 //"topic_poster"              => $topic_poster,/*irmtfan remove here and move to for loop*/
                 //"topic_last_poster"         => $topic_last_poster,/*irmtfan remove here and move to for loop*/
                 //"topic_folder"              => newbbDisplayImage($topic_folder,$topic_folder_text),/*irmtfan remove here and move to for loop*/
@@ -465,8 +470,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
             //$topic_prefix =  (!empty($typen[$myrow['type_id']])) ? getTopicTitle("", $typen[$myrow['type_id']]["type_name"], $typen[$myrow['type_id']]["type_color"]) : "";
             $topics[$id]['topic_poster']      = !empty($posters_name[$topics[$id]['topic_poster_uid']]) ? $posters_name[$topics[$id]['topic_poster_uid']] : $topics[$id]['topic_poster_name'];
-            $topics[$id]['topic_last_poster'] =
-                !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
+            $topics[$id]['topic_last_poster'] = !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
 
             // ------------------------------------------------------
             // topic_folder: priority: newhot -> hot/new -> regular
@@ -1019,7 +1023,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
         $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
 
-        require_once(__DIR__ . '/tree.php');
+        require_once __DIR__ . '/tree.php';
         $forums_structured = array();
         foreach (array_keys($forums_obj) as $key) {
             $forum_obj                                             =& $forums_obj[$key];

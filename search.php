@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -201,7 +201,9 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 $post_text        = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode('', $selectexclude)); // strip html tags = $selecthtml
                 $post_text_select = $post_text;
                 $post_text        = newbb_highlightText($post_text, $queries);
-            } elseif ('title' !== $searchin && !empty($selecthtml)) { // find if there is any query left after strip html tags
+            } elseif ('title' !== $searchin
+                      && !empty($selecthtml)
+            ) { // find if there is any query left after strip html tags
                 $post_text_select = newbb_selectText($row['post_text'], $queries, 100, 30000, true, implode('', $selectexclude)); // strip html tags = true
             }
             if ('text' !== $searchin) {

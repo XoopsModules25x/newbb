@@ -95,7 +95,13 @@ class Xmlrss
 
             $title         = $this->cleanup($title) . ' ' . $label;
             $pubdate       = $this->cleanup($pubdate);
-            $this->items[] = array('title' => $title, 'link' => $link, 'guid' => $link, 'description' => $description, 'pubdate' => $pubdate);
+            $this->items[] = array(
+                'title'       => $title,
+                'link'        => $link,
+                'guid'        => $link,
+                'description' => $description,
+                'pubdate'     => $pubdate
+            );
         }
 
         return true;

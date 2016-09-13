@@ -10,7 +10,7 @@
 
 Forum module for [XOOPS CMS](http://xoops.org) for discussions
 
-[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xoops-newbb-module/) Tutorial: see [here](https://www.gitbook.com/book/xoops/xoops-newbb-module-tutorial/). 
+[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xoops-newbb-module/) Tutorial: see [GitBook](https://www.gitbook.com/book/xoops/xoops-newbb-module-tutorial/). 
 To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/newbb-tutorial)
 
 [![Translations on Transifex](http://xoops.org/images/translations-transifex-blue.svg)](https://www.transifex.com/xoops) 

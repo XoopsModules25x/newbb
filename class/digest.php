@@ -367,7 +367,9 @@ class NewbbDigestHandler extends XoopsObjectHandler
 
         foreach ($rows as $topic) {
             if ($topic['uid'] > 0) {
-                if (isset($users[$topic['uid']]) && is_object($users[$topic['uid']]) && $users[$topic['uid']]->isActive()) {
+                if (isset($users[$topic['uid']]) && is_object($users[$topic['uid']])
+                    && $users[$topic['uid']]->isActive()
+                ) {
                     $topic['uname'] = $users[$topic['uid']]->getVar('uname');
                 } else {
                     $topic['uname'] = $GLOBALS['xoopsConfig']['anonymous'];

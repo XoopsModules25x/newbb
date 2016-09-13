@@ -9,45 +9,39 @@
  * @package        module::newbb
  */
 
-$modversion['name']        = _MI_NEWBB_NAME;
-$modversion['version']     = 4.33;
-$modversion['description'] = _MI_NEWBB_DESC;
-$modversion['credits']     = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
-$modversion['author']      = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / xoops.org (irmtfan)';
-$modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image']       = 'assets/images/logo_module.png';
-$modversion['dirname']     = basename(__DIR__);
-
-$modversion['author_realname'] = 'NewBB Dev Team';
-$modversion['author_email']    = '';
-$modversion['status_version']  = '4.33';
-
-//about
-$modversion['module_status']       = 'RC12';
+$modversion['version']             = 4.33;
+$modversion['module_status']       = 'RC 13';
 $modversion['release_date']        = '2016/04/03';
+$modversion['name']                = _MI_NEWBB_NAME;
+$modversion['description']         = _MI_NEWBB_DESC;
+$modversion['credits']             = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
+$modversion['author']              = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / xoops.org (irmtfan)';
+$modversion['license']             = 'GNU GPL 2.0';
+$modversion['license_url']         = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['image']               = 'assets/images/logoModule.png';
+$modversion['dirname']             = basename(__DIR__);
+$modversion['author_realname']     = 'NewBB Dev Team';
+$modversion['author_email']        = '';
+$modversion['status_version']      = '4.33';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
+$modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql' => '5.0', 'mysqli' => '5.0');
 $modversion['system_menu']         = 1;
-
-$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses/moduleadmin';
-$modversion['sysicons16']     = 'Frameworks/moduleclasses/icons/16';
-$modversion['sysicons32']     = 'Frameworks/moduleclasses/icons/32';
-$modversion['modicons16']     = 'assets/images/icons/16';
-$modversion['modicons32']     = 'assets/images/icons/32';
-
-$modversion['warning'] = 'Only For XOOPS >= 2.5.0 ';
-
-$modversion['demo_site_url']     = 'http://xoops.org/newbb/';
-$modversion['demo_site_name']    = 'XOOPS Project';
-$modversion['support_site_url']  = 'http://xoops.org/newbb/';
-$modversion['support_site_name'] = 'XOOPS Project';
-$modversion['submit_feature']    = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
-$modversion['submit_bug']        = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
+$modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses/moduleadmin';
+$modversion['sysicons16']          = 'Frameworks/moduleclasses/icons/16';
+$modversion['sysicons32']          = 'Frameworks/moduleclasses/icons/32';
+$modversion['modicons16']          = 'assets/images/icons/16';
+$modversion['modicons32']          = 'assets/images/icons/32';
+$modversion['warning']             = 'Only For XOOPS >= 2.5.0 ';
+$modversion['demo_site_url']       = 'http://xoops.org/newbb/';
+$modversion['demo_site_name']      = 'XOOPS Project';
+$modversion['support_site_url']    = 'http://xoops.org/newbb/';
+$modversion['support_site_name']   = 'XOOPS Project';
+$modversion['submit_feature']      = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
+$modversion['submit_bug']          = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
 
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.ini.php');
 // Is performing module install/update?

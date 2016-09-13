@@ -29,8 +29,16 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      * @return text   $select_text
      */
 
-    function newbb_selectText($text, $queryarray, $selectstartlag = 100, $selectlength = 200, $striptags = true, $excludetags = '<br>', $start_trimmarker = '[...]', $end_trimmarker = '[...]')
-    {
+    function newbb_selectText(
+        $text,
+        $queryarray,
+        $selectstartlag = 100,
+        $selectlength = 200,
+        $striptags = true,
+        $excludetags = '<br>',
+        $start_trimmarker = '[...]',
+        $end_trimmarker = '[...]'
+    ) {
         $sanitized_text       = $striptags ? strip_tags($text, $excludetags) : $text;
         $queryarray           = newbb_str2array($queryarray);
         $text_i               = strtolower($sanitized_text);

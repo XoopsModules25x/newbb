@@ -24,15 +24,26 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param  CriteriaCompo $criteriaExtra
  * @return array
  */
-function newbb_search($queryarray, $andor, $limit, $offset, $userid, $forums = 0, $sortby = 0, $searchin = 'both', CriteriaCompo $criteriaExtra = null)
-{
+function newbb_search(
+    $queryarray,
+    $andor,
+    $limit,
+    $offset,
+    $userid,
+    $forums = 0,
+    $sortby = 0,
+    $searchin = 'both',
+    CriteriaCompo $criteriaExtra = null
+) {
     global $myts;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
         $GLOBALS['xoopsModuleConfig'] = newbbLoadConfig();
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
-    if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module']) && $GLOBALS['module']->getVar('dirname') === 'newbb') {
+    if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module'])
+        && $GLOBALS['module']->getVar('dirname') === 'newbb'
+    ) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');

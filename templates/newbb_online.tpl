@@ -4,7 +4,8 @@
         <strong><{$smarty.const._MD_USERS_ONLINE}> <{$online.num_total}>  <{$smarty.const._MD_BROWSING_FORUM}></strong>
     </div>
     <div class="odd" style="padding: 5px; line-height: 150%;">
-        [ <span class="online_admin"><{$smarty.const._MD_ADMINISTRATOR}></span> ] [ <span class="online_moderator"><{$smarty.const._MD_MODERATOR}></span> ]
+        [ <span class="online_admin"><{$smarty.const._MD_ADMINISTRATOR}></span> ] [ <span
+                class="online_moderator"><{$smarty.const._MD_MODERATOR}></span> ]
         <br><{$online.num_anonymous}> <{$smarty.const._MD_ANONYMOUS_USERS}>
         <{if $online.num_user}>
             <br>

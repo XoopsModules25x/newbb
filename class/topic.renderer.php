@@ -39,7 +39,18 @@ class NewbbTopicRenderer
     /**
      * query variables
      */
-    public $args = array('forum', 'uid', 'lastposter', 'type', 'status', 'mode', 'sort', 'order', 'start', 'since');// irmtfan add multi lastposter
+    public $args = array(
+        'forum',
+        'uid',
+        'lastposter',
+        'type',
+        'status',
+        'mode',
+        'sort',
+        'order',
+        'start',
+        'since'
+    );// irmtfan add multi lastposter
     public $vars = array();
 
     /**
@@ -376,7 +387,9 @@ class NewbbTopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbb_getSinceTime($val);
-                    if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1 && $GLOBALS['last_visit'] > $startdate) {
+                    if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1
+                        && $GLOBALS['last_visit'] > $startdate
+                    ) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
@@ -643,13 +656,13 @@ class NewbbTopicRenderer
         $sorts             = $this->getSort('', 'title');
         $selection['sort'] = "<select name='sort'>";
         foreach ($sorts as $sort => $title) {
-            $selection['sort'] .= "<option value='" . $sort . "' " . (($sort == $sort_selected) ? " selected='selected'" : '') . '>' . $title . '</option>';
+            $selection['sort'] .= "<option value='" . $sort . "' " . (($sort == $sort_selected) ? ' selected' : '') . '>' . $title . '</option>';
         }
         $selection['sort'] .= '</select>';
 
         $selection['order'] = "<select name='order'>";
-        $selection['order'] .= "<option value='0' " . (empty($this->vars['order']) ? " selected='selected'" : '') . '>' . _DESCENDING . '</option>';
-        $selection['order'] .= "<option value='1' " . (!empty($this->vars['order']) ? " selected='selected'" : '') . '>' . _ASCENDING . '</option>';
+        $selection['order'] .= "<option value='0' " . (empty($this->vars['order']) ? ' selected' : '') . '>' . _DESCENDING . '</option>';
+        $selection['order'] .= "<option value='1' " . (!empty($this->vars['order']) ? ' selected' : '') . '>' . _ASCENDING . '</option>';
         $selection['order'] .= '</select>';
 
         $since              = isset($this->vars['since']) ? $this->vars['since'] : $this->config['since_default'];
@@ -997,8 +1010,8 @@ class NewbbTopicRenderer
                 }
             }
             // irmtfan - move here for both topics with and without pages - change topic_id to post_id
-            $topic_page_jump_icon =
-                "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon',
+                                                                                                                                                                     _MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
@@ -1086,8 +1099,13 @@ class NewbbTopicRenderer
 
         foreach (array_keys($topics) as $id) {
             $topics[$id]['topic_read']       = empty($topic_isRead[$id]) ? 0 : 1; // add topic-read/topic-new smarty variable
-            $topics[$id]['topic_forum_link'] =
-                '<a href="' . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $topics[$id]['topic_forum'] . '">' . $forum_list[$topics[$id]['topic_forum']]['forum_name'] . '</a>';
+            $topics[$id]['topic_forum_link'] = '<a href="'
+                                               . XOOPS_URL
+                                               . '/modules/newbb/viewforum.php?forum='
+                                               . $topics[$id]['topic_forum']
+                                               . '">'
+                                               . $forum_list[$topics[$id]['topic_forum']]['forum_name']
+                                               . '</a>';
 
             //irmtfan use topic_title_excerpt -- add else
             if (!empty($topics[$id]['type_id']) && isset($type_list[$topics[$id]['type_id']])) {
@@ -1096,8 +1114,7 @@ class NewbbTopicRenderer
                 $topics[$id]['topic_title'] = $topics[$id]['topic_title_excerpt'];
             }
             $topics[$id]['topic_poster']      = !empty($posters_name[$topics[$id]['topic_poster_uid']]) ? $posters_name[$topics[$id]['topic_poster_uid']] : $topics[$id]['topic_poster_name'];
-            $topics[$id]['topic_last_poster'] =
-                !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
+            $topics[$id]['topic_last_poster'] = !empty($posters_name[$topics[$id]['topic_last_poster_uid']]) ? $posters_name[$topics[$id]['topic_last_poster_uid']] : $topics[$id]['topic_last_poster_name'];
             // ------------------------------------------------------
             // START irmtfan remove hardcodes from topic_folder smarty
             // topic_folder: priority: newhot -> hot/new -> regular

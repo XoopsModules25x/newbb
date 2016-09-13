@@ -54,8 +54,10 @@
     <div class="icon_right" id="admin">
         <{if $mode gt 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin - action="topicmanager.php" => action="action.post.php" -->
-        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+        <form name="form_posts_admin" action="action.post.php" method="POST"
+              onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1"
+                                           onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <!-- irmtfan mistype mode => op  -->
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
@@ -68,13 +70,17 @@
             </select>
             <input type="hidden" name="topic_id" value="<{$topic_id}>"/>
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self"
+               title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
@@ -97,15 +103,15 @@
 
 <div style="padding: 5px;">
     <!-- irmtfan hardcode removed style="float: left; text-align:left;"" -->
-<span class="icon_left">
+    <span class="icon_left">
         <!-- irmtfan correct prev and next icons -->
 <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_BOTTOM}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
-    &nbsp;<a
-            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
+        &nbsp;<a
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
 </span>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;"" -->
-<span class="icon_right">
+    <span class="icon_right">
 <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </span>
 </div>
@@ -114,7 +120,8 @@
 
 <div>
     <div class="dropdown">
-        <select name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
+        <select name="topicoption" id="topicoption"
+                onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
             <{if $viewer_level gt 1}>
                 <{foreachq item=act from=$admin_actions}>
@@ -155,7 +162,8 @@
         <{if $mode lte 1}>
             <form id="search-topic" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
                 <fieldset>
-                    <input name="term" id="term" type="text" size="15" value="<{$smarty.const._MD_SEARCHTOPIC}>..." onBlur="if(this.value=='') this.value='<{$smarty.const._MD_SEARCHTOPIC}>...'"
+                    <input name="term" id="term" type="text" size="15" value="<{$smarty.const._MD_SEARCHTOPIC}>..."
+                           onBlur="if(this.value=='') this.value='<{$smarty.const._MD_SEARCHTOPIC}>...'"
                            onFocus="if(this.value =='<{$smarty.const._MD_SEARCHTOPIC}>...' ) this.value=''"/>
                     <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
                     <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
@@ -171,7 +179,8 @@
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
     <div class="icon_right">
-        <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>
@@ -221,14 +230,16 @@
 <div>
     <div class="left">
         <!-- irmtfan correct prev and next icons add up-->
-        <a id="threadbottom"></a><{$p_up}><a href="#threadtop"><{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
+        <a id="threadbottom"></a><{$p_up}><a href="#threadtop"><{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>
+        &nbsp;<a
                 href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
         &nbsp;<a
                 href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;"" -->
     <div class="icon_right">
-        <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>

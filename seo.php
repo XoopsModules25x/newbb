@@ -1,6 +1,6 @@
 <?php
 /*
- * 
+ *
  * Module: newbbss
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
@@ -59,7 +59,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
             $_GET['topic_id']       = $seoArg;
             break;
     }
-    include($seoMap[$seoOp]);
+    include $seoMap[$seoOp];
 
 } else {
     $last = $seoOp . '/' . $seoArg;

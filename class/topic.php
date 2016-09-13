@@ -248,7 +248,9 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         }
 
         $newbbConfig = newbbLoadConfig();
-        if (!empty($newbbConfig['do_tag']) && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
+        if (!empty($newbbConfig['do_tag'])
+            && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')
+        ) {
             if ($tag_handler = tag_getTagHandler()) {
                 $tag_handler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }

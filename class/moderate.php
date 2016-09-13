@@ -102,8 +102,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         }
         $forumCriteria   = empty($forum) ? 'forum_id=0' : 'forum_id=0 OR forum_id=' . (int)$forum;
         $expire_criteria = 'mod_end > ' . time();
-        $sql             =
-            sprintf('SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria, $expire_criteria);
+        $sql             = sprintf('SELECT COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) AND (%s)', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $forumCriteria,
+                                   $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -146,8 +146,8 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
             $ip_criteria = '1=1';
         }
         $expire_criteria = 'mod_end > ' . time();
-        $sql             =
-            sprintf('SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria, $expire_criteria);
+        $sql             = sprintf('SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria,
+                                   $expire_criteria);
         if (!$result = $this->db->query($sql)) {
             return $forums[$uid][$ip] = array();
         }

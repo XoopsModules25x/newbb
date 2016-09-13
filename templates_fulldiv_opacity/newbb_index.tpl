@@ -11,26 +11,35 @@
     <div class="forum_stats">
         <div class="forum_stats_col left floatleft">
             <{$smarty.const._MD_TOPIC}>:
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_topic}>(
                     <span style="color:red;"><b><{$wait_new_topic}></b></span>
                     ) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_topic}>(
                     <span style="color:red;"><b><{$delete_topic}></b></span>
                     ) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a><br>
             <{$smarty.const._MD_POST2}>:
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{if $wait_new_post}>(
                     <span style="color:red;"><b><{$wait_new_post}></b></span>
                     ) <{/if}><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_post}>(
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{if $delete_post}>(
                     <span style="color:red;"><b><{$delete_post}></b></span>
                     ) <{/if}><{$smarty.const._MD_TYPE_DELETED}></a>
         </div>
         <div class="forum_stats_col right floatright">
-            <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
-            <br><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_ADMINCP}>"><{$smarty.const._MD_ADMINCP}></a>
+            <{if $report_post}><a
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
+            <br><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self"
+                   title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self"
+               title="<{$smarty.const._MD_ADMINCP}>"><{$smarty.const._MD_ADMINCP}></a>
         </div>
         <div class="clear"></div>
     </div>
@@ -59,7 +68,8 @@
         </div>
         <{if $category.cat_sponsor}>
             <div class="floatright">
-                <span class="desc"><a href="<{$category.cat_sponsor.link}>" title="<{$category.cat_sponsor.title}>" target="_blank"><{$category.cat_sponsor.title}></a></span>
+                <span class="desc"><a href="<{$category.cat_sponsor.link}>" title="<{$category.cat_sponsor.title}>"
+                                      target="_blank"><{$category.cat_sponsor.title}></a></span>
             </div>
         <{/if}>
         <div class="clear"></div>
@@ -80,10 +90,12 @@
                     <div class="forum_folder even <{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new<{/if}> align_center"><{$forum.forum_folder}></div>
                     <div class="forum_name left odd">
                         <div class="index_forum">
-    <span class="item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
+    <span class="item"><a
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
         <{if $rss_enable}>
             (
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank" title="RSS feed">RSS</a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank"
+               title="RSS feed">RSS</a>
             )
         <{/if}>
         <br><{$forum.forum_desc}>
@@ -97,18 +109,23 @@
                         <{if $forum.subforum && $subforum_display == "collapse"}>
                             <div class="left"><{$smarty.const._MD_SUBFORUMS}>&nbsp;<{$img_subforum}>&nbsp;
                                 <{foreachq item=subforum from=$forum.subforum}>
-                                &nbsp;[<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
+                                &nbsp;[<a
+                                        href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                                 <{/foreach}>
                             </div>
                         <{/if}>
                         <div class="clear"></div>
                     </div>
                     <div class="forum_topics even align_center">
-                        <{if $stats[$forum.forum_id].topic.day}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
+                        <{if $stats[$forum.forum_id].topic.day}>
+                            <strong><{$stats[$forum.forum_id].topic.day}></strong>
+                            /<{/if}>
                         <{$forum.forum_topics}>
                     </div>
                     <div class="forum_posts odd align_center">
-                        <{if $stats[$forum.forum_id].post.day}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
+                        <{if $stats[$forum.forum_id].post.day}>
+                            <strong><{$stats[$forum.forum_id].post.day}></strong>
+                            /<{/if}>
                         <{$forum.forum_posts}>
                     </div>
                     <div class="forum_lastpost even right">
@@ -145,10 +162,12 @@
                             <div class="subforum_name left">
                                 <div class="forum_folder even <{if $subforum.forum_read eq 1 }>forum-read<{else}>forum-new<{/if}> floatleft"><{$subforum.forum_folder}></div>
                                 <div class="index_forum odd _col_end">
-<span class="item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><strong><{$subforum.forum_name}></strong></a>
+<span class="item"><a
+            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><strong><{$subforum.forum_name}></strong></a>
     <{if $rss_enable}>
         (
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$subforum.forum_id}>" target="_blank" title="RSS feed">RSS</a>
+        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$subforum.forum_id}>" target="_blank"
+           title="RSS feed">RSS</a>
         )
     <{/if}>
     <br><{$subforum.forum_desc}>
@@ -162,11 +181,15 @@
                                 <div class="clear"></div>
                             </div>
                             <div class="forum_topics even">
-                                <{if $stats[$subforum.forum_id].topic.day}><strong><{$stats[$subforum.forum_id].topic.day}></strong>/<{/if}>
+                                <{if $stats[$subforum.forum_id].topic.day}>
+                                    <strong><{$stats[$subforum.forum_id].topic.day}></strong>
+                                    /<{/if}>
                                 <{$subforum.forum_topics}>
                             </div>
                             <div class="forum_posts odd">
-                                <{if $stats[$subforum.forum_id].post.day}><strong><{$stats[$subforum.forum_id].post.day}></strong>/<{/if}>
+                                <{if $stats[$subforum.forum_id].post.day}>
+                                    <strong><{$stats[$subforum.forum_id].post.day}></strong>
+                                    /<{/if}>
                                 <{$subforum.forum_posts}>
                             </div>
                             <div class="forum_lastpost even right">
@@ -174,7 +197,8 @@
                                     <{$subforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$subforum.forum_lastpost_user}>
                                     <br>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$subforum.forum_lastpost_id}>">
-                                        <{$subforum.forum_lastpost_subject}>&nbsp;&nbsp;<{$subforum.forum_lastpost_icon}>
+                                        <{$subforum.forum_lastpost_subject}>
+                                        &nbsp;&nbsp;<{$subforum.forum_lastpost_icon}>
                                     </a>
                                 <{else}>
                                     <{$smarty.const._AM_NEWBB_NOTOPIC}>
@@ -234,11 +258,15 @@
                 <{$currenttime}><br>
                 <{$lastvisit}><br>
                 <{$smarty.const._MD_TOTALTOPICSC}>
-                <strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_ALL}>"><{$stats[0].topic.total}></a></strong>
-                | <{$smarty.const._MD_TOTALPOSTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_ALLPOSTS}>"><{$stats[0].post.total}></a></strong>
+                <strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php"
+                           title="<{$smarty.const._MD_ALL}>"><{$stats[0].topic.total}></a></strong>
+                | <{$smarty.const._MD_TOTALPOSTSC}><strong><a
+                            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php"
+                            title="<{$smarty.const._MD_ALLPOSTS}>"><{$stats[0].post.total}></a></strong>
                 <{if $stats[0].digest.total}>
-                    | <{$smarty.const._MD_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest"
-                                                                    title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
+                    | <{$smarty.const._MD_TOTALDIGESTSC}><strong><a
+                            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest"
+                            title="<{$smarty.const._MD_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
                 <{/if}>
                 <{if $userstats}>
                     <br>
@@ -249,13 +277,16 @@
                 <{/if}>
             </div>
             <div class="forum_stats_col odd right floatright">
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new" title="<{$smarty.const._MD_VIEW_NEWPOSTS}>"><{$smarty.const._MD_VIEW_NEWPOSTS}></a><br>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new"
+                   title="<{$smarty.const._MD_VIEW_NEWPOSTS}>"><{$smarty.const._MD_VIEW_NEWPOSTS}></a><br>
                 <{$smarty.const._MD_TODAYTOPICSC}><strong><{$stats[0].topic.day|default:0}></strong>
                 | <{$smarty.const._MD_TODAYPOSTSC}><strong><{$stats[0].post.day|default:0}></strong>
                 <{if $userstats}>
                     <br>
                     <br>
-                    <{$userstats.topics}> | <{$userstats.posts}><{if $userstats.digests}><br><{$userstats.digests}><{/if}>
+                    <{$userstats.topics}> | <{$userstats.posts}><{if $userstats.digests}>
+                    <br>
+                    <{$userstats.digests}><{/if}>
                 <{/if}>
             </div>
             <div class="clear"></div>

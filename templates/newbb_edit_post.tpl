@@ -49,13 +49,16 @@
     <br>
 <{/if}>
 
-<form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>" method="<{$form_post.method}>" <{$form_post.extra}> >
+<form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
+      method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreachq item=element from=$form_post.elements}>
         <{if $element.hidden != true}>
             <tr valign="top">
                 <td class="head">
-                    <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
+                    <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span
+                                class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span>
+                    </div>
                     <{if $element.description != ''}>
                         <div class="xoops-form-element-help"><{$element.description}></div>
                     <{/if}>

@@ -10,7 +10,8 @@
         </div>
         <{foreachq item=topic from=$block.topics}>
         <div class="align_center <{cycle values="even,odd"}>">
-            <div class="block_full_forum floatleft left"><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a></div>
+            <div class="block_full_forum floatleft left"><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a>
+            </div>
             <div class="block_full_topic floatleft left"><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></div>
             <div class="block_full_reply floatleft"><{$topic.replies}></div>
             <div class="block_full_view floatleft"><{$topic.views}></div>
@@ -28,7 +29,8 @@
         </div>
         <{foreachq item=topic from=$block.topics}>
         <div class="<{cycle values="even,odd"}>">
-            <div class="block_compact_topic floatleft left"><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></div>
+            <div class="block_compact_topic floatleft left"><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a>
+            </div>
             <div class="block_compact_reply floatleft left"><{$topic.replies}></div>
             <div class="_col_end right"><{$topic.time}><br><{$topic.topic_poster}>&nbsp;<a href="<{$topic.seo_url}>"><{$topic.topic_page_jump}></a></div>
             <div class="clear"></div>

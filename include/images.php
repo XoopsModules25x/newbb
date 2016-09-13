@@ -33,8 +33,7 @@ $forumImage['plus'] = $forumImage['minus'] =
 
 $forumImage['forum'] = $forumImage['forum_new'] =
 
-$forumImage['topic'] =
-$forumImage['topic_hot'] = $forumImage['topic_sticky'] = $forumImage['topic_digest'] = $forumImage['topic_locked'] = $forumImage['topic_new'] = $forumImage['topic_hot_new'] = $forumImage['topic_my'] =
+$forumImage['topic'] = $forumImage['topic_hot'] = $forumImage['topic_sticky'] = $forumImage['topic_digest'] = $forumImage['topic_locked'] = $forumImage['topic_new'] = $forumImage['topic_hot_new'] = $forumImage['topic_my'] =
 
 $forumImage['post'] =
 
@@ -46,8 +45,7 @@ $forumImage['document'] =
 
 $forumImage['previous'] = $forumImage['next'] = $forumImage['right'] = $forumImage['down'] = $forumImage['up'] = $forumImage['printer'] = $forumImage['new_forum'] =
 
-$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['googleplus'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] =
-$forumImage['digg'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['wong'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
+$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['googleplus'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['digg'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['wong'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
 
 for ($i = 1; $i <= 5; ++$i) {
     $forumImage['rate' . $i] = 'icon';

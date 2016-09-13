@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
@@ -156,9 +156,9 @@ switch ($op) {
         xoops_cp_header();
 
         echo '<fieldset>';
-        $imageLibs      = newbb_getImageLibs();
+        $imageLibs     = newbb_getImageLibs();
         $moduleHandler = xoops_getHandler('module');
-        $reportHandler  = xoops_getModuleHandler('report', 'newbb');
+        $reportHandler = xoops_getModuleHandler('report', 'newbb');
 
         $isOK = false;
         // START irmtfan add a poll_module config

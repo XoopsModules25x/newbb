@@ -23,7 +23,8 @@ foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint
 //$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
-$viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
+$viewmode = (XoopsRequest::getString('viewmode', '', 'GET')
+             && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (XoopsRequest::getString('viewmode', '', 'POST') ?: 'flat');
 
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -53,7 +54,9 @@ $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid
 
 $post_obj     =& $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
-if (($post_obj->checkIdentity() || $isadmin) && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')) {
+if (($post_obj->checkIdentity() || $isadmin)
+    && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')
+) {
 } else {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_DELNOTALLOWED);
 }
@@ -142,7 +145,14 @@ if ($ok) {
           </form>
           </div>';
     if ($isadmin) {
-        xoops_confirm(array('post_id' => $post_id, 'viewmode' => $viewmode, 'order' => $order, 'forum' => $forum, 'topic_id' => $topic_id, 'ok' => 99), 'delete.php', _MD_DEL_RELATED);
+        xoops_confirm(array(
+                          'post_id'  => $post_id,
+                          'viewmode' => $viewmode,
+                          'order'    => $order,
+                          'forum'    => $forum,
+                          'topic_id' => $topic_id,
+                          'ok'       => 99
+                      ), 'delete.php', _MD_DEL_RELATED);
     }
     include $GLOBALS['xoops']->path('footer.php');
 }

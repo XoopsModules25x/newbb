@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -71,7 +71,18 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum);
 }
 // irmtfan add restore to viewtopic
-$action_array = array('merge', 'delete', 'restore', 'move', 'lock', 'unlock', 'sticky', 'unsticky', 'digest', 'undigest');
+$action_array = array(
+    'merge',
+    'delete',
+    'restore',
+    'move',
+    'lock',
+    'unlock',
+    'sticky',
+    'unsticky',
+    'digest',
+    'undigest'
+);
 foreach ($action_array as $_action) {
     $action[$_action] = array(
         'name'   => $_action,
@@ -269,7 +280,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         $forum     = $topicHandler->get($topic_id, 'forum_id');
         $forum_new = !empty($newtopic) ? $topicHandler->get($newtopic, 'forum_id') : 0;
 
-        if (!$forumHandler->getPermission($forum, 'moderate') || (!empty($forum_new) && !$forumHandler->getPermission($forum_new, 'reply')) // The forum for the topic to be merged to
+        if (!$forumHandler->getPermission($forum, 'moderate')
+            || (!empty($forum_new)
+                && !$forumHandler->getPermission($forum_new, 'reply'))        // The forum for the topic to be merged to
             || (!empty($newforum) && !$forumHandler->getPermission($newforum, 'post')) // The forum to be moved to
         ) {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _NOPERM);

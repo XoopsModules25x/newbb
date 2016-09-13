@@ -307,7 +307,37 @@ function forum_seo_title($title = '', $withExt = true)
         '/%7E/', // ~
         "/\./" // .
     );
-    $rep_pat = array('-', '-', '', '', '', '-100', '', '-', '', '', '', '-', '', '', '', '-', '', '', '-at-', '', '-', '', '-', '', '-', '', '-', '', '');
+    $rep_pat = array(
+        '-',
+        '-',
+        '',
+        '',
+        '',
+        '-100',
+        '',
+        '-',
+        '',
+        '',
+        '',
+        '-',
+        '',
+        '',
+        '',
+        '-',
+        '',
+        '',
+        '-at-',
+        '',
+        '-',
+        '',
+        '-',
+        '',
+        '-',
+        '',
+        '-',
+        '',
+        ''
+    );
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     // Transformation des caractères accentués
@@ -338,7 +368,32 @@ function forum_seo_title($title = '', $withExt = true)
         '/%E3%A4/', //
         '/%E3%9F/' //
     );
-    $rep_pat = array('-', 'e', 'e', 'e', 'e', 'c', 'a', 'a', 'a', 'i', 'i', 'u', 'u', 'u', 'o', 'o', 'ue', 'oe', 'ae', 'ue', 'ss', 'oe', 'ae', 'ss');
+    $rep_pat = array(
+        '-',
+        'e',
+        'e',
+        'e',
+        'e',
+        'c',
+        'a',
+        'a',
+        'a',
+        'i',
+        'i',
+        'u',
+        'u',
+        'u',
+        'o',
+        'o',
+        'ue',
+        'oe',
+        'ae',
+        'ue',
+        'ss',
+        'oe',
+        'ae',
+        'ss'
+    );
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     /*$string = str_replace(' ', '-', $title);

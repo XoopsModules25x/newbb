@@ -45,11 +45,11 @@
         <div class="<{$block_topic}> floatleft left">
             <{if $block.headers.approve}>
                 <{if $topic.approve eq 1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=active#admin" target="_self"
-                                             title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a><{/if}>
+                    title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a><{/if}>
                 <{if $topic.approve eq 0}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=pending#admin" target="_self"
-                                             title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a><{/if}>
+                    title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a><{/if}>
                 <{if $topic.approve eq -1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=deleted#admin" target="_self"
-                                              title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a><{/if}>
+                    title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a><{/if}>
                 <br>
             <{/if}>
             <{if $block.headers.read}><{$topic.topic_folder}><{/if}>

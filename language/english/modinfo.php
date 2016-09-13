@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) {
     return;
@@ -253,4 +253,3 @@ define('_MI_USERATTACH_ENABLE', 'Display attachments only for registered users')
 define('_MI_USERATTACH_DESC', 'shows attachments in the forum only after logging in.');
 // 4.3
 define('_MI_NEWBB_BLOCK_LIST_TOPIC', 'Render a list of topics');// irmtfan
-

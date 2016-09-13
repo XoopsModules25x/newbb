@@ -31,4 +31,3 @@ $uploadFolders = array(
 //$copyFiles = array(
 //    NEWBB_UPLOAD_PATH,
 //    NEWBB_UPLOAD_PATH . '/thumbs');
-

@@ -11,7 +11,9 @@
 
 global $xoopsModule, $myts, $xoopsUser, $forum_obj;
 
-if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)) {
+if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($GLOBALS['xoopsUser'])
+    || !is_object($xoopsModule)
+) {
     return;
 }
 
@@ -116,8 +118,15 @@ $post_id = $postHandler->insert($post_obj);
 if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags                = array();
     $tags['THREAD_NAME'] = $subject;
-    $tags['THREAD_URL']  =
-        XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;
+    $tags['THREAD_URL']  = XOOPS_URL
+                           . '/modules/'
+                           . $xoopsModule->getVar('dirname')
+                           . '/viewtopic.php?post_id='
+                           . $post_id
+                           . '&amp;topic_id='
+                           . $post_obj->getVar('topic_id')
+                           . '&amp;forum='
+                           . $forum_id;
     $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post_id;
     include_once __DIR__ . '/include/notification.inc.php';
     $forum_info          = newbb_notify_iteminfo('forum', $forum_id);

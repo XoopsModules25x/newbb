@@ -44,12 +44,14 @@
     <br>
 <{/if}>
 
-<form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>" method="<{$form_post.method}>" <{$form_post.extra}> >
+<form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
+      method="<{$form_post.method}>" <{$form_post.extra}> >
     <div class='outer'>
         <{foreachq item=element from=$form_post.elements}>
         <{if $element.hidden != true}>
             <div class="edit_col1 head floatleft">
-                <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
+                <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span
+                            class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
                 <{if $element.description != ''}>
                     <div class="xoops-form-element-help"><{$element.description}></div>
                 <{/if}>

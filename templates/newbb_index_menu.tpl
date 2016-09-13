@@ -1,9 +1,10 @@
 <select
         name="mainoption" id="mainoption"
-        onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}">
+        onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
     <option value=""><{$smarty.const._MD_MAINFORUMOPT}></option>
     <option value="<{$mark_read}>"><{$smarty.const._MD_MARK_ALL_FORUMS}>&nbsp;<{$smarty.const._MD_MARK_READ}></option>
-    <option value="<{$mark_unread}>"><{$smarty.const._MD_MARK_ALL_FORUMS}>&nbsp;<{$smarty.const._MD_MARK_UNREAD}></option>
+    <option value="<{$mark_unread}>"><{$smarty.const._MD_MARK_ALL_FORUMS}>
+        &nbsp;<{$smarty.const._MD_MARK_UNREAD}></option>
     <option value="">--------</option>
     <option value="<{$post_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_ALLPOSTS}></option>
     <option value="<{$newpost_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_NEWPOSTS}></option>

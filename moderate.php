@@ -22,10 +22,13 @@ $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
 $moderateHandler  = xoops_getModuleHandler('moderate', 'newbb');
 
 if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expire', 0, 'POST')) {
-    if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) {
+    if (XoopsRequest::getString('ip', '', 'POST')
+        && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))
+    ) {
         $_POST['ip'] = '';
     }
-    if ((XoopsRequest::getInt('uid', 0, 'POST') && $moderateHandler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
+    if ((XoopsRequest::getInt('uid', 0, 'POST')
+         && $moderateHandler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
         || (XoopsRequest::getString('ip', '', 'POST')
             && $moderateHandler->getLatest(XoopsRequest::getString('ip', '', 'POST'), false) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
         || (!XoopsRequest::getInt('uid', 0, 'POST') && !XoopsRequest::getString('ip', '', 'POST'))
@@ -180,13 +183,14 @@ if (!empty($moderate_count)) {
                     </td>
                 <td width="5%" align="center" nowrap="nowrap">
                     '
-             . (($is_administrator || $moderate_objs[$id]->getVar('forum_id') == $forum_id) ? '<a href="moderate.php?forum='
-                                                                                              . $forum_id
-                                                                                              . '&amp;del='
-                                                                                              . $moderate_objs[$id]->getVar('mod_id')
-                                                                                              . '">'
-                                                                                              . _DELETE
-                                                                                              . '</a>' : ' ')
+             . (($is_administrator
+                 || $moderate_objs[$id]->getVar('forum_id') == $forum_id) ? '<a href="moderate.php?forum='
+                                                                            . $forum_id
+                                                                            . '&amp;del='
+                                                                            . $moderate_objs[$id]->getVar('mod_id')
+                                                                            . '">'
+                                                                            . _DELETE
+                                                                            . '</a>' : ' ')
              . '
                     </td>
             </tr>

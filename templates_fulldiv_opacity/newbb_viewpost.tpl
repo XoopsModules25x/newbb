@@ -25,8 +25,10 @@
     <div class="icon_right" id="admin">
         <{if $mode gt 1}>
         <!-- START admin form -->
-        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+        <form name="form_posts_admin" action="action.post.php" method="POST"
+              onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1"
+                                           onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
@@ -38,13 +40,17 @@
             </select>
             <input type="hidden" name="uid" value="<{$uid}>"/> |
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self"
+               title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin" target="_self"
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin"
+               target="_self"
                title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
@@ -69,7 +75,8 @@
             <option value="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREPLIED}></option>
             <option value="<{$unread_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_UNREAD}></option>
         </select>
-        <select name="viewmode" id="viewmode" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.document.location=this.options[this.selectedIndex].value;}">
+        <select name="viewmode" id="viewmode" class="menu"
+                onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
             <{foreachq item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
@@ -103,7 +110,8 @@
 <br>
 <div>
     <div class="icon_left">
-        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_TOP}>" title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>
+        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_TOP}>"
+                                    title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>
     </div>
     <div class="pagenav">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
