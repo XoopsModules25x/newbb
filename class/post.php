@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -205,7 +205,7 @@ class Post extends XoopsObject
         if (is_array($attachments) && count($attachments) > 0) {
             $iconHandler = newbbGetIconHandler();
             $mime_path   = $iconHandler->getPath('mime');
-            include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/include/functions.image.php');
+            include_once dirname(__DIR__) . '/include/functions.image.php';
             $image_extensions = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // need improve !!!
             $post_attachment .= '<br /><strong>' . _MD_ATTACHMENT . '</strong>:';
             $post_attachment .= '<br /><hr size="1" noshade="noshade" /><br />';
