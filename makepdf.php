@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -95,12 +95,12 @@ $GLOBALS['xoopsOption']['pdf_cache'] = 0;
 $pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
 $pdf_data['title']  = $myts->undoHtmlSpecialChars($post_data['subject']);
 $content            = '';
-$content .= '<b>' . $pdf_data['title'] . '</b><br /><br />';
-$content .= _MD_AUTHORC . ' ' . $pdf_data['author'] . '<br />';
-$content .= _MD_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br /><br /><br />';
-$content .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br />';
-//$content .= $post_edit . '<br />'; //reserve for future versions to display edit records
-$pdf_data['content']        = str_replace('[pagebreak]', '<br />', $content);
+$content .= '<b>' . $pdf_data['title'] . '</b><br><br>';
+$content .= _MD_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
+$content .= _MD_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
+$content .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
+//$content .= $post_edit . '<br>'; //reserve for future versions to display edit records
+$pdf_data['content']        = str_replace('[pagebreak]', '<br>', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');
 $pdf_data['forum_title']    = $pf_title . $viewtopic_forum->getVar('forum_name');
 $pdf_data['cat_title']      = $viewtopic_cat->getVar('cat_title');
@@ -119,13 +119,13 @@ if (function_exists('easiestml')) {
 }
 // END irmtfan to implement Xlanguage by phppp(DJ)
 
-require_once(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php');
+require_once XOOPS_PATH . '/vendor/tcpdf/tcpdf.php';
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // load $localLanguageOptions array with language specific definitions and apply
 if (is_file(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
-    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php');
+    require_once XOOPS_PATH . '/vendor/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php';
 } else {
-    require_once(XOOPS_PATH . '/vendor/tcpdf/config/lang/english.php');
+    require_once XOOPS_PATH . '/vendor/tcpdf/config/lang/english.php';
 }
 $pdf->setLanguageArray($localLanguageOptions);
 

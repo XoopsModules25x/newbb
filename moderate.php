@@ -22,10 +22,17 @@ $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
 $moderateHandler  = xoops_getModuleHandler('moderate', 'newbb');
 
 if (XoopsRequest::getString('submit', '', 'POST') && XoopsRequest::getInt('expire', 0, 'POST')) {
-    if (XoopsRequest::getString('ip', '', 'POST') && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))) {
+    if (XoopsRequest::getString('ip', '', 'POST')
+        && !preg_match("/^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/", XoopsRequest::getString('ip', '', 'POST'))
+    ) {
         $_POST['ip'] = '';
     }
-    if ((XoopsRequest::getInt('uid', 0, 'POST') && $moderateHandler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24)) || (XoopsRequest::getString('ip', '', 'POST') && $moderateHandler->getLatest(XoopsRequest::getString('ip', '', 'POST'), false) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24)) || (!XoopsRequest::getInt('uid', 0, 'POST') && !XoopsRequest::getString('ip', '', 'POST'))) {
+    if ((XoopsRequest::getInt('uid', 0, 'POST')
+         && $moderateHandler->getLatest(XoopsRequest::getInt('uid', 0, 'POST')) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
+        || (XoopsRequest::getString('ip', '', 'POST')
+            && $moderateHandler->getLatest(XoopsRequest::getString('ip', '', 'POST'), false) > (time() + XoopsRequest::getInt('expire', 0, 'POST') * 3600 * 24))
+        || (!XoopsRequest::getInt('uid', 0, 'POST') && !XoopsRequest::getString('ip', '', 'POST'))
+    ) {
     } else {
         $moderate_obj = $moderateHandler->create();
         $moderate_obj->setVar('uid', XoopsRequest::getInt('uid', 0, 'POST'));
@@ -104,12 +111,12 @@ echo '<div class="forum_intro odd">
             <a href="index.php">' . sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)) . '</a>
             <span class="delimiter">&raquo;</span>
             ' . _MD_SUSPEND_MANAGEMENT . '
-            <br /><br />
+            <br><br>
 
         </div>
         <div style="clear:both;"></div>
     </div>
-    <br />';
+    <br>';
 echo '<div style="padding: 10px; margin-left:auto; margin-right:auto; text-align:center;"><a href="' . $url . '"><h2>' . _MD_SUSPEND_MANAGEMENT . '</h2></a></div>';
 
 if (!empty($moderate_count)) {
@@ -150,22 +157,41 @@ if (!empty($moderate_count)) {
         echo '
             <tr>
                 <td width="5%" align="center" nowrap="nowrap">
-                    ' . ($moderate_objs[$id]->getVar('uid') ? (isset($users[$moderate_objs[$id]->getVar('uid')]) ? $users[$moderate_objs[$id]->getVar('uid')] : $moderate_objs[$id]->getVar('uid')) : $moderate_objs[$id]->getVar('ip')) . '
+                    '
+             . ($moderate_objs[$id]->getVar('uid') ? (isset($users[$moderate_objs[$id]->getVar('uid')]) ? $users[$moderate_objs[$id]->getVar('uid')] : $moderate_objs[$id]->getVar('uid')) : $moderate_objs[$id]->getVar('ip'))
+             . '
                     </td>
                 <td width="10%" align="center">
-                    ' . formatTimestamp($moderate_objs[$id]->getVar('mod_start')) . '
+                    '
+             . formatTimestamp($moderate_objs[$id]->getVar('mod_start'))
+             . '
                     </td>
                 <td width="10%" align="center">
-                    ' . formatTimestamp($moderate_objs[$id]->getVar('mod_end')) . '
+                    '
+             . formatTimestamp($moderate_objs[$id]->getVar('mod_end'))
+             . '
                     </td>
                 <td width="10%" align="center">
-                    ' . ($moderate_objs[$id]->getVar('forum_id') ? $forum_list[$moderate_objs[$id]->getVar('forum_id')]['forum_name'] /*irmtfan add forum name in moderate.php*/ : _ALL) . '
+                    '
+             . ($moderate_objs[$id]->getVar('forum_id') ? $forum_list[$moderate_objs[$id]->getVar('forum_id')]['forum_name'] /*irmtfan add forum name in moderate.php*/ : _ALL)
+             . '
                     </td>
                 <td align="left">
-                    ' . ($moderate_objs[$id]->getVar('mod_desc') ?: _NONE) . '
+                    '
+             . ($moderate_objs[$id]->getVar('mod_desc') ?: _NONE)
+             . '
                     </td>
                 <td width="5%" align="center" nowrap="nowrap">
-                    ' . (($is_administrator || $moderate_objs[$id]->getVar('forum_id') == $forum_id) ? '<a href="moderate.php?forum=' . $forum_id . '&amp;del=' . $moderate_objs[$id]->getVar('mod_id') . '">' . _DELETE . '</a>' : ' ') . '
+                    '
+             . (($is_administrator
+                 || $moderate_objs[$id]->getVar('forum_id') == $forum_id) ? '<a href="moderate.php?forum='
+                                                                            . $forum_id
+                                                                            . '&amp;del='
+                                                                            . $moderate_objs[$id]->getVar('mod_id')
+                                                                            . '">'
+                                                                            . _DELETE
+                                                                            . '</a>' : ' ')
+             . '
                     </td>
             </tr>
         ';
@@ -201,7 +227,7 @@ if (!empty($moderate_count)) {
         echo '<tr><td colspan="6">' . $nav->renderNav(4) . '</td></tr>';
     }
 
-    echo '</table><br /><br />';
+    echo '</table><br><br>';
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');

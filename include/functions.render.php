@@ -151,7 +151,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
             require_once dirname(__DIR__) . '/class/icon.php';
         }
 
-        $iconHandler           = NewbbIconHandler::instance();
+        $iconHandler           = NewbbIconHandler::getInstance();
         $iconHandler->template = $xoTheme->template;
         $iconHandler->init($GLOBALS['xoopsConfig']['language']);
 

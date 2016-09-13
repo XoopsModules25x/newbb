@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -113,8 +113,15 @@ if (!class_exists('NewbbObjectTree')) {
          *                                 node objects that should be used as the title for the options.
          * @internal param bool $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
          */
-        public function makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0, $extra = '')
-            //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
+        public function makeSelBox(
+            $name,
+            $fieldName,
+            $prefix = '-',
+            $selected = '',
+            $addEmptyOption = false,
+            $key = 0,
+            $extra = ''
+        ) //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
         {
             $ret = '<select name=' . $name . '>';
             if (!empty($addEmptyOption)) {

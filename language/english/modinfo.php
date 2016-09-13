@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) {
     return;
@@ -41,7 +41,8 @@ define('_MI_IMG_SET_DESC', 'Select the Image Set to use');
 define('_MI_THEMESET', 'Theme set');
 define('_MI_THEMESET_DESC', "Module-wide, select '' . _NONE . '' will use site-wide theme");
 define('_MI_DIR_ATTACHMENT', 'Attachments physical path.');
-define('_MI_DIR_ATTACHMENT_DESC', "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'");
+define('_MI_DIR_ATTACHMENT_DESC',
+       "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'");
 define('_MI_PATH_MAGICK', 'Path for ImageMagick');
 define('_MI_PATH_MAGICK_DESC', "Usually it is '/usr/bin/X11'. Leave it BLANK if you do not have ImageMagicK installed or for autodetecting.");
 define('_MI_SUBFORUM_DISPLAY', 'Display Mode of subforums on index page');
@@ -66,7 +67,8 @@ define('_MI_MAX_IMAGE_HEIGHT_DESC', 'Sets the maximum height of an uploaded imag
 define('_MI_SHOW_DIS', 'Show Disclaimer On');
 define('_MI_DISCLAIMER', 'Disclaimer');
 define('_MI_DISCLAIMER_DESC', 'Enter your Disclaimer that will be shown for the above selected option.');
-define('_MI_DISCLAIMER_TEXT', 'The forum contains a lot of posts with a lot of usefull information. <br /><br />In order to keep the number of double-posts to a minimum, we would like to ask you to use the forum search before posting your questions here.');
+define('_MI_DISCLAIMER_TEXT',
+       'The forum contains a lot of posts with a lot of usefull information. <br><br>In order to keep the number of double-posts to a minimum, we would like to ask you to use the forum search before posting your questions here.');
 define('_MI_NONE', 'None');
 define('_MI_POST', 'Post');
 define('_MI_REPLY', 'Reply');
@@ -77,7 +79,8 @@ define('_MI_NULL', 'disable');
 define('_MI_TEXT', 'text');
 define('_MI_GRAPHIC', 'graphic');
 define('_MI_USERLEVEL', 'HP/MP/EXP Level Mode');
-define('_MI_USERLEVEL_DESC', '<strong>HP</strong>  is determined by your average posts per day.<br /><strong>MP</strong>  is determined by your join date related to your post count.<br /><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.');
+define('_MI_USERLEVEL_DESC',
+       '<strong>HP</strong>  is determined by your average posts per day.<br><strong>MP</strong>  is determined by your join date related to your post count.<br><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.');
 define('_MI_RSS_ENABLE', 'Enable RSS Feed');
 define('_MI_RSS_ENABLE_DESC', 'Enable RSS Feed, edit options below for maximum Items and Description length');
 define('_MI_RSS_MAX_ITEMS', 'RSS Max. Items');
@@ -150,7 +153,7 @@ define('_MI_POSTSFORTHREAD_DESC', 'Flat mode will be used if post count exceeds 
 define('_MI_TOPICSPERPAGE', 'Topics per Page');
 define('_MI_TOPICSPERPAGE_DESC', 'The maximum number of topics that will be displayed per page');
 define('_MI_IMG_TYPE', 'Image Type');
-define('_MI_IMG_TYPE_DESC', 'Select the image type of buttons in the forum.<br />- png: for high speed server<br />- gif: for normal speed<br />- auto: gif for IE and png for other browsers');
+define('_MI_IMG_TYPE_DESC', 'Select the image type of buttons in the forum.<br>- png: for high speed server<br>- gif: for normal speed<br>- auto: gif for IE and png for other browsers');
 define('_MI_PNGFORIE_ENABLE', 'Enable PNG hack');
 define('_MI_PNGFORIE_ENABLE_DESC', 'The hack to allow PNG transparency attribute with IE');
 define('_MI_FORM_OPTIONS', 'Form Options');
@@ -219,7 +222,8 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', '
 define('_MI_NEWBB_ADMENU_GROUPMOD', 'Group moderate');
 define('_MI_SUBJECT_PREFIX', 'Add a prefix to the topic subject');
 define('_MI_SUBJECT_PREFIX_DESC', 'Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ', ' as the separator. NONE is no prefix.');
-define('_MI_SUBJECT_PREFIX_DEFAULT', "<span style='color:#00CC00;'> [solved] </span> <span style='color:#00CC00;'> [done] </span> <span style='color:#FF0000;'> [request] </span> , <span style='color:#FF0000;'> [bug report] </span> <span style='color:#FF0000;'> [unsolved] </span>");
+define('_MI_SUBJECT_PREFIX_DEFAULT',
+       "<span style='color:#00CC00;'> [solved] </span> <span style='color:#00CC00;'> [done] </span> <span style='color:#FF0000;'> [request] </span> , <span style='color:#FF0000;'> [bug report] </span> <span style='color:#FF0000;'> [unsolved] </span>");
 define('_MI_SUBJECT_PREFIX_LEVEL', 'Permissions for use of prefixes');
 define('_MI_SUBJECT_PREFIX_LEVEL_DESC', 'The group (s) select the prefixes to use it.');
 define('_MI_SPL_DISABLE', 'disabled');

@@ -16,7 +16,7 @@
             <td align="center"><{$topic.replies}></td>
             <td align="center"><{$topic.views}></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}></td>
         </tr>
     <{/foreach}>
 
@@ -30,7 +30,7 @@
             <!-- irmtfan remove hardcoded html in URLs  -->
             <td><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}></td>
         </tr>
     <{/foreach}>
 

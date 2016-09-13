@@ -10,26 +10,27 @@
     <{foreachq item=sforum from=$subforum}>
     <tr>
         <td class="even" align="center" valign="middle"><{$sforum.forum_folder}></td>
-        <td class="odd" onclick="window.location='<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>'"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>"><strong><{$sforum.forum_name}></strong></a><br/>
+        <td class="odd" onclick="window.location='<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>'">
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>"><strong><{$sforum.forum_name}></strong></a><br>
 
             <div id="index_forum">
                 <{$sforum.forum_desc}>
                 <{if $sforum.forum_moderators}>
-                    <br/>
+                    <br>
                     <span class="extra"><{$smarty.const._MD_MODERATOR}>:&nbsp;</span><{$sforum.forum_moderators}>
                 <{/if}>
             </div>
         </td>
         <td class="even" align="center" valign="middle">
             <{$sforum.forum_topics}>  <{$smarty.const._MD_TOPICS}>
-            <br/>
+            <br>
             <{$sforum.forum_posts}> <{$smarty.const._MD_POSTS}>
         </td>
         <!-- irmtfan hardcode removed align="right" -->
         <td class="odd" id="align_right" valign="middle">
             <{if $sforum.forum_lastpost_subject}>
                 <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_BY}> <{$sforum.forum_lastpost_user}>
-                <br/>
+                <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
                     <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
                     <!-- irmtfan removed icon_path -->

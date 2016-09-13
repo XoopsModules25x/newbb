@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -65,7 +65,8 @@ $uname                = XoopsRequest::getString('uname', XoopsRequest::getString
 // irmtfan add select parameters
 $selectstartlag = XoopsRequest::getInt('selectstartlag', 100, 'GET');
 $selectlength   = XoopsRequest::getInt('selectlength', 200, 'POST');
-$selecthtml     = XoopsRequest::getInt('selecthtml', '', 'GET') ? (XoopsRequest::getInt('selecthtml', '', 'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
+$selecthtml     = XoopsRequest::getInt('selecthtml', '', 'GET') ? (XoopsRequest::getInt('selecthtml', '',
+                                                                                        'GET') ? true : false) : true; // isset($_GET['selecthtml']) ? (!empty($_GET['selecthtml']) ? true : false) : true;
 
 $selectexclude = XoopsRequest::getString('selectexclude', '', 'GET');
 $selectexclude = newbb_str2array($selectexclude);
@@ -200,7 +201,9 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 $post_text        = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode('', $selectexclude)); // strip html tags = $selecthtml
                 $post_text_select = $post_text;
                 $post_text        = newbb_highlightText($post_text, $queries);
-            } elseif ('title' !== $searchin && !empty($selecthtml)) { // find if there is any query left after strip html tags
+            } elseif ('title' !== $searchin
+                      && !empty($selecthtml)
+            ) { // find if there is any query left after strip html tags
                 $post_text_select = newbb_selectText($row['post_text'], $queries, 100, 30000, true, implode('', $selectexclude)); // strip html tags = true
             }
             if ('text' !== $searchin) {
@@ -219,7 +222,8 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 'title'      => newbb_highlightText($row['title'], $queries),
                 'poster'     => $row['poster'],
                 'post_time'  => formatTimestamp($row['time'], 'm'),
-                'post_text'  => $post_text));
+                'post_text'  => $post_text
+            ));
         }
         // END irmtfan add show search post_text
         unset($results);
@@ -269,12 +273,12 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $search_info = _SR_KEYWORDS . ': ' . $search_info_keywords;
     if ($uname_required) {
         if ($search_info) {
-            $search_info .= '<br />';
+            $search_info .= '<br>';
         }
         $search_info .= _MD_USERNAME . ': ' . $myts->htmlSpecialChars($search_username);
     }
     // add num_results
-    $search_info .= '<br />' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
+    $search_info .= '<br>' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
     // if any result skip show the counter
     if (!empty($skipresults)) {
         $search_info .= ' - ' . sprintf(_SR_FOUND, $num_results - $skipresults);

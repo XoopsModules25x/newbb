@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -40,8 +40,8 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
      */
     function newbb_notify_iteminfo($category, $item_id)
     {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname('newbb');
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('newbb');
 
         if ($category === 'global') {
             $item['name'] = '';
@@ -67,7 +67,13 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
 
         if ($category === 'thread') {
             // Assume we have a valid topid id
-            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = ' . $item_id . ' limit 1';
+            $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM '
+                   . $GLOBALS['xoopsDB']->prefix('bb_topics')
+                   . ' t, '
+                   . $GLOBALS['xoopsDB']->prefix('bb_forums')
+                   . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = '
+                   . $item_id
+                   . ' limit 1';
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . 'index.php', 2, _MD_ERROROCCURED);
@@ -88,7 +94,15 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
             }
             $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
             $item['name'] = $result_array['subject'];
-            $item['url']  = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/viewtopic.php?forum= ' . $result_array['forum_id'] . '&amp;topic_id=' . $result_array['topic_id'] . '#forumpost' . $item_id;
+            $item['url']  = XOOPS_URL
+                            . '/modules/'
+                            . $module->getVar('dirname')
+                            . '/viewtopic.php?forum= '
+                            . $result_array['forum_id']
+                            . '&amp;topic_id='
+                            . $result_array['topic_id']
+                            . '#forumpost'
+                            . $item_id;
 
             return $item;
         }

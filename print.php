@@ -107,7 +107,7 @@ if (empty($isPost)) {
             <div style='width: 750px; border: 1px solid #000; padding: 20px;'>
             <div style='text-align: center; display: block; margin: 0 0 6px 0;'>
             <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' />
-            <br /><br /> ";
+            <br><br> ";
 
     $postsArray = $topicHandler->getAllPosts($topic_obj);
     foreach ($postsArray as $post) {
@@ -119,7 +119,7 @@ if (empty($isPost)) {
               <div align='center'>" . _POSTEDBY . '&nbsp;' . $post_data['author'] . '&nbsp;' . _ON . '&nbsp;' . formatTimestamp($post_data['date']) . "</div>
               <div style='text-align: center; display: block; padding-bottom: 12px; margin: 0 0 6px 0; border-bottom: 2px solid #ccc;'></div>
                <div>" . $post_data['text'] . "</div>
-              <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div><br />";
+              <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div><br>";
     }
     echo '<p>' . _MD_COMEFROM . '&nbsp;' . XOOPS_URL . '/newbb/viewtopic.php?forum=' . $forum_id . '&amp;topic_id=' . $topic_id . '</p>';
     echo '</div></div>';
@@ -135,5 +135,5 @@ if (empty($isPost)) {
             <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div>
             <p>" . _MD_COMEFROM . '&nbsp;' . $post_data['url'] . '</p>
             </div>
-            <br /><br /></body></html>';
+            <br><br></body></html>';
 }

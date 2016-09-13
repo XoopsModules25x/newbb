@@ -41,7 +41,9 @@ foreach (array('topic_id', 'rate', 'forum') as $var) {
 
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $topic_obj    = $topicHandler->get($topic_id);
-if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post') && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')) {
+if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post')
+    && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
+) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }
@@ -95,7 +97,7 @@ $finalrating = number_format($finalrating, 4);
 $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
 $GLOBALS['xoopsDB']->queryF($sql);
 
-$ratemessage = _MD_VOTEAPPRE . '<br />' . sprintf(_MD_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
+$ratemessage = _MD_VOTEAPPRE . '<br>' . sprintf(_MD_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
 redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 2, $ratemessage);
 // irmtfan enhance include footer.php
 include $GLOBALS['xoops']->path('footer.php');

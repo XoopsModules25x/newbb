@@ -18,12 +18,12 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{if $tagbar}>
     <div class="taglist">
         <{includeq file="db:tag_bar.tpl"}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 <{if $online}>
     <div class="online_block">
@@ -43,14 +43,16 @@
             &nbsp;<{$online.num_anonymous}> <{$smarty.const._MD_ANONYMOUS_USERS}>
         <{/if}>
     </div>
-    <br/>
+    <br>
 <{/if}>
 <{if $viewer_level gt 1}>
     <div class="icon_right" id="admin">
         <{if $mode gt 1}>
         <!-- START admin form -->
-        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+        <form name="form_posts_admin" action="action.post.php" method="POST"
+              onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1"
+                                           onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
@@ -62,18 +64,25 @@
             </select>
             <input type="hidden" name="topic_id" value="<{$topic_id}>"/>
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self"
+               title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
     <div class="clear"></div>
-    <br/>
+    <br>
 <{/if}>
 <{if $mode lte 1}>
-    <br/>
+    <br>
     <{if $topic_poll}>
         <{if $topic_pollresult}>
             <{includeq file="db:newbb_poll_results.tpl" poll=$poll}>
@@ -81,25 +90,27 @@
             <{includeq file="db:newbb_poll_view.tpl" poll=$poll}>
         <{/if}>
         <div class="clear"></div>
-        <br/>
+        <br>
     <{/if}>
 <{/if}>
 <div class="topic_top">
 <span class="icon_left">
 <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_BOTTOM}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-            href="viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
+            href="viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
+    &nbsp;<a
             href="viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
 </span>
-<span class="icon_right">
+    <span class="icon_right">
 <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </span>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <div>
     <div class="dropdown floatleft">
         <{if $viewer_level gt 1}>
-            <select name="topicoption" id="topicoption" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.document.location=this.options[this.selectedIndex].value;}">
+            <select name="topicoption" id="topicoption" class="menu"
+                    onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
                 <{foreachq item=act from=$admin_actions}>
                 <option value="<{$act.link}>"><{$act.name}></option>
@@ -114,7 +125,8 @@
             </select>
         <{/if}>
         <{if $rating_enable && $forum_post && $forum_reply}>
-            <select name="rate" id="rate" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
+            <select name="rate" id="rate"
+                    onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_RATE}></option>
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5"><{$smarty.const._MD_RATE5}></option>
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4"><{$smarty.const._MD_RATE4}></option>
@@ -123,7 +135,8 @@
                 <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1"><{$smarty.const._MD_RATE1}></option>
             </select>
         <{/if}>
-        <select name="viewmode" id="viewmode" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )	{ window.location=this.options[this.selectedIndex].value;}">
+        <select name="viewmode" id="viewmode" class="menu"
+                onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
             <{foreachq item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
@@ -133,7 +146,8 @@
         <{if $mode lte 1}>
             <form id="search-topic" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
                 <fieldset>
-                    <input name="term" id="term" type="text" size="15" value="<{$smarty.const._MD_SEARCHTOPIC}>..." onBlur="if(this.value=='') this.value='<{$smarty.const._MD_SEARCHTOPIC}>...'"
+                    <input name="term" id="term" type="text" size="15" value="<{$smarty.const._MD_SEARCHTOPIC}>..."
+                           onBlur="if(this.value=='') this.value='<{$smarty.const._MD_SEARCHTOPIC}>...'"
                            onFocus="if(this.value =='<{$smarty.const._MD_SEARCHTOPIC}>...' ) this.value=''"/>
                     <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
                     <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
@@ -152,16 +166,16 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 <{if $viewer_level gt 1 && $topic_status == 1}>
     <div class="resultMsg"><{$smarty.const._MD_TOPICLOCK}></div>
-    <br/>
+    <br>
 <{/if}>
 <{foreachq item=topic_post from=$topic_posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
-<br/>
-<br/>
+<br>
+<br>
 <{foreachelse}>
 <div class="topic_error"><{$smarty.const._MD_ERRORPOST}></div>
 <{/foreach}>
@@ -169,7 +183,7 @@
 <{if $mode gt 1}>
     </form>
 <{/if}>
-<br/>
+<br>
 <div class="forum_header">
     <div class="forum_title">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a>
@@ -188,12 +202,15 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div>
     <div class="icon_left">
-        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_TOP}>" title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-                href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
+        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_TOP}>"
+                                    title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>&nbsp;&nbsp;<{$previous}>
+        &nbsp;<a
+                href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>
+        &nbsp;<a
                 href="viewtopic.php?viewmode=flat&amp;order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEXTTOPIC}></a>
     </div>
     <div class="pagenav">
@@ -201,13 +218,13 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <div class="icon_left">
     <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{if $quickreply.show}>
     <div>
@@ -216,12 +233,12 @@
             <{$quickreply.displayImage}>
         </a>
     </div>
-    <br/>
+    <br>
     <div id="qr" class="toggle_<{$quickreply.style}>">
         <{$quickreply.form}>
     </div>
-    <br/>
-    <br/>
+    <br>
+    <br>
 <{/if}>
 
 <div>
@@ -238,15 +255,15 @@
             <input type="hidden" name="since" id="since" value="<{$forum_since}>"/>
             <input type="hidden" name="action" id="action" value="yes"/>
             <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
-        <br/>
+        <br>
         <{$forum_jumpbox}>
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{includeq file='db:newbb_notification_select.tpl'}>
 <!-- Add scroll js function to scroll down to current post -->
 <script type="text/javascript">

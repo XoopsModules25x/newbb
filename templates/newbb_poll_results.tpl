@@ -23,7 +23,7 @@
             <tr>
                 <td class="foot center" colspan="2">
                     <{$poll.totalVotes}>
-                    <br/>
+                    <br>
                     <{$poll.totalVoters}>
                 </td>
             </tr>

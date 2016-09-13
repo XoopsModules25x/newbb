@@ -78,8 +78,14 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
      * @param  int    $report_id
      * @return array
      */
-    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $report_id = 0)
-    {
+    public function getAllReports(
+        $forums = 0,
+        $order = 'ASC',
+        $perpage = 0,
+        &$start,
+        $report_result = 0,
+        $report_id = 0
+    ) {
         if ($order === 'DESC') {
             $operator_for_position = '>';
         } else {

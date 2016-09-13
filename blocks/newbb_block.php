@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -109,7 +109,26 @@ function b_newbb_show($options)
         }
     }
 
-    $query = 'SELECT' . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,' . '    f.forum_name,t.topic_status,' . '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p ON t.topic_last_post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,'
+             . '    f.forum_name,t.topic_status,'
+             . '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('bb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_posts')
+             . ' AS p ON t.topic_last_post_id=p.post_id'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
+             . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -278,7 +297,22 @@ function b_newbb_topic_show($options)
     $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $allowedForums) . ')';
     $approveCriteria = ' AND t.approved = 1';
 
-    $query = 'SELECT' . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,' . '    f.forum_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' AS t ' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,'
+             . '    f.forum_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('bb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('bb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
+             . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -434,7 +468,13 @@ function b_newbb_post_show($options)
     if ($options[0] === 'text') {
         $query .= '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr, pt.post_text,';
     }
-    $query .= '    f.forum_id, f.forum_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' AS p ' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' AS f ON f.forum_id=p.forum_id';
+    $query .= '    f.forum_id, f.forum_name'
+              . '    FROM '
+              . $GLOBALS['xoopsDB']->prefix('bb_posts')
+              . ' AS p '
+              . '    LEFT JOIN '
+              . $GLOBALS['xoopsDB']->prefix('bb_forums')
+              . ' AS f ON f.forum_id=p.forum_id';
     if ($options[0] === 'text') {
         $query .= '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id';
     }
@@ -636,28 +676,28 @@ function b_newbb_edit($options)
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
     if ($options[0] === 'time') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
     $form .= '</select>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
-    $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
+    $form .= '<br>' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
+    $form .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
+    $form .= '<br>' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
     if (1 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
     if (2 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
     if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
@@ -667,20 +707,20 @@ function b_newbb_edit($options)
     }
     $form .= ' />' . _NO;
 
-    $form .= '<br />' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
 
-    $form .= '<br /><br />' . _MB_NEWBB_FORUMLIST;
+    $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
+    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= ' selected';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
-    $form .= '</select><br />';
+    $form .= '</select><br>';
 
     return $form;
 }
@@ -695,48 +735,48 @@ function b_newbb_topic_edit($options)
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
     if ($options[0] === 'time') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
     $form .= "<option value='views'";
     if ($options[0] === 'views') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_VIEWS . '</option>';
     $form .= "<option value='replies'";
     if ($options[0] === 'replies') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_REPLIES . '</option>';
     $form .= "<option value='digest'";
     if ($options[0] === 'digest') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGEST . '</option>';
     $form .= "<option value='sticky'";
     if ($options[0] === 'sticky') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKY . '</option>';
     $form .= '</select>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
-    $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
+    $form .= '<br>' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
+    $form .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
+    $form .= '<br>' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
     if (1 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
     if (2 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
     if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
@@ -746,21 +786,21 @@ function b_newbb_topic_edit($options)
     }
     $form .= ' />' . _NO;
 
-    $form .= '<br />' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
 
-    $form .= '<br /><br />' . _MB_NEWBB_FORUMLIST;
+    $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
 
     $isAll = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
+    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
-    $form .= '</select><br />';
+    $form .= '</select><br>';
 
     return $form;
 }
@@ -775,33 +815,33 @@ function b_newbb_post_edit($options)
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='title'";
     if ($options[0] === 'title') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TITLE . '</option>';
     $form .= "<option value='text'";
     if ($options[0] === 'text') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TEXT . '</option>';
     $form .= '</select>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
-    $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
+    $form .= '<br>' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
+    $form .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
+    $form .= '<br>' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_FULL . "<input type='radio' name='options[3]' value='1'";
     if (1 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='2'";
     if (2 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
     if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
@@ -811,20 +851,20 @@ function b_newbb_post_edit($options)
     }
     $form .= ' />' . _NO;
 
-    $form .= '<br />' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TITLE_LENGTH . "<input type='text' name='options[5]' value='" . $options[5] . "' />";
 
-    $form .= '<br /><br />' . _MB_NEWBB_FORUMLIST;
+    $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
+    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
-    $form .= '</select><br />';
+    $form .= '</select><br>';
 
     return $form;
 }
@@ -839,39 +879,39 @@ function b_newbb_author_edit($options)
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='post'";
     if ($options[0] === 'post') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_POST . '</option>';
     $form .= "<option value='topic'";
     if ($options[0] === 'topic') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TOPIC . '</option>';
     $form .= "<option value='digest'";
     if ($options[0] === 'digest') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGESTS . '</option>';
     $form .= "<option value='sticky'";
     if ($options[0] === 'sticky') {
-        $form .= " selected='selected' ";
+        $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKYS . '</option>';
     $form .= '</select>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
-    $form .= '<br />' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
-    $form .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
-    $form .= '<br />' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
+    $form .= '<br>' . _MB_NEWBB_DISPLAY . "<input type='text' name='options[1]' value='" . $options[1] . "' />";
+    $form .= '<br>' . _MB_NEWBB_TIME . "<input type='text' name='options[2]' value='" . $options[2] . "' />";
+    $form .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;<small>' . _MB_NEWBB_TIME_DESC . '</small>';
+    $form .= '<br>' . _MB_NEWBB_DISPLAYMODE . "<input type='radio' name='options[3]' value='0'";
     if (0 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_COMPACT . "<input type='radio' name='options[3]' value='1'";
     if (1 == $options[3]) {
-        $form .= " checked='checked'";
+        $form .= ' checked';
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br />' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
     if (1 == $options[4]) {
         $form .= " checked=\"checked\"";
     }
@@ -881,18 +921,18 @@ function b_newbb_author_edit($options)
     }
     $form .= ' />' . _NO;
 
-    $form .= '<br /><br />' . _MB_NEWBB_FORUMLIST;
+    $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br />&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
+    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
     $form .= "<option value=\"0\" ";
     if ($isAll) {
         $form .= " selected=\"selected\"";
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
-    $form .= '</select><br />';
+    $form .= '</select><br>';
 
     return $form;
 }
@@ -905,9 +945,9 @@ function b_newbb_custom($options)
 {
     // if no newbb module block set, we have to include the language file
     if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
     } else {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
     }
 
     $options = explode('|', $options);
@@ -930,9 +970,9 @@ function b_newbb_custom_topic($options)
 
     // if no newbb module block set, we have to include the language file
     if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
     } else {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
     }
 
     $options = explode('|', $options);
@@ -955,9 +995,9 @@ function b_newbb_custom_post($options)
 
     // if no newbb module block set, we have to include the language file
     if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
     } else {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
     }
 
     $options = explode('|', $options);
@@ -979,9 +1019,9 @@ function b_newbb_custom_author($options)
 {
     // if no newbb module block set, we have to include the language file
     if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
     } else {
-        include_once($GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php'));
+        include_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
     }
 
     $options = explode('|', $options);

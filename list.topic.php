@@ -12,7 +12,7 @@
 include_once __DIR__ . '/header.php';
 
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
-$xoopsOption['template_main'] = 'newbb_viewall.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'newbb_viewall.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
@@ -28,7 +28,7 @@ mod_loadFunctions('render', 'newbb');
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
 require_once __DIR__ . '/./class/topic.renderer.php';
-$topic_renderer            = NewbbTopicRenderer::instance();
+$topic_renderer            = NewbbTopicRenderer::getInstance();
 $topic_renderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']);
 // irmtfan if list topic block is in the page then force to parse
 if (defined('LIST_TOPIC_DEFINED')) {

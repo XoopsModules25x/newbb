@@ -11,7 +11,7 @@
             <td><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a></td>
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}></td>
         </tr>
     <{/foreach}>
 
@@ -25,7 +25,7 @@
             <!-- irmtfan remove hardcoded html in URLs  -->
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}></td>
         </tr>
     <{/foreach}>
 

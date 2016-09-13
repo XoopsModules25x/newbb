@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -35,7 +35,7 @@ if (defined('NEWBB_FUNCTIONS_INI')) {
 }
 define('NEWBB_FUNCTIONS_INI', 1);
 
-include_once($GLOBALS['xoops']->path('Frameworks/art/functions.ini.php'));
+include_once $GLOBALS['xoops']->path('Frameworks/art/functions.ini.php');
 
 /**
  * @return bool
@@ -58,7 +58,9 @@ function &newbbLoadConfig()
     load_functions('config');
     $moduleConfig = mod_loadConfig('newbb');
     // irmtfan - change the read_mode = 2 (db) to read_mode = 1 (cookie) for anonymous users
-    if (!is_object($GLOBALS['xoopsUser']) && $moduleConfig['read_mode_db_to_cookie_for_anon'] && 2 == $moduleConfig['read_mode']) {
+    if (!is_object($GLOBALS['xoopsUser']) && $moduleConfig['read_mode_db_to_cookie_for_anon']
+        && 2 == $moduleConfig['read_mode']
+    ) {
         $moduleConfig['read_mode'] = 1;
     }
 
@@ -67,9 +69,9 @@ function &newbbLoadConfig()
 
 // Backword compatible
 /**
- * @param         $filename
- * @param  string $module
- * @param  string $default
+ * @param             $filename
+ * @param  string     $module
+ * @param  string     $default
  * @return bool|mixed
  */
 function newbb_load_lang_file($filename, $module = '', $default = 'english')
@@ -80,8 +82,8 @@ function newbb_load_lang_file($filename, $module = '', $default = 'english')
 
     $lang = $GLOBALS['xoopsConfig']['language'];
     $path = XOOPS_ROOT_PATH . ('' === $module ? '/' : "/modules/$module/") . 'language';
-    if (!($ret = @include_once("$path/$lang/$filename.php"))) {
-        $ret = @include_once("$path/$default/$filename.php");
+    if (!($ret = @include_once "$path/$lang/$filename.php")) {
+        $ret = @include_once "$path/$default/$filename.php";
     }
 
     return $ret;

@@ -14,9 +14,9 @@ if (!defined('XOOPS_XMLRPC')) {
     define('XOOPS_XMLRPC', 1);
 }
 ob_start();
-include_once('header.php');
+include_once 'header.php';
 if ($GLOBALS['xoopsModuleConfig']['email_digest'] == 0) {
-    echo '<br />Not set';
+    echo '<br>Not set';
 
     return false;
 }
@@ -24,4 +24,4 @@ $digestHandler = xoops_getModuleHandler('digest', 'newbb');
 $msg           = $digestHandler->process();
 $msg .= ob_get_contents();
 ob_end_clean();
-echo '<br />' . $msg;
+echo '<br>' . $msg;

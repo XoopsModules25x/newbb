@@ -76,7 +76,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         // irmtfan no option when no selected value
         $forum_selection_since .= '<option value="">--------</option>';
         foreach ($select_array as $since) {
-            $forum_selection_since .= '<option value="' . $since . '"' . (($selected == $since) ? ' selected="selected"' : '') . '>';
+            $forum_selection_since .= '<option value="' . $since . '"' . (($selected == $since) ? ' selected' : '') . '>';
             // START irmtfan functional since 0 and 365
             switch ($since) {
                 case 0:
@@ -96,8 +96,8 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
             $forum_selection_since .= '</option>';
         }
         // irmtfan remove hardcodes
-        //$forum_selection_since .= '<option value="365"'.(($selected === 365) ? ' selected="selected"' : '').'>'._MD_THELASTYEAR.'</option>';
-        //$forum_selection_since .= '<option value="0"'.(($selected === 0) ? ' selected="selected"' : '').'>'._MD_BEGINNING.'</option>';
+        //$forum_selection_since .= '<option value="365"'.(($selected === 365) ? ' selected' : '').'>'._MD_THELASTYEAR.'</option>';
+        //$forum_selection_since .= '<option value="0"'.(($selected === 0) ? ' selected' : '').'>'._MD_BEGINNING.'</option>';
         $forum_selection_since .= '</select>';
 
         return $forum_selection_since;

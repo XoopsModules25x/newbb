@@ -83,7 +83,6 @@ switch ($op) {
         echo '<fieldset>';
         echo $indexAdmin->addNavigation(basename(__FILE__));
 
-
         echo "<div style='padding: 8px;'>\n
         <div><strong>" . _AM_NEWBB_VOTE_USERAVG . ": </strong>$useravgrating</div>\n
         <div><strong>" . _AM_NEWBB_VOTE_TOTALRATE . ": </strong>$uservotes</div>\n
@@ -91,7 +90,7 @@ switch ($op) {
         <ul><li> " . _AM_NEWBB_VOTE_DELETEDSC . "</li></ul>
         <div>\n
         </fieldset>\n
-        <br />\n
+        <br>\n
 
         <table width='100%' cellspacing='1' cellpadding='2' class='outer'>\n
         <tr>\n

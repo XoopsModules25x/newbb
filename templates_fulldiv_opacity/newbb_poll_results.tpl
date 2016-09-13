@@ -18,8 +18,8 @@
         <{/foreach}>
     </div>
     <div class="foot">
-        <{$poll.totalVotes}><br /><{$poll.totalVoters}>
+        <{$poll.totalVotes}><br><{$poll.totalVoters}>
     </div>
 </div>
-<br />
+<br>
 <{/if}>

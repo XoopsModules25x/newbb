@@ -15,7 +15,7 @@
             <td align="center"><{$topic.replies}></td>
             <td align="center"><{$topic.views}></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}>&nbsp;<a href="<{$topic.seo_url}>"><{$topic.topic_page_jump}></a></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}>&nbsp;<a href="<{$topic.seo_url}>"><{$topic.topic_page_jump}></a></td>
         </tr>
     <{/foreach}>
 
@@ -31,7 +31,7 @@
             <td><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></td>
             <td align="center"><{$topic.replies}></td>
             <!-- irmtfan hardcode removed align="right" -->
-            <td class="align_right"><{$topic.time}><br/><{$topic.topic_poster}>&nbsp;<a href="<{$topic.seo_url}>"><{$topic.topic_page_jump}></a></td>
+            <td class="align_right"><{$topic.time}><br><{$topic.topic_poster}>&nbsp;<a href="<{$topic.seo_url}>"><{$topic.topic_page_jump}></a></td>
         </tr>
     <{/foreach}>
 

@@ -22,8 +22,10 @@
     <div class="right" id="admin">
         <{if $mode gt 1}>
         <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->
-        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+        <form name="form_posts_admin" action="action.post.php" method="POST"
+              onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1"
+                                           onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
@@ -35,30 +37,37 @@
             </select>
             <input type="hidden" name="uid" value="<{$uid}>"/> |
             <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self"
+               title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
             <{else}>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=pending#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a> |
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin"
+               target="_self"
+               title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
             <{/if}>
     </div>
 <{/if}>
 <div class="clear"></div>
-<br/>
+<br>
 
 <div style="padding: 5px;">
     <!-- irmtfan remove prev and next icons -->
     <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_BOTTOM}></a>
 </div>
 
-<br/>
+<br>
 <div>
     <div class="dropdown">
         <select
                 name="topicoption" id="topicoption"
                 class="menu"
                 onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
-                >
+        >
             <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
             <option value="<{$newpost_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_NEWPOSTS}></option>
             <option value="<{$all_link}>"><{$smarty.const._MD_VIEW}>&nbsp;<{$smarty.const._MD_ALL}></option>
@@ -73,7 +82,7 @@
                 name="viewmode" id="viewmode"
                 class="menu"
                 onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
-                >
+        >
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
             <{foreachq item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
@@ -82,12 +91,13 @@
     </div>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
     <div class="pagenav">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 
 <{foreachq item=post from=$posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$post}>
@@ -100,15 +110,15 @@
     <{/if}>
 </div>
 <div class="clear"></div>
-<br/>
-<br/>
+<br>
+<br>
 <{/foreach}>
 
 <{if $mode gt 1}>
     </form>
 <{/if}>
 
-<br/>
+<br>
 <div>
     <!-- irmtfan hardcode removed style="float: left; text-align:left;" -->
     <div class="icon_left">
@@ -117,13 +127,14 @@
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
     <div class="icon_right">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>
 
-<br/>
-<br/>
+<br>
+<br>
 <div>
     <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
     <div class="icon_left">
@@ -132,7 +143,7 @@
             <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
             <input type="hidden" name="action" id="action" value="yes"/>
             <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br/>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
         </form>
     </div>
@@ -142,9 +153,9 @@
     </div>
 </div>
 <div class="clear"></div>
-<br/>
+<br>
 <{if $online}>
-    <br/>
+    <br>
     <{includeq file="db:newbb_online.tpl"}>
 <{/if}>
 <{includeq file='db:newbb_notification_select.tpl'}>

@@ -1,5 +1,5 @@
 <?php
-// 
+//
 if (defined('NEWBB_ADMIN_DEFINED')) {
     return;
 } else {
@@ -85,22 +85,23 @@ define('_AM_NEWBB_DELETE', 'Delete');
 define('_AM_NEWBB_ADD', 'Add');
 define('_AM_NEWBB_MOVE', 'Move');
 define('_AM_NEWBB_ORDER', 'Order');
-define('_AM_NEWBB_TWDAFAP', 'Note: This will remove the forum and all posts in it.<br /><br />WARNING: Are you sure you want to delete this Forum?');
+define('_AM_NEWBB_TWDAFAP', 'Note: This will remove the forum and all posts in it.<br><br>WARNING: Are you sure you want to delete this Forum?');
 define('_AM_NEWBB_FORUMREMOVED', 'Forum Removed.');
 define('_AM_NEWBB_CREATENEWFORUM', 'Create a New Forum');
 define('_AM_NEWBB_EDITTHISFORUM', 'Editing Forum:');
 define('_AM_NEWBB_SET_FORUMORDER', 'Set Forum Position:');
 define('_AM_NEWBB_ALLOWPOLLS', 'Allow Polls:');
 define('_AM_NEWBB_ATTACHMENT_SIZE', 'Max Size in KB`s:');
-define('_AM_NEWBB_ALLOWED_EXTENSIONS', "Allowed Extensions:<span style='font-size: xx-small; font-weight: normal; display: block;'>'*' indicates no limititations.<br /> Extensions delimited by '|'</span>");
+define('_AM_NEWBB_ALLOWED_EXTENSIONS',
+       "Allowed Extensions:<span style='font-size: xx-small; font-weight: normal; display: block;'>'*' indicates no limititations.<br> Extensions delimited by '|'</span>");
 define('_AM_NEWBB_ALLOW_ATTACHMENTS', 'Allow Attachments:');
 define('_AM_NEWBB_ALLOWHTML', 'Allow HTML:');
 define('_AM_NEWBB_YES', 'Yes');
 define('_AM_NEWBB_NO', 'No');
 // irmtfan remove define('_AM_NEWBB_ALLOWSIGNATURES', "Allow Signatures:");
 define('_AM_NEWBB_HOTTOPICTHRESHOLD', 'Hot Topic Threshold:');
-//define('_AM_NEWBB_POSTPERPAGE', "Posts per Page:<span style='font-size: xx-small; font-weight: normal; display: block;'>(This is the number of posts<br /> per topic that will be<br /> displayed per page.)</span>");
-//define('_AM_NEWBB_TOPICPERFORUM', "Topics per Forum:<span style='font-size: xx-small; font-weight: normal; display: block;'>(This is the number of topics<br /> per forum that will be<br /> displayed per page.)</span>");
+//define('_AM_NEWBB_POSTPERPAGE', "Posts per Page:<span style='font-size: xx-small; font-weight: normal; display: block;'>(This is the number of posts<br> per topic that will be<br> displayed per page.)</span>");
+//define('_AM_NEWBB_TOPICPERFORUM', "Topics per Forum:<span style='font-size: xx-small; font-weight: normal; display: block;'>(This is the number of topics<br> per forum that will be<br> displayed per page.)</span>");
 //define('_AM_NEWBB_SHOWNAME', "Replace user's name with real name:");
 //define('_AM_NEWBB_SHOWICONSPANEL', "Show icons panel:");
 //define('_AM_NEWBB_SHOWSMILIESPANEL', "Show smilies panel:");
@@ -117,7 +118,8 @@ define('_AM_NEWBB_IMAGE', 'Image:');
 //define('_AM_NEWBB_SPONSORIMAGE', 'Sponsor Image:');
 define('_AM_NEWBB_SPONSORLINK', 'Sponsor Link:');
 define('_AM_NEWBB_DELCAT', 'Delete Category');
-define('_AM_NEWBB_WAYSYWTDTTAL', 'Note: This will NOT remove the forums under the category, you must do that via the Edit Forum section.<br /><br />WARNING: Are you sure you want to delete this Category?');
+define('_AM_NEWBB_WAYSYWTDTTAL',
+       'Note: This will NOT remove the forums under the category, you must do that via the Edit Forum section.<br><br>WARNING: Are you sure you want to delete this Category?');
 //%%%%%%        File Name  admin_forums.php           %%%%%
 define('_AM_NEWBB_FORUMNAME', 'Forum Name:');
 define('_AM_NEWBB_FORUMDESCRIPTION', 'Forum Description:');
@@ -135,7 +137,8 @@ define('_AM_NEWBB_ACCESSLEVEL', 'Global Access Level:');
 define('_AM_NEWBB_CATEGORY1', 'Category');
 define('_AM_NEWBB_FORUMUPDATE', 'Forum Settings Updated');
 define('_AM_NEWBB_FORUM_ERROR', 'ERROR: Forum Setting Error');
-define('_AM_NEWBB_CLICKBELOWSYNC', 'Clicking the button below will sync up your forums and topics pages with the correct data from the database. Use this section whenever you notice flaws in the topics and forums lists.');
+define('_AM_NEWBB_CLICKBELOWSYNC',
+       'Clicking the button below will sync up your forums and topics pages with the correct data from the database. Use this section whenever you notice flaws in the topics and forums lists.');
 define('_AM_NEWBB_SYNCHING', 'Synchronizing forum index and topics (This may take a while)');
 define('_AM_NEWBB_CATEGORYDELETED', 'Category deleted.');
 define('_AM_NEWBB_MOVE2CAT', 'Move to category:');
@@ -266,7 +269,8 @@ define('_AM_NEWBB_TYPE_ORDER', 'Order');
 define('_AM_NEWBB_TYPE_LIST', 'Type list');
 define('_AM_NEWBB_TODEL_TYPE', 'Are you sure to delete the types: [%s]?');
 define('_AM_NEWBB_TYPE_EDITFORUM_DESC', 'The data have not been saved yet. You must submit to save it.');
-define('_AM_NEWBB_TYPE_ORDER_DESC', 'To activate a type for a forum, a value greater than 0 is required for \'type_order\'; In other words, a type will be inactive for a forum if \'type_order\' is set to 0.');
+define('_AM_NEWBB_TYPE_ORDER_DESC',
+       'To activate a type for a forum, a value greater than 0 is required for \'type_order\'; In other words, a type will be inactive for a forum if \'type_order\' is set to 0.');
 // admin_synchronization.php
 define('_AM_NEWBB_SYNC_TYPE_FORUM', 'Forum Data');
 define('_AM_NEWBB_SYNC_TYPE_TOPIC', 'Topic Data');

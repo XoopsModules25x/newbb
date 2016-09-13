@@ -152,7 +152,8 @@ $toggles        = newbb_getcookie('G', true);
 $iconHandler    = newbbGetIconHandler();
 $category_icon  = array(
     'expand'   => $iconHandler->getImageSource('minus'),
-    'collapse' => $iconHandler->getImageSource('plus'));
+    'collapse' => $iconHandler->getImageSource('plus')
+);
 
 foreach (array_keys($categories) as $id) {
     $forums = array();
@@ -199,7 +200,8 @@ foreach (array_keys($categories) as $id) {
         'cat_element_id'   => $cat_element_id,
         'cat_display'      => $cat_display,
         'cat_displayImage' => $cat_displayImage,
-        'forums'           => $forums);
+        'forums'           => $forums
+    );
 }
 
 unset($categories, $forums_array, $forumsByCat);
@@ -209,7 +211,8 @@ $xoopsTpl->assign('notifyicon', $category_icon);
 
 $xoopsTpl->assign(array(
                       'index_title' => sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
-                      'index_desc'  => _MD_TOSTART));
+                      'index_desc'  => _MD_TOSTART
+                  ));
 
 /* display user stats */
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
@@ -267,7 +270,8 @@ if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
 $xoopsTpl->assign(array(
                       'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWPOSTS),
                       'img_forum'     => newbbDisplayImage('forum', _MD_NONEWPOSTS),
-                      'img_subforum'  => newbbDisplayImage('subforum')));
+                      'img_subforum'  => newbbDisplayImage('subforum')
+                  ));
 
 // irmtfan move to footer.php
 include_once __DIR__ . '/footer.php';

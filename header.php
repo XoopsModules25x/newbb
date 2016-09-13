@@ -21,7 +21,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     /* for seo */
     $toseo_url = array('index.php', 'viewforum.php', 'viewtopic.php', 'rss.php');
 
-    if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0) && (strpos(getenv('REQUEST_URI'), '.html') === false)) {
+    if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0)
+        && (strpos(getenv('REQUEST_URI'), '.html') === false)
+    ) {
         $redir = false;
         if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
             // Mark Forums
@@ -118,20 +120,22 @@ $xoops_module_header = $newbb_module_header; // for cache hack
 */
 /* END irmtfan remove and move to newbb/footer.php */
 
-if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum']) && !$GLOBALS['xoopsUser']->getVar('posts')) {
+if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum'])
+    && !$GLOBALS['xoopsUser']->getVar('posts')
+) {
     mod_loadFunctions('welcome', $dirname);
 }
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
-//$module_handler = xoops_getHandler('module');
-$xoopspoll = $module_handler->getByDirname($pollmodules);
+//$moduleHandler = xoops_getHandler('module');
+$xoopspoll = $moduleHandler->getByDirname($pollmodules);
 /*
 if (is_object($xoopspoll) && $xoopspoll->getVar('isactive')) {
         $pollmodules = 'xoopspoll';
 } else {
     //Umfrage
-    $xoopspoll = &$module_handler->getByDirname('umfrage');
+    $xoopspoll = &$moduleHandler->getByDirname('umfrage');
     if (is_object($xoopspoll) && $xoopspoll->getVar('isactive'))
         $pollmodules = 'umfrage';
 }

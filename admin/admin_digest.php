@@ -55,7 +55,7 @@ switch ($op) {
         include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
         echo '<fieldset>';
         $limit = 5;
-            echo $indexAdmin->addNavigation(basename(__FILE__));
+        echo $indexAdmin->addNavigation(basename(__FILE__));
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
         //    else echo $indexAdmin->addNavigation(basename(__FILE__));
@@ -71,7 +71,7 @@ switch ($op) {
         $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
-            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br />' . str_replace("\n", '<br />', $digest['digest_content']) . '</td>';
+            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br>' . str_replace("\n", '<br>', $digest['digest_content']) . '</td>';
             echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' /></td>";
             echo '</tr>';
             echo "<tr colspan='2'><td height='2'></td></tr>";

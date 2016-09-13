@@ -23,7 +23,8 @@ foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint
 //$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
-$viewmode = (XoopsRequest::getString('viewmode', '', 'GET') && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
+$viewmode = (XoopsRequest::getString('viewmode', '', 'GET')
+             && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (XoopsRequest::getString('viewmode', '', 'POST') ?: 'flat');
 
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -53,7 +54,9 @@ $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid
 
 $post_obj     =& $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
-if (($post_obj->checkIdentity() || $isadmin) && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')) {
+if (($post_obj->checkIdentity() || $isadmin)
+    && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')
+) {
 } else {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_DELNOTALLOWED);
 }
@@ -92,11 +95,20 @@ if ($ok) {
                 $xoopsMailer->setToUsers($senduser);
                 $xoopsMailer->setFromName($GLOBALS['xoopsUser']->getVar('uname'));
                 $xoopsMailer->setSubject(_MD_DELEDEDMSG_SUBJECT);
-                $forenurl = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $post_obj->getVar('topic_id') . "\">" . $post_obj->getVar('subject') . '</a>';
+                $forenurl = "<a href=\""
+                            . XOOPS_URL
+                            . '/modules/'
+                            . $xoopsModule->getVar('dirname')
+                            . '/viewtopic.php?topic_id='
+                            . $post_obj->getVar('topic_id')
+                            . "\">"
+                            . $post_obj->getVar('subject')
+                            . '</a>';
                 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
                     $forenurl = seo_urls($forenurl);
                 }
-                $body = sprintf(_MD_DELEDEDMSG_BODY, $senduser->getVar('uname'), $forenurl, XoopsRequest::getString('post_text', '', 'POST'), $GLOBALS['xoopsUser']->getVar('uname'), $GLOBALS['xoopsConfig']['sitename'], XOOPS_URL . '/');
+                $body = sprintf(_MD_DELEDEDMSG_BODY, $senduser->getVar('uname'), $forenurl, XoopsRequest::getString('post_text', '', 'POST'), $GLOBALS['xoopsUser']->getVar('uname'),
+                                $GLOBALS['xoopsConfig']['sitename'], XOOPS_URL . '/');
                 $body = $myts->nl2Br($body);
                 $xoopsMailer->setBody($body);
                 $xoopsMailer->send();
@@ -118,10 +130,10 @@ if ($ok) {
 } else {
     include $GLOBALS['xoops']->path('header.php');
     //xoops_confirm(array('post_id' => $post_id, 'viewmode' => $viewmode, 'order' => $order, 'forum' => $forum, 'topic_id' => $topic_id, 'ok' => 1), 'delete.php', _MD_DEL_ONE);
-    echo '<div class="confirmMsg">' . _MD_DEL_ONE . '<br />
+    echo '<div class="confirmMsg">' . _MD_DEL_ONE . '<br>
           <form method="post" action="' . XOOPS_URL . '/modules/newbb/delete.php">';
-    echo _MD_DELEDEDMSG . '<br />';
-    echo '<textarea name="post_text" cols="50" rows="5"></textarea><br />';
+    echo _MD_DELEDEDMSG . '<br>';
+    echo '<textarea name="post_text" cols="50" rows="5"></textarea><br>';
     echo '<input type="hidden" name="post_id" value="' . htmlspecialchars($post_id) . '" />';
     echo '<input type="hidden" name="order" value="' . htmlspecialchars($order) . '" />';
     echo '<input type="hidden" name="forum" value="' . htmlspecialchars($forum) . '" />';
@@ -133,7 +145,14 @@ if ($ok) {
           </form>
           </div>';
     if ($isadmin) {
-        xoops_confirm(array('post_id' => $post_id, 'viewmode' => $viewmode, 'order' => $order, 'forum' => $forum, 'topic_id' => $topic_id, 'ok' => 99), 'delete.php', _MD_DEL_RELATED);
+        xoops_confirm(array(
+                          'post_id'  => $post_id,
+                          'viewmode' => $viewmode,
+                          'order'    => $order,
+                          'forum'    => $forum,
+                          'topic_id' => $topic_id,
+                          'ok'       => 99
+                      ), 'delete.php', _MD_DEL_RELATED);
     }
     include $GLOBALS['xoops']->path('footer.php');
 }

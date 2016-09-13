@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -239,7 +239,21 @@ function xoops_module_install_newbb(XoopsModule $module)
     $groups_view  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
     $groups_post  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
-    $post_items = array('post', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove', 'type', 'html', 'signature', 'pdf', 'print');
+    $post_items = array(
+        'post',
+        'reply',
+        'edit',
+        'delete',
+        'addpoll',
+        'vote',
+        'attach',
+        'noapprove',
+        'type',
+        'html',
+        'signature',
+        'pdf',
+        'print'
+    );
     foreach ($groups_view as $group_id) {
         $gpermHandler->addRight('category_access', $cat_id, $group_id, $module_id);
         $gpermHandler->addRight('forum_access', $forum_id, $group_id, $module_id);
@@ -274,11 +288,11 @@ function xoops_module_install_newbb(XoopsModule $module)
 }
 
 /**
- * @param       $module
+ * @param  XoopsModule $module
  * @param  bool $isUpdate
  * @return bool
  */
-function newbb_setModuleConfig(&$module, $isUpdate = false)
+function newbb_setModuleConfig(XoopsModule $module, $isUpdate = false)
 {
     return true;
 }

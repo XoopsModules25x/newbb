@@ -14,7 +14,8 @@
                 <table border="0" cellpadding="1" cellspacing="1" width="100%" class="head">
                     <tr>
                         <!-- irmtfan hardcode removed align="right" -->
-                        <td class="head" width="10%" id="align_right"><strong><{$smarty.const._SR_KEYWORDS}></strong>&nbsp;</td>
+                        <td class="head" width="10%" id="align_right"><strong><{$smarty.const._SR_KEYWORDS}></strong>&nbsp;
+                        </td>
                         <!-- irmtfan add  value="$search_term" -->
                         <td class="even"><input type="text" name="term" value="<{$search_term}>"/></td>
                     </tr>
@@ -50,11 +51,16 @@
                     </tr>
                     <!-- START irmtfan add select text options -->
                     <tr>
-                        <td class="head" id="align_right" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>"><strong><{$smarty.const._MD_SELECT_STARTLAG}></strong>&nbsp;</td>
-                        <td class="even" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>"><input type="text" name="selectstartlag" value="<{$selectstartlag_select}>"/></td>
+                        <td class="head" id="align_right" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>">
+                            <strong><{$smarty.const._MD_SELECT_STARTLAG}></strong>&nbsp;</td>
+                        <td class="even" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>"><input type="text"
+                                                                                                   name="selectstartlag"
+                                                                                                   value="<{$selectstartlag_select}>"/>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_LENGTH}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_LENGTH}></strong>&nbsp;
+                        </td>
                         <td class="even"><input type="text" name="selectlength" value="<{$selectlength_select}>"/></td>
                     </tr>
                     <tr>
@@ -62,7 +68,8 @@
                         <td class="even"><{$selecthtml_radio}></td>
                     </tr>
                     <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_EXCLUDE}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_EXCLUDE}></strong>&nbsp;
+                        </td>
                         <td class="even"><{$selectexclude_check_box}></td>
                     </tr>
                     <!-- END irmtfan add select text options -->
@@ -75,7 +82,8 @@
                     <{if $search_rule}>
                         <tr>
                             <!-- irmtfan hardcode removed align="right" -->
-                            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>
+                            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;
+                            </td>
                             <td class="even"><{$search_rule}></td>
                         </tr>
                     <{/if}>

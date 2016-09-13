@@ -1,3 +1,13 @@
+4.33 RC 13  (XOOPS 2.5.8)      2016-09-13
+===========================================
+- code cosmetics (mamba0
+- replaced "<br />" with "<br>" (mamba)
+- fixed issue with Functions not loaded when not current module #32 (djsherren/geekright)
+- HTML 5 adjustments with 'selected' and 'checked' (mamba)
+- removed parenthesis from include/require as they are not functions (mamba)
+- using $GLOBALS['xoopsOption'] instead of '$xoopsOption' (mamba)
+- renamed logo to 'logoModule.png' (mamba)
+
 4.33 RC 12  (XOOPS 2.5.8)      (2016-04-03)
 ===========================================
 - removed @version (mamba)

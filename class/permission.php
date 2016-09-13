@@ -28,9 +28,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public $_handler;
 
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         $this->db = $db;
         parent::__construct($db);
@@ -224,9 +224,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') === 'newbb') {
             $modid = $xoopsModule->getVar('mid');
         } else {
-            $module_handler = xoops_getHandler('module');
-            $module         = $module_handler->getByDirname('newbb');
-            $modid          = $module->getVar('mid');
+            $moduleHandler = xoops_getHandler('module');
+            $module        = $moduleHandler->getByDirname('newbb');
+            $modid         = $module->getVar('mid');
             unset($module);
         }
 
@@ -292,9 +292,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
-                $module_handler = xoops_getHandler('module');
-                $mod            = $module_handler->getByDirname('newbb');
-                $mid            = $mod->getVar('mid');
+                $moduleHandler = xoops_getHandler('module');
+                $mod           = $moduleHandler->getByDirname('newbb');
+                $mid           = $mod->getVar('mid');
                 unset($mod);
             }
         }
@@ -357,9 +357,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
-                $module_handler = xoops_getHandler('module');
-                $mod            = $module_handler->getByDirname('newbb');
-                $mid            = $mod->getVar('mid');
+                $moduleHandler = xoops_getHandler('module');
+                $mod           = $moduleHandler->getByDirname('newbb');
+                $mid           = $mod->getVar('mid');
                 unset($mod);
             }
         }

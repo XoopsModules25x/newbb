@@ -110,7 +110,10 @@ switch ($op) {
         unset($topics_obj, $forums_obj);
         break;
     case 'move':
-        if (XoopsRequest::getInt('newforum', 0, 'POST') && XoopsRequest::getInt('newforum', 0, 'POST') !== $forum_id && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')) {
+        if (XoopsRequest::getInt('newforum', 0, 'POST')
+            && XoopsRequest::getInt('newforum', 0, 'POST') !== $forum_id
+            && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')
+        ) {
             $criteria    = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
             $postHandler = xoops_getModuleHandler('post', 'newbb');
             $postHandler->updateAll('forum_id', XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);

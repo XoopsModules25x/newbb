@@ -36,18 +36,21 @@
         <{if $block.headers.views}>
             <div class="<{$block_view}> floatleft center"><{$block.headers.views}></div>
         <{/if}>
-        <div style="overflow: hidden;" class="center" ><{$block.headers.lastpost}></div>
+        <div style="overflow: hidden;" class="center"><{$block.headers.lastpost}></div>
         <div class="clear"></div>
     </div>
-     <!-- start forum topic -->
+    <!-- start forum topic -->
     <{foreachq name=loop item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}> border">
         <div class="<{$block_topic}> floatleft left">
             <{if $block.headers.approve}>
-                <{if $topic.approve eq 1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=active#admin" target="_self" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a><{/if}>
-                <{if $topic.approve eq 0}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=pending#admin" target="_self" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a><{/if}>
-                <{if $topic.approve eq -1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=deleted#admin" target="_self" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a><{/if}>
-                <br />
+                <{if $topic.approve eq 1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=active#admin" target="_self"
+                    title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a><{/if}>
+                <{if $topic.approve eq 0}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=pending#admin" target="_self"
+                    title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a><{/if}>
+                <{if $topic.approve eq -1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=deleted#admin" target="_self"
+                    title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a><{/if}>
+                <br>
             <{/if}>
             <{if $block.headers.read}><{$topic.topic_folder}><{/if}>
             <{if $block.headers.topic}>
@@ -55,7 +58,7 @@
                     <{if $block.headers.type}><{$topic.topic_title}><{else}><{$topic.topic_title_excerpt}><{/if}>
                 </a>
                 <{if $block.headers.pagenav}><{$topic.topic_page_jump}><{/if}>
-                <br />
+                <br>
             <{/if}>
             <{if $block.headers.attachment}><{$topic.attachment}><{/if}>
             <{if $block.headers.lock}><{$topic.lock}><{/if}>
@@ -63,20 +66,20 @@
             <{if $block.headers.digest}><{$topic.digest}><{/if}>
             <{if $block.headers.poll}><{$topic.poll}><{/if}>
             <{if $block.headers.publish }>
-                <br />
+                <br>
                 <span class="xx-small">
                     <{$block.headers.publish}>: <{$topic.topic_time}>
                 </span>
             <{/if}>
             <{if $topic.votes}>
-                <br />
+                <br>
                 <span class="xx-small">
                     <{if $block.headers.votes}><{$block.headers.votes}>: <{$topic.votes}><{/if}>
                     <{if $block.headers.ratings}>&nbsp;<{$topic.rating_img}><{/if}>
                 </span>
             <{/if}>
             <{if $block.headers.poster}>
-                <br />
+                <br>
                 <span class="xx-small">
                     <{$block.headers.poster}>: <{$topic.topic_poster}>
                 </span>
@@ -94,7 +97,7 @@
         <div style="overflow: hidden;" class="right">
             <{if $block.headers.lastpostmsgicon}><{$topic.topic_icon}><{/if}>
             <{if $block.headers.lastposttime}><{$topic.topic_last_posttime}><{/if}>
-            <br />
+            <br>
             <{if $block.headers.lastposter}><{$topic.topic_last_poster}><{/if}>
             &nbsp;
             <{if $block.headers.lastpost}><{$topic.topic_page_jump_icon}><{/if}>
@@ -112,13 +115,16 @@
         <a href="<{$xoops_url}>/modules/newbb/list.topic.php"><{$smarty.const._MB_NEWBB_ALLTOPICS}></a> |
         <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unread"><{$smarty.const._MD_UNREAD}></a> |
         <{if $block.headers.replies}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unreplied"><{$smarty.const._MD_UNREPLIED}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unreplied"><{$smarty.const._MD_UNREPLIED}></a>
+            |
         <{/if}>
         <{if $block.headers.votes}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=voted"><{$smarty.const._MD_VOTED}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=voted"><{$smarty.const._MD_VOTED}></a>
+            |
         <{/if}>
         <{if $block.headers.poll}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=poll"><{$smarty.const._MD_POLL_POLL}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=poll"><{$smarty.const._MD_POLL_POLL}></a>
+            |
         <{/if}>
         <a href="<{$xoops_url}>/modules/newbb"><{$smarty.const._MB_NEWBB_VSTFRMS}></a>
     </div>

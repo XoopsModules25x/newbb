@@ -136,7 +136,8 @@ foreach ($posts_context_obj as $post_context_obj) {
     $posts_context[] = array(
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
-        'content' => $p_message);
+        'content' => $p_message
+    );
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php

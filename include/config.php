@@ -25,7 +25,8 @@ include_once __DIR__ . '/common.php';
 $moduleDirName = basename(dirname(__DIR__));
 $uploadFolders = array(
     NEWBB_UPLOAD_PATH,
-    NEWBB_UPLOAD_PATH . '/thumbs');
+    NEWBB_UPLOAD_PATH . '/thumbs'
+);
 
 //$copyFiles = array(
 //    NEWBB_UPLOAD_PATH,

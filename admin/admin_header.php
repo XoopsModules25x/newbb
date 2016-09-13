@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 //include $GLOBALS['xoops']->path('include/cp_header.php');
-include('../../../include/cp_header.php');
+include '../../../include/cp_header.php';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
@@ -55,6 +55,6 @@ $pathModIcon32 = XOOPS_URL . '/' . $module->getInfo('modicons32');
 $xoopsModuleAdminPath = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
 require_once $xoopsModuleAdminPath . '/moduleadmin.php';
 
-$indexAdmin        = new ModuleAdmin();
+$indexAdmin = new ModuleAdmin();
 
 $myts = MyTextSanitizer::getInstance();

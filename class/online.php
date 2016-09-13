@@ -106,7 +106,8 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname']);
+                'uname' => $users[$i]['online_uname']
+            );
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
@@ -164,7 +165,8 @@ class NewbbOnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = array(
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname']);
+                'uname' => $users[$i]['online_uname']
+            );
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
@@ -222,12 +224,22 @@ class NewbbOnlineHandler
         }
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
-            $sql = 'UPDATE ' . $this->db->prefix('bb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
+            $sql = 'UPDATE '
+                   . $this->db->prefix('bb_online')
+                   . " SET online_updated= '"
+                   . $time
+                   . "', online_forum = '"
+                   . $forum_id
+                   . "', online_topic = '"
+                   . $topic_id
+                   . "' WHERE online_uid = "
+                   . $uid;
             if ($uid == 0) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {
-            $sql = sprintf('INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_forum, online_topic) VALUES (%u, %s, %u, %s, %u, %u)', $this->db->prefix('bb_online'), $uid, $this->db->quoteString($uname), $time, $this->db->quoteString($ip), $forum_id, $topic_id);
+            $sql = sprintf('INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_forum, online_topic) VALUES (%u, %s, %u, %s, %u, %u)', $this->db->prefix('bb_online'), $uid,
+                           $this->db->quoteString($uname), $time, $this->db->quoteString($ip), $forum_id, $topic_id);
         }
         if (!$this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -237,7 +249,19 @@ class NewbbOnlineHandler
         $mysql_version = substr(trim(mysqli_get_server_info($xoopsDB->conn)), 0, 3);
         /* for MySQL 4.1+ */
         if ($mysql_version >= '4.1') {
-            $sql = 'DELETE FROM ' . $this->db->prefix('bb_online') . ' WHERE' . ' ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM ' . $this->db->prefix('online') . ' WHERE online_module =' . $xoopsModule->getVar('mid') . ' ) )' . ' OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM ' . $this->db->prefix('online') . ' WHERE online_module =' . $xoopsModule->getVar('mid') . ' AND online_uid = 0 ) )';
+            $sql = 'DELETE FROM '
+                   . $this->db->prefix('bb_online')
+                   . ' WHERE'
+                   . ' ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM '
+                   . $this->db->prefix('online')
+                   . ' WHERE online_module ='
+                   . $xoopsModule->getVar('mid')
+                   . ' ) )'
+                   . ' OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM '
+                   . $this->db->prefix('online')
+                   . ' WHERE online_module ='
+                   . $xoopsModule->getVar('mid')
+                   . ' AND online_uid = 0 ) )';
 
             if ($result = $this->db->queryF($sql)) {
                 return true;
@@ -246,9 +270,31 @@ class NewbbOnlineHandler
                 return false;
             }
         } else {
-            $sql    = 'DELETE ' . $this->db->prefix('bb_online') . ' FROM ' . $this->db->prefix('bb_online') . ' LEFT JOIN ' . $this->db->prefix('online') . ' AS aa ' . ' ON ' . $this->db->prefix('bb_online') . '.online_uid = aa.online_uid WHERE ' . $this->db->prefix('bb_online') . '.online_uid > 0 AND aa.online_uid IS NULL';
+            $sql    = 'DELETE '
+                      . $this->db->prefix('bb_online')
+                      . ' FROM '
+                      . $this->db->prefix('bb_online')
+                      . ' LEFT JOIN '
+                      . $this->db->prefix('online')
+                      . ' AS aa '
+                      . ' ON '
+                      . $this->db->prefix('bb_online')
+                      . '.online_uid = aa.online_uid WHERE '
+                      . $this->db->prefix('bb_online')
+                      . '.online_uid > 0 AND aa.online_uid IS NULL';
             $result = $this->db->queryF($sql);
-            $sql    = 'DELETE ' . $this->db->prefix('bb_online') . ' FROM ' . $this->db->prefix('bb_online') . ' LEFT JOIN ' . $this->db->prefix('online') . ' AS aa ' . ' ON ' . $this->db->prefix('bb_online') . '.online_ip = aa.online_ip WHERE ' . $this->db->prefix('bb_online') . '.online_uid = 0 AND aa.online_ip IS NULL';
+            $sql    = 'DELETE '
+                      . $this->db->prefix('bb_online')
+                      . ' FROM '
+                      . $this->db->prefix('bb_online')
+                      . ' LEFT JOIN '
+                      . $this->db->prefix('online')
+                      . ' AS aa '
+                      . ' ON '
+                      . $this->db->prefix('bb_online')
+                      . '.online_ip = aa.online_ip WHERE '
+                      . $this->db->prefix('bb_online')
+                      . '.online_uid = 0 AND aa.online_ip IS NULL';
             $result = $this->db->queryF($sql);
 
             return true;
