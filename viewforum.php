@@ -131,7 +131,7 @@ if ($forumHandler->getPermission($forum_obj, 'post')) {
                       "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/newtopic.php?forum={$forum_id}\">" . newbbDisplayImage('t_new', _MD_POSTNEW) . '</a>');
     if ($pollmodules && $forumHandler->getPermission($forum_obj, 'addpoll')) {
         $t_poll = newbbDisplayImage('t_poll', _MD_ADDPOLL);
-        $xoopsTpl->assign('forum_addpoll', "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/newtopic.php?op=add&amp;forum={$forum_id}\">{$t_poll}</a>");
+        $xoopsTpl->assign('forum_addpoll', "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=add&amp;forum={$forum_id}\">{$t_poll}</a>");
     }
 } else {
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
