@@ -699,7 +699,7 @@ class NewbbTopicRenderer
 
         $headers = $this->getSort('', 'title');
         foreach ($headers as $header => $title) {
-            $_args = array('sort={$header}');
+            $_args = array("sort={$header}");
             if (@$this->vars['sort'] == $header) {
                 $_args[] = 'order=' . ((@$this->vars['order'] + 1) % 2);
             }
@@ -719,14 +719,14 @@ class NewbbTopicRenderer
             if ($var === 'status') {
                 continue;
             }
-            $args[] = '{$var}={$val}';
+            $args[] = "{$var}={$val}";
         }
 
         $links = $this->getStatus($this->userlevel);
 
         $status = array();
         foreach ($links as $link => $title) {
-            $_args                  = array('status={$link}');
+            $_args = array("status={$link}");
             $status[$link]['title'] = $title;
             $status[$link]['link']  = $this->page . '?' . implode('&amp;', array_merge($args, $_args));
         }
@@ -767,11 +767,11 @@ class NewbbTopicRenderer
             if ($var === 'type') {
                 continue;
             }
-            $args[] = '{$var}={$val}';
+            $args[] = "{$var}={$val}";
         }
 
         foreach ($types as $id => $type) {
-            $_args                = array('type={$id}');
+            $_args = array("type={$id}");
             $status[$id]['title'] = $type['type_name'];
             $status[$id]['link']  = $this->page . '?' . implode('&amp;', array_merge($args, $_args));
         }
