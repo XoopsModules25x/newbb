@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -36,8 +36,8 @@ if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->ge
     redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
 }
 
-if (!XoopsRequest::getInt('option_id', 0, 'POST')) {
-    // irmtfan - add error message - simple url
+$testVars = XoopsRequest::get('POST');
+if (!isset($testVars['option_id'])) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
@@ -66,11 +66,11 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     $classConstants = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
     if (is_object($poll_obj)) {
         if ($poll_obj->getVar('multiple')) {
-            $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
+            $optionId = XoopsRequest::getArray('option_id', 0, 'POST');
             $optionId = (array)$optionId; // type cast to make sure it's an array
             $optionId = array_map('intval', $optionId); // make sure values are integers
         } else {
-            $optionId = !XoopsRequest::getInt('option_id', 0, 'POST');
+            $optionId = XoopsRequest::getInt('option_id', 0, 'POST');
         }
         if (!$poll_obj->hasExpired()) {
             $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_MUSTLOGIN');
