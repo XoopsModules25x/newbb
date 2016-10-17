@@ -5,9 +5,9 @@
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
-$seoOp = XoopsRequest::getString('seoOp', '', 'GET')       = checker(XoopsRequest::getString('seoOp', '', 'GET'));
-$seoArg                                                    = XoopsRequest::getInt('seoArg', 0, 'GET');
-$seoOther = XoopsRequest::getString('seoOther', '', 'GET') = checker(XoopsRequest::getString('seoOther', '', 'GET'));
+$seoOp = XoopsRequest::getString('seoOp', '', 'GET');
+$seoArg = XoopsRequest::getInt('seoArg', 0, 'GET');
+$seoOther = XoopsRequest::getString('seoOther', '', 'GET');
 
 $seos = array('c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf');
 
