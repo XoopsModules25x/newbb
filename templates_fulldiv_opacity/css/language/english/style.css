@@ -30,22 +30,15 @@
 }
 */
 .toggle_block, .toggle_none {
-    -moz-transition-property: all;
-    -moz-transition-duration: 1s;
-    -moz-transition-timing-function: ease-in-out;
-    -moz-transition-delay: 0s;
     -webkit-transition-property: all;
+    transition-property: all;
     -webkit-transition-duration: 1s;
+            transition-duration: 1s;
     -webkit-transition-timing-function: ease-in-out;
+            transition-timing-function: ease-in-out;
     -webkit-transition-delay: 0s;
-    -ms-transition-property: all;
-    -ms-transition-duration: 1s;
-    -ms-transition-timing-function: ease-in-out;
-    -ms-transition-delay: 0s;
-    -o-transition-property: all;
-    -o-transition-duration: 1s;
-    -o-transition-timing-function: ease-in-out;
-    -o-transition-delay: 0s;
+            transition-delay: 0s;
+    -webkit-transition: all 1s ease-in-out 0s;
     transition: all 1s ease-in-out 0s;
 }
 
@@ -568,11 +561,8 @@ find all image names in newbb/include/images.php
 */
 span.forum_icon.forum_button {
     background: #407DC7;
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#407DC7), to(#4279B8));
-    background-image: -webkit-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -moz-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -o-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -webkit-linear-gradient(#407DC7, #4279B8);
+    background-image: linear-gradient(#407DC7, #4279B8);
     border-width: 1px;
     color: white;
     padding: 4px 4px;
