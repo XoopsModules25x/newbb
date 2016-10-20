@@ -5,6 +5,9 @@
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
+ 
+include_once __DIR__ . '/header.php';
+ 
 $seoOp = XoopsRequest::getString('seoOp', '', 'GET');
 $seoArg = XoopsRequest::getInt('seoArg', 0, 'GET');
 $seoOther = XoopsRequest::getString('seoOther', '', 'GET');
