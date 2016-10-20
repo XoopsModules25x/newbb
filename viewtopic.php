@@ -249,7 +249,7 @@ $t_new   = newbbDisplayImage('t_new', _MD_POSTNEW);
 $t_reply = newbbDisplayImage('t_reply', _MD_REPLY);
 // irmtfan show topic status if show reg is 0 and revise forum_post_or_register
 if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'post')) {
-     $xoopsTpl->assign('forum_post', '<a href=' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/newtopic.php?forum=' . $forum_id . "\">" . $t_new . '</a>');
+    $xoopsTpl->assign('forum_post', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/newtopic.php?forum=' . $forum_id . '"> ' . $t_new . '</a>');
 } else {
     if ($topic_obj->getVar('topic_status')) {
         $xoopsTpl->assign('topic_lock', _MD_TOPICLOCKED);
@@ -262,7 +262,7 @@ if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'),
 $xoopsTpl->assign('forum_post_or_register', @$xoopsTpl->get_template_vars('forum_post') . @$xoopsTpl->get_template_vars('forum_register') . @$xoopsTpl->get_template_vars('topic_lock'));
 
 if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'reply')) {
-    $xoopsTpl->assign('forum_reply', '<a href=' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/reply.php?topic_id=' . $topic_id .' > '. $t_reply . '</a>');
+    $xoopsTpl->assign('forum_reply', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/reply.php?topic_id=' . $topic_id . '"> ' . $t_reply . '</a>');
 }
 
 $poster_array  = array();
@@ -501,6 +501,8 @@ if ($PollModule && $PollModule->getVar('isactive')) {
 }
 */
 //irmtfan remove
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
 $pollModuleHandler = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     $poll_id = $topic_obj->getVar('poll_id');

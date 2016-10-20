@@ -41,6 +41,8 @@ if (!isset($testVars['option_id'])) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_POLL_NOOPTION);
 }
 // poll module
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
 $pollModuleHandler = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // new xoopspoll module

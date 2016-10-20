@@ -37,7 +37,7 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
 include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 
-include_once dirname(__DIR__) . '/include/config.php';
+include_once __DIR__ . '/../include/config.php';
 
 xoops_load('XoopsRequest');
 
@@ -46,6 +46,7 @@ $moduleDirName = basename(dirname(__DIR__));
 xoops_loadLanguage('main', 'newbb');
 xoops_loadLanguage('modinfo', 'newbb');
 
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($moduleDirName);
 $pathIcon16    = XOOPS_URL . '/' . $module->getInfo('sysicons16');

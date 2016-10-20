@@ -124,7 +124,8 @@ class Topic extends XoopsObject
         if (empty($poll_id)) {
             return false;
         }
-        $moduleHandler     = xoops_getHandler('module');
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
         $newbbConfig       = newbbLoadConfig();
         $pollModuleHandler = $moduleHandler->getByDirname($newbbConfig['poll_module']);
         if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
@@ -171,6 +172,7 @@ class Topic extends XoopsObject
         if (empty($poll_id)) {
             return false;
         }
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbbConfig   = newbbLoadConfig();
         if (!empty($pollModule)) {
@@ -401,7 +403,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         }
         $postHandler = xoops_getModuleHandler('post', 'newbb');
         $myrow       = $this->db->fetchArray($result);
-        $post        =& $postHandler->create(false);
+        $post        = $postHandler->create(false);
         $post->assignVars($myrow);
 
         return $post;

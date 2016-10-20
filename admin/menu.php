@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
@@ -31,6 +31,7 @@
 
 $moduleDirName = basename(dirname(__DIR__));
 
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($moduleDirName);
 $pathIcon32    = '../../' . $module->getInfo('sysicons32');

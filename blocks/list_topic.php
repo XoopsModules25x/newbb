@@ -17,9 +17,9 @@ if (defined('LIST_TOPIC_DEFINED')) {
 }
 define('LIST_TOPIC_DEFINED', true);
 
-include_once dirname(__DIR__) . '/include/functions.ini.php';
-require_once dirname(__DIR__) . '/class/topic.renderer.php';
-include_once dirname(__DIR__) . '/footer.php'; // to include js/style files like validate function
+include_once __DIR__ . '/../include/functions.ini.php';
+require_once __DIR__ . '/../class/topic.renderer.php';
+include_once __DIR__ . '/../footer.php'; // to include js/style files like validate function
 
 xoops_loadLanguage('main', 'newbb');
 

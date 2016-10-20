@@ -8,7 +8,7 @@
  * @since          4.00
  * @package        module::newbb
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
@@ -128,6 +128,7 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['we
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];
 
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $xoopspoll = $moduleHandler->getByDirname($pollmodules);
 /*
