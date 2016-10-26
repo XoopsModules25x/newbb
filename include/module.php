@@ -107,8 +107,8 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
 
         //check if "poster_ip" is valid IP, and convert to string representation
-        include_once dirname(__DIR__) . '/class/ipcheck.php';
-        include_once dirname(__DIR__) . '/class/utilities.php';
+        include_once __DIR__ . '/../class/ipcheck.php';
+        include_once __DIR__ . '/../class/utilities.php';
         $MyIpCheck   = new IpCheck();
         $MyUtilities = new NewbbUtilities();
 
@@ -165,11 +165,11 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $folderHandler->delete($imagesDirectory);
 
         //remove old changelogs
-        array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
+        array_map('unlink', glob(__DIR__ . '/../docs/changelog-rev*.txt'));
 
-        //        $file = dirname(__DIR__) . '/docs/changelog-rev9883.txt';
-        //        $file = dirname(__DIR__) . '/docs/changelog-rev10095.txt';
-        //        $file = dirname(__DIR__) . '/docs/changelog-rev10109.txt';
+        //        $file = __DIR__ . '/../docs/changelog-rev9883.txt';
+        //        $file = __DIR__ . '/../docs/changelog-rev10095.txt';
+        //        $file = __DIR__ . '/../docs/changelog-rev10109.txt';
     }
 
     if (!empty($newbbConfig['syncOnUpdate'])) {

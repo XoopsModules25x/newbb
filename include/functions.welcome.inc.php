@@ -37,6 +37,7 @@ $post_obj->setVar('post_time', time());
 
 $categories = array();
 
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $gpermHandler = xoops_getHandler('groupperm');

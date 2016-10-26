@@ -55,7 +55,7 @@ switch ($op) {
         $type_del    = array();
         foreach (array_keys($type_names) as $key) {
             if (XoopsRequest::getBool('isnew', '', 'POST')) {
-                $type_obj =& $typeHandler->create();
+                $type_obj = $typeHandler->create();
             } elseif (!$type_obj =& $typeHandler->get($key)) {
                 continue;
             }

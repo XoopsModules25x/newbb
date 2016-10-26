@@ -70,9 +70,10 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
         if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
+            /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
-            $newbb          = $moduleHandler->getByDirname('newbb');
-            $mid            = $newbb->getVar('mid');
+            $newbb         = $moduleHandler->getByDirname('newbb');
+            $mid           = $newbb->getVar('mid');
         }
         if (empty($groups)) {
             $memberHandler = xoops_getHandler('member');

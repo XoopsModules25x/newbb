@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -69,7 +69,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
         xoops_error($error_message);
     } else {
         $reportHandler = xoops_getModuleHandler('report', 'newbb');
-        $report        =& $reportHandler->create();
+        $report        = $reportHandler->create();
         $report->setVar('report_text', XoopsRequest::getString('report_text', '', 'POST'));
         $report->setVar('post_id', XoopsRequest::getInt($post_id, 0, 'POST'));
         $report->setVar('report_time', time());

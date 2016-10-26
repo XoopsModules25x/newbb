@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -76,7 +76,7 @@ if ($ratinguser !== 0) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_VOTEONCE);
     }
 }
-$rate_obj =& $rateHandler->create();
+$rate_obj = $rateHandler->create();
 $rate_obj->setVar('rating', $rate * 2);
 $rate_obj->setVar('topic_id', $topic_id);
 $rate_obj->setVar('ratinguser', $ratinguser);

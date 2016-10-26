@@ -29,7 +29,7 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
-include_once dirname(__DIR__) . '/class/utilities.php';
+include_once __DIR__ . '/../class/utilities.php';
 mod_loadFunctions('stats', 'newbb');
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
@@ -157,7 +157,8 @@ switch ($op) {
 
         echo '<fieldset>';
         $imageLibs     = newbb_getImageLibs();
-        $moduleHandler = xoops_getHandler('module');
+    /** @var XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
         $reportHandler = xoops_getModuleHandler('report', 'newbb');
 
         $isOK = false;
