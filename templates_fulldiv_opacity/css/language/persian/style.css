@@ -80,10 +80,9 @@ table.userlevel {
 
 /* to mirror (flip) right left images for RTL */
 img#next, img#previous, img#admin_move, img#lastposticon, img#post, img#subforum {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
+            transform: scaleX(-1);
+    -webkit-filter: FlipH;
+            filter: FlipH;
     -ms-filter: "FlipH";
 }

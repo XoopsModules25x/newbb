@@ -360,11 +360,8 @@ find all image names in newbb/include/images.php
 */
 span.forum_icon.forum_button {
     background: #407DC7;
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#407DC7), to(#4279B8));
-    background-image: -webkit-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -moz-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
-    background-image: -o-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -webkit-linear-gradient(#407DC7, #4279B8);
+    background-image: linear-gradient(#407DC7, #4279B8);
     border-width: 1px;
     color: white;
     padding: 4px 4px;
