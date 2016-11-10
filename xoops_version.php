@@ -447,6 +447,15 @@ $modversion['config'][] = array(
 );
 
 $modversion['config'][] = array(
+    'name'        => 'show_css_buttons',
+    'title'       => '_MI_SHOW_CSS_BUTTONS',
+    'description' => '_MI_SHOW_CSS_BUTTONS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
     'name'        => 'user_level',
     'title'       => '_MI_USERLEVEL',
     'description' => '_MI_USERLEVEL_DESC',
