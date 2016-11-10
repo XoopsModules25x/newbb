@@ -253,3 +253,5 @@ define('_MI_USERATTACH_ENABLE', 'Display attachments only for registered users')
 define('_MI_USERATTACH_DESC', 'shows attachments in the forum only after logging in.');
 // 4.3
 define('_MI_NEWBB_BLOCK_LIST_TOPIC', 'Render a list of topics');// irmtfan
+define('_MI_SHOW_CSS_BUTTONS', 'Show CSS Buttons');
+define('_MI_SHOW_CSS_BUTTONS_DESC', 'render buttons as CSS instead of using images');
