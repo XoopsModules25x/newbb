@@ -66,6 +66,9 @@
     3-2- no style means just image
 */
 
+
+if ($GLOBALS['xoopsModuleConfig']['show_css_buttons'] == 1) 
+{
 // uncomment to show text link instead of images (set to true)
 $displayText[''] = //$displayText['blank'] =
 
@@ -138,6 +141,8 @@ $displayText['t_new'] = $displayText['t_poll'] = $displayText['t_qr'] = $display
 $displayText['p_bann'] =
 
     true;
+}
+
 
 for ($i = 1; $i <= 5; ++$i) {
     //$displayText['rate'.$i] = true;
