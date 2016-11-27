@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 //include $GLOBALS['xoops']->path('include/cp_header.php');
-include '../../../include/cp_header.php';
+include __DIR__ . '/../../../include/cp_header.php';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');

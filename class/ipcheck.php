@@ -5,7 +5,7 @@
 /**
  * Class IpCheck
  */
-class ipcheck
+class IpCheck
 {
     public $ipin;
     public $ipout;

@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
@@ -163,7 +163,7 @@ switch ($op) {
     default:
         if (!$categories = $categoryHandler->getByPermission('all')) {
             $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-            echo $indexAdmin->renderButton();
+            echo $indexAdmin->renderButton('left');
 
             echo '<fieldset>';
             echo '<br>';
@@ -174,7 +174,7 @@ switch ($op) {
         echo $indexAdmin->addNavigation(basename(__FILE__));
         echo '<fieldset>';
         $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-        echo $indexAdmin->renderButton();
+        echo $indexAdmin->renderButton('left');
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";

@@ -75,6 +75,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @param  bool        $force
      * @return mixed
      */
+
     public function insert(XoopsObject $category, $force = true)//insert(Category $category)
     {
         parent::insert($category, true);
@@ -91,6 +92,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @return bool|mixed
      * @internal param Category $category
      */
+
     public function delete(XoopsObject $category, $force = false)//delete(Category $category)
     {
         //        global $xoopsModule;
