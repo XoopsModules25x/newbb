@@ -122,7 +122,7 @@
                     |
                 <{/if}>
                 <{if $topic_post.poster.uid gt 0}>
-                <{$smarty.const._MD_POSTEDON}><{$topic_post.post_date}></div>
+                <{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></div>
             <{/if}>
             <{if $topic_post.post_edit}>
                 <div class="clear"></div>

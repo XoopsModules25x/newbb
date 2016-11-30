@@ -246,7 +246,8 @@ class NewbbOnlineHandler
             return false;
         }
 
-        $mysql_version = substr(trim(mysqli_get_server_info($xoopsDB->conn)), 0, 3);
+//        $mysql_version = substr(trim(mysqli_get_server_info($xoopsDB->conn)), 0, 3);
+        $mysql_version = $GLOBALS['xoopsDB']->getServerVersion;
         /* for MySQL 4.1+ */
         if ($mysql_version >= '4.1') {
             $sql = 'DELETE FROM '

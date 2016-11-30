@@ -732,7 +732,7 @@ $xoopsTpl->assign(array(
                       'lang_edit'        => _EDIT,
                       'lang_delete'      => _DELETE,
                       'lang_reply'       => _REPLY,
-                      'lang_postedon'    => _MD_POSTEDON,
+                      'lang_postedon'    => _MD_NEWBB_POSTEDON,
                       'lang_groups'      => _MD_GROUPS
                   ));
 
