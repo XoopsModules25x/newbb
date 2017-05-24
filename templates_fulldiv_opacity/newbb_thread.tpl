@@ -10,7 +10,7 @@
      id="<{$forum_post_prefix}><{$topic_post.post_id}>">
     <div class="thread_title comTitle floatleft"><{$topic_post.post_title}></div>
     <div class="thread_date floatleft right comDate"><span
-                class="thread_date_caption comDateCaption"><{$smarty.const._MD_POSTEDON}></span><{$topic_post.post_date}>
+                class="thread_date_caption comDateCaption"><{$smarty.const._MD_NEWBB_POSTEDON}></span><{$topic_post.post_date}>
     </div>
     <div class="thread_post_no _col_end right">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>

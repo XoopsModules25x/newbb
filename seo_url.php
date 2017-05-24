@@ -1,6 +1,8 @@
 <?php
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+include_once __DIR__ . '/header.php';
+
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 
@@ -17,7 +19,7 @@ function seo_urls($s)
 
     $search = array(
 
-        // Search URLs of modules' directry.
+        // Search URLs of modules' directory.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewpost.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(rss.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',

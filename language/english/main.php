@@ -1,5 +1,5 @@
 <?php
-// 
+//
 if (defined('MAIN_DEFINED')) {
     return;
 }
@@ -48,7 +48,7 @@ define('_MD_USER_POSTS', 'Posts: %s');
 define('_MD_USER_DIGESTS', 'Digests: %s');
 define('_MD_VIEW_NEWPOSTS', 'View New Posts');
 define('_MD_ADVSEARCH', 'Advanced Search');
-define('_MD_POSTEDON', 'Posted on: ');
+define('_MD_NEWBB_POSTEDON', 'Posted on: ');
 define('_MD_SUBJECT', 'Subject');
 define('_MD_INACTIVEFORUM_NEWPOSTS', 'Inactive forum with new posts');
 define('_MD_INACTIVEFORUM_NONEWPOSTS', 'Inactive forum without new posts');

@@ -67,7 +67,7 @@ class Topic extends XoopsObject
             return $topic_title;
         }
         $typeHandler = xoops_getModuleHandler('type', 'newbb');
-        if (!$type_obj =& $typeHandler->get($this->getVar('type_id'))) {
+        if (!$type_obj = $typeHandler->get($this->getVar('type_id'))) {
             return $topic_title;
         }
 

@@ -101,7 +101,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      *
      * @param  text    $query , int $i
      * @param          $i
-     * @return unknown
+     * @return mixed
      */
     function newbb_highlighter($query, $i)
     {
@@ -112,7 +112,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      * function for convert string to array
      *
      * @param  text /array $str
-     * @return unknown
+     * @return mixed
      */
 
     function newbb_str2array($str)

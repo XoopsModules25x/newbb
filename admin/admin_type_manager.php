@@ -56,7 +56,7 @@ switch ($op) {
         foreach (array_keys($type_names) as $key) {
             if (XoopsRequest::getBool('isnew', '', 'POST')) {
                 $type_obj = $typeHandler->create();
-            } elseif (!$type_obj =& $typeHandler->get($key)) {
+            } elseif (!$type_obj = $typeHandler->get($key)) {
                 continue;
             }
 
@@ -92,7 +92,7 @@ switch ($op) {
     case 'delete':
         $type_dels = @unserialize(XoopsRequest::getString('type_del', '', 'POST'));
         foreach ($type_dels as $key) {
-            if (!$type_obj =& $typeHandler->get($key)) {
+            if (!$type_obj = $typeHandler->get($key)) {
                 continue;
             }
             $typeHandler->delete($type_obj);

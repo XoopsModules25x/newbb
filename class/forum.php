@@ -801,9 +801,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $sub_forums = $_subforums;
         } else {
             foreach ($subforums as $id) {
-                //                if (isset($_subforums[$id])) {
+                                if (isset($_subforums[$id])) {
                 $sub_forums[$id] = $_subforums[$id];
-                //                }
+                                }
             }
         }
 

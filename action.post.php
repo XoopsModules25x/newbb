@@ -68,7 +68,7 @@ switch ($op) {
         $topics    = array();
         $forums    = array();
         $criteria  = new Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
-        $posts_obj =& $postHandler->getObjects($criteria, true);
+        $posts_obj = $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
             $post_obj = $posts_obj[$post];
             if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {

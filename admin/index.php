@@ -177,10 +177,10 @@ switch ($op) {
         */
         // END irmtfan add a poll_module config
 
-        $memlimit_iniphp    = return_bytes(@ini_get('memory_limit'));
-        $postmaxsize_iniphp = return_bytes(@ini_get('post_max_size'));
+        $memlimit_iniphp    = returnBytes(@ini_get('memory_limit'));
+        $postmaxsize_iniphp = returnBytes(@ini_get('post_max_size'));
         if ($postmaxsize_iniphp < $memlimit_iniphp) {
-            $uploadlimit = sprintf(_AM_NEWBB_MEMLIMITOK, return_bytes($postmaxsize_iniphp, true));
+            $uploadlimit = sprintf(_AM_NEWBB_MEMLIMITOK, returnBytes($postmaxsize_iniphp, true));
             $uploadfarbe = 'Green';
         } else {
             $uploadlimit = _AM_NEWBB_MEMLIMITTOLARGE;
@@ -250,7 +250,7 @@ mod_clearCacheFile('permission', 'newbb');
  * @param  bool       $b
  * @return int|string
  */
-function return_bytes($sizeAsString, $b = false)
+function returnBytes($sizeAsString, $b = false)
 {
     if ($b === false) {
         switch (substr($sizeAsString, -1)) {
