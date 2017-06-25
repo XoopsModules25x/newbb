@@ -84,6 +84,6 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
         /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
 
-        return $readHandler->isRead_items($items, $uid);
+        return $readHandler->isReadItems($items, $uid);
     }
 }

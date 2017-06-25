@@ -66,13 +66,13 @@ class Topic extends XoopsObject
             return $topic_title;
         }
         $typeHandler = xoops_getModuleHandler('type', 'newbb');
-        if (!$type_obj = $typeHandler->get($this->getVar('type_id'))) {
+        if (!$typeObject = $typeHandler->get($this->getVar('type_id'))) {
             return $topic_title;
         }
 
         include_once __DIR__ . '/../include/functions.topic.php';
 
-        return getTopicTitle($topic_title, $type_obj->getVar('type_name'), $type_obj->getVar('type_color'));
+        return getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
     }
     // START irmtfan loadOldPoll function
 
@@ -189,14 +189,14 @@ class Topic extends XoopsObject
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             $pollHandler = xoops_getModuleHandler('poll', $newbbConfig['poll_module']);
-            $poll_obj    = $pollHandler->get($poll_id);
+            $pollObject    = $pollHandler->get($poll_id);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll = $this->loadOldPoll($newbbConfig['poll_module']);
-            $poll_obj  = new $classPoll($poll_id);
+            $pollObject  = new $classPoll($poll_id);
         } // end poll_module new or old
 
-        return $poll_obj;
+        return $pollObject;
     }
     // END irmtfan add getPoll function
 }
@@ -227,12 +227,12 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (!empty($var) && is_string($var)) {
             $tags = [$var];
         }
-        if (!$topic_obj = parent::get($id, $tags)) {
+        if (!$topicObject = parent::get($id, $tags)) {
             return $ret;
         }
-        $ret = $topic_obj;
+        $ret = $topicObject;
         if (!empty($var) && is_string($var)) {
-            $ret = @$topic_obj->getVar($var);
+            $ret = @$topicObject->getVar($var);
         }
 
         return $ret;
@@ -281,11 +281,11 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             return false;
         }
         $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $posts_obj   = $postHandler->getAll(new Criteria('topic_id', $topic_id));
-        foreach (array_keys($posts_obj) as $post_id) {
-            $postHandler->approve($posts_obj[$post_id]);
+        $postsObject   = $postHandler->getAll(new Criteria('topic_id', $topic_id));
+        foreach (array_keys($postsObject) as $post_id) {
+            $postHandler->approve($postsObject[$post_id]);
         }
-        unset($posts_obj);
+        unset($postsObject);
         $statsHandler = xoops_getModuleHandler('stats', 'newbb');
         $statsHandler->update($object->getVar('forum_id'), 'topic');
 
@@ -566,10 +566,10 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (empty($topic_id)) {
             return false;
         }
-        $post_obj = $this->getTopPost($topic_id);
+        $postObject = $this->getTopPost($topic_id);
         /** @var \NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $postHandler->delete($post_obj, false, $force);
+        $postHandler->delete($postObject, false, $force);
 
         $newbbConfig = newbbLoadConfig();
         /** @var \TagTagHandler $tagHandler */
@@ -593,7 +593,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     {
         static $_cachedTopicPerms;
         include_once __DIR__ . '/../include/functions.user.php';
-        if (newbb_isAdmin($forum)) {
+        if (newbbIsAdmin($forum)) {
             return true;
         }
 

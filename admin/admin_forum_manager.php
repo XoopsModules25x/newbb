@@ -61,12 +61,12 @@ switch ($op) {
                 $cid = abs((int)$dest);
                 $pid = 0;
             }
-            $forum_obj = $forumHandler->get($forum_id);
-            $forum_obj->setVar('cat_id', $cid);
-            $forum_obj->setVar('parent_forum', $pid);
-            $forumHandler->insert($forum_obj);
-            if ($forumHandler->insert($forum_obj)) {
-                if ($cid !== $forum_obj->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
+            $forumObject = $forumHandler->get($forum_id);
+            $forumObject->setVar('cat_id', $cid);
+            $forumObject->setVar('parent_forum', $pid);
+            $forumHandler->insert($forumObject);
+            if ($forumHandler->insert($forumObject)) {
+                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
@@ -107,14 +107,14 @@ switch ($op) {
                 $sql          = '    UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '    SET forum_id=' . Request::getInt('dest_forum', 0, 'POST') . "    WHERE forum_id=$forum_id";
                 $result_topic = $GLOBALS['xoopsDB']->queryF($sql);
 
-                $forum_obj = $forumHandler->get($forum_id);
+                $forumObject = $forumHandler->get($forum_id);
                 $forumHandler->updateAll('parent_forum', Request::getInt('dest_forum', 0, 'POST'), new Criteria('parent_forum', $forum_id));
-                if ($cid !== $forum_obj->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
+                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
-                $forumHandler->delete($forum_obj);
+                $forumHandler->delete($forumObject);
 
                 $forumHandler->synchronization($forum_dest);
                 unset($forum_dest);
@@ -146,28 +146,28 @@ switch ($op) {
     case 'save':
 
         if ($forum_id) {
-            $forum_obj = $forumHandler->get($forum_id);
+            $forumObject = $forumHandler->get($forum_id);
             $message   = _AM_NEWBB_FORUMUPDATE;
         } else {
-            $forum_obj = $forumHandler->create();
+            $forumObject = $forumHandler->create();
             $message   = _AM_NEWBB_FORUMCREATED;
         }
 
-        $forum_obj->setVar('forum_name', Request::getString('forum_name', '', 'POST'));
-        $forum_obj->setVar('forum_desc', Request::getString('forum_desc', '', 'POST'));
-        $forum_obj->setVar('forum_order', Request::getInt('forum_order', 0, 'POST'));
-        $forum_obj->setVar('forum_moderator', Request::getArray('forum_moderator', [], 'POST'));
-        $forum_obj->setVar('parent_forum', Request::getInt('parent_forum', 0, 'POST'));
-        $forum_obj->setVar('attach_maxkb', Request::getInt('attach_maxkb', 0, 'POST'));
-        $forum_obj->setVar('attach_ext', Request::getString('attach_ext', '', 'POST'));
-        $forum_obj->setVar('hot_threshold', Request::getInt('hot_threshold', 0, 'POST'));
+        $forumObject->setVar('forum_name', Request::getString('forum_name', '', 'POST'));
+        $forumObject->setVar('forum_desc', Request::getString('forum_desc', '', 'POST'));
+        $forumObject->setVar('forum_order', Request::getInt('forum_order', 0, 'POST'));
+        $forumObject->setVar('forum_moderator', Request::getArray('forum_moderator', [], 'POST'));
+        $forumObject->setVar('parent_forum', Request::getInt('parent_forum', 0, 'POST'));
+        $forumObject->setVar('attach_maxkb', Request::getInt('attach_maxkb', 0, 'POST'));
+        $forumObject->setVar('attach_ext', Request::getString('attach_ext', '', 'POST'));
+        $forumObject->setVar('hot_threshold', Request::getInt('hot_threshold', 0, 'POST'));
         if (Request::getInt('parent_forum', 0, 'POST')) {
-            $parent_obj      = $forumHandler->get(Request::getInt('parent_forum', 0, 'POST'), ['cat_id']);
-            $_POST['cat_id'] = $parent_obj->getVar('cat_id');
+            $parentObject      = $forumHandler->get(Request::getInt('parent_forum', 0, 'POST'), ['cat_id']);
+            $_POST['cat_id'] = $parentObject->getVar('cat_id');
         }
-        $forum_obj->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
+        $forumObject->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
 
-        if ($forumHandler->insert($forum_obj)) {
+        if ($forumHandler->insert($forumObject)) {
             $cacheHelper->delete('forum');
             if (Request::getInt('perm_template', 0, 'POST')) {
                 /** @var \NewbbPermissionHandler $grouppermHandler */
@@ -180,11 +180,11 @@ switch ($op) {
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
                         $ids = $grouppermHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
-                        if (!in_array($forum_obj->getVar('forum_id'), $ids)) {
+                        if (!in_array($forumObject->getVar('forum_id'), $ids)) {
                             if (empty($perm_template[$group][$perm])) {
-                                $grouppermHandler->deleteRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $grouppermHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {
-                                $grouppermHandler->addRight($perm, $forum_obj->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $grouppermHandler->addRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             }
                         }
                     }
@@ -192,12 +192,12 @@ switch ($op) {
             }
             redirect_header('admin_forum_manager.php', 2, $message);
         } else {
-            redirect_header('admin_forum_manager.php?op=mod&amp;forum=' . $forum_obj->getVar('forum_id') . '', 2, _AM_NEWBB_FORUM_ERROR);
+            redirect_header('admin_forum_manager.php?op=mod&amp;forum=' . $forumObject->getVar('forum_id') . '', 2, _AM_NEWBB_FORUM_ERROR);
         }
         break;
 
     case 'mod':
-        $forum_obj = $forumHandler->get($forum_id);
+        $forumObject = $forumHandler->get($forum_id);
         include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
 
@@ -206,8 +206,8 @@ switch ($op) {
             xoops_confirm(['op' => 'del', 'forum' => Request::getInt('forum', 0, 'GET'), 'confirm' => 1], 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
             break;
         } else {
-            $forum_obj = $forumHandler->get(Request::getInt('forum', 0, 'POST'));
-            $forumHandler->delete($forum_obj);
+            $forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'));
+            $forumHandler->delete($forumObject);
             $cacheHelper->delete('forum');
             redirect_header('admin_forum_manager.php?op=manage', 1, _AM_NEWBB_FORUMREMOVED);
         }
@@ -220,9 +220,9 @@ switch ($op) {
         if (!$parent_forum && !$cat_id) {
             break;
         }
-        $forum_obj = $forumHandler->create();
-        $forum_obj->setVar('parent_forum', $parent_forum);
-        $forum_obj->setVar('cat_id', $cat_id);
+        $forumObject = $forumHandler->create();
+        $forumObject->setVar('parent_forum', $parent_forum);
+        $forumObject->setVar('cat_id', $cat_id);
         include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
 
@@ -260,14 +260,14 @@ switch ($op) {
             $cat_edit_link  = '<a href="admin_cat_manager.php?op=mod&amp;cat_id=' . $cat_id . '">' . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
             $cat_del_link   = '<a href="admin_cat_manager.php?op=del&amp;cat_id=' . $cat_id . '">' . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
             $forum_add_link = '<a href="admin_forum_manager.php?op=addforum&amp;cat_id=' . $cat_id . '">' . newbbDisplayImage('new_forum') . '</a>';
-            $echo .= "<tr class='even' align='left'>";
-            $echo .= "<td width='100%' colspan='2'><strong>" . $cat_link . '</strong></td>';
-            $echo .= "<td align='center'>" . $cat_edit_link . '</td>';
-            $echo .= "<td align='center'>" . $cat_del_link . '</td>';
-            $echo .= "<td align='center'>" . $forum_add_link . '</td>';
-            $echo .= '<td></td>';
-            $echo .= '<td></td>';
-            $echo .= '</tr>';
+            $echo           .= "<tr class='even' align='left'>";
+            $echo           .= "<td width='100%' colspan='2'><strong>" . $cat_link . '</strong></td>';
+            $echo           .= "<td align='center'>" . $cat_edit_link . '</td>';
+            $echo           .= "<td align='center'>" . $cat_del_link . '</td>';
+            $echo           .= "<td align='center'>" . $forum_add_link . '</td>';
+            $echo           .= '<td></td>';
+            $echo           .= '<td></td>';
+            $echo           .= '</tr>';
             if (!isset($forums[$c])) {
                 continue;
             }
@@ -282,14 +282,14 @@ switch ($op) {
                 $f_merge_link = '<a href="admin_forum_manager.php?op=mergeforum&amp;forum=' . $f . '">' . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . '</a>';
 
                 $class = (($i++) % 2) ? 'odd' : 'even';
-                $echo .= "<tr class='" . $class . "' align='left'><td></td>";
-                $echo .= '<td><strong>' . $f_link . '</strong></td>';
-                $echo .= "<td align='center'>" . $f_edit_link . '</td>';
-                $echo .= "<td align='center'>" . $f_del_link . '</td>';
-                $echo .= "<td align='center'>" . $sf_add_link . '</td>';
-                $echo .= "<td align='center'>" . $f_move_link . '</td>';
-                $echo .= "<td align='center'>" . $f_merge_link . '</td>';
-                $echo .= '</tr>';
+                $echo  .= "<tr class='" . $class . "' align='left'><td></td>";
+                $echo  .= '<td><strong>' . $f_link . '</strong></td>';
+                $echo  .= "<td align='center'>" . $f_edit_link . '</td>';
+                $echo  .= "<td align='center'>" . $f_del_link . '</td>';
+                $echo  .= "<td align='center'>" . $sf_add_link . '</td>';
+                $echo  .= "<td align='center'>" . $f_move_link . '</td>';
+                $echo  .= "<td align='center'>" . $f_merge_link . '</td>';
+                $echo  .= '</tr>';
             }
         }
         unset($forums, $categories);

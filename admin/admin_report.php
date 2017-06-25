@@ -59,10 +59,10 @@ switch ($op) {
             if (!$value) {
                 continue;
             }
-            $report_obj = $reportHandler->get($rid);
-            $report_obj->setVar('report_result', 1);
-            $report_obj->setVar('report_memo', $report_memos[$rid]);
-            $reportHandler->insert($report_obj);
+            $reportObject = $reportHandler->get($rid);
+            $reportObject->setVar('report_result', 1);
+            $reportObject->setVar('report_memo', $report_memos[$rid]);
+            $reportHandler->insert($reportObject);
         }
         // irmtfan add message
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTSAVE);
@@ -79,8 +79,8 @@ switch ($op) {
             if (!$value) {
                 continue;
             }
-            if ($report_obj = $reportHandler->get($rid)) {
-                $reportHandler->delete($report_obj);
+            if ($reportObject = $reportHandler->get($rid)) {
+                $reportHandler->delete($reportObject);
             }
         }
         // irmtfan add message
@@ -150,7 +150,7 @@ switch ($op) {
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
             $uid           = (int)$report['reporter_uid'];
-            $reporter_name = newbb_getUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
+            $reporter_name = newbbGetUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
 
             echo "<td align='center'>" . $reporter . $report['reporter_ip'] . '</td>';

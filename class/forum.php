@@ -52,7 +52,7 @@ class NewbbForum extends XoopsObject
             return $ret;
         }
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');
-        $moderators = newbb_getUnameFromIds($valid_moderators, !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
+        $moderators = newbbGetUnameFromIds($valid_moderators, !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
         $ret        = implode(', ', $moderators);
 
         return $ret;
@@ -405,7 +405,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             if ($excerpt == 0) {
                 $topic_excerpt = '';
-            } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbb_isAdmin($forum)) {
+            } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbbIsAdmin($forum)) {
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = xoops_substr(newbb_html2text($myts->displayTarea($myrow['post_text'])), 0, $excerpt);
@@ -458,9 +458,9 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
         }// irmtfan while end
         // START irmtfan move to a for loop
-        $posters_name = newbb_getUnameFromIds(array_keys($posters), $GLOBALS['xoopsModuleConfig']['show_realname'], true);
-        //$topic_poster = newbb_getUnameFromId($myrow['topic_poster'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
-        //$topic_last_poster = newbb_getUnameFromId($myrow['uid'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
+        $posters_name = newbbGetUnameFromIds(array_keys($posters), $GLOBALS['xoopsModuleConfig']['show_realname'], true);
+        //$topic_poster = newbbGetUnameFromId($myrow['topic_poster'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
+        //$topic_last_poster = newbbGetUnameFromId($myrow['uid'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
         $topic_isRead = newbb_isRead('topic', $reads);
         foreach (array_keys($topics) as $id) {
             $topics[$id]['topic_read'] = empty($topic_isRead[$id]) ? 0 : 1; // add topic-read/topic-new smarty variable
@@ -611,7 +611,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         include_once __DIR__ . '/../include/functions.user.php';
-        if (newbb_isAdmin($forum)) {
+        if (newbbIsAdmin($forum)) {
             return true;
         }
         //if ($GLOBALS["xoopsUserIsAdmin"] && $xoopsModule->getVar("dirname") === "newbb") {
@@ -635,7 +635,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         // START irmtfan commented and removed
         //if ("moderate" === $type) {
         //require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');
-        //$permission = newbb_isModerator($forum);
+        //$permission = newbbIsModerator($forum);
         //} else {
         $forum_id = $forum->getVar('forum_id');
         /** @var \NewbbPermissionHandler $permHandler */
@@ -849,7 +849,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         global $myts;
 
         $posts     = [];
-        $posts_obj = [];
+        $postsObject = [];
         foreach (array_keys($forums) as $id) {
             $posts[] = $forums[$id]['forum_last_post_id'];
         }
@@ -900,7 +900,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
         $forum_isread = newbb_isRead('forum', $reads);
-        $users_linked = newbb_getUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
+        $users_linked = newbbGetUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
         $forums_array   = [];
         $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
@@ -982,12 +982,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (!is_array($tags) || count($tags) === 0) {
             $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
-        $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
+        $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
         require_once __DIR__ . '/tree.php';
         $forums_structured = [];
-        foreach (array_keys($forums_obj) as $key) {
-            $forums_structured[$forums_obj[$key]->getVar('cat_id')][$key] = $forums_obj[$key];
+        foreach (array_keys($forumsObject) as $key) {
+            $forums_structured[$forumsObject[$key]->getVar('cat_id')][$key] = $forumsObject[$key];
         }
 
         foreach (array_keys($forums_structured) as $cid) {
@@ -1018,13 +1018,13 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (!is_array($tags) || count($tags) === 0) {
             $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
-        $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
+        $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
         require_once __DIR__ . '/tree.php';
         $forums_structured = [];
-        foreach (array_keys($forums_obj) as $key) {
-            $forum_obj                                             =& $forums_obj[$key];
-            $forums_structured[$forum_obj->getVar('cat_id')][$key] = $forums_obj[$key];
+        foreach (array_keys($forumsObject) as $key) {
+            $forumObject                                             =& $forumsObject[$key];
+            $forums_structured[$forumObject->getVar('cat_id')][$key] = $forumsObject[$key];
         }
         foreach (array_keys($forums_structured) as $cid) {
             $tree              = new NewbbObjectTree($forums_structured[$cid]);

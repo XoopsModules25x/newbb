@@ -32,15 +32,15 @@ $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 /** @var NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 if (empty($topic_id)) {
-    $forum_obj = null;
+    $forumObject = null;
 } else {
-    $topic_obj = $topicHandler->get($topic_id);
-    $forum_id  = $topic_obj->getVar('forum_id');
-    $forum_obj = $forumHandler->get($forum_id);
+    $topicObject = $topicHandler->get($topic_id);
+    $forum_id  = $topicObject->getVar('forum_id');
+    $forumObject = $forumHandler->get($forum_id);
 }
-$isadmin = newbb_isAdmin($forum_obj);
+$isAdmin = newbbIsAdmin($forumObject);
 
-if (!$isadmin) {
+if (!$isAdmin) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
@@ -51,15 +51,15 @@ switch ($op) {
         $topics = [];
         $forums = [];
         foreach ($post_id as $post) {
-            $post_obj = $postHandler->get($post);
-            if ($post_obj->getVar('topic_id') < 1) {
+            $postObject = $postHandler->get($post);
+            if ($postObject->getVar('topic_id') < 1) {
                 continue;
             }
 
-            $postHandler->approve($post_obj, true);
-            $topics[$post_obj->getVar('topic_id')] = 1;
-            $forums[$post_obj->getVar('forum_id')] = 1;
-            unset($post_obj);
+            $postHandler->approve($postObject, true);
+            $topics[$postObject->getVar('topic_id')] = 1;
+            $forums[$postObject->getVar('forum_id')] = 1;
+            unset($postObject);
         }
         foreach (array_keys($topics) as $topic) {
             $topicHandler->synchronization($topic);
@@ -74,16 +74,16 @@ switch ($op) {
         $topics    = [];
         $forums    = [];
         $criteria  = new Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
-        $posts_obj = $postHandler->getObjects($criteria, true);
+        $postsObject = $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
-            /** @var \NewbbPost $post_obj */
-            $post_obj = $posts_obj[$post];
-            if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {
+            /** @var \NewbbPost $postObject */
+            $postObject = $postsObject[$post];
+            if (!empty($topic_id) && $topic_id !== $postObject->getVar('topic_id')) {
                 continue;
             }
-            $postHandler->approve($post_obj);
-            $topics[$post_obj->getVar('topic_id')] = $post;
-            $forums[$post_obj->getVar('forum_id')] = 1;
+            $postHandler->approve($postObject);
+            $topics[$postObject->getVar('topic_id')] = $post;
+            $forums[$postObject->getVar('forum_id')] = 1;
         }
         foreach (array_keys($topics) as $topic) {
             $topicHandler->synchronization($topic);
@@ -107,19 +107,19 @@ switch ($op) {
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
             $tags = [];
-            /** @var \NewbbPost[] $posts_obj [$post] */
-            $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
-            $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $posts_obj[$post]->getVar('topic_id') . '&amp;forum=' . $posts_obj[$post]->getVar('forum_id');
-            $tags['FORUM_NAME']  = $forum_list[$posts_obj[$post]->getVar('forum_id')];
-            $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $posts_obj[$post]->getVar('forum_id');
+            /** @var \NewbbPost[] $postsObject [$post] */
+            $tags['THREAD_NAME'] = $topic_list[$postsObject[$post]->getVar('topic_id')];
+            $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $postsObject[$post]->getVar('topic_id') . '&amp;forum=' . $postsObject[$post]->getVar('forum_id');
+            $tags['FORUM_NAME']  = $forum_list[$postsObject[$post]->getVar('forum_id')];
+            $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $postsObject[$post]->getVar('forum_id');
             $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post;
-            $notificationHandler->triggerEvent('thread', $posts_obj[$post]->getVar('topic_id'), 'new_post', $tags);
-            $notificationHandler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_post', $tags);
+            $notificationHandler->triggerEvent('thread', $postsObject[$post]->getVar('topic_id'), 'new_post', $tags);
+            $notificationHandler->triggerEvent('forum', $postsObject[$post]->getVar('forum_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
-            $tags['POST_CONTENT'] = $posts_obj[$post]->getVar('post_text');
-            $tags['POST_NAME']    = $posts_obj[$post]->getVar('subject');
+            $tags['POST_CONTENT'] = $postsObject[$post]->getVar('post_text');
+            $tags['POST_NAME']    = $postsObject[$post]->getVar('subject');
             $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
-            $notificationHandler->triggerEvent('forum', $posts_obj[$post]->getVar('forum_id'), 'new_fullpost', $tags);
+            $notificationHandler->triggerEvent('forum', $postsObject[$post]->getVar('forum_id'), 'new_fullpost', $tags);
         }
         break;
     case 'delete':
@@ -128,14 +128,14 @@ switch ($op) {
         $topics = [];
         $forums = [];
         foreach ($post_id as $post) {
-            $post_obj = $postHandler->get($post);
-            if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {
+            $postObject = $postHandler->get($post);
+            if (!empty($topic_id) && $topic_id !== $postObject->getVar('topic_id')) {
                 continue;
             }
-            $topics[$post_obj->getVar('topic_id')] = 1;
-            $forums[$post_obj->getVar('forum_id')] = 1;
-            $postHandler->delete($post_obj, true);
-            unset($post_obj);
+            $topics[$postObject->getVar('topic_id')] = 1;
+            $forums[$postObject->getVar('forum_id')] = 1;
+            $postHandler->delete($postObject, true);
+            unset($postObject);
         }
         foreach (array_keys($topics) as $topic) {
             $topicHandler->synchronization($topic);
@@ -145,28 +145,28 @@ switch ($op) {
         }
         break;
     case 'split':
-        /** @var \NewbbPost $post_obj */
-        $post_obj = $postHandler->get($post_id);
-        if (0 === count($post_id) || $post_obj->isTopic()) {
+        /** @var \NewbbPost $postObject */
+        $postObject = $postHandler->get($post_id);
+        if (0 === count($post_id) || $postObject->isTopic()) {
             break;
         }
-        $topic_id = $post_obj->getVar('topic_id');
+        $topic_id = $postObject->getVar('topic_id');
 
         $newtopic = $topicHandler->create();
-        $newtopic->setVar('topic_title', $post_obj->getVar('subject'), true);
-        $newtopic->setVar('topic_poster', $post_obj->getVar('uid'), true);
-        $newtopic->setVar('forum_id', $post_obj->getVar('forum_id'), true);
-        $newtopic->setVar('topic_time', $post_obj->getVar('post_time'), true);
-        $newtopic->setVar('poster_name', $post_obj->getVar('poster_name'), true);
+        $newtopic->setVar('topic_title', $postObject->getVar('subject'), true);
+        $newtopic->setVar('topic_poster', $postObject->getVar('uid'), true);
+        $newtopic->setVar('forum_id', $postObject->getVar('forum_id'), true);
+        $newtopic->setVar('topic_time', $postObject->getVar('post_time'), true);
+        $newtopic->setVar('poster_name', $postObject->getVar('poster_name'), true);
         $newtopic->setVar('approved', 1, true);
         $topicHandler->insert($newtopic, true);
         $new_topic_id = $newtopic->getVar('topic_id');
 
-        $pid = $post_obj->getVar('pid');
+        $pid = $postObject->getVar('pid');
 
-        $post_obj->setVar('topic_id', $new_topic_id, true);
-        $post_obj->setVar('pid', 0, true);
-        $postHandler->insert($post_obj);
+        $postObject->setVar('topic_id', $new_topic_id, true);
+        $postObject->setVar('pid', 0, true);
+        $postHandler->insert($postObject);
 
         /* split a single post */
         if ($mode === 1) {
@@ -211,7 +211,7 @@ switch ($op) {
             }
         }
 
-        $forum_id = $post_obj->getVar('forum_id');
+        $forum_id = $postObject->getVar('forum_id');
         $topicHandler->synchronization($topic_id);
         $topicHandler->synchronization($new_topic_id);
         $sql    = sprintf('UPDATE "%s" SET forum_topics = forum_topics+1 WHERE forum_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);

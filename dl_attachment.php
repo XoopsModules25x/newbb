@@ -32,18 +32,18 @@ if (!$approved = $forumpost->getVar('approved')) {
 }
 /** @var NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$topic_obj    = $topicHandler->getByPost($post_id);
-$topic_id     = $topic_obj->getVar('topic_id');
-if (!$approved = $topic_obj->getVar('approved')) {
+$topicObject    = $topicHandler->getByPost($post_id);
+$topic_id     = $topicObject->getVar('topic_id');
+if (!$approved = $topicObject->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 /** @var NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$forum_obj    = $forumHandler->get($topic_obj->getVar('forum_id'));
-if (!$forumHandler->getPermission($forum_obj)) {
+$forumObject    = $forumHandler->get($topicObject->getVar('forum_id'));
+if (!$forumHandler->getPermission($forumObject)) {
     exit(_MD_NEWBB_NORIGHTTOACCESS);
 }
-if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
+if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'view')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 

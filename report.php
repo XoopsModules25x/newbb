@@ -86,11 +86,11 @@ if (Request::hasVar('submit', 'POST')) {
             $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             if (empty($forum)) {
             }
-            $forum_obj = $forumHandler->get($forum);
+            $forumObject = $forumHandler->get($forum);
 
-            if (is_object($forum_obj)) {
-                $mods          = $forum_obj->getVar('forum_moderator');
-                $emails        = [];
+            if (is_object($forumObject)) {
+                $mods   = $forumObject->getVar('forum_moderator');
+                $emails = [];
                 /** @var \XoopsMemberHandler $memberHandler */
                 $memberHandler = xoops_getHandler('member');
                 foreach ($mods as $mod) {
@@ -125,8 +125,8 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 
 $postHandler = xoops_getModuleHandler('post', 'newbb');
-$post_obj    = $postHandler->get($post_id);
-$forum       = $post_obj->getVar('forum_id');
+$postObject    = $postHandler->get($post_id);
+$forum       = $postObject->getVar('forum_id');
 
 //$report_form->addElement(new XoopsFormHidden('pid', $pid));
 $report_form->addElement(new XoopsFormHidden('post_id', $post_id));
@@ -145,20 +145,20 @@ $button_tray->addElement($cancel_button);
 $report_form->addElement($button_tray);
 $report_form->display();
 
-$r_subject = $post_obj->getVar('subject', 'E');
-if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_obj->getVar('post_karma') > 0) {
-    $r_message = sprintf(_MD_NEWBB_KARMA_REQUIREMENT, '***', $post_obj->getVar('post_karma')) . '</div>';
-} elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $post_obj->getVar('require_reply')) {
+$r_subject = $postObject->getVar('subject', 'E');
+if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $postObject->getVar('post_karma') > 0) {
+    $r_message = sprintf(_MD_NEWBB_KARMA_REQUIREMENT, '***', $postObject->getVar('post_karma')) . '</div>';
+} elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $postObject->getVar('require_reply')) {
     $r_message = _MD_NEWBB_REPLY_REQUIREMENT;
 } else {
-    $r_message = $post_obj->getVar('post_text');
+    $r_message = $postObject->getVar('post_text');
 }
 
-$r_date = formatTimestamp($post_obj->getVar('post_time'));
-if ($post_obj->getVar('uid')) {
-    $r_name = newbb_getUnameFromId($post_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
+$r_date = formatTimestamp($postObject->getVar('post_time'));
+if ($postObject->getVar('uid')) {
+    $r_name = newbbGetUnameFromId($postObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
-    $poster_name = $post_obj->getVar('poster_name');
+    $poster_name = $postObject->getVar('poster_name');
     $r_name      = empty($poster_name) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlSpecialChars($poster_name);
 }
 $r_content = _MD_NEWBB_SUBJECTC . ' ' . $r_subject . '<br>';

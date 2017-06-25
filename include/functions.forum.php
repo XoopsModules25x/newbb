@@ -135,17 +135,17 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $criteria     = new CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
-        $forums_obj = $forumHandler->getObjects($criteria);
+        $forumsObject = $forumHandler->getObjects($criteria);
         require_once $GLOBALS['xoops']->path('modules/newbb/class/tree.php');
-        $tree        = new NewbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
+        $tree        = new NewbbObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
-        foreach (array_keys($forums_obj) as $key) {
-            if (!$child = array_keys($tree->getAllChild($forums_obj[$key]->getVar('forum_id')))) {
+        foreach (array_keys($forumsObject) as $key) {
+            if (!$child = array_keys($tree->getAllChild($forumsObject[$key]->getVar('forum_id')))) {
                 continue;
             }
-            $forum_array[$forums_obj[$key]->getVar('forum_id')] = $child;
+            $forum_array[$forumsObject[$key]->getVar('forum_id')] = $child;
         }
-        unset($forums_obj, $tree, $criteria);
+        unset($forumsObject, $tree, $criteria);
 
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
         $cacheHelper->write('forum_sub', $forum_array);
@@ -186,23 +186,23 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $criteria     = new Criteria('1', 1);
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
-        $forums_obj = $forumHandler->getObjects($criteria);
+        $forumsObject = $forumHandler->getObjects($criteria);
         require_once $GLOBALS['xoops']->path('modules/newbb/class/tree.php');
-        $tree        = new NewbbObjectTree($forums_obj, 'forum_id', 'parent_forum');
+        $tree        = new NewbbObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
-        foreach (array_keys($forums_obj) as $key) {
-            $parent_forum = $forums_obj[$key]->getVar('parent_forum');
+        foreach (array_keys($forumsObject) as $key) {
+            $parent_forum = $forumsObject[$key]->getVar('parent_forum');
             if (!$parent_forum) {
                 continue;
             }
             if (isset($forum_array[$parent_forum])) {
-                $forum_array[$forums_obj[$key]->getVar('forum_id')]   = $forum_array[$parent_forum];
-                $forum_array[$forums_obj[$key]->getVar('forum_id')][] = $parent_forum;
+                $forum_array[$forumsObject[$key]->getVar('forum_id')]   = $forum_array[$parent_forum];
+                $forum_array[$forumsObject[$key]->getVar('forum_id')][] = $parent_forum;
             } else {
-                $forum_array[$forums_obj[$key]->getVar('forum_id')] = $tree->getParentForums($forums_obj[$key]->getVar('forum_id'));
+                $forum_array[$forumsObject[$key]->getVar('forum_id')] = $tree->getParentForums($forumsObject[$key]->getVar('forum_id'));
             }
         }
-        unset($forums_obj, $tree, $criteria);
+        unset($forumsObject, $tree, $criteria);
 
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
         $cacheHelper->write('forum_parent', $forum_array);

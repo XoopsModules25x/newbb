@@ -5,13 +5,14 @@
 /**
  * Class IpCheck
  */
-class ipcheck
+class IpCheck
 {
     public $ipin;
     public $ipout;
     public $ipver;
 
     // Return IP type.  4 for IPv4, 6 for IPv6, 0 for bad IP.
+
     /**
      * @param $ipValue
      */

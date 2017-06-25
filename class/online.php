@@ -22,7 +22,7 @@ class NewbbOnlineHandler
 {
     public $db;
     public $forum_id;
-    public $forum_object;
+    public $forumObject;
     public $topic_id;
     public $user_ids = [];
 
@@ -36,10 +36,10 @@ class NewbbOnlineHandler
         $this->db = $GLOBALS['xoopsDB'];
         if (is_object($forum)) {
             $this->forum_id     = $forum->getVar('forum_id');
-            $this->forum_object = $forum;
+            $this->forumObject = $forum;
         } else {
             $this->forum_id     = (int)$forum;
-            $this->forum_object = $forum;
+            $this->forumObject = $forum;
         }
         if (is_object($forumtopic)) {
             $this->topic_id = $forumtopic->getVar('topic_id');
@@ -118,13 +118,13 @@ class NewbbOnlineHandler
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;
-        $administrator_list      = newbb_isModuleAdministrators($users_id);
+        $administrator_list      = newbbIsModuleAdministrators($users_id);
         $moderator_list          = [];
         if ($member_list = array_diff(array_keys($administrator_list), $users_id)) {
-            if (is_object($this->forum_object)) {
-                $moderator_list = $this->forum_object->getVar('forum_moderator');
+            if (is_object($this->forumObject)) {
+                $moderator_list = $this->forumObject->getVar('forum_moderator');
             } else {
-                $moderator_list = newbb_isForumModerators($member_list);
+                $moderator_list = newbbIsForumModerators($member_list);
             }
         }
         foreach ($users_online as $uid => $user) {
@@ -178,13 +178,13 @@ class NewbbOnlineHandler
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;
-        $administrator_list      = newbb_isModuleAdministrators($users_id);
+        $administrator_list      = newbbIsModuleAdministrators($users_id);
         $moderator_list          = [];
         if ($member_list = array_diff($users_id, array_keys($administrator_list))) {
-            if (is_object($this->forum_object)) {
-                $moderator_list = $this->forum_object->getVar('forum_moderator');
+            if (is_object($this->forumObject)) {
+                $moderator_list = $this->forumObject->getVar('forum_moderator');
             } else {
-                $moderator_list = newbb_isForumModerators($member_list);
+                $moderator_list = newbbIsForumModerators($member_list);
             }
         }
 

@@ -165,7 +165,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         newbb_trackback_response(1, _MD_NEWBB_NORSS_DATA);
         //return $xmlrssHandler->get($rss);
     }
-    $users = newbb_getUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
+    $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
         /** @var \NewbbTypeHandler $typeHandler */
         $typeHandler = xoops_getModuleHandler('type', 'newbb');

@@ -79,7 +79,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
     {
         error_reporting(E_ALL);
         // if user is admin do not suspend
-        if (newbb_isAdmin($forum)) {
+        if (newbbIsAdmin($forum)) {
             return true;
         }
 

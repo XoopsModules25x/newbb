@@ -43,9 +43,9 @@ foreach (['topic_id', 'rate', 'forum'] as $var) {
 
 /** @var \NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$topic_obj    = $topicHandler->get($topic_id);
-if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post')
-    && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')) {
+$topicObject    = $topicHandler->get($topic_id);
+if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'post')
+    && !$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'reply')) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _NOPERM);
 }
@@ -80,14 +80,14 @@ if ($ratinguser !== 0) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_VOTEONCE);
     }
 }
-$rate_obj = $rateHandler->create();
-$rate_obj->setVar('rating', $rate * 2);
-$rate_obj->setVar('topic_id', $topic_id);
-$rate_obj->setVar('ratinguser', $ratinguser);
-$rate_obj->setVar('ratinghostname', $ip);
-$rate_obj->setVar('ratingtimestamp', time());
+$rateObject = $rateHandler->create();
+$rateObject->setVar('rating', $rate * 2);
+$rateObject->setVar('topic_id', $topic_id);
+$rateObject->setVar('ratinguser', $ratinguser);
+$rateObject->setVar('ratinghostname', $ip);
+$rateObject->setVar('ratingtimestamp', time());
 
-$ratingid = $rateHandler->insert($rate_obj);
+$ratingid = $rateHandler->insert($rateObject);
 
 $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);

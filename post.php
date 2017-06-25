@@ -47,23 +47,23 @@ $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $postHandler = xoops_getModuleHandler('post', 'newbb');
 
 if (!empty($isedit) && $post_id > 0) {
-    /** @var NewbbPost $post_obj */
-    $post_obj = $postHandler->get($post_id);
-    $topic_id = $post_obj->getVar('topic_id');
+    /** @var NewbbPost $postObject */
+    $postObject = $postHandler->get($post_id);
+    $topic_id = $postObject->getVar('topic_id');
 } else {
-    $post_obj = $postHandler->create();
+    $postObject = $postHandler->create();
 }
-$topic_obj = $topicHandler->get($topic_id);
-$forum_id  = $topic_id ? $topic_obj->getVar('forum_id') : $forum;
-$forum_obj = $forumHandler->get($forum_id);
-if (!$forumHandler->getPermission($forum_obj)) {
+$topicObject = $topicHandler->get($topic_id);
+$forum_id  = $topic_id ? $topicObject->getVar('forum_id') : $forum;
+$forumObject = $forumHandler->get($forum_id);
+if (!$forumHandler->getPermission($forumObject)) {
     redirect_header('index.php', 2, _NOPERM);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
-    $onlineHandler->init($forum_obj);
+    $onlineHandler->init($forumObject);
 }
 
 $error_message = [];
@@ -108,10 +108,10 @@ if (Request::getString('contents_submit', '', 'POST')) {
         }
     }
 
-    $isadmin = newbb_isAdmin($forum_obj);
+    $isAdmin = newbbIsAdmin($forumObject);
 
     $time_valid = true;
-    if (!$isadmin && !empty($GLOBALS['xoopsModuleConfig']['post_timelimit'])) {
+    if (!$isAdmin && !empty($GLOBALS['xoopsModuleConfig']['post_timelimit'])) {
         $last_post = newbb_getsession('LP');
         if (time() - $last_post < $GLOBALS['xoopsModuleConfig']['post_timelimit']) {
             $time_valid = false;
@@ -140,28 +140,28 @@ if (Request::getString('contents_submit', '', 'POST')) {
     if (!empty($isedit) && $post_id > 0) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
-        $topic_status = $topic_obj->getVar('topic_status');
-        if ($topicHandler->getPermission($forum_obj, $topic_status, 'edit')
-            && ($isadmin
-                || ($post_obj->checkTimelimit('edit_timelimit')
-                    && $post_obj->checkIdentity()))) {
+        $topic_status = $topicObject->getVar('topic_status');
+        if ($topicHandler->getPermission($forumObject, $topic_status, 'edit')
+            && ($isAdmin
+                || ($postObject->checkTimelimit('edit_timelimit')
+                    && $postObject->checkIdentity()))) {
         } else {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NEWBB_NORIGHTTOEDIT);
         }
 
         $delete_attach = Request::getArray('delete_attach', [], 'POST');
         if (is_array($delete_attach) && count($delete_attach) > 0) {
-            $post_obj->deleteAttachment($delete_attach);
+            $postObject->deleteAttachment($delete_attach);
         }
     } else {
         if ($topic_id) {
-            $topic_status = $topic_obj->getVar('topic_status');
-            if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
+            $topic_status = $topicObject->getVar('topic_status');
+            if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
                 redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NEWBB_NORIGHTTOREPLY);
             }
         } else {
             $topic_status = 0;
-            if (!$topicHandler->getPermission($forum_obj, $topic_status, 'post')) {
+            if (!$topicHandler->getPermission($forumObject, $topic_status, 'post')) {
                 redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}", 2, _MD_NEWBB_NORIGHTTOPOST);
             }
         }
@@ -176,56 +176,56 @@ if (Request::getString('contents_submit', '', 'POST')) {
             $uid = $GLOBALS['xoopsUser']->getVar('uid');
         }
         if (!empty($pid)) {
-            $post_obj->setVar('pid', $pid);
+            $postObject->setVar('pid', $pid);
         }
         if (!empty($topic_id)) {
-            $post_obj->setVar('topic_id', $topic_id);
+            $postObject->setVar('topic_id', $topic_id);
             $isreply = 1;
         }
-        $post_obj->setVar('poster_ip', Xmf\IPAddress::fromRequest()->asReadable());
-        $post_obj->setVar('uid', $uid);
-        $post_obj->setVar('post_time', time());
+        $postObject->setVar('poster_ip', Xmf\IPAddress::fromRequest()->asReadable());
+        $postObject->setVar('uid', $uid);
+        $postObject->setVar('post_time', time());
     }
 
-    $approved = $topicHandler->getPermission($forum_obj, $topic_status, 'noapprove');
-    $post_obj->setVar('approved', $approved);
+    $approved = $topicHandler->getPermission($forumObject, $topic_status, 'noapprove');
+    $postObject->setVar('approved', $approved);
 
-    $post_obj->setVar('forum_id', $forum_obj->getVar('forum_id'));
+    $postObject->setVar('forum_id', $forumObject->getVar('forum_id'));
 
     $subject       = xoops_trim(Request::getString('subject', '', 'POST'));
     $subject       = ($subject === '') ? _NOTITLE : $subject;
     $poster_name   = xoops_trim(Request::getString('poster_name', '', 'POST'));
     $dohtml        = Request::getInt('dohtml', 0, 'POST')
-                     && $topicHandler->getPermission($forum_obj, $topic_status, 'html');
+                     && $topicHandler->getPermission($forumObject, $topic_status, 'html');
     $dosmiley      = Request::getInt('dosmiley', 0, 'POST');
     $doxcode       = Request::getInt('doxcode', 0, 'POST') ? 1 : 0;
     $dobr          = Request::getInt('dobr', 0, 'POST') ? 1 : 0;
     $icon          = (Request::getString('icon', '', 'POST')
                       && is_file($GLOBALS['xoops']->path('images/subject/' . Request::getString('icon', '', 'POST'))) ? Request::getString('icon', '', 'POST') : '');
     $attachsig     = Request::getBool('attachsig', false, 'POST')
-                     && $topicHandler->getPermission($forum_obj, $topic_status, 'signature');
+                     && $topicHandler->getPermission($forumObject, $topic_status, 'signature');
     $view_require  = Request::getString('view_require', '', 'POST');
     $post_karma    = ($view_require === 'require_karma') ? Request::getInt('post_karma', 0, 'POST') : 0;
     $require_reply = ($view_require === 'require_reply');
-    $post_obj->setVar('subject', $subject);
+    $postObject->setVar('subject', $subject);
     $editwhy = xoops_trim(Request::getString('editwhy', '', 'POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
 
-    if ($dohtml && !newbb_isAdmin($forum_obj)) {
+    if ($dohtml && !newbbIsAdmin($forumObject)) {
         //$message=newbb_textFilter($message);
     }
-    $post_obj->setVar('post_text', $message);
-    $post_obj->setVar('post_karma', $post_karma);
-    $post_obj->setVar('require_reply', $require_reply);
-    $post_obj->setVar('poster_name', $poster_name);
-    $post_obj->setVar('dohtml', $dohtml);
-    $post_obj->setVar('dosmiley', $dosmiley);
-    $post_obj->setVar('doxcode', $doxcode);
-    $post_obj->setVar('dobr', $dobr);
-    $post_obj->setVar('icon', $icon);
-    $post_obj->setVar('attachsig', $attachsig);
-    $post_obj->setAttachment();
+    $postObject->setVar('post_text', $message);
+    $postObject->setVar('post_karma', $post_karma);
+    $postObject->setVar('require_reply', $require_reply);
+    $postObject->setVar('poster_name', $poster_name);
+    $postObject->setVar('dohtml', $dohtml);
+    $postObject->setVar('dosmiley', $dosmiley);
+    $postObject->setVar('doxcode', $doxcode);
+    $postObject->setVar('dobr', $dobr);
+    $postObject->setVar('icon', $icon);
+    $postObject->setVar('attachsig', $attachsig);
+    $postObject->setAttachment();
     if (!empty($post_id)) {
-        $post_obj->setPostEdit($poster_name, $editwhy);
+        $postObject->setPostEdit($poster_name, $editwhy);
     } // is reply
 
     //    $attachments_tmp = array();
@@ -242,19 +242,19 @@ if (Request::getString('contents_submit', '', 'POST')) {
     if (isset($attachments_tmp) && count($attachments_tmp)) {
         foreach ($attachments_tmp as $key => $attach) {
             if (rename(XOOPS_CACHE_PATH . '/' . $attachments_tmp[$key][0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]))) {
-                $post_obj->setAttachment($attach[0], $attach[1], $attach[2]);
+                $postObject->setAttachment($attach[0], $attach[1], $attach[2]);
             }
         }
     }
     $error_upload = '';
 
     if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] !== ''
-        && $topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
+        && $topicHandler->getPermission($forumObject, $topic_status, 'attach')) {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/uploader.php');
-        $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
+        $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new NewbbUploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
 
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
@@ -262,7 +262,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
                     $error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
                     break;
                 case 2:
-                    $error_message[] = sprintf(_MD_NEWBB_MAXKB, $forum_obj->getVar('attach_maxkb'));
+                    $error_message[] = sprintf(_MD_NEWBB_MAXKB, $forumObject->getVar('attach_maxkb'));
                     break;
                 default:
                     $error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
@@ -279,7 +279,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
                         if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
-                            $post_obj->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
+                            $postObject->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
                         }
                     }
                 }
@@ -289,38 +289,38 @@ if (Request::getString('contents_submit', '', 'POST')) {
         }
     }
 
-    $postid = $postHandler->insert($post_obj);
+    $postid = $postHandler->insert($postObject);
 
     if (!$postid) {
         include_once $GLOBALS['xoops']->path('header.php');
-        xoops_error($post_obj->getErrors());
+        xoops_error($postObject->getErrors());
         include_once $GLOBALS['xoops']->path('footer.php');
     }
     newbb_setsession('LP', time()); // Recording last post time
-    $topic_obj = $topicHandler->get($post_obj->getVar('topic_id'));
+    $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
     $uid       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-    if (newbb_isAdmin($forum_obj)
-        || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
+    if (newbbIsAdmin($forumObject)
+        || ($topicHandler->getPermission($forumObject, $topic_status, 'type')
             && ($topic_id == 0
-                || $uid == $topic_obj->getVar('topic_poster')))) {
-        $topic_obj->setVar('type_id', Request::getInt('type_id', 0, 'POST'));
+                || $uid == $topicObject->getVar('topic_poster')))) {
+        $topicObject->setVar('type_id', Request::getInt('type_id', 0, 'POST'));
     }
 
-    if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && $post_obj->isTopic()) {
-        $topic_obj->setVar('topic_tags', Request::getInt('topic_tags', 0, 'POST'));
+    if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && $postObject->isTopic()) {
+        $topicObject->setVar('topic_tags', Request::getInt('topic_tags', 0, 'POST'));
     }
-    $topicHandler->insert($topic_obj);
+    $topicHandler->insert($topicObject);
 
     // Set read mark
     if (!empty($isnew)) {
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
-        newbb_setRead('topic', $topic_obj->getVar('topic_id'), $postid);
-        if (!$post_obj->getVar('pid')) {
-            newbb_setRead('forum', $forum_obj->getVar('forum_id'), $postid);
+        newbb_setRead('topic', $topicObject->getVar('topic_id'), $postid);
+        if (!$postObject->getVar('pid')) {
+            newbb_setRead('forum', $forumObject->getVar('forum_id'), $postid);
         }
     }
 
-    //$post_obj->loadFilters(empty($isnew) ? 'update' : 'insert');
+    //$postObject->loadFilters(empty($isnew) ? 'update' : 'insert');
 
     // Define tags for notification message
     if (!empty($isnew) && $approved && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
@@ -329,14 +329,14 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
         $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
         include_once __DIR__ . '/include/notification.inc.php';
-        $forum_info         = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
+        $forum_info         = newbb_notify_iteminfo('forum', $forumObject->getVar('forum_id'));
         $tags['FORUM_NAME'] = $forum_info['name'];
         $tags['FORUM_URL']  = $forum_info['url'];
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         if (empty($isreply)) {
             // Notify of new thread
-            $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_thread', $tags);
+            $notificationHandler->triggerEvent('forum', $forumObject->getVar('forum_id'), 'new_thread', $tags);
         } else {
             // Notify of new post
             $notificationHandler->triggerEvent('thread', $topic_id, 'new_post', $tags);
@@ -346,11 +346,11 @@ if (Request::getString('contents_submit', '', 'POST')) {
             $notificationHandler->triggerEvent('thread', $topic_id, 'post', $_tags);
         }
         $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
-        $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_post', $tags);
+        $notificationHandler->triggerEvent('forum', $forumObject->getVar('forum_id'), 'new_post', $tags);
         $tags['POST_CONTENT'] = Request::getString('message', '', 'POST');
         $tags['POST_NAME']    = Request::getString('subject', '', 'POST');
         $notificationHandler->triggerEvent('global', 0, 'new_fullpost', $tags);
-        $notificationHandler->triggerEvent('forum', $forum_obj->getVar('forum_id'), 'new_fullpost', $tags);
+        $notificationHandler->triggerEvent('forum', $forumObject->getVar('forum_id'), 'new_fullpost', $tags);
     }
 
     // If user checked notification box, subscribe them to the
@@ -358,16 +358,16 @@ if (Request::getString('contents_submit', '', 'POST')) {
     if (!empty($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
         $notificationHandler = xoops_getHandler('notification');
         if (!Request::getInt('notify', 0, 'POST')) {
-            $notificationHandler->unsubscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
+            $notificationHandler->unsubscribe('thread', $postObject->getVar('topic_id'), 'new_post');
         } elseif (Request::getInt('notify', 0, 'POST') > 0) {
-            $notificationHandler->subscribe('thread', $post_obj->getVar('topic_id'), 'new_post');
+            $notificationHandler->subscribe('thread', $postObject->getVar('topic_id'), 'new_post');
         }
         // elseif ($_POST['notify']<0) keep it as it is
     }
 
     if ($approved) {
         if (!empty($GLOBALS['xoopsModuleConfig']['cache_enabled'])) {
-            newbb_setsession('t' . $post_obj->getVar('topic_id'), null);
+            newbb_setsession('t' . $postObject->getVar('topic_id'), null);
         }
         // Update user
         if ($uid > 0) {
@@ -389,12 +389,12 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $postid;
         $message  = _MD_NEWBB_THANKSSUBMIT . '<br>' . $error_upload;
     } else {
-        $redirect = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post_obj->getVar('forum_id');
+        $redirect = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $postObject->getVar('forum_id');
         $message  = _MD_NEWBB_THANKSSUBMIT . '<br>' . _MD_NEWBB_WAITFORAPPROVAL . '<br>' . $error_upload;
     }
 
     if ($op === 'add') {
-        redirect_header(XOOPS_URL . '/modules/newbb/polls.php?op=add&amp;forum=' . $post_obj->getVar('forum_id') . '&amp;topic_id=' . $post_obj->getVar('topic_id'), 1, _MD_NEWBB_ADDPOLL);
+        redirect_header(XOOPS_URL . '/modules/newbb/polls.php?op=add&amp;forum=' . $postObject->getVar('forum_id') . '&amp;topic_id=' . $postObject->getVar('topic_id'), 1, _MD_NEWBB_ADDPOLL);
     } else {
         redirect_header($redirect, 2, $message);
     }
@@ -423,17 +423,17 @@ if (Request::getString('contents_upload', null, 'POST')) {
     $error_upload = '';
     if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] !== '') {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/uploader.php');
-        $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
+        $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forum_obj->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new NewbbUploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
                 case 1:
                     $error_message[] = _MD_NEWBB_MAXUPLOADFILEINI;
                     break;
                 case 2:
-                    $error_message[] = sprintf(_MD_NEWBB_MAXKB, $forum_obj->getVar('attach_maxkb'));
+                    $error_message[] = sprintf(_MD_NEWBB_MAXKB, $forumObject->getVar('attach_maxkb'));
                     break;
                 default:
                     $error_message[] = _MD_NEWBB_UPLOAD_ERRNODEF;
@@ -476,15 +476,15 @@ if (Request::getString('contents_preview', Request::getString('contents_preview'
     $p_message = Request::getString('message', '', 'POST');
     $p_message = $myts->previewTarea($p_message, $dohtml, $dosmiley, $doxcode, 1, $dobr);
     $p_date    = formatTimestamp(time());
-    if ($post_obj->isNew()) {
+    if ($postObject->isNew()) {
         if (is_object($GLOBALS['xoopsUser'])) {
             $p_name = $GLOBALS['xoopsUser']->getVar('uname');
             if (!empty($GLOBALS['xoopsModuleConfig']['show_realname']) && $GLOBALS['xoopsUser']->getVar('name')) {
                 $p_name = $GLOBALS['xoopsUser']->getVar('name');
             }
         }
-    } elseif ($post_obj->getVar('uid')) {
-        $p_name = newbb_getUnameFromId($post_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
+    } elseif ($postObject->getVar('uid')) {
+        $p_name = newbbGetUnameFromId($postObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     }
     if (empty($p_name)) {
         $p_name = Request::getString('poster_name', '', 'POST') ? htmlspecialchars(Request::getString('poster_name', '', 'POST')) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
@@ -524,7 +524,7 @@ if (Request::getString('contents_upload', null, 'POST') || Request::getString('c
     if (!Request::getString('contents_upload', '', 'POST')) {
         $contents_preview = 1;
     }
-    $attachments = $post_obj->getAttachment();
+    $attachments = $postObject->getAttachment();
     $xoopsTpl->assign('error_message', implode('<br>', $error_message));
 
     include __DIR__ . '/include/form.post.php';

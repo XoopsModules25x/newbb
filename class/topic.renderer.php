@@ -163,7 +163,7 @@ class NewbbTopicRenderer
     /**
      * @param null $status
      */
-    public function _parseStatus($status = null)
+    public function myParseStatus($status = null)
     {
         switch ($status) {
             case 'digest':
@@ -403,7 +403,7 @@ class NewbbTopicRenderer
                     $val[] = 'all';
                 }
                 foreach ($val as $key => $status) {
-                    $this->_parseStatus($status);
+                    $this->myParseStatus($status);
                 }
                 // END irmtfan to accept multiple status
                 break;
@@ -991,7 +991,7 @@ class NewbbTopicRenderer
 
             if (empty($this->config['post_excerpt'])) {
                 $topic_excerpt = '';
-            } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbb_isAdmin($myrow['forum_id'])) {
+            } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbbIsAdmin($myrow['forum_id'])) {
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = xoops_substr(newbb_html2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
@@ -1050,7 +1050,7 @@ class NewbbTopicRenderer
             // forums
             $forums[$myrow['forum_id']] = 1;
         }
-        $posters_name = newbb_getUnameFromIds(array_keys($posters), $this->config['show_realname'], true);
+        $posters_name = newbbGetUnameFromIds(array_keys($posters), $this->config['show_realname'], true);
         $topic_isRead = newbb_isRead('topic', $reads);
         /*
         $type_list = array();

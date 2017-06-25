@@ -9,30 +9,30 @@
  * @package        module::newbb
  */
 
-global $xoopsModule, $myts, $xoopsUser, $forum_obj;
+global $xoopsModule, $myts, $xoopsUser, $forumObject;
 
-if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($GLOBALS['xoopsUser'])
+if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBALS['xoopsUser'])
     || !is_object($xoopsModule)) {
     return;
 }
 
-$forum_id    = $forum_obj->getVar('forum_id');
+$forum_id    = $forumObject->getVar('forum_id');
 $postHandler = xoops_getModuleHandler('post', 'newbb');
-$post_obj    = $postHandler->create();
-$post_obj->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
-$post_obj->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
-$post_obj->setVar('approved', 1);
-$post_obj->setVar('forum_id', $forum_id);
+$postObject    = $postHandler->create();
+$postObject->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
+$postObject->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
+$postObject->setVar('approved', 1);
+$postObject->setVar('forum_id', $forum_id);
 
 $subject = sprintf(_MD_NEWBB_WELCOME_SUBJECT, $GLOBALS['xoopsUser']->getVar('uname'));
-$post_obj->setVar('subject', $subject);
-$post_obj->setVar('dohtml', 1);
-$post_obj->setVar('dosmiley', 1);
-$post_obj->setVar('doxcode', 0);
-$post_obj->setVar('dobr', 1);
-$post_obj->setVar('icon', '');
-$post_obj->setVar('attachsig', 1);
-$post_obj->setVar('post_time', time());
+$postObject->setVar('subject', $subject);
+$postObject->setVar('dohtml', 1);
+$postObject->setVar('dosmiley', 1);
+$postObject->setVar('doxcode', 0);
+$postObject->setVar('dobr', 1);
+$postObject->setVar('icon', '');
+$postObject->setVar('attachsig', 1);
+$postObject->setVar('post_time', time());
 
 $categories = [];
 
@@ -116,13 +116,13 @@ foreach ($categories as $category) {
         }
     }
 }
-$post_obj->setVar('post_text', $message);
-$post_id = $postHandler->insert($post_obj);
+$postObject->setVar('post_text', $message);
+$post_id = $postHandler->insert($postObject);
 
 if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags                = [];
     $tags['THREAD_NAME'] = $subject;
-    $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;
+    $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $postObject->getVar('topic_id') . '&amp;forum=' . $forum_id;
     $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post_id;
     include_once __DIR__ . '/include/notification.inc.php';
     $forum_info         = newbb_notify_iteminfo('forum', $forum_id);

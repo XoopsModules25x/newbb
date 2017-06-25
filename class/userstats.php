@@ -116,7 +116,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler
 
                 return $object->getVar($this->keyName);
             }
-            $this->_loadHandler("write");
+            $this->loadHandler("write");
             if (!$changedVars = $this->_handler["write"]->cleanVars($object)) {
                 $object->setErrors("cleanVars failed");
 

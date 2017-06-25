@@ -48,7 +48,7 @@ $status = explode(',', $topic_renderer->vars['status']); // irmtfan to accept mu
 // irmtfan to accept multiple status
 $mode = count(array_intersect($status, ['active', 'pending', 'deleted'])) > 0 ? 2 : Request::getInt('mode', 0, 'GET');
 
-//$isadmin = $GLOBALS["xoopsUserIsAdmin"];
+//$isAdmin = $GLOBALS["xoopsUserIsAdmin"];
 /* Only admin has access to admin mode */
 if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
     $mode = 0;

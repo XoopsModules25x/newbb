@@ -161,9 +161,9 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
             return null;
         }
         if (1 == $this->mode) {
-            return $this->getRead_cookie($read_item);
+            return $this->getReadCookie($read_item);
         } else {
-            return $this->getRead_db($read_item, $uid);
+            return $this->getReadDb($read_item, $uid);
         }
     }
 
@@ -171,7 +171,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $item_id
      * @return mixed
      */
-    public function getRead_cookie($item_id)
+    public function getReadCookie($item_id)
     {
         $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_var  = $item_id;
@@ -186,7 +186,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $uid
      * @return bool|null
      */
-    public function getRead_db($read_item, $uid)
+    public function getReadDb($read_item, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS['xoopsUser'])) {
@@ -216,9 +216,9 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
             return true;
         }
         if (1 == $this->mode) {
-            return $this->setRead_cookie($read_item, $post_id);
+            return $this->setReadCookie($read_item, $post_id);
         } else {
-            return $this->setRead_db($read_item, $post_id, $uid);
+            return $this->setReadDb($read_item, $post_id, $uid);
         }
     }
 
@@ -226,7 +226,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $read_item
      * @param $post_id
      */
-    public function setRead_cookie($read_item, $post_id)
+    public function setReadCookie($read_item, $post_id)
     {
         $cookie_name          = ($this->type === 'forum') ? 'LF' : 'LT';
         $lastview             = newbb_getcookie($cookie_name, true);
@@ -240,7 +240,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $uid
      * @return bool|mixed
      */
-    public function setRead_db($read_item, $post_id, $uid)
+    public function setReadDb($read_item, $post_id, $uid)
     {
         if (empty($uid)) {
             if (is_object($GLOBALS['xoopsUser'])) {
@@ -268,7 +268,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param  null       $uid
      * @return array|null
      */
-    public function isRead_items(&$items, $uid = null)
+    public function isReadItems(&$items, $uid = null)
     {
         $ret = null;
         if (empty($this->mode)) {
@@ -276,9 +276,9 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
         }
 
         if (1 == $this->mode) {
-            $ret = $this->isRead_items_cookie($items);
+            $ret = $this->isReadItemsCookie($items);
         } else {
-            $ret = $this->isRead_items_db($items, $uid);
+            $ret = $this->isReadItemsDb($items, $uid);
         }
 
         return $ret;
@@ -288,7 +288,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $items
      * @return array
      */
-    public function isRead_items_cookie(&$items)
+    public function isReadItemsCookie(&$items)
     {
         $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
@@ -306,7 +306,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      * @param $uid
      * @return array
      */
-    public function isRead_items_db(&$items, $uid)
+    public function isReadItemsDb(&$items, $uid)
     {
         $ret = [];
         if (empty($items)) {
@@ -323,13 +323,13 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
 
         $criteria = new CriteriaCompo(new Criteria('uid', $uid));
         $criteria->add(new Criteria('read_item', '(' . implode(', ', array_map('intval', array_keys($items))) . ')', 'IN'));
-        $items_obj = $this->getAll($criteria, ['read_item', 'post_id']);
+        $itemsObject = $this->getAll($criteria, ['read_item', 'post_id']);
 
         $items_list = [];
-        foreach (array_keys($items_obj) as $key) {
-            $items_list[$items_obj[$key]->getVar('read_item')] = $items_obj[$key]->getVar('post_id');
+        foreach (array_keys($itemsObject) as $key) {
+            $items_list[$itemsObject[$key]->getVar('read_item')] = $itemsObject[$key]->getVar('post_id');
         }
-        unset($items_obj);
+        unset($itemsObject);
 
         foreach ($items as $key => $last_update) {
             $ret[$key] = (@$items_list[$key] >= $last_update);

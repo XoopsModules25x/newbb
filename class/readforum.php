@@ -139,11 +139,11 @@ class NewbbReadForumHandler extends NewbbReadHandler
 
         /** @var \NewbbForumHandler $itemHandler */
         $itemHandler = xoops_getModuleHandler('forum', 'newbb');
-        $items_obj   = $itemHandler->getAll(null, ['forum_last_post_id']);
-        foreach (array_keys($items_obj) as $key) {
-            $this->setRead_db($key, $items_obj[$key]->getVar('forum_last_post_id'), $uid);
+        $itemsObject   = $itemHandler->getAll(null, ['forum_last_post_id']);
+        foreach (array_keys($itemsObject) as $key) {
+            $this->setReadDb($key, $itemsObject[$key]->getVar('forum_last_post_id'), $uid);
         }
-        unset($items_obj);
+        unset($itemsObject);
 
         return true;
     }

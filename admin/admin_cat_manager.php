@@ -54,40 +54,40 @@ function newCategory()
 /**
  * editCategory()
  *
- * @param null|XoopsObject $category_obj
+ * @param null|XoopsObject $categoryObject
  * @internal param int $catid
  */
-function editCategory(XoopsObject $category_obj = null)
+function editCategory(XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
     $categoryHandler = xoops_getModuleHandler('category', 'newbb');
-    if (null === $category_obj) {
-        $category_obj = $categoryHandler->create();
+    if (null === $categoryObject) {
+        $categoryObject = $categoryHandler->create();
     }
     $groups_cat_access = null;
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-    if (!$category_obj->isNew()) {
-        $sform = new XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $category_obj->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
+    if (!$categoryObject->isNew()) {
+        $sform = new XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
     } else {
         $sform = new XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('PHP_SELF'));
-        $category_obj->setVar('cat_title', '');
-        $category_obj->setVar('cat_image', '');
-        $category_obj->setVar('cat_description', '');
-        $category_obj->setVar('cat_order', 0);
-        $category_obj->setVar('cat_url', 'http://xoops.org/modules/newbb/ newBB Support');
+        $categoryObject->setVar('cat_title', '');
+        $categoryObject->setVar('cat_image', '');
+        $categoryObject->setVar('cat_description', '');
+        $categoryObject->setVar('cat_order', 0);
+        $categoryObject->setVar('cat_url', 'http://xoops.org/modules/newbb/ newBB Support');
     }
 
-    $sform->addElement(new XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $category_obj->getVar('cat_order')), false);
-    $sform->addElement(new XoopsFormText(_AM_NEWBB_CATEGORY, 'title', 50, 80, $category_obj->getVar('cat_title', 'E')), true);
-    $sform->addElement(new XoopsFormDhtmlTextArea(_AM_NEWBB_CATEGORYDESC, 'cat_description', $category_obj->getVar('cat_description', 'E'), 10, 60), false);
+    $sform->addElement(new XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $categoryObject->getVar('cat_order')), false);
+    $sform->addElement(new XoopsFormText(_AM_NEWBB_CATEGORY, 'title', 50, 80, $categoryObject->getVar('cat_title', 'E')), true);
+    $sform->addElement(new XoopsFormDhtmlTextArea(_AM_NEWBB_CATEGORYDESC, 'cat_description', $categoryObject->getVar('cat_description', 'E'), 10, 60), false);
 
     $imgdir      = '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/category';
-    $cat_image   = $category_obj->getVar('cat_image');
+    $cat_image   = $categoryObject->getVar('cat_image');
     $cat_image   = empty($cat_image) ? 'blank.gif' : $cat_image;
     $graph_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . $imgdir . '/');
     array_unshift($graph_array, _NONE);
-    $cat_image_select = new XoopsFormSelect('', 'cat_image', $category_obj->getVar('cat_image'));
+    $cat_image_select = new XoopsFormSelect('', 'cat_image', $categoryObject->getVar('cat_image'));
     $cat_image_select->addOptionArray($graph_array);
     $cat_image_select->setExtra("onchange=\"showImgSelected('img', 'cat_image', '/" . $imgdir . "/', '', '" . XOOPS_URL . "')\"");
     $cat_image_tray = new XoopsFormElementTray(_AM_NEWBB_IMAGE, '&nbsp;');
@@ -95,8 +95,8 @@ function editCategory(XoopsObject $category_obj = null)
     $cat_image_tray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' />"));
     $sform->addElement($cat_image_tray);
 
-    $sform->addElement(new XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $category_obj->getVar('cat_url', 'E')), false);
-    $sform->addElement(new XoopsFormHidden('cat_id', $category_obj->getVar('cat_id')));
+    $sform->addElement(new XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $categoryObject->getVar('cat_url', 'E')), false);
+    $sform->addElement(new XoopsFormHidden('cat_id', $categoryObject->getVar('cat_id')));
 
     $button_tray = new XoopsFormElementTray('', '');
     $button_tray->addElement(new XoopsFormHidden('op', 'save'));
@@ -104,7 +104,7 @@ function editCategory(XoopsObject $category_obj = null)
     $butt_save = new XoopsFormButton('', '', _SUBMIT, 'submit');
     $butt_save->setExtra('onclick="this.form.elements.op.value=\'save\'"');
     $button_tray->addElement($butt_save);
-    if ($category_obj->getVar('cat_id')) {
+    if ($categoryObject->getVar('cat_id')) {
         $butt_delete = new XoopsFormButton('', '', _CANCEL, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'default\'"');
         $button_tray->addElement($butt_delete);
@@ -115,15 +115,15 @@ function editCategory(XoopsObject $category_obj = null)
 
 switch ($op) {
     case 'mod':
-        $category_obj = ($cat_id > 0) ? $categoryHandler->get($cat_id) : $categoryHandler->create();
+        $categoryObject = ($cat_id > 0) ? $categoryHandler->get($cat_id) : $categoryHandler->create();
         //        if (!$newXoopsModuleGui) {
-        //            //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
+        //            //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $categoryObject->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
         //            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . '</legend>';
         //        } else {
         $adminObject->displayNavigation(basename(__FILE__));
         //        }
         echo '<br>';
-        editCategory($category_obj);
+        editCategory($categoryObject);
         break;
 
     case 'del':
@@ -131,9 +131,9 @@ switch ($op) {
             xoops_confirm(['op' => 'del', 'cat_id' => Request::getInt('cat_id', 0, 'GET'), 'confirm' => 1], 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
         } else {
-            $category_obj = $categoryHandler->create(false);
-            $category_obj->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
-            $categoryHandler->delete($category_obj);
+            $categoryObject = $categoryHandler->create(false);
+            $categoryObject->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
+            $categoryHandler->delete($categoryObject);
 
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
         }
@@ -143,25 +143,25 @@ switch ($op) {
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
         $cacheHelper->delete('permission_category');
         if ($cat_id) {
-            $category_obj = $categoryHandler->get($cat_id);
+            $categoryObject = $categoryHandler->get($cat_id);
             $message      = _AM_NEWBB_CATEGORYUPDATED;
         } else {
-            $category_obj = $categoryHandler->create();
+            $categoryObject = $categoryHandler->create();
             $message      = _AM_NEWBB_CATEGORYCREATED;
         }
 
-        $category_obj->setVar('cat_title', Request::getString('title', '', 'POST'));
-        $category_obj->setVar('cat_image', Request::getString('cat_image', '', 'POST'));
-        $category_obj->setVar('cat_order', Request::getInt('cat_order', 0, 'POST'));
-        $category_obj->setVar('cat_description', Request::getText('cat_description', '', 'POST'));
-        $category_obj->setVar('cat_url', Request::getString('cat_url', '', 'POST'));
+        $categoryObject->setVar('cat_title', Request::getString('title', '', 'POST'));
+        $categoryObject->setVar('cat_image', Request::getString('cat_image', '', 'POST'));
+        $categoryObject->setVar('cat_order', Request::getInt('cat_order', 0, 'POST'));
+        $categoryObject->setVar('cat_description', Request::getText('cat_description', '', 'POST'));
+        $categoryObject->setVar('cat_url', Request::getString('cat_url', '', 'POST'));
 
-        $cat_isNew = $category_obj->isNew();
-        if (!$categoryHandler->insert($category_obj)) {
+        $cat_isNew = $categoryObject->isNew();
+        if (!$categoryHandler->insert($categoryObject)) {
             $message = _AM_NEWBB_DATABASEERROR;
         }
-        if ($cat_id = $category_obj->getVar('cat_id') && $cat_isNew) {
-            $categoryHandler->applyPermissionTemplate($category_obj);
+        if ($cat_id = $categoryObject->getVar('cat_id') && $cat_isNew) {
+            $categoryHandler->applyPermissionTemplate($categoryObject);
         }
         redirect_header('admin_cat_manager.php', 2, $message);
         break;

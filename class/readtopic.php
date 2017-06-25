@@ -189,16 +189,16 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        $items_obj  = $itemHandler->getAll($criteria_topic, ['topic_last_post_id']);
-        $sticky_obj = $itemHandler->getAll($criteria_sticky, ['topic_last_post_id']);
-        $items_obj += $sticky_obj;
-        $items = [];
-        foreach (array_keys($items_obj) as $key) {
-            $items[$key] = $items_obj[$key]->getVar('topic_last_post_id');
+        $itemsObject  = $itemHandler->getAll($criteria_topic, ['topic_last_post_id']);
+        $stickyObject = $itemHandler->getAll($criteria_sticky, ['topic_last_post_id']);
+        $itemsObject  += $stickyObject;
+        $items      = [];
+        foreach (array_keys($itemsObject) as $key) {
+            $items[$key] = $itemsObject[$key]->getVar('topic_last_post_id');
         }
-        unset($items_obj, $sticky_obj);
+        unset($itemsObject, $stickyObject);
         foreach (array_keys($items) as $key) {
-            $this->setRead_db($key, $items[$key], $uid);
+            $this->setReadDb($key, $items[$key], $uid);
         }
 
         return true;

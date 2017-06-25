@@ -107,7 +107,7 @@ class NewbbUser
      */
     public function getUserbar()
     {
-        global $isadmin;
+        global $isAdmin;
 
         $userbar = [];
         if (empty($GLOBALS['xoopsModuleConfig']['userbar_enabled'])) {
@@ -126,7 +126,7 @@ class NewbbUser
                 'name' => _MD_NEWBB_PM
             ];
         }
-        if ($user->getVar('user_viewemail') || $isadmin) {
+        if ($user->getVar('user_viewemail') || $isAdmin) {
             $userbar['email'] = [
                 'link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');",
                 'name' => _MD_NEWBB_EMAIL

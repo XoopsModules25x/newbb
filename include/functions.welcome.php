@@ -22,7 +22,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
      */
     function newbb_welcome()
     {
-        global $forum_obj;
+        global $forumObject;
         $ret = '';
 
         $forumId = @$GLOBALS['xoopsModuleConfig']['welcome_forum'];
@@ -31,15 +31,15 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
         }
         /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $forum_obj    = $forumHandler->get($forumId);
-        if (!$forum_obj || !$forumHandler->getPermission($forum_obj)) {
-            unset($forum_obj);
+        $forumObject    = $forumHandler->get($forumId);
+        if (!$forumObject || !$forumHandler->getPermission($forumObject)) {
+            unset($forumObject);
 
             return false;
         }
 
         include __DIR__ . '/functions.welcome.inc.php';
-        unset($forum_obj);
+        unset($forumObject);
 
         return $ret;
     }

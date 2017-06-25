@@ -28,7 +28,7 @@ if (Request::getInt('mark_read', 0)) {
     redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
 }
 
-$viewcat         = Request::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
+$viewcat = Request::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
 /** @var \NewbbCategoryHandler $categoryHandler */
 $categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
@@ -38,12 +38,12 @@ if (!$viewcat) {
     $forum_index_title = '';
     $xoops_pagetitle   = $xoopsModule->getVar('name');
 } else {
-    $category_obj = $categoryHandler->get($viewcat);
-    if ($categoryHandler->getPermission($category_obj)) {
-        $categories[$viewcat] = $category_obj->getValues();
+    $categoryObject = $categoryHandler->get($viewcat);
+    if ($categoryHandler->getPermission($categoryObject)) {
+        $categories[$viewcat] = $categoryObject->getValues();
     }
     $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
-    $xoops_pagetitle   = $category_obj->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
+    $xoops_pagetitle   = $categoryObject->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
 }
 
 if (count($categories) === 0) {
@@ -260,8 +260,8 @@ $xoopsTpl->assign('unread_link', XOOPS_URL . '/modules/' . $xoopsModule->getVar(
 $xoopsTpl->assign('menumode', $menumode);
 $xoopsTpl->assign('menumode_other', $menumode_other);
 
-$isadmin = $GLOBALS['xoopsUserIsAdmin'];
-$xoopsTpl->assign('viewer_level', $isadmin ? 2 : is_object($GLOBALS['xoopsUser']));
+$isAdmin = $GLOBALS['xoopsUserIsAdmin'];
+$xoopsTpl->assign('viewer_level', $isAdmin ? 2 : is_object($GLOBALS['xoopsUser']));
 $mode = Request::getInt('mode', 0, 'GET');
 $xoopsTpl->assign('mode', $mode);
 
@@ -269,7 +269,7 @@ $xoopsTpl->assign('viewcat', $viewcat);
 $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
 
 /* To be removed */
-if ($isadmin) {
+if ($isAdmin) {
     $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_NEWBB_ADMINCP]);
 }
 

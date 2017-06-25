@@ -156,7 +156,7 @@ function b_newbb_show($options)
     }
 
     include_once __DIR__ . '/../include/functions.user.php';
-    $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
+    $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
         /** @var \NewbbTypeHandler $typeHandler */
@@ -340,7 +340,7 @@ function b_newbb_topic_show($options)
         return $block;
     }
     include_once __DIR__ . '/../include/functions.user.php';
-    $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
+    $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
         /** @var \NewbbTypeHandler $typeHandler */
         $typeHandler = xoops_getModuleHandler('type', 'newbb');
@@ -498,7 +498,7 @@ function b_newbb_post_show($options)
         return $block;
     }
     include_once __DIR__ . '/../include/functions.user.php';
-    $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
+    $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     foreach ($rows as $arr) {
         //if ($arr['icon'] && is_file($GLOBALS['xoops']->path('images/subject/' . $arr['icon']))) {
@@ -658,7 +658,7 @@ function b_newbb_author_show($options)
         return $block;
     }
     include_once __DIR__ . '/../include/functions.user.php';
-    $author_name = newbb_getUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
+    $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
     foreach (array_keys($author) as $uid) {
         $author[$uid]['name'] = $myts->htmlSpecialChars($author_name[$uid]);
     }

@@ -111,7 +111,7 @@ switch ($op) {
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
             $formatted_date = formatTimestamp($ratingtimestamp, _DATESTRING);
-            $ratinguname    = newbb_getUnameFromId($ratinguser, $GLOBALS['xoopsModuleConfig']['show_realname']);
+            $ratinguname    = newbbGetUnameFromId($ratinguser, $GLOBALS['xoopsModuleConfig']['show_realname']);
             echo "
         <tr>\n
         <td class='head' align='center'>$ratingid</td>\n

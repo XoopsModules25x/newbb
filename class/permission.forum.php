@@ -72,7 +72,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip  = \Xmf\IPAddress::fromRequest()->asReadable();
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])
-            && !newbb_isAdmin($id)) {
+            && !newbbIsAdmin($id)) {
             /** @var \NewbbModerateHandler $moderateHandler */
             $moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
             if (!$moderateHandler->verifyUser($uid, '', $id)) {
@@ -156,27 +156,27 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     /**
      * @param  NewbbForum|int $forum
      * @param  bool           $topic_locked
-     * @param  bool           $isadmin
+     * @param  bool           $isAdmin
      * @return array
      */
-    public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
+    public function getPermissionTable($forum = 0, $topic_locked = false, $isAdmin = false)
     {
         $perm = [];
 
-        $forum_id = $forum;
+        $forumId = $forum;
         if (is_object($forum)) {
-            $forum_id = $forum->getVar('forum_id');
+            $forumId = $forum->getVar('forum_id');
         }
 
-        $permission_set = $this->getPermissions($forum_id);
+        $permission_set = $this->getPermissions($forumId);
 
-        $perm_items = $this->getValidPerms();
-        foreach ($perm_items as $item) {
+        $permItems = $this->getValidPerms();
+        foreach ($permItems as $item) {
             if ($item === 'access') {
                 continue;
             }
-            if ($isadmin
-                || (isset($permission_set[$forum_id]['forum_' . $item])
+            if ($isAdmin
+                || (isset($permission_set[$forumId]['forum_' . $item])
                     && (!$topic_locked
                         || $item === 'view'))) {
                 $perm[] = constant('_MD_NEWBB_CAN_' . strtoupper($item));

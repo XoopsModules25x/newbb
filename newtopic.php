@@ -19,16 +19,16 @@ if (!$forum = Request::getString('forum', '', 'GET')) {
 
 /** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum');
-$forum_obj    = $forumHandler->get($forum);
-if (!$forumHandler->getPermission($forum_obj)) {
+$forumObject    = $forumHandler->get($forum);
+if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _NOPERM);
 }
 
 /** @var \NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic');
-$topic_obj    = $topicHandler->create();
-$topic_obj->setVar('forum_id', $forum);
-if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
+$topicObject    = $topicHandler->create();
+$topicObject->setVar('forum_id', $forum);
+if (!$topicHandler->getPermission($forumObject, 0, 'post')) {
     /*
      * Build the page query
      */
@@ -47,7 +47,7 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online');
-    $onlineHandler->init($forum_obj);
+    $onlineHandler->init($forumObject);
 }
 
 $xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';

@@ -74,31 +74,31 @@ if (!Request::getString('post_data', '', 'POST')) {
 
     /** @var \NewbbTopicHandler $topicHandler */
     $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-    $topic_obj    = $topicHandler->get($topic_id);
-    $topic_id     = $topic_obj->getVar('topic_id');
-    $forum        = $topic_obj->getVar('forum_id');
-    if (!$approved = $topic_obj->getVar('approved')) {
+    $topicObject    = $topicHandler->get($topic_id);
+    $topic_id     = $topicObject->getVar('topic_id');
+    $forum        = $topicObject->getVar('forum_id');
+    if (!$approved = $topicObject->getVar('approved')) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    $isadmin = newbb_isAdmin($forum_obj);
-    if (!$isadmin && $topic_obj->getVar('approved') < 0) {
+    $isAdmin = newbbIsAdmin($forumObject);
+    if (!$isAdmin && $topicObject->getVar('approved') < 0) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
     /** @var \NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-    $forum        = $topic_obj->getVar('forum_id');
-    $forum_obj    = $forumHandler->get($forum);
-    if (!$forumHandler->getPermission($forum_obj)) {
+    $forum        = $topicObject->getVar('forum_id');
+    $forumObject    = $forumHandler->get($forum);
+    if (!$forumHandler->getPermission($forumObject)) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
+    if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'view')) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
     // irmtfan add print permission
-    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'print')) {
+    if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'print')) {
         exit(_MD_NEWBB_NORIGHTTOPRINT);
     }
 } else {
@@ -115,7 +115,7 @@ if (empty($isPost)) {
             <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' />
             <br><br> ";
 
-    $postsArray = $topicHandler->getAllPosts($topic_obj);
+    $postsArray = $topicHandler->getAllPosts($topicObject);
     foreach ($postsArray as $post) {
         if (!$post->getVar('approved')) {
             continue;

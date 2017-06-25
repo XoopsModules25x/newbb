@@ -58,8 +58,8 @@ switch ($op) {
         $type_del    = [];
         foreach (array_keys($type_names) as $key) {
             if (Request::getBool('isnew', '', 'POST')) {
-                $type_obj = $typeHandler->create();
-            } elseif (!$type_obj = $typeHandler->get($key)) {
+                $typeObject = $typeHandler->create();
+            } elseif (!$typeObject = $typeHandler->get($key)) {
                 continue;
             }
 
@@ -70,18 +70,18 @@ switch ($op) {
                 continue;
             } else {
                 foreach (['type_name', 'type_color', 'type_description'] as $var) {
-                    //                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
-                    //                        $type_obj->setVar($var, @$_POST[$var][$key]);
+                    //                    if ($typeObject->getVar($var) != @$_POST[$var][$key]) {
+                    //                        $typeObject->setVar($var, @$_POST[$var][$key]);
                     //                    }
                     $temp = Request::getArray($var, '', 'POST');
-                    if ($type_obj->getVar($var) != $temp[$key]) {
-                        $type_obj->setVar($var, $temp[$key]);
+                    if ($typeObject->getVar($var) != $temp[$key]) {
+                        $typeObject->setVar($var, $temp[$key]);
                     }
 
-                    //                    $type_obj->setVar($var, Request::getArray($var, '', 'POST')[$key]);
+                    //                    $typeObject->setVar($var, Request::getArray($var, '', 'POST')[$key]);
                 }
-                $typeHandler->insert($type_obj);
-                unset($type_obj);
+                $typeHandler->insert($typeObject);
+                unset($typeObject);
             }
         }
         if (count($type_del) > 0) {
@@ -95,18 +95,18 @@ switch ($op) {
     case 'delete':
         $type_dels = @unserialize(Request::getString('type_del', '', 'POST'));
         foreach ($type_dels as $key) {
-            if (!$type_obj = $typeHandler->get($key)) {
+            if (!$typeObject = $typeHandler->get($key)) {
                 continue;
             }
-            $typeHandler->delete($type_obj);
-            unset($type_obj);
+            $typeHandler->delete($typeObject);
+            unset($typeObject);
         }
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
 
     case 'template':
-        $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        $typesObject = $typeHandler->getAll();
+        if (count($typesObject) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -132,24 +132,24 @@ switch ($op) {
         if ($templates = $cacheHelper->read('type_template')) {
             arsort($templates);
             foreach ($templates as $order => $key) {
-                if (!isset($types_obj[$key])) {
+                if (!isset($typesObject[$key])) {
                     continue;
                 }
-                $type_obj = $types_obj[$key];
+                $typeObject = $typesObject[$key];
                 echo "<tr class='even' align='left'>";
                 echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' /></td>";
-                echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
-                echo '<td>' . $type_obj->getVar('type_description') . '</td>';
+                echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
+                echo '<td>' . $typeObject->getVar('type_description') . '</td>';
                 echo '</tr>';
-                unset($types_obj[$key]);
+                unset($typesObject[$key]);
             }
             echo "<tr><td colspan='3' height='5px'></td></tr>";
         }
-        foreach ($types_obj as $key => $type_obj) {
+        foreach ($typesObject as $key => $typeObject) {
             echo "<tr class='odd' align='left'>";
             echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
-            echo '<td>' . $type_obj->getVar('type_description') . '</td>';
+            echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
+            echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
         }
 
@@ -216,19 +216,19 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        $types_obj = $typeHandler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
+        $typesObject = $typeHandler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
         arsort($templates);
         foreach ($templates as $order => $key) {
-            if (!isset($types_obj[$key])) {
+            if (!isset($typesObject[$key])) {
                 continue;
             }
-            $type_obj = $types_obj[$key];
+            $typeObject = $typesObject[$key];
             echo "<tr class='even' align='left'>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
+            echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
             echo '<td>' . $order . '</td>';
-            echo '<td>' . $type_obj->getVar('type_description') . '</td>';
+            echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
-            unset($types_obj[$key]);
+            unset($typesObject[$key]);
         }
         echo '</table>';
         echo '<br>';
@@ -298,12 +298,12 @@ switch ($op) {
         }
 
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        if (!$forum_obj = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
+        if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
 
-        $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        $typesObject = $typeHandler->getAll();
+        if (count($typesObject) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -331,23 +331,23 @@ switch ($op) {
         }
         array_multisort($types_order, $types);
         foreach ($types as $key => $type) {
-            if (!isset($types_obj[$type['type_id']])) {
+            if (!isset($typesObject[$type['type_id']])) {
                 continue;
             }
-            $type_obj = $types_obj[$type['type_id']];
+            $typeObject = $typesObject[$type['type_id']];
             echo "<tr class='even' align='left'>";
             echo "<td><input type='text' name='type_order[" . $type['type_id'] . "]' value='" . $type['type_order'] . "' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
-            echo '<td>' . $type_obj->getVar('type_description') . '</td>';
+            echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
+            echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
-            unset($types_obj[$type['type_id']]);
+            unset($typesObject[$type['type_id']]);
         }
         echo "<tr><td colspan='3' height='5px'></td></tr>";
-        foreach ($types_obj as $key => $type_obj) {
+        foreach ($typesObject as $key => $typeObject) {
             echo "<tr class='odd' align='left'>";
             echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
-            echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
-            echo '<td>' . $type_obj->getVar('type_description') . '</td>';
+            echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
+            echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
         }
 
@@ -372,8 +372,8 @@ switch ($op) {
 
     case 'add':
     default:
-        $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        $typesObject = $typeHandler->getAll();
+        if (count($typesObject) === 0) {
             $op    = 'add';
             $title = _AM_NEWBB_TYPE_ADD;
         } else {
@@ -405,17 +405,17 @@ switch ($op) {
         $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
 
         if ($op !== 'add') {
-            foreach ($types_obj as $key => $type_obj) {
+            foreach ($typesObject as $key => $typeObject) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";
-                echo "<td><input type='text' name='type_name[{$key}]' value='" . $type_obj->getVar('type_name') . "' size='10' /></td>";
+                echo "<td><input type='text' name='type_name[{$key}]' value='" . $typeObject->getVar('type_name') . "' size='10' /></td>";
                 if ($isColorpicker) {
-                    $form_colorpicker = new XoopsFormColorPicker('', "type_color[{$key}]", $type_obj->getVar('type_color'));
+                    $form_colorpicker = new XoopsFormColorPicker('', "type_color[{$key}]", $typeObject->getVar('type_color'));
                     echo '<td>' . $form_colorpicker->render() . '</td>';
                 } else {
-                    echo "<td><input type='text' name='type_color[{$key}]' value='" . $type_obj->getVar('type_color') . "' size='10' /></td>";
+                    echo "<td><input type='text' name='type_color[{$key}]' value='" . $typeObject->getVar('type_color') . "' size='10' /></td>";
                 }
-                echo "<td><input type='text' name='type_description[{$key}]' value='" . $type_obj->getVar('type_description') . "' size='30' /></td>";
+                echo "<td><input type='text' name='type_description[{$key}]' value='" . $typeObject->getVar('type_description') . "' size='30' /></td>";
                 echo '</tr>';
             }
             echo "<tr><td colspan='4'>";

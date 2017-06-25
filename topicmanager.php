@@ -61,15 +61,15 @@ $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
 if (!$forum) {
-    /** @var \Topic $topic_obj */
-    $topic_obj = $topicHandler->get((int)$topic_id);
-    if (is_object($topic_obj)) {
-        $forum = $topic_obj->getVar('forum_id');
+    /** @var \Topic $topicObject */
+    $topicObject = $topicHandler->get((int)$topic_id);
+    if (is_object($topicObject)) {
+        $forum = $topicObject->getVar('forum_id');
     } else {
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topic_id;
         redirect_header($redirect, 2, _MD_FORUMNOEXIST);
     }
-    unset($topic_obj);
+    unset($topicObject);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
@@ -115,12 +115,12 @@ if (Request::getString('submit', '', 'POST')) {
 
     if ('delete' === $mode) {
         foreach ($topic_id as $tid) {
-            $topic_obj = $topicHandler->get($tid);
-            $topicHandler->delete($topic_obj, false);
+            $topicObject = $topicHandler->get($tid);
+            $topicHandler->delete($topicObject, false);
             // irmtfan - sync topic after delete
-            $topicHandler->synchronization($topic_obj);
+            $topicHandler->synchronization($topicObject);
             $forumHandler->synchronization($forum);
-            //$topic_obj->loadFilters("delete");
+            //$topicObject->loadFilters("delete");
             //sync($topic_id, "topic");
             //xoops_notification_deletebyitem ($xoopsModule->getVar('mid'), 'thread', $topic_id);
         }
@@ -129,22 +129,22 @@ if (Request::getString('submit', '', 'POST')) {
     } elseif ('restore' === $mode) {
         //$topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $forums     = [];
-        $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
-        foreach (array_keys($topics_obj) as $id) {
-            $topic_obj = $topics_obj[$id];
-            $topicHandler->approve($topic_obj);
-            $topicHandler->synchronization($topic_obj);
-            $forums[$topic_obj->getVar('forum_id')] = 1;
+        $topicsObject = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
+        foreach (array_keys($topicsObject) as $id) {
+            $topicObject = $topicsObject[$id];
+            $topicHandler->approve($topicObject);
+            $topicHandler->synchronization($topicObject);
+            $forums[$topicObject->getVar('forum_id')] = 1;
         }
         //irmtfan remove - no need to approve posts manually - see class/post.php approve function
         $criteria_forum = new Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
-        $forums_obj     = $forumHandler->getAll($criteria_forum);
-        foreach (array_keys($forums_obj) as $id) {
-            $forumHandler->synchronization($forums_obj[$id]);
+        $forumsObject     = $forumHandler->getAll($criteria_forum);
+        foreach (array_keys($forumsObject) as $id) {
+            $forumHandler->synchronization($forumsObject[$id]);
         }
-        unset($topics_obj, $forums_obj);
+        unset($topicsObject, $forumsObject);
         // irmtfan add restore to viewtopic
-        $restoretopic_id = $topic_obj->getVar('topic_id');
+        $restoretopic_id = $topicObject->getVar('topic_id');
         // irmtfan / missing in URL
         echo $action[$mode]['msg']
              . "<p><a href='"
@@ -171,12 +171,12 @@ if (Request::getString('submit', '', 'POST')) {
         $rateHandler = xoops_getModuleHandler('rate', 'newbb');
 
         foreach ($topic_id as $tid) {
-            $topic_obj    = $topicHandler->get($tid);
-            $newtopic_obj = $topicHandler->get($newtopic);
+            $topicObject    = $topicHandler->get($tid);
+            $newtopicObject = $topicHandler->get($newtopic);
 
             /* return false if destination topic is not existing */
             // irmtfan bug fix: the old topic will be deleted if user input a not exist new topic
-            if (!is_object($newtopic_obj)) {
+            if (!is_object($newtopicObject)) {
                 $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $tid;
                 redirect_header($redirect, 2, _MD_ERRORTOPIC);
             }
@@ -184,38 +184,38 @@ if (Request::getString('submit', '', 'POST')) {
             $criteria       = new CriteriaCompo($criteria_topic);
             $criteria->add(new Criteria('pid', 0));
             // irmtfan OR change to this for less query?:
-            // $postHandler->updateAll("pid", $newtopic_obj->getVar("topic_last_post_id"), $criteria, true);
+            // $postHandler->updateAll("pid", $newtopicObject->getVar("topic_last_post_id"), $criteria, true);
             $postHandler->updateAll('pid', $topicHandler->getTopPostId($newtopic), $criteria, true);
             $postHandler->updateAll('topic_id', $newtopic, $criteria_topic, true);
             // irmtfan update vote data instead of deleting them
             $rateHandler->updateAll('topic_id', $newtopic, $criteria_topic, true);
 
-            $topic_views = $topic_obj->getVar('topic_views') + $newtopic_obj->getVar('topic_views');
+            $topic_views = $topicObject->getVar('topic_views') + $newtopicObject->getVar('topic_views');
             // irmtfan better method to update topic_views in new topic
             //$criteria_newtopic = new Criteria('topic_id', $newtopic);
             //$topicHandler->updateAll('topic_views', $topic_views, $criteria_newtopic, true);
-            $newtopic_obj->setVar('topic_views', $topic_views);
+            $newtopicObject->setVar('topic_views', $topic_views);
             // START irmtfan poll_module and rewrite the method
             // irmtfan only move poll in old topic to new topic if new topic has not a poll
-            $poll_id = $topic_obj->getVar('poll_id');
-            if ($poll_id > 0 && ($newtopic_obj->getVar('poll_id') == 0)) {
-                $newtopic_obj->setVar('topic_haspoll', 1);
-                $newtopic_obj->setVar('poll_id', $poll_id);
+            $poll_id = $topicObject->getVar('poll_id');
+            if ($poll_id > 0 && ($newtopicObject->getVar('poll_id') == 0)) {
+                $newtopicObject->setVar('topic_haspoll', 1);
+                $newtopicObject->setVar('poll_id', $poll_id);
                 $poll_id = 0;// set to not delete the poll
-                $topic_obj->setVar('topic_haspoll', 0); // set to not delete the poll
-                $topic_obj->setVar('poll_id', 0);// set to not delete the poll
+                $topicObject->setVar('topic_haspoll', 0); // set to not delete the poll
+                $topicObject->setVar('poll_id', 0);// set to not delete the poll
             }
             //update and sync newtopic after merge
-            //$topicHandler->insert($newtopic_obj, true);
-            $topicHandler->synchronization($newtopic_obj); // very important: only use object
+            //$topicHandler->insert($newtopicObject, true);
+            $topicHandler->synchronization($newtopicObject); // very important: only use object
             //sync newforum after merge
-            $newforum = $newtopic_obj->getVar('forum_id');
+            $newforum = $newtopicObject->getVar('forum_id');
             $forumHandler->synchronization($newforum);
             //hardcode remove force to delete old topic from database
-            //$topicHandler->delete($topic_obj,true); // cannot use this
+            //$topicHandler->delete($topicObject,true); // cannot use this
             $topicHandler->deleteAll($criteria_topic, true); // $force = true
             //delete poll if old topic had a poll
-            $topic_obj->deletePoll($poll_id);
+            $topicObject->deletePoll($poll_id);
             //sync forum after delete old topic
             $forumHandler->synchronization($forum);
             // END irmtfan poll_module and rewrite the method
@@ -246,11 +246,11 @@ if (Request::getString('submit', '', 'POST')) {
     } elseif ('move' === $mode) {
         if ($newforum > 0) {
             $topic_id  = $topic_id[0];
-            $topic_obj = $topicHandler->get($topic_id);
-            $topic_obj->loadFilters('update');
-            $topic_obj->setVar('forum_id', $newforum, true);
-            $topicHandler->insert($topic_obj, true);
-            $topic_obj->loadFilters('update');
+            $topicObject = $topicHandler->get($topic_id);
+            $topicObject->loadFilters('update');
+            $topicObject->setVar('forum_id', $newforum, true);
+            $topicHandler->insert($topicObject, true);
+            $topicObject->loadFilters('update');
 
             $sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('bb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
@@ -286,12 +286,12 @@ if (Request::getString('submit', '', 'POST')) {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
         }
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
-            $topic_obj = $topicHandler->get($topic_id);
+            $topicObject = $topicHandler->get($topic_id);
             /** @var \NewbbStatsHandler $statsHandler */
             $statsHandler = xoops_getModuleHandler('stats', 'newbb');
-            $statsHandler->update($topic_obj->getVar('forum_id'), 'digest');
+            $statsHandler->update($topicObject->getVar('forum_id'), 'digest');
             $userstatsHandler = xoops_getModuleHandler('userstats', 'newbb');
-            if ($user_stat = $userstatsHandler->get($topic_obj->getVar('topic_poster'))) {
+            if ($user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'))) {
                 $z = $user_stat->getVar('user_digests') + 1;
                 $user_stat->setVar('user_digests', (int)$z);
                 $userstatsHandler->insert($user_stat);

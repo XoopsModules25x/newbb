@@ -25,7 +25,7 @@
  * @param  bool  $linked
  * @return array
  */
-function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
+function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
     $ids = XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
@@ -39,7 +39,7 @@ function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
  * @param  bool   $linked
  * @return string
  */
-function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
+function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
 
@@ -53,7 +53,7 @@ function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
  * @param  int $mid
  * @return bool
  */
-function newbb_isAdministrator($user = -1, $mid = 0)
+function newbbIsAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
@@ -99,7 +99,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
  * @param  int  $user
  * @return bool
  */
-function newbb_isModerator(&$forum, $user = -1)
+function newbbIsModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)$forum;
@@ -127,7 +127,7 @@ function newbb_isModerator(&$forum, $user = -1)
  * @param  NewbbForum|int $forum
  * @return bool
  */
-function newbb_isAdmin($forum = 0)
+function newbbIsAdmin($forum = 0)
 {
     global $xoopsModule;
     static $_cachedModerators;
@@ -161,7 +161,7 @@ function newbb_isAdmin($forum = 0)
  * @param  array $uid
  * @return array
  */
-function newbb_isModuleAdministrators(array $uid = [])
+function newbbIsModuleAdministrators(array $uid = [])
 {
     global $xoopsModule;
     $module_administrators = [];
@@ -212,7 +212,7 @@ function newbb_isModuleAdministrators(array $uid = [])
  * @param  int   $mid
  * @return array
  */
-function newbb_isForumModerators(array $uid = [], $mid = 0)
+function newbbIsForumModerators(array $uid = [], $mid = 0)
 {
     $forum_moderators = [];
 
