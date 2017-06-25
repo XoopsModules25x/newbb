@@ -1,6 +1,8 @@
 ![alt XOOPS CMS](http://xoops.org/images/logoXoops4GithubRepository.png)
-## NewBB module for [XOOPS CMS 2.5.8+](https://xoops.org)
-[![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE) 
+## NewBB 5.0 Alpha 1 module for [XOOPS CMS 2.5.8+](https://xoops.org)
+[![XOOPS CMS Module](https://img.shields.io/badge/XOOPS%20CMS-Module-blue.svg)](http://xoops.org)
+[![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE)
+ 
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/mambax7/newbb.svg?style=flat)](https://scrutinizer-ci.com/g/mambax7/newbb/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/2d27c0023ee54f0b9ba2b5d17a68b2a5)](https://www.codacy.com/app/mambax7/newbb)
 [![Code Climate](https://img.shields.io/codeclimate/github/mambax7/newbb.svg?style=flat)](https://codeclimate.com/github/mambax7/newbb)
