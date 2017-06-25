@@ -22,7 +22,7 @@ if (!defined('NEWBB_FUNCTIONS_LANGUAGE')) {
      * @param  string $dirname
      * @return bool
      */
-    function newbb_load_language($page, $dirname = 'newbb')
+    function newbbLoadLanguage($page, $dirname = 'newbb')
     {
         $page = str_replace('..', '', $page);
         if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/{$GLOBALS['xoopsConfig']['language']}/{$language}.php")) {

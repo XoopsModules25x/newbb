@@ -16,7 +16,7 @@ class IpCheck
     /**
      * @param $ipValue
      */
-    public function address_type($ipValue)
+    public function addressType($ipValue)
     {
         $this->ipin  = $ipValue;
         $this->ipver = 0;

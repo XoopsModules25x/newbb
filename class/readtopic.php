@@ -128,7 +128,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     public function setReadItemsCookie($status, $forum_id)
     {
         $cookie_name = 'LT';
-        $cookie_vars = newbb_getcookie($cookie_name, true);
+        $cookie_vars = newbbGetCookie($cookie_name, true);
 
         /** @var \NewbbTopicHandler $itemHandler */
         $itemHandler = xoops_getModuleHandler('topic', 'newbb');
@@ -148,7 +148,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
                 ;
             }
         }
-        newbb_setcookie($cookie_name, $cookie_vars);
+        newbbSetCookie($cookie_name, $cookie_vars);
 
         return true;
     }

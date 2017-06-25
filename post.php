@@ -112,7 +112,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
 
     $time_valid = true;
     if (!$isAdmin && !empty($GLOBALS['xoopsModuleConfig']['post_timelimit'])) {
-        $last_post = newbb_getsession('LP');
+        $last_post = newbbGetSession('LP');
         if (time() - $last_post < $GLOBALS['xoopsModuleConfig']['post_timelimit']) {
             $time_valid = false;
         }
@@ -296,7 +296,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         xoops_error($postObject->getErrors());
         include_once $GLOBALS['xoops']->path('footer.php');
     }
-    newbb_setsession('LP', time()); // Recording last post time
+    newbbSetSession('LP', time()); // Recording last post time
     $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
     $uid       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
     if (newbbIsAdmin($forumObject)
@@ -314,9 +314,9 @@ if (Request::getString('contents_submit', '', 'POST')) {
     // Set read mark
     if (!empty($isnew)) {
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
-        newbb_setRead('topic', $topicObject->getVar('topic_id'), $postid);
+        newbbSetRead('topic', $topicObject->getVar('topic_id'), $postid);
         if (!$postObject->getVar('pid')) {
-            newbb_setRead('forum', $forumObject->getVar('forum_id'), $postid);
+            newbbSetRead('forum', $forumObject->getVar('forum_id'), $postid);
         }
     }
 
@@ -367,7 +367,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
 
     if ($approved) {
         if (!empty($GLOBALS['xoopsModuleConfig']['cache_enabled'])) {
-            newbb_setsession('t' . $postObject->getVar('topic_id'), null);
+            newbbSetSession('t' . $postObject->getVar('topic_id'), null);
         }
         // Update user
         if ($uid > 0) {

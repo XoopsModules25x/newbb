@@ -79,7 +79,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
         include_once __DIR__ . '/../include/functions.recon.php';
-        newbb_synchronization();
+        newbbSynchronization();
     }
 
     return true;

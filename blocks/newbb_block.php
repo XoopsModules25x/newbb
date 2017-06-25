@@ -73,7 +73,7 @@ function b_newbb_show($options)
     $extraCriteria = '';
     if (!empty($options[2])) {
         //include_once __DIR__ . '/../include/functions.time.php';
-        $extraCriteria .= ' AND p.post_time>' . (time() - newbb_getSinceTime($options[2]));
+        $extraCriteria .= ' AND p.post_time>' . (time() - newbbGetSinceTime($options[2]));
     }
     switch ($options[0]) {
         case 'time':
@@ -184,7 +184,7 @@ function b_newbb_show($options)
         $topic['title']   = $topic['topic_subject'] . ' ' . $title;
         $topic['replies'] = $arr['topic_replies'];
         $topic['views']   = $arr['topic_views'];
-        $topic['time']    = newbb_formatTimestamp($arr['post_time']);
+        $topic['time']    = newbbFormatTimestamp($arr['post_time']);
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
@@ -245,7 +245,7 @@ function b_newbb_topic_show($options)
     $extraCriteria = '';
     $time_criteria = null;
     if (!empty($options[2])) {
-        $time_criteria = time() - newbb_getSinceTime($options[2]);
+        $time_criteria = time() - newbbGetSinceTime($options[2]);
         $extraCriteria = ' AND t.topic_time>' . $time_criteria;
     }
     switch ($options[0]) {
@@ -363,7 +363,7 @@ function b_newbb_topic_show($options)
         $topic['title']   = $topic['topic_subject'] . $title;
         $topic['replies'] = $arr['topic_replies'];
         $topic['views']   = $arr['topic_views'];
-        $topic['time']    = newbb_formatTimestamp($arr['topic_time']);
+        $topic['time']    = newbbFormatTimestamp($arr['topic_time']);
         if (!empty($author_name[$arr['topic_poster']])) {
             $topic_poster = $author_name[$arr['topic_poster']];
         } else {
@@ -415,6 +415,7 @@ function b_newbb_topic_show($options)
 function b_newbb_post_show($options)
 {
     global $accessForums;
+    global $newbbConfig;
 
     include_once __DIR__ . '/../include/functions.time.php';
     $myts          = MyTextSanitizer::getInstance();
@@ -424,7 +425,7 @@ function b_newbb_post_show($options)
     $extraCriteria = '';
     $time_criteria = null;
     if (!empty($options[2])) {
-        $time_criteria = time() - newbb_getSinceTime($options[2]);
+        $time_criteria = time() - newbbGetSinceTime($options[2]);
         $extraCriteria = ' AND p.post_time>' . $time_criteria;
     }
 
@@ -519,7 +520,7 @@ function b_newbb_post_show($options)
         }
         $topic['title']   = $title;
         $topic['post_id'] = $arr['post_id'];
-        $topic['time']    = newbb_formatTimestamp($arr['post_time']);
+        $topic['time']    = newbbFormatTimestamp($arr['post_time']);
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
@@ -578,7 +579,7 @@ function b_newbb_post_show($options)
 function b_newbb_author_show($options)
 {
     global $accessForums;
-    //    global $newbbConfig;
+    global $newbbConfig;
 
     $myts  = MyTextSanitizer::getInstance();
     $block = [];
@@ -589,7 +590,7 @@ function b_newbb_author_show($options)
     $time_criteria = null;
     if (!empty($options[2])) {
         include_once __DIR__ . '/../include/functions.time.php';
-        $time_criteria = time() - newbb_getSinceTime($options[2]);
+        $time_criteria = time() - newbbGetSinceTime($options[2]);
         $extraCriteria = ' AND topic_time > ' . $time_criteria;
     }
     switch ($options[0]) {
@@ -597,7 +598,7 @@ function b_newbb_author_show($options)
             break;
         case 'digest':
             $extraCriteria = ' AND topic_digest = 1';
-            if ($time_criteria) {
+            if ($time_criteria!== null) {
                 $extraCriteria .= ' AND digest_time > ' . $time_criteria;
             }
             break;
@@ -723,7 +724,7 @@ function b_newbb_edit($options)
         $form .= ' selected';
     }
     $form .= '>' . _ALL . '</option>';
-    $form .= newbb_forumSelectBox($optionsForum);
+    $form .= newbbForumSelectBox($optionsForum);
     $form .= '</select><br>';
 
     return $form;
@@ -803,7 +804,7 @@ function b_newbb_topic_edit($options)
         $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
-    $form .= newbb_forumSelectBox($optionsForum);
+    $form .= newbbForumSelectBox($optionsForum);
     $form .= '</select><br>';
 
     return $form;
@@ -867,7 +868,7 @@ function b_newbb_post_edit($options)
         $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
-    $form .= newbb_forumSelectBox($optionsForum);
+    $form .= newbbForumSelectBox($optionsForum);
     $form .= '</select><br>';
 
     return $form;
@@ -935,7 +936,7 @@ function b_newbb_author_edit($options)
         $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
-    $form .= newbb_forumSelectBox($optionsForum);
+    $form .= newbbForumSelectBox($optionsForum);
     $form .= '</select><br>';
 
     return $form;

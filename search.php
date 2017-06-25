@@ -165,7 +165,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
     if (!empty($since)) {
-        $criteriaExtra->add(new Criteria('p.post_time', time() - newbb_getSinceTime($since), '>='), 'OR');
+        $criteriaExtra->add(new Criteria('p.post_time', time() - newbbGetSinceTime($since), '>='), 'OR');
     }
     if (is_numeric($topic) && !empty($topic)) {
         $criteriaExtra->add(new Criteria('p.topic_id', $topic), 'OR');
@@ -287,7 +287,7 @@ $xoopsTpl->assign('andor_selection_box', $andor_select);
 /* forum */
 $select_forum = '<select class="form-control" name="forum[]" id="forum" size="5" multiple="multiple">';
 $select_forum .= '<option value="all">' . _MD_NEWBB_SEARCHALLFORUMS . '</option>';
-$select_forum .= newbb_forumSelectBox($forum);
+$select_forum .= newbbForumSelectBox($forum);
 $select_forum .= '</select>';
 $xoopsTpl->assign_by_ref('forum_selection_box', $select_forum);
 
@@ -347,7 +347,7 @@ $xoopsTpl->assign('selectlength_select', $selectlength);
 
 // irmtfan get since from the user for selction box
 $since        = Request::getInt('since', $GLOBALS['xoopsModuleConfig']['since_default']);
-$select_since = newbb_sinceSelectBox($since);
+$select_since = newbbSinceSelectBox($since);
 $xoopsTpl->assign_by_ref('since_selection_box', $select_since);
 
 if ($xoopsConfigSearch['keyword_min'] > 0) {

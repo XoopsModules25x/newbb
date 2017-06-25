@@ -66,7 +66,7 @@ switch ($op) {
             $forumObject->setVar('parent_forum', $pid);
             $forumHandler->insert($forumObject);
             if ($forumHandler->insert($forumObject)) {
-                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
+                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
@@ -79,7 +79,7 @@ switch ($op) {
         } else {
             $box = '<select name="dest_forum">';
             $box .= '<option value=0 selected>' . _SELECT . '</option>';
-            $box .= newbb_forumSelectBox($forum_id, 'all', true, true);
+            $box .= newbbForumSelectBox($forum_id, 'all', true, true);
             $box .= '</select>';
 
             echo '<form action="./admin_forum_manager.php" method="post" name="forummove" id="forummove">';
@@ -109,7 +109,7 @@ switch ($op) {
 
                 $forumObject = $forumHandler->get($forum_id);
                 $forumHandler->updateAll('parent_forum', Request::getInt('dest_forum', 0, 'POST'), new Criteria('parent_forum', $forum_id));
-                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbb_getSubForum($forum_id)) {
+                if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
                     $forums = array_map('intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
@@ -127,7 +127,7 @@ switch ($op) {
         } else {
             $box = '<select name="dest_forum">';
             $box .= '<option value=0 selected>' . _SELECT . '</option>';
-            $box .= newbb_forumSelectBox($forum_id, 'all');
+            $box .= newbbForumSelectBox($forum_id, 'all');
             $box .= '</select>';
 
             echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post" name="forummove" id="forummove">';

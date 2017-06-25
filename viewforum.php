@@ -38,7 +38,7 @@ if (Request::getInt('mark', 0, 'GET')) {
         $markvalue  = 0;
         $markresult = _MD_NEWBB_MARK_UNREAD;
     }
-    newbb_setRead_topic($markvalue, Request::getInt('forum', 0, 'GET'));
+    newbbSetReadTopic($markvalue, Request::getInt('forum', 0, 'GET'));
     $url = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?' . $page_query;
     redirect_header($url, 2, _MD_NEWBB_ALL_TOPIC_MARKED . ' ' . $markresult);
 }
@@ -73,7 +73,7 @@ if (!$forumObject) {
 if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php', 2, _NOPERM);
 }
-newbb_setRead('forum', $forum_id, $forumObject->getVar('forum_last_post_id'));
+newbbSetRead('forum', $forum_id, $forumObject->getVar('forum_last_post_id'));
 
 $xoops_pagetitle = $forumObject->getVar('forum_name') . ' [' . $xoopsModule->getVar('name') . ']';
 
@@ -111,7 +111,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forumObject);
-    $xoopsTpl->assign('online', $onlineHandler->show_online());
+    $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 
 if ($forumHandler->getPermission($forumObject, 'post')) {
@@ -190,7 +190,7 @@ $xoopsTpl->assign_by_ref('forum_selection_order', $forum_selection_order);
 
 $since = Request::getInt('since', $GLOBALS['xoopsModuleConfig']['since_default'], 'GET');
 include_once __DIR__ . '/include/functions.time.php';
-$forum_selection_since = newbb_sinceSelectBox($since);
+$forum_selection_since = newbbSinceSelectBox($since);
 $xoopsTpl->assign_by_ref('forum_selection_since', $forum_selection_since);
 
 $query_sort = $query_array;
@@ -211,7 +211,7 @@ $xoopsTpl->assign('forum_since', $since); // For $since in search.php
 
 // irmtfan - if no since it should be 0
 $since     = Request::getInt('since', 0, 'GET');
-$startdate = empty($since) ? 0 : (time() - newbb_getSinceTime($since));
+$startdate = empty($since) ? 0 : (time() - newbbGetSinceTime($since));
 $start     = Request::getInt('start', 0, 'GET');
 
 $criteria_vars = ['startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt'];
@@ -321,7 +321,7 @@ if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
     include_once __DIR__ . '/include/functions.forum.php';
-    $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox($forum_id));
+    $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {

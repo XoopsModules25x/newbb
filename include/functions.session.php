@@ -30,7 +30,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      * @param        $name
      * @param string $string
      */
-    function newbb_setsession($name, $string = '')
+    function newbbSetSession($name, $string = '')
     {
         if (is_array($string)) {
             $value = [];
@@ -47,7 +47,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      * @param  bool       $isArray
      * @return array|bool
      */
-    function newbb_getsession($name, $isArray = false)
+    function newbbGetSession($name, $isArray = false)
     {
         $value = !empty($_SESSION['newbb_' . $name]) ? $_SESSION['newbb_' . $name] : false;
         if ($isArray) {
@@ -71,7 +71,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      * @param string $string
      * @param int    $expire
      */
-    function newbb_setcookie($name, $string = '', $expire = 0)
+    function newbbSetCookie($name, $string = '', $expire = 0)
     {
         global $forumCookie;
         if (is_array($string)) {
@@ -89,7 +89,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      * @param  bool       $isArray
      * @return array|null
      */
-    function newbb_getcookie($name, $isArray = false)
+    function newbbGetCookie($name, $isArray = false)
     {
         global $forumCookie;
         //        $value = !empty($_COOKIE[$forumCookie['prefix'] . $name]) ? $_COOKIE[$forumCookie['prefix'] . $name] : null;

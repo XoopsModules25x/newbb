@@ -184,10 +184,10 @@ if (Request::getString('submit', '', 'POST')) {
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
-    $forumSelBox .= newbb_forumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
-    $forumSelBox .= '</select>';
-    $forumEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
-    $storeEle = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
+    $forumSelBox    .= newbbForumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
+    $forumSelBox    .= '</select>';
+    $forumEle       = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
+    $storeEle       = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
     /* irmtfan remove hardcode
     $checkbox = new XoopsFormCheckBox(_AM_NEWBB_PRUNE_FORUMS, 'forums');
     $radiobox = new XoopsFormRadio(_AM_NEWBB_PRUNE_STORE, 'store');

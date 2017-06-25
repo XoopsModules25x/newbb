@@ -37,13 +37,13 @@ $forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS
 
 // set LastVisitTemp cookie, which only gets the time from the LastVisit cookie if it does not exist yet
 // otherwise, it gets the time from the LastVisitTemp cookie
-$last_visit = newbb_getsession('LV');
-$last_visit = $last_visit ?: newbb_getcookie('LV');
+$last_visit = newbbGetSession('LV');
+$last_visit = $last_visit ?: newbbGetCookie('LV');
 $last_visit = $last_visit ?: time();
 
 // update LastVisit cookie.
-newbb_setcookie('LV', time(), $forumCookie['expire']); // set cookie life time to one month
-newbb_setsession('LV', $last_visit);
+newbbSetCookie('LV', time(), $forumCookie['expire']); // set cookie life time to one month
+newbbSetSession('LV', $last_visit);
 
 // include customized variables
 if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {

@@ -150,8 +150,8 @@ $nohtml = !$topicHandler->getPermission($forumObject, $topic_status, 'html');
 
 if (Request::getString('editor', '', 'POST')) {
     $editor = trim(Request::getString('editor', '', 'POST'));
-    newbb_setcookie('editor', $editor);
-} elseif (!$editor = newbb_getcookie('editor')) {
+    newbbSetCookie('editor', $editor);
+} elseif (!$editor = newbbGetCookie('editor')) {
     if (empty($editor)) {
         $editor = @ $GLOBALS['xoopsModuleConfig']['editor_default'];
     }
@@ -159,7 +159,7 @@ if (Request::getString('editor', '', 'POST')) {
 if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
     if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'])) {
         $editor = $GLOBALS['xoopsModuleConfig']['editor_allowed'][0];
-        newbb_setcookie('editor', $editor);
+        newbbSetCookie('editor', $editor);
     }
 }
 

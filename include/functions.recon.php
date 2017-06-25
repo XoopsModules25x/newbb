@@ -21,7 +21,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
      * @param  null $type
      * @return bool
      */
-    function newbb_synchronization($type = null)
+    function newbbSynchronization($type = null)
     {
         $allTypes = [
             'category',

@@ -144,7 +144,7 @@ class NewbbOnlineHandler
     /**
      * Deprecated
      */
-    public function show_online()
+    public function showOnline()
     {
         include_once __DIR__ . '/../include/functions.render.php';
         include_once __DIR__ . '/../include/functions.user.php';

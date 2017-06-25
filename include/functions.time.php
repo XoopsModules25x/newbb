@@ -24,7 +24,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
      * @param  string $timeoffset
      * @return string
      */
-    function newbb_formatTimestamp($time, $format = 'c', $timeoffset = '')
+    function newbbFormatTimestamp($time, $format = 'c', $timeoffset = '')
     {
         xoops_loadLanguage('locale');
         $newbbConfig = newbbLoadConfig();
@@ -44,7 +44,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
      * @param  int $selected
      * @return string
      */
-    function newbb_sinceSelectBox($selected = 100)
+    function newbbSinceSelectBox($selected = 100)
     {
         $newbbConfig = newbbLoadConfig();
         // irmtfan - new method to get user inputs
@@ -107,7 +107,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
      * @param  int $since
      * @return int
      */
-    function newbb_getSinceTime($since = 100)
+    function newbbGetSinceTime($since = 100)
     {
         // irmtfan bad coding
         //if ($since==1000) return 0;

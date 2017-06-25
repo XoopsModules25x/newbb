@@ -204,6 +204,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     public function getAllTopics(&$forum, $criteria = null)
     {
         global $myts, $viewAllForums;
+        $startdate = '';
+
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.session.php');
@@ -216,7 +218,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             ${$var} = $criteria[$var];
         }
 
-        $topic_lastread = newbb_getcookie('LT', true);
+        $topic_lastread = newbbGetCookie('LT', true);
         $criteria_forum = '';
         if (is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
@@ -262,7 +264,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
                         $topics         = [];
-                        $topic_lastread = newbb_getcookie('LT', true);
+                        $topic_lastread = newbbGetCookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
                                 if ($time > $time_criterion) {
@@ -408,7 +410,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbbIsAdmin($forum)) {
                 $topic_excerpt = '';
             } else {
-                $topic_excerpt = xoops_substr(newbb_html2text($myts->displayTarea($myrow['post_text'])), 0, $excerpt);
+                $topic_excerpt = xoops_substr(newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $excerpt);
                 $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
             }
             // START irmtfan move here
@@ -431,8 +433,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 'topic_poster_uid'       => $myrow['topic_poster'],
                 'topic_poster_name'      => $myts->htmlSpecialChars($myrow['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_views'            => $myrow['topic_views'],
-                'topic_time'             => newbb_formatTimestamp($myrow['topic_time']),
-                'topic_last_posttime'    => newbb_formatTimestamp($myrow['last_post_time']),
+                'topic_time'             => newbbFormatTimestamp($myrow['topic_time']),
+                'topic_last_posttime'    => newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
                 'topic_last_poster_name' => $myts->htmlSpecialChars($myrow['last_poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_forum_link'       => $forum_link,
@@ -461,7 +463,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $posters_name = newbbGetUnameFromIds(array_keys($posters), $GLOBALS['xoopsModuleConfig']['show_realname'], true);
         //$topic_poster = newbbGetUnameFromId($myrow['topic_poster'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
         //$topic_last_poster = newbbGetUnameFromId($myrow['uid'], $GLOBALS['xoopsModuleConfig']['show_realname'], true);
-        $topic_isRead = newbb_isRead('topic', $reads);
+        $topic_isRead = newbbIsRead('topic', $reads);
         foreach (array_keys($topics) as $id) {
             $topics[$id]['topic_read'] = empty($topic_isRead[$id]) ? 0 : 1; // add topic-read/topic-new smarty variable
             if (!empty($topics[$id]['type_id']) && isset($typen[$topics[$id]['type_id']])) {
@@ -543,7 +545,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
                         $topics         = [];
-                        $topic_lastread = newbb_getcookie('LT', true);
+                        $topic_lastread = newbbGetCookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
                                 if ($time > $time_criterion) {
@@ -633,7 +635,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
         $type = strtolower($type);
         // START irmtfan commented and removed
-        //if ("moderate" === $type) {
+        //if ('moderate' === $type) {
         //require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');
         //$permission = newbbIsModerator($forum);
         //} else {
@@ -795,7 +797,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.forum.php');
 
-        $subForumTree = newbb_getSubForum();
+        $subForumTree = newbbGetSubForum();
         if (empty($passedSubForums)) {
             $sub_forums = $subForumTree;
         } else {
@@ -899,7 +901,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.time.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
-        $forum_isread = newbb_isRead('forum', $reads);
+        $forum_isread = newbbIsRead('forum', $reads);
         $users_linked = newbbGetUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
         $forums_array   = [];
@@ -930,7 +932,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             if ($post_id = $forum['forum_last_post_id']) {
                 $post                               =& $posts[$post_id];
                 $_forum_data['forum_lastpost_id']   = $post_id;
-                $_forum_data['forum_lastpost_time'] = newbb_formatTimestamp($post['post_time']);
+                $_forum_data['forum_lastpost_time'] = newbbFormatTimestamp($post['post_time']);
                 if (!empty($users_linked[$post['uid']])) {
                     $_forum_data['forum_lastpost_user'] = $users_linked[$post['uid']];
                 } elseif ($poster_name = $post['poster_name']) {
@@ -1047,7 +1049,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.forum.php');
-        if (!$parents = newbb_getParentForum($object->getVar('forum_id'))) {
+        if (!$parents = newbbGetParentForum($object->getVar('forum_id'))) {
             return $ret;
         }
         $parents_list = $this->getList(new Criteria('forum_id', '(' . implode(', ', $parents) . ')', 'IN'));

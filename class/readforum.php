@@ -112,7 +112,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
                 $items[$key] = time();
             }
         }
-        newbb_setcookie($cookie_name, $items);
+        newbbSetCookie($cookie_name, $items);
 
         return true;
     }

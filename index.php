@@ -23,7 +23,7 @@ if (Request::getInt('mark_read', 0)) {
         $markresult = _MD_NEWBB_MARK_UNREAD;
     }
     include_once __DIR__ . '/include/functions.read.php';
-    newbb_setRead_forum($markvalue);
+    newbbSetReadForum($markvalue);
     $url = XOOPS_URL . '/modules/newbb/index.php';
     redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
 }
@@ -73,7 +73,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
     /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init();
-    $xoopsTpl->assign('online', $onlineHandler->show_online());
+    $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 /** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -156,7 +156,7 @@ if (count($forums_array) > 0) {
 }
 
 $category_array = [];
-$toggles        = newbb_getcookie('G', true);
+$toggles        = newbbGetCookie('G', true);
 $iconHandler    = newbbGetIconHandler();
 $category_icon  = [
     'expand'   => $iconHandler->getImageSource('minus'),

@@ -24,7 +24,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null  $uid
      * @return mixed
      */
-    function newbb_setRead($type, $item_id, $post_id, $uid = null)
+    function newbbSetRead($type, $item_id, $post_id, $uid = null)
     {
         /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
@@ -38,7 +38,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null  $uid
      * @return mixed
      */
-    function newbb_getRead($type, $item_id, $uid = null)
+    function newbbGetRead($type, $item_id, $uid = null)
     {
         /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
@@ -51,7 +51,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null $uid
      * @return mixed
      */
-    function newbb_setRead_forum($status = 0, $uid = null)
+    function newbbSetReadForum($status = 0, $uid = null)
     {
         /** @var \NewbbReadForumHandler $readHandler */
         $readHandler = xoops_getModuleHandler('readforum', 'newbb');
@@ -65,7 +65,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null $uid
      * @return mixed
      */
-    function newbb_setRead_topic($status = 0, $forum_id = 0, $uid = null)
+    function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
     {
         /** @var \NewbbReadtopicHandler $readHandler */
         $readHandler = xoops_getModuleHandler('readtopic', 'newbb');
@@ -79,7 +79,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null  $uid
      * @return mixed
      */
-    function newbb_isRead($type, &$items, $uid = null)
+    function newbbIsRead($type, &$items, $uid = null)
     {
         /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');

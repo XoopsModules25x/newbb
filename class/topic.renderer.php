@@ -238,14 +238,14 @@ class NewbbTopicRenderer
                     // User cookie
                 } elseif ($this->config['read_mode'] == 1) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-                    $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
+                    $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
                         $readmode1query = '';
                         if ($lastvisit > $startdate) {
                             $readmode1query = 'p.post_time < ' . $lastvisit;
                         }
                         $topics         = [];
-                        $topic_lastread = newbb_getcookie('LT', true);
+                        $topic_lastread = newbbGetCookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
                                 if ($time > $lastvisit) {
@@ -280,13 +280,13 @@ class NewbbTopicRenderer
                     // User cookie
                 } elseif ($this->config['read_mode'] == 1) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-                    $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
+                    $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
                         if ($lastvisit > $startdate) {
                             $this->query['where'][] = 'p.post_time > ' . $lastvisit;
                         }
                         $topics         = [];
-                        $topic_lastread = newbb_getcookie('LT', true);
+                        $topic_lastread = newbbGetCookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
                                 if ($time > $lastvisit) {
@@ -374,7 +374,7 @@ class NewbbTopicRenderer
             case 'since':
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
-                    $startdate = time() - newbb_getSinceTime($val);
+                    $startdate = time() - newbbGetSinceTime($val);
                     if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1
                         && $GLOBALS['last_visit'] > $startdate) {
                         break;
@@ -634,7 +634,7 @@ class NewbbTopicRenderer
         $forum_selected     = empty($this->vars['forum']) ? null : explode('|', @$this->vars['forum']);
         $selection['forum'] = '<select name="forum[]" multiple="multiple">';
         $selection['forum'] .= '<option value="0">' . _MD_NEWBB_ALL . '</option>';
-        $selection['forum'] .= newbb_forumSelectBox($forum_selected);
+        $selection['forum'] .= newbbForumSelectBox($forum_selected);
         $selection['forum'] .= '</select>';
 
         $sort_selected     = $this->vars['sort'];
@@ -654,7 +654,7 @@ class NewbbTopicRenderer
         $selection['order'] .= '</select>';
 
         $since              = isset($this->vars['since']) ? $this->vars['since'] : $this->config['since_default'];
-        $selection['since'] = newbb_sinceSelectBox($since);
+        $selection['since'] = newbbSinceSelectBox($since);
 
         $xoopsTpl->assign_by_ref('selection', $selection);
     }
@@ -994,7 +994,7 @@ class NewbbTopicRenderer
             } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbbIsAdmin($myrow['forum_id'])) {
                 $topic_excerpt = '';
             } else {
-                $topic_excerpt = xoops_substr(newbb_html2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
+                $topic_excerpt = xoops_substr(newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
                 $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
             }
 
@@ -1016,10 +1016,10 @@ class NewbbTopicRenderer
                 'topic_poster_uid'       => $myrow['topic_poster'],
                 'topic_poster_name'      => !empty($myrow['poster_name']) ? $myts->htmlSpecialChars($myrow['poster_name']) : $anonymous,
                 'topic_views'            => $myrow['topic_views'],
-                'topic_time'             => newbb_formatTimestamp($myrow['topic_time']),
+                'topic_time'             => newbbFormatTimestamp($myrow['topic_time']),
                 'topic_last_post_id'     => $myrow['topic_last_post_id'],
                 //irmtfan added
-                'topic_last_posttime'    => newbb_formatTimestamp($myrow['last_post_time']),
+                'topic_last_posttime'    => newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
                 'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars($myrow['last_poster_name']) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
@@ -1051,7 +1051,7 @@ class NewbbTopicRenderer
             $forums[$myrow['forum_id']] = 1;
         }
         $posters_name = newbbGetUnameFromIds(array_keys($posters), $this->config['show_realname'], true);
-        $topic_isRead = newbb_isRead('topic', $reads);
+        $topic_isRead = newbbIsRead('topic', $reads);
         /*
         $type_list = array();
         if (count($types) > 0) {

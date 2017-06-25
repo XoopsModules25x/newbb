@@ -24,7 +24,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param $text
      * @return mixed
      */
-    function newbb_htmlspecialchars(&$text)
+    function newbbHtmlspecialchars(&$text)
     {
         return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], htmlspecialchars($text));
     }
@@ -38,13 +38,13 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param  int   $br
      * @return mixed
      */
-    function &newbb_displayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+    function &newbbDisplayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
         global $myts;
 
         if ($html !== 1) {
             // html not allowed
-            $text = newbb_htmlspecialchars($text);
+            $text = newbbHtmlspecialchars($text);
         }
         $text = $myts->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
         $text = $myts->makeClickable($text);
@@ -74,7 +74,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param $document
      * @return string
      */
-    function newbb_html2text($document)
+    function newbbHtml2text($document)
     {
         $text = strip_tags($document);
 
@@ -92,7 +92,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @return mixed
      * @internal param string $image image/button name, without extension
      */
-    function newbb_getButton($link, $button, $alt = '', $asImage = true, $extra = "class='forum_button'")
+    function newbbGetButton($link, $button, $alt = '', $asImage = true, $extra = "class='forum_button'")
     {
         $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
         if (empty($asImage)) {

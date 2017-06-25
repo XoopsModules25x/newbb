@@ -87,7 +87,7 @@ $xoopsTpl->assign('newpost_link', 'viewpost.php?status=new');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
     include_once __DIR__ . '/include/functions.forum.php';
-    $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox());
+    $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox());
 }
 $xoopsTpl->assign('menumode', $menumode);
 $xoopsTpl->assign('menumode_other', $menumode_other);

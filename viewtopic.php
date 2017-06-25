@@ -114,7 +114,7 @@ $topic_is_unread = true;
  * if !$GLOBALS['xoopsUser'] && $GLOBALS['xoopsModuleConfig']["read_mode"] === 1
  * => $topic_last_post_time_or_id_read = lastview(newbb_IP{ip}LT)
 */
-$topic_last_post_time_or_id_read = newbb_getRead('topic', $topic_id);
+$topic_last_post_time_or_id_read = newbbGetRead('topic', $topic_id);
 if (!empty($topic_last_post_time_or_id_read)) {
     if ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
         $postHandler     = xoops_getModuleHandler('post', 'newbb');
@@ -154,7 +154,7 @@ $postsArray  = $topicHandler->getAllPosts($topicObject, $order, $GLOBALS['xoopsM
 if ($topic_is_unread) {
     $topicObject->incrementCounter();
 }
-newbb_setRead('topic', $topic_id, $topicObject->getVar('topic_last_post_id'));
+newbbSetRead('topic', $topic_id, $topicObject->getVar('topic_last_post_id'));
 
 $GLOBALS['xoopsOption']['template_main'] = 'newbb_viewtopic.tpl';
 // irmtfan remove and move to footer.php
@@ -173,7 +173,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forumObject, $topicObject);
-    $xoopsTpl->assign('online', $onlineHandler->show_online());
+    $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forumObject));
 // irmtfan - remove icon_path and use newbbDisplayImage
@@ -281,10 +281,10 @@ unset($users);
 
 if ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $require_reply) {
     if (!empty($GLOBALS['xoopsModuleConfig']['cache_enabled'])) {
-        $viewtopic_posters = newbb_getsession('t' . $topic_id, true);
+        $viewtopic_posters = newbbGetSession('t' . $topic_id, true);
         if (!is_array($viewtopic_posters) || count($viewtopic_posters) === 0) {
             $viewtopic_posters = $topicHandler->getAllPosters($topicObject);
-            newbb_setsession('t' . $topic_id, $viewtopic_posters);
+            newbbSetSession('t' . $topic_id, $viewtopic_posters);
         }
     } else {
         $viewtopic_posters = $topicHandler->getAllPosters($topicObject);
@@ -681,7 +681,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rating_enabled'])) {
 // create jump box
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
     include_once __DIR__ . '/include/functions.forum.php';
-    $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox($forum_id));
+    $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
 $xoopsTpl->assign([
@@ -792,7 +792,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     $submit_button->setExtra('onclick="if (document.forms.quick_reply.message.value === \'RE\' || document.forms.quick_reply.message.value === \'\') { alert(\'' . _MD_NEWBB_QUICKREPLY_EMPTY . '\'); return false;} else { return true;}"');
     $forum_form->addElement($submit_button);
 
-    $toggles = newbb_getcookie('G', true);
+    $toggles = newbbGetCookie('G', true);
     // START irmtfan improve quickreply smarty variable - add alt key to quick reply button - change $display to $style for more comprehension - add toggle $quickreply['expand']
     $quickreply           = [];
     $qr_collapse          = 't_qr';

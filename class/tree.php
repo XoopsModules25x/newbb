@@ -186,7 +186,7 @@ if (!class_exists('NewbbObjectTree')) {
          * @param  integer $depth level of subcategories
          * @return array
          **/
-        public function getAllChild_array($key, &$ret, array $tags = [], $depth = 0)
+        public function getAllChildArray($key, &$ret, array $tags = [], $depth = 0)
         {
             if (--$depth == 0) {
                 return;
@@ -204,7 +204,7 @@ if (!class_exists('NewbbObjectTree')) {
                         }
                     }
 
-                    $this->getAllChild_array($childkey, $ret['child'][$childkey], $tags, $depth);
+                    $this->getAllChildArray($childkey, $ret['child'][$childkey], $tags, $depth);
                 }
             }
         }
@@ -223,7 +223,7 @@ if (!class_exists('NewbbObjectTree')) {
             if ($depth > 0) {
                 ++$depth;
             }
-            $this->getAllChild_array($key, $ret, $tags, $depth);
+            $this->getAllChildArray($key, $ret, $tags, $depth);
 
             return $ret;
         }

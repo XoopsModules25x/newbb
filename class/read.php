@@ -176,7 +176,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
         $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_var  = $item_id;
         // irmtfan set true to return array
-        $lastview = newbb_getcookie($cookie_name, true);
+        $lastview = newbbGetCookie($cookie_name, true);
 
         return @$lastview[$cookie_var];
     }
@@ -229,9 +229,9 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
     public function setReadCookie($read_item, $post_id)
     {
         $cookie_name          = ($this->type === 'forum') ? 'LF' : 'LT';
-        $lastview             = newbb_getcookie($cookie_name, true);
+        $lastview             = newbbGetCookie($cookie_name, true);
         $lastview[$read_item] = time();
-        newbb_setcookie($cookie_name, $lastview);
+        newbbSetCookie($cookie_name, $lastview);
     }
 
     /**
@@ -291,7 +291,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
     public function isReadItemsCookie(&$items)
     {
         $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
-        $cookie_vars = newbb_getcookie($cookie_name, true);
+        $cookie_vars = newbbGetCookie($cookie_name, true);
 
         $ret = [];
         foreach ($items as $key => $last_update) {

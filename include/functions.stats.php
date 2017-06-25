@@ -20,7 +20,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     /**
      * @return mixed
      */
-    function newbb_get_stats()
+    function newbbGetStats()
     {
         /** @var \NewbbStatsHandler $statsHandler */
         $statsHandler = xoops_getModuleHandler('stats', 'newbb');
@@ -35,7 +35,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      * @param  int   $increment
      * @return mixed
      */
-    function newbb_update_stats($id, $type, $increment = 1)
+    function newbbUpdateStats($id, $type, $increment = 1)
     {
         /** @var \NewbbStatsHandler $statsHandler */
         $statsHandler = xoops_getModuleHandler('stats', 'newbb');

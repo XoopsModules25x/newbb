@@ -121,7 +121,7 @@ switch ($status) {
             $criteria_post->add(new Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
             $topics         = [];
-            $topic_lastread = newbb_getcookie('LT', true);
+            $topic_lastread = newbbGetCookie('LT', true);
             if (count($topic_lastread) > 0) {
                 foreach ($topic_lastread as $id => $time) {
                     if ($time > (int)$last_visit) {
@@ -151,10 +151,10 @@ $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
 $valid_modes     = ['flat', 'compact'];
-$viewmode_cookie = newbb_getcookie('V');
+$viewmode_cookie = newbbGetCookie('V');
 
 if ('compact' === Request::getString('viewmode', '', 'GET')) {
-    newbb_setcookie('V', 'compact', $forumCookie['expire']);
+    newbbSetCookie('V', 'compact', $forumCookie['expire']);
 }
 
 $viewmode = Request::getString('viewmode', (!empty($viewmode_cookie) ? $viewmode_cookie : (@$valid_modes[$GLOBALS['xoopsModuleConfig']['view_mode'] - 1])), 'GET');
@@ -340,7 +340,7 @@ foreach (array_keys($posts) as $id) {
         'post_id'         => $post->getVar('post_id'),
         'topic_id'        => $post->getVar('topic_id'),
         'forum_id'        => $post->getVar('forum_id'),
-        'post_date'       => newbb_formatTimestamp($post->getVar('post_time')),
+        'post_date'       => newbbFormatTimestamp($post->getVar('post_time')),
         'post_image'      => $post_image,
         'post_title'      => $post_title,
         'post_text'       => $post_text,
@@ -361,7 +361,7 @@ unset($viewtopic_users, $forums);
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
     include_once __DIR__ . '/include/functions.forum.php';
-    $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox($forum_id));
+    $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
 if ($postCount > $post_perpage) {

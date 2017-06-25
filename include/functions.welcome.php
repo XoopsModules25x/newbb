@@ -20,7 +20,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
     /**
      * @return bool
      */
-    function newbb_welcome()
+    function newbbWelcome()
     {
         global $forumObject;
         $ret = '';
@@ -44,5 +44,5 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
         return $ret;
     }
 
-    newbb_welcome();
+    newbbWelcome();
 }

@@ -508,7 +508,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     {
         global $viewtopic_users, $myts;
 
-        $postArray['post_time'] = newbb_formatTimestamp($postArray['post_time']);
+        $postArray['post_time'] = newbbFormatTimestamp($postArray['post_time']);
 
         if (!empty($postArray['icon'])) {
             $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($postArray['icon']) . '" alt="" />';
@@ -731,6 +731,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
      */
     public function findPollModule(array $pollDirs = [])
     {
+        $dir_def = '';
         if (empty($pollDirs)) {
             $pollDirs = $this->getActivePolls();
         }

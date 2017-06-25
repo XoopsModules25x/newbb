@@ -64,7 +64,7 @@ if (is_array($forums) && count($forums) > 0) {
     $validForums = array_intersect($forums_top, $validForums);
 }
 if (count($validForums) === 0) {
-    newbb_trackback_response(1, _NOPERM);
+    newbbTrackbackResponse(1, _NOPERM);
 }
 
 asort($validForums);
@@ -147,7 +147,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
              . ' ORDER BY p.post_id DESC';
     $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
     if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
-        newbb_trackback_response(1, _MD_NEWBB_ERROR);
+        newbbTrackbackResponse(1, _MD_NEWBB_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
         //return $xmlrssHandler->get($rss);
     }
@@ -162,7 +162,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
 
     if (count($rows) < 1) {
-        newbb_trackback_response(1, _MD_NEWBB_NORSS_DATA);
+        newbbTrackbackResponse(1, _MD_NEWBB_NORSS_DATA);
         //return $xmlrssHandler->get($rss);
     }
     $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);

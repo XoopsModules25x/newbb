@@ -11,7 +11,7 @@
 
 use Xmf\Request;
 
-// irmtfan - TODO - should be changed completly with Newbb new function newbb_synchronization
+// irmtfan - TODO - should be changed completly with Newbb new function newbbSynchronization
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 include_once __DIR__ . '/../include/functions.recon.php';
@@ -24,14 +24,14 @@ $start = Request::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
 switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite forum sync
     case 'forum':
-        $result = newbb_synchronization('forum');
+        $result = newbbSynchronization('forum');
         if (!empty($result)) {
             redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_FORUM . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan rewrite topic sync
     case 'topic':
-        $limit        = Request::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit = Request::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         /** @var \NewbbTopicHandler $topicHandler */
         $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria     = new Criteria('approved', 1);
@@ -45,19 +45,19 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         foreach ($topicObjs as $tObj) {
             $topicHandler->synchronization($tObj);
         }
-        $result = newbb_synchronization('topic');
+        $result = newbbSynchronization('topic');
         redirect_header('admin_synchronization.php?type=topic&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
         break;
     // irmtfan rewrite post sync
     case 'post':
-        $result = newbb_synchronization('post');
+        $result = newbbSynchronization('post');
         if (!empty($result)) {
             redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_POST . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
         break;
     // irmtfan - user is not in recon functions - only here
     case 'user':
-        $limit       = Request::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit = Request::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
         /** @var \XoopsUserHandler $userHandler */
         $userHandler = xoops_getHandler('user');
         if ($start >= ($count = $userHandler->getCount())) {
@@ -86,11 +86,11 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // irmtfan rewrite stats reset
     case 'stats':
-        $result = newbb_synchronization('stats');
+        $result = newbbSynchronization('stats');
         break;
     // START irmtfan add read sync
     case 'read':
-        $result = newbb_synchronization(['readtopic', 'readforum']);
+        $result = newbbSynchronization(['readtopic', 'readforum']);
         if (!empty($result)) {
             redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_READ . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }
@@ -98,7 +98,7 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
     // END irmtfan add read sync
     case 'misc':
     default:
-        newbb_synchronization();
+        newbbSynchronization();
         break;
 }
 

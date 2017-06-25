@@ -130,7 +130,7 @@ class NewbbPost extends XoopsObject
     }
 
     /**
-     * @param  null $attachArray
+     * @param  array|null $attachArray
      * @return bool
      */
     public function deleteAttachment($attachArray = null)
@@ -225,7 +225,7 @@ class NewbbPost extends XoopsObject
                 if (in_array(strtolower($file_extension), $image_extensions)
                     && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
-                    $post_attachment .= '<br>' . newbb_attachmentImage($att['name_saved']);
+                    $post_attachment .= '<br>' . newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
                 } else {
                     if (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
@@ -389,7 +389,7 @@ class NewbbPost extends XoopsObject
 
         $post               = [];
         $post['attachment'] = false;
-        $post_text          = newbb_displayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'), $this->getVar('dobr'));
+        $post_text          = newbbDisplayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'), $this->getVar('dobr'));
         if (newbbIsAdmin($this->getVar('forum_id')) || $this->checkIdentity()) {
             $post['text'] = $post_text . '<br>' . $this->displayAttachment();
         } elseif ($newbbConfig['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
@@ -414,7 +414,7 @@ class NewbbPost extends XoopsObject
             $post['author'] = $this->getVar('poster_name') ?: $GLOBALS['xoopsConfig']['anonymous'];
         }
 
-        $post['subject'] = newbb_htmlspecialchars($this->vars['subject']['value']);
+        $post['subject'] = newbbHtmlspecialchars($this->vars['subject']['value']);
 
         $post['date'] = $this->getVar('post_time');
 
@@ -477,7 +477,8 @@ class NewbbPost extends XoopsObject
         global $order, $start, $total_posts, $topic_status;
         static $post_NO = 0;
         static $name_anonymous;
-
+        /** @var NewbbTopicHandler $topicHandler */
+        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         if (!isset($name_anonymous)) {
             $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
@@ -562,8 +563,8 @@ class NewbbPost extends XoopsObject
         }
 
         if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
-            /** @var NewbbTopicHandler $topicHandler */
-            $topicHandler = xoops_getModuleHandler('topic', 'newbb');
+//            /** @var NewbbTopicHandler $topicHandler */
+//            $topicHandler = xoops_getModuleHandler('topic', 'newbb');
             $topic_status = $topicObject->getVar('topic_status');
             if ($topicHandler->getPermission($forum_id, $topic_status, 'edit')) {
                 $edit_ok = ($isAdmin || ($this->checkIdentity() && $this->checkTimelimit('edit_timelimit')));
@@ -685,7 +686,7 @@ class NewbbPost extends XoopsObject
         $post = [
             'post_id'         => $post_id,
             'post_parent_id'  => $this->getVar('pid'),
-            'post_date'       => newbb_formatTimestamp($this->getVar('post_time')),
+            'post_date'       => newbbFormatTimestamp($this->getVar('post_time')),
             'post_image'      => $post_image,
             'post_title'      => $post_title,
             // irmtfan $post_title to add highlight keywords

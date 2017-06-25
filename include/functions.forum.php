@@ -24,7 +24,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      * @param  bool   $see
      * @return string
      */
-    function newbb_forumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
+    function newbbForumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
     {
         global $xoopsUser;
 
@@ -83,12 +83,12 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      * @param  int $forum_id
      * @return string
      */
-    function newbb_make_jumpbox($forum_id = 0)
+    function newbbMakeJumpbox($forum_id = 0)
     {
         $box = '<form name="forum_jumpbox" method="get" action="' . XOOPS_URL . '/modules/newbb/viewforum.php" onsubmit="javascript: if (document.forum_jumpbox.forum.value &lt; 1) {return false;}">';
         $box .= '<select class="select" name="forum" onchange="if (this.options[this.selectedIndex].value >0) { document.forms.forum_jumpbox.submit();}">';
         $box .= '<option value=0>-- ' . _MD_NEWBB_SELFORUM . ' --</option>';
-        $box .= newbb_forumSelectBox($forum_id);
+        $box .= newbbForumSelectBox($forum_id);
         $box .= "</select> <input type='submit' class='button' value='" . _GO . "' /></form>";
         unset($forums, $categories);
 
@@ -107,7 +107,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      * @param  bool $refresh
      * @return array
      */
-    function newbb_getSubForum($pid = 0, $refresh = false)
+    function newbbGetSubForum($pid = 0, $refresh = false)
     {
         static $list;
         if (!isset($list)) {
@@ -116,7 +116,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
 
         if (!is_array($list) || $refresh) {
-            $list = newbb_createSubForumList();
+            $list = newbbCreateSubForumList();
         }
         if ($pid == 0) {
             return $list;
@@ -128,7 +128,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     /**
      * @return array
      */
-    function newbb_createSubForumList()
+    function newbbCreateSubForumList()
     {
         /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -158,7 +158,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      * @param  bool $refresh
      * @return array|mixed|null
      */
-    function newbb_getParentForum($forum_id = 0, $refresh = false)
+    function newbbGetParentForum($forum_id = 0, $refresh = false)
     {
         static $list = null;
 
@@ -167,7 +167,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
             $list        = $cacheHelper->read('forum_parent');
         }
         if (!is_array($list) || $refresh) {
-            $list = newbb_createParentForumList();
+            $list = newbbCreateParentForumList();
         }
         if ($forum_id == 0) {
             return $list;
@@ -179,7 +179,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     /**
      * @return array
      */
-    function newbb_createParentForumList()
+    function newbbCreateParentForumList()
     {
         /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');

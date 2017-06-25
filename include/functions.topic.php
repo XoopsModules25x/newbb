@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_TOPIC')) {
      * @param  null   $prefixColor
      * @return string
      */
-    function newbb_getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)
+    function newbbGetTopicTitle($topicTitle, $prefixName = null, $prefixColor = null)
     {
         return getTopicTitle($topicTitle, $prefixName = null, $prefixColor = null);
     }

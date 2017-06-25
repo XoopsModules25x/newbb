@@ -98,7 +98,7 @@ class NewbbUser
 {
     public $user;
 
-    public function User()
+    public function __construct()
     {
     }
 
@@ -254,8 +254,8 @@ class NewbbUser
         $userinfo['from'] = $user->getVar('user_from');
 
         include_once __DIR__ . '/../include/functions.time.php';
-        $userinfo['regdate']    = newbb_formatTimestamp($user->getVar('user_regdate'), 'reg');
-        $userinfo['last_login'] = newbb_formatTimestamp($user->getVar('last_login')); // irmtfan add last_login
+        $userinfo['regdate']    = newbbFormatTimestamp($user->getVar('user_regdate'), 'reg');
+        $userinfo['last_login'] = newbbFormatTimestamp($user->getVar('last_login')); // irmtfan add last_login
 
         $userinfo['posts'] = $user->getVar('posts');
 
