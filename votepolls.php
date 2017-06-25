@@ -36,7 +36,7 @@ $forum    = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET')
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $topic_obj    = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'vote')) {
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _NOPERM);
 }
 
 if (!Request::getInt('option_id', 0, 'POST')) {
@@ -64,7 +64,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $poll_obj  = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
     }
 } else {
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_POLLMODULE_ERROR);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_POLLMODULE_ERROR);
 }
 
 $mail_author = false;
@@ -128,22 +128,22 @@ if ($pollModuleHandler->getVar('version') >= 140) {
 } else {
     $classLog = $classPoll . 'Log';
     if (is_object($GLOBALS['xoopsUser'])) {
-        if ($classLog::hasVoted($poll_id, $_SERVER['REMOTE_ADDR'], $GLOBALS['xoopsUser']->getVar('uid'))) {
+        if ($classLog::hasVoted($poll_id, Request::getString('REMOTE_ADDR', '', 'SERVER'), $GLOBALS['xoopsUser']->getVar('uid'))) {
             $msg = _PL_ALREADYVOTED;
             setcookie("newbb_polls[{$poll_id}]", 1);
         } else {
             // irmtfan save ip to db
-            $poll_obj->vote(Request::getInt('option_id', 0, 'POST'), $_SERVER['REMOTE_ADDR'], $GLOBALS['xoopsUser']->getVar('uid'));
+            $poll_obj->vote(Request::getInt('option_id', 0, 'POST'), Request::getString('REMOTE_ADDR', '', 'SERVER'), $GLOBALS['xoopsUser']->getVar('uid'));
             $poll_obj->updateCount();
             $msg = _PL_THANKSFORVOTE;
             setcookie("newbb_polls[{$poll_id}]", 1);
         }
     } else {
-        if ($classLog::hasVoted($poll_id, $_SERVER['REMOTE_ADDR'])) {
+        if ($classLog::hasVoted($poll_id, Request::getString('REMOTE_ADDR', '', 'SERVER'))) {
             $msg = _PL_ALREADYVOTED;
             setcookie("newbb_polls[{$poll_id}]", 1);
         } else {
-            $poll_obj->vote(Request::getInt('option_id', 0, 'POST'), $_SERVER['REMOTE_ADDR']);
+            $poll_obj->vote(Request::getInt('option_id', 0, 'POST'), Request::getString('REMOTE_ADDR', '', 'SERVER'));
             $poll_obj->updateCount();
             $msg = _PL_THANKSFORVOTE;
             setcookie("newbb_polls[{$poll_id}]", 1);

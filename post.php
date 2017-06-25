@@ -74,8 +74,8 @@ if (Request::getString('contents_submit', '', 'POST')) {
 
     $captcha_invalid = false;
     if (!is_object($GLOBALS['xoopsUser']) && Request::hasVar('uname', 'POST') && Request::hasVar('pass', 'POST')) {
-        $uname         = Request::getString('uname', '', 'POST');
-        $pass          = Request::getString('pass', '', 'POST');
+        $uname = Request::getString('uname', '', 'POST');
+        $pass  = Request::getString('pass', '', 'POST');
         /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $user          = $memberHandler->loginUser($uname, $pass);
@@ -135,7 +135,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $message = Request::getText('message', '', 'POST');
     if (empty($message)) {
         // irmtfan - issue with javascript:history.go(-1) - add error message
-        redirect_header($_SERVER['HTTP_REFERER'], 1, _MD_NEWBB_ERROR_BACK);
+        redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 1, _MD_NEWBB_ERROR_BACK);
     }
     if (!empty($isedit) && $post_id > 0) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -144,8 +144,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         if ($topicHandler->getPermission($forum_obj, $topic_status, 'edit')
             && ($isadmin
                 || ($post_obj->checkTimelimit('edit_timelimit')
-                    && $post_obj->checkIdentity()))
-        ) {
+                    && $post_obj->checkIdentity()))) {
         } else {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum={$forum_id}&amp;topic_id={$topic_id}&amp;post_id={$post_id}&amp;order={$order}&amp;viewmode={$viewmode}", 2, _MD_NEWBB_NORIGHTTOEDIT);
         }
@@ -171,8 +170,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $isnew   = 1;
         if (!is_object($GLOBALS['xoopsUser'])
             || (Request::getString('noname', '', 'POST')
-                && !empty($GLOBALS['xoopsModuleConfig']['allow_user_anonymous']))
-        ) {
+                && !empty($GLOBALS['xoopsModuleConfig']['allow_user_anonymous']))) {
             $uid = 0;
         } else {
             $uid = $GLOBALS['xoopsUser']->getVar('uid');
@@ -251,8 +249,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $error_upload = '';
 
     if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] !== ''
-        && $topicHandler->getPermission($forum_obj, $topic_status, 'attach')
-    ) {
+        && $topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/uploader.php');
         $maxfilesize = $forum_obj->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
@@ -305,8 +302,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     if (newbb_isAdmin($forum_obj)
         || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
             && ($topic_id == 0
-                || $uid == $topic_obj->getVar('topic_poster')))
-    ) {
+                || $uid == $topic_obj->getVar('topic_poster')))) {
         $topic_obj->setVar('type_id', Request::getInt('type_id', 0, 'POST'));
     }
 
@@ -333,9 +329,9 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
         $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
         include_once __DIR__ . '/include/notification.inc.php';
-        $forum_info          = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
-        $tags['FORUM_NAME']  = $forum_info['name'];
-        $tags['FORUM_URL']   = $forum_info['url'];
+        $forum_info         = newbb_notify_iteminfo('forum', $forum_obj->getVar('forum_id'));
+        $tags['FORUM_NAME'] = $forum_info['name'];
+        $tags['FORUM_URL']  = $forum_info['url'];
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         if (empty($isreply)) {
@@ -504,8 +500,7 @@ if (Request::getString('contents_preview', Request::getString('contents_preview'
 
 if (Request::getString('contents_upload', null, 'POST') || Request::getString('contents_preview', null, 'POST')
     || Request::getString('contents_preview', null, 'GET')
-    || Request::getString('editor', '', 'POST')
-) {
+    || Request::getString('editor', '', 'POST')) {
     $editor        = Request::getString('editor', '', 'POST');
     $dosmiley      = Request::getInt('dosmiley', 0, 'POST');
     $dohtml        = Request::getInt('dohtml', 0, 'POST');

@@ -296,16 +296,14 @@ foreach (array_keys($posts) as $id) {
 
         if ($isadmin
             || (!$suspension[$post->getVar('forum_id')] && $post->checkIdentity()
-                && $post->checkTimelimit('delete_timelimit'))
-        ) {
+                && $post->checkTimelimit('delete_timelimit'))) {
             $thread_buttons['delete']['image'] = newbbDisplayImage('p_delete', _DELETE);
             $thread_buttons['delete']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/delete.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['delete']['name']  = _DELETE;
         }
         if ($isadmin
             || !$suspension[$post->getVar('forum_id')] && $post->checkIdentity()
-               && $post->checkTimelimit('edit_timelimit')
-        ) {
+               && $post->checkTimelimit('edit_timelimit')) {
             $thread_buttons['edit']['image'] = newbbDisplayImage('p_edit', _EDIT);
             $thread_buttons['edit']['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/edit.php?forum=' . $post->getVar('forum_id') . '&amp;topic_id=' . $post->getVar('topic_id');
             $thread_buttons['edit']['name']  = _EDIT;
@@ -369,7 +367,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 if ($postCount > $post_perpage) {
     include $GLOBALS['xoops']->path('class/pagenav.php');
     $nav = new XoopsPageNav($postCount, $post_perpage, $start, 'start', 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
-    //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL($_SERVER['SERVER_NAME']) . $nav->url;
+    //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . $nav->url;
     if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
         $navi = $nav->renderSelect();
     } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {

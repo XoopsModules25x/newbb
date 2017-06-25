@@ -221,7 +221,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function getDigestCount()
     {
-        $sql    = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix('newbb_digest');
+        $sql    = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
@@ -234,7 +234,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
 
     public function getLastDigest()
     {
-        $sql    = 'SELECT MAX(digest_time) as last_digest FROM ' . $this->db->prefix('newbb_digest');
+        $sql    = 'SELECT MAX(digest_time) AS last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
         if (!$result) {
             $this->last_digest = 0;
@@ -332,8 +332,19 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $karma_criteria = $GLOBALS['xoopsModuleConfig']['enable_karma'] ? ' AND p.post_karma=0' : '';
         $reply_criteria = $GLOBALS['xoopsModuleConfig']['allow_require_reply'] ? ' AND p.require_reply=0' : '';
 
-        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM ' . $this->db->prefix('newbb_topics') . ' t, ' . $this->db->prefix('newbb_posts_text') . ' pt, ' . $this->db->prefix('newbb_posts')
-                 . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 ' . $forumCriteria . $approveCriteria . $time_criteria . $karma_criteria . $reply_criteria . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
+        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM '
+                 . $this->db->prefix('newbb_topics')
+                 . ' t, '
+                 . $this->db->prefix('newbb_posts_text')
+                 . ' pt, '
+                 . $this->db->prefix('newbb_posts')
+                 . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 '
+                 . $forumCriteria
+                 . $approveCriteria
+                 . $time_criteria
+                 . $karma_criteria
+                 . $reply_criteria
+                 . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
         if (!$result = $this->db->query($query)) {
             //echo "<br>No result:<br>$query";
             return false;
@@ -360,8 +371,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         foreach ($rows as $topic) {
             if ($topic['uid'] > 0) {
                 if (isset($users[$topic['uid']]) && is_object($users[$topic['uid']])
-                    && $users[$topic['uid']]->isActive()
-                ) {
+                    && $users[$topic['uid']]->isActive()) {
                     $topic['uname'] = $users[$topic['uid']]->getVar('uname');
                 } else {
                     $topic['uname'] = $GLOBALS['xoopsConfig']['anonymous'];

@@ -102,7 +102,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param XoopsDatabase|null $db
-     * @param               $type
+     * @param                    $type
      */
     public function __construct(XoopsDatabase $db, $type)
     {
@@ -149,6 +149,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
     }
 
     // END irmtfan rephrase function to 1- add clearDuplicate and 2- dont clean when read_expire = 0
+
     /**
      * @param                  $read_item
      * @param  null            $uid
@@ -338,12 +339,13 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
     }
 
     // START irmtfan add clear duplicated rows function
+
     /**
      * @return bool
      */
     public function clearDuplicate()
     {
-        $sql = 'CREATE TABLE ' . $this->table . '_duplicate like ' . $this->table . '; ';
+        $sql = 'CREATE TABLE ' . $this->table . '_duplicate LIKE ' . $this->table . '; ';
         if (!$result = $this->db->queryF($sql)) {
             xoops_error($this->db->error() . '<br>' . $sql);
 

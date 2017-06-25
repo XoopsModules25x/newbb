@@ -61,8 +61,7 @@ $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid
 $post_obj     = $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
 if (($post_obj->checkIdentity() || $isadmin)
-    && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')
-) {
+    && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')) {
 } else {
     redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id=$topic_id&amp;pid=$pid&amp;forum=$forum", 2, _MD_NEWBB_DELNOTALLOWED);
 }

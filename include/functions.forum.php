@@ -18,7 +18,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param  null   $value             selected forum id
+     * @param  null|array   $value             selected forum id
      * @param  string $permission        permission (access, all, etc.)
      * @param  bool   $categoryDelimiter show delimiter between categories
      * @param  bool   $see

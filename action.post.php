@@ -23,10 +23,10 @@ $mode = Request::getInt('mode', 1, 'GET');
 
 if (0 === count($post_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_NORIGHTTOACCESS);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 /** @var NewbbPostHandler $postHandler */
-$postHandler  = xoops_getModuleHandler('post', 'newbb');
+$postHandler = xoops_getModuleHandler('post', 'newbb');
 /** @var NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 /** @var NewbbForumHandler $forumHandler */
@@ -106,8 +106,8 @@ switch ($op) {
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
-            $tags                = [];
-            /** @var \NewbbPost[] $posts_obj[$post] */
+            $tags = [];
+            /** @var \NewbbPost[] $posts_obj [$post] */
             $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $posts_obj[$post]->getVar('topic_id') . '&amp;forum=' . $posts_obj[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$posts_obj[$post]->getVar('forum_id')];
@@ -214,7 +214,7 @@ switch ($op) {
         $forum_id = $post_obj->getVar('forum_id');
         $topicHandler->synchronization($topic_id);
         $topicHandler->synchronization($new_topic_id);
-        $sql    = sprintf('UPDATE %s SET forum_topics = forum_topics+1 WHERE forum_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
+        $sql    = sprintf('UPDATE "%s" SET forum_topics = forum_topics+1 WHERE forum_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
         $result = $GLOBALS['xoopsDB']->queryF($sql);
 
         break;

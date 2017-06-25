@@ -111,8 +111,25 @@ function b_newbb_show($options)
         }
     }
 
-    $query = 'SELECT' . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,' . '    f.forum_name,t.topic_status,' . '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' AS t ' . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' AS p ON t.topic_last_post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id,'
+             . '    f.forum_name,t.topic_status,'
+             . '    p.post_id, p.post_time, p.icon, p.uid, p.poster_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('newbb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_posts')
+             . ' AS p ON t.topic_last_post_id=p.post_id'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
              . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
@@ -150,6 +167,7 @@ function b_newbb_show($options)
     foreach ($rows as $arr) {
         // irmtfan add lastposticon - load main lang
         xoops_loadLanguage('main', 'newbb');
+        $topic = [];
         $topic_page_jump        = newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . ']';
 
@@ -214,7 +232,7 @@ function b_newbb_show($options)
 
 /**
  * @param $options
- * @return array
+ * @return array|bool
  */
 function b_newbb_topic_show($options)
 {
@@ -240,12 +258,12 @@ function b_newbb_topic_show($options)
         case 'digest':
             $order         = 't.digest_time';
             $extraCriteria = ' AND t.topic_digest=1';
-            if ($time_criteria) {
+            if (null !== $time_criteria) {
                 $extraCriteria .= ' AND t.digest_time>' . $time_criteria;
             }
             break;
         case 'sticky':
-            $order = 't.topic_id';
+            $order         = 't.topic_id';
             $extraCriteria .= ' AND t.topic_sticky=1';
             break;
         case 'time':
@@ -284,8 +302,22 @@ function b_newbb_topic_show($options)
     $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $allowedForums) . ')';
     $approveCriteria = ' AND t.approved = 1';
 
-    $query = 'SELECT' . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,' . '    f.forum_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' AS t ' . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
+    $query = 'SELECT'
+             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,'
+             . '    f.forum_name'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('newbb_topics')
+             . ' AS t '
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_forums')
+             . ' AS f ON f.forum_id=t.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . $extraCriteria
+             . ' ORDER BY '
+             . $order
+             . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -318,6 +350,7 @@ function b_newbb_topic_show($options)
     foreach ($rows as $arr) {
         // irmtfan remove $topic_page_jump because there is no last post
         //$topic_page_jump = '';
+        $topic = [];
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . '] ';
         $topic['forum_id']      = $arr['forum_id'];
         $topic['forum_name']    = $myts->htmlSpecialChars($arr['forum_name']);
@@ -475,6 +508,7 @@ function b_newbb_post_show($options)
             $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/icon1.gif" alt="" />';
         }
         //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
+        $topic = [];
         $topic['forum_id']   = $arr['forum_id'];
         $topic['forum_name'] = $myts->htmlSpecialChars($arr['forum_name']);
         //$topic['id'] = $arr['topic_id'];
@@ -573,7 +607,7 @@ function b_newbb_author_show($options)
         case 'post':
         default:
             $type = 'post';
-            if ($time_criteria) {
+            if (null !== $time_criteria) {
                 $extraCriteria = ' AND post_time > ' . $time_criteria;
             }
             break;
@@ -669,11 +703,11 @@ function b_newbb_edit($options)
 
     $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _NO;
 
@@ -683,8 +717,8 @@ function b_newbb_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
-    $form .= '<option value="0" ';
+    $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form         .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected';
     }
@@ -748,11 +782,11 @@ function b_newbb_topic_edit($options)
 
     $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _NO;
 
@@ -763,8 +797,8 @@ function b_newbb_topic_edit($options)
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
 
     $isAll = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
-    $form .= '<option value="0" ';
+    $form  .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form  .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected="selected"';
     }
@@ -813,11 +847,11 @@ function b_newbb_post_edit($options)
 
     $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _NO;
 
@@ -827,8 +861,8 @@ function b_newbb_post_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
-    $form .= '<option value="0" ';
+    $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form         .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected="selected"';
     }
@@ -883,11 +917,11 @@ function b_newbb_author_edit($options)
 
     $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= ' checked="checked"';
+        $form .= ' checked';
     }
     $form .= ' />' . _NO;
 
@@ -895,8 +929,8 @@ function b_newbb_author_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
-    $form .= '<option value="0" ';
+    $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form         .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected="selected"';
     }

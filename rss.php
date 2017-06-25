@@ -123,9 +123,28 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     unset($validForums);
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
-    $query = 'SELECT' . '    f.forum_id, f.forum_name,' . '    t.topic_id, t.topic_title, t.type_id,' . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' . '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' . '    pt.post_text' . '    FROM '
-             . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' AS p' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . ' AS pt ON pt.post_id=p.post_id' . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' AS f ON f.forum_id=p.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . ' ORDER BY p.post_id DESC';
+    $query = 'SELECT'
+             . '    f.forum_id, f.forum_name,'
+             . '    t.topic_id, t.topic_title, t.type_id,'
+             . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, '
+             . '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,'
+             . '    pt.post_text'
+             . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('newbb_posts')
+             . ' AS p'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_topics')
+             . ' AS t ON t.topic_last_post_id=p.post_id'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_posts_text')
+             . ' AS pt ON pt.post_id=p.post_id'
+             . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_forums')
+             . ' AS f ON f.forum_id=p.forum_id'
+             . '    WHERE 1=1 '
+             . $forumCriteria
+             . $approveCriteria
+             . ' ORDER BY p.post_id DESC';
     $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
     if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
         newbb_trackback_response(1, _MD_NEWBB_ERROR);
@@ -167,11 +186,11 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';
-        $description .= $topic['topic_subject'] . $topic['topic_title'] . "<br>\n";
-        $description .= $myts->displayTarea($topic['post_text'], $topic['dohtml'], $topic['dosmiley'], $topic['doxcode'], $topic['dobr']);
-        $label = _MD_NEWBB_BY . ' ' . $topic['uname'];
-        $time  = formatTimestamp($topic['post_time'], 'rss');
-        $link  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
+        $description            .= $topic['topic_subject'] . $topic['topic_title'] . "<br>\n";
+        $description            .= $myts->displayTarea($topic['post_text'], $topic['dohtml'], $topic['dosmiley'], $topic['doxcode'], $topic['dobr']);
+        $label                  = _MD_NEWBB_BY . ' ' . $topic['uname'];
+        $time                   = formatTimestamp($topic['post_time'], 'rss');
+        $link                   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
         if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             $link   = XOOPS_URL . '/' . REAL_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
             $oldurl = '<a href=\'' . $link . '\'>';

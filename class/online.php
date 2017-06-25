@@ -28,7 +28,7 @@ class NewbbOnlineHandler
 
     /**
      * @param null|\NewbbForum $forum
-     * @param null|Topic $forumtopic
+     * @param null|Topic       $forumtopic
      */
     public function init($forum = null, $forumtopic = null)
     {
@@ -238,13 +238,23 @@ class NewbbOnlineHandler
             return false;
         }
 
-
         /** @var XoopsOnlineHandler $xoops_onlineHandler */
         $xoops_onlineHandler = xoops_getHandler('online');
         $xoopsOnlineTable    = $xoops_onlineHandler->table;
 
-        $sql = 'DELETE FROM ' . $this->db->prefix('newbb_online') . ' WHERE' . ' ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM ' . $xoopsOnlineTable . ' WHERE online_module =' . $xoopsModule->getVar('mid') . ' ) )'
-               . ' OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM ' . $xoopsOnlineTable . ' WHERE online_module =' . $xoopsModule->getVar('mid') . ' AND online_uid = 0 ) )';
+        $sql = 'DELETE FROM '
+               . $this->db->prefix('newbb_online')
+               . ' WHERE'
+               . ' ( online_uid > 0 AND online_uid NOT IN ( SELECT online_uid FROM '
+               . $xoopsOnlineTable
+               . ' WHERE online_module ='
+               . $xoopsModule->getVar('mid')
+               . ' ) )'
+               . ' OR ( online_uid = 0 AND online_ip NOT IN ( SELECT online_ip FROM '
+               . $xoopsOnlineTable
+               . ' WHERE online_module ='
+               . $xoopsModule->getVar('mid')
+               . ' AND online_uid = 0 ) )';
 
         if ($result = $this->db->queryF($sql)) {
             return true;
@@ -283,7 +293,7 @@ class NewbbOnlineHandler
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('newbb_online');
         if (is_object($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' ' . $criteria->renderWhere();
+            $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }

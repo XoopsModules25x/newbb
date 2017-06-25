@@ -72,8 +72,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip  = \Xmf\IPAddress::fromRequest()->asReadable();
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])
-            && !newbb_isAdmin($id)
-        ) {
+            && !newbb_isAdmin($id)) {
             /** @var \NewbbModerateHandler $moderateHandler */
             $moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
             if (!$moderateHandler->verifyUser($uid, '', $id)) {
@@ -105,10 +104,11 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     */
     /**
      * @param  int $id
-     * @return bool
+     * @return bool|array
      */
     public function getPermissions($id = 0)
     {
+        $permissions = [];
         if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
@@ -154,9 +154,9 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @param  NewbbForum|int  $forum
-     * @param  bool $topic_locked
-     * @param  bool $isadmin
+     * @param  NewbbForum|int $forum
+     * @param  bool           $topic_locked
+     * @param  bool           $isadmin
      * @return array
      */
     public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
@@ -178,8 +178,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             if ($isadmin
                 || (isset($permission_set[$forum_id]['forum_' . $item])
                     && (!$topic_locked
-                        || $item === 'view'))
-            ) {
+                        || $item === 'view'))) {
                 $perm[] = constant('_MD_NEWBB_CAN_' . strtoupper($item));
             } else {
                 $perm[] = constant('_MD_NEWBB_CANNOT_' . strtoupper($item));
@@ -226,8 +225,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
             } else {
                 /** @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
-                $newbb = $moduleHandler->getByDirname('newbb');
-                $mid   = $newbb->getVar('mid');
+                $newbb         = $moduleHandler->getByDirname('newbb');
+                $mid           = $newbb->getVar('mid');
                 unset($newbb);
             }
         }

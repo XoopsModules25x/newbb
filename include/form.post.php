@@ -30,7 +30,7 @@ $category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), ['cat_tit
 //check banning
 $moderated_id    = (is_object($GLOBALS['xoopsUser'])
                     && $GLOBALS['xoopsUser']->uid() > 0) ? $GLOBALS['xoopsUser']->uid() : 0;
-$moderated_ip    = $_SERVER['REMOTE_ADDR'];
+$moderated_ip    = Request::getString('REMOTE_ADDR', '', 'SERVER');
 $moderated_forum = $forum_obj->getVar('forum_id');
 /** @var \NewbbModerateHandler $moderateHandler */
 $moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
@@ -111,9 +111,8 @@ $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') :
 if (newbb_isAdmin($forum_obj)
     || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
         && ($topic_id == 0
-            || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))
-) {
-    $type_id     = $topicHandler->get(@$topic_id, 'type_id');
+            || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
+    $type_id = $topicHandler->get(@$topic_id, 'type_id');
     /** @var \NewbbTypeHandler $typeHandler */
     $typeHandler = xoops_getModuleHandler('type', 'newbb');
     $types       = $typeHandler->getByForum($forum_obj->getVar('forum_id'));
@@ -236,8 +235,7 @@ if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['notificat
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         if (!empty($topic_id)
-            && $notificationHandler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))
-        ) {
+            && $notificationHandler->isSubscribed('thread', $topic_id, 'new_post', $xoopsModule->getVar('mid'), $GLOBALS['xoopsUser']->getVar('uid'))) {
             $notify = 1;
         }
     }

@@ -24,18 +24,18 @@ class NewbbUploader extends XoopsMediaUploader
     /**
      * Constructor
      *
-     * @param string    $uploadDir
-     * @param array|int $allowedMimeTypes
-     * @param int       $maxFileSize
-     * @param int       $maxWidth
-     * @param int       $maxHeight
+     * @param string           $uploadDir
+     * @param array|int|string $allowedMimeTypes
+     * @param int              $maxFileSize
+     * @param int              $maxWidth
+     * @param int              $maxHeight
      */
     public function __construct($uploadDir, $allowedMimeTypes = 0, $maxFileSize = 0, $maxWidth = 0, $maxHeight = 0)
     {
         //        $this->XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
 
         if (!is_array($allowedMimeTypes)) {
-            if (empty($allowedMimeTypes) || $allowedMimeTypes === '*') {
+            if (empty($allowedMimeTypes) || $allowedMimeTypes == '*') {
                 $allowedMimeTypes = [];
             } else {
                 $allowedMimeTypes = array_filter(array_map('trim', explode('|', strtolower($allowedMimeTypes))));

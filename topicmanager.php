@@ -49,7 +49,7 @@ if (Request::getString('submit', '', 'POST')) {
     }
 }
 
-if (!$topic_id) {
+if (empty($topic_id)) {
     $redirect = empty($forum_id) ? 'index.php' : 'viewforum.php?forum={$forum}';
     $redirect = XOOPS_URL . '/modules/newbb/' . $redirect;
     redirect_header($redirect, 2, _MD_ERRORTOPIC);
@@ -146,8 +146,24 @@ if (Request::getString('submit', '', 'POST')) {
         // irmtfan add restore to viewtopic
         $restoretopic_id = $topic_obj->getVar('topic_id');
         // irmtfan / missing in URL
-        echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$restoretopic_id'>" . _MD_VIEWTHETOPIC . '</a></p>' . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
-             . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . '</a></p>' . "<p><a href='index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
+        echo $action[$mode]['msg']
+             . "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/viewtopic.php?topic_id=$restoretopic_id'>"
+             . _MD_VIEWTHETOPIC
+             . '</a></p>'
+             . "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/viewforum.php?forum=$forum'>"
+             . _MD_RETURNTOTHEFORUM
+             . '</a></p>'
+             . "<p><a href='index.php'>"
+             . _MD_RETURNFORUMINDEX
+             . '</a></p>';
     } elseif ('merge' === $mode) {
         /** @var NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
@@ -204,9 +220,29 @@ if (Request::getString('submit', '', 'POST')) {
             $forumHandler->synchronization($forum);
             // END irmtfan poll_module and rewrite the method
         }
-        echo $action[$mode]['msg'] . // irmtfan full URL
-             "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$newtopic'>" . _MD_VIEWTHETOPIC . '</a></p>' . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM
-             . '</a></p>' . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
+        echo $action[$mode]['msg']
+             . // irmtfan full URL
+             "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/viewtopic.php?topic_id=$newtopic'>"
+             . _MD_VIEWTHETOPIC
+             . '</a></p>'
+             . "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/viewforum.php?forum=$forum'>"
+             . _MD_RETURNTOTHEFORUM
+             . '</a></p>'
+             . "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/index.php'>"
+             . _MD_RETURNFORUMINDEX
+             . '</a></p>';
     } elseif ('move' === $mode) {
         if ($newforum > 0) {
             $topic_id  = $topic_id[0];
@@ -216,7 +252,7 @@ if (Request::getString('submit', '', 'POST')) {
             $topicHandler->insert($topic_obj, true);
             $topic_obj->loadFilters('update');
 
-            $sql = sprintf('UPDATE %s SET forum_id = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_posts'), $newforum, $topic_id);
+            $sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('bb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
                 return false;
             }
@@ -226,7 +262,7 @@ if (Request::getString('submit', '', 'POST')) {
             echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$topic_id&amp;forum=$newforum'>" . _MD_GOTONEWFORUM . "</a></p><p><a href='" . XOOPS_URL . "/modules/newbb/index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
         } else {
             // irmtfan - issue with javascript:history.go(-1)
-            redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_ERRORFORUM);
+            redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_ERRORFORUM);
         }
     } else {
         $topic_id  = $topic_id[0];
@@ -250,7 +286,7 @@ if (Request::getString('submit', '', 'POST')) {
             redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
         }
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
-            $topic_obj    = $topicHandler->get($topic_id);
+            $topic_obj = $topicHandler->get($topic_id);
             /** @var \NewbbStatsHandler $statsHandler */
             $statsHandler = xoops_getModuleHandler('stats', 'newbb');
             $statsHandler->update($topic_obj->getVar('forum_id'), 'digest');
@@ -262,7 +298,17 @@ if (Request::getString('submit', '', 'POST')) {
             }
         }
         // irmtfan full URL
-        echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$topic_id&amp;forum=$forum'>" . _MD_VIEWTHETOPIC . "</a></p><p><a href='" . XOOPS_URL . "/modules/newbb/viewforum.php?forum=$forum'>" . _MD_RETURNFORUMINDEX
+        echo $action[$mode]['msg']
+             . "<p><a href='"
+             . XOOPS_URL
+             . '/modules/'
+             . $xoopsModule->getVar('dirname')
+             . "/viewtopic.php?topic_id=$topic_id&amp;forum=$forum'>"
+             . _MD_VIEWTHETOPIC
+             . "</a></p><p><a href='"
+             . XOOPS_URL
+             . "/modules/newbb/viewforum.php?forum=$forum'>"
+             . _MD_RETURNFORUMINDEX
              . '</a></p>';
     }
 } else {  // No submit

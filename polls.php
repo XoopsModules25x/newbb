@@ -87,7 +87,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     }
 } else {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_POLLMODULE_ERROR);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_POLLMODULE_ERROR);
 }
 // include header
 include $GLOBALS['xoops']->path('header.php');
@@ -97,8 +97,7 @@ if (is_object($GLOBALS['xoopsUser']) && !newbb_isAdmin($forum_obj)) {
     $perm = false;
     if ($topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'addpoll')) {
         if (('add' === $op || 'save' === $op || 'update' === $op) && !$topic_obj->getVar('topic_haspoll')
-            && ($GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster'))
-        ) {
+            && ($GLOBALS['xoopsUser']->getVar('uid') == $topic_obj->getVar('topic_poster'))) {
             $perm = true;
         } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') == $poll_obj->getVar('user_id'))) {
             $perm = true;
@@ -113,14 +112,18 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_CREATNEWPOLL . "</h4>\n";
-            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', ['topic_id' => $topic_id]);
+            $poll_obj->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new XoopsThemeForm(_MD_NEWBB_POLL_CREATNEWPOLL, 'poll_form', 'polls.php', 'post', true);
-            $author_label = new XoopsFormLabel(_MD_NEWBB_POLL_AUTHOR,
-                                               is_object($GLOBALS['xoopsUser']) ? ("<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname'])
-                                                                                   . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
+            $author_label = new XoopsFormLabel(_MD_NEWBB_POLL_AUTHOR, is_object($GLOBALS['xoopsUser']) ? ("<a href='"
+                                                                                                          . XOOPS_URL
+                                                                                                          . '/userinfo.php?uid='
+                                                                                                          . $GLOBALS['xoopsUser']->getVar('uid')
+                                                                                                          . "'>"
+                                                                                                          . newbb_getUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname'])
+                                                                                                          . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
             $poll_form->addElement($author_label);
             $question_text = new XoopsFormText(_MD_NEWBB_POLL_POLLQUESTION, 'question', 50, 255);
             $poll_form->addElement($question_text);
@@ -149,7 +152,12 @@ switch ($op) {
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars", "", "' . XOOPS_URL . "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" . XOOPS_URL . '/modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/' . $current_bar
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . XOOPS_URL
+                                                      . '/modules/'
+                                                      . $GLOBALS['xoopsModuleConfig']['poll_module']
+                                                      . '/assets/images/colorbars/'
+                                                      . $current_bar
                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
@@ -174,7 +182,7 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_EDITPOLL . "</h4>\n";
-            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', ['topic_id' => $topic_id]);
+            $poll_obj->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
@@ -216,7 +224,8 @@ switch ($op) {
                 $color_select = new XoopsFormSelect('', 'option_color[{$i}]', $option->getVar('option_color'));
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[" . $i . "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E'))
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E'))
                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
@@ -242,7 +251,7 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') < 140) {
             // check security token
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                redirect_header($_SERVER['PHP_SELF'], 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+                redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             /*
              * The option check should be done before submitting
@@ -250,7 +259,7 @@ switch ($op) {
             $option_empty = true;
             if (!Request::getString('option_text', '', 'POST')) {
                 // irmtfan - issue with javascript:history.go(-1)
-                redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
+                redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
             }
             $option_text = Request::getArray('option_text', '', 'POST');
             foreach ($option_text as $optxt) {
@@ -261,7 +270,7 @@ switch ($op) {
             }
             if ($option_empty) {
                 // irmtfan - issue with javascript:history.go(-1)
-                redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
+                redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
             }
             $poll_obj->setVar('question', Request::getString('question', '', 'POST'));
             $poll_obj->setVar('description', Request::getString('description', '', 'POST'));
@@ -294,7 +303,7 @@ switch ($op) {
             $option_color = Request::getArray('option_color', null, 'POST');
             $classOption  = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
-                $optxt      = trim($optxt);
+                $optxt = trim($optxt);
                 /** @var XoopspollOption $option_obj */
                 $option_obj = new $classOption();
                 if ($optxt !== '') {
@@ -324,14 +333,14 @@ switch ($op) {
     case 'update':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         /* make sure there's at least one option */
         $option_text   = Request::getString('option_text', '', 'POST');
         $option_string = is_array($option_text) ? implode('', $option_text) : $option_text;
         $option_string = trim($option_string);
         if ('' === $option_string) {
-            redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
+            redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
         }
 
         // new xoopspoll module
@@ -355,8 +364,7 @@ switch ($op) {
 
             //  don't allow changing start time if there are votes in the log
             if (($startTimestamp < $poll_obj->getVar('start_time'))
-                && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)
-            ) {
+                && ($xpLogHandler->getTotalVotesByPollId($poll_id) > 0)) {
                 $startTimestamp = $poll_obj->getVar('start_time'); //don't change start time
             }
 
@@ -505,7 +513,8 @@ switch ($op) {
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
-                $color_label = new XoopsFormLabel('', "<img src='" . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
+                $color_label = new XoopsFormLabel('', "<img src='"
+                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
@@ -528,7 +537,7 @@ switch ($op) {
     case 'savemore':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
         $option_text   = Request::getString('option_text', '', 'POST');
@@ -536,7 +545,7 @@ switch ($op) {
         $option_string = trim($option_string);
         if ('' === $option_string) {
             // irmtfan - issue with javascript:history.go(-1)
-            redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
+            redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_ERROROCCURED . ': ' . _MD_NEWBB_POLL_POLLOPTIONS . ' !');
         }
         $i            = 0;
         $option_color = Request::getArray('option_color', null, 'POST');
@@ -578,7 +587,7 @@ switch ($op) {
     case 'delete_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //try and delete the poll
         // new xoopspoll module
@@ -654,7 +663,7 @@ switch ($op) {
     case 'restart_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
         // new xoopspoll module

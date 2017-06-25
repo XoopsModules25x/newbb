@@ -75,12 +75,13 @@ class Topic extends XoopsObject
         return getTopicTitle($topic_title, $type_obj->getVar('type_name'), $type_obj->getVar('type_color'));
     }
     // START irmtfan loadOldPoll function
+
     /**
      * Load functions needed for old xoopspoll (older than version 1.4 by zyspec) and umfrage modules
      *
      * @access public
      * @param  string $pollModule dirname of the poll module
-     * @return string $classPoll = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
+     * @return string|false $classPoll = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
      */
 
     public function loadOldPoll($pollModule = null)
@@ -153,7 +154,7 @@ class Topic extends XoopsObject
                 $classOption::deleteByPollId($poll->getVar('poll_id'));
                 $classLog = $classPoll . 'Log';
                 $classLog::deleteByPollId($poll->getVar('poll_id'));
-                xoops_comment_delete($xoopsModule->getVar('mid'), $poll->getVar('poll_id'));
+                xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll->getVar('poll_id'));
             }
         } // end poll_module new or old
 
@@ -215,11 +216,12 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  mixed $id
-     * @param  null  $var
+     * @param  null|array  $fields
      * @return mixed|null
      */
-    public function get($id = null, $var = null) //get($id, $var = null)
+    public function get($id = null, $fields = null) //get($id, $var = null)
     {
+        $var = $fields;
         $ret  = null;
         $tags = $var;
         if (!empty($var) && is_string($var)) {
@@ -252,8 +254,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
 
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag'])
-            && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')
-        ) {
+            && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
             if ($tagHandler = tag_getTagHandler()) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
@@ -350,7 +351,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  Topic       $topic
+     * @param  Topic  $topic
      * @param  string $type
      * @return mixed
      */
@@ -378,7 +379,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param $topic_id
-     * @return null
+     * @return null|\NewbbPost
      */
     public function &getTopPost($topic_id)
     {
@@ -394,9 +395,11 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return $post;
         }
+        /** @var \NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
         $myrow       = $this->db->fetchArray($result);
-        $post        = $postHandler->create(false);
+        /** @var \NewbbPost $post */
+        $post = $postHandler->create(false);
         $post->assignVars($myrow);
 
         return $post;
@@ -554,7 +557,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject|Topic $topic
-     * @param  bool        $force
+     * @param  bool              $force
      * @return bool
      */
     public function delete(XoopsObject $topic, $force = true)
@@ -563,7 +566,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (empty($topic_id)) {
             return false;
         }
-        $post_obj    = $this->getTopPost($topic_id);
+        $post_obj = $this->getTopPost($topic_id);
         /** @var \NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
         $postHandler->delete($post_obj, false, $force);
@@ -581,9 +584,9 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     // parameter: $type: 'post', 'view',  'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach'
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
     /**
-     * @param   \NewbbForum      $forum
-     * @param  int    $topic_locked
-     * @param  string $type
+     * @param   \NewbbForum $forum
+     * @param  int          $topic_locked
+     * @param  string       $type
      * @return bool
      */
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
@@ -651,6 +654,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
     }
 
     // START irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
+
     /**
      * @param  null $object
      * @param  bool $force
@@ -720,7 +724,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
      * find poll module that is in used in the current newbb installtion.
      * @access public
      * @param  array $pollDirs dirnames of all active poll modules
-     * @return string $dir_def | true | false
+     * @return bool|string $dir_def | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
      *                         false: errors (see below xoops_errors)

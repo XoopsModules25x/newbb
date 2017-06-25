@@ -95,8 +95,7 @@ class NewbbMigrate extends Xmf\Database\Migrate
         $tableName    = 'newbb_posts_text';
         $srcTableName = 'newbb_posts';
         if (false !== $this->tableHandler->useTable($tableName)
-            && false !== $this->tableHandler->useTable($srcTableName)
-        ) {
+            && false !== $this->tableHandler->useTable($srcTableName)) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, 'dohtml');
             if ($attributes === false) {
                 $this->synchronizeTable($tableName);

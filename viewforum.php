@@ -165,8 +165,7 @@ $sel_sort_array = [
     't.topic_last_post_id' => _MD_NEWBB_LASTPOSTTIME
 ];
 if (!Request::getString('sort', '', 'GET')
-    || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)
-) {
+    || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)) {
     $sort = 't.topic_last_post_id';
 } else {
     $sort = Request::getString('sort', '', 'GET');

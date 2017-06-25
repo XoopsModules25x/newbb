@@ -186,7 +186,12 @@ class NewbbUser
                 }
             }
             // irmtfan hardcore removed align="left"
-            $table = "<table class='userlevel'><tr><td class='end'><img src='" . $rpg_images['img_left'] . "' alt='' /></td><td class='center' background='" . $rpg_images['img_backing'] . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='" . $rpg_images['img_right']
+            $table = "<table class='userlevel'><tr><td class='end'><img src='"
+                     . $rpg_images['img_left']
+                     . "' alt='' /></td><td class='center' background='"
+                     . $rpg_images['img_backing']
+                     . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='"
+                     . $rpg_images['img_right']
                      . "' alt='' /></td></tr></table>";
 
             $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '<br>' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);

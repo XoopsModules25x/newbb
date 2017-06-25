@@ -8,9 +8,9 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
             <{foreach item=forum from=$parentforum}>
-            <span class="delimiter">&raquo;</span>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
-        <{/foreach}>
+                <span class="delimiter">&raquo;</span>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
+            <{/foreach}>
         <{/if}>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
@@ -32,15 +32,16 @@
     <div class="left" style="padding: 5px;">
         <{$smarty.const._MD_NEWBB_BROWSING}>&nbsp;
         <{foreach item=user from=$online.users}>
-        <a href="<{$user.link}>">
-            <{if $user.level eq 2}>
-                <span class="online_admin"><{$user.uname}></span>
-            <{elseif $user.level eq 1}>
-                <span class="online_moderator"><{$user.uname}></span>
-            <{else}>
-                <{$user.uname}>
-            <{/if}>
-        </a>&nbsp;
+            <a href="<{$user.link}>">
+                <{if $user.level eq 2}>
+                    <span class="online_admin"><{$user.uname}></span>
+                <{elseif $user.level eq 1}>
+                    <span class="online_moderator"><{$user.uname}></span>
+                <{else}>
+                    <{$user.uname}>
+                <{/if}>
+            </a>
+            &nbsp;
         <{/foreach}>
         <{if $online.num_anonymous}>
             &nbsp;<{$online.num_anonymous}> <{$smarty.const._MD_NEWBB_ANONYMOUS_USERS}>
@@ -94,14 +95,14 @@
 
 <div style="padding: 5px;">
     <!-- irmtfan hardcode removed style="float: left; text-align:left;"" -->
-<span class="icon_left">
+    <span class="icon_left">
         <!-- irmtfan correct prev and next icons -->
 <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_NEWBB_BOTTOM}></a>&nbsp;&nbsp;<{$previous}>&nbsp;<a
-            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_NEWBB_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
-            href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEWBB_NEXTTOPIC}></a>
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev"><{$smarty.const._MD_NEWBB_PREVTOPIC}></a>&nbsp;&nbsp;<{$next}>&nbsp;<a
+                href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next"><{$smarty.const._MD_NEWBB_NEXTTOPIC}></a>
 </span>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;"" -->
-<span class="icon_right">
+    <span class="icon_right">
 <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
 </span>
 </div>
@@ -114,15 +115,15 @@
             <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
             <{if $viewer_level gt 1}>
                 <{foreach item=act from=$admin_actions}>
-                <option value="<{$act.link}>"><{$act.name}></option>
-            <{/foreach}>
+                    <option value="<{$act.link}>"><{$act.name}></option>
+                <{/foreach}>
             <{/if}>
             <{if count($adminpoll_actions) > 0 }>
                 <option value="">--------</option>
                 <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
                 <{foreach item=actpoll from=$adminpoll_actions}>
-                <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
-            <{/foreach}>
+                    <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
+                <{/foreach}>
             <{/if}>
         </select>
         <!-- irmtfan user should not see rating if he dont have permission -->
@@ -144,7 +145,7 @@
                 onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
             <{foreach item=act from=$viewmode_options}>
-            <option value="<{$act.link}>"><{$act.title}></option>
+                <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
         <!-- START irmtfan add topic search -->
@@ -182,15 +183,15 @@
 <{*<{if $post_id == 0}><div id="aktuell"></div><{/if}> *}>
 -->
 <{foreach item=topic_post from=$topic_posts}>
-<{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
-<br>
-<br>
-<{foreachelse}>
-<div style="text-align: center;width:100%;font-size:1.5em;padding:5px;"><{$smarty.const._MD_NEWBB_ERRORPOST}></div>
+    <{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
+    <br>
+    <br>
+    <{foreachelse}>
+    <div style="text-align: center;width:100%;font-size:1.5em;padding:5px;"><{$smarty.const._MD_NEWBB_ERRORPOST}></div>
 <{/foreach}>
 
 <{if $mode gt 1}>
-</form>
+    </form>
 <{/if}>
 
 <br>
@@ -201,9 +202,9 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
             <{foreach item=forum from=$parentforum}>
-            <span class="delimiter">&raquo;</span>
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
-        <{/foreach}>
+                <span class="delimiter">&raquo;</span>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
+            <{/foreach}>
         <{/if}>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
@@ -257,7 +258,7 @@
     <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
     <div class="icon_left">
         <{foreach item=perm from=$permission_table}>
-        <div><{$perm}></div>
+            <div><{$perm}></div>
         <{/foreach}>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->

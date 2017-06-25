@@ -50,7 +50,7 @@ if (!class_exists('NewbbObjectTree')) {
          * @param string $ret         (reference to a string when called from outside) Result from previous recursions
          * @param string $prefix_orig String to indent items at deeper levels
          * @param string $prefix_curr String to indent the current item
-         * @param null   $tags
+         * @param null|array   $tags
          * @internal  param string $fieldName Name of the member variable from the
          *                            node objects that should be used as the title for the options.
          * @internal  param string $selected Value to display as selected
@@ -67,7 +67,7 @@ if (!class_exists('NewbbObjectTree')) {
                     $ret[$key]['forum_name'] = $this->tree[$key]['obj']->getVar('forum_name');
                 }
                 $ret[$key]['prefix'] = $prefix_curr;
-                $prefix_curr .= $prefix_orig;
+                $prefix_curr         .= $prefix_orig;
             }
             if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
                 foreach ($this->tree[$key]['child'] as $childkey) {
@@ -262,13 +262,13 @@ if (!class_exists('NewbbObjectTree')) {
             $ret  = [];
             $pids = [];
             if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
-                $pids[]  = $this->tree[$this->tree[$key]['parent']]['obj']->getVar($this->_myId);
+                $pids[]  = $this->tree[$this->tree[$key]['parent']]['obj']->getVar($this->myId);
                 $parents = $this->_getParentForums($this->tree[$key]['parent'], $ret);
                 foreach (array_keys($parents) as $newkey) {
                     if (!is_object($newkey)) {
                         continue;
                     }
-                    $ret[] = $parents[$newkey]->getVar($this->_myId);
+                    $ret[] = $parents[$newkey]->getVar($this->myId);
                 }
             }
             if ($reverse) {

@@ -376,8 +376,7 @@ class NewbbTopicRenderer
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbb_getSinceTime($val);
                     if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1
-                        && $GLOBALS['last_visit'] > $startdate
-                    ) {
+                        && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
@@ -563,6 +562,7 @@ class NewbbTopicRenderer
     }
 
     // START irmtfan add Display topic headers function
+
     /**
      * @param  null $header
      * @return array
@@ -581,6 +581,7 @@ class NewbbTopicRenderer
     }
 
     // END irmtfan add Display topic headers function
+
     /**
      * @param  null $type
      * @param  null $status
@@ -639,6 +640,9 @@ class NewbbTopicRenderer
         $sort_selected     = $this->vars['sort'];
         $sorts             = $this->getSort('', 'title');
         $selection['sort'] = "<select name='sort'>";
+        if (! is_array($sorts)) {
+            throw new \RuntimeException('$sorts must be an array.');
+        }
         foreach ($sorts as $sort => $title) {
             $selection['sort'] .= "<option value='" . $sort . "' " . (($sort == $sort_selected) ? " selected='selected'" : '') . '>' . $title . '</option>';
         }
@@ -682,6 +686,9 @@ class NewbbTopicRenderer
         }
 
         $headers = $this->getSort('', 'title');
+        if (! is_array($headers)) {
+            throw new \RuntimeException('$headers must be an array.');
+        }
         foreach ($headers as $header => $title) {
             $_args = ["sort={$header}"];
             if (@$this->vars['sort'] == $header) {
@@ -743,6 +750,7 @@ class NewbbTopicRenderer
      */
     public function buildTypes(Smarty $xoopsTpl)
     {
+        $status = '';
         if (!$types = $this->getTypes()) {
             return true;
         }
@@ -803,11 +811,11 @@ class NewbbTopicRenderer
             require_once $GLOBALS['xoops']->path('class/pagenav.php');
             $nav = new XoopsPageNav($count_topic, $this->config['topics_per_page'], @$this->vars['start'], 'start', implode('&amp;', $args));
             if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-                $nav->url = formatURL($_SERVER['SERVER_NAME']) . ' /' . $nav->url;
+                $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . ' /' . $nav->url;
             }
             if ($this->config['pagenav_display'] === 'select') {
                 $navi = $nav->renderSelect();
-            } elseif ($this->config['pagenav_display'] === 'image') {
+            } elseif ($this->config['pagenav_display'] == 'image') {
                 $navi = $nav->renderImageNav(4);
             } else {
                 $navi = $nav->renderNav(4);
@@ -950,12 +958,12 @@ class NewbbTopicRenderer
             $totalpages           = ceil(($myrow['topic_replies'] + 1) / $this->config['posts_per_page']);
             if ($totalpages > 1) {
                 $topic_page_jump .= '&nbsp;&nbsp;';
-                $append = false;
+                $append          = false;
                 for ($i = 1; $i <= $totalpages; ++$i) {
                     if ($i > 3 && $i < $totalpages) {
                         if (!$append) {
                             $topic_page_jump .= '...';
-                            $append = true;
+                            $append          = true;
                         }
                     } else {
                         $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $this->config['posts_per_page']) . '">' . $i . '</a>]';
@@ -1051,7 +1059,7 @@ class NewbbTopicRenderer
             $type_list = $typeHandler->getAll(new Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
         }
         */
-        $type_list    = $this->getTypes();
+        $type_list = $this->getTypes();
         /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
@@ -1120,6 +1128,7 @@ class NewbbTopicRenderer
     }
 
     // START irmtfan to create an array from selected keys of an array
+
     /**
      * @param        $array
      * @param  null  $keys

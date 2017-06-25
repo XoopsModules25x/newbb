@@ -123,8 +123,19 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports(0, 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $report['post_id'] . '&amp;topic_id=' . $report['topic_id'] . '&amp;forum=' . $report['forum_id'] . '&amp;viewmode=thread" target="checkreport">'
-                         . $myts->htmlSpecialChars($report['subject']) . '</a>';
+            $post_link = '<a href="'
+                         . XOOPS_URL
+                         . '/modules/'
+                         . $xoopsModule->getVar('dirname')
+                         . '/viewtopic.php?post_id='
+                         . $report['post_id']
+                         . '&amp;topic_id='
+                         . $report['topic_id']
+                         . '&amp;forum='
+                         . $report['forum_id']
+                         . '&amp;viewmode=thread" target="checkreport">'
+                         . $myts->htmlSpecialChars($report['subject'])
+                         . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked />';
             if ($item !== 'processed') {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
@@ -152,12 +163,12 @@ switch ($op) {
         }
         $buttons = '';
         if ($item !== 'processed') {
-            $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+            $submit  = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
             $buttons .= $submit->render() . ' ';
         }
-        $delete = new XoopsFormButton('', 'delete', _DELETE, 'submit');
+        $delete  = new XoopsFormButton('', 'delete', _DELETE, 'submit');
         $buttons .= $delete->render() . ' ';
-        $cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'reset');
+        $cancel  = new XoopsFormButton('', 'cancel', _CANCEL, 'reset');
         $buttons .= $cancel->render();
         echo "<tr colspan='2'><td align='center'>{$buttons}</td></tr>";
         $hidden = new XoopsFormHidden('start', $start);

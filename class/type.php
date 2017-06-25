@@ -62,8 +62,15 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
 
         $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : [(int)$forums]));
 
-        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order' . '     FROM ' . $this->db->prefix('newbb_type_forum') . ' AS l ' . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " . '     WHERE ' . '        l.forum_id '
-               . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')') . '         ORDER BY l.type_order ASC';
+        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order'
+               . '     FROM '
+               . $this->db->prefix('newbb_type_forum')
+               . ' AS l '
+               . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} "
+               . '     WHERE '
+               . '        l.forum_id '
+               . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')')
+               . '         ORDER BY l.type_order ASC';
         if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             return $ret;

@@ -8,8 +8,8 @@ use Xmf\Request;
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
-$seoOp = Request::getString('seoOp', '', 'GET');
-$seoArg = Request::getInt('seoArg', 0, 'GET');
+$seoOp    = Request::getString('seoOp', '', 'GET');
+$seoArg   = Request::getInt('seoArg', 0, 'GET');
 $seoOther = Request::getString('seoOther', '', 'GET');
 
 $seos = ['c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf'];
@@ -28,7 +28,7 @@ $seoMap = [
 if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
-    $ori_self               = $_SERVER['PHP_SELF'];
+    $ori_self               = Request::getString('PHP_SELF', '', 'SERVER');
     $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
     $_ENV['PHP_SELF']       = $newUrl;

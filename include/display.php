@@ -126,8 +126,7 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['more'] =
     //$displayText['less'] =
 
-$displayText['p_delete'] = $displayText['p_reply'] = $displayText['p_quote'] = $displayText['p_edit'] = $displayText['p_report'] =
-$displayText['t_new'] = $displayText['t_poll'] = $displayText['t_qr'] = $displayText['t_qr_expand'] = $displayText['t_reply'] =
+$displayText['p_delete'] = $displayText['p_reply'] = $displayText['p_quote'] = $displayText['p_edit'] = $displayText['p_report'] = $displayText['t_new'] = $displayText['t_poll'] = $displayText['t_qr'] = $displayText['t_qr_expand'] = $displayText['t_reply'] =
 
     //$displayText['online'] =
     //$displayText['offline'] =

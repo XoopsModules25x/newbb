@@ -165,7 +165,7 @@ if (!empty($moderate_count)) {
         include $GLOBALS['xoops']->path('class/pagenav.php');
         $nav = new XoopsPageNav($moderate_count, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', 'forum=' . $forum_id . '&amp;sort=' . $sortname);
         //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-        //    $nav->url = formatURL($_SERVER['SERVER_NAME']) . ' /' . $nav->url;
+        //    $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . ' /' . $nav->url;
         //}
         $xoopsTpl->assign('moderate_page_nav', $nav->renderNav());
     }
@@ -184,9 +184,9 @@ if (newbb_isAdmin()) {
     if ($forum_id == 0) {
         $forumSel .= ' selected';
     }
-    $forumSel .= '>' . _ALL . '</option>';
-    $forumSel .= newbb_forumSelectBox($forum_id, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = true
-    $forumSel .= '</select>';
+    $forumSel                         .= '>' . _ALL . '</option>';
+    $forumSel                         .= newbb_forumSelectBox($forum_id, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = true
+    $forumSel                         .= '</select>';
     $forumEle                         = new XoopsFormLabel(_MD_NEWBB_SELFORUM, $forumSel);
     $forumEle->customValidationCode[] = 'if (document.suspend.forum.value < 0) {return false;} ';
     $forum_form->addElement($forumEle);

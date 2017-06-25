@@ -13,9 +13,11 @@ use Xmf\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+/** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
-$dirname = $xoopsModule->getVar('dirname');
+//$dirname = $xoopsModule->getVar('dirname');
+$moduleDirName = basename(__DIR__);
 //include_once $GLOBALS['xoops']->path('header.php');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
@@ -24,8 +26,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     $toseo_url = ['index.php', 'viewforum.php', 'viewtopic.php', 'rss.php'];
 
     if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0)
-        && (strpos(getenv('REQUEST_URI'), '.html') === false)
-    ) {
+        && (strpos(getenv('REQUEST_URI'), '.html') === false)) {
         $redir = false;
         if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
             // Mark Forums
@@ -58,7 +59,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     }
 }
 
-include_once $GLOBALS['xoops']->path('modules/' . $dirname . '/include/vars.php');
+include_once $GLOBALS['xoops']->path('modules/' . $moduleDirName . '/include/vars.php');
 
 include_once __DIR__ . '/include/functions.user.php';
 include_once __DIR__ . '/include/functions.topic.php';
@@ -69,8 +70,8 @@ $myts = MyTextSanitizer::getInstance();
 
 $menumode       = 0;
 $menumode_other = [];
-$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', $_SERVER['REQUEST_URI']));
-$menu_url .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
+$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI','','SERVER')));
+$menu_url       .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
 //foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
 //    if ($key !== $menumode) {
 //        $menumode_other[] = array('title' => $val, 'link' => $menu_url . $key);
@@ -78,8 +79,7 @@ $menu_url .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=
 //}
 
 if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum'])
-    && !$GLOBALS['xoopsUser']->getVar('posts')
-) {
+    && !$GLOBALS['xoopsUser']->getVar('posts')) {
     include_once __DIR__ . '/include/functions.welcome.php';
 }
 // irmtfan for backward compatibility

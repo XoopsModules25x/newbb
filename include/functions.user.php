@@ -78,8 +78,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
     }
 
     if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid == $xoopsModule->getVar('mid', 'n')
-        && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')
-    ) {
+        && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')) {
         return $GLOBALS['xoopsUserIsAdmin'];
     }
 
@@ -167,8 +166,8 @@ function newbb_isModuleAdministrators(array $uid = [])
     global $xoopsModule;
     $module_administrators = [];
 
-//    $xoopsMembershipHandler = xoops_getHandler('membership');
-//    $xoopsMembershipTable   = $xoopsMembershipHandler->table;
+    //    $xoopsMembershipHandler = xoops_getHandler('membership');
+    //    $xoopsMembershipTable   = $xoopsMembershipHandler->table;
 
     /** @var \XoopsMembershipHandler $xoopsMembershipHandler */
     $xoopsMembershipHandler = xoops_getHandler('membership');
@@ -182,8 +181,19 @@ function newbb_isModuleAdministrators(array $uid = [])
     }
     $mid = $xoopsModule->getVar('mid');
 
-    $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM ' . $xoopsMembershipTable . ' AS l' . ' LEFT JOIN ' . $xoopsGroupPermTable . ' AS p ON p.gperm_groupid=l.groupid' . ' WHERE l.uid IN (' . implode(', ', array_map('intval', $uid)) . ')'
-           . "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '" . (int)$mid . "'" . ' GROUP BY l.uid';
+    $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM '
+           . $xoopsMembershipTable
+           . ' AS l'
+           . ' LEFT JOIN '
+           . $xoopsGroupPermTable
+           . ' AS p ON p.gperm_groupid=l.groupid'
+           . ' WHERE l.uid IN ('
+           . implode(', ', array_map('intval', $uid))
+           . ')'
+           . "    AND p.gperm_modid = '1' AND p.gperm_name = 'module_admin' AND p.gperm_itemid = '"
+           . (int)$mid
+           . "'"
+           . ' GROUP BY l.uid';
 
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {

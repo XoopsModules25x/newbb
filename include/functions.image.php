@@ -52,11 +52,9 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
-            && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
-        ) {
+            && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 //if (!file_exists($thumb_path.'/'.$source) && $imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_img_width']) {
                 if (!file_exists($thumb_path . '/' . $source)) {
                     newbb_createThumbnail($source, $GLOBALS['xoopsModuleConfig']['max_image_width']);
@@ -64,16 +62,14 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             }
 
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
                 $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height . "px'";
             }
             // irmtfan to fix Undefined variable: pseudo_height
             if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
-                && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
                 $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height . "px'";
@@ -104,6 +100,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      */
     function newbb_createThumbnail($source, $thumb_width)
     {
+        $cmd = '';
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $thumb_path = $img_path . '/thumbs';
         $src_file   = $img_path . '/' . $source;

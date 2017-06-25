@@ -84,6 +84,8 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
         $report_result = 0,
         $report_id = 0
     ) {
+        $forumCriteria = '';
+        $row = [];
         if ($order === 'DESC') {
             $operator_for_position = '>';
         } else {
@@ -100,7 +102,7 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
         }
         $result_criteria = ' AND r.report_result = ' . $report_result;
 
-        if (!$forums) {
+        if ($forums) {
             $forumCriteria = '';
         } elseif (!is_array($forums)) {
             $forums        = [$forums];

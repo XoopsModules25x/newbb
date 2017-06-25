@@ -27,31 +27,29 @@ $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_t
 
 if (!$GLOBALS['xoopsDB']->queryF('
         CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp') . " (
-          `type_id`             smallint(4)         unsigned NOT NULL auto_increment,
-          `type_name`             varchar(64)         NOT NULL default '',
-          `type_color`             varchar(10)         NOT NULL default '',
-          `type_description`     varchar(255)         NOT NULL default '',
+          `type_id`             SMALLINT(4)         UNSIGNED NOT NULL AUTO_INCREMENT,
+          `type_name`             VARCHAR(64)         NOT NULL DEFAULT '',
+          `type_color`             VARCHAR(10)         NOT NULL DEFAULT '',
+          `type_description`     VARCHAR(255)         NOT NULL DEFAULT '',
 
           PRIMARY KEY              (`type_id`)
         ) ENGINE=MyISAM;
-    ")
-) {
+    ")) {
     exit('Can not create tmp table for `bb_type_tmp`');
 }
 
 if (!$GLOBALS['xoopsDB']->queryF('
         CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_forum_tmp') . " (
-          `tf_id`                 mediumint(4)         unsigned NOT NULL auto_increment,
-          `type_id`             smallint(4)         unsigned NOT NULL default '0',
-          `forum_id`             smallint(4)         unsigned NOT NULL default '0',
-          `type_order`             smallint(4)         unsigned NOT NULL default '99',
+          `tf_id`                 MEDIUMINT(4)         UNSIGNED NOT NULL AUTO_INCREMENT,
+          `type_id`             SMALLINT(4)         UNSIGNED NOT NULL DEFAULT '0',
+          `forum_id`             SMALLINT(4)         UNSIGNED NOT NULL DEFAULT '0',
+          `type_order`             SMALLINT(4)         UNSIGNED NOT NULL DEFAULT '99',
 
           PRIMARY KEY              (`tf_id`),
           KEY `forum_id`        (`forum_id`),
           KEY `type_order`        (`type_order`)
         ) ENGINE=MyISAM;
-    ")
-) {
+    ")) {
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp'));
     exit('Can not create tmp table for `bb_type_forum_tmp`');
 }
@@ -67,8 +65,7 @@ foreach ($subjectpres as $subjectpre) {
                     (`type_name`, `type_color`)
                 VALUES
                     (' . $GLOBALS['xoopsDB']->quoteString($matches[2]) . ', ' . $GLOBALS['xoopsDB']->quoteString($matches[1]) . ')
-            ')
-        ) {
+            ')) {
             xoops_error("Can not add type of `{$matches[2]}`");
             continue;
         }

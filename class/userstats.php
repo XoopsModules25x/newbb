@@ -93,7 +93,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param $id
-     * @return null
+     * @return null|array
      */
     public function getStats($id)
     {

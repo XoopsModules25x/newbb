@@ -36,10 +36,10 @@
         <{if $block.headers.views}>
             <div class="<{$block_view}> floatleft center"><{$block.headers.views}></div>
         <{/if}>
-        <div style="overflow: hidden;" class="center" ><{$block.headers.lastpost}></div>
+        <div style="overflow: hidden;" class="center"><{$block.headers.lastpost}></div>
         <div class="clear"></div>
     </div>
-     <!-- start forum topic -->
+    <!-- start forum topic -->
     <{foreachq name=loop item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}> border">
         <div class="<{$block_topic}> floatleft left">
@@ -112,13 +112,16 @@
         <a href="<{$xoops_url}>/modules/newbb/list.topic.php"><{$smarty.const._MB_NEWBB_ALLTOPICS}></a> |
         <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unread"><{$smarty.const._MD_NEWBB_UNREAD}></a> |
         <{if $block.headers.replies}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unreplied"><{$smarty.const._MD_NEWBB_UNREPLIED}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unreplied"><{$smarty.const._MD_NEWBB_UNREPLIED}></a>
+            |
         <{/if}>
         <{if $block.headers.votes}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=voted"><{$smarty.const._MD_NEWBB_VOTED}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=voted"><{$smarty.const._MD_NEWBB_VOTED}></a>
+            |
         <{/if}>
         <{if $block.headers.poll}>
-            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=poll"><{$smarty.const._MD_NEWBB_POLL_POLL}></a> |
+            <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=poll"><{$smarty.const._MD_NEWBB_POLL_POLL}></a>
+            |
         <{/if}>
         <a href="<{$xoops_url}>/modules/newbb"><{$smarty.const._MB_NEWBB_VSTFRMS}></a>
     </div>

@@ -23,6 +23,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
     function newbb_welcome()
     {
         global $forum_obj;
+        $ret = '';
 
         $forumId = @$GLOBALS['xoopsModuleConfig']['welcome_forum'];
         if (!$forumId) {

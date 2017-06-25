@@ -12,8 +12,7 @@
 global $xoopsModule, $myts, $xoopsUser, $forum_obj;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($forum_obj) || !is_object($GLOBALS['xoopsUser'])
-    || !is_object($xoopsModule)
-) {
+    || !is_object($xoopsModule)) {
     return;
 }
 
@@ -51,13 +50,13 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $show_ids         = $grouppermHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
     $visible_ids      = $grouppermHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
-    $fieldids         = array_intersect($show_ids, $visible_ids);
+    $fieldids = array_intersect($show_ids, $visible_ids);
     /** @var \ProfileProfileHandler $profileHandler */
-    $profileHandler  = xoops_getHandler('profile');
-    $fields          = $profileHandler->loadFields();
+    $profileHandler = xoops_getHandler('profile');
+    $fields         = $profileHandler->loadFields();
     /** @var \ProfileCategoryHandler $catHandler */
-    $catHandler      = xoops_getModuleHandler('category', 'profile');
-    $categories      = $catHandler->getObjects(null, true, false);
+    $catHandler = xoops_getModuleHandler('category', 'profile');
+    $categories = $catHandler->getObjects(null, true, false);
     /** @var \ProfileFieldHandler $fieldcatHandler */
     $fieldcatHandler = xoops_getModuleHandler('fieldcategory', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
@@ -126,9 +125,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $post_obj->getVar('topic_id') . '&amp;forum=' . $forum_id;
     $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post_id;
     include_once __DIR__ . '/include/notification.inc.php';
-    $forum_info          = newbb_notify_iteminfo('forum', $forum_id);
-    $tags['FORUM_NAME']  = $forum_info['name'];
-    $tags['FORUM_URL']   = $forum_info['url'];
+    $forum_info         = newbb_notify_iteminfo('forum', $forum_id);
+    $tags['FORUM_NAME'] = $forum_info['name'];
+    $tags['FORUM_URL']  = $forum_info['url'];
     /** @var \XoopsNotificationHandler $notificationHandler */
     $notificationHandler = xoops_getHandler('notification');
     $notificationHandler->triggerEvent('forum', $forum_id, 'new_thread', $tags);

@@ -135,6 +135,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      */
     public function getLatest($item, $isUid = true)
     {
+        $ips = [];
         if ($isUid) {
             $criteria = 'uid =' . (int)$item;
         } else {

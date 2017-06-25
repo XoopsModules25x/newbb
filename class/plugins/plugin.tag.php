@@ -80,7 +80,15 @@ function newbb_tag_synchronization($mid)
     $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
-    $sql = "    DELETE FROM {$linkHandler->table}" . '    WHERE ' . "        tag_modid = {$mid}" . '        AND ' . '        ( tag_itemid NOT IN ' . "            ( SELECT DISTINCT {$itemHandler->keyName} " . "                FROM {$itemHandler->table} "
-           . "                WHERE {$itemHandler->table}.approved > 0" . '            ) ' . '        )';
+    $sql = "    DELETE FROM {$linkHandler->table}"
+           . '    WHERE '
+           . "        tag_modid = {$mid}"
+           . '        AND '
+           . '        ( tag_itemid NOT IN '
+           . "            ( SELECT DISTINCT {$itemHandler->keyName} "
+           . "                FROM {$itemHandler->table} "
+           . "                WHERE {$itemHandler->table}.approved > 0"
+           . '            ) '
+           . '        )';
     $linkHandler->db->queryF($sql);
 }

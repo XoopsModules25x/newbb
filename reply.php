@@ -138,17 +138,16 @@ if (!preg_match('/^(Re|' . _MD_NEWBB_RE . '):/i', $r_subject)) {
 
 $q_message = $post_parent_obj->getVar('post_text', 'e');
 if ((!$GLOBALS['xoopsModuleConfig']['enable_karma'] || !$post_parent_obj->getVar('post_karma'))
-    && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))
-) {
+    && (!$GLOBALS['xoopsModuleConfig']['allow_require_reply'] || !$post_parent_obj->getVar('require_reply'))) {
     if (1 === Request::getInt('quotedac', 0, 'GET')) {
         $message = "[quote]\n";
         $message .= sprintf(_MD_NEWBB_USERWROTE, $r_name);
         $message .= "\n" . $q_message . '[/quote]';
-        $hidden = '';
+        $hidden  = '';
     } else {
-        $hidden = "[quote]\n";
-        $hidden .= sprintf(_MD_NEWBB_USERWROTE, $r_name);
-        $hidden .= "\n" . $q_message . '[/quote]';
+        $hidden  = "[quote]\n";
+        $hidden  .= sprintf(_MD_NEWBB_USERWROTE, $r_name);
+        $hidden  .= "\n" . $q_message . '[/quote]';
         $message = '';
     }
 } else {

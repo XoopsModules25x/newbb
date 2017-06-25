@@ -15,6 +15,7 @@
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 class NewbbForum extends XoopsObject
@@ -72,12 +73,15 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  XoopsObject $forum
+     * @param \XoopsObject $object
      * @param  bool        $force
      * @return bool
+     * @internal param \XoopsObject $forum
      */
-    public function insert(XoopsObject $forum, $force = true) //insert($forum)
+
+    public function insert(XoopsObject $object, $force = true) //insert($forum)
     {
+        $forum = $object;
         if (!parent::insert($forum, true)) {
             return false;
         }
@@ -248,7 +252,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
-                        $leftjoin .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
+                        $leftjoin      .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $criteria_post .= ' AND (r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
                     } else {
                     }
@@ -274,8 +278,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 }
                 break;
             case 'pending':
-                $post_on = ' p.topic_id = t.topic_id';
-                $criteria_post .= ' AND p.pid = 0';
+                $post_on          = ' p.topic_id = t.topic_id';
+                $criteria_post    .= ' AND p.pid = 0';
                 $criteria_approve = ' AND t.approved = 0';
                 break;
 
@@ -301,7 +305,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
         if ($excerpt) {
             $select .= ', p.post_karma, p.require_reply, pt.post_text';
-            $from .= ' LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' pt ON pt.post_id = t.topic_last_post_id';
+            $from   .= ' LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' pt ON pt.post_id = t.topic_last_post_id';
         }
         if ($sort === 'u.uname') {
             $sort = 't.topic_poster';
@@ -366,12 +370,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $totalpages           = ceil(($myrow['topic_replies'] + 1) / $GLOBALS['xoopsModuleConfig']['posts_per_page']);
             if ($totalpages > 1) {
                 $topic_page_jump .= '&nbsp;&nbsp;';
-                $append = false;
+                $append          = false;
                 for ($i = 1; $i <= $totalpages; ++$i) {
                     if ($i > 3 && $i < $totalpages) {
                         if (!$append) {
                             $topic_page_jump .= '...';
-                            $append = true;
+                            $append          = true;
                         }
                     } else {
                         $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '">' . $i . '</a>]';
@@ -505,7 +509,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      * @param $forum
      * @param $startdate
      * @param $type
-     * @return null
+     * @return null|int
      */
     public function getTopicCount(&$forum, $startdate, $type)
     {
@@ -529,7 +533,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
-                        $leftjoin .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
+                        $leftjoin      .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $criteria_post .= ' AND (r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
                     } else {
                     }
@@ -577,7 +581,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
         }
 
-        $sql = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix('newbb_topics') . ' t ' . $leftjoin;
+        $sql = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_topics') . ' t ' . $leftjoin;
         $sql .= ' WHERE ' . $criteria_post . $criteria_forum . $criteria_extra . $criteria_approve;
         if (!$result = $this->db->query($sql)) {
             //xoops_error($this->db->error().'<br>'.$sql);
@@ -590,6 +594,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     }
 
     // get permission
+
     /**
      * @param         $forum
      * @param  string $type
@@ -632,7 +637,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         //require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');
         //$permission = newbb_isModerator($forum);
         //} else {
-        $forum_id    = $forum->getVar('forum_id');
+        $forum_id = $forum->getVar('forum_id');
         /** @var \NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
         $permission  = $permHandler->getPermission('forum', $type, $forum_id);
@@ -826,7 +831,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $stats[$id] = ['topics' => 0, 'posts' => 0];
             foreach ($sub_forums[$id] as $fid) {
                 $stats[$id]['topics'] += $forum_stats[$fid]['topics'];
-                $stats[$id]['posts'] += $forum_stats[$fid]['posts'];
+                $stats[$id]['posts']  += $forum_stats[$fid]['posts'];
             }
         }
 
@@ -1055,6 +1060,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     }
 
     // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
+
     /**
      * function for get forum Ids by positive and negative values
      *

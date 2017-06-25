@@ -45,10 +45,9 @@ foreach (['topic_id', 'rate', 'forum'] as $var) {
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $topic_obj    = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'post')
-    && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')
-) {
+    && !$topicHandler->getPermission($topic_obj->getVar('forum_id'), $topic_obj->getVar('topic_status'), 'reply')) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _NOPERM);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _NOPERM);
 }
 
 if (empty($rate)) {
@@ -90,7 +89,7 @@ $rate_obj->setVar('ratingtimestamp', time());
 
 $ratingid = $rateHandler->insert($rate_obj);
 
-$query       = 'select rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
+$query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
@@ -99,7 +98,7 @@ while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
 }
 $finalrating = $totalrating / $votesDB;
 $finalrating = number_format($finalrating, 4);
-$sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
+$sql         = sprintf('UPDATE "%s" SET rating = "%u", votes = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
 $GLOBALS['xoopsDB']->queryF($sql);
 
 $ratemessage = _MD_NEWBB_VOTEAPPRE . '<br>' . sprintf(_MD_NEWBB_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);

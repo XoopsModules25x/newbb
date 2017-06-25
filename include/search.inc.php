@@ -43,8 +43,7 @@ function newbb_search(
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
     if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module'])
-        && $GLOBALS['module']->getVar('dirname') === 'newbb'
-    ) {
+        && $GLOBALS['module']->getVar('dirname') === 'newbb') {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     /** @var \NewbbForumHandler $forumHandler */

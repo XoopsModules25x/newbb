@@ -21,13 +21,13 @@ $op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
 
 if (0 === count($topic_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_NORIGHTTOACCESS);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
-$topic_id     = array_values($topic_id);
-/** @var \NewbbTopicHandler $topicHandler */
+$topic_id = array_values($topic_id);
+/** @var \NewbbTopicHandler|XoopsPersistableObjectHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var \NewbbForumHandler $forumHandler */
+/** @var \NewbbForumHandler|XoopsPersistableObjectHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
 $isadmin = newbb_isAdmin($forum_id);
@@ -81,9 +81,10 @@ switch ($op) {
             $topic_obj           = $topics_obj[$id];
             $tags                = [];
             $tags['THREAD_NAME'] = $topic_obj->getVar('topic_title');
-            $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
-            $tags['FORUM_NAME']  = $forums_obj[$topic_obj->getVar('forum_id')]->getVar('forum_name');
-            $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $topic_obj->getVar('forum_id');
+            $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $moduleDirName . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
+            /** @var \NewbbForum[] $forums_obj */
+            $tags['FORUM_NAME'] = $forums_obj[$topic_obj->getVar('forum_id')]->getVar('forum_name');
+            $tags['FORUM_URL']  = XOOPS_URL . '/modules/' . $moduleDirName . '/viewforum.php?forum=' . $topic_obj->getVar('forum_id');
             $notificationHandler->triggerEvent('global', 0, 'new_thread', $tags);
             $notificationHandler->triggerEvent('forum', $topic_obj->getVar('forum_id'), 'new_thread', $tags);
             $post_obj         = $topicHandler->getTopPost($id);
@@ -101,8 +102,10 @@ switch ($op) {
         break;
     case 'delete':
         $forums     = [];
+        /** @var \NewbbTopicHandler|XoopsPersistableObjectHandler $topicHandler */
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
+            /** @var Topic $topic_obj */
             $topic_obj = $topics_obj[$id];
             // irmtfan should be set to false to not delete topic from database
             $topicHandler->delete($topic_obj, false);
@@ -120,9 +123,8 @@ switch ($op) {
     case 'move':
         if (Request::getInt('newforum', 0, 'POST')
             && Request::getInt('newforum', 0, 'POST') !== $forum_id
-            && $forumHandler->getPermission(Request::getInt('newforum', 0, 'POST'), 'post')
-        ) {
-            $criteria    = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
+            && $forumHandler->getPermission(Request::getInt('newforum', 0, 'POST'), 'post')) {
+            $criteria = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
             /** @var \NewbbPostHandler $postHandler */
             $postHandler = xoops_getModuleHandler('post', 'newbb');
             $postHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
@@ -133,8 +135,8 @@ switch ($op) {
             include $GLOBALS['xoops']->path('header.php');
             /** @var \NewbbCategoryHandler $categoryHandler */
             $categoryHandler = xoops_getModuleHandler('category', 'newbb');
-            $categories = $categoryHandler->getByPermission('access');
-            $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
+            $categories      = $categoryHandler->getByPermission('access');
+            $forums          = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
             $box = '<select name="newforum" size="1">';
             if (count($categories) > 0 && count($forums) > 0) {

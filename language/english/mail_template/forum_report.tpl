@@ -8,5 +8,5 @@ Please check to see what is the reason.
 Please do not respond to this e-mail.
 -----------------------------------------------------
 
-{X_SITENAME} ({X_SITEURL}) 
+{X_SITENAME} ({X_SITEURL})
 {X_ADMINMAIL}

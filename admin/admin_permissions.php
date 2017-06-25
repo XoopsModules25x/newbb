@@ -107,8 +107,8 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
         $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $this->addElement($tray);
-        $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br>';
-        $ret .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
+        $ret      = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br>';
+        $ret      .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
         $elements = $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
@@ -162,18 +162,31 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
                     continue;
                 }
                 $parent_ele = $this->getName() . '[groups][' . $this->_groupId . '][' . $pid . ']';
-                $tree .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if (ele.checked !== true) {ele.checked = this.checked;}";
+                $tree       .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if (ele.checked !== true) {ele.checked = this.checked;}";
             }
             foreach ($option['allchild'] as $cid) {
                 $child_ele = $this->getName() . '[groups][' . $this->_groupId . '][' . $cid . ']';
-                $tree .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
+                $tree      .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
             }
             $tree .= '" value="1"';
             if (in_array($option['id'], $this->_value)) {
                 $tree .= ' checked';
             }
-            $tree .= ' />' . $option['name'] . '<input type="hidden" name="' . $this->getName() . '[parents][' . $option['id'] . ']" value="' . implode(':', $parentIds) . '" /><input type="hidden" name="' . $this->getName() . '[itemname][' . $option['id'] . ']" value="'
-                     . htmlspecialchars($option['name']) . "\" /><br>\n";
+            $tree .= ' />'
+                     . $option['name']
+                     . '<input type="hidden" name="'
+                     . $this->getName()
+                     . '[parents]['
+                     . $option['id']
+                     . ']" value="'
+                     . implode(':', $parentIds)
+                     . '" /><input type="hidden" name="'
+                     . $this->getName()
+                     . '[itemname]['
+                     . $option['id']
+                     . ']" value="'
+                     . htmlspecialchars($option['name'])
+                     . "\" /><br>\n";
         } else {
             $tree .= $prefix . $option['name'] . '<input type="hidden" id="' . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br>\n";
         }
@@ -190,8 +203,8 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 }
 
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
-$action           = strtolower(Request::getCmd('action', ''));
-$module_id        = $xoopsModule->getVar('mid');
+$action    = strtolower(Request::getCmd('action', ''));
+$module_id = $xoopsModule->getVar('mid');
 /** @var \NewbbPermissionHandler $newbbpermHandler */
 $newbbpermHandler = xoops_getModuleHandler('permission', 'newbb');
 $perms            = $newbbpermHandler->getValidForumPerms();
@@ -218,10 +231,10 @@ switch ($action) {
         $elements      = [];
         $perm_template = $newbbpermHandler->getTemplate();
         foreach (array_keys($glist) as $i) {
-            $selected = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : [];
-            $ret_ele  = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
-            $ret_ele .= '<td class="even">';
-            $ret_ele .= '<table class="outer"><tr><td class="odd"><table><tr>';
+            $selected   = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : [];
+            $ret_ele    = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
+            $ret_ele    .= '<td class="even">';
+            $ret_ele    .= '<table class="outer"><tr><td class="odd"><table><tr>';
             $ii         = 0;
             $option_ids = [];
             foreach ($perms as $perm) {
@@ -232,12 +245,12 @@ switch ($action) {
                 $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . strtoupper($perm)) . '<br></td>';
+                $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . strtoupper($perm)) . '<br></td>';
             }
-            $ret_ele .= '</tr></table></td><td class="even">';
-            $ret_ele .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
-            $ret_ele .= '</td></tr></table>';
-            $ret_ele .= '</td></tr>';
+            $ret_ele    .= '</tr></table></td><td class="even">';
+            $ret_ele    .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
+            $ret_ele    .= '</td></tr></table>';
+            $ret_ele    .= '</td></tr>';
             $elements[] = $ret_ele;
         }
         $tray = new XoopsFormElementTray('');
