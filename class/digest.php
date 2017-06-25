@@ -1,10 +1,10 @@
 <?php
 
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -136,11 +136,11 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!$id) {
             return $digest;
         }
-        $sql = 'SELECT * FROM ' . $this->db->prefix('bb_digest') . ' WHERE digest_id=' . $id;
+        $sql = 'SELECT * FROM ' . $this->db->prefix('newbb_digest') . ' WHERE digest_id=' . $id;
         if ($array = $this->db->fetchArray($this->db->query($sql))) {
-            if ($var) {
-                return $array[$var];
-            }
+            //if ($var) {
+            //    return $array[$var];
+            //}
             $digest = $this->create(false);
             $digest->assignVars($array);
         }
@@ -184,7 +184,8 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function notify(XoopsObject $digest)
     {
-        $content                = $digest->getVar('digest_content');
+        //$content                = $digest->getVar('digest_content');
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler    = xoops_getHandler('notification');
         $tags['DIGEST_ID']      = $digest->getVar('digest_id');
         $tags['DIGEST_CONTENT'] = $digest->getVar('digest_content', 'E');
@@ -204,11 +205,11 @@ class NewbbDigestHandler extends XoopsObjectHandler
         //            $start = 0;
         //        }
 
-        $sql    = 'SELECT * FROM ' . $this->db->prefix('bb_digest') . ' ORDER BY digest_id DESC';
+        $sql    = 'SELECT * FROM ' . $this->db->prefix('newbb_digest') . ' ORDER BY digest_id DESC';
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //        $reportHandler = xoops_getModuleHandler('report', 'newbb');
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while ($myrow = $this->db->fetchArray($result)) {
             $ret[] = $myrow; // return as array
         }
 
@@ -220,7 +221,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function getDigestCount()
     {
-        $sql    = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix('bb_digest');
+        $sql    = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
@@ -233,7 +234,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
 
     public function getLastDigest()
     {
-        $sql    = 'SELECT MAX(digest_time) as last_digest FROM ' . $this->db->prefix('bb_digest');
+        $sql    = 'SELECT MAX(digest_time) as last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
         if (!$result) {
             $this->last_digest = 0;
@@ -252,7 +253,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        $deadline  = (1 == $GLOBALS['xoopsModuleConfig']['email_digest']) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
+        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
 
         return $time_diff - $deadline;
@@ -297,7 +298,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if ($this->last_digest == $digest_id) {
             return false;
         } // It is not allowed to delete the last digest
-        $sql = 'DELETE FROM ' . $this->db->prefix('bb_digest') . ' WHERE digest_id=' . $digest_id;
+        $sql = 'DELETE FROM ' . $this->db->prefix('newbb_digest') . ' WHERE digest_id=' . $digest_id;
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
@@ -306,7 +307,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param  XoopsObject $digest
+     * @param  XoopsObject|\Digest $digest
      * @return bool
      */
     public function buildDigest(XoopsObject $digest)
@@ -317,6 +318,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
             define('SUMMARY_LENGTH', 100);
         }
 
+        /** @var \NewbbForumHandler $forumHandler */
         $forumHandler         = xoops_getModuleHandler('forum', 'newbb');
         $thisUser             = $GLOBALS['xoopsUser'];
         $GLOBALS['xoopsUser'] = null; // To get posts accessible by anonymous
@@ -330,26 +332,15 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $karma_criteria = $GLOBALS['xoopsModuleConfig']['enable_karma'] ? ' AND p.post_karma=0' : '';
         $reply_criteria = $GLOBALS['xoopsModuleConfig']['allow_require_reply'] ? ' AND p.require_reply=0' : '';
 
-        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM '
-                 . $this->db->prefix('bb_topics')
-                 . ' t, '
-                 . $this->db->prefix('bb_posts_text')
-                 . ' pt, '
-                 . $this->db->prefix('bb_posts')
-                 . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 '
-                 . $forumCriteria
-                 . $approveCriteria
-                 . $time_criteria
-                 . $karma_criteria
-                 . $reply_criteria
-                 . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
+        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM ' . $this->db->prefix('newbb_topics') . ' t, ' . $this->db->prefix('newbb_posts_text') . ' pt, ' . $this->db->prefix('newbb_posts')
+                 . ' p WHERE t.topic_digest = 1 AND p.topic_id=t.topic_id AND p.pid=0 ' . $forumCriteria . $approveCriteria . $time_criteria . $karma_criteria . $reply_criteria . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
         if (!$result = $this->db->query($query)) {
             //echo "<br>No result:<br>$query";
             return false;
         }
         $rows  = [];
         $users = [];
-        while (false !== ($row = $this->db->fetchArray($result))) {
+        while ($row = $this->db->fetchArray($result)) {
             $users[$row['uid']] = 1;
             $rows[]             = $row;
         }
@@ -358,9 +349,10 @@ class NewbbDigestHandler extends XoopsObjectHandler
         }
         $uids = array_keys($users);
         if (count($uids) > 0) {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $user_criteria = new Criteria('uid', '(' . implode(',', $uids) . ')', 'IN');
-            $users         = $memberHandler->getUsers(new Criteria('uid', '(' . implode(',', $uids) . ')', 'IN'), true);
+            $users         = $memberHandler->getUsers($user_criteria, true);
         } else {
             $users = [];
         }

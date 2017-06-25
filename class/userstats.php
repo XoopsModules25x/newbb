@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -12,19 +12,18 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-newbb_load_object();
 
 /**
  * Class NewbbUserstats
  */
-class NewbbUserstats extends XoopsObject //ArtObject
+class NewbbUserstats extends XoopsObject
 {
     /**
      *
      */
     public function __construct()
     {
-        parent::__construct('bb_user_stats');
+        parent::__construct();
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('user_topics', XOBJ_DTYPE_INT);
         $this->initVar('user_digests', XOBJ_DTYPE_INT);
@@ -37,14 +36,14 @@ class NewbbUserstats extends XoopsObject //ArtObject
  * user stats
  *
  */
-class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHandler
+class NewbbUserstatsHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'bb_user_stats', 'NewbbUserstats', 'uid', '');
+        parent::__construct($db, 'newbb_user_stats', 'NewbbUserstats', 'uid', '');
     }
 
     /**
@@ -84,7 +83,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHan
         if (!$result = $this->db->query($sql)) {
             return $object;
         }
-        while (false !== ($row = $this->db->fetchArray($result))) {
+        while ($row = $this->db->fetchArray($result)) {
             $object->assignVars($row);
         }
         */
@@ -110,7 +109,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHan
         return $row;
     }
     /*
-        function insert(&$object, $force = true)
+        function insert(XoopsObject $object, $force = true)
         {
             if (!$object->isDirty()) {
                 $object->setErrors("not isDirty");

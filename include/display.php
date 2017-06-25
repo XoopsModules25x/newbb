@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  * @package        module::newbb
@@ -127,7 +127,6 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['less'] =
 
 $displayText['p_delete'] = $displayText['p_reply'] = $displayText['p_quote'] = $displayText['p_edit'] = $displayText['p_report'] =
-
 $displayText['t_new'] = $displayText['t_poll'] = $displayText['t_qr'] = $displayText['t_qr_expand'] = $displayText['t_reply'] =
 
     //$displayText['online'] =

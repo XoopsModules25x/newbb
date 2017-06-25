@@ -29,32 +29,15 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../class/utilities.php';
-mod_loadFunctions('stats', 'newbb');
+include_once __DIR__ . '/../class/utility.php';
+include_once __DIR__ . '/../include/functions.stats.php';
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
 $folder      = [$attach_path, $thumb_path];
 
-/**
- * @param $path
- * @return bool|string
- */
-function newbb_admin_getPathStatus($path = '')
-{
-    if ('' === $path) {
-        return false;
-    }
-    if (@is_writable($path)) {
-        $path_status = '';
-    } elseif (!@is_dir($path)) {
-        $path_status = _AM_NEWBB_NOTAVAILABLE . " <a href=index.php?op=createdir&amp;path=$path>" . _AM_NEWBB_CREATETHEDIR . '</a>';
-    } else {
-        $path_status = _AM_NEWBB_NOTWRITABLE . " <a href=index.php?op=setperm&amp;path=$path>" . _AM_NEWBB_SETMPERM . '</a>';
-    }
-
-    return $path_status;
-}
+/** @var Xmf\Module\Admin $adminObject */
+$adminObject = Xmf\Module\Admin::getInstance();
 
 /**
  * @param       $target
@@ -88,7 +71,7 @@ function newbb_getImageLibs()
 {
     $imageLibs = [];
     unset($output, $status);
-    if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -97,7 +80,7 @@ function newbb_getImageLibs()
 
         unset($output, $status);
     }
-    if (2 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
+    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -106,153 +89,87 @@ function newbb_getImageLibs()
         unset($output, $status);
     }
 
-    $GDfuncList = get_extension_funcs('gd');
-    ob_start();
-    @phpinfo(INFO_MODULES);
-    $output = ob_get_contents();
-    ob_end_clean();
-    $matches[1] = '';
-    $gdversion  = '';
-    if (preg_match("/GD Version[ \t]*(<[^>]+>[ \t]*)+([^<>]+)/s", $output, $matches)) {
-        $gdversion = $matches[2];
-    }
-    if ($GDfuncList) {
-        if (in_array('imagegd2', $GDfuncList, true)) {
-            $imageLibs['gd2'] = $gdversion;
-        } else {
-            $imageLibs['gd1'] = $gdversion;
-        }
+    if (function_exists('gd_info')) {
+        $tmpInfo         = gd_info();
+        $imageLibs['gd'] = $tmpInfo['GD Version'];
     }
 
     return $imageLibs;
 }
 
-$op = XoopsRequest::getCmd('op', '', 'GET'); // (isset($_GET['op']))? $_GET['op'] : "";
+xoops_cp_header();
 
-switch ($op) {
-    case 'createdir':
-        $path = XoopsRequest::getString('path', '', 'GET');// $_GET['path'];
-        $res  = newbb_admin_mkdir($path);
-        $msg  = $res ? _AM_NEWBB_DIRCREATED : _AM_NEWBB_DIRNOTCREATED;
-        redirect_header('index.php', 2, $msg . ': ' . $path);
-        break;
+$imageLibs     = newbb_getImageLibs();
+/** @var \XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+/** @var \NewbbReportHandler $reportHandler */
+$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
-    case 'setperm':
-        $path = XoopsRequest::getString('path', '', 'GET');// $_GET['path'];
-        $res  = newbb_admin_chmod($path, 0777);
-        $msg  = $res ? _AM_NEWBB_PERMSET : _AM_NEWBB_PERMNOTSET;
-        redirect_header('index.php', 2, $msg . ': ' . $path);
-        break;
-
-    case 'senddigest':
-        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
-        $res           = $digestHandler->process(true);
-        $msg           = $res ? _AM_NEWBB_DIGEST_FAILED : _AM_NEWBB_DIGEST_SENT;
-        redirect_header('index.php', 2, $msg);
-        break;
-
-    case 'default':
-    default:
-        xoops_cp_header();
-
-        echo '<fieldset>';
-        $imageLibs     = newbb_getImageLibs();
-        /** @var XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
-        $reportHandler = xoops_getModuleHandler('report', 'newbb');
-
-        $isOK = false;
-        // START irmtfan add a poll_module config
-        //XOOPS_POLL
-        $xoopspoll = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
-        if (is_object($xoopspoll)) {
-            $isOK = $xoopspoll->getVar('isactive');
-        }
-        /*
-        else {
-            //Umfrage
-            $xoopspoll = &$moduleHandler->getByDirname('umfrage');
-            if (is_object($xoopspoll)) $isOK = $xoopspoll->getVar('isactive');
-        }
-        */
-        // END irmtfan add a poll_module config
-
-        $memlimit_iniphp    = returnBytes(@ini_get('memory_limit'));
-        $postmaxsize_iniphp = returnBytes(@ini_get('post_max_size'));
-        if ($postmaxsize_iniphp < $memlimit_iniphp) {
-            $uploadlimit = sprintf(_AM_NEWBB_MEMLIMITOK, returnBytes($postmaxsize_iniphp, true));
-            $uploadfarbe = 'Green';
-        } else {
-            $uploadlimit = _AM_NEWBB_MEMLIMITTOLARGE;
-            $uploadfarbe = 'Red';
-        }
-
-        $indexAdmin->addInfoBox(_AM_NEWBB_PREFERENCES);
-        // START irmtfan better poll module display link and version - check if xoops poll module is available
-        if ($isOK) {
-            $pollLink = _AM_NEWBB_AVAILABLE . ': ';
-            $pollLink .= '<a href="' . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . '/admin/index.php"';
-            $pollLink .= ' alt="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
-            $pollLink .= ' title="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
-            $pollLink .= '>' . '(' . $xoopspoll->getVar('name') . ')</a>';
-        } else {
-            $pollLink = _AM_NEWBB_NOTAVAILABLE;
-        }
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_POLLMODULE . ': %s' . '</infotext>', $pollLink, 'Green');
-        // END irmtfan better poll module display link and version - check if xoops poll module is available
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_IMAGEMAGICK . ' %s' . '</infotext>',
-                                    array_key_exists('imagemagick', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . 'NetPBM' . ': %s' . '</infotext>',
-                                    array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB1 . ' %s' . '</infotext>',
-                                    array_key_exists('gd1', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd1'] : _AM_NEWBB_NOTAVAILABLE, 'Red');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_GDLIB2 . ' %s' . '</infotext>',
-                                    array_key_exists('gd2', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd2'] : _AM_NEWBB_NOTAVAILABLE, 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_PREFERENCES, '<infotext>' . _AM_NEWBB_UPLOAD . ' %s' . '</infotext>', $uploadlimit, $uploadfarbe);
-
-        $indexAdmin->addInfoBox(_AM_NEWBB_BOARDSUMMARY);
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, '<infolabel>' . _AM_NEWBB_TOTALTOPICS . ': %s' . '</infolabel>', getTotalTopics(), 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, '<infolabel>' . _AM_NEWBB_TOTALPOSTS . ': %s' . '</infolabel>', getTotalPosts(), 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_BOARDSUMMARY, '<infolabel>' . _AM_NEWBB_TOTALVIEWS . ': %s' . '</infolabel>', getTotalViews(), 'Green');
-
-        $indexAdmin->addInfoBox(_AM_NEWBB_REPORT);
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, '<infolabel>' . _AM_NEWBB_REPORT_PENDING . ': %s' . '</infolabel>', $reportHandler->getCount(new Criteria('report_result', 0)), 'Green');
-        $indexAdmin->addInfoBoxLine(_AM_NEWBB_REPORT, '<infolabel>' . _AM_NEWBB_REPORT_PROCESSED . ': %s' . '</infolabel>', $reportHandler->getCount(new Criteria('report_result', 1)), 'Green');
-
-        //        foreach (array_keys($folder) as $i) {
-        //            if (!newbb_admin_getPathStatus($folder[$i]) == '') {
-        //                $indexAdmin->addConfigBoxLine($folder[$i] . ' ' . newbb_admin_getPathStatus($folder[$i]), 'folder');
-        //            } else {
-        //                $indexAdmin->addConfigBoxLine($folder[$i], 'folder');
-        //            }
-        //            $indexAdmin->addConfigBoxLine(array($folder[$i], '755'), 'chmod');
-        //        }
-
-        //        $indexAdmin = new ModuleAdmin();
-        foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
-            NewbbUtilities::prepareFolder($uploadFolders[$i]);
-            $indexAdmin->addConfigBoxLine($uploadFolders[$i], 'folder');
-            //    $indexAdmin->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
-        }
-
-        echo $indexAdmin->addNavigation(basename(__FILE__));
-        echo $indexAdmin->renderIndex();
-
-        echo '</fieldset>';
-        include_once __DIR__ . '/admin_footer.php';
-        break;
+$isOK = false;
+// START irmtfan add a poll_module config
+//XOOPS_POLL
+$xoopspoll = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
+if (is_object($xoopspoll)) {
+    $isOK = $xoopspoll->getVar('isactive');
 }
-mod_clearCacheFile('config', 'newbb');
-mod_clearCacheFile('permission', 'newbb');
+// END irmtfan add a poll_module config
+
+$memlimit_iniphp    = return_bytes(@ini_get('memory_limit'));
+$postmaxsize_iniphp = return_bytes(@ini_get('post_max_size'));
+$uploadlimit = _AM_NEWBB_MEMLIMITTOLARGE;
+if ($postmaxsize_iniphp < $memlimit_iniphp) {
+    $uploadlimit = sprintf(_AM_NEWBB_MEMLIMITOK, return_bytes($postmaxsize_iniphp, true));
+}
+
+$adminObject->addInfoBox(_AM_NEWBB_PREFERENCES);
+// START irmtfan better poll module display link and version - check if xoops poll module is available
+if ($isOK) {
+    $pollLink = _AM_NEWBB_AVAILABLE . ': ';
+    $pollLink .= '<a href="' . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . '/admin/index.php"';
+    $pollLink .= ' alt="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
+    $pollLink .= ' title="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
+    $pollLink .= '>' . '(' . $xoopspoll->getVar('name') . ')</a>';
+} else {
+    $pollLink = _AM_NEWBB_NOTAVAILABLE;
+}
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_POLLMODULE . ': %s', $pollLink));
+// END irmtfan better poll module display link and version - check if xoops poll module is available
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_IMAGEMAGICK . ' %s', array_key_exists('imagemagick', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['imagemagick'] : _AM_NEWBB_NOTAVAILABLE));
+$adminObject->addInfoBoxLine(sprintf('NetPBM' . ': %s', array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_GDLIB . ' %s', array_key_exists('gd', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd'] : _AM_NEWBB_NOTAVAILABLE));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_UPLOAD . ' %s', $uploadlimit));
+
+$adminObject->addInfoBox(_AM_NEWBB_BOARDSUMMARY);
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALTOPICS . ': %s', getTotalTopics()));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALPOSTS . ': %s', getTotalPosts()));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALVIEWS . ': %s', getTotalViews()));
+
+$adminObject->addInfoBox(_AM_NEWBB_REPORT);
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportHandler->getCount(new Criteria('report_result', 0))));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new Criteria('report_result', 1))));
+
+foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
+    NewbbUtility::prepareFolder($uploadFolders[$i]);
+    $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
+}
+
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
+
+include_once __DIR__ . '/admin_footer.php';
+
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper->delete('config');
+$cacheHelper->delete('permission');
 
 /**
  * @param             $sizeAsString
  * @param  bool       $b
  * @return int|string
  */
-function returnBytes($sizeAsString, $b = false)
+function return_bytes($sizeAsString, $b = false)
 {
-    if (false === $b) {
+    if ($b === false) {
         switch (substr($sizeAsString, -1)) {
             case 'M':
             case 'm':

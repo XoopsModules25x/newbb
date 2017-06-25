@@ -3,22 +3,25 @@
  * newbb
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
  * @package        module::newbb
  */
+
+use Xmf\Request;
+
 // irmtfan - TODO - should be changed completly with Newbb new function newbb_synchronization
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-mod_loadFunctions('recon', 'newbb');
-$form = '<fieldset>';
-$form .= $indexAdmin->addNavigation(basename(__FILE__));
+include_once __DIR__ . '/../include/functions.recon.php';
+$form = '';
+$form .= $adminObject->displayNavigation(basename(__FILE__));
 
 //if (!empty($_GET['type'])) {
-$start = XoopsRequest::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
+$start = Request::getInt('start', 0, 'GET'); //(int)( @$_GET['start'] );
 
-switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
+switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite forum sync
     case 'forum':
         $result = newbb_synchronization('forum');
@@ -28,7 +31,8 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // irmtfan rewrite topic sync
     case 'topic':
-        $limit        = XoopsRequest::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit        = Request::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        /** @var \NewbbTopicHandler $topicHandler */
         $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria     = new Criteria('approved', 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
@@ -53,7 +57,8 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // irmtfan - user is not in recon functions - only here
     case 'user':
-        $limit       = XoopsRequest::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        $limit       = Request::getInt('limit', 1000, 'GET'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
+        /** @var \XoopsUserHandler $userHandler */
         $userHandler = xoops_getHandler('user');
         if ($start >= ($count = $userHandler->getCount())) {
             break;
@@ -62,21 +67,19 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
         while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             // irmtfan approved=1 AND
-            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . "    WHERE topic_poster = {$uid}";
+            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
+            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
-            $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . "    WHERE uid = {$uid}";
+            $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . "    WHERE uid = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
             list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO '
-                                        . $GLOBALS['xoopsDB']->prefix('bb_user_stats')
-                                        . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
         redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));
@@ -162,8 +165,6 @@ $form .= '<input type="hidden" name="type" value="misc">';
 $form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
 $form .= '</div>';
 $form .= '</form>';
-
-$form .= '</fieldset>';
 
 echo $form;
 include_once __DIR__ . '/admin_footer.php';

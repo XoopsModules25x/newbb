@@ -1,16 +1,16 @@
 <?php
+
+use Xmf\Request;
+
 /*
  *
  * Module: newbbss
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
- 
-include_once __DIR__ . '/header.php';
- 
-$seoOp = XoopsRequest::getString('seoOp', '', 'GET');
-$seoArg = XoopsRequest::getInt('seoArg', 0, 'GET');
-$seoOther = XoopsRequest::getString('seoOther', '', 'GET');
+$seoOp = Request::getString('seoOp', '', 'GET');
+$seoArg = Request::getInt('seoArg', 0, 'GET');
+$seoOther = Request::getString('seoOther', '', 'GET');
 
 $seos = ['c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf'];
 
@@ -63,10 +63,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
             break;
     }
     include $seoMap[$seoOp];
-
 } else {
     $last = $seoOp . '/' . $seoArg;
-    if ('' !== $seoOther) {
+    if ($seoOther !== '') {
         $last .= '/' . $seoOther;
     }
     include $last;

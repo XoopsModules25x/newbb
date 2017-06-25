@@ -39,6 +39,6 @@ $mod_copyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blan
 xoops_loadLanguage('common', NEWBB_DIRNAME);
 
 xoops_load('constants', NEWBB_DIRNAME);
-xoops_load('utilities', NEWBB_DIRNAME);
+xoops_load('utility', NEWBB_DIRNAME);
 xoops_load('XoopsRequest');
 xoops_load('XoopsFilterInput');

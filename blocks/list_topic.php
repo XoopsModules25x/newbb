@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @author         The Persian Xoops Support Site <www.xoops.ir>
  * @since          4.3
@@ -17,16 +17,17 @@ if (defined('LIST_TOPIC_DEFINED')) {
 }
 define('LIST_TOPIC_DEFINED', true);
 
-include_once __DIR__ . '/../include/functions.ini.php';
-require_once __DIR__ . '/../class/topic.renderer.php';
-include_once __DIR__ . '/../footer.php'; // to include js/style files like validate function
+//include_once dirname(__DIR__) . '/include/functions.ini.php';
+require_once dirname(__DIR__) . '/class/topic.renderer.php';
+include_once dirname(__DIR__) . '/footer.php'; // to include js/style files like validate function
 
 xoops_loadLanguage('main', 'newbb');
 
-mod_loadFunctions('time', 'newbb');
-mod_loadFunctions('session', 'newbb');
-mod_loadFunctions('render', 'newbb');
-mod_loadFunctions('user', 'newbb');
+include_once __DIR__ . '/../include/functions.config.php';
+include_once __DIR__ . '/../include/functions.time.php';
+include_once __DIR__ . '/../include/functions.session.php';
+include_once __DIR__ . '/../include/functions.render.php';
+include_once __DIR__ . '/../include/functions.user.php';
 
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -115,19 +116,19 @@ function newbb_list_topic_edit($options)
 
     // topic_poster element
     $topicPosterRadioEle = new XoopsFormRadio(_MB_NEWBB_AUTHOR, 'options[1]', $options[1]);
-    $topicPosterRadioEle->addOption(-1, _MD_TOTALUSER);
-    $topicPosterRadioEle->addOption((-1 !== $options[1]) ? $options[1] : 0, _SELECT); // if no user in selection box it select uid=0 anon users
+    $topicPosterRadioEle->addOption(-1, _MD_NEWBB_TOTALUSER);
+    $topicPosterRadioEle->addOption(($options[1] !== -1) ? $options[1] : 0, _SELECT); // if no user in selection box it select uid=0 anon users
     $topicPosterRadioEle->setExtra("onchange=\"var el=document.getElementById('options[1]'); el.disabled=(this.id == 'options[1]1'); if (!el.value) {el.value= this.value}\""); // if user dont select any option it select "all"
     $topicPosterSelectEle = new XoopsFormSelectUser(_MB_NEWBB_AUTHOR, 'options[1]', true, explode(',', $options[1]), 5, true);// show $limit = 200 users when no user is selected;
     $topicPosterEle       = new XoopsFormLabel(_MB_NEWBB_AUTHOR, $topicPosterRadioEle->render() . $topicPosterSelectEle->render());
 
     // lastposter element
-    $lastPosterRadioEle = new XoopsFormRadio(_MD_POSTER, 'options[2]', $options[2]);
-    $lastPosterRadioEle->addOption(-1, _MD_TOTALUSER);
-    $lastPosterRadioEle->addOption((-1 !== $options[2]) ? $options[2] : 0, _SELECT); // if no user in selection box it select uid=1
+    $lastPosterRadioEle = new XoopsFormRadio(_MD_NEWBB_POSTER, 'options[2]', $options[2]);
+    $lastPosterRadioEle->addOption(-1, _MD_NEWBB_TOTALUSER);
+    $lastPosterRadioEle->addOption(($options[2] !== -1) ? $options[2] : 0, _SELECT); // if no user in selection box it select uid=1
     $lastPosterRadioEle->setExtra("onchange=\"var el=document.getElementById('options[2]'); el.disabled=(this.id == 'options[2]1'); if (!el.value) {el.value= this.value}\""); // if user dont select any option it select "all"
-    $lastPosterSelectEle = new XoopsFormSelectUser(_MD_POSTER, 'options[2]', true, explode(',', $options[2]), 5, true);// show $limit = 200 users when no user is selected;
-    $lastPosterEle       = new XoopsFormLabel(_MD_POSTER, $lastPosterRadioEle->render() . $lastPosterSelectEle->render());
+    $lastPosterSelectEle = new XoopsFormSelectUser(_MD_NEWBB_POSTER, 'options[2]', true, explode(',', $options[2]), 5, true);// show $limit = 200 users when no user is selected;
+    $lastPosterEle       = new XoopsFormLabel(_MD_NEWBB_POSTER, $lastPosterRadioEle->render() . $lastPosterSelectEle->render());
 
     // type element
     $types   = $topicRenderer->getTypes(); // get all available types in all forums
@@ -140,7 +141,7 @@ function newbb_list_topic_edit($options)
     }
 
     // sort element
-    $sortEle = new XoopsFormSelect(_MD_SORTBY, 'options[4]', $options[4]);
+    $sortEle = new XoopsFormSelect(_MD_NEWBB_SORTBY, 'options[4]', $options[4]);
     $sortEle->setDescription(_MB_NEWBB_CRITERIA_SORT_DESC);
     $sorts = $topicRenderer->getSort('', 'title');
     $sortEle->addOptionArray($sorts);
@@ -177,12 +178,13 @@ function newbb_list_topic_edit($options)
 
     //  forum element
     $optionsForum = explode(',', $options[12]);
-    mod_loadFunctions('forum', 'newbb');
+    include_once __DIR__ . '/../include/functions.forum.php';
+    /** @var \NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
-    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
+    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
     $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel .= '<option value="0" ';
     if ($isAll) {

@@ -10,7 +10,7 @@
     </div>
     <div class="clear"></div>
     <div class="forum_table">
-        <{foreach item=option from=$poll.options}>
+        <{foreachq item=option from=$poll.options}>
             <div class="forum_row">
                 <div class="poll_text even"><{$option.text}></div>
                 <div class="poll_col2 odd" ><{$option.image}> <{$option.percent}></div>

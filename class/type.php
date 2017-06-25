@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -17,8 +17,6 @@
  * @author    D.J. (phppp)
  * @copyright copyright &copy; 2006 XoopsForge.com
  * @package   module::newbb
- *
- * {@link ArtObject}
  **/
 class NewbbType extends XoopsObject
 {
@@ -41,9 +39,6 @@ class NewbbType extends XoopsObject
  *
  * @author    D.J. (phppp)
  * @copyright copyright &copy; 2006 XOOPS Project
- *
- * {@link ArtObjectHandler}
- *
  */
 class NewbbTypeHandler extends XoopsPersistableObjectHandler
 {
@@ -52,7 +47,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'bb_type', 'NewbbType', 'type_id', 'type_name');
+        parent::__construct($db, 'newbb_type', 'NewbbType', 'type_id', 'type_name');
     }
 
     /**
@@ -67,21 +62,14 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
 
         $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : [(int)$forums]));
 
-        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order'
-               . '     FROM '
-               . $this->db->prefix('bb_type_forum')
-               . ' AS l '
-               . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} "
-               . '     WHERE '
-               . '        l.forum_id '
-               . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')')
-               . '         ORDER BY l.type_order ASC';
-        if (false === ($result = $this->db->query($sql))) {
+        $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order' . '     FROM ' . $this->db->prefix('newbb_type_forum') . ' AS l ' . "         LEFT JOIN {$this->table} AS o ON o.{$this->keyName} = l.{$this->keyName} " . '     WHERE ' . '        l.forum_id '
+               . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')') . '         ORDER BY l.type_order ASC';
+        if (($result = $this->db->query($sql)) === false) {
             //xoops_error($this->db->error());
             return $ret;
         }
 
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while ($myrow = $this->db->fetchArray($result)) {
             $ret[$myrow[$this->keyName]] = [
                 'type_id'    => $myrow[$this->keyName],
                 'type_order' => $myrow['type_order'],
@@ -130,17 +118,9 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         $types_update = array_filter($types_update);
 
         if (!empty($types_valid)) {
-            $sql = 'DELETE FROM '
-                   . $this->db->prefix('bb_type_forum')
-                   . ' WHERE '
-                   . ' forum_id = '
-                   . $forum_id
-                   . ' AND '
-                   . // irmtfan bug fix: delete other forums types when update the type for a specific forum
-                   "     {$this->keyName} NOT IN ("
-                   . implode(', ', $types_valid)
-                   . ')';
-            if (false === ($result = $this->db->queryF($sql))) {
+            $sql = 'DELETE FROM ' . $this->db->prefix('newbb_type_forum') . ' WHERE ' . ' forum_id = ' . $forum_id . ' AND ' . // irmtfan bug fix: delete other forums types when update the type for a specific forum
+                   "     {$this->keyName} NOT IN (" . implode(', ', $types_valid) . ')';
+            if (($result = $this->db->queryF($sql)) === false) {
             }
         }
 
@@ -151,8 +131,8 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 if ($types_existing[$key]['type_order'] == $order) {
                     continue;
                 }
-                $sql = 'UPDATE ' . $this->db->prefix('bb_type_forum') . " SET type_order = {$order}" . " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";
-                if (false === ($result = $this->db->queryF($sql))) {
+                $sql = 'UPDATE ' . $this->db->prefix('newbb_type_forum') . " SET type_order = {$order}" . " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";
+                if (($result = $this->db->queryF($sql)) === false) {
                 }
             }
         }
@@ -164,8 +144,8 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 //if (!in_array($key, $types_add)) continue;
                 $type_query[] = "({$key}, {$forum_id}, {$order})";
             }
-            $sql = 'INSERT INTO ' . $this->db->prefix('bb_type_forum') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
-            if (false === ($result = $this->db->queryF($sql))) {
+            $sql = 'INSERT INTO ' . $this->db->prefix('newbb_type_forum') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
+            if (($result = $this->db->queryF($sql)) === false) {
                 //xoops_error($this->db->error());
             }
         }
@@ -190,16 +170,16 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         /*
          * Remove forum-type links
          */
-        $sql = 'DELETE' . ' FROM ' . $this->db->prefix('bb_type_forum') . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
-        if (false === ($result = $this->db->{$queryFunc}($sql))) {
+        $sql = 'DELETE' . ' FROM ' . $this->db->prefix('newbb_type_forum') . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
+        if (($result = $this->db->{$queryFunc}($sql)) === false) {
             // xoops_error($this->db->error());
         }
 
         /*
          * Reset topic type linked to this type
          */
-        $sql = 'UPATE' . ' ' . $this->db->prefix('bb_topics') . ' SET ' . $this->keyName . '=0' . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
-        if (false === ($result = $this->db->{$queryFunc}($sql))) {
+        $sql = 'UPATE' . ' ' . $this->db->prefix('newbb_topics') . ' SET ' . $this->keyName . '=0' . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
+        if (($result = $this->db->{$queryFunc}($sql)) === false) {
             //xoops_error($this->db->error());
         }
 
@@ -217,41 +197,12 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
         /* clear forum-type links */
-        if ($this->mysql_major_version() >= 4) {
-            $sql = 'DELETE FROM ' . $this->db->prefix('bb_type_forum') . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
-        } else {
-            $sql = 'DELETE '
-                   . $this->db->prefix('bb_type_forum')
-                   . ' FROM '
-                   . $this->db->prefix('bb_type_forum')
-                   . " LEFT JOIN {$this->table} AS aa ON "
-                   . $this->db->prefix('bb_type_forum')
-                   . ".{$this->keyName} = aa.{$this->keyName} "
-                   . " WHERE (aa.{$this->keyName} IS NULL)";
-        }
-        if (!$result = $this->db->queryF($sql)) {
-            //xoops_error($this->db->error());
-        }
+        $sql = 'DELETE FROM ' . $this->db->prefix('newbb_type_forum') . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
+        $this->db->queryF($sql);
 
         /* reconcile topic-type link */
-        if ($this->mysql_major_version() >= 4) {
-            $sql = 'UPATE ' . $this->db->prefix('bb_topics') . " SET {$this->keyName} = 0" . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
-        } else {
-            $sql = 'UPATE '
-                   . $this->db->prefix('bb_topics')
-                   . ' FROM '
-                   . $this->db->prefix('bb_type_forum')
-                   . ' SET '
-                   . $this->db->prefix('bb_topics')
-                   . ".{$this->keyName} = 0"
-                   . " LEFT JOIN {$this->table} AS aa ON "
-                   . $this->db->prefix('bb_topics')
-                   . ".{$this->keyName} = aa.{$this->keyName} "
-                   . " WHERE (aa.{$this->keyName} IS NULL)";
-        }
-        if (!$result = $this->db->queryF($sql)) {
-            //xoops_error($this->db->error());
-        }
+        $sql = 'UPATE ' . $this->db->prefix('newbb_topics') . " SET {$this->keyName} = 0" . " WHERE ({$this->keyName} NOT IN ( SELECT DISTINCT {$this->keyName} FROM {$this->table}) )";
+        $this->db->queryF($sql);
 
         return true;
     }

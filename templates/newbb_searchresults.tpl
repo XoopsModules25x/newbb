@@ -6,10 +6,10 @@
             <td>
                 <table border="0" cellpadding="4" cellspacing="1" width="100%">
                     <tr class="head" align="center">
-                        <td><{$smarty.const._MD_FORUMC}></td>
-                        <td><{$smarty.const._MD_SUBJECT}></td>
-                        <td><{$smarty.const._MD_AUTHOR}></td>
-                        <td nowrap="nowrap"><{$smarty.const._MD_POSTTIME}></td>
+                        <td><{$smarty.const._MD_NEWBB_FORUMC}></td>
+                        <td><{$smarty.const._MD_NEWBB_SUBJECT}></td>
+                        <td><{$smarty.const._MD_NEWBB_AUTHOR}></td>
+                        <td nowrap="nowrap"><{$smarty.const._MD_NEWBB_POSTTIME}></td>
                     </tr>
                     <!-- start search results -->
                     <{section name=i loop=$results}>
@@ -17,8 +17,7 @@
                         <tr align="center">
                             <td class="even"><a href="<{$results[i].forum_link}>"><{$results[i].forum_name}></a></td>
                             <!-- irmtfan hardcode removed align="left" -->
-                            <td class="odd" id="align_left"><a href="<{$results[i].link}>"><{$results[i].title}></a>
-                            </td>
+                            <td class="odd" id="align_left"><a href="<{$results[i].link}>"><{$results[i].title}></a></td>
                             <td class="even"><{$results[i].poster}></a></td>
                             <td class="odd"><{$results[i].post_time}></td>
                         </tr>

@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -26,6 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbb_setRead($type, $item_id, $post_id, $uid = null)
     {
+        /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
 
         return $readHandler->setRead($item_id, $post_id, $uid);
@@ -39,6 +40,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbb_getRead($type, $item_id, $uid = null)
     {
+        /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
 
         return $readHandler->getRead($item_id, $uid);
@@ -51,6 +53,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbb_setRead_forum($status = 0, $uid = null)
     {
+        /** @var \NewbbReadForumHandler $readHandler */
         $readHandler = xoops_getModuleHandler('readforum', 'newbb');
 
         return $readHandler->setReadItems($status, $uid);
@@ -64,6 +67,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbb_setRead_topic($status = 0, $forum_id = 0, $uid = null)
     {
+        /** @var \NewbbReadtopicHandler $readHandler */
         $readHandler = xoops_getModuleHandler('readtopic', 'newbb');
 
         return $readHandler->setReadItems($status, $forum_id, $uid);
@@ -77,6 +81,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbb_isRead($type, &$items, $uid = null)
     {
+        /** @var \NewbbReadHandler $readHandler */
         $readHandler = xoops_getModuleHandler('read' . $type, 'newbb');
 
         return $readHandler->isRead_items($items, $uid);

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -21,15 +21,15 @@ class NewbbKarmaHandler
     {
         $user = (null === $user) ? $GLOBALS['xoopsUser'] : $user;
 
-        return NewbbKarmaHandler::calUserKarma($user);
+        return $this->calculateUserKarma($user);
     }
 
     /**
-     * Placeholder for calcuating user karma
-     * @param $user
+     * Placeholder for calculating user karma
+     * @param XoopsUser $user
      * @return int
      */
-    public function calUserKarma($user)
+    public function calculateUserKarma($user)
     {
         if (!is_object($user)) {
             $user_karma = 0;

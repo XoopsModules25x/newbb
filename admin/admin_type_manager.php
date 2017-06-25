@@ -4,18 +4,19 @@
  *
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
  * @package        module::newbb
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-echo '<fieldset>';
 echo '<br>';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-echo $indexAdmin->addNavigation(basename(__FILE__));
+include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+$adminObject->displayNavigation(basename(__FILE__));
 
 /*
  * The 'op' could be
@@ -29,8 +30,8 @@ echo $indexAdmin->addNavigation(basename(__FILE__));
  *    <li>default: list of existing types</li>
  * </ol>
  */
-$op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');// !empty($_GET['op'])? $_GET['op'] : ( !empty($_POST['op']) ? $_POST['op'] : "" );
-if (!in_array($op, [
+$op       = Request::getCmd('op', '');
+$validOps = [
     'save_type',
     'delete',
     'template',
@@ -41,27 +42,29 @@ if (!in_array($op, [
     'edit_forum',
     'save_forum',
     'add'
-], true)
-) {
+];
+if (!in_array($op, $validOps, true)) {
     $op = '';
 }
 
+/** @var \NewbbTypeHandler $typeHandler */
 $typeHandler = xoops_getModuleHandler('type', 'newbb');
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 
 switch ($op) {
     case 'save_type':
         $type_names0 = $_POST['type_name'];
-        $type_names  = XoopsRequest::getArray('type_name', null, 'POST');// $_POST['type_name'];
+        $type_names  = Request::getArray('type_name', null, 'POST');
         $type_del    = [];
         foreach (array_keys($type_names) as $key) {
-            if (XoopsRequest::getBool('isnew', '', 'POST')) {
+            if (Request::getBool('isnew', '', 'POST')) {
                 $type_obj = $typeHandler->create();
             } elseif (!$type_obj = $typeHandler->get($key)) {
                 continue;
             }
 
-            //            if (XoopsRequest::getArray("type_del[$key]", '', 'POST')) {
-            $temp = XoopsRequest::getArray('type_del', '', 'POST');
+            //            if (Request::getArray("type_del[$key]", '', 'POST')) {
+            $temp = Request::getArray('type_del', '', 'POST');
             if ($temp[$key]) {
                 $type_del[] = $key;
                 continue;
@@ -70,12 +73,12 @@ switch ($op) {
                     //                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
                     //                        $type_obj->setVar($var, @$_POST[$var][$key]);
                     //                    }
-                    $temp = XoopsRequest::getArray($var, '', 'POST');
+                    $temp = Request::getArray($var, '', 'POST');
                     if ($type_obj->getVar($var) != $temp[$key]) {
                         $type_obj->setVar($var, $temp[$key]);
                     }
 
-                    //                    $type_obj->setVar($var, XoopsRequest::getArray($var, '', 'POST')[$key]);
+                    //                    $type_obj->setVar($var, Request::getArray($var, '', 'POST')[$key]);
                 }
                 $typeHandler->insert($type_obj);
                 unset($type_obj);
@@ -85,12 +88,12 @@ switch ($op) {
             $type_list = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
             xoops_confirm(['op' => 'delete', 'type_del' => serialize($type_del)], xoops_getenv('PHP_SELF'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
         } else {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
+            redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         }
         break;
 
     case 'delete':
-        $type_dels = @unserialize(XoopsRequest::getString('type_del', '', 'POST'));
+        $type_dels = @unserialize(Request::getString('type_del', '', 'POST'));
         foreach ($type_dels as $key) {
             if (!$type_obj = $typeHandler->get($key)) {
                 continue;
@@ -98,36 +101,24 @@ switch ($op) {
             $typeHandler->delete($type_obj);
             unset($type_obj);
         }
-        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
+        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
 
     case 'template':
         $types_obj = $typeHandler->getAll();
-        if (0 === count($types_obj)) {
+        if (count($types_obj) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=apply'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=apply'>";
         echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '</fieldset>';
         echo '<br>';
-        echo '<br>';
-
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_TYPE_TEMPLATE . '</legend>';
         echo '<br>';
 
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
@@ -138,13 +129,13 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        if ($templates = mod_loadCacheFile('type_template')) {
+        if ($templates = $cacheHelper->read('type_template')) {
             arsort($templates);
             foreach ($templates as $order => $key) {
                 if (!isset($types_obj[$key])) {
                     continue;
                 }
-                $type_obj =& $types_obj[$key];
+                $type_obj = $types_obj[$key];
                 echo "<tr class='even' align='left'>";
                 echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' /></td>";
                 echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
@@ -169,22 +160,21 @@ switch ($op) {
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
-        echo '</fieldset>';
         break;
 
     case 'save_template':
-        $templates = array_flip(array_filter(XoopsRequest::getArray('type_order', [], 'POST')));
-        mod_createCacheFile($templates, 'type_template');
-        redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _MD_DBUPDATED);
+        $templates = array_flip(array_filter(Request::getArray('type_order', [], 'POST')));
+        $cacheHelper->write('type_template', $templates);
+        redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _MD_NEWBB_DBUPDATED);
         break;
 
     case 'apply':
-        if (!$templates = mod_loadCacheFile('type_template')) {
+        if (!$templates = $cacheHelper->read('type_template')) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
 
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories   = $categoryHandler->getList($criteriaCategory);
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -207,29 +197,16 @@ switch ($op) {
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_TEMPLATE_APPLY);
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
         echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=apply'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=apply'>";
         echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '</fieldset>';
         echo '<br>';
-        echo '<br>';
-
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_TYPE_TEMPLATE . '</legend>';
         echo '<br>';
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -245,7 +222,7 @@ switch ($op) {
             if (!isset($types_obj[$key])) {
                 continue;
             }
-            $type_obj =& $types_obj[$key];
+            $type_obj = $types_obj[$key];
             echo "<tr class='even' align='left'>";
             echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
             echo '<td>' . $order . '</td>';
@@ -256,25 +233,24 @@ switch ($op) {
         echo '</table>';
         echo '<br>';
         $fmform->display();
-        echo '</fieldset>';
         break;
 
     case 'save_apply':
-        if (!$templates = mod_loadCacheFile('type_template')) {
+        if (!$templates = $cacheHelper->read('type_template')) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
-        foreach (XoopsRequest::getArray('forums', [], 'POST') as $forum) {
+        foreach (Request::getArray('forums', [], 'POST') as $forum) {
             if ($forum < 1) {
                 continue;
             }
             $typeHandler->updateByForum($forum, array_flip($templates));
         }
-        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
+        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
 
     case 'forum':
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
+        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
@@ -304,66 +280,42 @@ switch ($op) {
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_FORUM);
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
-        echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '</fieldset>';
         echo '<br>';
         echo '<br>';
 
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_TYPE_FORUM . '</legend>';
-        echo '<br>';
         $fmform->display();
-        echo '</fieldset>';
         break;
 
     case 'edit_forum':
-        if (!XoopsRequest::getInt('forum', 0, 'POST') || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
+        if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
 
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        if (!$forum_obj = $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'))) {
+        if (!$forum_obj = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
 
         $types_obj = $typeHandler->getAll();
-        if (0 === count($types_obj)) {
+        if (count($types_obj) === 0) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
-        echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=add'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
         echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=template'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
         echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-             . xoops_getenv('PHP_SELF')
-             . "?op=forum'>";
+        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
         echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '</fieldset>';
         echo '<br>';
-        echo '<br>';
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_TYPE_FORUM . '</legend>';
         echo '<br>';
 
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_TYPE_FORUM . ' - ' . $forum_obj->getVar('forum_name') . '</legend>';
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -372,7 +324,7 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        $types       = $typeHandler->getByForum(XoopsRequest::getInt('forum', 0, 'POST'));
+        $types       = $typeHandler->getByForum(Request::getInt('forum', 0, 'POST'));
         $types_order = [];
         foreach ($types as $key => $type) {
             $types_order[] = $type['type_order'];
@@ -382,7 +334,7 @@ switch ($op) {
             if (!isset($types_obj[$type['type_id']])) {
                 continue;
             }
-            $type_obj =& $types_obj[$type['type_id']];
+            $type_obj = $types_obj[$type['type_id']];
             echo "<tr class='even' align='left'>";
             echo "<td><input type='text' name='type_order[" . $type['type_id'] . "]' value='" . $type['type_order'] . "' size='10' /></td>";
             echo "<td><em style='color:" . $type_obj->getVar('type_color') . ";'>" . $type_obj->getVar('type_name') . '</em></td>';
@@ -402,60 +354,47 @@ switch ($op) {
         echo "<tr><td colspan='3'>";
         echo '<ul><li>' . _AM_NEWBB_TYPE_EDITFORUM_DESC . '</li>';
         echo '<li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ol><br>';
-        echo "<input type='hidden' name='forum' value='" . XoopsRequest::getInt('forum', 0, 'POST') . "' />";
+        echo "<input type='hidden' name='forum' value='" . Request::getInt('forum', 0, 'POST') . "' />";
         echo "<input type='hidden' name='op' value='save_forum' />";
         echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
-        echo '</fieldset>';
         break;
 
     case 'save_forum':
-        if (!XoopsRequest::getInt('forum', 0, 'POST') || XoopsRequest::getInt('forum', 0, 'POST') < 1) {
+        if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
-        $typeHandler->updateByForum(XoopsRequest::getInt('forum', 0, 'POST'), XoopsRequest::getArray('type_order', null, 'POST'));
-        redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _MD_DBUPDATED);
+        $typeHandler->updateByForum(Request::getInt('forum', 0, 'POST'), Request::getArray('type_order', null, 'POST'));
+        redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _MD_NEWBB_DBUPDATED);
         break;
 
     case 'add':
     default:
         $types_obj = $typeHandler->getAll();
-        if (0 === count($types_obj)) {
+        if (count($types_obj) === 0) {
             $op    = 'add';
             $title = _AM_NEWBB_TYPE_ADD;
         } else {
             $title = _AM_NEWBB_TYPE_LIST;
         }
 
-        if ('add' !== $op) {
-            echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
-            echo '<br>';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-                 . xoops_getenv('PHP_SELF')
-                 . "?op=add'>";
+        if ($op !== 'add') {
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
             echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-                 . xoops_getenv('PHP_SELF')
-                 . "?op=template'>";
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
             echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
-                 . xoops_getenv('PHP_SELF')
-                 . "?op=forum'>";
+            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
             echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-            echo '</fieldset>';
             echo '<br>';
             echo '<br>';
         }
 
-        echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . $title . '</legend>';
-        echo '<br>';
-
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        if ('add' !== $op) {
+        if ($op !== 'add') {
             echo "<td class='bg3' width='5%'>" . _DELETE . '</td>';
         }
         echo "<th align='left' class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
@@ -465,7 +404,7 @@ switch ($op) {
 
         $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
 
-        if ('add' !== $op) {
+        if ($op !== 'add') {
             foreach ($types_obj as $key => $type_obj) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";
@@ -501,7 +440,6 @@ switch ($op) {
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
-        echo '</fieldset>';
         break;
 }
 

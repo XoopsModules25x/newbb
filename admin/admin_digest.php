@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -29,21 +29,24 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 include_once $GLOBALS['xoops']->path('class/pagenav.php');
 
-$op   = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
-$item = XoopsRequest::getString('op', XoopsRequest::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
+$op   = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
+$item = Request::getString('op', Request::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 
-$start = XoopsRequest::getInt('start', 0, 'GET');
+$start = Request::getInt('start', 0, 'GET');
 //$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
 xoops_cp_header();
 switch ($op) {
     case 'delete':
-        $digest_ids    = XoopsRequest::getArray('digest_id', '', 'POST');
+        $digest_ids    = Request::getArray('digest_id', '', 'POST');
+        /** @var \NewbbDigestHandler $digestHandler */
         $digestHandler = xoops_getModuleHandler('digest', 'newbb');
-        if ('' !== $digest_ids) {
+        if ($digest_ids !== '') {
             foreach ($digest_ids as $did => $value) {
                 $digestHandler->delete($did);
             }
@@ -52,13 +55,13 @@ switch ($op) {
         break;
 
     default:
-        include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-        echo '<fieldset>';
+        include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+
         $limit = 5;
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
-        //    else echo $indexAdmin->addNavigation(basename(__FILE__));
+        //    else $adminObject->displayNavigation(basename(__FILE__));
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -87,8 +90,6 @@ switch ($op) {
 
         $nav = new XoopsPageNav($digestHandler->getDigestCount(), $limit, $start, 'start');
         echo $nav->renderNav(4);
-
-        echo '</fieldset>';
 
         break;
 }

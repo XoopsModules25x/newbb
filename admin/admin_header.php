@@ -29,33 +29,43 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Request;
+
 //include $GLOBALS['xoops']->path('include/cp_header.php');
 include __DIR__ . '/../../../include/cp_header.php';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
-include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
-include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
+//include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
+//include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 
-include_once __DIR__ . '/../include/config.php';
-
-xoops_load('XoopsRequest');
+include_once dirname(__DIR__) . '/include/config.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-xoops_loadLanguage('main', 'newbb');
-xoops_loadLanguage('modinfo', 'newbb');
-
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
-$module        = $moduleHandler->getByDirname($moduleDirName);
-$pathIcon16    = XOOPS_URL . '/' . $module->getInfo('sysicons16');
-$pathIcon32    = XOOPS_URL . '/' . $module->getInfo('sysicons32');
-$pathModIcon32 = XOOPS_URL . '/' . $module->getInfo('modicons32');
-
-$xoopsModuleAdminPath = $GLOBALS['xoops']->path('www/' . $GLOBALS['xoopsModule']->getInfo('dirmoduleadmin'));
-require_once $xoopsModuleAdminPath . '/moduleadmin.php';
-
-$indexAdmin = new ModuleAdmin();
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+/** @var Xmf\Module\Admin $adminObject */
+$adminObject = Xmf\Module\Admin::getInstance();
 
 $myts = MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
+
+$pathIcon16      = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32      = Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+// Local icons path
+$xoopsTpl->assign('pathModIcon16', $pathIcon16);
+$xoopsTpl->assign('pathModIcon32', $pathIcon32);
+
+// Load language files
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');

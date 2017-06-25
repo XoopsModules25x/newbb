@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -45,7 +45,7 @@ class Readtopic extends Read
      */
     public function __construct()
     {
-        parent::__construct('topic');
+        parent::__construct();
         //$this->initVar('forum_id', XOBJ_DTYPE_INT);
     }
 }
@@ -64,7 +64,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
     public $items_per_forum;
 
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
@@ -83,9 +83,9 @@ class NewbbReadtopicHandler extends NewbbReadHandler
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
-        parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
+        parent::cleanOrphan($this->db->prefix('newbb_posts'), 'post_id');
 
-        return parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id', 'read_item');
+        return parent::cleanOrphan($this->db->prefix('newbb_topics'), 'topic_id', 'read_item');
     }
 
     /**
@@ -113,7 +113,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        if (1 == $this->mode) {
+        if ($this->mode == 1) {
             return $this->setReadItemsCookie($status, $forum_id);
         } else {
             return $this->setReadItemsDb($status, $forum_id, $uid);
@@ -130,6 +130,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
         $cookie_name = 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
+        /** @var \NewbbTopicHandler $itemHandler */
         $itemHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria    = new CriteriaCompo(new Criteria('forum_id', $forum_id));
         $criteria->setSort('topic_last_post_id');
@@ -168,6 +169,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             }
         }
 
+        /** @var \NewbbTopicHandler $itemHandler */
         $itemHandler    = xoops_getModuleHandler('topic', 'newbb');
         $criteria_topic = new CriteriaCompo(new Criteria('forum_id', $forum_id));
         $criteria_topic->setSort('topic_last_post_id');

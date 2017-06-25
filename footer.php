@@ -11,7 +11,7 @@
 
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         NEWBB
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
@@ -27,6 +27,7 @@ $iconHandler = newbbGetIconHandler();
 //  get css rel path from setted language
 $css_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['language'], 'newbb', 'language/english', 'css');
 // add local stylesheet
+/** @var xos_opal_Theme $xoTheme */
 $xoTheme->addStylesheet($css_rel_path . '/style.css');
 
 //  get js rel path from setted language
@@ -35,12 +36,12 @@ $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['lang
 xoops_load('XoopsLists');
 $allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
-    if ('js' === strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
+    if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
-$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G' . '";';
+$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G";';
 $xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);

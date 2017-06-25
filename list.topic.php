@@ -1,13 +1,15 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
+
+use Xmf\Request;
 
 include_once __DIR__ . '/header.php';
 
@@ -23,8 +25,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
 }
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
-mod_loadFunctions('time', 'newbb');
-mod_loadFunctions('render', 'newbb');
+include_once __DIR__ . '/include/functions.time.php';
+include_once __DIR__ . '/include/functions.render.php';
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
 require_once __DIR__ . '/./class/topic.renderer.php';
@@ -39,12 +41,12 @@ $topic_renderer->is_multiple = true;
 $topic_renderer->config      = $GLOBALS['xoopsModuleConfig'];
 $topic_renderer->setVars(@$_GET);
 
-$type   = XoopsRequest::getInt('type', 0, 'GET');
+$type   = Request::getInt('type', 0, 'GET');
 $status = explode(',', $topic_renderer->vars['status']); // irmtfan to accept multiple status
 //irmtfan parse status for rendering topic correctly - remove here and move to topic.renderer.php
 //$topic_renderer->parseVar('status',$status);
 // irmtfan to accept multiple status
-$mode = count(array_intersect($status, ['active', 'pending', 'deleted'])) > 0 ? 2 : XoopsRequest::getInt('mode', 0, 'GET');
+$mode = count(array_intersect($status, ['active', 'pending', 'deleted'])) > 0 ? 2 : Request::getInt('mode', 0, 'GET');
 
 //$isadmin = $GLOBALS["xoopsUserIsAdmin"];
 /* Only admin has access to admin mode */
@@ -53,6 +55,7 @@ if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
+    /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init();
     $onlineHandler->render($xoopsTpl);
@@ -75,15 +78,15 @@ $xoopsTpl->assign('img_folder', newbbDisplayImage('topic'));
 $xoopsTpl->assign('img_hotfolder', newbbDisplayImage('topic_hot'));
 $xoopsTpl->assign('img_locked', newbbDisplayImage('topic_locked'));
 
-$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY));
-$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_TOPICDIGEST));
-$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_TOPICHASPOLL));
+$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY));
+$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_NEWBB_TOPICDIGEST));
+$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_NEWBB_TOPICHASPOLL));
 
 $xoopsTpl->assign('post_link', 'viewpost.php');
 $xoopsTpl->assign('newpost_link', 'viewpost.php?status=new');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    mod_loadFunctions('forum', 'newbb');
+    include_once __DIR__ . '/include/functions.forum.php';
     $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox());
 }
 $xoopsTpl->assign('menumode', $menumode);
@@ -93,7 +96,7 @@ $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
 $xoopsTpl->assign('viewer_level', $topic_renderer->userlevel);// irmtfan use userlevel
 
-$pagetitle = sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
+$pagetitle = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
 $xoopsTpl->assign('forum_index_title', $pagetitle);
 $xoopsTpl->assign('xoops_pagetitle', $pagetitle);
 

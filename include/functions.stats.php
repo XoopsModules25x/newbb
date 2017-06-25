@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -22,6 +22,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbb_get_stats()
     {
+        /** @var \NewbbStatsHandler $statsHandler */
         $statsHandler = xoops_getModuleHandler('stats', 'newbb');
         $stats        = $statsHandler->getStats();
 
@@ -36,6 +37,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbb_update_stats($id, $type, $increment = 1)
     {
+        /** @var \NewbbStatsHandler $statsHandler */
         $statsHandler = xoops_getModuleHandler('stats', 'newbb');
 
         return $statsHandler->update($id, $type, $increment);
@@ -50,6 +52,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalTopics($forum_id = '')
     {
+        /** @var \NewbbTopicHandler $topicHandler */
         $topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $criteria     = new CriteriaCompo(new Criteria('approved', 0, '>'));
         if ($forum_id) {
@@ -70,6 +73,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalPosts($id = 0, $type = 'all')
     {
+        /** @var \NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
         $criteria    = new CriteriaCompo(new Criteria('approved', 0, '>'));
         switch ($type) {
@@ -96,7 +100,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalViews()
     {
-        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '';
+        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }

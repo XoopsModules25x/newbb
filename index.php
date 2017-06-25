@@ -1,32 +1,35 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
 /* deal with marks */
-if (XoopsRequest::getInt('mark_read', 0)) { //TODO mb check if this is GET or POST?
-    if (1 === XoopsRequest::getInt('mark_read', 0)) { // marked as read
+if (Request::getInt('mark_read', 0)) {
+    if (1 === Request::getInt('mark_read', 0)) { // marked as read
         $markvalue  = 1;
-        $markresult = _MD_MARK_READ;
+        $markresult = _MD_NEWBB_MARK_READ;
     } else { // marked as unread
         $markvalue  = 0;
-        $markresult = _MD_MARK_UNREAD;
+        $markresult = _MD_NEWBB_MARK_UNREAD;
     }
-    mod_loadFunctions('read', 'newbb');
+    include_once __DIR__ . '/include/functions.read.php';
     newbb_setRead_forum($markvalue);
     $url = XOOPS_URL . '/modules/newbb/index.php';
-    redirect_header($url, 2, _MD_ALL_FORUM_MARKED . ' ' . $markresult);
+    redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
 }
 
-$viewcat         = XoopsRequest::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
+$viewcat         = Request::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
+/** @var \NewbbCategoryHandler $categoryHandler */
 $categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
 $categories = [];
@@ -39,12 +42,12 @@ if (!$viewcat) {
     if ($categoryHandler->getPermission($category_obj)) {
         $categories[$viewcat] = $category_obj->getValues();
     }
-    $forum_index_title = sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
+    $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
     $xoops_pagetitle   = $category_obj->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
 }
 
-if (0 === count($categories)) {
-    redirect_header(XOOPS_URL, 2, _MD_NORIGHTTOACCESS);
+if (count($categories) === 0) {
+    redirect_header(XOOPS_URL, 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
 $xoopsOption['template_main']   = 'newbb_index.tpl';
@@ -53,7 +56,7 @@ $xoopsOption['xoops_pagetitle'] = $xoops_pagetitle;
 //$xoopsOption['xoops_module_header'] = $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
 include_once $GLOBALS['xoops']->path('header.php');
-mod_loadFunctions('render', 'newbb');
+include_once __DIR__ . '/include/functions.render.php';
 /* rss feed */
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
@@ -67,12 +70,15 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('forum_index_title', $forum_index_title);
 //if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
+    /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init();
     $xoopsTpl->assign('online', $onlineHandler->show_online());
 }
+/** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$postHandler  = xoops_getModuleHandler('post', 'newbb');
+/** @var \NewbbPostHandler $postHandler */
+$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 /* Allowed forums */
 $forums_allowed = $forumHandler->getIdsByPermission();
@@ -132,8 +138,10 @@ if ($deleteposts > 0) {
     $xoopsTpl->assign('delete_post', $deleteposts);
 }
 
+/** @var \NewbbReportHandler $reportHandler */
 $reportHandler = xoops_getModuleHandler('report', 'newbb');
 $reported      = $reportHandler->getCount(new Criteria('report_result', 0));
+$xoopsTpl->assign('reported_count', $reported);
 if ($reported > 0) {
     $xoopsTpl->assign('report_post', sprintf(_MD_NEWBB_SEEWAITREPORT, $reported));
 }
@@ -210,30 +218,32 @@ $xoopsTpl->assign_by_ref('categories', $category_array);
 $xoopsTpl->assign('notifyicon', $category_icon);
 
 $xoopsTpl->assign([
-                      'index_title' => sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
-                      'index_desc'  => _MD_TOSTART
+                      'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
+                      'index_desc'  => _MD_NEWBB_TOSTART
                   ]);
 
 /* display user stats */
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = [];
     if (is_object($GLOBALS['xoopsUser'])) {
+        /** @var \NewbbUserstatsHandler $userstatsHandler */
         $userstatsHandler         = xoops_getModuleHandler('userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
-        $userstats['topics']      = sprintf(_MD_USER_TOPICS, (int)(@$userstats_row['user_topics']));
-        $userstats['posts']       = sprintf(_MD_USER_POSTS, (int)(@$userstats_row['user_posts']));
-        $userstats['digests']     = sprintf(_MD_USER_DIGESTS, (int)(@$userstats_row['user_digests']));
-        $userstats['currenttime'] = sprintf(_MD_TIMENOW, formatTimestamp(time(), 's')); // irmtfan should be removed because it is for anon users too
-        $userstats['lastvisit']   = sprintf(_MD_USER_LASTVISIT, formatTimestamp($last_visit, 's')); // irmtfan should be removed because it is for anon users too
-        $userstats['lastpost']    = empty($userstats_row['user_lastpost']) ? _MD_USER_NOLASTPOST : sprintf(_MD_USER_LASTPOST, formatTimestamp($userstats_row['user_lastpost'], 's'));
+        $userstats['topics']      = sprintf(_MD_NEWBB_USER_TOPICS, (int)(@$userstats_row['user_topics']));
+        $userstats['posts']       = sprintf(_MD_NEWBB_USER_POSTS, (int)(@$userstats_row['user_posts']));
+        $userstats['digests']     = sprintf(_MD_NEWBB_USER_DIGESTS, (int)(@$userstats_row['user_digests']));
+        $userstats['currenttime'] = sprintf(_MD_NEWBB_TIMENOW, formatTimestamp(time(), 's')); // irmtfan should be removed because it is for anon users too
+        $userstats['lastvisit']   = sprintf(_MD_NEWBB_USER_LASTVISIT, formatTimestamp($last_visit, 's')); // irmtfan should be removed because it is for anon users too
+        $userstats['lastpost']    = empty($userstats_row['user_lastpost']) ? _MD_NEWBB_USER_NOLASTPOST : sprintf(_MD_NEWBB_USER_LASTPOST, formatTimestamp($userstats_row['user_lastpost'], 's'));
     }
     $xoopsTpl->assign_by_ref('userstats', $userstats);
     // irmtfan add lastvisit smarty variable for all users
-    $xoopsTpl->assign('lastvisit', sprintf(_MD_USER_LASTVISIT, formatTimestamp($last_visit, 'l')));
-    $xoopsTpl->assign('currenttime', sprintf(_MD_TIMENOW, formatTimestamp(time(), 'm')));
+    $xoopsTpl->assign('lastvisit', sprintf(_MD_NEWBB_USER_LASTVISIT, formatTimestamp($last_visit, 'l')));
+    $xoopsTpl->assign('currenttime', sprintf(_MD_NEWBB_TIMENOW, formatTimestamp(time(), 'm')));
 }
 
 /* display forum stats */
+/** @var \NewbbStatsHandler $statsHandler */
 $statsHandler = xoops_getModuleHandler('stats');
 $stats        = $statsHandler->getStats(array_merge([0], $forums_available));
 $xoopsTpl->assign_by_ref('stats', $stats);
@@ -252,7 +262,7 @@ $xoopsTpl->assign('menumode_other', $menumode_other);
 
 $isadmin = $GLOBALS['xoopsUserIsAdmin'];
 $xoopsTpl->assign('viewer_level', $isadmin ? 2 : is_object($GLOBALS['xoopsUser']));
-$mode = XoopsRequest::getInt('mode', 0, 'GET');
+$mode = Request::getInt('mode', 0, 'GET');
 $xoopsTpl->assign('mode', $mode);
 
 $xoopsTpl->assign('viewcat', $viewcat);
@@ -260,16 +270,16 @@ $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
 
 /* To be removed */
 if ($isadmin) {
-    $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_ADMINCP]);
+    $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_NEWBB_ADMINCP]);
 }
 
-if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
+if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
     $xoopsTpl->assign('rss_enable', 1);
     $xoopsTpl->assign('rss_button', newbbDisplayImage('rss', 'RSS feed'));
 }
 $xoopsTpl->assign([
-                      'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWPOSTS),
-                      'img_forum'     => newbbDisplayImage('forum', _MD_NONEWPOSTS),
+                      'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWBB_NEWPOSTS),
+                      'img_forum'     => newbbDisplayImage('forum', _MD_NEWBB_NONEWPOSTS),
                       'img_subforum'  => newbbDisplayImage('subforum')
                   ]);
 

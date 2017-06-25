@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
@@ -28,19 +28,23 @@
 // URL: http://www.mymyxoops.org/, http://simple-xoops.de/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-echo '<fieldset>';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-echo $indexAdmin->addNavigation(basename(__FILE__));
+include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+$adminObject->displayNavigation(basename(__FILE__));
+/** @var \XoopsMemberHandler $memberHandler */
 $memberHandler = xoops_getHandler('member');
-$forumHandler  = xoops_getModuleHandler('forum', 'newbb');
-if (XoopsRequest::getString('submit', '', 'POST')) {
-    $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
-    $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
+/** @var \NewbbForumHandler $forumHandler */
+$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+if (Request::getString('submit', '', 'POST')) {
+    $fgroups = Request::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
+    $fforum  = Request::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
     $fuser   = [];
-    if (0 !== $fforum) {
-        if ('' !== $fgroups) {
+    if ($fforum !== 0) {
+        if ($fgroups !== '') {
             $gg = [];
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
@@ -51,10 +55,10 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                 }
             }
         }
-        if (-1 == $fforum) { // alle Foren
-            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
+        if ($fforum == -1) { // alle Foren
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
-            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
         }
         if (is_array($fuser) && $GLOBALS['xoopsDB']->queryF($sql)) {
             $mess = _AM_NEWBB_GROUPMOD_ADDMOD;
@@ -69,8 +73,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo "<br><br><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
+/** @var \NewbbCategoryHandler $categoryHandler */
 $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-$criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
+$criteriaCategory = new CriteriaCompo(new criteria('1', 1));
 $criteriaCategory->setSort('cat_order');
 $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
 $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');
@@ -96,6 +101,5 @@ echo "</td><tr><tr><td class='odd'>";
 
 echo '<input type="submit" value="' . _SUBMIT . '" name="submit" />';
 echo '</td></tr></table>';
-echo '</form></fieldset>';
-echo '</fieldset>';
+echo '</form>';
 include_once __DIR__ . '/admin_footer.php';

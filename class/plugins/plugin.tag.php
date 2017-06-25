@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -40,12 +40,15 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
+    /** @var NewbbTopicHandler $itemHandler */
     $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    $items_obj   = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    /** @var XoopsObject $items_obj */
+    $items_obj = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            if (!$item_obj =& $items_obj[$item_id]) {
+            /** @var XoopsObject $item_obj */
+            if (!$item_obj = $items_obj[$item_id]) {
                 continue;
             }
             $items[$cat_id][$item_id] = [
@@ -59,42 +62,25 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     unset($items_obj);
+
+    return true;
 }
 
 /**
  * Remove orphan tag-item links
  *
  * @param $mid
- * @return void
+ * @return bool
  */
 function newbb_tag_synchronization($mid)
 {
-    $itemHandler  = xoops_getModuleHandler('topic', 'newbb');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    /** @var NewbbTopicHandler $itemHandler */
+    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
+    /** @var XoopsPersistableObjectHandler $linkHandler */
+    $linkHandler = xoops_getModuleHandler('link', 'tag');
 
     /* clear tag-item links */
-    if ($link_handler->mysql_major_version() >= 4) {
-        $sql = "    DELETE FROM {$link_handler->table}"
-               . '    WHERE '
-               . "        tag_modid = {$mid}"
-               . '        AND '
-               . '        ( tag_itemid NOT IN '
-               . "            ( SELECT DISTINCT {$itemHandler->keyName} "
-               . "                FROM {$itemHandler->table} "
-               . "                WHERE {$itemHandler->table}.approved > 0"
-               . '            ) '
-               . '        )';
-    } else {
-        $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}"
-               . "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} "
-               . '    WHERE '
-               . "        tag_modid = {$mid}"
-               . '        AND '
-               . "        ( aa.{$itemHandler->keyName} IS NULL"
-               . '            OR aa.approved < 1'
-               . '        )';
-    }
-    if (!$result = $link_handler->db->queryF($sql)) {
-        //xoops_error($link_handler->db->error());
-    }
+    $sql = "    DELETE FROM {$linkHandler->table}" . '    WHERE ' . "        tag_modid = {$mid}" . '        AND ' . '        ( tag_itemid NOT IN ' . "            ( SELECT DISTINCT {$itemHandler->keyName} " . "                FROM {$itemHandler->table} "
+           . "                WHERE {$itemHandler->table}.approved > 0" . '            ) ' . '        )';
+    $linkHandler->db->queryF($sql);
 }

@@ -1,1 +1,1 @@
-<{includeq file="db:tag_block_cloud.tpl"}>
+<{include file="db:tag_block_cloud.tpl"}>

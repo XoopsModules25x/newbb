@@ -32,7 +32,6 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-newbb_load_object();
 
 /**
  * A handler for read/unread handling
@@ -42,15 +41,15 @@ newbb_load_object();
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
-class Read extends XoopsObject //ArtObject
+class Read extends XoopsObject
 {
     /**
-     * @param $type
+     * @internal param $type
      */
-    public function __construct($type)
+    public function __construct()
     {
-        //        parent::__construct("bb_reads_" . $type);
-        parent::__construct('bb_reads_' . $type);
+        // parent::__construct("newbb_reads_" . $type);
+        parent::__construct();
         $this->initVar('read_id', XOBJ_DTYPE_INT);
         $this->initVar('uid', XOBJ_DTYPE_INT);
         $this->initVar('read_item', XOBJ_DTYPE_INT);
@@ -62,7 +61,6 @@ class Read extends XoopsObject //ArtObject
 /**
  * Class NewbbReadHandler
  */
-//class NewbbReadHandler extends ArtObjectHandler
 class NewbbReadHandler extends XoopsPersistableObjectHandler
 {
     /**
@@ -103,13 +101,13 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
     public $mode;
 
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      * @param               $type
      */
     public function __construct(XoopsDatabase $db, $type)
     {
         $type = ('forum' === $type) ? 'forum' : 'topic';
-        parent::__construct($db, 'bb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
+        parent::__construct($db, 'newbb_reads_' . $type, 'Read' . $type, 'read_id', 'post_id');
         $this->type  = $type;
         $newbbConfig = newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
@@ -130,24 +128,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
             return false;
         }
 
-        /* for MySQL 4.1+ */
-        if ($this->mysql_major_version() >= 4) {
-            $sql = 'DELETE bb FROM ' . $this->table . ' AS bb' . ' LEFT JOIN ' . $this->table . ' AS aa ON bb.read_item = aa.read_item ' . ' WHERE aa.post_id > bb.post_id';
-        } else {
-            // for 4.0+
-            $sql = 'DELETE '
-                   . $this->table
-                   . ' FROM '
-                   . $this->table
-                   . ' LEFT JOIN '
-                   . $this->table
-                   . ' AS aa ON '
-                   . $this->table
-                   . '.read_item = aa.read_item '
-                   . ' WHERE aa.post_id > '
-                   . $this->table
-                   . '.post_id';
-        }
+        $sql = 'DELETE bb FROM ' . $this->table . ' AS bb' . ' LEFT JOIN ' . $this->table . ' AS aa ON bb.read_item = aa.read_item ' . ' WHERE aa.post_id > bb.post_id';
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
             return false;
@@ -191,7 +172,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      */
     public function getRead_cookie($item_id)
     {
-        $cookie_name = ('forum' === $this->type) ? 'LF' : 'LT';
+        $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_var  = $item_id;
         // irmtfan set true to return array
         $lastview = newbb_getcookie($cookie_name, true);
@@ -246,7 +227,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      */
     public function setRead_cookie($read_item, $post_id)
     {
-        $cookie_name          = ('forum' === $this->type) ? 'LF' : 'LT';
+        $cookie_name          = ($this->type === 'forum') ? 'LF' : 'LT';
         $lastview             = newbb_getcookie($cookie_name, true);
         $lastview[$read_item] = time();
         newbb_setcookie($cookie_name, $lastview);
@@ -273,10 +254,10 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
             return true;
         }
         $object = $this->create();
-        $object->setVar('read_item', $read_item, true);
-        $object->setVar('post_id', $post_id, true);
-        $object->setVar('uid', $uid, true);
-        $object->setVar('read_time', time(), true);
+        $object->setVar('read_item', $read_item);
+        $object->setVar('post_id', $post_id);
+        $object->setVar('uid', $uid);
+        $object->setVar('read_time', time());
 
         return parent::insert($object);
     }
@@ -308,7 +289,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      */
     public function isRead_items_cookie(&$items)
     {
-        $cookie_name = ('forum' === $this->type) ? 'LF' : 'LT';
+        $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
         $ret = [];

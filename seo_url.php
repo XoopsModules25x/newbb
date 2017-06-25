@@ -1,8 +1,6 @@
 <?php
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-include_once __DIR__ . '/header.php';
-
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 
@@ -19,7 +17,7 @@ function seo_urls($s)
 
     $search = [
 
-        // Search URLs of modules' directory.
+        // Search URLs of modules' directry.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewpost.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(rss.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
@@ -166,7 +164,7 @@ function replace_links($matches)
             //if ($add_to_url === '') $add_to_url ='index.php';
             break;
     }
-    if ('?' === $req_string) {
+    if ($req_string === '?') {
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
@@ -190,10 +188,10 @@ function forum_seo_cat($_cat_id)
             return $ret;
         }
     }
-    $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_categories');
+    $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_categories');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = [];
-    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
+    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
         $_ret[$res['cat_id']] = forum_seo_title($res['cat_title']);
     }
     XoopsCache::write($key, $_ret);
@@ -218,10 +216,10 @@ function forum_seo_forum($_cat_id)
             return $ret;
         }
     }
-    $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
+    $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = [];
-    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
+    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
         $_ret[$res['forum_id']] = forum_seo_title($res['forum_name']);
     }
     XoopsCache::write($key, $_ret);
@@ -237,7 +235,7 @@ function forum_seo_forum($_cat_id)
  */
 function forum_seo_topic($_cat_id)
 {
-    $query  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id = ' . $_cat_id;
+    $query  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['topic_title']);
@@ -251,7 +249,7 @@ function forum_seo_topic($_cat_id)
  */
 function forum_seo_post($_cat_id)
 {
-    $query  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE post_id = ' . $_cat_id;
+    $query  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' WHERE post_id = ' . $_cat_id;
     $result = $GLOBALS['xoopsDB']->query($query);
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['subject']);
@@ -279,35 +277,37 @@ function forum_seo_title($title = '', $withExt = true)
     $title = rawurlencode(strtolower($title));
 
     // Transformation des ponctuations
+    //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
     $pattern = [
-        '/%09/', // Tab
-        '/%20/', // Space
-        '/%21/', // !
-        '/%22/', // "
-        '/%23/', // #
-        '/%25/', // %
-        '/%26/', // &
-        '/%27/', // '
-        '/%28/', // (
-        '/%29/', // )
-        '/%2C/', // ,
-        '/%2F/', // /
-        '/%3A/', // :
-        '/%3B/', // ;
-        '/%3C/', // <
-        '/%3D/', // =
-        '/%3E/', // >
-        '/%3F/', // ?
-        '/%40/', // @
-        '/%5B/', // [
-        '/%5C/', // \
-        '/%5D/', // ]
-        '/%5E/', // ^
-        '/%7B/', // {
-        '/%7C/', // |
-        '/%7D/', // }
-        '/%7E/', // ~
-        "/\./" // .
+        '/%09/',
+        '/%20/',
+        '/%21/',
+        '/%22/',
+        '/%23/',
+        '/%25/',
+        '/%26/',
+        '/%27/',
+        '/%28/',
+        '/%29/',
+        '/%2C/',
+        '/%2F/',
+        '/%3A/',
+        '/%3B/',
+        '/%3C/',
+        '/%3D/',
+        '/%3E/',
+        '/%3F/',
+        '/%40/',
+        '/%5B/',
+        '/%5C/',
+        '/%5D/',
+        '/%5E/',
+        '/%7B/',
+        '/%7C/',
+        '/%7D/',
+        '/%7E/',
+        '/\./',
+        '/%2A/'
     ];
     $rep_pat = [
         '-',
@@ -343,32 +343,32 @@ function forum_seo_title($title = '', $withExt = true)
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     // Transformation des caractères accentués
-    //
+    //                  è         é        ê         ë         ç         à         â         ä        î         ï        ù         ü         û         ô        ö
     $pattern = [
-        '/%B0/', // °
-        '/%E8/', // è
-        '/%E9/', // é
-        '/%EA/', // ê
-        '/%EB/', // ë
-        '/%E7/', // ç
-        '/%E0/', // à
-        '/%E2/', // â
-        '/%E4/', // ä
-        '/%EE/', // î
-        '/%EF/', // ï
-        '/%F9/', // ù
-        '/%FC/', // ü
-        '/%FB/', // û
-        '/%F4/', // ô
-        '/%F6/', // ö
-        '/%E3%BC/', //
-        '/%E3%96/', //
-        '/%E3%84/', //
-        '/%E3%9C/', //
-        '/%E3%FF/', //
-        '/%E3%B6/', //
-        '/%E3%A4/', //
-        '/%E3%9F/' //
+        '/%B0/',
+        '/%E8/',
+        '/%E9/',
+        '/%EA/',
+        '/%EB/',
+        '/%E7/',
+        '/%E0/',
+        '/%E2/',
+        '/%E4/',
+        '/%EE/',
+        '/%EF/',
+        '/%F9/',
+        '/%FC/',
+        '/%FB/',
+        '/%F4/',
+        '/%F6/',
+        '/%E3%BC/',
+        '/%E3%96/',
+        '/%E3%84/',
+        '/%E3%9C/',
+        '/%E3%FF/',
+        '/%E3%B6/',
+        '/%E3%A4/',
+        '/%E3%9F/'
     ];
     $rep_pat = [
         '-',

@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -13,7 +13,6 @@
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 define('NEWBB_HANDLER_PERMISSION', 1);
-load_functions('cache');
 
 // Initializing XoopsGroupPermHandler if not loaded yet
 if (!class_exists('XoopsGroupPermHandler')) {
@@ -26,12 +25,16 @@ if (!class_exists('XoopsGroupPermHandler')) {
 class NewbbPermissionHandler extends XoopsGroupPermHandler
 {
     public $_handler;
+    /** @var \Xmf\Module\Helper\Cache */
+    protected $cacheHelper;
 
     /**
-     * @param XoopsDatabase $db
+     * @param $db
      */
     public function __construct(XoopsDatabase $db)
     {
+        $this->cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+
         $this->db = $db;
         parent::__construct($db);
     }
@@ -82,7 +85,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function deleteByForum($forum_id)
     {
-        mod_clearCacheFile('permission_forum', 'newbb');
+        $this->cacheHelper->delete('permission_forum');
         $handler = $this->_loadHandler('forum');
 
         return $handler->deleteByForum($forum_id);
@@ -94,7 +97,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function deleteByCategory($cat_id)
     {
-        mod_clearCacheFile('permission_category', 'newbb');
+        $this->cacheHelper->delete('permission_category');
         $handler = $this->_loadHandler('category');
 
         return $handler->deleteByCategory($cat_id);
@@ -107,7 +110,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function setCategoryPermission($category, array $groups = [])
     {
-        mod_clearCacheFile('permission_category', 'newbb');
+        $this->cacheHelper->delete('permission_category');
         $handler = $this->_loadHandler('category');
 
         return $handler->setCategoryPermission($category, $groups);
@@ -123,7 +126,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     {
         global $xoopsModule;
         $ret = false;
-        if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $xoopsModule->getVar('dirname')) {
+        if ($GLOBALS['xoopsUserIsAdmin'] && $xoopsModule->getVar('dirname') === 'newbb') {
             $ret = true;
         }
 
@@ -184,7 +187,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
 
         $allowed_items = [];
         foreach ($_cachedPerms as $id => $allowed_groups) {
-            if (0 == $id || empty($allowed_groups)) {
+            if ($id == 0 || empty($allowed_groups)) {
                 continue;
             }
 
@@ -219,12 +222,12 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function createPermData($perm_name = 'forum_all')
     {
         global $xoopsModule;
+        /** @var \XoopsModuleHandler $moduleHandler */
         $perms = [];
 
-        if (is_object($xoopsModule) && 'newbb' === $xoopsModule->getVar('dirname')) {
+        if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') === 'newbb') {
             $modid = $xoopsModule->getVar('mid');
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('newbb');
             $modid         = $module->getVar('mid');
@@ -232,19 +235,20 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         }
 
         if (in_array($perm_name, ['forum_all', 'category_all'], true)) {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $groups        = array_keys($memberHandler->getGroupList());
 
-            $type           = ('category_all' === $perm_name) ? 'category' : 'forum';
-            $object_handler = xoops_getModuleHandler($type, 'newbb');
-            $object_ids     = $object_handler->getIds();
+            $type           = ($perm_name === 'category_all') ? 'category' : 'forum';
+            $objectHandler = xoops_getModuleHandler($type, 'newbb');
+            $object_ids    = $objectHandler->getIds();
             foreach ($object_ids as $item_id) {
                 $perms[$perm_name][$item_id] = $groups;
             }
         } else {
             $gpermHandler = xoops_getHandler('groupperm');
             $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $modid));
-            if (!empty($perm_name) && 'forum_all' !== $perm_name && 'category_all' !== $perm_name) {
+            if (!empty($perm_name) && $perm_name !== 'forum_all' && $perm_name !== 'category_all') {
                 $criteria->add(new Criteria('gperm_name', $perm_name));
             }
             $permissions = $this->getObjects($criteria);
@@ -255,10 +259,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
                 $perms[$gperm->getVar('gperm_name')][$item_id][] = $group_id;
             }
         }
-        load_functions('cache');
         if (count($perms) > 0) {
             foreach (array_keys($perms) as $perm) {
-                mod_createCacheFile($perms[$perm], 'permission_{$perm}', 'newbb');
+                $this->cacheHelper->write("permission_{$perm}", $perms[$perm]);
             }
         }
         $ret = !empty($perm_name) ? @$perms[$perm_name] : $perms;
@@ -272,8 +275,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function &loadPermData($perm_name = 'forum_access')
     {
-        load_functions('cache');
-        if (!$perms = mod_loadCacheFile('permission_{$perm_name}', 'newbb')) {
+        if (!$perms = $this->cacheHelper->read("permission_{$perm_name}")) {
             $perms = $this->createPermData($perm_name);
         }
 
@@ -290,10 +292,10 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function validateRight($perm, $itemid, $groupid, $mid = null)
     {
         if (empty($mid)) {
-            if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
+            if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
-                /** @var XoopsModuleHandler $moduleHandler */
+                /** @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
                 $mod           = $moduleHandler->getByDirname('newbb');
                 $mid           = $mod->getVar('mid');
@@ -303,8 +305,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
         if ($this->_checkRight($perm, $itemid, $groupid, $mid)) {
             return true;
         }
-        load_functions('cache');
-        mod_clearCacheFile('permission', 'newbb');
+        $this->cacheHelper->delete('permission');
         $this->addRight($perm, $itemid, $groupid, $mid);
 
         return true;
@@ -354,12 +355,12 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function deleteRight($perm, $itemid, $groupid, $mid = null)
     {
-        mod_clearCacheFile('permission', 'newbb');
+        $this->cacheHelper->delete('permission');
         if (null === $mid) {
-            if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
+            if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
-                /** @var XoopsModuleHandler $moduleHandler */
+                /** @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
                 $mod           = $moduleHandler->getByDirname('newbb');
                 $mid           = $mod->getVar('mid');
@@ -392,7 +393,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function applyTemplate($forum, $mid = 0)
     {
-        mod_clearCacheFile('permission_forum', 'newbb');
+        $this->cacheHelper->delete('permission_forum');
         $handler = $this->_loadHandler('forum');
 
         return $handler->applyTemplate($forum, $mid);

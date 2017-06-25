@@ -3,10 +3,10 @@
 <{if $results}>
     <div class="outer">
         <div class="head align_center">
-            <div class="topic_forumname floatleft"><{$smarty.const._MD_FORUMC}></div>
-            <div class="topic_name floatleft"><{$smarty.const._MD_SUBJECT}></div>
-            <div class="topic_poster floatleft"><{$smarty.const._MD_AUTHOR}></div>
-            <div class="_col_end"><{$smarty.const._MD_POSTTIME}></div>
+            <div class="topic_forumname floatleft"><{$smarty.const._MD_NEWBB_FORUMC}></div>
+            <div class="topic_name floatleft"><{$smarty.const._MD_NEWBB_SUBJECT}></div>
+            <div class="topic_poster floatleft"><{$smarty.const._MD_NEWBB_AUTHOR}></div>
+            <div class="_col_end"><{$smarty.const._MD_NEWBB_POSTTIME}></div>
             <div class="clear"></div>
         </div>
         <!-- start search results -->

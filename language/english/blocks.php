@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // Blocks
 if (defined('NEWBB_BLOCKS_DEFINED')) {
     return;

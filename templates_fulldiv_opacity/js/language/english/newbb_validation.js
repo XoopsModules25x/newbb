@@ -9,18 +9,19 @@
  */
 
 /**
- * Function for validation of xoops forms: prevent user select nothing or disable some options
- * @param elName : elements name
- * @param elType : element type eg: select, checkbox
- * @param prevent: prevent user select nothing: true or false
- * @param disablecat: disable categories in forum select box: true or false
- * @param elMsg: the message
- */
+* Function for validation of xoops forms: prevent user select nothing or disable some options
+* @param elName : elements name
+* @param elType : element type eg: select, checkbox
+* @param prevent: prevent user select nothing: true or false
+* @param disablecat: disable categories in forum select box: true or false
+* @param elMsg: the message
+*/
 
 
-function validate(elName, elType, prevent, disablecat, elMsg) {
+function validate(elName, elType , prevent, disablecat, elMsg)
+{
     var i = 0;
-    var el = document.getElementsByName(elName);
+    var el=document.getElementsByName(elName);
     var is_valid = true;
     switch (elType) {
         case 'checkbox':
@@ -39,14 +40,10 @@ function validate(elName, elType, prevent, disablecat, elMsg) {
             }
             if (!hasChecked) {
                 if (el.length) {
-                    if (prevent) {
-                        el[0].checked = true;
-                    }
+                    if (prevent) {el[0].checked = true;}
                     el[0].focus();
-                } else {
-                    if (prevent) {
-                        el.checked = true;
-                    }
+                }else{
+                    if (prevent) {el.checked = true;}
                     el.focus();
                 }
                 is_valid = false;
@@ -55,9 +52,9 @@ function validate(elName, elType, prevent, disablecat, elMsg) {
         case 'select':
             el = el[0];
             if (disablecat) {
-                for (i = 0; i < el.options.length; i++) {
+                for (i = 0; i < el.options.length; i++ ) {
                     if (el.options[i].value < 0) {
-                        el.options[i].disabled = true;
+                        el.options[i].disabled  = true;
                         el.options[i].value = '';
                     }
                 }
@@ -65,8 +62,8 @@ function validate(elName, elType, prevent, disablecat, elMsg) {
 
             if (el.value === '') {
                 is_valid = false;
-                if (prevent) {
-                    for (i = 0; i < el.options.length; i++) {
+                if(prevent) {
+                    for (i = 0; i < el.options.length; i++ ) {
                         if (el.options[i].value !== '') {
                             el.value = el.options[i].value;
                             break; // loop exit

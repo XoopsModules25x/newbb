@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -42,19 +42,19 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     {
         global $myts;
 
-        if (1 !== $html) {
+        if ($html !== 1) {
             // html not allowed
             $text = newbb_htmlspecialchars($text);
         }
         $text = $myts->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
         $text = $myts->makeClickable($text);
-        if (0 !== $smiley) {
+        if ($smiley !== 0) {
             // process smiley
             $text = $myts->smiley($text);
         }
-        if (0 !== $xcode) {
+        if ($xcode !== 0) {
             // decode xcode
-            if (0 !== $image) {
+            if ($image !== 0) {
                 // image allowed
                 $text = $myts->xoopsCodeDecode($text);
             } else {
@@ -62,7 +62,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
                 $text = $myts->xoopsCodeDecode($text, 0);
             }
         }
-        if (0 !== $br) {
+        if ($br !== 0) {
             $text = $myts->nl2Br($text);
         }
         $text = $myts->codeConv($text, $xcode, $image);    // Ryuji_edit(2003-11-18)
@@ -117,7 +117,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         // START hacked by irmtfan
         // to show text links instead of buttons - func_num_args()==2 => only when $image, $alt is set and optional $display not set
 
-        if (2 == func_num_args()) {
+        if (func_num_args() == 2) {
             // overall setting
             if (!empty($GLOBALS['xoopsModuleConfig']['display_text_links'])) {
                 $display = false;
@@ -148,7 +148,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         }
 
         if (!class_exists('NewbbIconHandler')) {
-            require_once __DIR__ . '/../class/icon.php';
+            require_once dirname(__DIR__) . '/class/icon.php';
         }
 
         $iconHandler           = NewbbIconHandler::getInstance();

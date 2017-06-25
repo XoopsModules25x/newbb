@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -29,6 +29,8 @@
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 include_once $GLOBALS['xoops']->path('class/template.php');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
@@ -38,16 +40,17 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
 }
 /* for seo */
 
-error_reporting(0);
+error_reporting(E_ALL);
 $xoopsLogger->activated = false;
 
 $forums   = [];
-$category = XoopsRequest::getString('c', '', 'GET');
-if (XoopsRequest::getString('f', 0, 'GET')) {
-    $forums = array_map('intval', array_map('trim', explode('|', XoopsRequest::getString('f', 0, 'GET'))));
-    //$forums[] = (int)($_GET["f"]);
+$category = Request::getInt('c', 0, 'GET');
+$forumSet = Request::getString('f', '', 'GET');
+if ('' !== $forumSet) {
+    $forums = array_map('intval', array_map('trim', explode('|', $forumSet)));
 }
 
+/** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $validForums  = $forumHandler->getIdsByPermission(); // get all accessible forums
@@ -60,9 +63,12 @@ if (is_array($forums) && count($forums) > 0) {
     $forums_top  = $forumHandler->getIds($crit_top);
     $validForums = array_intersect($forums_top, $validForums);
 }
-if (0 === count($validForums)) {
+if (count($validForums) === 0) {
     newbb_trackback_response(1, _NOPERM);
 }
+
+asort($validForums);
+$forumSet = implode(',', $validForums);
 
 $charset = 'UTF-8';
 header('Content-Type:text/xml; charset=' . $charset);
@@ -74,22 +80,20 @@ if (!empty($GLOBALS['xoopsConfig']['rewrite'])) {
     $tpl->load_filter('output', 'xoRewriteModule');
 }
 
-mod_loadFunctions('cache');
-$xoopsCachedTemplateId = md5(mod_generateCacheId_byGroup() . str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']));
+//mod_loadFunctions('cache');
+$xoopsCachedTemplateId = "newbbb_rss_$forumSet";
 $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
-    mod_loadFunctions('time', 'newbb');
+    include_once __DIR__ . '/include/functions.time.php';
 
-    $xmlrss_handler = xoops_getModuleHandler('xmlrss', 'newbb');
-    $rss            = $xmlrss_handler->create();
+    /** @var \NewbbXmlrssHandler $xmlrssHandler */
+    $xmlrssHandler = xoops_getModuleHandler('xmlrss', 'newbb');
+    $rss           = $xmlrssHandler->create();
 
-    $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_FORUM);
+    $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_NEWBB_FORUM);
     $rss->channel_link = XOOPS_URL . '/';
     $rss->setVarRss('channel_desc', $GLOBALS['xoopsConfig']['slogan'] . ' :: ' . $xoopsModule->getInfo('description'));
-    // There is a "bug" with xoops function formatTimestamp(time(), 'rss')
-    // We have to make a customized function
-    //$rss->channel_lastbuild = formatTimestamp(time(), 'rss');
-    $rss->setVarRss('channel_lastbuild', newbb_formatTimestamp(time(), 'rss'));
+    $rss->setVarRss('channel_lastbuild', formatTimestamp(time(), 'rss'));
     $rss->channel_webmaster = $GLOBALS['xoopsConfig']['adminmail'];
     $rss->channel_editor    = $GLOBALS['xoopsConfig']['adminmail'];
     $rss->setVarRss('channel_category', $xoopsModule->getVar('name'));
@@ -119,37 +123,18 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     unset($validForums);
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
-    $query = 'SELECT'
-             . '    f.forum_id, f.forum_name,'
-             . '    t.topic_id, t.topic_title, t.type_id,'
-             . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, '
-             . '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,'
-             . '    pt.post_text'
-             . '    FROM '
-             . $GLOBALS['xoopsDB']->prefix('bb_posts')
-             . ' AS p'
-             . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('bb_topics')
-             . ' AS t ON t.topic_last_post_id=p.post_id'
-             . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('bb_posts_text')
-             . ' AS pt ON pt.post_id=p.post_id'
-             . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('bb_forums')
-             . ' AS f ON f.forum_id=p.forum_id'
-             . '    WHERE 1=1 '
-             . $forumCriteria
-             . $approveCriteria
-             . ' ORDER BY p.post_id DESC';
+    $query = 'SELECT' . '    f.forum_id, f.forum_name,' . '    t.topic_id, t.topic_title, t.type_id,' . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, ' . '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr,' . '    pt.post_text' . '    FROM '
+             . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' AS p' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' AS t ON t.topic_last_post_id=p.post_id' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . ' AS pt ON pt.post_id=p.post_id' . '    LEFT JOIN '
+             . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' AS f ON f.forum_id=p.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . ' ORDER BY p.post_id DESC';
     $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
     if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
-        newbb_trackback_response(1, _MD_ERROR);
+        newbb_trackback_response(1, _MD_NEWBB_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
-        //return $xmlrss_handler->get($rss);
+        //return $xmlrssHandler->get($rss);
     }
     $rows  = [];
     $types = [];
-    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
+    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
         $users[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
             $types[$row['type_id']] = 1;
@@ -158,11 +143,12 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
 
     if (count($rows) < 1) {
-        newbb_trackback_response(1, _MD_NORSS_DATA);
-        //return $xmlrss_handler->get($rss);
+        newbb_trackback_response(1, _MD_NEWBB_NORSS_DATA);
+        //return $xmlrssHandler->get($rss);
     }
     $users = newbb_getUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
+        /** @var \NewbbTypeHandler $typeHandler */
         $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
@@ -183,8 +169,8 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';
         $description .= $topic['topic_subject'] . $topic['topic_title'] . "<br>\n";
         $description .= $myts->displayTarea($topic['post_text'], $topic['dohtml'], $topic['dosmiley'], $topic['doxcode'], $topic['dobr']);
-        $label = _MD_BY . ' ' . $topic['uname'];
-        $time  = newbb_formatTimestamp($topic['post_time'], 'rss');
+        $label = _MD_NEWBB_BY . ' ' . $topic['uname'];
+        $time  = formatTimestamp($topic['post_time'], 'rss');
         $link  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
         if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             $link   = XOOPS_URL . '/' . REAL_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '';
@@ -200,7 +186,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         }
     }
 
-    $rss_feed = $xmlrss_handler->get($rss);
+    $rss_feed = $xmlrssHandler->get($rss);
 
     $tpl->assign('rss', $rss_feed);
     unset($rss);

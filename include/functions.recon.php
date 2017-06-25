@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -39,7 +39,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
             $handler = xoops_getModuleHandler($item, 'newbb');
-            if ('stats' !== $item) {
+            if ($item !== 'stats') {
                 $handler->synchronization();
             } else {
                 $handler->reset();

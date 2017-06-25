@@ -1,13 +1,14 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  * @package        module::newbb
  */
+
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
@@ -35,17 +36,18 @@ function newbb_search(
     $searchin = 'both',
     CriteriaCompo $criteriaExtra = null
 ) {
-    global $myts;
+    global $myts, $xoopsDB;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
         $GLOBALS['xoopsModuleConfig'] = newbbLoadConfig();
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
     if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module'])
-        && 'newbb' === $GLOBALS['module']->getVar('dirname')
+        && $GLOBALS['module']->getVar('dirname') === 'newbb'
     ) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
+    /** @var \NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
@@ -59,7 +61,7 @@ function newbb_search(
         $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
     }
 
-    if (is_numeric($userid) && 0 !== $userid) {
+    if (is_numeric($userid) && $userid !== 0) {
         $criteriaUser = new CriteriaCompo();
         $criteriaUser->add(new Criteria('p.uid', $userid), 'OR');
     } elseif (is_array($userid) && count($userid) > 0) {
@@ -68,30 +70,24 @@ function newbb_search(
         $criteriaUser->add(new Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
     }
 
-    $count          = count($queryarray);
-    $hightlight_key = '';
+    $count        = count($queryarray);
+    $highlightKey = '';
     if (is_array($queryarray) && $count > 0) {
         $criteriaKeywords = new CriteriaCompo();
-        for ($i = 0; $i < $count; ++$i) {
-            $criteriaKeyword = new CriteriaCompo();
-            switch ($searchin) {
-                case 'title':
-                    $criteriaKeyword->add(new Criteria('p.subject', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                    break;
-                case 'text':
-                    $criteriaKeyword->add(new Criteria('t.post_text', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                    break;
-                case 'both':
-                default:
-                    $criteriaKeyword->add(new Criteria('p.subject', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                    $criteriaKeyword->add(new Criteria('t.post_text', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                    break;
+        foreach ($queryarray as $queryTerm) {
+            $termCriteria  = new CriteriaCompo();
+            $queryTermLike = '%' . $xoopsDB->escape($queryTerm) . '%';
+            if ($searchin === 'title' || $searchin === 'both') {
+                $termCriteria->add(new Criteria('p.subject', $queryTermLike, 'LIKE'), 'OR');
             }
-            $criteriaKeywords->add($criteriaKeyword, $andor);
-            unset($criteriaKeyword);
+            if ($searchin === 'text' || $searchin === 'both') {
+                $termCriteria->add(new Criteria('t.post_text', $queryTermLike, 'LIKE'), 'OR');
+            }
+            $criteriaKeywords->add($termCriteria, $andor);
         }
         // add highlight keywords to post links
-        $hightlight_key = '&amp;keywords=' . implode('+', $queryarray);
+        $highlightKey = '&amp;keywords=' . implode(' ', $queryarray);
+        $highlightKey = str_replace(' ', '+', $highlightKey);
     }
     $criteria = new CriteriaCompo();
     $criteria->add($criteriaPost, 'AND');
@@ -115,21 +111,23 @@ function newbb_search(
     }
     $criteria->setSort($sortby);
     $order = 'ASC';
-    if ('p.post_time' === $sortby) {
+    if ($sortby === 'p.post_time') {
         $order = 'DESC';
     }
     $criteria->setOrder($order);
 
+    /** @var \NewbbPostHandler $postHandler */
     $postHandler = xoops_getModuleHandler('post', 'newbb');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];
     $i   = 0;
     foreach (array_keys($posts) as $id) {
-        $post                  =& $posts[$id];
+        /** @var \NewbbPost $post */
+        $post                  = $posts[$id];
         $post_data             = $post->getPostBody();
         $ret[$i]['topic_id']   = $post->getVar('topic_id');
-        $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $hightlight_key; // add highlight key
+        $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $highlightKey; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
         $ret[$i]['forum_name'] = $myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);

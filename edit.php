@@ -1,37 +1,44 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
 foreach (['forum', 'topic_id', 'post_id', 'order'] as $getint) {
-    ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');
+    ${$getint} = Request::getInt($getint, 0, 'GET');
 }
 
 if (!$topic_id && !$post_id) {
     $redirect = empty($forum) ? 'index.php' : "viewforum.php?forum={$forum}";
-    redirect_header($redirect, 2, _MD_ERRORTOPIC);
+    redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
+/** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+/** @var \NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$postHandler  = xoops_getModuleHandler('post', 'newbb');
+/** @var \NewbbPostHandler $postHandler */
+$postHandler = xoops_getModuleHandler('post', 'newbb');
 
+/** @var \NewbbPost $post_obj */
 $post_obj  = $postHandler->get($post_id);
 $topic_obj = $topicHandler->get($post_obj->getVar('topic_id'));
 $forum_obj = $forumHandler->get($post_obj->getVar('forum_id'));
 if (!$forumHandler->getPermission($forum_obj)) {
-    redirect_header('index.php', 2, _MD_NORIGHTTOACCESS);
+    redirect_header('index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
+    /** @var \NewbbOnlineHandler $onlineHandler */
     $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forum_obj);
 }
@@ -43,9 +50,9 @@ $topic_status = $topic_obj->getVar('topic_status');
 $error_msg    = null;
 
 if (!$topicHandler->getPermission($forum_obj, $topic_status, 'edit') || (!$isadmin && !$post_obj->checkIdentity())) {
-    $error_msg = _MD_NORIGHTTOEDIT;
+    $error_msg = _MD_NEWBB_NORIGHTTOEDIT;
 } elseif (!$isadmin && !$post_obj->checkTimelimit('edit_timelimit')) {
-    $error_msg = _MD_TIMEISUP;
+    $error_msg = _MD_NEWBB_TIMEISUP;
 }
 
 if (!empty($error_msg)) {
@@ -55,8 +62,8 @@ if (!empty($error_msg)) {
     $query_vars  = ['topic_id', 'post_id', 'forum', 'status', 'order', 'mode', 'viewmode'];
     $query_array = [];
     foreach ($query_vars as $var) {
-        if (XoopsRequest::getString($var, '', 'GET')) {
-            $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');
+        if (Request::getString($var, '', 'GET')) {
+            $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
         }
     }
     $page_query = htmlspecialchars(implode('&', array_values($query_array)));
@@ -75,7 +82,7 @@ $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 include_once $GLOBALS['xoops']->path('header.php');
 
 /*
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = xoops_getModuleHandler("category");
 $category_obj = $categoryHandler->get($forum_obj->getVar('cat_id'), array("cat_title"));
@@ -98,7 +105,7 @@ $doxcode       = $post_obj->getVar('doxcode');
 $dobr          = $post_obj->getVar('dobr');
 $icon          = $post_obj->getVar('icon');
 $attachsig     = $post_obj->getVar('attachsig');
-$istopic       = $post_obj->istopic() ? 1 : 0;
+$istopic       = $post_obj->isTopic() ? 1 : 0;
 $isedit        = 1;
 $subject       = $post_obj->getVar('subject', 'E');
 $message       = $post_obj->getVar('post_text', 'E');
@@ -107,9 +114,10 @@ $attachments   = $post_obj->getAttachment();
 $post_karma    = $post_obj->getVar('post_karma');
 $require_reply = $post_obj->getVar('require_reply');
 
-$xoopsTpl->assign('error_message', _MD_EDITEDBY . ' ' . $GLOBALS['xoopsUser']->uname());
+$xoopsTpl->assign('error_message', _MD_NEWBB_EDITEDBY . ' ' . $GLOBALS['xoopsUser']->uname());
 include __DIR__ . '/include/form.post.php';
 
+/** @var \NewbbKarmaHandler $karmaHandler */
 $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
@@ -117,9 +125,9 @@ $posts_context     = [];
 $posts_context_obj = $istopic ? [] : [$postHandler->get($post_obj->getVar('pid'))];
 foreach ($posts_context_obj as $post_context_obj) {
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_context_obj->getVar('post_karma') > 0) {
-        $p_message = sprintf(_MD_KARMA_REQUIREMENT, '***', $post_context_obj->getVar('post_karma')) . '</div>';
+        $p_message = sprintf(_MD_NEWBB_KARMA_REQUIREMENT, '***', $post_context_obj->getVar('post_karma')) . '</div>';
     } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $post_context_obj->getVar('require_reply')) {
-        $p_message = _MD_REPLY_REQUIREMENT;
+        $p_message = _MD_NEWBB_REPLY_REQUIREMENT;
     } else {
         $p_message = $post_context_obj->getVar('post_text');
     }
@@ -135,7 +143,7 @@ foreach ($posts_context_obj as $post_context_obj) {
 
     $posts_context[] = [
         'subject' => $p_subject,
-        'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
+        'meta'    => _MD_NEWBB_BY . ' ' . $p_name . ' ' . _MD_NEWBB_ON . ' ' . $p_date,
         'content' => $p_message
     ];
 }

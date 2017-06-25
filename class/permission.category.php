@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -17,7 +17,7 @@
 class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
 {
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
@@ -52,6 +52,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
         if (empty($cat_id)) {
             return false;
         }
+        /** @var \XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         $criteria     = new CriteriaCompo(new Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $criteria->add(new Criteria('gperm_name', 'category_access'));
@@ -67,15 +68,16 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function setCategoryPermission($category, array $groups = [])
     {
-        if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
+        if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $newbb         = $moduleHandler->getByDirname('newbb');
             $mid           = $newbb->getVar('mid');
         }
         if (empty($groups)) {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $glist         = $memberHandler->getGroupList();
             $groups        = array_keys($glist);

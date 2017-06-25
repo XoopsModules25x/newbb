@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -17,11 +17,10 @@ define('NEWBB_FUNCTIONS_LOADED', true);
 if (!defined('NEWBB_FUNCTIONS')) {
     define('NEWBB_FUNCTIONS', 1);
 
-    load_functions();
-    mod_loadFunctions('image', 'newbb');
-    mod_loadFunctions('user', 'newbb');
-    mod_loadFunctions('render', 'newbb');
-    mod_loadFunctions('forum', 'newbb');
-    mod_loadFunctions('session', 'newbb');
-    mod_loadFunctions('stats', 'newbb');
+    include_once __DIR__ . '/functions.image.php';
+    include_once __DIR__ . '/functions.user.php';
+    include_once __DIR__ . '/functions.render.php';
+    include_once __DIR__ . '/functions.forum.php';
+    include_once __DIR__ . '/functions.session.php';
+    include_once __DIR__ . '/functions.stats.php';
 }

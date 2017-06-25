@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -32,8 +32,8 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$aboutAdmin = new ModuleAdmin();
-echo $aboutAdmin->addNavigation(basename(__FILE__));
-echo $aboutAdmin->renderAbout('PBQZ7D6LT6UBC', false);
+$adminObject->displayNavigation(basename(__FILE__));
+\Xmf\Module\Admin::setPaypal('PBQZ7D6LT6UBC');
+$adminObject->displayAbout(false);
 
 include_once __DIR__ . '/admin_footer.php';

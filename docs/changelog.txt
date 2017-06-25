@@ -1,30 +1,17 @@
-4.34 Final  (XOOPS 2.5.10)      2019-05-07
+5.00 Alpha (XOOPS 2.5.8.1+)  (NOT RELEASED)
 ===========================================
-- 4.34 Final release
+- Remove use of Art framework (geekwright)
+- standardize names of classes, tables and constants to include "newbb" (geekwright)
+- Use XMF whenever practical (geekwright)
+- Simplify database migration strategy (geekwright)
+- lots of warning/error cleanup (geekwright)
+- extra code updates (mamba)
+- Short syntax in array literals (mamba)
 
-4.34 RC1  (XOOPS 2.5.10)      2019-02-09
+4.33 RC 13  (XOOPS 2.5.8)      (NOT RELEASED)
 ===========================================
-- fix for Criteria('1', 1) (geekwright/mamba)
-
-
-4.33 Final  (XOOPS 2.5.8)      2016-11-27
-===========================================
-- cosmetics (mamba)
-- array short syntax (mamba)
-- assignment in condition (mamba)
-- double quotes (mamba)
-- Yoda (mamba)
-
-
-4.33 RC 13  (XOOPS 2.5.8)      2016-10-18
-===========================================
-- code cosmetics (mamba0
-- replaced "< br />" with "< br>" (mamba)
-- fixed issue with Functions not loaded when not current module #32 (djsherren/geekright)
-- HTML 5 adjustments with 'selected' and 'checked' (mamba)
-- removed parenthesis from include/require as they are not functions (mamba)
-- using $GLOBALS['xoopsOption'] instead of '$xoopsOption' (mamba)
-- renamed logo to 'logoModule.png' (mamba)
+- code cosmetics (mamba)
+- standardize br tags (mamba)
 
 4.33 RC 12  (XOOPS 2.5.8)      (2016-04-03)
 ===========================================

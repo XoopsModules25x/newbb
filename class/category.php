@@ -1,16 +1,16 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class Category extends XoopsObject
+class NewbbCategory extends XoopsObject
 {
     /**
      *
@@ -37,7 +37,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'bb_categories', 'Category', 'cat_id', 'cat_title');
+        parent::__construct($db, 'newbb_categories', 'NewbbCategory', 'cat_id', 'cat_title');
     }
 
     /**
@@ -46,6 +46,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getIdsByPermission($perm = 'access')
     {
+        /** @var \NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
 
         return $permHandler->getCategories($perm);
@@ -75,10 +76,13 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @param  bool        $force
      * @return mixed
      */
-
-    public function insert(XoopsObject $category, $force = true)//insert(Category $category)
+    public function insert(XoopsObject $category, $force = true)
     {
-        parent::insert($category, true);
+        $className = 'NewbbCategory';
+        if (!($category instanceof $className)) {
+            return false;
+        }
+        parent::insert($category, $force);
         if ($category->isNew()) {
             $this->applyPermissionTemplate($category);
         }
@@ -92,71 +96,72 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      * @return bool|mixed
      * @internal param Category $category
      */
-
     public function delete(XoopsObject $category, $force = false)//delete(Category $category)
     {
-        //        global $xoopsModule;
+        $className = 'NewbbCategory';
+        if (!($category instanceof $className)) {
+            return false;
+        }
+        /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forumHandler->deleteAll(new Criteria('cat_id', $category->getVar('cat_id')), true, true);
         if ($result = parent::delete($category)) {
             // Delete group permissions
             return $this->deletePermission($category);
         } else {
-            $category->setErrors('delete category error: ' . $sql);
+            $category->setErrors('delete category error');
 
             return false;
         }
     }
 
-    /*
+    /**
      * Check permission for a category
      *
-     * TODO: get a list of categories per permission type
+     * @param  NewbbCategory|int $category object or id
+     * @param  string            $perm     permission name
      *
-     * @param    mixed (object or integer)    category object or ID
-     * return    bool
-     */
-    /**
-     * @param         $category
-     * @param  string $perm
      * @return bool
      */
     public function getPermission($category, $perm = 'access')
     {
-        if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
+        if ($GLOBALS['xoopsUserIsAdmin'] && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             return true;
         }
 
-        $cat_id      = is_object($category) ? $category->getVar('cat_id') : (int)$category;
+        $cat_id = is_object($category) ? $category->getVar('cat_id') : (int)$category;
+        /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
 
         return $permHandler->getPermission('category', $perm, $cat_id);
     }
 
     /**
-     * @param $category
+     * @param NewbbCategory $category
      * @return mixed
      */
-    public function deletePermission(&$category)
+    public function deletePermission(NewbbCategory $category)
     {
+        /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
 
         return $permHandler->deleteByCategory($category->getVar('cat_id'));
     }
 
     /**
-     * @param $category
+     * @param NewbbCategory $category
      * @return mixed
      */
-    public function applyPermissionTemplate(&$category)
+    public function applyPermissionTemplate(NewbbCategory $category)
     {
+        /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
 
         return $permHandler->setCategoryPermission($category->getVar('cat_id'));
     }
 
     /**
-     * @param  null $object
+     * @param  mixed $object
      * @return bool
      */
     public function synchronization($object = null)

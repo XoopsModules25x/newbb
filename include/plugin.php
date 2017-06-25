@@ -1,13 +1,15 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
+
+xoops_loadLanguage('main', 'newbb');
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 /* some static xoopsModuleConfig */
@@ -72,9 +74,9 @@ $customConfig['length_title_index'] = 40;
 // MENU handler
 /* You could remove anyone by commenting out in order to disable it */
 $customConfig['valid_menumodes'] = [
-    0 => _MD_MENU_SELECT,    // for selectbox
-    //1 => _MD_MENU_CLICK,    // for "click to expand"
-    //2 => _MD_MENU_HOVER        // for "mouse hover to expand"
+    0 => _MD_NEWBB_MENU_SELECT,    // for selectbox
+    //1 => _MD_NEWBB_MENU_CLICK,    // for "click to expand"
+    //2 => _MD_NEWBB_MENU_HOVER        // for "mouse hover to expand"
 ];
 
 // view latest edit

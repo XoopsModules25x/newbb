@@ -29,40 +29,45 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Request;
+
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
 
 include_once __DIR__ . '/header.php';
 
-$attach_id = XoopsRequest::getString('attachid', '', 'GET');
+$attach_id = Request::getString('attachid', '', 'GET');
 
-$forum    = XoopsRequest::getInt('forum', 0, 'GET');
-$topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-$post_id  = XoopsRequest::getInt('post_id', 0, 'GET');
+$forum    = Request::getInt('forum', 0, 'GET');
+$topic_id = Request::getInt('topic_id', 0, 'GET');
+$post_id  = Request::getInt('post_id', 0, 'GET');
 
 if (!is_file(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php')) {
-    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPF for Xoops not installed');
+    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPDF for Xoops not installed');
 }
 
 if (empty($post_id)) {
-    exit(_MD_ERRORTOPIC);
+    exit(_MD_NEWBB_ERRORTOPIC);
 }
 
+/** @var \NewbbPostHandler $postHandler */
 $postHandler = xoops_getModuleHandler('post', 'newbb');
 $post        = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
-    exit(_MD_NORIGHTTOVIEW);
+    exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 
 $post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
+/** @var \NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $forumtopic   = $topicHandler->getByPost($post_id);
 $topic_id     = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
-    exit(_MD_NORIGHTTOVIEW);
+    exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 
+/** @var \NewbbForumHandler $forumHandler */
 $forumHandler    = xoops_getModuleHandler('forum', 'newbb');
 $forum           = $forum ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
@@ -76,14 +81,14 @@ if ($parent_forums) {
 }
 
 if (!$forumHandler->getPermission($viewtopic_forum)) {
-    exit(_MD_NORIGHTTOACCESS);
+    exit(_MD_NEWBB_NORIGHTTOACCESS);
 }
 if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'view')) {
-    exit(_MD_NORIGHTTOVIEW);
+    exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 // irmtfan add pdf permission
 if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'pdf')) {
-    exit(_MD_NORIGHTTOPDF);
+    exit(_MD_NEWBB_NORIGHTTOPDF);
 }
 
 $categoryHandler = xoops_getModuleHandler('category', 'newbb');
@@ -96,7 +101,7 @@ $pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
 $pdf_data['title']  = $myts->undoHtmlSpecialChars($post_data['subject']);
 $content            = '';
 $content .= '<b>' . $pdf_data['title'] . '</b><br><br>';
-$content .= _MD_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
+$content .= _MD_NEWBB_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
 $content .= _MD_NEWBB_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
 $content .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
 //$content .= $post_edit . '<br>'; //reserve for future versions to display edit records
@@ -104,10 +109,10 @@ $pdf_data['content']        = str_replace('[pagebreak]', '<br>', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');
 $pdf_data['forum_title']    = $pf_title . $viewtopic_forum->getVar('forum_name');
 $pdf_data['cat_title']      = $viewtopic_cat->getVar('cat_title');
-$pdf_data['subject']        = NEWBB_PDF_SUBJECT . ': ' . $pdf_data['topic_title'];
+$pdf_data['subject']        = _MD_NEWBB_PDF_SUBJECT . ': ' . $pdf_data['topic_title'];
 $pdf_data['keywords']       = XOOPS_URL . ', ' . 'XOOPS Project, ' . $pdf_data['topic_title'];
 $pdf_data['HeadFirstLine']  = $GLOBALS['xoopsConfig']['sitename'] . ' - ' . $GLOBALS['xoopsConfig']['slogan'];
-$pdf_data['HeadSecondLine'] = _MD_FORUMHOME . ' - ' . $pdf_data['cat_title'] . ' - ' . $pdf_data['forum_title'] . ' - ' . $pdf_data['topic_title'];
+$pdf_data['HeadSecondLine'] = _MD_NEWBB_FORUMHOME . ' - ' . $pdf_data['cat_title'] . ' - ' . $pdf_data['forum_title'] . ' - ' . $pdf_data['topic_title'];
 
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {

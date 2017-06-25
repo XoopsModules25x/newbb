@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -23,10 +23,15 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
     function newbb_welcome()
     {
         global $forum_obj;
-        //$GLOBALS['xoopsModuleConfig']["welcome_forum"] = 1;
+
+        $forumId = @$GLOBALS['xoopsModuleConfig']['welcome_forum'];
+        if (!$forumId) {
+            return false;
+        }
+        /** @var \NewbbForumHandler $forumHandler */
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $forum_obj    = $forumHandler->get($GLOBALS['xoopsModuleConfig']['welcome_forum']);
-        if (!$forumHandler->getPermission($forum_obj)) {
+        $forum_obj    = $forumHandler->get($forumId);
+        if (!$forum_obj || !$forumHandler->getPermission($forum_obj)) {
             unset($forum_obj);
 
             return false;

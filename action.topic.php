@@ -1,41 +1,47 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
-$forum_id = XoopsRequest::getInt('forum_id', 0, 'POST');
-$topic_id = XoopsRequest::getArray('topic_id', null, 'POST');
+$forum_id = Request::getInt('forum_id', 0, 'POST');
+$topic_id = Request::getArray('topic_id', null, 'POST');
 
-$op = XoopsRequest::getCmd('op', '', 'POST');
+$op = Request::getCmd('op', '', 'POST');
 $op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
 
 if (0 === count($topic_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NORIGHTTOACCESS);
+    redirect_header($_SERVER['HTTP_REFERER'], 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
 $topic_id     = array_values($topic_id);
+/** @var \NewbbTopicHandler $topicHandler */
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
+/** @var \NewbbForumHandler $forumHandler */
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
 $isadmin = newbb_isAdmin($forum_id);
 
 if (!$isadmin) {
-    redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
+    redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 switch ($op) {
     case 'restore':
         $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
-            $topic_obj =& $topics_obj[$id];
+            /** @var \Topic $topic_obj */
+            $topic_obj = $topics_obj[$id];
             $topicHandler->approve($topic_obj);
             $topicHandler->synchronization($topic_obj);
             $forums[$topic_obj->getVar('forum_id')] = 1;
@@ -51,7 +57,8 @@ switch ($op) {
         $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
-            $topic_obj =& $topics_obj[$id];
+            /** @var \Topic $topic_obj */
+            $topic_obj = $topics_obj[$id];
             $topicHandler->approve($topic_obj);
             $topicHandler->synchronization($topic_obj);
             $forums[$topic_obj->getVar('forum_id')] = 1;
@@ -68,9 +75,10 @@ switch ($op) {
         }
 
         include_once __DIR__ . '/include/notification.inc.php';
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         foreach (array_keys($topics_obj) as $id) {
-            $topic_obj           =& $topics_obj[$id];
+            $topic_obj           = $topics_obj[$id];
             $tags                = [];
             $tags['THREAD_NAME'] = $topic_obj->getVar('topic_title');
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
@@ -95,7 +103,7 @@ switch ($op) {
         $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
-            $topic_obj =& $topics_obj[$id];
+            $topic_obj = $topics_obj[$id];
             // irmtfan should be set to false to not delete topic from database
             $topicHandler->delete($topic_obj, false);
             $topicHandler->synchronization($topic_obj);
@@ -110,25 +118,29 @@ switch ($op) {
         unset($topics_obj, $forums_obj);
         break;
     case 'move':
-        if (XoopsRequest::getInt('newforum', 0, 'POST')
-            && XoopsRequest::getInt('newforum', 0, 'POST') !== $forum_id
-            && $forumHandler->getPermission(XoopsRequest::getInt('newforum', 0, 'POST'), 'post')
+        if (Request::getInt('newforum', 0, 'POST')
+            && Request::getInt('newforum', 0, 'POST') !== $forum_id
+            && $forumHandler->getPermission(Request::getInt('newforum', 0, 'POST'), 'post')
         ) {
             $criteria    = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
+            /** @var \NewbbPostHandler $postHandler */
             $postHandler = xoops_getModuleHandler('post', 'newbb');
-            $postHandler->updateAll('forum_id', XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
-            $topicHandler->updateAll('forum_id', XoopsRequest::getInt('newforum', 0, 'POST'), $criteria, true);
-            $forumHandler->synchronization(XoopsRequest::getInt('newforum', 0, 'POST'));
+            $postHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
+            $topicHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
+            $forumHandler->synchronization(Request::getInt('newforum', 0, 'POST'));
             $forumHandler->synchronization($forum_id);
         } else {
             include $GLOBALS['xoops']->path('header.php');
+            /** @var \NewbbCategoryHandler $categoryHandler */
             $categoryHandler = xoops_getModuleHandler('category', 'newbb');
-            $categories      = $categoryHandler->getByPermission('access');
-            $forums          = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
+            $categories = $categoryHandler->getByPermission('access');
+            $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
             $box = '<select name="newforum" size="1">';
             if (count($categories) > 0 && count($forums) > 0) {
                 foreach (array_keys($forums) as $key) {
+
+                    /** @var \NewbbCategory[] $categories */
                     $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . ']</option>';
                     foreach ($forums[$key] as $forumid => $_forum) {
                         $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . '</option>';
@@ -141,16 +153,16 @@ switch ($op) {
                     }
                 }
             } else {
-                $box .= "<option value='-1'>" . _MD_NOFORUMINDB . '</option>';
+                $box .= "<option value='-1'>" . _MD_NEWBB_NOFORUMINDB . '</option>';
             }
             $box .= '</select>';
             unset($forums, $categories);
 
-            echo "<form action='" . XoopsRequest::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
+            echo "<form action='" . Request::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
             echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
             echo "<tr><td class='bg2'>";
             echo "<table border='0' cellpadding='1' cellspacing='1' width='100%'>";
-            echo '<tr><td class="bg3">' . _MD_MOVETOPICTO . '</td><td class="bg1">';
+            echo '<tr><td class="bg3">' . _MD_NEWBB_MOVETOPICTO . '</td><td class="bg1">';
             echo $box;
             echo '</td></tr>';
             echo '<tr class="bg3"><td colspan="2" align="center">';
@@ -167,12 +179,13 @@ switch ($op) {
         }
         break;
 }
+/** @var \NewbbStatsHandler $statsHandler */
 $statsHandler = xoops_getModuleHandler('stats', 'newbb');
 $statsHandler->reset();
 if (empty($forum_id)) {
-    redirect_header(XOOPS_URL . '/modules/newbb/list.topic.php', 2, _MD_DBUPDATED);
+    redirect_header(XOOPS_URL . '/modules/newbb/list.topic.php', 2, _MD_NEWBB_DBUPDATED);
 } else {
-    redirect_header(XOOPS_URL . '/modules/newbb/viewforum.php?forum=$forum_id', 2, _MD_DBUPDATED);
+    redirect_header(XOOPS_URL . "/modules/newbb/viewforum.php?forum={$forum_id}", 2, _MD_NEWBB_DBUPDATED);
 }
 // irmtfan move to footer.php
 include_once __DIR__ . '/footer.php';

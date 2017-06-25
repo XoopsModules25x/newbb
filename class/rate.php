@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -32,7 +32,6 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-newbb_load_object();
 
 /**
  * Class Nrate
@@ -44,7 +43,7 @@ class Nrate extends XoopsObject
      */
     public function __construct()
     {
-        parent::__construct('bb_votedata');
+        parent::__construct();
         $this->initVar('ratingid', XOBJ_DTYPE_INT);
         $this->initVar('topic_id', XOBJ_DTYPE_INT);
         $this->initVar('ratinguser', XOBJ_DTYPE_INT);
@@ -60,11 +59,11 @@ class Nrate extends XoopsObject
 class NewbbRateHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'bb_votedata', 'Nrate', 'ratingid', '');
+        parent::__construct($db, 'newbb_votedata', 'Nrate', 'ratingid', '');
     }
 
     /**
@@ -85,6 +84,6 @@ class NewbbRateHandler extends XoopsPersistableObjectHandler
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
-        return parent::cleanOrphan($this->db->prefix('bb_topics'), 'topic_id');
+        return parent::cleanOrphan($this->db->prefix('newbb_topics'), 'topic_id');
     }
 }

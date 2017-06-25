@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -18,24 +18,29 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
     define('NEWBB_FUNCTIONS_CONFIG', 1);
 
     /**
-     * @param  string $category
-     * @param  string $dirname
-     * @return bool
+     * @return array
+     * @internal param string $category
+     * @internal param string $dirname
      */
-    function newbbLoadConfig($category = '', $dirname = 'newbb')
+    function newbbLoadConfig()
     {
+        $moduleHelper = \Xmf\Module\Helper::getHelper('newbb');
         //        global $xoopsModuleConfig;
-        static $configs;
+        static $configs = null;
 
-        if (isset($configs['']) || isset($configs[$category])) {
-            return true;
+        if (null !== $configs) {
+            return $configs;
         }
-        $configHandler = xoops_getModuleHandler('config', $dirname);
-        if ($configsData = $configHandler->getByCategory($category)) {
-            $GLOBALS['xoopsModuleConfig'] = array_merge($GLOBALS['xoopsModuleConfig'], $configsData);
-        }
-        $configs[$category] = 1;
 
-        return true;
+        $configs = is_object($moduleHelper) ? $moduleHelper->getConfig() : [];
+        $plugins = include __DIR__ . '/plugin.php';
+        if (is_array($configs) && is_array($plugins)) {
+            $configs = array_merge($configs, $plugins);
+        }
+        if (is_array($configs)) {
+            $GLOBALS['xoopsModuleConfig'] = array_merge($GLOBALS['xoopsModuleConfig'], $configs);
+        }
+
+        return $configs;
     }
 }

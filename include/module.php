@@ -36,8 +36,6 @@ define('XOOPS_MODULE_NEWBB_FUCTIONS', 1);
 
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
-newbb_load_object();
-
 /**
  * @param  XoopsModule $module
  * @param  null        $oldversion
@@ -45,135 +43,42 @@ newbb_load_object();
  */
 function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 {
-    //  START irmtfan to not run update script if user has the latest version.
-    if ($oldversion == round($module->getInfo('version') * 100, 2)) {
-        $module->setErrors('You have the latest ' . $module->getInfo('name') . ' module (' . $module->getInfo('dirname') . ' version ' . $module->getInfo('version') . ') and update is not necessary');
-        //        print_r($module->getErrors());
-        redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/admin/index.php', 2, implode($module->getErrors()));
-
-        return true;
-    }
-    //  END irmtfan to dont run update script if user has the latest version.
-
-    load_functions('config');
-    mod_clearConfg($module->getVar('dirname', 'n'));
+    $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+    $cacheHelper->delete('config');
 
     $newbbConfig = newbbLoadConfig();
 
-    //$oldversion = $module->getVar('version');
-    //$oldconfig = $module->getVar('hasconfig');
-    // NewBB 1.0 -- no config
-    //if (empty($oldconfig)) {
-    if (100 == $oldversion) {
-        include_once __DIR__ . '/module.v100.php';
-        xoops_module_update_newbb_v100($module);
-    }
+    // remove old html template files
+    // create an array with all folders, and then run this once
 
-    // NewBB 2.* and CBB 1.*
-    // change group permission name
-    // change forum moderators
-    if ($oldversion < 220) {
-        include_once __DIR__ . '/module.v220.php';
-        xoops_module_update_newbb_v220($module);
-    }
-
-    if ($oldversion < 230) {
-        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/upgrade_230.sql'));
-        //$module->setErrors('bb_moderates table inserted');
-    }
-
-    if ($oldversion < 304) {
-        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.304.sql'));
-    }
-
-    if ($oldversion < 400) {
-        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.400.sql'));
-        include __DIR__ . '/module.v400.php';
-        xoops_module_update_newbb_v400($module);
-    }
-
-    //    if ($oldversion < 403) {
-    //        $sql = "    ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
-    //        $GLOBALS['xoopsDB']->queryF($sql);
-    //    }
-
-    if ($oldversion < 431) {
-        $GLOBALS['xoopsDB']->queryFromFile($GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.430.sql'));
-    }
-
-    if ($oldversion < 434) {
-        //convert "poster_ip" to varchar(45) for IPv6
-        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " CHANGE `poster_ip` `poster_ip` varchar(45) NOT NULL default ''";
-        $GLOBALS['xoopsDB']->queryF($sql);
-
-        //check if "poster_ip" is valid IP, and convert to string representation
-        include_once __DIR__ . '/../class/ipcheck.php';
-        include_once __DIR__ . '/../class/utilities.php';
-        $MyIpCheck   = new IpCheck();
-        $MyUtilities = new NewbbUtilities();
-
-        if (!$MyUtilities->fieldExists('updated', $GLOBALS['xoopsDB']->prefix('bb_posts'))) {
-            $MyUtilities->addField('updated BOOL NOT NULL', $GLOBALS['xoopsDB']->prefix('bb_posts'));
+    $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/');
+    $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
+    foreach ($template_list as $k => $v) {
+        $fileinfo = new SplFileInfo($templateDirectory . $v);
+        if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            @unlink($templateDirectory . $v);
         }
-
-        $sql    = 'SELECT post_id, poster_ip FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts');
-        $result = $GLOBALS['xoopsDB']->query($sql);
-        //        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            $newIpValue = '';
-            if ($MyIpCheck->isValidIpAddress(long2ip((float)$row['poster_ip']))) {
-                $newIpValue = long2ip((float)$row['poster_ip']);
-            }
-            $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . " SET poster_ip='" . $newIpValue . "' WHERE post_id=" . $row['post_id'];
-            $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
-            if ($result_sub) {
-                $sql2 = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' SET updated=true WHERE post_id=' . $row['post_id'];
-                $GLOBALS['xoopsDB']->queryF($sql2);
-            } else {
-                $module->setErrors("Could not convert 'poster_ip' to varchar(45) for IPv6 " . $row['post_id']);
-            }
-        }
-
-        //delete the "updated" column
-        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' DROP `updated`';
-        $GLOBALS['xoopsDB']->queryF($sql);
-
-        // remove old html template files
-        // create an array with all folders, and then run this once
-
-        $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/');
-        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
-        foreach ($template_list as $k => $v) {
-            $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
-                @unlink($templateDirectory . $v);
-            }
-        }
-        $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/blocks');
-        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
-        foreach ($template_list as $k => $v) {
-            $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
-                @unlink($templateDirectory . $v);
-            }
-        }
-        // Load class XoopsFile
-        xoops_load('xoopsfile');
-        //remove /images directory
-        $imagesDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/images/');
-        $folderHandler   = XoopsFile::getHandler('folder', $imagesDirectory);
-        $folderHandler->delete($imagesDirectory);
-
-        //remove old changelogs
-        array_map('unlink', glob(__DIR__ . '/../docs/changelog-rev*.txt'));
-
-        //        $file = __DIR__ . '/../docs/changelog-rev9883.txt';
-        //        $file = __DIR__ . '/../docs/changelog-rev10095.txt';
-        //        $file = __DIR__ . '/../docs/changelog-rev10109.txt';
     }
+    $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/blocks');
+    $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
+    foreach ($template_list as $k => $v) {
+        $fileinfo = new SplFileInfo($templateDirectory . $v);
+        if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            @unlink($templateDirectory . $v);
+        }
+    }
+    // Load class XoopsFile
+    xoops_load('xoopsfile');
+    //remove /images directory
+    $imagesDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/images/');
+    $folderHandler   = XoopsFile::getHandler('folder', $imagesDirectory);
+    $folderHandler->delete($imagesDirectory);
+
+    //remove old changelogs
+    array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
-        mod_loadFunctions('recon', 'newbb');
+        include_once __DIR__ . '/../include/functions.recon.php';
         newbb_synchronization();
     }
 
@@ -186,7 +91,11 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
  */
 function xoops_module_pre_update_newbb(XoopsModule $module)
 {
-    return newbb_setModuleConfig($module, true);
+    XoopsLoad::load('migrate', 'newbb');
+    $newbbMigrate = new NewbbMigrate();
+    $newbbMigrate->synchronizeSchema();
+
+    return true;
 }
 
 /**
@@ -200,7 +109,7 @@ function xoops_module_pre_install_newbb(XoopsModule $module)
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
 
-    return newbb_setModuleConfig($module);
+    return true;
 }
 
 /**
@@ -210,6 +119,7 @@ function xoops_module_pre_install_newbb(XoopsModule $module)
 function xoops_module_install_newbb(XoopsModule $module)
 {
     /* Create a test category */
+    /** @var NewbbCategoryHandler $categoryHandler */
     $categoryHandler = xoops_getModuleHandler('category', $module->getVar('dirname'));
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
@@ -221,6 +131,7 @@ function xoops_module_install_newbb(XoopsModule $module)
     }
 
     /* Create a forum for test */
+    /** @var NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', $module->getVar('dirname'));
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
@@ -234,7 +145,8 @@ function xoops_module_install_newbb(XoopsModule $module)
     $forum_id = $forumHandler->insert($forum);
 
     /* Set corresponding permissions for the category and the forum */
-    $module_id    = $module->getVar('mid');
+    $module_id = $module->getVar('mid');
+    /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
     $groups_view  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
     $groups_post  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
@@ -266,10 +178,12 @@ function xoops_module_install_newbb(XoopsModule $module)
     }
 
     /* Create a test post */
-    mod_loadFunctions('user', 'newbb');
+    include_once __DIR__ . '/functions.user.php';
+    /** @var NewbbPostHandler $postHandler */
     $postHandler = xoops_getModuleHandler('post', $module->getVar('dirname'));
-    $forumpost   = $postHandler->create();
-    $forumpost->setVar('poster_ip', newbb_getIP());
+    /** @var  $forumpost */
+    $forumpost = $postHandler->create();
+    $forumpost->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
     $forumpost->setVar('approved', 1);
     $forumpost->setVar('forum_id', $forum_id);
@@ -284,15 +198,5 @@ function xoops_module_install_newbb(XoopsModule $module)
     $forumpost->setVar('post_text', _MI_NEWBB_INSTALL_POST_TEXT, true);
     $postid = $postHandler->insert($forumpost);
 
-    return true;
-}
-
-/**
- * @param  XoopsModule $module
- * @param  bool $isUpdate
- * @return bool
- */
-function newbb_setModuleConfig(XoopsModule $module, $isUpdate = false)
-{
     return true;
 }

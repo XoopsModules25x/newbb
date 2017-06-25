@@ -5,7 +5,7 @@
 </div>
 
 <{if $search_info}>
-    <{includeq file="db:newbb_searchresults.tpl" results=$results}>
+    <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 <form name="Search" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
     <table class="outer" border="0" cellpadding="1" cellspacing="0" align="center" width="95%">
@@ -14,8 +14,7 @@
                 <table border="0" cellpadding="1" cellspacing="1" width="100%" class="head">
                     <tr>
                         <!-- irmtfan hardcode removed align="right" -->
-                        <td class="head" width="10%" id="align_right"><strong><{$smarty.const._SR_KEYWORDS}></strong>&nbsp;
-                        </td>
+                        <td class="head" width="10%" id="align_right"><strong><{$smarty.const._SR_KEYWORDS}></strong>&nbsp;</td>
                         <!-- irmtfan add  value="$search_term" -->
                         <td class="even"><input type="text" name="term" value="<{$search_term}>"/></td>
                     </tr>
@@ -26,7 +25,7 @@
                     </tr>
                     <tr>
                         <!-- irmtfan hardcode removed align="right" -->
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_FORUMC}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_FORUMC}></strong>&nbsp;</td>
                         <td class="even"><{$forum_selection_box}></td>
                     </tr>
                     <tr>
@@ -36,54 +35,32 @@
                     </tr>
                     <tr>
                         <!-- irmtfan hardcode removed align="right" add value="$author_select"-->
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_AUTHOR}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_AUTHOR}></strong>&nbsp;</td>
                         <td class="even"><input type="text" name="uname" value="<{$author_select}>"/></td>
                     </tr>
                     <tr>
                         <!-- irmtfan hardcode removed align="right" add $sortby_selection_box -->
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SORTBY}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SORTBY}></strong>&nbsp;</td>
                         <td class="even"><{$sortby_selection_box}></td>
                     </tr>
                     <tr>
                         <!-- irmtfan hardcode removed align="right" -->
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SINCE}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SINCE}></strong>&nbsp;</td>
                         <td class="even"><{$since_selection_box}></td>
                     </tr>
-                    <!-- START irmtfan add select text options -->
                     <tr>
-                        <td class="head" id="align_right" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>">
-                            <strong><{$smarty.const._MD_SELECT_STARTLAG}></strong>&nbsp;</td>
-                        <td class="even" title="<{$smarty.const._MD_SELECT_STARTLAG_DESC}>"><input type="text"
-                                                                                                   name="selectstartlag"
-                                                                                                   value="<{$selectstartlag_select}>"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_LENGTH}></strong>&nbsp;
-                        </td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_LENGTH}></strong>&nbsp;</td>
                         <td class="even"><input type="text" name="selectlength" value="<{$selectlength_select}>"/></td>
                     </tr>
                     <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_HTML}></strong>&nbsp;</td>
-                        <td class="even"><{$selecthtml_radio}></td>
-                    </tr>
-                    <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SELECT_EXCLUDE}></strong>&nbsp;
-                        </td>
-                        <td class="even"><{$selectexclude_check_box}></td>
-                    </tr>
-                    <!-- END irmtfan add select text options -->
-                    <!-- START irmtfan add show search -->
-                    <tr>
-                        <td class="head" id="align_right"><strong><{$smarty.const._MD_SHOWSEARCH}></strong>&nbsp;</td>
+                        <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SHOWSEARCH}></strong>&nbsp;</td>
                         <td class="even"><{$show_search_radio}></td>
                     </tr>
                     <!-- START irmtfan add show search -->
                     <{if $search_rule}>
                         <tr>
                             <!-- irmtfan hardcode removed align="right" -->
-                            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;
-                            </td>
+                            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>
                             <td class="even"><{$search_rule}></td>
                         </tr>
                     <{/if}>
@@ -91,7 +68,7 @@
                         <!-- irmtfan hardcode removed align="right" -->
                         <td class="head" id="align_right">&nbsp;</td>
                         <!-- irmtfan remove name="submit" -->
-                        <td class="even"><input type="submit" value="<{$smarty.const._MD_SEARCH}>"/></td>
+                        <td class="even"><input type="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/></td>
                 </table>
             </td>
         </tr>

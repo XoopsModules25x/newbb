@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -45,7 +45,7 @@ class ReadForum extends Read
      */
     public function __construct()
     {
-        parent::__construct('forum');
+        parent::__construct();
     }
 }
 
@@ -55,7 +55,7 @@ class ReadForum extends Read
 class NewbbReadForumHandler extends NewbbReadHandler
 {
     /**
-     * @param XoopsDatabase $db
+     * @param XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db)
     {
@@ -72,9 +72,9 @@ class NewbbReadForumHandler extends NewbbReadHandler
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
     {
-        parent::cleanOrphan($this->db->prefix('bb_posts'), 'post_id');
+        parent::cleanOrphan($this->db->prefix('newbb_posts'), 'post_id');
 
-        return parent::cleanOrphan($this->db->prefix('bb_forums'), 'forum_id', 'read_item');
+        return parent::cleanOrphan($this->db->prefix('newbb_forums'), 'forum_id', 'read_item');
     }
 
     /**
@@ -88,7 +88,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
             return true;
         }
 
-        if (1 == $this->mode) {
+        if ($this->mode == 1) {
             return $this->setReadItemsCookie($status);
         } else {
             return $this->setReadItemsDb($status, $uid);
@@ -105,6 +105,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
         $cookie_name = 'LF';
         $items       = [];
         if (!empty($status)) {
+            /** @var \NewbbForumHandler $itemHandler */
             $itemHandler = xoops_getModuleHandler('forum', 'newbb');
             $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
@@ -136,6 +137,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
             return true;
         }
 
+        /** @var \NewbbForumHandler $itemHandler */
         $itemHandler = xoops_getModuleHandler('forum', 'newbb');
         $items_obj   = $itemHandler->getAll(null, ['forum_last_post_id']);
         foreach (array_keys($items_obj) as $key) {

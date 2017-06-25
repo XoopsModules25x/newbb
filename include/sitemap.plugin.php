@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // FILE        ::    newbb.php
 // AUTHOR    ::    Ryuji AMANO <info@ryus.biz>
 // WEB        ::    Ryu's Planning <http://ryus.biz/>
@@ -14,6 +14,7 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = [];
 
+    /** @var \NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
@@ -63,6 +64,7 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs['show_subcategoris']) {
+        /** @var \NewbbCategoryHandler $categoryHandler */
         $categoryHandler = xoops_getModuleHandler('category', 'newbb');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);

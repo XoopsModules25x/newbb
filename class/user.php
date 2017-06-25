@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -123,40 +123,43 @@ class NewbbUser
         if (is_object($GLOBALS['xoopsUser'])) {
             $userbar['pm'] = [
                 'link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);",
-                'name' => _MD_PM
+                'name' => _MD_NEWBB_PM
             ];
         }
         if ($user->getVar('user_viewemail') || $isadmin) {
             $userbar['email'] = [
                 'link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');",
-                'name' => _MD_EMAIL
+                'name' => _MD_NEWBB_EMAIL
             ];
         }
         if ($url = $user->getVar('url')) {
-            $userbar['url'] = ['link' => "javascript:void window.open('" . $url . "', 'new');", 'name' => _MD_WWW];
+            $userbar['url'] = [
+                'link' => "javascript:void window.open('" . $url . "', 'new');",
+                'name' => _MD_NEWBB_WWW
+            ];
         }
         if ($icq = $user->getVar('user_icq')) {
             $userbar['icq'] = [
                 'link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
-                'name' => _MD_ICQ
+                'name' => _MD_NEWBB_ICQ
             ];
         }
         if ($aim = $user->getVar('user_aim')) {
             $userbar['aim'] = [
                 'link' => "javascript:void window.open('aim:goim?screenname=" . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there?' . "', 'new');",
-                'name' => _MD_AIM
+                'name' => _MD_NEWBB_AIM
             ];
         }
         if ($yim = $user->getVar('user_yim')) {
             $userbar['yim'] = [
                 'link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
-                'name' => _MD_YIM
+                'name' => _MD_NEWBB_YIM
             ];
         }
         if ($msn = $user->getVar('user_msnm')) {
             $userbar['msnm'] = [
                 'link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');",
-                'name' => _MD_MSNM
+                'name' => _MD_NEWBB_MSNM
             ];
         }
 
@@ -172,7 +175,7 @@ class NewbbUser
 
         $level = newbb_calculateLevel($this->user->getVar('posts'), $this->user->getVar('user_regdate'));
         $info  = '';
-        if (2 == $GLOBALS['xoopsModuleConfig']['user_level']) {
+        if ($GLOBALS['xoopsModuleConfig']['user_level'] == 2) {
             static $rpg_images;
             if (!isset($rpg_images)) {
                 $iconHandler = newbbGetIconHandler();
@@ -183,28 +186,23 @@ class NewbbUser
                 }
             }
             // irmtfan hardcore removed align="left"
-            $table = "<table class='userlevel'><tr><td class='end'><img src='"
-                     . $rpg_images['img_left']
-                     . "' alt='' /></td><td class='center' background='"
-                     . $rpg_images['img_backing']
-                     . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='"
-                     . $rpg_images['img_right']
+            $table = "<table class='userlevel'><tr><td class='end'><img src='" . $rpg_images['img_left'] . "' alt='' /></td><td class='center' background='" . $rpg_images['img_backing'] . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='" . $rpg_images['img_right']
                      . "' alt='' /></td></tr></table>";
 
-            $info = _MD_LEVEL . ' ' . $level['level'] . '<br>' . _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
-            $info .= _MD_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '<br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);
-            $info .= _MD_EXP . ' ' . $level['exp'] . '<br>' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
+            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '<br>' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
+            $info .= _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '<br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);
+            $info .= _MD_NEWBB_EXP . ' ' . $level['exp'] . '<br>' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
         } else {
-            $info = _MD_LEVEL . ' ' . $level['level'] . '; ' . _MD_EXP . ' ' . $level['exp'] . '<br>';
-            $info .= _MD_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>';
-            $info .= _MD_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'];
+            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '; ' . _MD_NEWBB_EXP . ' ' . $level['exp'] . '<br>';
+            $info .= _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>';
+            $info .= _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'];
         }
 
         return $info;
     }
 
     /**
-     * @param $user
+     * @param \XoopsUser $user
      * @return mixed
      */
     public function getInfo(&$user)
@@ -241,15 +239,16 @@ class NewbbUser
         // START hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         //checks for user's groups
         $userinfo['groups'] = [];
-        $memberHandler      = xoops_getHandler('member');
-        $usergroups         = $memberHandler->getGroupsByUser($userinfo['uid'], true);
+        /** @var \XoopsMemberHandler $memberHandler */
+        $memberHandler = xoops_getHandler('member');
+        $usergroups    = $memberHandler->getGroupsByUser($userinfo['uid'], true);
         foreach ($usergroups as $group) {
             $userinfo['groups'][] = $group->getVar('name');
         }
         // END hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         $userinfo['from'] = $user->getVar('user_from');
 
-        mod_loadFunctions('time', 'newbb');
+        include_once __DIR__ . '/../include/functions.time.php';
         $userinfo['regdate']    = newbb_formatTimestamp($user->getVar('user_regdate'), 'reg');
         $userinfo['last_login'] = newbb_formatTimestamp($user->getVar('last_login')); // irmtfan add last_login
 
@@ -309,10 +308,11 @@ class NewbbUserHandler
         if (empty($this->users) || !$this->enableOnline) {
             return;
         }
-        mod_loadFunctions('render', 'newbb');
-        $image_online  = newbbDisplayImage('online', _MD_ONLINE);
-        $image_offline = newbbDisplayImage('offline', _MD_OFFLINE);
+        include_once __DIR__ . '/../include/functions.render.php';
+        $image_online  = newbbDisplayImage('online', _MD_NEWBB_ONLINE);
+        $image_offline = newbbDisplayImage('offline', _MD_NEWBB_OFFLINE);
 
+        /** @var \NewbbOnlineHandler $onlineHandler */
         $onlineHandler = xoops_getModuleHandler('online', 'newbb');
         $onlines       = $onlineHandler->checkStatus(array_keys($this->users));
 
@@ -333,9 +333,9 @@ class NewbbUserHandler
             return;
         }
 
-        $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . ' WHERE uid IN( ' . implode(', ', array_keys($this->users)) . ')';
+        $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . ' WHERE uid IN( ' . implode(', ', array_keys($this->users)) . ')';
         $result = $GLOBALS['xoopsDB']->query($sql);
-        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
         }
     }

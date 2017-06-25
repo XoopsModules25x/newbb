@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -12,7 +12,7 @@
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-load_functions('locale');
+//load_functions('locale');
 
 /**
  * Description
@@ -114,7 +114,7 @@ class Xmlrss
      */
     public function cleanup($text, $trim = 0)
     {
-        if ('utf-8' === strtolower($this->xml_encoding) && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
+        if (strtolower($this->xml_encoding) === 'utf-8' && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
             $text = XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {

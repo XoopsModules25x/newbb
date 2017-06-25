@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
@@ -29,6 +29,8 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Request;
+
 /*
  * Print contents of a post or a topic
  * currently only available for post print
@@ -42,20 +44,22 @@ include_once __DIR__ . '/header.php';
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if (!XoopsRequest::getString('post_data', '', 'POST')) {
-    $forum    = XoopsRequest::getInt('forum', 0, 'GET');
-    $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-    $post_id  = XoopsRequest::getInt('post_id', 0, 'GET');
+if (!Request::getString('post_data', '', 'POST')) {
+    $forum    = Request::getInt('forum', 0, 'GET');
+    $topic_id = Request::getInt('topic_id', 0, 'GET');
+    $post_id  = Request::getInt('post_id', 0, 'GET');
 
     if (0 === $post_id && 0 === $topic_id) {
-        exit(_MD_ERRORTOPIC);
+        exit(_MD_NEWBB_ERRORTOPIC);
     }
 
     if (0 !== $post_id) {
+        /** @var \NewbbPostHandler $postHandler */
         $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $post        = $postHandler->get($post_id);
+        /** @var \NewbbPost $post */
+        $post = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
-            exit(_MD_NORIGHTTOVIEW);
+            exit(_MD_NEWBB_NORIGHTTOVIEW);
         }
         $topic_id         = $post->getVar('topic_id');
         $post_data        = $postHandler->getPostForPrint($post);
@@ -68,35 +72,37 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
         }
     }
 
+    /** @var \NewbbTopicHandler $topicHandler */
     $topicHandler = xoops_getModuleHandler('topic', 'newbb');
     $topic_obj    = $topicHandler->get($topic_id);
     $topic_id     = $topic_obj->getVar('topic_id');
     $forum        = $topic_obj->getVar('forum_id');
     if (!$approved = $topic_obj->getVar('approved')) {
-        exit(_MD_NORIGHTTOVIEW);
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
     $isadmin = newbb_isAdmin($forum_obj);
     if (!$isadmin && $topic_obj->getVar('approved') < 0) {
-        exit(_MD_NORIGHTTOVIEW);
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
+    /** @var \NewbbForumHandler $forumHandler */
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $forum        = $topic_obj->getVar('forum_id');
     $forum_obj    = $forumHandler->get($forum);
     if (!$forumHandler->getPermission($forum_obj)) {
-        exit(_MD_NORIGHTTOVIEW);
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
     if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
-        exit(_MD_NORIGHTTOVIEW);
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
     // irmtfan add print permission
     if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'print')) {
-        exit(_MD_NORIGHTTOPRINT);
+        exit(_MD_NEWBB_NORIGHTTOPRINT);
     }
 } else {
-    $post_data = unserialize(base64_decode(XoopsRequest::getString('post_data', '', 'POST')));
+    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST')));
     $isPost    = 1;
 }
 
@@ -121,7 +127,7 @@ if (empty($isPost)) {
                <div>" . $post_data['text'] . "</div>
               <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div><br>";
     }
-    echo '<p>' . _MD_COMEFROM . '&nbsp;' . XOOPS_URL . '/newbb/viewtopic.php?forum=' . $forum_id . '&amp;topic_id=' . $topic_id . '</p>';
+    echo '<p>' . _MD_NEWBB_COMEFROM . '&nbsp;' . XOOPS_URL . '/newbb/viewtopic.php?forum=' . $forum_id . '&amp;topic_id=' . $topic_id . '</p>';
     echo '</div></div>';
     echo '</body></html>';
 } else {
@@ -133,7 +139,7 @@ if (empty($isPost)) {
             <div style='text-align: center; display: block; padding-bottom: 12px; margin: 0 0 6px 0; border-bottom: 2px solid #ccc;'></div>
             <div>" . $post_data['text'] . "</div>
             <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div>
-            <p>" . _MD_COMEFROM . '&nbsp;' . $post_data['url'] . '</p>
+            <p>" . _MD_NEWBB_COMEFROM . '&nbsp;' . $post_data['url'] . '</p>
             </div>
             <br><br></body></html>';
 }

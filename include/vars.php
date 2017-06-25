@@ -1,9 +1,9 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -11,9 +11,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-mod_loadFunctions('session', 'newbb');
-// irmtfan include user functions for newbb_getIP
-mod_loadFunctions('user', 'newbb');
+include_once __DIR__ . '/functions.session.php';
 
 // NewBB cookie structure
 /* NewBB cookie storage
@@ -35,7 +33,7 @@ $forumCookie['domain'] = '';
 $forumCookie['path']   = '/';
 $forumCookie['secure'] = false;
 $forumCookie['expire'] = time() + 3600 * 24 * 30; // one month
-$forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . newbb_getIP()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
+$forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . \Xmf\IPAddress::fromRequest()->asReadable()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
 
 // set LastVisitTemp cookie, which only gets the time from the LastVisit cookie if it does not exist yet
 // otherwise, it gets the time from the LastVisitTemp cookie
@@ -51,5 +49,3 @@ newbb_setsession('LV', $last_visit);
 if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')) {
     $GLOBALS['xoopsModuleConfig'] = newbbLoadConfig();
 }
-
-newbb_load_object();

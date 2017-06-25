@@ -1,13 +1,15 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
+
+use Xmf\Request;
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
@@ -91,7 +93,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     {
         global $forumCookie;
         //        $value = !empty($_COOKIE[$forumCookie['prefix'] . $name]) ? $_COOKIE[$forumCookie['prefix'] . $name] : null;
-        $value = XoopsRequest::getString($forumCookie['prefix'] . $name, null, 'COOKIE');
+        $value = Request::getString($forumCookie['prefix'] . $name, null, 'COOKIE');
 
         if ($isArray) {
             $_value = $value ? explode(',', $value) : [];
@@ -99,7 +101,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $sep = strpos($string, '|');
-                    if (false === $sep) {
+                    if ($sep === false) {
                         $value[] = $string;
                     } else {
                         $key         = substr($string, 0, $sep);

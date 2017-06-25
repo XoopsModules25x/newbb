@@ -28,13 +28,18 @@
 // URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
-include_once __DIR__ . '/admin_header.php';
-mod_loadFunctions('render', 'newbb');
-xoops_cp_header();
-echo '<fieldset>';
-$op     = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
-$cat_id = XoopsRequest::getInt('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
+use Xmf\Request;
+
+include_once __DIR__ . '/admin_header.php';
+include_once __DIR__ . '/../include/functions.render.php';
+
+xoops_cp_header();
+
+$op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
+$cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
+
+/** @var \NewbbCategoryHandler $categoryHandler */
 $categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
 /**
@@ -60,7 +65,7 @@ function editCategory(XoopsObject $category_obj = null)
         $category_obj = $categoryHandler->create();
     }
     $groups_cat_access = null;
-    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
+    include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
     if (!$category_obj->isNew()) {
         $sform = new XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $category_obj->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
@@ -115,19 +120,19 @@ switch ($op) {
         //            //loadModuleAdminMenu(1, ( $cat_id > 0) ? _AM_NEWBB_EDITCATEGORY . $category_obj->getVar('cat_title') : _AM_NEWBB_CREATENEWCATEGORY);
         //            echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_EDITCATEGORY . '</legend>';
         //        } else {
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
         //        }
         echo '<br>';
         editCategory($category_obj);
         break;
 
     case 'del':
-        if (!XoopsRequest::getBool('confirm', '', 'POST')) {
-            xoops_confirm(['op' => 'del', 'cat_id' => XoopsRequest::getInt('cat_id', 0, 'GET'), 'confirm' => 1], 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
+        if (!Request::getBool('confirm', '', 'POST')) {
+            xoops_confirm(['op' => 'del', 'cat_id' => Request::getInt('cat_id', 0, 'GET'), 'confirm' => 1], 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
         } else {
             $category_obj = $categoryHandler->create(false);
-            $category_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
+            $category_obj->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
             $categoryHandler->delete($category_obj);
 
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
@@ -135,7 +140,8 @@ switch ($op) {
         break;
 
     case 'save':
-        mod_clearCacheFile('permission_category', 'newbb');
+        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper->delete('permission_category');
         if ($cat_id) {
             $category_obj = $categoryHandler->get($cat_id);
             $message      = _AM_NEWBB_CATEGORYUPDATED;
@@ -144,11 +150,11 @@ switch ($op) {
             $message      = _AM_NEWBB_CATEGORYCREATED;
         }
 
-        $category_obj->setVar('cat_title', XoopsRequest::getString('title', '', 'POST'));
-        $category_obj->setVar('cat_image', XoopsRequest::getString('cat_image', '', 'POST'));
-        $category_obj->setVar('cat_order', XoopsRequest::getInt('cat_order', 0, 'POST'));
-        $category_obj->setVar('cat_description', XoopsRequest::getText('cat_description', '', 'POST'));
-        $category_obj->setVar('cat_url', XoopsRequest::getString('cat_url', '', 'POST'));
+        $category_obj->setVar('cat_title', Request::getString('title', '', 'POST'));
+        $category_obj->setVar('cat_image', Request::getString('cat_image', '', 'POST'));
+        $category_obj->setVar('cat_order', Request::getInt('cat_order', 0, 'POST'));
+        $category_obj->setVar('cat_description', Request::getText('cat_description', '', 'POST'));
+        $category_obj->setVar('cat_url', Request::getString('cat_url', '', 'POST'));
 
         $cat_isNew = $category_obj->isNew();
         if (!$categoryHandler->insert($category_obj)) {
@@ -162,19 +168,16 @@ switch ($op) {
 
     default:
         if (!$categories = $categoryHandler->getByPermission('all')) {
-            $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-            echo $indexAdmin->renderButton('left');
+            $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
+            $adminObject->displayButton();
 
-            echo '<fieldset>';
             echo '<br>';
             newCategory();
-            echo '</fieldset>';
             break;
         }
-        echo $indexAdmin->addNavigation(basename(__FILE__));
-        echo '<fieldset>';
-        $indexAdmin->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-        echo $indexAdmin->renderButton('left');
+        $adminObject->displayNavigation(basename(__FILE__));
+        $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
+        $adminObject->displayButton();
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -195,9 +198,9 @@ switch ($op) {
             echo '</tr>';
         }
         echo '</table>';
-        echo '</fieldset>';
         break;
 }
-mod_clearCacheFile('permission_category', 'newbb');
-echo '</fieldset>';
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper->delete('permission_category');
+
 include_once __DIR__ . '/admin_footer.php';
