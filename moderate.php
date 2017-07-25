@@ -2,7 +2,7 @@
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
@@ -172,7 +172,7 @@ if (!empty($moderate_count)) {
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-$forum_form = new XoopsThemeForm(_ADD, 'suspend_form', 'moderate.php', 'post');
+$forum_form = new XoopsThemeForm(_ADD, 'suspend_form', 'moderate.php', 'post', true);
 $forum_form->addElement(new XoopsFormSelectUser(_MD_NEWBB_SUSPEND_UID, 'uid', true, $forum_userid, 1, false));
 $forum_form->addElement(new XoopsFormText(_MD_NEWBB_SUSPEND_IP, 'ip', 50, 50));
 $forum_form->addElement(new XoopsFormText(_MD_NEWBB_SUSPEND_DURATION, 'expire', 20, 25, '5'), true);

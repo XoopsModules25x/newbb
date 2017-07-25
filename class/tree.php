@@ -21,7 +21,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoops.org                                                    //
+//  URL: https://xoops.org                                                    //
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 

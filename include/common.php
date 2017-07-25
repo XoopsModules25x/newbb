@@ -11,12 +11,12 @@
 /**
  * NewBB module for xoops
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GPL 2.0 or later
  * @package         newbb
  * @since           4.33
  * @min_xoops       2.5.8
- * @author          XOOPS Development Team - Email:<name@site.com> - Website:<http://xoops.org>
+ * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -33,7 +33,7 @@ define('NEWBB_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . NEWBB_DIRNAME); // WITHOUT T
 define('NEWBB_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . NEWBB_DIRNAME); // WITHOUT Trailing slash
 
 // module information
-$mod_copyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+$mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . NEWBB_AUTHOR_LOGOIMG . "' alt='XOOPS Project' /></a>";
 
 xoops_loadLanguage('common', NEWBB_DIRNAME);

@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <http://xoops.org/>                             //
+//                       <https://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoops.org                                                    //
+//  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -125,7 +125,7 @@ function xoops_module_install_newbb(XoopsModule $module)
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
     $category->setVar('cat_description', _MI_NEWBB_INSTALL_CAT_DESC, true);
-    $category->setVar('cat_url', 'http://xoops.org XOOPS Project', true);
+    $category->setVar('cat_url', 'https://xoops.org XOOPS Project', true);
     if (!$cat_id = $categoryHandler->insert($category)) {
         return true;
     }

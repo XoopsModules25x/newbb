@@ -11,12 +11,12 @@
 /**
  * animal module for xoops
  *
- * @copyright       XOOPS Project (http://xoops.org)
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GPL 2.0 or later
  * @package         Publisher
  * @subpackage      Config
  * @since           1.03
- * @author          XOOPS Development Team - ( http://xoops.org )
+ * @author          XOOPS Development Team - ( https://xoops.org )
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

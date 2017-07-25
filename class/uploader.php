@@ -2,7 +2,7 @@
 /**
  * NewBB, XOOPS forum module
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00

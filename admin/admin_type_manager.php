@@ -3,7 +3,7 @@
  * Topic type management for newbb
  *
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
@@ -186,7 +186,7 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('PHP_SELF'), 'post');
+        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
         $fm_select = new XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forums', null, 10, true);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
@@ -269,7 +269,7 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('PHP_SELF'), 'post');
+        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
         $fm_select = new XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forum', null, 5, false);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);

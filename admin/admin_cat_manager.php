@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
-// <http://xoops.org/>                             //
+// <https://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
+// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
@@ -75,7 +75,7 @@ function editCategory(XoopsObject $categoryObject = null)
         $categoryObject->setVar('cat_image', '');
         $categoryObject->setVar('cat_description', '');
         $categoryObject->setVar('cat_order', 0);
-        $categoryObject->setVar('cat_url', 'http://xoops.org/modules/newbb/ newBB Support');
+        $categoryObject->setVar('cat_url', 'https://xoops.org/modules/newbb/ newBB Support');
     }
 
     $sform->addElement(new XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $categoryObject->getVar('cat_order')), false);

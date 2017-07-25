@@ -215,7 +215,7 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', '
     Welcome to ' . htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
     Feel free to register and login to start your topics.
 
-    If you have any question concerning NewBB usage, please visit your local support site or [url=http://xoops.org/modules/newbb/]XOOPS Support Site[/url].
+    If you have any question concerning NewBB usage, please visit your local support site or [url=https://xoops.org/modules/newbb/]XOOPS Support Site[/url].
     ');
 define('_MI_NEWBB_ADMENU_GROUPMOD', 'Group moderate');
 //define('_MI_NEWBB_SUBJECT_PREFIX', 'Add a prefix to the topic subject');

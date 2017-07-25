@@ -79,4 +79,4 @@ if you go to modules/system/admin in file error_log you can find this error:
 you should increase max_input_vars like this.
 creating a php.ini in the root of your website and enter this:
 max_input_vars = 10000
-readm more: http://xoops.org/modules/newbb/viewtopic.php?topic_id=75669
+readm more: https://xoops.org/modules/newbb/viewtopic.php?topic_id=75669

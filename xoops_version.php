@@ -2,7 +2,7 @@
 /**
  * NewBB, the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
@@ -43,12 +43,12 @@ $modversion['system_menu']         = 1;
 $modversion['modicons16'] = 'assets/images/icons/16';
 $modversion['modicons32'] = 'assets/images/icons/32';
 
-$modversion['demo_site_url']     = 'http://xoops.org/newbb/';
+$modversion['demo_site_url']     = 'https://xoops.org/newbb/';
 $modversion['demo_site_name']    = 'XOOPS Project';
-$modversion['support_site_url']  = 'http://xoops.org/newbb/';
+$modversion['support_site_url']  = 'https://xoops.org/newbb/';
 $modversion['support_site_name'] = 'XOOPS Project';
-$modversion['submit_feature']    = 'http://xoops.org/modules/newbb/viewforum.php?forum=30';
-$modversion['submit_bug']        = 'http://xoops.org/modules/newbb/viewforum.php?forum=28';
+$modversion['submit_feature']    = 'https://xoops.org/modules/newbb/viewforum.php?forum=30';
+$modversion['submit_bug']        = 'https://xoops.org/modules/newbb/viewforum.php?forum=28';
 
 // Sql file
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
