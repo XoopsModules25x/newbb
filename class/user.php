@@ -194,13 +194,13 @@ class NewbbUser
                      . $rpg_images['img_right']
                      . "' alt='' /></td></tr></table>";
 
-            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '<br>' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
-            $info .= _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '<br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);
-            $info .= _MD_NEWBB_EXP . ' ' . $level['exp'] . '<br>' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
+            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '<br><span title="' . _MD_NEWBB_HP_DESC . '">' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '</span><br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
+            $info .= '<span title="' . _MD_NEWBB_MP_DESC . '">' . _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '</span><br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);
+            $info .= '<span title="' . _MD_NEWBB_EXP_DESC . '">' . _MD_NEWBB_EXP . ' ' . $level['exp'] . '</span><br>' . sprintf($table, $rpg_images['blue'], $level['exp_width']);
         } else {
-            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '; ' . _MD_NEWBB_EXP . ' ' . $level['exp'] . '<br>';
-            $info .= _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '<br>';
-            $info .= _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'];
+            $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '; <span title="' . _MD_NEWBB_EXP_DESC . '">' . _MD_NEWBB_EXP . ' ' . $level['exp'] . '</span><br>';
+            $info .= '<span title="' . _MD_NEWBB_HP_DESC . '">' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '</span><br>';
+            $info .= '<span title="' . _MD_NEWBB_MP_DESC . '">' . _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '</span>';
         }
 
         return $info;

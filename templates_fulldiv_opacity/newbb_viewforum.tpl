@@ -16,7 +16,7 @@
         <{if $forum_topictype}> <{$forum_topictype}> <{/if}>
         <{if $forum_topicstatus}> [<{$forum_topicstatus}>]
         <{else}> [
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>"><{$smarty.const._MD_DIGEST}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>"><{$smarty.const._MD_NEWBB_DIGEST}></a>
             ]
         <{/if}>
     </div>

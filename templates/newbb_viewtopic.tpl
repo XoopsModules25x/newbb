@@ -54,7 +54,7 @@
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
     <div class="icon_right" id="admin">
         <{if $mode gt 1}>
-        <!-- irmtfan mistype forum_posts_admin => form_posts_admin - action="topicmanager.php" => action="action.post.php" -->
+        <!-- irmtfan mistype forum_posts_admin => form_posts_admin - action="topicmanager.php" => action="action.post.php" --> 
         <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1) { return false; }">
             <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
             <!-- irmtfan mistype mode => op  -->
@@ -241,7 +241,7 @@
     <div>
         <!-- irmtfan improve toggle method to ToggleBlockCategory (this.children[0] for IE7&8) change display to style and icon to displayImage for more comprehension -->
         <a href="#threadbottom"
-           onclick="ToggleBlockCategory('qr', (this.firstElementChild || this.children[0]), '<{$quickreply.icon.expand}>', '<{$quickreply.icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDE|escape:'quotes'}> <{$smarty.const._MD_NEWBB_QUICKREPLY|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEE|escape:'quotes'}> <{$smarty.const._MD_QUICKREPLY|escape:'quotes'}>')">
+           onclick="ToggleBlockCategory('qr', (this.firstElementChild || this.children[0]), '<{$quickreply.icon.expand}>', '<{$quickreply.icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDE|escape:'quotes'}> <{$smarty.const._MD_NEWBB_QUICKREPLY|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEE|escape:'quotes'}> <{$smarty.const._MD_NEWBB_QUICKREPLY|escape:'quotes'}>')">
             <{$quickreply.displayImage}>
         </a>
     </div>

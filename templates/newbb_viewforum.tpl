@@ -16,7 +16,7 @@
         <{if $forum_topictype}> <{$forum_topictype}> <{/if}>
         <{if $forum_topicstatus}> [<{$forum_topicstatus}>]
         <{else}> [
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>"><{$smarty.const._MD_DIGEST}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>"><{$smarty.const._MD_NEWBB_DIGEST}></a>
             ]
         <{/if}>
     </div>
@@ -196,8 +196,8 @@
 
 <tr class="foot">
     <{if $rating_enable}>
-    <td colspan="9" align="center"><{else}>
-    <td colspan="8" align="center"><{/if}>
+    <td colspan="10" align="center"><{else}>
+    <td colspan="9" align="center"><{/if}>
         <{strip}>
             <form method="get" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php">
                 <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;<{$forum_selection_sort}>&nbsp;<{$forum_selection_order}>&nbsp;<{$forum_selection_since}>&nbsp;

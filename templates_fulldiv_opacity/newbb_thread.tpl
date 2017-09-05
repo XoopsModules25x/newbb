@@ -114,11 +114,11 @@
         </div>
         <div class="icon_right">
             <{if $mode gt 1 && $topic_post.poster.uid gt -1}>
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>"><{$smarty.const._MD_SPLIT_ONE}></a>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>"><{$smarty.const._MD_NEWBB_SPLIT_ONE}></a>
                 |
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_TREE}>"><{$smarty.const._MD_SPLIT_TREE}></a>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_TREE}>"><{$smarty.const._MD_NEWBB_SPLIT_TREE}></a>
                 |
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>"><{$smarty.const._MD_SPLIT_ALL}></a>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>"><{$smarty.const._MD_NEWBB_SPLIT_ALL}></a>
                 |
                 <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>"/>
             <{else}>

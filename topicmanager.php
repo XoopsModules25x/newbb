@@ -52,7 +52,7 @@ if (Request::getString('submit', '', 'POST')) {
 if (empty($topic_id)) {
     $redirect = empty($forum_id) ? 'index.php' : 'viewforum.php?forum={$forum}';
     $redirect = XOOPS_URL . '/modules/newbb/' . $redirect;
-    redirect_header($redirect, 2, _MD_ERRORTOPIC);
+    redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
 /** @var \NewbbTopicHandler $topicHandler */
@@ -67,7 +67,7 @@ if (!$forum) {
         $forum = $topicObject->getVar('forum_id');
     } else {
         $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topic_id;
-        redirect_header($redirect, 2, _MD_FORUMNOEXIST);
+        redirect_header($redirect, 2, _MD_NEWBB_FORUMNOEXIST);
     }
     unset($topicObject);
 }
@@ -93,10 +93,10 @@ $action_array = [
 foreach ($action_array as $_action) {
     $action[$_action] = [
         'name'   => $_action,
-        'desc'   => constant(strtoupper("_MD_DESC_{$_action}")),
-        'submit' => constant(strtoupper("_MD_{$_action}")),
+        'desc'   => constant(strtoupper("_MD_NEWBB_DESC_{$_action}")),
+        'submit' => constant(strtoupper("_MD_NEWBB_{$_action}")),
         'sql'    => "topic_{$_action}=1",
-        'msg'    => constant(strtoupper("_MD_TOPIC{$_action}"))
+        'msg'    => constant(strtoupper("_MD_NEWBB_TOPIC{$_action}"))
     ];
 }
 $action['lock']['sql']     = 'topic_status = 1';
@@ -125,7 +125,7 @@ if (Request::getString('submit', '', 'POST')) {
             //xoops_notification_deletebyitem ($xoopsModule->getVar('mid'), 'thread', $topic_id);
         }
         // irmtfan full URL
-        echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewforum.php?forum=$forum'>" . _MD_RETURNTOTHEFORUM . "</a></p><p><a href='index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
+        echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewforum.php?forum=$forum'>" . _MD_NEWBB_RETURNTOTHEFORUM . "</a></p><p><a href='index.php'>" . _MD_NEWBB_RETURNFORUMINDEX . '</a></p>';
     } elseif ('restore' === $mode) {
         //$topicHandler = xoops_getModuleHandler('topic', 'newbb');
         $forums     = [];
@@ -152,17 +152,17 @@ if (Request::getString('submit', '', 'POST')) {
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/viewtopic.php?topic_id=$restoretopic_id'>"
-             . _MD_VIEWTHETOPIC
+             . _MD_NEWBB_VIEWTHETOPIC
              . '</a></p>'
              . "<p><a href='"
              . XOOPS_URL
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/viewforum.php?forum=$forum'>"
-             . _MD_RETURNTOTHEFORUM
+             . _MD_NEWBB_RETURNTOTHEFORUM
              . '</a></p>'
              . "<p><a href='index.php'>"
-             . _MD_RETURNFORUMINDEX
+             . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     } elseif ('merge' === $mode) {
         /** @var NewbbPostHandler $postHandler */
@@ -178,7 +178,7 @@ if (Request::getString('submit', '', 'POST')) {
             // irmtfan bug fix: the old topic will be deleted if user input a not exist new topic
             if (!is_object($newtopicObject)) {
                 $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $tid;
-                redirect_header($redirect, 2, _MD_ERRORTOPIC);
+                redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
             }
             $criteria_topic = new Criteria('topic_id', $tid);
             $criteria       = new CriteriaCompo($criteria_topic);
@@ -227,21 +227,21 @@ if (Request::getString('submit', '', 'POST')) {
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/viewtopic.php?topic_id=$newtopic'>"
-             . _MD_VIEWTHETOPIC
+             . _MD_NEWBB_VIEWTHETOPIC
              . '</a></p>'
              . "<p><a href='"
              . XOOPS_URL
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/viewforum.php?forum=$forum'>"
-             . _MD_RETURNTOTHEFORUM
+             . _MD_NEWBB_RETURNTOTHEFORUM
              . '</a></p>'
              . "<p><a href='"
              . XOOPS_URL
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/index.php'>"
-             . _MD_RETURNFORUMINDEX
+             . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     } elseif ('move' === $mode) {
         if ($newforum > 0) {
@@ -259,10 +259,10 @@ if (Request::getString('submit', '', 'POST')) {
             $forumHandler->synchronization($forum);
             $forumHandler->synchronization($newforum);
             // irmtfan full URL
-            echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$topic_id&amp;forum=$newforum'>" . _MD_GOTONEWFORUM . "</a></p><p><a href='" . XOOPS_URL . "/modules/newbb/index.php'>" . _MD_RETURNFORUMINDEX . '</a></p>';
+            echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewtopic.php?topic_id=$topic_id&amp;forum=$newforum'>" . _MD_NEWBB_GOTONEWFORUM . "</a></p><p><a href='" . XOOPS_URL . "/modules/newbb/index.php'>" . _MD_NEWBB_RETURNFORUMINDEX . '</a></p>';
         } else {
             // irmtfan - issue with javascript:history.go(-1)
-            redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_ERRORFORUM);
+            redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_ERRORFORUM);
         }
     } else {
         $topic_id  = $topic_id[0];
@@ -280,10 +280,10 @@ if (Request::getString('submit', '', 'POST')) {
         if (!empty($action[$mode]['sql'])) {
             $sql = sprintf('UPDATE %s SET ' . $action[$mode]['sql'] . ' WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_topics'), $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
-                redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode", 2, _MD_ERROR_BACK . '<br>sql:' . $sql);
+                redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode", 2, _MD_NEWBB_ERROR_BACK . '<br>sql:' . $sql);
             }
         } else {
-            redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_ERROR_BACK);
+            redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id", 2, _MD_NEWBB_ERROR_BACK);
         }
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
             $topicObject = $topicHandler->get($topic_id);
@@ -304,11 +304,11 @@ if (Request::getString('submit', '', 'POST')) {
              . '/modules/'
              . $xoopsModule->getVar('dirname')
              . "/viewtopic.php?topic_id=$topic_id&amp;forum=$forum'>"
-             . _MD_VIEWTHETOPIC
+             . _MD_NEWBB_VIEWTHETOPIC
              . "</a></p><p><a href='"
              . XOOPS_URL
              . "/modules/newbb/viewforum.php?forum=$forum'>"
-             . _MD_RETURNFORUMINDEX
+             . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     }
 } else {  // No submit
@@ -321,7 +321,7 @@ if (Request::getString('submit', '', 'POST')) {
     echo "<td colspan='2' align='center'>" . $action[$mode]['desc'] . '</td></tr>';
 
     if ($mode === 'move') {
-        echo '<tr><td class="bg3">' . _MD_MOVETOPICTO . '</td><td class="bg1">';
+        echo '<tr><td class="bg3">' . _MD_NEWBB_MOVETOPICTO . '</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
         /** @var \NewbbCategoryHandler $categoryHandler */
@@ -344,7 +344,7 @@ if (Request::getString('submit', '', 'POST')) {
                 }
             }
         } else {
-            $box .= "<option value='-1'>" . _MD_NOFORUMINDB . '</option>';
+            $box .= "<option value='-1'>" . _MD_NEWBB_NOFORUMINDB . '</option>';
         }
         unset($forums, $categories);
 
@@ -352,8 +352,8 @@ if (Request::getString('submit', '', 'POST')) {
         echo '</select></td></tr>';
     }
     if ($mode === 'merge') {
-        echo '<tr><td class="bg3">' . _MD_MERGETOPICTO . '</td><td class="bg1">';
-        echo _MD_TOPIC . "ID-$topic_id -> ID: <input name='newtopic' value='' />";
+        echo '<tr><td class="bg3">' . _MD_NEWBB_MERGETOPICTO . '</td><td class="bg1">';
+        echo _MD_NEWBB_TOPIC . "&nbsp;ID-$topic_id -> ID: <input name='newtopic' value='' />";
         echo '</td></tr>';
     }
     echo '<tr class="bg3"><td colspan="2" align="center">';

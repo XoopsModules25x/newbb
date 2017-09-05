@@ -33,7 +33,7 @@
         <div class="forum_stats_right">
             <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
             <br><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_NEWBB_ADMINCP}>"><{$smarty.const._MD_ADMINCP}></a>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_NEWBB_ADMINCP}>"><{$smarty.const._MD_NEWBB_ADMINCP}></a>
         </div>
         <div style="clear:both;"></div>
     </div>

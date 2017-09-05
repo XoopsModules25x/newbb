@@ -78,7 +78,8 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (file_exists($thumb)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" />';
+            // $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" />';
+            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" />';
             $attachmentImage .= '</a>';
         } elseif (!empty($pseudo_size)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
