@@ -505,3 +505,7 @@ define('_MD_NEWBB_REPLIED', 'Replied topics');
 define('_MD_NEWBB_READ', 'Read topics');
 define('_MD_NEWBB_POLL_POLL', 'Poll');
 define('_MD_NEWBB_PAGENAV_DISPLAY', 'Display of navigation');
+// Automatic forum creation during registration
+define('_MD_NEWBB_AUTO_CREATE_EMAIL', 'Email');
+define('_MD_NEWBB_AUTO_CREATE_AVATARS', 'Avatar');
+define('_MD_NEWBB_AUTO_CREATE_ABOUT', '');
