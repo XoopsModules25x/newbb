@@ -199,8 +199,10 @@ switch ($op) {
                 $poll_form->addElement($expire_text);
             } else {
                 // irmtfan full URL - add topic_id
-                $restart_label = new XoopsFormLabel(_MD_NEWBB_POLL_EXPIRATION,
-                                                    sprintf(_MD_NEWBB_POLL_EXPIREDAT, $date) . "<br><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_NEWBB_POLL_RESTART . '</a>');
+                $restart_label = new XoopsFormLabel(
+                    _MD_NEWBB_POLL_EXPIRATION,
+                                                    sprintf(_MD_NEWBB_POLL_EXPIREDAT, $date) . "<br><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_NEWBB_POLL_RESTART . '</a>'
+                );
                 $poll_form->addElement($restart_label);
             }
             $weight_text = new XoopsFormText(_MD_NEWBB_POLL_DISPLAYORDER, 'weight', 6, 5, $pollObject->getVar('weight'));
@@ -330,6 +332,7 @@ switch ($op) {
             }
             break;// op: save
         }
+        // no break
     case 'update':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -645,9 +648,16 @@ switch ($op) {
             $default_poll_duration = (86400 * 10);
         }
         $poll_form   = new XoopsThemeForm(_MD_NEWBB_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
-        $expire_text = new XoopsFormText(_MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br>' . sprintf(_MD_NEWBB_POLL_EXPIREDAT,
-                                                                                                                                                                                                                     formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')) . '</small>',
-                                         'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
+        $expire_text = new XoopsFormText(
+            _MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br>' . sprintf(
+            _MD_NEWBB_POLL_EXPIREDAT,
+                                                                                                                                                                                                                     formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')
+        ) . '</small>',
+                                         'end_time',
+            20,
+            19,
+            formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s')
+        );
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new XoopsFormRadioYN(_MD_NEWBB_POLL_NOTIFY, 'notify', 1));
         $poll_form->addElement(new XoopsFormRadioYN(_MD_NEWBB_POLL_RESET, 'reset', 0));
