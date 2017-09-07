@@ -29,7 +29,7 @@
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 include_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**

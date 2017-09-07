@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 //defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_CATEGORY", 1);

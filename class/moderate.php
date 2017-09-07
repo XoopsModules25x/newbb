@@ -11,7 +11,7 @@
 
 use Xmf\IPAddress;
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * A handler for User moderation management

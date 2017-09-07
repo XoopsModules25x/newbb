@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 //defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_FORUM", 1);
@@ -214,7 +214,6 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function applyTemplate($forum, $mid = 0)
     {
-
         if (!$perm_template = $this->getTemplate()) {
             return false;
         }

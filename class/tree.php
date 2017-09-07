@@ -25,7 +25,7 @@
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once $GLOBALS['xoops']->path('class/tree.php');
 
 if (!class_exists('NewbbObjectTree')) {

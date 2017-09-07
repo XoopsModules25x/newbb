@@ -28,7 +28,7 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 // irmtfan use full path because block maybe used outside newbb
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -437,6 +437,7 @@ function b_newbb_post_show($options)
             if (!empty($newbbConfig['allow_require_reply'])) {
                 $extraCriteria .= ' AND p.require_reply = 0';
             }
+            // no break
         default:
             $order = 'p.post_id';
             break;

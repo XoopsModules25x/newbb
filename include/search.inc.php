@@ -10,7 +10,7 @@
  */
 
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**

@@ -8,7 +8,7 @@
  * @since          4.00
  * @package        module::newbb
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class NewbbCategory extends XoopsObject
 {

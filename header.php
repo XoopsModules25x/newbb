@@ -12,7 +12,7 @@
 use Xmf\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
@@ -70,7 +70,7 @@ $myts = MyTextSanitizer::getInstance();
 
 $menumode       = 0;
 $menumode_other = [];
-$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI','','SERVER')));
+$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI', '', 'SERVER')));
 $menu_url       .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
 //foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
 //    if ($key !== $menumode) {
