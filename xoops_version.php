@@ -21,14 +21,11 @@ $modversion['credits']       = 'NewBB 2 developed by Marko Schmuck (predator) / 
 $modversion['author']        = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / (irmtfan) / (Geekwright)';
 $modversion['license']       = 'GNU GPL 2.0';
 $modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image']         = 'assets/images/logo_module.png';
+$modversion['image']         = 'assets/images/logoModule.png';
 $modversion['dirname']       = basename(__DIR__);
 
 $modversion['author_realname'] = 'NewBB Dev Team';
 $modversion['author_email']    = '';
-
-//about
-
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
@@ -36,13 +33,8 @@ $modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
 $modversion['system_menu']         = 1;
-
-//$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses/moduleadmin';
-//$modversion['sysicons16']     = 'Frameworks/moduleclasses/icons/16';
-//$modversion['sysicons32']     = 'Frameworks/moduleclasses/icons/32';
 $modversion['modicons16'] = 'assets/images/icons/16';
 $modversion['modicons32'] = 'assets/images/icons/32';
-
 $modversion['demo_site_url']     = 'https://xoops.org/newbb/';
 $modversion['demo_site_name']    = 'XOOPS Project';
 $modversion['support_site_url']  = 'https://xoops.org/newbb/';
@@ -93,103 +85,35 @@ $modversion['onUpdate'] = 'include/module.php';
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [
-    [
-        'name' => _MI_NEWBB_OVERVIEW,
-        'link' => 'page=help'
-    ],
-    [
-        'name' => _MI_NEWBB_HELP_DISCLAIMER,
-        'link' => 'page=disclaimer'
-    ],
-    [
-        'name' => _MI_NEWBB_LICENSE,
-        'link' => 'page=license'
-    ],
-    [
-        'name' => _MI_NEWBB_SUPPORT,
-        'link' => 'page=support'
-    ],
+    ['name' => _MI_NEWBB_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_NEWBB_HELP_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_NEWBB_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_NEWBB_SUPPORT, 'link' => 'page=support'],
     //    array('name' => _MI_NEWBB_HOWTO, 'link' => 'page=__howto'),
     //    array('name' => _MI_NEWBB_REQUIREMENTS, 'link' => 'page=__requirements'),
     //    array('name' => _MI_NEWBB_CREDITS, 'link' => 'page=__credits'),
-
 ];
 
 // Templates
 $modversion['templates'] = [
-
-    [
-        'file'        => 'newbb_index_menu.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_index.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewforum_subforum.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewforum_menu.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewforum.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewtopic.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_thread.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_edit_post.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_poll_results.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_poll_view.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_searchresults.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_search.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewall.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_viewpost.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_online.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_rss.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_notification_select.tpl',
-        'description' => ''
-    ],
-    [
-        'file'        => 'newbb_moderate.tpl',
-        'description' => ''
-    ],
+    ['file' => 'newbb_index_menu.tpl', 'description' => ''],
+    ['file' => 'newbb_index.tpl', 'description' => ''],
+    ['file' => 'newbb_viewforum_subforum.tpl', 'description' => ''],
+    ['file' => 'newbb_viewforum_menu.tpl', 'description' => ''],
+    ['file' => 'newbb_viewforum.tpl', 'description' => ''],
+    ['file' => 'newbb_viewtopic.tpl', 'description' => ''],
+    ['file' => 'newbb_thread.tpl', 'description' => ''],
+    ['file' => 'newbb_edit_post.tpl', 'description' => ''],
+    ['file' => 'newbb_poll_results.tpl', 'description' => ''],
+    ['file' => 'newbb_poll_view.tpl', 'description' => ''],
+    ['file' => 'newbb_searchresults.tpl', 'description' => ''],
+    ['file' => 'newbb_search.tpl', 'description' => ''],
+    ['file' => 'newbb_viewall.tpl', 'description' => ''],
+    ['file' => 'newbb_viewpost.tpl', 'description' => ''],
+    ['file' => 'newbb_online.tpl', 'description' => ''],
+    ['file' => 'newbb_rss.tpl', 'description' => ''],
+    ['file' => 'newbb_notification_select.tpl', 'description' => ''],
+    ['file' => 'newbb_moderate.tpl', 'description' => ''],
 ];
 
 // Blocks
