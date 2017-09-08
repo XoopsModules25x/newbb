@@ -50,7 +50,6 @@ function newCategory()
 {
     editCategory();
 }
-
 /**
  * editCategory()
  *
@@ -200,7 +199,7 @@ switch ($op) {
         echo '</table>';
         break;
 }
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-$cacheHelper->delete('permission_category');
+$cacheHelper = NewbbUtility::cleanCache();
+//$cacheHelper->delete('permission_category');
 
 include_once __DIR__ . '/admin_footer.php';
