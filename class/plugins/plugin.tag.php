@@ -70,7 +70,6 @@ function newbb_tag_iteminfo(&$items)
  * Remove orphan tag-item links
  *
  * @param $mid
- * @return bool
  */
 function newbb_tag_synchronization($mid)
 {
