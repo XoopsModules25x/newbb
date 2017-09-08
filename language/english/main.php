@@ -509,3 +509,4 @@ define('_MD_NEWBB_PAGENAV_DISPLAY', 'Display of navigation');
 define('_MD_NEWBB_AUTO_CREATE_EMAIL', 'Email');
 define('_MD_NEWBB_AUTO_CREATE_AVATARS', 'Avatar');
 define('_MD_NEWBB_AUTO_CREATE_ABOUT', '');
+define('_MD_NEWBB_NO_SELECTION', 'Selection required');

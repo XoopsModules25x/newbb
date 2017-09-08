@@ -14,7 +14,7 @@ use Xmf\Request;
 include_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
-$post_id  = Request::getArray('post_id', Request::getArray('post_id', 0, 'POST'), 'GET');
+$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
 $uid      = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
@@ -23,7 +23,7 @@ $mode = Request::getInt('mode', 1, 'GET');
 
 if (0 === count($post_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NORIGHTTOACCESS);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
 /** @var NewbbPostHandler $postHandler */
 $postHandler = xoops_getModuleHandler('post', 'newbb');

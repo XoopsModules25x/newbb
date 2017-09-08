@@ -21,7 +21,7 @@ $op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
 
 if (0 === count($topic_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NORIGHTTOACCESS);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
 
 $topic_id = array_values($topic_id);
