@@ -360,7 +360,7 @@ class NewbbPost extends XoopsObject
                 // End irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
                 // START hacked by irmtfan
                 // display/save all edit records.
-                $post_edit .= _MD_NEWBB_EDITEDBY . ' ' . $edit_user . ' ' . _MD_NEWBB_ON . ' ' . formatTimestamp((int)$edit_time) . '<br>';
+                $post_edit .= _MD_NEWBB_EDITEDBY . ' ' . $edit_user . ' ' . _MD_NEWBB_ON . ' ' . formatTimestamp($edit_time) . '<br>';
                 // if reason is not empty
                 if ($edit_msg !== '') {
                     $post_edit .= _MD_NEWBB_EDITEDMSG . ' ' . $edit_msg . '<br>';
