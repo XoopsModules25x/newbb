@@ -89,9 +89,9 @@ class NewbbUtility
     // for 2.5 systems, clear everything
           require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
           $maintenance = new SystemMaintenance();
-            $cacheList = array(
+            $cacheList = [
             3, // xoops_cache
-          );
+            ];
         $maintenance->CleanCache($cacheList);
     }    
 }
