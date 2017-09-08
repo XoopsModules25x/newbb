@@ -51,7 +51,7 @@ unset($query_array);
 
 $forum_id = Request::getInt('forum', 0, 'GET');
 $read     = (Request::getString('read', '', 'GET')
-             && in_array(Request::getString('read', '', 'GET'), ['new'], true)) ? Request::getString('read', '', 'GET') : '';
+             && 'new' === Request::getString('read', '', 'GET')) ? Request::getString('read', '', 'GET') : '';
 $topic_id = Request::getInt('topic_id', 0, 'GET'); // isset($_GET['topic_id']) ? (int)($_GET['topic_id']) : 0;
 $post_id  = Request::getInt('post_id', 0, 'GET'); // !empty($_GET['post_id']) ? (int)($_GET['post_id']) : 0;
 $move     = strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
