@@ -104,7 +104,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
 
 $message = sprintf(_MD_NEWBB_WELCOME_MESSAGE, $GLOBALS['xoopsUser']->getVar('uname')) . "\n\n";
 $message .= _PROFILE . ": <a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'><strong>" . $GLOBALS['xoopsUser']->getVar('uname') . '</strong></a> ';
-$message .= " | <a target='_blank' href='".XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $GLOBALS['xoopsUser']->getVar('uid')."'>"._MD_NEWBB_PM."</a>\n";
+$message .= " | <a target='_blank' href='".XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . _MD_NEWBB_PM . "</a>\n";
 foreach ($categories as $category) {
     if (isset($category['fields'])) {
         $message .= "\n\n" . $category['cat_title'] . ":\n\n";
