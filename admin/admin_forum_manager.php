@@ -37,7 +37,7 @@ include_once $GLOBALS['xoops']->path('class/pagenav.php');
 include_once __DIR__ . '/../include/functions.forum.php';
 include_once __DIR__ . '/../include/functions.render.php';
 
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper = NewbbUtility::cleanCache();
 
 xoops_cp_header();
 
@@ -168,7 +168,7 @@ switch ($op) {
         $forumObject->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
 
         if ($forumHandler->insert($forumObject)) {
-            $cacheHelper->delete('forum');
+            //$cacheHelper->delete('forum');
             if (Request::getInt('perm_template', 0, 'POST')) {
                 /** @var \NewbbPermissionHandler $grouppermHandler */
                 $grouppermHandler = xoops_getModuleHandler('permission', $xoopsModule->getVar('dirname'));
@@ -208,7 +208,7 @@ switch ($op) {
         } else {
             $forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'));
             $forumHandler->delete($forumObject);
-            $cacheHelper->delete('forum');
+            //$cacheHelper->delete('forum');
             redirect_header('admin_forum_manager.php?op=manage', 1, _AM_NEWBB_FORUMREMOVED);
         }
         break;
