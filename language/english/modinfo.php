@@ -246,7 +246,7 @@ define('_MI_NEWBB_PAGENAV_NUMBER', 'as numbers');
 define('_MI_NEWBB_PAGENAV_IMAGE', 'as small images');
 define('_MI_NEWBB_PAGENAV_SELECT', 'as select box');
 define('_MI_NEWBB_ADVERTISING', 'Show Advertising');
-define('_MI_NEWBB_ADVERTISING_DESC', 'shows a commercial break after the 2nd Thread');
+define('_MI_NEWBB_ADVERTISING_DESC', 'shows a commercial break after the 2nd Thread. <a href="/modules/system/admin.php?fct=banners">Managing Banners</a>');
 define('_MI_NEWBB_USERATTACH_ENABLE', 'Display attachments only for registered users');
 define('_MI_NEWBB_USERATTACH_ENABLE_DESC', 'shows attachments in the forum only after logging in.');
 // 4.3
