@@ -184,7 +184,7 @@ function newbb_list_topic_edit($options)
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
     $forumSel     .= '<option value="0" ';
     if ($isAll) {

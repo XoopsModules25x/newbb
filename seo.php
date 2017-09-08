@@ -65,7 +65,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     include $seoMap[$seoOp];
 } else {
     $last = $seoOp . '/' . $seoArg;
-    if ($seoOther !== '') {
+    if ('' !== $seoOther) {
         $last .= '/' . $seoOther;
     }
     include $last;

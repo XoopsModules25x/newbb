@@ -175,7 +175,7 @@ class NewbbUser
 
         $level = newbb_calculateLevel($this->user->getVar('posts'), $this->user->getVar('user_regdate'));
         $info  = '';
-        if ($GLOBALS['xoopsModuleConfig']['user_level'] == 2) {
+        if (2 == $GLOBALS['xoopsModuleConfig']['user_level']) {
             static $rpg_images;
             if (!isset($rpg_images)) {
                 $iconHandler = newbbGetIconHandler();

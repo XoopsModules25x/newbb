@@ -198,7 +198,7 @@ if (Request::getString('submit', '', 'POST')) {
             // START irmtfan poll_module and rewrite the method
             // irmtfan only move poll in old topic to new topic if new topic has not a poll
             $poll_id = $topicObject->getVar('poll_id');
-            if ($poll_id > 0 && ($newtopicObject->getVar('poll_id') == 0)) {
+            if ($poll_id > 0 && (0 == $newtopicObject->getVar('poll_id'))) {
                 $newtopicObject->setVar('topic_haspoll', 1);
                 $newtopicObject->setVar('poll_id', $poll_id);
                 $poll_id = 0;// set to not delete the poll
@@ -320,7 +320,7 @@ if (Request::getString('submit', '', 'POST')) {
     echo "<tr class='bg3' align='left'>";
     echo "<td colspan='2' align='center'>" . $action[$mode]['desc'] . '</td></tr>';
 
-    if ($mode === 'move') {
+    if ('move' === $mode) {
         echo '<tr><td class="bg3">' . _MD_NEWBB_MOVETOPICTO . '</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
@@ -351,7 +351,7 @@ if (Request::getString('submit', '', 'POST')) {
         echo $box;
         echo '</select></td></tr>';
     }
-    if ($mode === 'merge') {
+    if ('merge' === $mode) {
         echo '<tr><td class="bg3">' . _MD_NEWBB_MERGETOPICTO . '</td><td class="bg1">';
         echo _MD_NEWBB_TOPIC . "&nbsp;ID-$topic_id -> ID: <input name='newtopic' value='' />";
         echo '</td></tr>';

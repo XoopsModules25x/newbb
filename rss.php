@@ -63,7 +63,7 @@ if (is_array($forums) && count($forums) > 0) {
     $forums_top  = $forumHandler->getIds($crit_top);
     $validForums = array_intersect($forums_top, $validForums);
 }
-if (count($validForums) === 0) {
+if (0 === count($validForums)) {
     newbbTrackbackResponse(1, _NOPERM);
 }
 

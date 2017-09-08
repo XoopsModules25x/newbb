@@ -39,7 +39,7 @@ xoops_loadLanguage('search');
 /** @var \XoopsConfigHandler $configHandler */
 $configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-if ($xoopsConfigSearch['enable_search'] !== 1) {
+if (1 !== $xoopsConfigSearch['enable_search']) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
 
@@ -91,7 +91,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $start = Request::getInt('start', 0);
     $forum = Request::getInt('forum', null);
-    if (empty($forum) || $forum === 'all' || (is_array($forum) && in_array('all', $forum, true))) {
+    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum, true))) {
         $forum = [];
     } elseif (!is_array($forum)) {
         $forum = array_map('intval', explode('|', $forum));
@@ -132,7 +132,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $next_search['term'] = htmlspecialchars($term, ENT_QUOTES);
     $query               = trim($term);
 
-    if ($andor !== 'EXACT') {
+    if ('EXACT' !== $andor) {
         $ignored_queries = []; // holds keywords that are shorter than allowed minimum length
         $temp_queries    = str_getcsv($query, ' ', '"');
         foreach ($temp_queries as $q) {
@@ -143,7 +143,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
                 $ignored_queries[] = $q;
             }
         }
-        if (!$uname_required && count($queries) === 0) {
+        if (!$uname_required && 0 === count($queries)) {
             redirect_header(XOOPS_URL . '/search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
     } else {
@@ -188,7 +188,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         foreach ($results as $row) {
             $post_text_select    = '';
             $post_subject_select = Highlighter::apply($queries, $row['title'], '<mark>', '</mark>');
-            if ($show_search === 'post_text') {
+            if ('post_text' === $show_search) {
                 $post_text_select = Metagen::getSearchSummary($row['post_text'], $queries, $selectlength);
                 $post_text_select = Highlighter::apply($queries, $post_text_select, '<mark>', '</mark>');
             }
@@ -246,7 +246,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         // irmtfan if all results skipped then redirect to the next/previous page
         if ($num_results == $skipresults) {
             $direction           = Request::getString('direction', 'next');
-            $search_url_redirect = (strtolower($direction) === 'next') ? $search_url_next : $search_url_prev;
+            $search_url_redirect = ('next' === strtolower($direction)) ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
         }
     }

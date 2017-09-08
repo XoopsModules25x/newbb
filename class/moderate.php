@@ -95,7 +95,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
 
         $matches = $this->getAll($criteria);
 
-        if (count($matches) === 0) {
+        if (0 === count($matches)) {
             return true; // no matches
         }
 

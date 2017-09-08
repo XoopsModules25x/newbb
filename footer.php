@@ -36,7 +36,7 @@ $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['lang
 xoops_load('XoopsLists');
 $allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
-    if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
+    if ('js' === strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }

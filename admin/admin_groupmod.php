@@ -43,8 +43,8 @@ if (Request::getString('submit', '', 'POST')) {
     $fgroups = Request::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
     $fforum  = Request::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
     $fuser   = [];
-    if ($fforum !== 0) {
-        if ($fgroups !== '') {
+    if (0 !== $fforum) {
+        if ('' !== $fgroups) {
             $gg = [];
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);

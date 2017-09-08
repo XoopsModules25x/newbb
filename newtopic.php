@@ -54,7 +54,7 @@ $xoopsOption['template_main']                                        = 'newbb_ed
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0; // Disable cache
 include_once $GLOBALS['xoops']->path('header.php');
 
-if ($GLOBALS['xoopsModuleConfig']['disc_show'] == 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] == 3) {
+if (1 == $GLOBALS['xoopsModuleConfig']['disc_show'] || 3 == $GLOBALS['xoopsModuleConfig']['disc_show']) {
     $xoopsTpl->assign('disclaimer', $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 

@@ -97,7 +97,7 @@ class NewbbMigrate extends Xmf\Database\Migrate
         if (false !== $this->tableHandler->useTable($tableName)
             && false !== $this->tableHandler->useTable($srcTableName)) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, 'dohtml');
-            if ($attributes === false) {
+            if (false === $attributes) {
                 $this->synchronizeTable($tableName);
                 $updateTable = $GLOBALS['xoopsDB']->prefix($tableName);
                 $joinTable   = $GLOBALS['xoopsDB']->prefix($srcTableName);

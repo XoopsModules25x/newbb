@@ -71,7 +71,7 @@ function newbb_getImageLibs()
 {
     $imageLibs = [];
     unset($output, $status);
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -80,7 +80,7 @@ function newbb_getImageLibs()
 
         unset($output, $status);
     }
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if (2 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -169,7 +169,7 @@ $cacheHelper->delete('permission');
  */
 function return_bytes($sizeAsString, $b = false)
 {
-    if ($b === false) {
+    if (false === $b) {
         switch (substr($sizeAsString, -1)) {
             case 'M':
             case 'm':

@@ -55,7 +55,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($templateDirectory . $v);
-        if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+        if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
             @unlink($templateDirectory . $v);
         }
     }
@@ -63,7 +63,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($templateDirectory . $v);
-        if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+        if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
             @unlink($templateDirectory . $v);
         }
     }

@@ -103,7 +103,7 @@ switch ($op) {
         <th align='center'>" . _AM_NEWBB_VOTE_DATE . "</th>\n
         <th align='center'>" . _AM_NEWBB_ACTION . "</th></tr>\n";
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {

@@ -43,7 +43,7 @@ function newbb_search(
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
     if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module'])
-        && $GLOBALS['module']->getVar('dirname') === 'newbb') {
+        && 'newbb' === $GLOBALS['module']->getVar('dirname')) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     /** @var \NewbbForumHandler $forumHandler */
@@ -60,7 +60,7 @@ function newbb_search(
         $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
     }
 
-    if (is_numeric($userid) && $userid !== 0) {
+    if (is_numeric($userid) && 0 !== $userid) {
         $criteriaUser = new CriteriaCompo();
         $criteriaUser->add(new Criteria('p.uid', $userid), 'OR');
     } elseif (is_array($userid) && count($userid) > 0) {
@@ -76,10 +76,10 @@ function newbb_search(
         foreach ($queryarray as $queryTerm) {
             $termCriteria  = new CriteriaCompo();
             $queryTermLike = '%' . $xoopsDB->escape($queryTerm) . '%';
-            if ($searchin === 'title' || $searchin === 'both') {
+            if ('title' === $searchin || 'both' === $searchin) {
                 $termCriteria->add(new Criteria('p.subject', $queryTermLike, 'LIKE'), 'OR');
             }
-            if ($searchin === 'text' || $searchin === 'both') {
+            if ('text' === $searchin || 'both' === $searchin) {
                 $termCriteria->add(new Criteria('t.post_text', $queryTermLike, 'LIKE'), 'OR');
             }
             $criteriaKeywords->add($termCriteria, $andor);
@@ -110,7 +110,7 @@ function newbb_search(
     }
     $criteria->setSort($sortby);
     $order = 'ASC';
-    if ($sortby === 'p.post_time') {
+    if ('p.post_time' === $sortby) {
         $order = 'DESC';
     }
     $criteria->setOrder($order);

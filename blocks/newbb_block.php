@@ -475,11 +475,11 @@ function b_newbb_post_show($options)
 
     $query = 'SELECT';
     $query .= '    p.post_id, p.subject, p.post_time, p.icon, p.uid, p.poster_name,';
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $query .= '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr, pt.post_text,';
     }
     $query .= '    f.forum_id, f.forum_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' AS p ' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' AS f ON f.forum_id=p.forum_id';
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $query .= '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . ' AS pt ON pt.post_id=p.post_id';
     }
     $query .= '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
@@ -489,7 +489,7 @@ function b_newbb_post_show($options)
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
-    $block['disp_mode'] = ($options[0] === 'text') ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
+    $block['disp_mode'] = ('text' === $options[0]) ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
     while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
@@ -516,7 +516,7 @@ function b_newbb_post_show($options)
         //$topic['id'] = $arr['topic_id'];
 
         $title = $myts->htmlSpecialChars($arr['subject']);
-        if ($options[0] !== 'text' && !empty($options[5])) {
+        if ('text' !== $options[0] && !empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
         $topic['title']   = $title;
@@ -529,7 +529,7 @@ function b_newbb_post_show($options)
         }
         $topic['topic_poster'] = $topic_poster;
 
-        if ($options[0] === 'text') {
+        if ('text' === $options[0]) {
             $post_text = $myts->displayTarea($arr['post_text'], $arr['dohtml'], $arr['dosmiley'], $arr['doxcode'], 1, $arr['dobr']);
             if (!empty($options[5])) {
                 $post_text = xoops_substr(strip_tags($post_text), 0, $options[5]);
@@ -599,7 +599,7 @@ function b_newbb_author_show($options)
             break;
         case 'digest':
             $extraCriteria = ' AND topic_digest = 1';
-            if ($time_criteria!== null) {
+            if (null !== $time_criteria) {
                 $extraCriteria .= ' AND digest_time > ' . $time_criteria;
             }
             break;
@@ -633,7 +633,7 @@ function b_newbb_author_show($options)
         return false;
     }
 
-    if ($type === 'topic') {
+    if ('topic' === $type) {
         $forumCriteria   = ' AND forum_id IN (' . implode(',', $allowedForums) . ')';
         $approveCriteria = ' AND approved = 1';
         $query           = 'SELECT DISTINCT topic_poster AS author, COUNT(*) AS count
@@ -681,7 +681,7 @@ function b_newbb_edit($options)
 
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
-    if ($options[0] === 'time') {
+    if ('time' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
@@ -718,7 +718,7 @@ function b_newbb_edit($options)
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';
     if ($isAll) {
@@ -740,27 +740,27 @@ function b_newbb_topic_edit($options)
     include_once __DIR__ . '/../include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
-    if ($options[0] === 'time') {
+    if ('time' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
     $form .= "<option value='views'";
-    if ($options[0] === 'views') {
+    if ('views' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_VIEWS . '</option>';
     $form .= "<option value='replies'";
-    if ($options[0] === 'replies') {
+    if ('replies' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_REPLIES . '</option>';
     $form .= "<option value='digest'";
-    if ($options[0] === 'digest') {
+    if ('digest' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGEST . '</option>';
     $form .= "<option value='sticky'";
-    if ($options[0] === 'sticky') {
+    if ('sticky' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKY . '</option>';
@@ -798,7 +798,7 @@ function b_newbb_topic_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
 
-    $isAll = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $isAll = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form  .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form  .= '<option value="0" ';
     if ($isAll) {
@@ -820,12 +820,12 @@ function b_newbb_post_edit($options)
     include_once __DIR__ . '/../include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='title'";
-    if ($options[0] === 'title') {
+    if ('title' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TITLE . '</option>';
     $form .= "<option value='text'";
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TEXT . '</option>';
@@ -862,7 +862,7 @@ function b_newbb_post_edit($options)
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';
     if ($isAll) {
@@ -884,22 +884,22 @@ function b_newbb_author_edit($options)
     include_once __DIR__ . '/../include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='post'";
-    if ($options[0] === 'post') {
+    if ('post' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_POST . '</option>';
     $form .= "<option value='topic'";
-    if ($options[0] === 'topic') {
+    if ('topic' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TOPIC . '</option>';
     $form .= "<option value='digest'";
-    if ($options[0] === 'digest') {
+    if ('digest' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGESTS . '</option>';
     $form .= "<option value='sticky'";
-    if ($options[0] === 'sticky') {
+    if ('sticky' === $options[0]) {
         $form .= " selected='selected' ";
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKYS . '</option>';
@@ -930,7 +930,7 @@ function b_newbb_author_edit($options)
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';
     if ($isAll) {

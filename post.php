@@ -87,7 +87,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
                 $_SESSION                    = [];
                 $_SESSION['xoopsUserId']     = $user->getVar('uid');
                 $_SESSION['xoopsUserGroups'] = $user->getGroups();
-                if ($GLOBALS['xoopsConfig']['use_mysession'] && $GLOBALS['xoopsConfig']['session_name'] !== '') {
+                if ($GLOBALS['xoopsConfig']['use_mysession'] && '' !== $GLOBALS['xoopsConfig']['session_name']) {
                     setcookie($GLOBALS['xoopsConfig']['session_name'], session_id(), time() + (60 * $GLOBALS['xoopsConfig']['session_expire']), '/', '', 0);
                 }
                 $user_theme = $user->getVar('theme');
@@ -193,7 +193,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $postObject->setVar('forum_id', $forumObject->getVar('forum_id'));
 
     $subject       = xoops_trim(Request::getString('subject', '', 'POST'));
-    $subject       = ($subject === '') ? _NOTITLE : $subject;
+    $subject       = ('' === $subject) ? _NOTITLE : $subject;
     $poster_name   = xoops_trim(Request::getString('poster_name', '', 'POST'));
     $dohtml        = Request::getInt('dohtml', 0, 'POST')
                      && $topicHandler->getPermission($forumObject, $topic_status, 'html');
@@ -205,8 +205,8 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $attachsig     = Request::getBool('attachsig', false, 'POST')
                      && $topicHandler->getPermission($forumObject, $topic_status, 'signature');
     $view_require  = Request::getString('view_require', '', 'POST');
-    $post_karma    = ($view_require === 'require_karma') ? Request::getInt('post_karma', 0, 'POST') : 0;
-    $require_reply = ($view_require === 'require_reply');
+    $post_karma    = ('require_karma' === $view_require) ? Request::getInt('post_karma', 0, 'POST') : 0;
+    $require_reply = ('require_reply' === $view_require);
     $postObject->setVar('subject', $subject);
     $editwhy = xoops_trim(Request::getString('editwhy', '', 'POST')); // !empty($_POST['editwhy'])) ? xoops_trim($_POST['editwhy']) : "";
 
@@ -248,7 +248,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     }
     $error_upload = '';
 
-    if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] !== ''
+    if (isset($_FILES['userfile']['name']) && '' !== $_FILES['userfile']['name']
         && $topicHandler->getPermission($forumObject, $topic_status, 'attach')) {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/uploader.php');
         $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
@@ -301,7 +301,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $uid       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
     if (newbbIsAdmin($forumObject)
         || ($topicHandler->getPermission($forumObject, $topic_status, 'type')
-            && ($topic_id == 0
+            && (0 == $topic_id
                 || $uid == $topicObject->getVar('topic_poster')))) {
         $topicObject->setVar('type_id', Request::getInt('type_id', 0, 'POST'));
     }
@@ -393,7 +393,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $message  = _MD_NEWBB_THANKSSUBMIT . '<br>' . _MD_NEWBB_WAITFORAPPROVAL . '<br>' . $error_upload;
     }
 
-    if ($op === 'add') {
+    if ('add' === $op) {
         redirect_header(XOOPS_URL . '/modules/newbb/polls.php?op=add&amp;forum=' . $postObject->getVar('forum_id') . '&amp;topic_id=' . $postObject->getVar('topic_id'), 1, _MD_NEWBB_ADDPOLL);
     } else {
         redirect_header($redirect, 2, $message);
@@ -421,7 +421,7 @@ if (Request::getString('contents_upload', null, 'POST')) {
     }
 
     $error_upload = '';
-    if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] !== '') {
+    if (isset($_FILES['userfile']['name']) && '' !== $_FILES['userfile']['name']) {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/uploader.php');
         $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
@@ -517,9 +517,9 @@ if (Request::getString('contents_upload', null, 'POST') || Request::getString('c
     $icon          = (Request::getString('icon', '', 'POST')
                       && is_file($GLOBALS['xoops']->path('images/subject/' . Request::getString('icon', '', 'POST'))) ? Request::getString('icon', '', 'POST') : '');
     $view_require  = Request::getString('view_require', '', 'POST');
-    $post_karma    = (($view_require === 'require_karma')
+    $post_karma    = (('require_karma' === $view_require)
                       && !Request::getInt('post_karma', 0, 'POST')) ? Request::getInt('post_karma', 0, 'POST') : 0;
-    $require_reply = ($view_require === 'require_reply') ? 1 : 0;
+    $require_reply = ('require_reply' === $view_require) ? 1 : 0;
 
     if (!Request::getString('contents_upload', '', 'POST')) {
         $contents_preview = 1;

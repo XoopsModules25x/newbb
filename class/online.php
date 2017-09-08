@@ -227,7 +227,7 @@ class NewbbOnlineHandler
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
             $sql = 'UPDATE ' . $this->db->prefix('newbb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
-            if ($uid == 0) {
+            if (0 == $uid) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {

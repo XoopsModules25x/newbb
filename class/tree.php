@@ -144,7 +144,7 @@ if (!class_exists('NewbbObjectTree')) {
          */
         public function getAllChildObject($key, &$ret, $depth = 0)
         {
-            if (--$depth == 0) {
+            if (0 == --$depth) {
                 return;
             }
 
@@ -188,7 +188,7 @@ if (!class_exists('NewbbObjectTree')) {
          **/
         public function getAllChildArray($key, &$ret, array $tags = [], $depth = 0)
         {
-            if (--$depth == 0) {
+            if (0 == --$depth) {
                 return;
             }
 

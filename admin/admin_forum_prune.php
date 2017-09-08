@@ -76,7 +76,7 @@ if (Request::getString('submit', '', 'POST')) {
     if ($lock) {
         $sql .= ' AND t.topic_status <> 1 ';
     }
-    if ($hot !== 0) {
+    if (0 !== $hot) {
         $sql .= ' AND t.topic_replies < ' . $hot . ' ';
     }
 
@@ -123,7 +123,7 @@ if (Request::getString('submit', '', 'POST')) {
             }
         } else {
             // ARCHIVING POSTS
-            if ($archive == 1) {
+            if (1 == $archive) {
                 $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
                 while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
                     $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");

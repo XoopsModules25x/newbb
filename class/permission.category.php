@@ -68,7 +68,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function setCategoryPermission($category, array $groups = [])
     {
-        if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+        if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */

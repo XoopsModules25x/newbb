@@ -64,14 +64,14 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     // Add core fields
     $categories[0]['cat_title'] = sprintf(_MD_NEWBB_AUTO_CREATE_ABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
     $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
-    if (!empty($avatar) && $avatar !== 'blank.gif') {
+    if (!empty($avatar) && 'blank.gif' !== $avatar) {
         $categories[0]['fields'][] = [
             'title' => _MD_NEWBB_AUTO_CREATE_AVATARS,
             'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />"
         ];
         $weights[0][]              = 0;
     }
-    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
+    if (1 == $GLOBALS['xoopsUser']->getVar('user_viewemail')) {
         $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
         $categories[0]['fields'][] = ['title' => _MD_NEWBB_AUTO_CREATE_EMAIL, 'value' => $email];
         $weights[0][]              = 0;

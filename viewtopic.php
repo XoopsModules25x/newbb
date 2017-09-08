@@ -62,11 +62,11 @@ $mode     = Request::getInt('mode', (!empty($status) ? 2 : 0), 'GET'); // !empty
 $order    = (Request::getString('order', '', 'GET')
              && in_array(Request::getString('order', '', 'GET'), ['ASC', 'DESC'], true)) ? Request::getString('order', '', 'GET') : '';
 
-if ($order === '') {
+if ('' === $order) {
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
-        $order = ($GLOBALS['xoopsUser']->getVar('uorder') == 1) ? 'DESC' : 'ASC';
+        $order = (1 == $GLOBALS['xoopsUser']->getVar('uorder')) ? 'DESC' : 'ASC';
     } else {
-        $order = ($GLOBALS['xoopsConfig']['com_order'] == 1) ? 'DESC' : 'ASC';
+        $order = (1 == $GLOBALS['xoopsConfig']['com_order']) ? 'DESC' : 'ASC';
     }
 }
 
@@ -81,7 +81,7 @@ if (!empty($post_id)) {
     $topicObject = $topicHandler->getByPost($post_id);
     $topic_id  = $topicObject->getVar('topic_id');
 } elseif (!empty($move)) {
-    $topicObject = $topicHandler->getByMove($topic_id, ($move === 'prev') ? -1 : 1, $forum_id);
+    $topicObject = $topicHandler->getByMove($topic_id, ('prev' === $move) ? -1 : 1, $forum_id);
     $topic_id  = $topicObject->getVar('topic_id');
 } else {
     $topicObject = $topicHandler->get($topic_id);
@@ -116,12 +116,12 @@ $topic_is_unread = true;
 */
 $topic_last_post_time_or_id_read = newbbGetRead('topic', $topic_id);
 if (!empty($topic_last_post_time_or_id_read)) {
-    if ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
         $postHandler     = xoops_getModuleHandler('post', 'newbb');
         $postObject        = $postHandler->get($topicObject->getVar('topic_last_post_id'));
         $topic_is_unread = ($topic_last_post_time_or_id_read < $postObject->getVar('post_time'));
     }
-    if ($GLOBALS['xoopsModuleConfig']['read_mode'] == 2) {
+    if (2 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
         $topic_is_unread = ($topic_last_post_time_or_id_read < $topicObject->getVar('topic_last_post_id'));
         // hack jump to last post read if post_id is empty - is there any better way?
         if (empty($post_id) && $topic_is_unread
@@ -192,7 +192,7 @@ if ($infobox['show'] > 0) {
         'expand'   => $iconHandler->getImageSource('less'),
         'collapse' => $iconHandler->getImageSource('more')
     ];
-    if ($infobox['show'] == 1) {
+    if (1 == $infobox['show']) {
         $infobox['style'] = 'none';        //irmtfan move semicolon
         $infobox['alt']   = _MD_NEWBB_SEEUSERDATA;
         $infobox['src']   = 'more';
@@ -222,7 +222,7 @@ $xoopsTpl->assign('post_id', $post_id);
 $xoopsTpl->assign('topic_id', $topic_id);
 $xoopsTpl->assign('forum_id', $forum_id);
 
-$order_current = ($order === 'DESC') ? 'DESC' : 'ASC';
+$order_current = ('DESC' === $order) ? 'DESC' : 'ASC';
 $xoopsTpl->assign('order_current', $order_current);
 
 $t_new   = newbbDisplayImage('t_new', _MD_NEWBB_POSTNEW);
@@ -282,7 +282,7 @@ unset($users);
 if ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $require_reply) {
     if (!empty($GLOBALS['xoopsModuleConfig']['cache_enabled'])) {
         $viewtopic_posters = newbbGetSession('t' . $topic_id, true);
-        if (!is_array($viewtopic_posters) || count($viewtopic_posters) === 0) {
+        if (!is_array($viewtopic_posters) || 0 === count($viewtopic_posters)) {
             $viewtopic_posters = $topicHandler->getAllPosters($topicObject);
             newbbSetSession('t' . $topic_id, $viewtopic_posters);
         }
@@ -339,9 +339,9 @@ if ($total_posts > $GLOBALS['xoopsModuleConfig']['posts_per_page']) {
 
     $nav = new XoopsPageNav($total_posts, $GLOBALS['xoopsModuleConfig']['posts_per_page'], $start, 'start', 'topic_id=' . $topic_id . '&amp;order=' . $order . '&amp;status=' . $status . '&amp;mode=' . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite']) && $GLOBALS['xoopsModuleConfig']['do_rewrite'] === 1) $nav->url = XOOPS_URL . $nav->url;
-    if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
+    if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderSelect();
-    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {
+    } elseif ('image' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderImageNav(4);
     } else {
         $navi = $nav->renderNav(4);
@@ -699,7 +699,7 @@ $xoopsTpl->assign([
                   ]);
 
 $viewmode_options = [];
-if ($order === 'DESC') {
+if ('DESC' === $order) {
     $viewmode_options[] = [
         'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?order=ASC&amp;status=$status&amp;topic_id=' . $topic_id,
         'title' => _OLDESTFIRST

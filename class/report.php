@@ -86,7 +86,7 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
     ) {
         $forumCriteria = '';
         $row = [];
-        if ($order === 'DESC') {
+        if ('DESC' === $order) {
             $operator_for_position = '>';
         } else {
             $order                 = 'ASC';

@@ -118,7 +118,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         if (!is_array($list) || $refresh) {
             $list = newbbCreateSubForumList();
         }
-        if ($pid == 0) {
+        if (0 == $pid) {
             return $list;
         } else {
             return @$list[$pid];
@@ -169,7 +169,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         if (!is_array($list) || $refresh) {
             $list = newbbCreateParentForumList();
         }
-        if ($forum_id == 0) {
+        if (0 == $forum_id) {
             return $list;
         } else {
             return @$list[$forum_id];

@@ -103,7 +103,7 @@ function newbbIsModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)$forum;
-        if ($forum_id == 0) {
+        if (0 == $forum_id) {
             return false;
         }
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -140,7 +140,7 @@ function newbbIsAdmin($forum = 0)
         return false;
     }
 
-    if ($GLOBALS['xoopsUserIsAdmin'] && $xoopsModule->getVar('dirname') === 'newbb') {
+    if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $xoopsModule->getVar('dirname')) {
         return true;
     }
 

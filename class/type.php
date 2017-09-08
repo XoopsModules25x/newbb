@@ -71,7 +71,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                . '        l.forum_id '
                . (empty($forums) ? 'IS NOT NULL' : 'IN (' . implode(', ', $forums) . ')')
                . '         ORDER BY l.type_order ASC';
-        if (($result = $this->db->query($sql)) === false) {
+        if (false === ($result = $this->db->query($sql))) {
             //xoops_error($this->db->error());
             return $ret;
         }
@@ -127,7 +127,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         if (!empty($types_valid)) {
             $sql = 'DELETE FROM ' . $this->db->prefix('newbb_type_forum') . ' WHERE ' . ' forum_id = ' . $forum_id . ' AND ' . // irmtfan bug fix: delete other forums types when update the type for a specific forum
                    "     {$this->keyName} NOT IN (" . implode(', ', $types_valid) . ')';
-            if (($result = $this->db->queryF($sql)) === false) {
+            if (false === ($result = $this->db->queryF($sql))) {
             }
         }
 
@@ -139,7 +139,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                     continue;
                 }
                 $sql = 'UPDATE ' . $this->db->prefix('newbb_type_forum') . " SET type_order = {$order}" . " WHERE  {$this->keyName} = {$key} AND forum_id = {$forum_id}";
-                if (($result = $this->db->queryF($sql)) === false) {
+                if (false === ($result = $this->db->queryF($sql))) {
                 }
             }
         }
@@ -152,7 +152,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
                 $type_query[] = "({$key}, {$forum_id}, {$order})";
             }
             $sql = 'INSERT INTO ' . $this->db->prefix('newbb_type_forum') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
-            if (($result = $this->db->queryF($sql)) === false) {
+            if (false === ($result = $this->db->queryF($sql))) {
                 //xoops_error($this->db->error());
             }
         }
@@ -178,7 +178,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
          * Remove forum-type links
          */
         $sql = 'DELETE' . ' FROM ' . $this->db->prefix('newbb_type_forum') . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
-        if (($result = $this->db->{$queryFunc}($sql)) === false) {
+        if (false === ($result = $this->db->{$queryFunc}($sql))) {
             // xoops_error($this->db->error());
         }
 
@@ -186,7 +186,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
          * Reset topic type linked to this type
          */
         $sql = 'UPATE' . ' ' . $this->db->prefix('newbb_topics') . ' SET ' . $this->keyName . '=0' . ' WHERE  ' . $this->keyName . ' = ' . $object->getVar($this->keyName);
-        if (($result = $this->db->{$queryFunc}($sql)) === false) {
+        if (false === ($result = $this->db->{$queryFunc}($sql))) {
             //xoops_error($this->db->error());
         }
 

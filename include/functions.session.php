@@ -101,7 +101,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $sep = strpos($string, '|');
-                    if ($sep === false) {
+                    if (false === $sep) {
                         $value[] = $string;
                     } else {
                         $key         = substr($string, 0, $sep);

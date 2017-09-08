@@ -169,12 +169,12 @@ switch ($op) {
         $postHandler->insert($postObject);
 
         /* split a single post */
-        if ($mode === 1) {
+        if (1 === $mode) {
             $criteria = new CriteriaCompo(new Criteria('topic_id', $topic_id));
             $criteria->add(new Criteria('pid', $post_id));
             $postHandler->updateAll('pid', $pid, $criteria, true);
             /* split a post and its children posts */
-        } elseif ($mode === 2) {
+        } elseif (2 === $mode) {
             include_once $GLOBALS['xoops']->path('class/xoopstree.php');
             $mytree = new XoopsTree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
             $posts  = $mytree->getAllChildId($post_id);
@@ -183,7 +183,7 @@ switch ($op) {
                 $postHandler->updateAll('topic_id', $new_topic_id, $criteria, true);
             }
             /* split a post and all posts coming after */
-        } elseif ($mode === 3) {
+        } elseif (3 === $mode) {
             $criteria = new CriteriaCompo(new Criteria('topic_id', $topic_id));
             $criteria->add(new Criteria('post_id', $post_id, '>'));
             $postHandler->updateAll('topic_id', $new_topic_id, $criteria, true);

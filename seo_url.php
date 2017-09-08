@@ -164,7 +164,7 @@ function replace_links($matches)
             //if ($add_to_url === '') $add_to_url ='index.php';
             break;
     }
-    if ($req_string === '?') {
+    if ('?' === $req_string) {
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';

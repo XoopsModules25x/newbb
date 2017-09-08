@@ -181,7 +181,7 @@ include_once __DIR__ . '/include/functions.forum.php';
 if (newbbIsAdmin()) {
     $forumSel = '<select name="forum">';// if user doesn't select, default is "0" all forums
     $forumSel .= '<option value="0"';
-    if ($forum_id == 0) {
+    if (0 == $forum_id) {
         $forumSel .= ' selected';
     }
     $forumSel                         .= '>' . _ALL . '</option>';
