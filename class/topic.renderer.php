@@ -815,7 +815,7 @@ class NewbbTopicRenderer
             }
             if ('select' === $this->config['pagenav_display']) {
                 $navi = $nav->renderSelect();
-            } elseif ('image' == $this->config['pagenav_display']) {
+            } elseif ('image' === $this->config['pagenav_display']) {
                 $navi = $nav->renderImageNav(4);
             } else {
                 $navi = $nav->renderNav(4);
