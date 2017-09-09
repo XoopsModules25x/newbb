@@ -101,17 +101,16 @@ if (!class_exists('NewbbObjectTree')) {
          * Make a select box with options from the tree
          *
          * @param  string  $name           Name of the select box
-         * @param  string  $fieldName
+         * @param  string  $fieldName       Name of the member variable from the
+         *                                 node objects that should be used as the title for the options.
          * @param  string  $prefix         String to indent deeper levels
          * @param  string  $selected       Value to display as selected
-         * @param  bool    $addEmptyOption
+         * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
          * @param  integer $key            ID of the object to display as the root of select options
          * @param  string  $extra
          * @return string  HTML select box
-         * @internal param bool $EmptyOption
-         * @internal param string $fieldName Name of the member variable from the
-         *                                 node objects that should be used as the title for the options.
-         * @internal param bool $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
+         *
+         * @deprecated since 2.5.9, please use makeSelectElement()
          */
         public function makeSelBox(
             $name,
@@ -123,6 +122,9 @@ if (!class_exists('NewbbObjectTree')) {
             $extra = ''
         ) //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
         {
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
+
             $ret = '<select name=' . $name . '>';
             if (!empty($addEmptyOption)) {
                 $ret .= '<option value="0">' . (is_string($EmptyOption) ? $EmptyOption : '') . '</option>';
