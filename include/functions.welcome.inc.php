@@ -103,19 +103,20 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
 }
 
 $message = sprintf(_MD_NEWBB_WELCOME_MESSAGE, $GLOBALS['xoopsUser']->getVar('uname')) . "\n\n";
-$message .= _PROFILE . ": <a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'><strong>" . $GLOBALS['xoopsUser']->getVar('uname') . '</strong></a> ';
-$message .= " | <a target='_blank' href='".XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . _MD_NEWBB_PM . "</a>\n";
-foreach ($categories as $category) {
-    if (isset($category['fields'])) {
-        $message .= "\n\n" . $category['cat_title'] . ":\n\n";
-        foreach ($category['fields'] as $field) {
-            if (empty($field['value'])) {
-                continue;
-            }
-            $message .= $field['title'] . ': ' . $field['value'] . "\n";
-        }
-    }
-}
+//$message .= _PROFILE . ": <a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'><strong>" . $GLOBALS['xoopsUser']->getVar('uname') . '</strong></a> ';
+//$message .= " | <a target='_blank' href='".XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . _MD_NEWBB_PM . "</a>\n";
+$message .= sprintf($GLOBALS['xoopsModuleConfig']['welcome_forum_message']);
+//foreach ($categories as $category) {
+//    if (isset($category['fields'])) {
+//        $message .= "\n\n" . $category['cat_title'] . ":\n\n";
+//        foreach ($category['fields'] as $field) {
+//            if (empty($field['value'])) {
+//                continue;
+//            }
+//            $message .= $field['title'] . ': ' . $field['value'] . "\n";
+//        }
+//    }
+//}
 $postObject->setVar('post_text', $message);
 $post_id = $postHandler->insert($postObject);
 

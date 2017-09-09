@@ -267,3 +267,10 @@ define('_MI_NEWBB_OVERVIEW', 'Overview');
 define('_MI_NEWBB_HELP_DISCLAIMER', 'Disclaimer');
 define('_MI_NEWBB_LICENSE', 'License');
 define('_MI_NEWBB_SUPPORT', 'Support');
+
+// Message when you first log in to the forum
+define('_MI_NEWBB_WELCOMEFORUM_MESSAGE', 'Enter a message for the first time you logged in');
+define('_MI_NEWBB_WELCOMEFORUM_MESSAGE_DESC', 'The message will be published in the first user message when the user first logs on to the Forum');
+define('_MI_NEWBB_WELCOMEFORUM_DESC_MESSAGE', '
+Since the forum works in real time, it is impossible to verify or confirm the accuracy of the information placed here. Remember that the forum administration does not actively monitor and is not responsible for the messages sent. Administration does not guarantee the accuracy, completeness and correctness of the content of any message. Any communication reflects the author's point of view, which does not necessarily coincide with the point of view of the administration of the forum or organization associated with this forum. Any user who finds a provocative message can inform the forum administration about this. In this case, the message will be reviewed and, if the administration deems it necessary, deleted. However, do not forget that this process takes time and treat it with understanding.
+');

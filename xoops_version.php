@@ -759,10 +759,19 @@ $modversion['config'][] = [
     'name'        => 'welcome_forum',
     'title'       => '_MI_NEWBB_WELCOMEFORUM',
     'description' => '_MI_NEWBB_WELCOMEFORUM_DESC',
-    'formtype'    => 'textbox',
+    'formtype'    => 'textbox',    
     'valuetype'   => 'int',
     'default'     => 0,
     //    'options'     => $forum_options
+];
+
+$modversion['config'][] = [
+    'name'        => 'welcome_forum_message',
+    'title'       => '_MI_NEWBB_WELCOMEFORUM_MESSAGE',
+    'description' => '_MI_NEWBB_WELCOMEFORUM_MESSAGE_DESC',
+    'formtype'    => 'textarea',
+    'valuetype'   => 'text',
+    'default'     => _MI_NEWBB_WELCOMEFORUM_DESC_MESSAGE
 ];
 
 $modversion['config'][] = [
