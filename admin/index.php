@@ -158,9 +158,10 @@ $adminObject->displayIndex();
 
 include_once __DIR__ . '/admin_footer.php';
 
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-$cacheHelper->delete('config');
-$cacheHelper->delete('permission');
+$cacheHelper = NewbbUtility::cleanCache();
+//$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+//$cacheHelper->delete('config');
+//$cacheHelper->delete('permission');
 
 /**
  * @param             $sizeAsString

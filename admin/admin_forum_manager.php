@@ -71,7 +71,7 @@ switch ($op) {
                     $forumHandler->updateAll('cat_id', $cid, new Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
-                $cacheHelper->delete('forum');
+                //$cacheHelper->delete('forum');
                 redirect_header('admin_forum_manager.php?op=manage', 2, _AM_NEWBB_MSG_FORUM_MOVED);
             } else {
                 redirect_header('admin_forum_manager.php?op=manage', 2, _AM_NEWBB_MSG_ERR_FORUM_MOVED);

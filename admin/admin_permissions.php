@@ -339,8 +339,8 @@ switch ($action) {
             }
             $newbbpermHandler->applyTemplate($forum, $module_id);
         }
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-        $cacheHelper->delete('permission');
+        $cacheHelper = NewbbUtility::cleanCache();
+        //$cacheHelper->delete('permission');
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
         break;
 
@@ -446,8 +446,8 @@ switch ($action) {
         /** @var \NewbbPermissionHandler $permissionHandler */
         $permissionHandler = xoops_getModuleHandler('permission', 'newbb');
         $permissionHandler->createPermData();
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-        $cacheHelper->delete('permission');
+        $cacheHelper = NewbbUtility::cleanCache();
+        //$cacheHelper->delete('permission');
         include_once __DIR__ . '/admin_footer.php';
         break;
 }

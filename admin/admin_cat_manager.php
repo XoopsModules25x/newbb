@@ -199,6 +199,7 @@ switch ($op) {
         echo '</table>';
         break;
 }
+
 $cacheHelper = NewbbUtility::cleanCache();
 //$cacheHelper->delete('permission_category');
 
