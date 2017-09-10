@@ -93,5 +93,6 @@ class NewbbUtility
             3, // xoops_cache
             ];
         $maintenance->CleanCache($cacheList);
+        xoops_setActiveModules();
     }    
 }
