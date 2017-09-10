@@ -11,6 +11,8 @@
 
 <{if $viewer_level gt 1}>
     <br>
+  <fieldset style="border:1px solid #778;margin:1em 0;text-align:left;background-color:transparent;">
+    <legend>&nbsp;<{$smarty.const._MD_NEWBB_ADMINCP}>&nbsp;</legend>
     <div class="forum_stats">
         <div class="forum_stats_left">
             <{$smarty.const._MD_NEWBB_TOPIC}>:
@@ -37,6 +39,7 @@
         </div>
         <div style="clear:both;"></div>
     </div>
+  </fieldset>    
 <{/if}>
 <br style="clear: both;"/>
 <div class="dropdown">
