@@ -106,12 +106,12 @@ switch ($op) {
         }
 
         $limit = 10;
-
+        
         $adminObject->displayNavigation(basename(__FILE__));
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
-
+        
         echo "<br><a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href=\"admin_report.php?item=$item_other\">" . $title_other . '</a><br><br>';
 
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
@@ -120,8 +120,8 @@ switch ($op) {
         echo "<td class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</td>';
         echo "<td class='bg3' width='10%'>" . $extra . '</td>';
         echo '</tr>';
-
-        $reports = $reportHandler->getAllReports(0, 'ASC', $limit, $start, $process_result);
+         
+        $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
             $post_link = '<a href="'
                          . XOOPS_URL
@@ -141,8 +141,7 @@ switch ($op) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
                 $memo = $myts->htmlSpecialChars($report['report_memo']);
-            }
-
+            }            
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTPOST . ': ' . $post_link . '</td>';
             echo "<td align='center'>" . $report['report_id'] . '</td>';
@@ -152,7 +151,6 @@ switch ($op) {
             $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbbGetUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
-
             echo "<td align='center'>" . $reporter . $report['reporter_ip'] . '</td>';
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
@@ -180,7 +178,6 @@ switch ($op) {
 
         $nav = new XoopsPageNav($reportHandler->getCount(new Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
         echo $nav->renderNav(4);
-
         break;
 }
 include_once __DIR__ . '/admin_footer.php';
