@@ -107,45 +107,18 @@ class Digest extends XoopsObject
 /**
  * Class NewbbDigestHandler
  */
-class NewbbDigestHandler extends XoopsObjectHandler
+class NewbbDigestHandler extends XoopsPersistableObjectHandler
 {
     public $last_digest;
 
     /**
-     * @param  bool $isNew
-     * @return XoopsObject Digest
+     * Constructor
+     *
+     * @param null|XoopsDatabase $db             database connection
      */
-    public function create($isNew = true)
+    function __construct(XoopsDatabase $db)
     {
-        $digest = new Digest();
-        if ($isNew) {
-            $digest->setNew();
-        }
-
-        return $digest;
-    }
-
-    /**
-     * @param  int $id
-     * @return Digest|null
-     */
-    public function get($id)
-    {
-        $digest = null;
-        $id     = (int)$id;
-        if (!$id) {
-            return $digest;
-        }
-        $sql = 'SELECT * FROM ' . $this->db->prefix('newbb_digest') . ' WHERE digest_id=' . $id;
-        if ($array = $this->db->fetchArray($this->db->query($sql))) {
-            //if ($var) {
-            //    return $array[$var];
-            //}
-            $digest = $this->create(false);
-            $digest->assignVars($array);
-        }
-
-        return $digest;
+        parent::__construct($db, 'bb_digest', 'Digest', 'digest_id');
     }
 
     /**
@@ -265,6 +238,8 @@ class NewbbDigestHandler extends XoopsObjectHandler
      */
     public function insert(XoopsObject $digest)
     {
+        return parent::insert($digest);
+        /*
         $content = $digest->getVar('digest_content', 'E');
 
         $id  = $this->db->genId($digest->table . '_digest_id_seq');
@@ -280,6 +255,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         $digest->setVar('digest_id', $id);
 
         return true;
+        */
     }
 
     /**
