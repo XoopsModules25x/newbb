@@ -118,7 +118,7 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
      */
     function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'bb_digest', 'Digest', 'digest_id');
+        parent::__construct($db, 'newbb_digest', 'Digest', 'digest_id');
     }
 
     /**
@@ -234,11 +234,12 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject $digest
-     * @return bool
+     * @param  bool        $force  flag to force the query execution despite security settings
+     * @return mixed       object ID or false
      */
-    public function insert(XoopsObject $digest)
+    public function insert(XoopsObject $digest, $force = true)
     {
-        return parent::insert($digest);
+        return parent::insert($digest, $force);
         /*
         $content = $digest->getVar('digest_content', 'E');
 
@@ -260,26 +261,21 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param  XoopsObject $digest
-     * @return bool
+     * @param  bool        $force (ignored)
+     * @return bool        FALSE if failed.
      */
-    public function delete(XoopsObject $digest)
+    public function delete(XoopsObject $digest, $force = false)
     {
-        $digest_id = $digest;
-        if (is_object($digest)) {
-            $digest_id = $digest->getVar('digest_id');
-        }
+        $digest_id = $digest->getVar('digest_id');
+
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
         if ($this->last_digest == $digest_id) {
             return false;
         } // It is not allowed to delete the last digest
-        $sql = 'DELETE FROM ' . $this->db->prefix('newbb_digest') . ' WHERE digest_id=' . $digest_id;
-        if (!$result = $this->db->queryF($sql)) {
-            return false;
-        }
 
-        return true;
+        return parent::delete($digest, true);
     }
 
     /**
@@ -355,7 +351,7 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
             } else {
                 $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
-            $summary = xoops_substr(newbbHtml2text($topic['post_text']), 0, SUMMARY_LENGTH);
+            $summary = \Xmf\Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
             $author  = $topic['uname'] . ' (' . formatTimestamp($topic['topic_time']) . ')';
             $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];
