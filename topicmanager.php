@@ -247,10 +247,10 @@ if (Request::getString('submit', '', 'POST')) {
         if ($newforum > 0) {
             $topic_id  = $topic_id[0];
             $topicObject = $topicHandler->get($topic_id);
-            //$topicObject->loadFilters('update');
+            $topicObject->loadFilters('update');
             $topicObject->setVar('forum_id', $newforum, true);
             $topicHandler->insert($topicObject, true);
-            //$topicObject->loadFilters('update');
+            $topicObject->loadFilters('update');
 
             $sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
