@@ -43,13 +43,12 @@ $start = Request::getInt('start', 0, 'GET');
 xoops_cp_header();
 switch ($op) {
     case 'delete':
-        $digest_ids    = Request::getArray('digest_id', '', 'POST');
+        $digest_ids    = Request::getArray('digest_id', [], 'POST');
         /** @var \NewbbDigestHandler $digestHandler */
         $digestHandler = xoops_getModuleHandler('digest', 'newbb');
-        if ('' !== $digest_ids) {
-            foreach ($digest_ids as $did => $value) {
-                $digestHandler->delete($did);
-            }
+        foreach ($digest_ids as $did => $value) {
+            $digest = $digestHandler->get($did);
+            $digestHandler->delete($digest);
         }
         redirect_header('admin_digest.php', 1);
         break;

@@ -239,6 +239,7 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
      */
     public function insert(XoopsObject $digest, $force = true)
     {
+        $digest->setVar('digest_time', time());
         return parent::insert($digest, $force);
         /*
         $content = $digest->getVar('digest_content', 'E');
