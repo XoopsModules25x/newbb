@@ -8,6 +8,8 @@
 <div class="clear"></div>
 <{if $viewer_level gt 1}>
     <br>
+  <fieldset style="border:1px solid #778;margin:1em 0;text-align:left;background-color:transparent;">
+    <legend>&nbsp;<{$smarty.const._MD_NEWBB_ADMINCP}>&nbsp;</legend>    
     <div class="forum_stats">
         <div class="forum_stats_col left floatleft">
             <{$smarty.const._MD_NEWBB_TOPIC}>:
@@ -34,6 +36,7 @@
         </div>
         <div class="clear"></div>
     </div>
+  </fieldset>
 <{/if}>
 <div class="dropdown floatleft">
     <{includeq file="db:newbb_index_menu.tpl"}>
