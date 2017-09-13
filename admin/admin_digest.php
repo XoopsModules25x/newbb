@@ -53,19 +53,45 @@ switch ($op) {
         redirect_header('admin_digest.php', 1);
         break;
 
+    case 'digest':
+        xoops_confirm(['op' => 'digestconfirmed'], 'admin_digest.php', _AM_NEWBB_DIGEST_CONFIRM);
+        break;
+    case 'digestconfirmed':
+        $message = '';
+        if ('POST' === Request::getMethod()) {
+            $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+
+            switch ($digestHandler->process(true)) {
+                case 0:
+                    $message = _AM_NEWBB_DIGEST_SENT;
+                    break;
+                case 4:
+                    $message = _AM_NEWBB_DIGEST_NOT_SENT;
+                    break;
+                default:
+                    $message = _AM_NEWBB_DIGEST_FAILED;
+                    break;
+            }
+        }
+        redirect_header('admin_digest.php', 1, $message);
+        break;
+
     default:
         include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
         $limit = 5;
         $adminObject->displayNavigation(basename(__FILE__));
 
+        $adminObject->addItemButton(_AM_NEWBB_DIGEST, 'admin_digest.php?op=digest', $icon = 'add');
+        $adminObject->displayButton();
+
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3'>" . _AM_NEWBB_DIGESTCONTENT . '</td>';
-        echo "<td class='bg3' width='2%'>" . _DELETE . '</td>';
+        echo "<th class='bg3' width='2%'>" . _DELETE . '</th>';
+        echo "<th class='bg3'>" . _AM_NEWBB_DIGESTCONTENT . '</th>';
         echo '</tr>';
 
         $digests       = [];
@@ -73,13 +99,13 @@ switch ($op) {
         $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
-            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br>' . str_replace("\n", '<br>', $digest['digest_content']) . '</td>';
             echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' /></td>";
+            echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br>' . str_replace("\n", '<br>', $digest['digest_content']) . '</td>';
             echo '</tr>';
             echo "<tr colspan='2'><td height='2'></td></tr>";
         }
         $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
-        echo "<tr colspan='2'><td align='center'>" . $submit->render() . '</td></tr>';
+        echo "<tr><td colspan='2' align='center'>" . $submit->render() . '</td></tr>';
         $hidden = new XoopsFormHidden('op', 'delete');
         echo $hidden->render();
         $hidden = new XoopsFormHidden('item', $item);
