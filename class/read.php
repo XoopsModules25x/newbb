@@ -345,6 +345,15 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      */
     public function clearDuplicate()
     {
+        /**
+         * This is needed for the following query GROUP BY clauses to work in MySQL 5.7.
+         * This is a TEMPORARY fix. Needing this function is bad in the first place, but
+         * needing sloppy SQL to make it work is worse.
+         * @todo The schema itself should preclude the duplicates
+         */
+        $sql = "SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))";
+        $this->db->queryF($sql);
+
         $sql = 'CREATE TABLE ' . $this->table . '_duplicate LIKE ' . $this->table . '; ';
         if (!$result = $this->db->queryF($sql)) {
             xoops_error($this->db->error() . '<br>' . $sql);

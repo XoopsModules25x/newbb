@@ -201,6 +201,7 @@ class NewbbStatsHandler
                 $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}" . "        AND FROM_UNIXTIME(topic_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
                 $result = $this->db->query($sql);
                 list($topics, $views) = $this->db->fetchRow($result);
+                $views = empty($views) ? 0 : $views; // null check
                 $this->db->queryF("    INSERT INTO {$this->table}"
                                   . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) '
                                   . '    VALUES '
