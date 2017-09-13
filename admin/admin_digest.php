@@ -52,6 +52,29 @@ switch ($op) {
         }
         redirect_header('admin_digest.php', 1);
         break;
+        
+    case 'digest':
+        xoops_confirm(['op' => 'digestconfirmed'], 'admin_digest.php', _AM_NEWBB_DIGEST_CONFIRM);
+        break;
+    case 'digestconfirmed':
+        $message = '';
+        if ('POST' === Request::getMethod()) {
+            $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+
+            switch ($digestHandler->process(true)) {
+                case 0:
+                    $message = _AM_NEWBB_DIGEST_SENT;
+                    break;
+                case 4:
+                    $message = _AM_NEWBB_DIGEST_NOT_SENT;
+                    break;
+                default:
+                    $message = _AM_NEWBB_DIGEST_FAILED;
+                    break;
+            }
+        }
+        redirect_header('admin_digest.php', 1, $message);
+        break;
 
     case 'digest':
         xoops_confirm(['op' => 'digestconfirmed'], 'admin_digest.php', _AM_NEWBB_DIGEST_CONFIRM);

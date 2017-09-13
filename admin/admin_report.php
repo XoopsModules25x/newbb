@@ -95,12 +95,12 @@ switch ($op) {
 
         if ('processed' !== $item) {
             $process_result = 0;
-            $item_other     = 'processed';
+            $item_other     = 'admin_report.php?item=processed';
             $title_other    = _AM_NEWBB_PROCESSEDREPORT;
             $extra          = _AM_NEWBB_REPORTEXTRA;
         } else {
             $process_result = 1;
-            $item_other     = 'process';
+            $item_other     = 'admin_report.php?item=process';
             $title_other    = _AM_NEWBB_PROCESSREPORT;
             $extra          = _DELETE;
         }
@@ -111,9 +111,8 @@ switch ($op) {
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
-        
-        echo "<br><a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href=\"admin_report.php?item=$item_other\">" . $title_other . '</a><br><br>';
-
+        $adminObject->addItemButton($title_other, $item_other, $icon = 'add');
+        $adminObject->displayButton(); 
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
