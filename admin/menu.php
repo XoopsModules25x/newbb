@@ -94,13 +94,13 @@ $adminmenu[] = [
     'link'  => 'admin/admin_report.php',
     'icon'  => $pathIcon32 . 'content.png'
 ];
-/*
+
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_DIGEST,
     'link'  => 'admin/admin_digest.php',
     'icon'  => $pathIcon32 . 'digest.png'
 ];
-*/
+
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_VOTE,
     'link'  => 'admin/admin_votedata.php',
