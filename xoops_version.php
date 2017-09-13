@@ -266,7 +266,7 @@ $modversion['config'][] = [
     'default'     => 0
 ];
 
-$modversion['config'][] = [
+$modversion['config'][] = [ 
     'name'        => 'subforum_display',
     'title'       => '_MI_NEWBB_SUBFORUM_DISPLAY',
     'description' => '_MI_NEWBB_SUBFORUM_DISPLAY_DESC',
@@ -590,7 +590,7 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
+/*
 $modversion['config'][] = [
     'name'        => 'email_digest',
     'title'       => '_MI_NEWBB_EMAIL_DIGEST',
@@ -604,7 +604,7 @@ $modversion['config'][] = [
         _MI_NEWBB_EMAIL_WEEKLY => 2
     ]
 ];
-
+*/
 $modversion['config'][] = [
     'name'        => 'show_ip',
     'title'       => '_MI_NEWBB_SHOW_IP',
@@ -874,7 +874,7 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_newfullpost_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_NEWFULLPOST_NOTIFYSBJ,
 ];
-
+/*
 $modversion['notification']['event'][] = [
     'name'          => 'digest',
     'category'      => 'global',
@@ -884,7 +884,7 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_digest_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_DIGEST_NOTIFYSBJ,
 ];
-
+*/
 $modversion['notification']['event'][] = [
     'name'          => 'new_fullpost',
     'category'      => 'forum',
