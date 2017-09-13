@@ -110,16 +110,11 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
-        echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=apply'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
-        echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '<br>';
-        echo '<br>';
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+        $adminObject->displayButton();                          
 
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -197,17 +192,11 @@ switch ($op) {
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_TEMPLATE_APPLY);
-        echo '<br>';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
-        echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=apply'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE_APPLY . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
-        echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '<br>';
-        echo '<br>';
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+        $adminObject->displayButton();   
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -280,14 +269,10 @@ switch ($op) {
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_FORUM);
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
-        echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
-        echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '<br>';
-        echo '<br>';
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+        $adminObject->displayButton();         
 
         $fmform->display();
         break;
@@ -307,14 +292,10 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
-        echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
-        echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-        echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
-        echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-        echo '<br>';
-        echo '<br>';
+                $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+        $adminObject->displayButton(); 
 
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -381,14 +362,10 @@ switch ($op) {
         }
 
         if ('add' !== $op) {
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=add'>";
-            echo _AM_NEWBB_TYPE_ADD . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=template'>";
-            echo _AM_NEWBB_TYPE_TEMPLATE . '</a> | ';
-            echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='" . xoops_getenv('PHP_SELF') . "?op=forum'>";
-            echo _AM_NEWBB_TYPE_FORUM . '</a> | ';
-            echo '<br>';
-            echo '<br>';
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+        $adminObject->displayButton(); 
         }
 
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
