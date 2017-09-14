@@ -111,8 +111,8 @@ switch ($op) {
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
-        $adminObject->addItemButton($title_other, $item_other, $icon = 'add');
-        $adminObject->displayButton(); 
+        $adminObject->addItemButton($title_other, $item_other, $icon = 'add');          
+        $adminObject->displayButton();
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";

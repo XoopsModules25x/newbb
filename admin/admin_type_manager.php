@@ -114,7 +114,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();                          
+        $adminObject->displayButton();
 
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -196,7 +196,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();   
+        $adminObject->displayButton();
 
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -272,7 +272,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();         
+        $adminObject->displayButton();
 
         $fmform->display();
         break;
@@ -292,10 +292,10 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
-                $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton(); 
+        $adminObject->displayButton();
 
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -365,7 +365,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton(); 
+        $adminObject->displayButton();
         }
 
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
