@@ -49,7 +49,7 @@ if (!in_array($op, $validOps, true)) {
 
 /** @var \NewbbTypeHandler $typeHandler */
 $typeHandler = xoops_getModuleHandler('type', 'newbb');
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');    
 
 switch ($op) {
     case 'save_type':
@@ -397,6 +397,9 @@ switch ($op) {
             }
             echo "<tr><td colspan='4'>";
         } else {
+            $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+            $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+            $adminObject->displayButton();
             for ($i = 0; $i < 10; ++$i) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='text' name='type_name[{$i}]' value='' size='10' /></td>";
