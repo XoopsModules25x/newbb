@@ -8,7 +8,6 @@
  * @since          4.00
  * @package        module::newbb
  */
-
 $moduleDirName = basename(__DIR__);
 $modversion    = [
     'version'             => 5.00,
@@ -43,24 +42,24 @@ $modversion    = [
     'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
     // ------------------- Tables ----------------------------
     'tables'              => [
-        'newbb_archive',
-        'newbb_attachments',
-        'newbb_categories',
-        'newbb_digest',
-        'newbb_forums',
-        'newbb_moderates',
-        'newbb_online',
-        'newbb_posts',
-        'newbb_posts_text',
-        'newbb_reads_forum',
-        'newbb_reads_topic',
-        'newbb_report',
-        'newbb_stats',
-        'newbb_topics',
-        'newbb_type',
-        'newbb_type_forum',
-        'newbb_user_stats',
-        'newbb_votedata',
+    $moduleDirName . '_' . 'archive',
+    $moduleDirName . '_' . 'categories',
+    $moduleDirName . '_' . 'votedata',
+    $moduleDirName . '_' . 'forums',
+    $moduleDirName . '_' . 'posts',
+    $moduleDirName . '_' . 'posts_text',
+    $moduleDirName . '_' . 'topics',
+    $moduleDirName . '_' . 'online',
+    $moduleDirName . '_' . 'digest',
+    $moduleDirName . '_' . 'report',
+    $moduleDirName . '_' . 'attachments',
+    $moduleDirName . '_' . 'moderates',
+    $moduleDirName . '_' . 'reads_forum',
+    $moduleDirName . '_' . 'reads_topic',
+    $moduleDirName . '_' . 'type',
+    $moduleDirName . '_' . 'type_forum',
+    $moduleDirName . '_' . 'stats',
+    $moduleDirName . '_' . 'user_stats'
     ],
     // ------------------- Admin Menu -------------------
     'system_menu'         => 1,
@@ -80,7 +79,6 @@ $modversion    = [
     'onUpdate'            => 'include/module.php',
     //  'onUninstall'         => 'include/onuninstall.php',
 ];
-
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [
     ['name' => _MI_NEWBB_OVERVIEW, 'link' => 'page=help'],
@@ -91,7 +89,6 @@ $modversion['helpsection'] = [
     //    array('name' => _MI_NEWBB_REQUIREMENTS, 'link' => 'page=__requirements'),
     //    array('name' => _MI_NEWBB_CREDITS, 'link' => 'page=__credits'),
 ];
-
 // Templates
 $modversion['templates'] = [
     ['file' => 'newbb_index_menu.tpl', 'description' => ''],
@@ -113,16 +110,13 @@ $modversion['templates'] = [
     ['file' => 'newbb_notification_select.tpl', 'description' => ''],
     ['file' => 'newbb_moderate.tpl', 'description' => ''],
 ];
-
 // Blocks
-
 // options[0] - Citeria valid: time(by default)
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
 // options[3] - DisplayMode: 0-full view;1-compact view;2-lite view
 // options[4] - Display Navigator: 1 (by default), 0 (No)
 // options[5] - SelectedForumIDs: null for all
-
 $modversion['blocks'][1] = [
     'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_TOPIC_POST,
@@ -133,7 +127,6 @@ $modversion['blocks'][1] = [
     'edit_func'   => 'b_newbb_edit',
     'template'    => 'newbb_block.tpl'
 ];
-
 // options[0] - Citeria valid: time(by default), views, replies, digest, sticky
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
@@ -141,7 +134,6 @@ $modversion['blocks'][1] = [
 // options[4] - Display Navigator: 1 (by default), 0 (No)
 // options[5] - Title Length : 0 - no limit
 // options[6] - SelectedForumIDs: null for all
-
 $modversion['blocks'][] = [
     'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_TOPIC,
@@ -152,7 +144,6 @@ $modversion['blocks'][] = [
     'edit_func'   => 'b_newbb_topic_edit',
     'template'    => 'newbb_block_topic.tpl'
 ];
-
 // options[0] - Citeria valid: title(by default), text
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
@@ -160,7 +151,6 @@ $modversion['blocks'][] = [
 // options[4] - Display Navigator: 1 (by default), 0 (No)
 // options[5] - Title/Text Length : 0 - no limit
 // options[6] - SelectedForumIDs: null for all
-
 $modversion['blocks'][] = [
     'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_POST,
@@ -170,14 +160,12 @@ $modversion['blocks'][] = [
     'edit_func'   => 'b_newbb_post_edit',
     'template'    => 'newbb_block_post.tpl'
 ];
-
 // options[0] - Citeria valid: post(by default), topic, digest, sticky
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
 // options[3] - DisplayMode: 0-full view;1-compact view;
 // options[4] - Display Navigator: 1 (by default), 0 (No)
 // options[5] - SelectedForumIDs: null for all
-
 $modversion['blocks'][] = [
     'file'        => 'newbb_block.php',
     'name'        => _MI_NEWBB_BLOCK_AUTHOR,
@@ -187,7 +175,6 @@ $modversion['blocks'][] = [
     'edit_func'   => 'b_newbb_author_edit',
     'template'    => 'newbb_block_author.tpl'
 ];
-
 /*
  * $options:
  *                    $options[0] - number of tags to display
@@ -204,7 +191,6 @@ $modversion['blocks'][] = [
     'options'     => '100|0|150|80',
     'template'    => 'newbb_tag_block_cloud.tpl'
 ];
-
 /*
  * $options:
  *                    $options[0] - number of tags to display
@@ -220,7 +206,6 @@ $modversion['blocks'][] = [
     'options'     => '50|0|c',
     'template'    => 'newbb_tag_block_top.tpl'
 ];
-
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
 // options[2] - Lastposter in WHERE claus: uid of the lastposter in topic : -1 - all users (by default)
@@ -243,13 +228,10 @@ $modversion['blocks'][] = [
     'edit_func'   => 'newbb_list_topic_edit',
     'template'    => 'newbb_block_list_topic.tpl'
 ];
-
 // Smarty
 $modversion['use_smarty'] = 1;
-
 // Configs
 $modversion['config'] = [];
-
 $modversion['config'][] = [
     'name'        => 'do_rewrite',
     'title'       => '_MI_NEWBB_DO_REWRITE',
@@ -258,7 +240,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'subforum_display',
     'title'       => '_MI_NEWBB_SUBFORUM_DISPLAY',
@@ -272,7 +253,6 @@ $modversion['config'][] = [
     ],
     'default'     => 'collapse'
 ];
-
 $modversion['config'][] = [
     'name'        => 'post_excerpt',
     'title'       => '_MI_NEWBB_POST_EXCERPT',
@@ -281,7 +261,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 100
 ];
-
 $modversion['config'][] = [
     'name'        => 'topics_per_page',
     'title'       => '_MI_NEWBB_TOPICSPERPAGE',
@@ -290,7 +269,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 20
 ];
-
 $modversion['config'][] = [
     'name'        => 'posts_per_page',
     'title'       => '_MI_NEWBB_POSTSPERPAGE',
@@ -299,7 +277,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 10
 ];
-
 $modversion['config'][] = [
     'name'        => 'pagenav_display',
     'title'       => '_MI_NEWBB_PAGENAV_DISPLAY',
@@ -313,7 +290,6 @@ $modversion['config'][] = [
     ],
     'default'     => 'number'
 ];
-
 $modversion['config'][] = [
     'name'        => 'cache_enabled',
     'title'       => '_MI_NEWBB_CACHE_ENABLE',
@@ -322,7 +298,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'statistik_enabled',
     'title'       => '_MI_NEWBB_STATISTIK_ENABLE',
@@ -331,7 +306,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'dir_attachments',
     'title'       => '_MI_NEWBB_DIR_ATTACHMENT',
@@ -340,7 +314,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => 'uploads/newbb'
 ];
-
 $modversion['config'][] = [
     'name'        => 'media_allowed',
     'title'       => '_MI_NEWBB_MEDIA_ENABLE',
@@ -349,7 +322,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'path_magick',
     'title'       => '_MI_NEWBB_PATH_MAGICK',
@@ -358,7 +330,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => '/usr/bin/X11'
 ];
-
 $modversion['config'][] = [
     'name'        => 'path_netpbm',
     'title'       => '_MI_NEWBB_PATH_NETPBM',
@@ -367,7 +338,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => '/usr/bin'
 ];
-
 $modversion['config'][] = [
     'name'        => 'image_lib',
     'title'       => '_MI_NEWBB_IMAGELIB',
@@ -383,7 +353,6 @@ $modversion['config'][] = [
         _MI_NEWBB_GD2    => 4
     ]
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_userattach',
     'title'       => '_MI_NEWBB_USERATTACH_ENABLE',
@@ -392,7 +361,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'max_img_width',
     'title'       => '_MI_NEWBB_MAX_IMG_WIDTH',
@@ -401,7 +369,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 800
 ];
-
 $modversion['config'][] = [
     'name'        => 'max_img_height',
     'title'       => '_MI_NEWBB_MAX_IMG_HEIGHT',
@@ -410,7 +377,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 640
 ];
-
 $modversion['config'][] = [
     'name'        => 'max_image_width',
     'title'       => '_MI_NEWBB_MAX_IMAGE_WIDTH',
@@ -419,7 +385,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 150
 ];
-
 $modversion['config'][] = [
     'name'        => 'max_image_height',
     'title'       => '_MI_NEWBB_MAX_IMAGE_HEIGHT',
@@ -428,7 +393,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 150
 ];
-
 $modversion['config'][] = [
     'name'        => 'wol_enabled',
     'title'       => '_MI_NEWBB_WOL_ENABLE',
@@ -437,7 +401,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'user_level',
     'title'       => '_MI_NEWBB_USERLEVEL',
@@ -451,7 +414,6 @@ $modversion['config'][] = [
         _MI_NEWBB_GRAPHIC => 2
     ]
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_realname',
     'title'       => '_MI_NEWBB_SHOW_REALNAME',
@@ -460,7 +422,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'groupbar_enabled',
     'title'       => '_MI_NEWBB_GROUPBAR_ENABLE',
@@ -469,7 +430,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'rating_enabled',
     'title'       => '_MI_NEWBB_RATING_ENABLE',
@@ -478,7 +438,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'reportmod_enabled',
     'title'       => '_MI_NEWBB_REPORTMOD_ENABLE',
@@ -487,7 +446,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'quickreply_enabled',
     'title'       => '_MI_NEWBB_QUICKREPLY_ENABLE',
@@ -496,7 +454,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'rss_enable',
     'title'       => '_MI_NEWBB_RSS_ENABLE',
@@ -505,7 +462,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'rss_maxitems',
     'title'       => '_MI_NEWBB_RSS_MAX_ITEMS',
@@ -514,7 +470,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 10
 ];
-
 $modversion['config'][] = [
     'name'        => 'rss_maxdescription',
     'title'       => '_MI_NEWBB_RSS_MAX_DESCRIPTION',
@@ -523,7 +478,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'rss_cachetime',
     'title'       => '_MI_NEWBB_RSS_CACHETIME',
@@ -532,7 +486,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 30
 ];
-
 // 4.05
 $modversion['config'][] = [
     'name'        => 'show_infobox',
@@ -547,7 +500,6 @@ $modversion['config'][] = [
         _MI_NEWBB_INFOBOX_SHOW   => 2
     ]
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_sociallinks',
     'title'       => '_MI_NEWBB_SHOW_SOCIALLINKS',
@@ -556,7 +508,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_advertising',
     'title'       => '_MI_NEWBB_ADVERTISING',
@@ -565,7 +516,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_jump',
     'title'       => '_MI_NEWBB_SHOW_JUMPBOX',
@@ -574,7 +524,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_permissiontable',
     'title'       => '_MI_NEWBB_SHOW_PERMISSIONTABLE',
@@ -583,7 +532,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'email_digest',
     'title'       => '_MI_NEWBB_EMAIL_DIGEST',
@@ -597,7 +545,6 @@ $modversion['config'][] = [
         _MI_NEWBB_EMAIL_WEEKLY => 2
     ]
 ];
-
 $modversion['config'][] = [
     'name'        => 'show_ip',
     'title'       => '_MI_NEWBB_SHOW_IP',
@@ -606,7 +553,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'enable_karma',
     'title'       => '_MI_NEWBB_ENABLE_KARMA',
@@ -615,7 +561,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'karma_options',
     'title'       => '_MI_NEWBB_KARMA_OPTIONS',
@@ -633,7 +578,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => '-1, -2, -6, -12, 0, 1, 2, 5, 10, 20, 30, 60, 100, 365'
 ];
-
 $modversion['config'][] = [
     'name'        => 'since_default',
     'title'       => '_MI_NEWBB_SINCE_DEFAULT',
@@ -642,7 +586,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'allow_user_anonymous',
     'title'       => '_MI_NEWBB_USER_ANONYMOUS',
@@ -651,7 +594,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'anonymous_prefix',
     'title'       => '_MI_NEWBB_ANONYMOUS_PRE',
@@ -660,7 +602,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => $GLOBALS['xoopsConfig']['anonymous'] . '-'
 ];
-
 $modversion['config'][] = [
     'name'        => 'allow_require_reply',
     'title'       => '_MI_NEWBB_REQUIRE_REPLY',
@@ -669,7 +610,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'edit_timelimit',
     'title'       => '_MI_NEWBB_EDIT_TIMELIMIT',
@@ -678,7 +618,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 60
 ];
-
 $modversion['config'][] = [
     'name'        => 'recordedit_timelimit',
     'title'       => '_MI_RECORDEDIT_TIMELIMIT',
@@ -687,7 +626,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 15
 ];
-
 $modversion['config'][] = [
     'name'        => 'delete_timelimit',
     'title'       => '_MI_NEWBB_DELETE_TIMELIMIT',
@@ -696,7 +634,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 60
 ];
-
 $modversion['config'][] = [
     'name'        => 'post_timelimit',
     'title'       => '_MI_NEWBB_POST_TIMELIMIT',
@@ -705,7 +642,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 30
 ];
-
 $modversion['config'][] = [
     'name'        => 'enable_permcheck',
     'title'       => '_MI_NEWBB_PERMCHECK_ONDISPLAY',
@@ -714,7 +650,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
-
 $modversion['config'][] = [
     'name'        => 'enable_usermoderate',
     'title'       => '_MI_NEWBB_USERMODERATE',
@@ -723,7 +658,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0
 ];
-
 $modversion['config'][] = [
     'name'        => 'disc_show',
     'title'       => '_MI_NEWBB_SHOW_DIS',
@@ -738,7 +672,6 @@ $modversion['config'][] = [
         _MI_NEWBB_OP_BOTH => 3
     ]
 ];
-
 $modversion['config'][] = [
     'name'        => 'disclaimer',
     'title'       => '_MI_NEWBB_DISCLAIMER',
@@ -747,7 +680,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => _MI_NEWBB_DISCLAIMER_TEXT
 ];
-
 $modversion['config'][] = [
     'name'        => 'welcome_forum',
     'title'       => '_MI_NEWBB_WELCOMEFORUM',
@@ -757,7 +689,6 @@ $modversion['config'][] = [
     'default'     => 0,
     //    'options'     => $forum_options
 ];
-
 $modversion['config'][] = [
     'name'        => 'welcome_forum_message',
     'title'       => '_MI_NEWBB_WELCOMEFORUM_MESSAGE',
@@ -766,7 +697,6 @@ $modversion['config'][] = [
     'valuetype'   => 'text',
     'default'     => _MI_NEWBB_WELCOMEFORUM_DESC_MESSAGE
 ];
-
 $modversion['config'][] = [
     'name'        => 'poll_module',
     'title'       => '_MI_NEWBB_POLL_MODULE',
@@ -775,13 +705,11 @@ $modversion['config'][] = [
     'formtype'    => 'textbox',
     'default'     => 'xoopspoll',
 ];
-
 // Notification
 $modversion['notification']                = [];
 $modversion['hasNotification']             = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'newbb_notify_iteminfo';
-
 $modversion['notification']['category'][] = [
     'name'           => 'thread',
     'title'          => _MI_NEWBB_THREAD_NOTIFY,
@@ -790,7 +718,6 @@ $modversion['notification']['category'][] = [
     'item_name'      => 'topic_id',
     'allow_bookmark' => 1,
 ];
-
 $modversion['notification']['category'][] = [
     'name'           => 'forum',
     'title'          => _MI_NEWBB_FORUM_NOTIFY,
@@ -799,14 +726,12 @@ $modversion['notification']['category'][] = [
     'item_name'      => 'forum',
     'allow_bookmark' => 1,
 ];
-
 $modversion['notification']['category'][] = [
     'name'           => 'global',
     'title'          => _MI_NEWBB_GLOBAL_NOTIFY,
     'description'    => _MI_NEWBB_GLOBAL_NOTIFYDSC,
     'subscribe_from' => 'index.php',
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_post',
     'category'      => 'thread',
@@ -816,7 +741,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'thread_newpost_notify',
     'mail_subject'  => _MI_NEWBB_THREAD_NEWPOST_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_thread',
     'category'      => 'forum',
@@ -826,7 +750,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'forum_newthread_notify',
     'mail_subject'  => _MI_NEWBB_FORUM_NEWTHREAD_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_forum',
     'category'      => 'global',
@@ -836,7 +759,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_newforum_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_NEWFORUM_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_post',
     'category'      => 'global',
@@ -846,7 +768,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_newpost_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_NEWPOST_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_post',
     'category'      => 'forum',
@@ -856,7 +777,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'forum_newpost_notify',
     'mail_subject'  => _MI_NEWBB_FORUM_NEWPOST_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_fullpost',
     'category'      => 'global',
@@ -867,7 +787,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_newfullpost_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_NEWFULLPOST_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'digest',
     'category'      => 'global',
@@ -877,7 +796,6 @@ $modversion['notification']['event'][] = [
     'mail_template' => 'global_digest_notify',
     'mail_subject'  => _MI_NEWBB_GLOBAL_DIGEST_NOTIFYSBJ,
 ];
-
 $modversion['notification']['event'][] = [
     'name'          => 'new_fullpost',
     'category'      => 'forum',
