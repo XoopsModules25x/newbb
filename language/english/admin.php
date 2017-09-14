@@ -259,6 +259,7 @@ define('_AM_NEWBB_VOTE_DELETEDSC', '<strong>Deletes</strong> the selected voting
 define('_AM_NEWBB_TYPE_ADD', 'Add types');
 define('_AM_NEWBB_TYPE_ADD_ERR', 'Error. Add types');
 define('_AM_NEWBB_TYPE_TEMPLATE', 'Type template');
+define('_AM_NEWBB_TYPE_TEMPLATE_ERR', 'Error. Set template order');
 define('_AM_NEWBB_TYPE_TEMPLATE_APPLY', 'Apply template');
 define('_AM_NEWBB_TYPE_FORUM', 'Type per forum');
 define('_AM_NEWBB_TYPE_FORUM_ERR', 'Error. It is necessary to choose a forum and not a category.');
