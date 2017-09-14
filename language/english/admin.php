@@ -271,6 +271,7 @@ define('_AM_NEWBB_TYPE_LIST', 'Type list');
 define('_AM_NEWBB_TODEL_TYPE', 'Are you sure to delete the types: [%s]?');
 define('_AM_NEWBB_TYPE_EDITFORUM_DESC', 'The data have not been saved yet. You must submit to save it.');
 define('_AM_NEWBB_TYPE_ORDER_DESC', 'To activate a type for a forum, a value greater than 0 is required for \'type_order\'; In other words, a type will be inactive for a forum if \'type_order\' is set to 0.');
+define('_AM_NEWBB_TYPE_HELP', 'Allows you to create \'Types\' of forums, to highlight forum topics. Example: <strong style="color:blue;">[Important]</strong>, <strong style="color:red;">[ATTENTION]</strong> etc.');
 // admin_synchronization.php
 define('_AM_NEWBB_SYNC_TYPE_FORUM', 'Forum Data');
 define('_AM_NEWBB_SYNC_TYPE_TOPIC', 'Topic Data');

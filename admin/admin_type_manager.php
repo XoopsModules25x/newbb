@@ -164,7 +164,7 @@ switch ($op) {
 
     case 'apply':
         if (!$templates = $cacheHelper->read('type_template')) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
+            redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
         }
 
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
@@ -283,7 +283,7 @@ switch ($op) {
 
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
+            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
         $typesObject = $typeHandler->getAll();
@@ -365,7 +365,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
         }
-
+        echo _AM_NEWBB_TYPE_HELP;
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
