@@ -116,7 +116,7 @@ class NewbbDigestHandler extends XoopsPersistableObjectHandler
      *
      * @param null|XoopsDatabase $db             database connection
      */
-    function __construct(XoopsDatabase $db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'newbb_digest', 'Digest', 'digest_id');
     }
