@@ -14,7 +14,7 @@ use Xmf\Request;
 
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-echo '<br>';
+echo '<br />';
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
@@ -148,8 +148,8 @@ switch ($op) {
             echo '</tr>';
         }
 
-        echo "<tr><td colspan='3'>";
-        echo _AM_NEWBB_TYPE_ORDER_DESC . '<br><br>';
+        echo "<tr><td colspan='3' style='text-align:center;'>";
+        echo '<ul><li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ul>';
         echo "<input type='hidden' name='op' value='save_template' />";
         echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
         echo "<input type='reset' value='" . _CANCEL . "' />";
@@ -220,7 +220,7 @@ switch ($op) {
             unset($typesObject[$key]);
         }
         echo '</table>';
-        echo '<br>';
+        echo '<br />';
         $fmform->display();
         break;
 
@@ -332,9 +332,9 @@ switch ($op) {
             echo '</tr>';
         }
 
-        echo "<tr><td colspan='3'>";
+        echo "<tr><td colspan='3' style='text-align:center;'>";
         echo '<ul><li>' . _AM_NEWBB_TYPE_EDITFORUM_DESC . '</li>';
-        echo '<li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ol><br>';
+        echo '<li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ul>';
         echo "<input type='hidden' name='forum' value='" . Request::getInt('forum', 0, 'POST') . "' />";
         echo "<input type='hidden' name='op' value='save_forum' />";
         echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
@@ -372,7 +372,7 @@ switch ($op) {
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         if ('add' !== $op) {
-            echo "<td class='bg3' width='5%'>" . _DELETE . '</td>';
+            echo "<th class='bg3' width='5%'>" . _DELETE . '</th>';
         }
         echo "<th align='left' class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
         echo "<th class='bg3' width='15%'>" . _AM_NEWBB_TYPE_COLOR . '</th>';
@@ -395,7 +395,7 @@ switch ($op) {
                 echo "<td><input type='text' name='type_description[{$key}]' value='" . $typeObject->getVar('type_description') . "' size='30' /></td>";
                 echo '</tr>';
             }
-            echo "<tr><td colspan='4'>";
+            echo "<tr><td colspan='4' style='text-align:center;'>";
         } else {
             $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
             $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
@@ -412,7 +412,7 @@ switch ($op) {
                 echo "<td><input type='text' name='type_description[{$i}]' value='' size='40' /></td>";
                 echo '</tr>';
             }
-            echo "<tr><td colspan='3'>";
+            echo "<tr><td colspan='3' style='text-align:center;'>";
             echo "<input type='hidden' name='isnew' value='1' />";
         }
         echo "<input type='hidden' name='op' value='save_type' />";
