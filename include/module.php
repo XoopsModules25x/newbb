@@ -43,9 +43,8 @@ include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  */
 function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
 {
-    $cacheHelper = NewbbUtility::cleanCache();
-    //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-    //$cacheHelper->delete('config');
+    $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+    $cacheHelper->delete('config');
 
     $newbbConfig = newbbLoadConfig();
 

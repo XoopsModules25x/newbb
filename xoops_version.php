@@ -47,24 +47,24 @@ $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
 $modversion['tables'] = [
-    'newbb_archive',
-    'newbb_attachments',
-    'newbb_categories',
-    'newbb_digest',
-    'newbb_forums',
-    'newbb_moderates',
-    'newbb_online',
-    'newbb_posts',
-    'newbb_posts_text',
-    'newbb_reads_forum',
-    'newbb_reads_topic',
-    'newbb_report',
-    'newbb_stats',
-    'newbb_topics',
-    'newbb_type',
-    'newbb_type_forum',
-    'newbb_user_stats',
-    'newbb_votedata',
+    $moduleDirName . '_' . 'archive',
+    $moduleDirName . '_' . 'categories',
+    $moduleDirName . '_' . 'votedata',
+    $moduleDirName . '_' . 'forums',
+    $moduleDirName . '_' . 'posts',
+    $moduleDirName . '_' . 'posts_text',
+    $moduleDirName . '_' . 'topics',
+    $moduleDirName . '_' . 'online',
+    $moduleDirName . '_' . 'digest',
+    $moduleDirName . '_' . 'report',
+    $moduleDirName . '_' . 'attachments',
+    $moduleDirName . '_' . 'moderates',
+    $moduleDirName . '_' . 'reads_forum',
+    $moduleDirName . '_' . 'reads_topic',
+    $moduleDirName . '_' . 'type',
+    $moduleDirName . '_' . 'type_forum',
+    $moduleDirName . '_' . 'stats',
+    $moduleDirName . '_' . 'user_stats'
 ];
 
 // Admin things
@@ -264,7 +264,7 @@ $modversion['config'][] = [
     'default'     => 0
 ];
 
-$modversion['config'][] = [ 
+$modversion['config'][] = [
     'name'        => 'subforum_display',
     'title'       => '_MI_NEWBB_SUBFORUM_DISPLAY',
     'description' => '_MI_NEWBB_SUBFORUM_DISPLAY_DESC',
