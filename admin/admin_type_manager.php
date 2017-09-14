@@ -115,7 +115,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
-
+        echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -149,7 +149,6 @@ switch ($op) {
         }
 
         echo "<tr><td colspan='3' style='text-align:center;'>";
-        echo '<ul><li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ul>';
         echo "<input type='hidden' name='op' value='save_template' />";
         echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
         echo "<input type='reset' value='" . _CANCEL . "' />";
@@ -296,7 +295,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
-
+        echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -333,8 +332,7 @@ switch ($op) {
         }
 
         echo "<tr><td colspan='3' style='text-align:center;'>";
-        echo '<ul><li>' . _AM_NEWBB_TYPE_EDITFORUM_DESC . '</li>';
-        echo '<li>' . _AM_NEWBB_TYPE_ORDER_DESC . '</li></ul>';
+        echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_EDITFORUM_DESC . '</legend>';
         echo "<input type='hidden' name='forum' value='" . Request::getInt('forum', 0, 'POST') . "' />";
         echo "<input type='hidden' name='op' value='save_forum' />";
         echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
