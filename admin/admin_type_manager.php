@@ -107,7 +107,7 @@ switch ($op) {
     case 'template':
         $typesObject = $typeHandler->getAll();
         if (0 === count($typesObject)) {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
+            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD_ERR);
         }
 
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
@@ -279,7 +279,7 @@ switch ($op) {
 
     case 'edit_forum':
         if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
+            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -289,7 +289,7 @@ switch ($op) {
 
         $typesObject = $typeHandler->getAll();
         if (0 === count($typesObject)) {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
+            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD_ERR);
         }
 
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');

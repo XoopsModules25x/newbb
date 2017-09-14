@@ -257,9 +257,11 @@ define('_AM_NEWBB_VOTE_DELETE', 'No User Votes to delete');
 define('_AM_NEWBB_VOTE_DELETEDSC', '<strong>Deletes</strong> the selected voting information from the database.');
 // admin_type_manager.php
 define('_AM_NEWBB_TYPE_ADD', 'Add types');
+define('_AM_NEWBB_TYPE_ADD_ERR', 'Error. Add types');
 define('_AM_NEWBB_TYPE_TEMPLATE', 'Type template');
 define('_AM_NEWBB_TYPE_TEMPLATE_APPLY', 'Apply template');
 define('_AM_NEWBB_TYPE_FORUM', 'Type per forum');
+define('_AM_NEWBB_TYPE_FORUM_ERR', 'Error. It is necessary to choose a forum and not a category.');
 define('_AM_NEWBB_TYPE_NAME', 'Type name');
 define('_AM_NEWBB_TYPE_COLOR', 'Color');
 define('_AM_NEWBB_TYPE_DESCRIPTION', 'Description');
