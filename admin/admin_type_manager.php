@@ -14,7 +14,7 @@ use Xmf\Request;
 
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-echo '<br />';
+echo '<br>';
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $adminObject->displayNavigation(basename(__FILE__));
 
@@ -220,7 +220,7 @@ switch ($op) {
             unset($typesObject[$key]);
         }
         echo '</table>';
-        echo '<br />';
+        echo '<br>';
         $fmform->display();
         break;
 
