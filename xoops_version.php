@@ -10,76 +10,76 @@
  */
 
 $moduleDirName = basename(__DIR__);
-
-$modversion['version']       = 5.00;
-$modversion['module_status'] = 'Alpha1';
-$modversion['release_date']  = '2016/09/12';
-$modversion['name']          = _MI_NEWBB_NAME;
-$modversion['description']   = _MI_NEWBB_DESC;
-$modversion['help']          = 'page=help';
-$modversion['credits']       = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
-$modversion['author']        = 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / (irmtfan) / (Geekwright)';
-$modversion['license']       = 'GNU GPL 2.0';
-$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image']         = 'assets/images/logoModule.png';
-$modversion['dirname']       = basename(__DIR__);
-
-$modversion['author_realname'] = 'NewBB Dev Team';
-$modversion['author_email']    = '';
-$modversion['module_website_url']  = 'www.xoops.org/';
-$modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.9';
-$modversion['min_admin']           = '1.2';
-$modversion['min_db']              = ['mysql' => '5.5'];
-$modversion['system_menu']         = 1;
-$modversion['modicons16'] = 'assets/images/icons/16';
-$modversion['modicons32'] = 'assets/images/icons/32';
-$modversion['demo_site_url']     = 'https://xoops.org/newbb/';
-$modversion['demo_site_name']    = 'XOOPS Project';
-$modversion['support_site_url']  = 'https://xoops.org/newbb/';
-$modversion['support_site_name'] = 'XOOPS Project';
-$modversion['submit_feature']    = 'https://xoops.org/modules/newbb/viewforum.php?forum=30';
-$modversion['submit_bug']        = 'https://xoops.org/modules/newbb/viewforum.php?forum=28';
-
-// Sql file
-$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-
-// Tables created by sql file (without prefix!)
-$modversion['tables'] = [
-    $moduleDirName . '_' . 'archive',
-    $moduleDirName . '_' . 'categories',
-    $moduleDirName . '_' . 'votedata',
-    $moduleDirName . '_' . 'forums',
-    $moduleDirName . '_' . 'posts',
-    $moduleDirName . '_' . 'posts_text',
-    $moduleDirName . '_' . 'topics',
-    $moduleDirName . '_' . 'online',
-    $moduleDirName . '_' . 'digest',
-    $moduleDirName . '_' . 'report',
-    $moduleDirName . '_' . 'attachments',
-    $moduleDirName . '_' . 'moderates',
-    $moduleDirName . '_' . 'reads_forum',
-    $moduleDirName . '_' . 'reads_topic',
-    $moduleDirName . '_' . 'type',
-    $moduleDirName . '_' . 'type_forum',
-    $moduleDirName . '_' . 'stats',
-    $moduleDirName . '_' . 'user_stats'
+$modversion    = [
+    'version'             => 5.00,
+    'module_status'       => 'Alpha 1',
+    'release_date'        => '2017/09/12',
+    'name'                => _MI_NEWBB_NAME,
+    'description'         => _MI_NEWBB_DESC,
+    'help'                => 'page=help',
+    'credits'             => 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)',
+    'author'              => 'Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst) / (irmtfan) / (Geekwright) / (Mamba) / (Aerograf)',
+    'license'             => 'GNU GPL 2.0',
+    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'image'               => 'assets/images/logoModule.png',
+    'dirname'             => basename(__DIR__),
+    'author_realname'     => 'NewBB Dev Team',
+    'author_email'        => '',
+    'module_website_url'  => 'www.xoops.org/',
+    'module_website_name' => 'XOOPS',
+    'min_php'             => '5.5',
+    'min_xoops'           => '2.5.9',
+    'min_admin'           => '1.2',
+    'min_db'              => ['mysql' => '5.5'],
+    'modicons16'          => 'assets/images/icons/16',
+    'modicons32'          => 'assets/images/icons/32',
+    'demo_site_url'       => 'https://xoops.org/newbb/',
+    'demo_site_name'      => 'XOOPS Project',
+    'support_site_url'    => 'https://xoops.org/newbb/',
+    'support_site_name'   => 'XOOPS Project',
+    'submit_feature'      => 'https://xoops.org/modules/newbb/viewforum.php?forum=30',
+    'submit_bug'          => 'https://xoops.org/modules/newbb/viewforum.php?forum=28',
+    // ------------------- Mysql -----------------------------
+    'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
+    // ------------------- Tables ----------------------------
+    'tables'              => [
+        'newbb_archive',
+        'newbb_attachments',
+        'newbb_categories',
+        'newbb_digest',
+        'newbb_forums',
+        'newbb_moderates',
+        'newbb_online',
+        'newbb_posts',
+        'newbb_posts_text',
+        'newbb_reads_forum',
+        'newbb_reads_topic',
+        'newbb_report',
+        'newbb_stats',
+        'newbb_topics',
+        'newbb_type',
+        'newbb_type_forum',
+        'newbb_user_stats',
+        'newbb_votedata',
+    ],
+    // ------------------- Admin Menu -------------------
+    'system_menu'         => 1,
+    'hasAdmin'            => 1,
+    'adminindex'          => 'admin/index.php',
+    'adminmenu'           => 'admin/menu.php',
+    // ------------------- Main Menu -------------------
+    'hasMain'             => 1,
+    // ------------------- Search ---------------------------
+    'hasSearch'           => 1,
+    'search'              => [
+        'file' => 'include/search.inc.php',
+        'func' => 'newbb_search',
+    ],
+    // ------------------- Install/Update -------------------
+    'onInstall'           => 'include/module.php',
+    'onUpdate'            => 'include/module.php',
+    //  'onUninstall'         => 'include/onuninstall.php',
 ];
-
-// Admin things
-$modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu']  = 'admin/menu.php';
-
-// Menu
-$modversion['hasMain'] = 1;
-
-//install
-$modversion['onInstall'] = 'include/module.php';
-
-//update things
-$modversion['onUpdate'] = 'include/module.php';
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [
@@ -243,11 +243,6 @@ $modversion['blocks'][] = [
     'edit_func'   => 'newbb_list_topic_edit',
     'template'    => 'newbb_block_list_topic.tpl'
 ];
-
-// Search
-$modversion['hasSearch']      = 1;
-$modversion['search']['file'] = 'include/search.inc.php';
-$modversion['search']['func'] = 'newbb_search';
 
 // Smarty
 $modversion['use_smarty'] = 1;
