@@ -52,7 +52,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     // create an array with all folders, and then run this once
 
     $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/');
-    $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
+    $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), ['..', '.']);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($templateDirectory . $v);
         if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
@@ -60,7 +60,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         }
     }
     $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/blocks');
-    $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
+    $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), ['..', '.']);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($templateDirectory . $v);
         if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
