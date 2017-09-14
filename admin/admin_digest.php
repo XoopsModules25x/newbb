@@ -118,6 +118,7 @@ switch ($op) {
         echo '</tr>';
 
         $digests       = [];
+        /** @var \NewbbDigestHandler $digestHandler */
         $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
