@@ -178,6 +178,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
         $adminObject->displayButton();
 
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th align='left' class='bg3'>" . _AM_NEWBB_CATEGORY1 . '</th>';
@@ -197,6 +198,7 @@ switch ($op) {
             echo '</tr>';
         }
         echo '</table>';
+        echo '</td></tr></table>';
         break;
 }
 

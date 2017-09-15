@@ -82,6 +82,7 @@ switch ($op) {
             $box .= newbbForumSelectBox($forum_id, 'all', true, true);
             $box .= '</select>';
 
+            echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
             echo '<form action="./admin_forum_manager.php" method="post" name="forummove" id="forummove">';
             echo '<input type="hidden" name="op" value="moveforum" />';
             echo '<input type="hidden" name="forum" value=' . $forum_id . ' />';
@@ -91,6 +92,7 @@ switch ($op) {
             echo '<tr><td class="bg1" align="center">' . $box . '</td></tr>';
             echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" /></td></tr>';
             echo '</table></form>';
+            echo '</td></tr></table>';
         }
         break;
 
@@ -129,7 +131,7 @@ switch ($op) {
             $box .= '<option value=0 selected>' . _SELECT . '</option>';
             $box .= newbbForumSelectBox($forum_id, 'all');
             $box .= '</select>';
-
+            echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
             echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post" name="forummove" id="forummove">';
             echo '<input type="hidden" name="op" value="mergeforum" />';
             echo '<input type="hidden" name="forum" value=' . $forum_id . ' />';
@@ -140,6 +142,7 @@ switch ($op) {
             echo '<tr><td class="bg1" align="center">' . $box . '</td></tr>';
             echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" /></td></tr>';
             echo '</form></table>';
+            echo '</td></tr></table>';
         }
         break;
 
@@ -238,6 +241,7 @@ switch ($op) {
         }
 
         $echo = $adminObject->displayNavigation(basename(__FILE__));
+        $echo .= "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         $echo .= "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         $echo .= "<tr align='center'>";
         $echo .= "<th class='bg3' colspan='2'>" . _AM_NEWBB_NAME . '</th>';
@@ -296,6 +300,7 @@ switch ($op) {
 
         echo $echo;
         echo '</table>';
+        echo '</td></tr></table>';
         break;
 }
 include_once __DIR__ . '/admin_footer.php';

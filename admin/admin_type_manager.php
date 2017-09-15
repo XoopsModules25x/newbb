@@ -116,6 +116,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -154,6 +155,7 @@ switch ($op) {
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
+        echo '</td></tr></table>';
         break;
 
     case 'save_template':
@@ -197,6 +199,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
 
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
@@ -219,6 +222,7 @@ switch ($op) {
             unset($typesObject[$key]);
         }
         echo '</table>';
+        echo '</td></tr></table>';
         echo '<br>';
         $fmform->display();
         break;
@@ -296,6 +300,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
         $adminObject->displayButton();
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -339,6 +344,7 @@ switch ($op) {
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
+        echo '</td></tr></table>';
         break;
 
     case 'save_forum':
@@ -366,6 +372,7 @@ switch ($op) {
         $adminObject->displayButton();
         }
         echo _AM_NEWBB_TYPE_HELP;
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -418,6 +425,7 @@ switch ($op) {
         echo "<input type='reset' value='" . _CANCEL . "' />";
         echo '</td></tr></table>';
         echo '</form>';
+        echo '</td></tr></table>';
         break;
 }
 

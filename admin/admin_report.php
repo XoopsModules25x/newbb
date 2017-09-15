@@ -114,11 +114,12 @@ switch ($op) {
         $adminObject->addItemButton($title_other, $item_other, $icon = 'add');          
         $adminObject->displayButton();
         echo _AM_NEWBB_REPORTADMIN_HELP;
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";        
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        echo "<td class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</td>';
-        echo "<td class='bg3' width='10%'>" . $extra . '</td>';
+        echo "<th class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</th>';
+        echo "<th class='bg3' width='10%'>" . $extra . '</th>';
         echo '</tr>';
          
         $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
@@ -175,7 +176,7 @@ switch ($op) {
         echo $hidden->render() . '</form>';
 
         echo '</table>';
-
+        echo '</td></tr></table>';
         $nav = new XoopsPageNav($reportHandler->getCount(new Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
         echo $nav->renderNav(4);
         break;
