@@ -107,7 +107,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
         $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $this->addElement($tray);
-        $ret      = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br>';
+        $ret      = '<br><strong>' . $this->getTitle() . '</strong><br>' . $this->_permDesc . '<br>';
         $ret      .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
         $elements = $this->getElements();
         $hidden   = '';
@@ -233,8 +233,8 @@ switch ($action) {
         foreach (array_keys($glist) as $i) {
             $selected   = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : [];
             $ret_ele    = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
-            $ret_ele    .= '<td class="even">';
-            $ret_ele    .= '<table class="outer"><tr><td class="odd"><table><tr>';
+            $ret_ele   .= '<td class="even">';
+            $ret_ele   .= '<table class="outer"><tr><td class="odd"><table><tr>';
             $ii         = 0;
             $option_ids = [];
             foreach ($perms as $perm) {
@@ -257,7 +257,7 @@ switch ($action) {
         $tray->addElement(new XoopsFormHidden('action', 'template_save'));
         $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
-        $ret = '<h4>' . _AM_NEWBB_PERM_TEMPLATE . '</h4>' . _AM_NEWBB_PERM_TEMPLATE_DESC . '<br><br><br>';
+        $ret = '<br><strong>' . _AM_NEWBB_PERM_TEMPLATE . '</strong><br>' . _AM_NEWBB_PERM_TEMPLATE_DESC . '<br>';
         $ret .= "<form name='template' id='template' method='post'>\n<table width='100%' class='outer' cellspacing='1'>\n";
         $ret .= implode("\n", $elements);
         $ret .= '<tr align="left" valign="top"><td class="head"></td><td class="even" style="text-align:center;">';
@@ -267,9 +267,9 @@ switch ($action) {
         echo $ret;
         include_once __DIR__ . '/admin_footer.php';
         break;
-                                                
+
     case 'template_save':
-        //        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0); 
+        //        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0);
         $res = $newbbpermHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
         if ($res) {
             redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_CREATED);
