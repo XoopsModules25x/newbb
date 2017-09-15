@@ -75,10 +75,10 @@ if (Request::getString('submit', '', 'POST')) {
     echo "<td class='head' align='center'><strong>" . _AM_NEWBB_REORDERWEIGHT . '</strong></td>';
     echo '</tr>';
 
-    /** @var \NewbbForumHandler $forumHandler */
-    $forumHandler     = xoops_getModuleHandler('forum', 'newbb');
-    /** @var \NewbbCategoryHandler $categoryHandler */
-    $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+//    /** @var \NewbbForumHandler $forumHandler */
+//    $forumHandler     = xoops_getModuleHandler('forum', 'newbb');
+//    /** @var \NewbbCategoryHandler $categoryHandler */
+//    $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
     $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
     $criteriaCategory->setSort('cat_order');
     $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);

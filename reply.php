@@ -44,12 +44,12 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-/** @var NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-/** @var NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);
@@ -87,8 +87,8 @@ if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forumObject);
 }
 
@@ -168,8 +168,8 @@ $require_reply = 0;
 
 include __DIR__ . '/include/form.post.php';
 
-/** @var \NewbbKarmaHandler $karmaHandler */
-$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
+///** @var \NewbbKarmaHandler $karmaHandler */
+//$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
 $posts_context = [];

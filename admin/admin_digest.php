@@ -44,8 +44,8 @@ xoops_cp_header();
 switch ($op) {
     case 'delete':
         $digest_ids    = Request::getArray('digest_id', [], 'POST');
-        /** @var \NewbbDigestHandler $digestHandler */
-        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+//        /** @var \NewbbDigestHandler $digestHandler */
+//        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         foreach ($digest_ids as $did => $value) {
             $digest = $digestHandler->get($did);
             $digestHandler->delete($digest);
@@ -59,7 +59,7 @@ switch ($op) {
     case 'digestconfirmed':
         $message = '';
         if ('POST' === Request::getMethod()) {
-            $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+//            $digestHandler = xoops_getModuleHandler('digest', 'newbb');
 
             switch ($digestHandler->process(true)) {
                 case 0:
@@ -83,7 +83,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
 
         $adminObject->addItemButton(_AM_NEWBB_DIGEST, 'admin_digest.php?op=digest', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
@@ -100,8 +100,8 @@ switch ($op) {
         echo '</tr>';
 
         $digests       = [];
-        /** @var \NewbbDigestHandler $digestHandler */
-        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+//        /** @var \NewbbDigestHandler $digestHandler */
+//        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";

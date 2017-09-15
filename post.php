@@ -39,12 +39,12 @@ if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-/** @var \NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var \NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var \NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 if (!empty($isedit) && $post_id > 0) {
     /** @var NewbbPost $postObject */
@@ -61,8 +61,8 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forumObject);
 }
 

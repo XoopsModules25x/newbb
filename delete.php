@@ -29,12 +29,12 @@ $viewmode = (Request::getString('viewmode', '', 'GET')
              && 'flat' !== Request::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (Request::getString('viewmode', '', 'POST') ?: 'flat');
 
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-/** @var \NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var \NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var \NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 if (!empty($post_id)) {
     $topic = $topicHandler->getByPost($post_id);
@@ -71,8 +71,8 @@ if (!$isAdmin && !$postObject->checkTimelimit('delete_timelimit')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forumObject);
 }
 
@@ -115,8 +115,8 @@ if ($ok) {
         $postHandler->delete($postObject, $isDeleteOne);
         $forumHandler->synchronization($forum);
         $topicHandler->synchronization($topic_id);
-        /** @var \NewbbStatsHandler $statsHandler */
-        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+//        /** @var \NewbbStatsHandler $statsHandler */
+//        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
         $statsHandler->reset();
     }
 

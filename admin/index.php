@@ -102,8 +102,8 @@ xoops_cp_header();
 $imageLibs     = newbb_getImageLibs();
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-/** @var \NewbbReportHandler $reportHandler */
-$reportHandler = xoops_getModuleHandler('report', 'newbb');
+///** @var \NewbbReportHandler $reportHandler */
+//$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
 $isOK = false;
 // START irmtfan add a poll_module config

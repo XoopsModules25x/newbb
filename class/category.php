@@ -48,7 +48,6 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     {
         /** @var \NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
-
         return $permHandler->getCategories($perm);
     }
 
@@ -132,7 +131,6 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
         $cat_id = is_object($category) ? $category->getVar('cat_id') : (int)$category;
         /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
-
         return $permHandler->getPermission('category', $perm, $cat_id);
     }
 
@@ -144,7 +142,6 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     {
         /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
-
         return $permHandler->deleteByCategory($category->getVar('cat_id'));
     }
 
@@ -156,7 +153,6 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
     {
         /** @var NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
-
         return $permHandler->setCategoryPermission($category->getVar('cat_id'));
     }
 

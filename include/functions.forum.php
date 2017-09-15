@@ -27,7 +27,6 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbForumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
     {
         global $xoopsUser;
-
         /** @var \NewbbCategoryHandler $categoryHandler */
         $categoryHandler = xoops_getModuleHandler('category', 'newbb');
         $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);

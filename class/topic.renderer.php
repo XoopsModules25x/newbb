@@ -732,8 +732,9 @@ class NewbbTopicRenderer
     {
         static $types;
         if (!isset($types)) {
-            $typeHandler = xoops_getModuleHandler('type', 'newbb');
             /** @var \NewbbTypeHandler $typeHandler */
+            $typeHandler = xoops_getModuleHandler('type', 'newbb');
+
             $types = $typeHandler->getByForum(explode('|', @$this->vars['forum']));
         }
 

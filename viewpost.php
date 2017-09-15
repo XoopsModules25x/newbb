@@ -44,10 +44,10 @@ $status = (Request::getString('status', '', 'GET')
 $mode   = Request::getInt('mode', 0, 'GET');
 $mode   = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? 2 : $mode;
 
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-/** @var \NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 if (empty($forum_id)) {
     $forums       = $forumHandler->getByPermission(0, 'view');
@@ -146,8 +146,8 @@ switch ($status) {
 //$criteria_count->add($criteria_status_count); // irmtfan commented and removed
 //$criteria_post->add($criteria_status_post); // irmtfan commented and removed
 // END irmtfan solve the status issues and specially status = new issue
-/** @var \NewbbKarmaHandler $karmaHandler */
-$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
+///** @var \NewbbKarmaHandler $karmaHandler */
+//$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
 $valid_modes     = ['flat', 'compact'];
@@ -232,8 +232,8 @@ $online = [];
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-        /** @var \NewbbOnlineHandler $onlineHandler */
-        $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//        /** @var \NewbbOnlineHandler $onlineHandler */
+//        $onlineHandler = xoops_getModuleHandler('online', 'newbb');
         $onlineHandler->init($forum_id);
     }
 }
@@ -249,7 +249,7 @@ if (count($userid_array) > 0) {
 }
 
 $pn           = 0;
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
 static $suspension = [];
 foreach (array_keys($posts) as $id) {
     ++$pn;
@@ -289,8 +289,8 @@ foreach (array_keys($posts) as $id) {
 
     if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
         if (!isset($suspension[$post->getVar('forum_id')])) {
-            /** @var \NewbbModerateHandler $moderateHandler */
-            $moderateHandler                       = xoops_getModuleHandler('moderate', 'newbb');
+//            /** @var \NewbbModerateHandler $moderateHandler */
+//            $moderateHandler                       = xoops_getModuleHandler('moderate', 'newbb');
             $suspension[$post->getVar('forum_id')] = !$moderateHandler->verifyUser(-1, '', $post->getVar('forum_id'));
         }
 

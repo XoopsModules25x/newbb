@@ -9,6 +9,7 @@
  * @since          4.00
  * @package        module::newbb
  */
+
 class Digest extends XoopsObject
 {
     public $digest_id;

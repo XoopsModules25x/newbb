@@ -47,8 +47,8 @@ if (!in_array($op, $validOps, true)) {
     $op = '';
 }
 
-/** @var \NewbbTypeHandler $typeHandler */
-$typeHandler = xoops_getModuleHandler('type', 'newbb');
+///** @var \NewbbTypeHandler $typeHandler */
+//$typeHandler = xoops_getModuleHandler('type', 'newbb');
 $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');    
 
 switch ($op) {
@@ -114,7 +114,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
@@ -169,11 +169,11 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
         }
 
-        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories   = $categoryHandler->getList($criteriaCategory);
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c] = '[' . $categories[$c] . ']';
@@ -197,7 +197,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'admin_type_manager.php?op=apply', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
 
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
@@ -241,14 +241,14 @@ switch ($op) {
         break;
 
     case 'forum':
-        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories));
         if (empty($forums)) {
             redirect_header('admin_forum_manager.php', 2, _AM_NEWBB_CREATENEWFORUM);
@@ -275,7 +275,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
 
         $fmform->display();
         break;
@@ -285,7 +285,7 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
@@ -298,7 +298,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
@@ -369,7 +369,7 @@ switch ($op) {
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
         $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
         }
         echo _AM_NEWBB_TYPE_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
@@ -404,7 +404,7 @@ switch ($op) {
         } else {
             $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
             $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-            $adminObject->displayButton();
+            $adminObject->displayButton('left');
             for ($i = 0; $i < 10; ++$i) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='text' name='type_name[{$i}]' value='' size='10' /></td>";

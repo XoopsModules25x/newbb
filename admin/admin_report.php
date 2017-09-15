@@ -41,8 +41,8 @@ $start = Request::getInt('start', 0);
 $op = Request::hasVar('submit', 'POST') ? 'save' : $op;
 $op = Request::hasVar('delete', 'POST') ? 'delete' : $op;
 
-/** @var \NewbbReportHandler $reportHandler */
-$reportHandler = xoops_getModuleHandler('report', 'newbb');
+///** @var \NewbbReportHandler $reportHandler */
+//$reportHandler = xoops_getModuleHandler('report', 'newbb');
 
 xoops_cp_header();
 
@@ -112,7 +112,7 @@ switch ($op) {
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton($title_other, $item_other, $icon = 'add');          
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
         echo _AM_NEWBB_REPORTADMIN_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";        
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';

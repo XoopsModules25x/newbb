@@ -24,8 +24,8 @@ if (!$isAdmin) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
-/** @var \NewbbModerateHandler $moderateHandler */
-$moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
+///** @var \NewbbModerateHandler $moderateHandler */
+//$moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
 
 if (Request::hasVar('submit', 'POST') && Request::getInt('expire', 0, 'POST')) {
     $ipWithMask = '';
@@ -143,8 +143,8 @@ if (!empty($moderate_count)) {
     ];
     $xoopsTpl->assign('columnHeaders', $columnHeaders);
 
-    /** @var \NewbbForumHandler $forumHandler */
-    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//    /** @var \NewbbForumHandler $forumHandler */
+//    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $forum_list   = $forumHandler->getAll(null, ['forum_name'], false);
 
     $columnRows = [];

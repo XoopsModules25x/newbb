@@ -54,9 +54,9 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetReadForum($status = 0, $uid = null)
     {
         /** @var \NewbbReadForumHandler $readHandler */
-        $readHandler = xoops_getModuleHandler('readforum', 'newbb');
+        $readForumHandler = xoops_getModuleHandler('readforum', 'newbb');
 
-        return $readHandler->setReadItems($status, $uid);
+        return $readForumHandler->setReadItems($status, $uid);
     }
 
     /**
@@ -68,9 +68,9 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
     {
         /** @var \NewbbReadtopicHandler $readHandler */
-        $readHandler = xoops_getModuleHandler('readtopic', 'newbb');
+        $readTopicHandler = xoops_getModuleHandler('readtopic', 'newbb');
 
-        return $readHandler->setReadItems($status, $forum_id, $uid);
+        return $readTopicHandler->setReadItems($status, $forum_id, $uid);
     }
 
     /**

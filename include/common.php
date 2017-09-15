@@ -38,7 +38,64 @@ $mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_bla
 
 xoops_loadLanguage('common', NEWBB_DIRNAME);
 
-xoops_load('constants', NEWBB_DIRNAME);
+//xoops_load('constants', NEWBB_DIRNAME);
 xoops_load('utility', NEWBB_DIRNAME);
-xoops_load('XoopsRequest');
-xoops_load('XoopsFilterInput');
+//xoops_load('XoopsRequest');
+//xoops_load('XoopsFilterInput');
+
+require_once NEWBB_ROOT_PATH . '/class/helper.php';
+
+$debug     = false;
+$helper = Newbb::getInstance($debug);
+
+//This is needed or it will not work in blocks.
+global $newbbIsAdmin;
+
+// Load only if module is installed
+if (is_object($helper->getModule())) {
+    // Find if the user is admin of the module
+    $publisherIsAdmin = NewbbUtility::userIsAdmin();
+}
+
+$db = \XoopsDatabaseFactory::getDatabase();
+
+/** @var \NewbbCategoryHandler $categoryHandler */
+$categoryHandler = $helper->getHandler('category');
+/** @var \NewbbDigestHandler $digestHandler */
+$digestHandler = $helper->getHandler('digest');
+/** @var \NewbbForumHandler $forumHandler */
+$forumHandler = $helper->getHandler('forum');
+/** @var \NewbbIconHandler $iconHandler */
+$iconHandler = $helper->getHandler('icon');
+/** @var \NewbbKarmaHandler $karmaHandler */
+$karmaHandler = $helper->getHandler('karma');
+/** @var \NewbbModerateHandler $moderateHandler */
+$moderateHandler = $helper->getHandler('moderate');
+/** @var \NewbbOnlineHandler $onlineHandler */
+$onlineHandler = $helper->getHandler('online');
+/** @var \NewbbPermissionHandler $permHandler */
+$permHandler = $helper->getHandler('permission');
+/** @var \NewbbPostHandler $postHandler */
+$postHandler = $helper->getHandler('post');
+/** @var \NewbbRateHandler $rateHandler */
+$rateHandler = $helper->getHandler('rate');
+/** @var \NewbbReadHandler $readHandler */
+//$readHandler = $helper->getHandler('read' . $type);
+/** @var \NewbbReadForumHandler $readForumHandler */
+$readForumHandler = $helper->getHandler('readforum');
+/** @var \NewbbReadtopicHandler $readTopicHandler */
+$readTopicHandler = $helper->getHandler('readtopic');
+/** @var \NewbbReportHandler $reportHandler */
+$reportHandler = $helper->getHandler('report');
+/** @var \NewbbStatsHandler $statsHandler */
+$statsHandler = $helper->getHandler('stats');
+/** @var \NewbbTextHandler $textHandler */
+$textHandler = $helper->getHandler('text');
+/** @var \NewbbTopicHandler $topicHandler */
+$topicHandler = $helper->getHandler('topic');
+/** @var \NewbbTypeHandler $typeHandler */
+$typeHandler = $helper->getHandler('type');
+/** @var \NewbbUserstatsHandler $userstatsHandler */
+$userstatsHandler = $helper->getHandler('userstats');
+/** @var \NewbbXmlrssHandler $xmlrssHandler */
+$xmlrssHandler = $helper->getHandler('xmlrss');

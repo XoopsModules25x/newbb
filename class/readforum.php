@@ -38,6 +38,7 @@ include_once __DIR__ . '/read.php';
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
+
 class ReadForum extends Read
 {
     /**

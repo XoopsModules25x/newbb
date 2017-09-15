@@ -121,7 +121,6 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     {
         /** @var \NewbbPermissionHandler $permHandler */
         $permHandler = xoops_getModuleHandler('permission', 'newbb');
-
         return $permHandler->getForums($perm);
     }
 

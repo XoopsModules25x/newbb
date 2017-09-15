@@ -145,8 +145,8 @@ if (Request::getString('submit', '', 'POST')) {
                 return _MD_NEWBB_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-            /** @var \NewbbForumHandler $forumHandler */
-            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//            /** @var \NewbbForumHandler $forumHandler */
+//            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:
         }

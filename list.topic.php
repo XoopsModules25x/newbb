@@ -55,8 +55,8 @@ if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init();
     $onlineHandler->render($xoopsTpl);
 }

@@ -44,8 +44,8 @@ xoops_cp_header();
 $op       = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $forum_id = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET'); //(int)( !empty($_GET['forum'])? $_GET['forum'] : (!empty($_POST['forum'])?$_POST['forum']:0) );
 
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 switch ($op) {
     case 'moveforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
@@ -173,21 +173,21 @@ switch ($op) {
         if ($forumHandler->insert($forumObject)) {
             //$cacheHelper->delete('forum');
             if (Request::getInt('perm_template', 0, 'POST')) {
-                /** @var \NewbbPermissionHandler $grouppermHandler */
-                $grouppermHandler = xoops_getModuleHandler('permission', $xoopsModule->getVar('dirname'));
-                $perm_template    = $grouppermHandler->getTemplate();
+//                /** @var \NewbbPermissionHandler $permHandler */
+//                $permHandler = xoops_getModuleHandler('permission', 'newbb');
+                $perm_template    = $permHandler->getTemplate();
                 /** @var \XoopsMemberHandler $memberHandler */
                 $memberHandler = xoops_getHandler('member');
                 $glist         = $memberHandler->getGroupList();
-                $perms         = $grouppermHandler->getValidForumPerms(true);
+                $perms         = $permHandler->getValidForumPerms(true);
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
-                        $ids = $grouppermHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
+                        $ids = $permHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
                         if (!in_array($forumObject->getVar('forum_id'), $ids)) {
                             if (empty($perm_template[$group][$perm])) {
-                                $grouppermHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $permHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {
-                                $grouppermHandler->addRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
+                                $permHandler->addRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             }
                         }
                     }
@@ -231,8 +231,8 @@ switch ($op) {
 
     default:
 
-        /** @var \NewbbCategoryHandler $categoryHandler */
-        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+//        /** @var \NewbbCategoryHandler $categoryHandler */
+//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -252,7 +252,7 @@ switch ($op) {
         $echo .= "<th class='bg3'>" . _AM_NEWBB_MERGE . '</th>';
         $echo .= '</tr>';
 
-        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);

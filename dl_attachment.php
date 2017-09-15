@@ -22,23 +22,23 @@ if (!$post_id || !$attach_id) {
     exit(_MD_NEWBB_NO_SUCH_FILE . ': post_id:' . $post_id . '; attachid' . $attachid);
 }
 
-/** @var \NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var \NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 
 /** @var \NewbbPost $forumpost */
 $forumpost = $postHandler->get($post_id);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
-/** @var NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $topicObject    = $topicHandler->getByPost($post_id);
 $topic_id     = $topicObject->getVar('topic_id');
 if (!$approved = $topicObject->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
-/** @var NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 $forumObject    = $forumHandler->get($topicObject->getVar('forum_id'));
 if (!$forumHandler->getPermission($forumObject)) {
     exit(_MD_NEWBB_NORIGHTTOACCESS);

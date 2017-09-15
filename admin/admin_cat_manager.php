@@ -39,8 +39,8 @@ xoops_cp_header();
 $op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
-/** @var \NewbbCategoryHandler $categoryHandler */
-$categoryHandler = xoops_getModuleHandler('category', 'newbb');
+///** @var \NewbbCategoryHandler $categoryHandler */
+//$categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
 /**
  * newCategory()
@@ -59,7 +59,7 @@ function newCategory()
 function editCategory(XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
-    $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+//    $categoryHandler = xoops_getModuleHandler('category', 'newbb');
     if (null === $categoryObject) {
         $categoryObject = $categoryHandler->create();
     }
@@ -168,7 +168,7 @@ switch ($op) {
     default:
         if (!$categories = $categoryHandler->getByPermission('all')) {
             $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-            $adminObject->displayButton();
+            $adminObject->displayButton('left');
 
             echo '<br>';
             newCategory();
@@ -176,7 +176,7 @@ switch ($op) {
         }
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');
-        $adminObject->displayButton();
+        $adminObject->displayButton('left');
 
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";

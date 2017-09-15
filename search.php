@@ -75,8 +75,8 @@ $show_search     = 'post_text';
 $search_username = trim($uname);
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init(0);
 }
 

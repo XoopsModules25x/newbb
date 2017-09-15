@@ -32,8 +32,8 @@ class NewbbOnlineHandler
      */
     public function init($forum = null, $forumtopic = null)
     {
-        //$this->db = XoopsDatabaseFactory::getDatabaseConnection();
-        $this->db = $GLOBALS['xoopsDB'];
+        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+//        $this->db = $GLOBALS['xoopsDB'];
         if (is_object($forum)) {
             $this->forum_id     = $forum->getVar('forum_id');
             $this->forumObject = $forum;

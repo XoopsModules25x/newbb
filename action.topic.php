@@ -25,10 +25,10 @@ if (0 === count($topic_id) || 0 === count($op)) {
 }
 
 $topic_id = array_values($topic_id);
-/** @var \NewbbTopicHandler|XoopsPersistableObjectHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var \NewbbForumHandler|XoopsPersistableObjectHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbTopicHandler|XoopsPersistableObjectHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var \NewbbForumHandler|XoopsPersistableObjectHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
 $isAdmin = newbbIsAdmin($forum_id);
 
@@ -125,16 +125,16 @@ switch ($op) {
             && Request::getInt('newforum', 0, 'POST') !== $forum_id
             && $forumHandler->getPermission(Request::getInt('newforum', 0, 'POST'), 'post')) {
             $criteria = new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
-            /** @var \NewbbPostHandler $postHandler */
-            $postHandler = xoops_getModuleHandler('post', 'newbb');
+//            /** @var \NewbbPostHandler $postHandler */
+//            $postHandler = xoops_getModuleHandler('post', 'newbb');
             $postHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
             $topicHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
             $forumHandler->synchronization(Request::getInt('newforum', 0, 'POST'));
             $forumHandler->synchronization($forum_id);
         } else {
             include $GLOBALS['xoops']->path('header.php');
-            /** @var \NewbbCategoryHandler $categoryHandler */
-            $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+//            /** @var \NewbbCategoryHandler $categoryHandler */
+//            $categoryHandler = xoops_getModuleHandler('category', 'newbb');
             $categories      = $categoryHandler->getByPermission('access');
             $forums          = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
@@ -181,8 +181,8 @@ switch ($op) {
         }
         break;
 }
-/** @var \NewbbStatsHandler $statsHandler */
-$statsHandler = xoops_getModuleHandler('stats', 'newbb');
+///** @var \NewbbStatsHandler $statsHandler */
+//$statsHandler = xoops_getModuleHandler('stats', 'newbb');
 $statsHandler->reset();
 if (empty($forum_id)) {
     redirect_header(XOOPS_URL . '/modules/newbb/list.topic.php', 2, _MD_NEWBB_DBUPDATED);

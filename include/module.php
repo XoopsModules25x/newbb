@@ -120,7 +120,7 @@ function xoops_module_install_newbb(XoopsModule $module)
 {
     /* Create a test category */
     /** @var NewbbCategoryHandler $categoryHandler */
-    $categoryHandler = xoops_getModuleHandler('category', $module->getVar('dirname'));
+    $categoryHandler = xoops_getModuleHandler('category', 'newbb');
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
@@ -132,7 +132,7 @@ function xoops_module_install_newbb(XoopsModule $module)
 
     /* Create a forum for test */
     /** @var NewbbForumHandler $forumHandler */
-    $forumHandler = xoops_getModuleHandler('forum', $module->getVar('dirname'));
+    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
@@ -180,7 +180,7 @@ function xoops_module_install_newbb(XoopsModule $module)
     /* Create a test post */
     include_once __DIR__ . '/functions.user.php';
     /** @var NewbbPostHandler $postHandler */
-    $postHandler = xoops_getModuleHandler('post', $module->getVar('dirname'));
+    $postHandler = xoops_getModuleHandler('post', 'newbb');
     /** @var  $forumpost */
     $forumpost = $postHandler->create();
     $forumpost->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());

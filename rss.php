@@ -50,9 +50,9 @@ if ('' !== $forumSet) {
     $forums = array_map('intval', array_map('trim', explode('|', $forumSet)));
 }
 
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
 $validForums  = $forumHandler->getIdsByPermission(); // get all accessible forums
 
 if (is_array($forums) && count($forums) > 0) {
@@ -86,8 +86,8 @@ $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     include_once __DIR__ . '/include/functions.time.php';
 
-    /** @var \NewbbXmlrssHandler $xmlrssHandler */
-    $xmlrssHandler = xoops_getModuleHandler('xmlrss', 'newbb');
+//    /** @var \NewbbXmlrssHandler $xmlrssHandler */
+//    $xmlrssHandler = xoops_getModuleHandler('xmlrss', 'newbb');
     $rss           = $xmlrssHandler->create();
 
     $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_NEWBB_FORUM);
@@ -167,8 +167,8 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-        /** @var \NewbbTypeHandler $typeHandler */
-        $typeHandler = xoops_getModuleHandler('type', 'newbb');
+//        /** @var \NewbbTypeHandler $typeHandler */
+//        $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 

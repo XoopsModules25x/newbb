@@ -581,7 +581,6 @@ function b_newbb_author_show($options)
 {
     global $accessForums;
     global $newbbConfig;
-
     $myts  = MyTextSanitizer::getInstance();
     $block = [];
     //    $i              = 0;

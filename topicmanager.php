@@ -55,10 +55,10 @@ if (empty($topic_id)) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-/** @var \NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var \NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var \NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var \NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 
 if (!$forum) {
     /** @var \Topic $topicObject */
@@ -73,8 +73,8 @@ if (!$forum) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forum);
 }
 // irmtfan add restore to viewtopic
@@ -165,10 +165,10 @@ if (Request::getString('submit', '', 'POST')) {
              . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     } elseif ('merge' === $mode) {
-        /** @var NewbbPostHandler $postHandler */
-        $postHandler = xoops_getModuleHandler('post', 'newbb');
-        /** @var \NewbbRateHandler $rateHandler */
-        $rateHandler = xoops_getModuleHandler('rate', 'newbb');
+//        /** @var NewbbPostHandler $postHandler */
+//        $postHandler = xoops_getModuleHandler('post', 'newbb');
+//        /** @var \NewbbRateHandler $rateHandler */
+//        $rateHandler = xoops_getModuleHandler('rate', 'newbb');
 
         foreach ($topic_id as $tid) {
             $topicObject    = $topicHandler->get($tid);
@@ -287,10 +287,11 @@ if (Request::getString('submit', '', 'POST')) {
         }
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
             $topicObject = $topicHandler->get($topic_id);
-            /** @var \NewbbStatsHandler $statsHandler */
-            $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+//            /** @var \NewbbStatsHandler $statsHandler */
+//            $statsHandler = xoops_getModuleHandler('stats', 'newbb');
             $statsHandler->update($topicObject->getVar('forum_id'), 'digest');
-            $userstatsHandler = xoops_getModuleHandler('userstats', 'newbb');
+//            /** @var \NewbbUserstatsHandler $userstatsHandler */
+//            $userstatsHandler = xoops_getModuleHandler('userstats', 'newbb');
             if ($user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'))) {
                 $z = $user_stat->getVar('user_digests') + 1;
                 $user_stat->setVar('user_digests', (int)$z);
@@ -324,8 +325,8 @@ if (Request::getString('submit', '', 'POST')) {
         echo '<tr><td class="bg3">' . _MD_NEWBB_MOVETOPICTO . '</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
-        /** @var \NewbbCategoryHandler $categoryHandler */
-        $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+//        /** @var \NewbbCategoryHandler $categoryHandler */
+//        $categoryHandler = xoops_getModuleHandler('category', 'newbb');
         $categories      = $categoryHandler->getByPermission('access');
         $forums          = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 

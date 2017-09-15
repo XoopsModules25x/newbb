@@ -24,7 +24,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = xoops_getModuleHandler('category');
+$categoryHandler = xoops_getModuleHandler('category', 'newbb');
 $categoryObject    = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 
 //check banning

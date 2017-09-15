@@ -25,12 +25,12 @@ if (0 === count($post_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
-/** @var NewbbPostHandler $postHandler */
-$postHandler = xoops_getModuleHandler('post', 'newbb');
-/** @var NewbbTopicHandler $topicHandler */
-$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-/** @var NewbbForumHandler $forumHandler */
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+///** @var NewbbPostHandler $postHandler */
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var NewbbTopicHandler $topicHandler */
+//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var NewbbForumHandler $forumHandler */
+//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
 if (empty($topic_id)) {
     $forumObject = null;
 } else {

@@ -45,10 +45,10 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     if (!defined('_PROFILE_MA_ALLABOUT')) {
         $mod->loadLanguage();
     }
-    /** @var \NewbbPermissionHandler $grouppermHandler */
-    $grouppermHandler = xoops_getModuleHandler('permission', 'newbb');
-    $show_ids         = $grouppermHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
-    $visible_ids      = $grouppermHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
+    /** @var \NewbbPermissionHandler $permHandler */
+    $permHandler = xoops_getModuleHandler('permission', 'newbb');
+    $show_ids         = $permHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
+    $visible_ids      = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
     /** @var \ProfileProfileHandler $profileHandler */

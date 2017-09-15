@@ -48,8 +48,8 @@ if (empty($post_id)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var \NewbbOnlineHandler $onlineHandler */
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+//    /** @var \NewbbOnlineHandler $onlineHandler */
+//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
     $onlineHandler->init($forum);
 }
 
@@ -72,7 +72,7 @@ if (Request::hasVar('submit', 'POST')) {
     if ('' !== $error_message) {
         xoops_error($error_message);
     } else {
-        $reportHandler = xoops_getModuleHandler('report', 'newbb');
+//        $reportHandler = xoops_getModuleHandler('report', 'newbb');
         $report        = $reportHandler->create();
         $report->setVar('report_text', Request::getString('report_text', '', 'POST'));
         $report->setVar('post_id', Request::getInt('post_id', 0, 'POST'));
@@ -83,7 +83,7 @@ if (Request::hasVar('submit', 'POST')) {
         $report->setVar('report_memo', '');
 
         if ($report_id = $reportHandler->insert($report)) {
-            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             if (empty($forum)) {
             }
             $forumObject = $forumHandler->get($forum);
@@ -124,7 +124,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     $report_form->addElement(new XoopsFormCaptcha());
 }
 
-$postHandler = xoops_getModuleHandler('post', 'newbb');
+//$postHandler = xoops_getModuleHandler('post', 'newbb');
 $postObject    = $postHandler->get($post_id);
 $forum       = $postObject->getVar('forum_id');
 
