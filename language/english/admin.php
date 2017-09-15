@@ -185,6 +185,9 @@ define('_AM_NEWBB_PERM_TEMPLATE_ERROR', 'Error occurs during permission template
 define('_AM_NEWBB_PERM_TEMPLATEAPP', 'Apply default permission');
 define('_AM_NEWBB_PERM_TEMPLATE_APPLIED', 'Default permissions have been applied to forums');
 define('_AM_NEWBB_PERM_ACTION', 'Permission management tools');
+define('_AM_NEWBB_PERM_ACTION_HELP', 'Allows you to set the access rights for each function and group');
+define('_AM_NEWBB_PERM_ACTION_HELP_TEMPLAT', 'Allows you to create an access rights template for automatic installation when creating a forum.');
+define('_AM_NEWBB_PERM_ACTION_HELP_APPLY', 'Allows you to apply a permission template to already created forums.');
 define('_AM_NEWBB_PERM_SETBYGROUP', 'Set permissions directly by group');
 // admin_forum_prune.php
 define('_AM_NEWBB_PRUNE_RESULTS_TITLE', 'Prune Results');

@@ -119,7 +119,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
                 if ('' !== $elements[$i]->getDescription()) {
                     $ret .= '<br><br><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }
-                $ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
+                $ret .= "</td>\n<td class='even' style='text-align:center;'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
             } else {
                 $hidden .= $elements[$i]->render();
             }
@@ -205,16 +205,16 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
 $action    = strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
-///** @var \NewbbPermissionHandler $permHandler */
-//$permHandler = xoops_getModuleHandler('permission', 'newbb');
-$perms            = $permHandler->getValidForumPerms();
+/** @var \NewbbPermissionHandler $newbbpermHandler */
+$newbbpermHandler = xoops_getModuleHandler('permission', 'newbb');
+$perms            = $newbbpermHandler->getValidForumPerms();
 
 switch ($action) {
     case 'template':
         xoops_cp_header();
         $adminObject->displayNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
-        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
+        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP_TEMPLAT, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
         $op_select->addOptionArray([
@@ -229,7 +229,7 @@ switch ($action) {
         $memberHandler = xoops_getHandler('member');
         $glist         = $memberHandler->getGroupList();
         $elements      = [];
-        $perm_template = $permHandler->getTemplate();
+        $perm_template = $newbbpermHandler->getTemplate();
         foreach (array_keys($glist) as $i) {
             $selected   = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : [];
             $ret_ele    = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
@@ -260,17 +260,17 @@ switch ($action) {
         $ret = '<h4>' . _AM_NEWBB_PERM_TEMPLATE . '</h4>' . _AM_NEWBB_PERM_TEMPLATE_DESC . '<br><br><br>';
         $ret .= "<form name='template' id='template' method='post'>\n<table width='100%' class='outer' cellspacing='1'>\n";
         $ret .= implode("\n", $elements);
-        $ret .= '<tr align="left" valign="top"><td class="head"></td><td class="even">';
+        $ret .= '<tr align="left" valign="top"><td class="head"></td><td class="even" style="text-align:center;">';
         $ret .= $tray->render();
         $ret .= '</td></tr>';
         $ret .= '</table></form>';
         echo $ret;
         include_once __DIR__ . '/admin_footer.php';
         break;
-
+                                                
     case 'template_save':
-        //        $res = $permHandler->setTemplate($_POST['perms'], $groupid = 0);
-        $res = $permHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
+        //        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0); 
+        $res = $newbbpermHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
         if ($res) {
             redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_CREATED);
         } else {
@@ -280,14 +280,14 @@ switch ($action) {
     //        exit();
 
     case 'apply':
-        $perm_template = $permHandler->getTemplate();
+        $perm_template = $newbbpermHandler->getTemplate();
         if (null === $perm_template) {
             redirect_header('admin_permissions.php?action=template', 2, _AM_NEWBB_PERM_TEMPLATE);
         }
         xoops_cp_header();
         $adminObject->displayNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
-        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
+        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP_APPLY, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
         $op_select->addOptionArray([
@@ -298,14 +298,14 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-//        /** @var \NewbbCategoryHandler $categoryHandler */
-//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+        /** @var \NewbbCategoryHandler $categoryHandler */
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
-//        /** @var \NewbbForumHandler $forumHandler */
-//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        /** @var \NewbbForumHandler $forumHandler */
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c - 1000] = ' ';
@@ -337,7 +337,7 @@ switch ($action) {
             if ($forum < 1) {
                 continue;
             }
-            $permHandler->applyTemplate($forum, $module_id);
+            $newbbpermHandler->applyTemplate($forum, $module_id);
         }
         $cacheHelper = NewbbUtility::cleanCache();
         //$cacheHelper->delete('permission');
@@ -347,7 +347,7 @@ switch ($action) {
     default:
         xoops_cp_header();
 
-//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -356,7 +356,7 @@ switch ($action) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
         if (0 === count($forums)) {
@@ -365,7 +365,7 @@ switch ($action) {
 
         $adminObject->displayNavigation(basename(__FILE__));
         echo "<legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_PERM_ACTION . '</legend>';
-        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION, 'actionform', 'admin_permissions.php', 'get');
+        $opform    = new XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
         $op_select->addOptionArray([
@@ -416,7 +416,7 @@ switch ($action) {
 
         $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
-//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
+        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -426,7 +426,7 @@ switch ($action) {
             }
             unset($categories);
         } else {
-//            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
             if (count($forums) > 0) {
                 foreach (array_keys($forums) as $c) {
@@ -443,9 +443,9 @@ switch ($action) {
         $form->display();
 
         // Since we can not control the permission update, a trick is used here
-//        /** @var \NewbbPermissionHandler $permHandler */
-//        $permHandler = xoops_getModuleHandler('permission', 'newbb');
-        $permHandler->createPermData();
+        /** @var \NewbbPermissionHandler $permissionHandler */
+        $permissionHandler = xoops_getModuleHandler('permission', 'newbb');
+        $permissionHandler->createPermData();
         $cacheHelper = NewbbUtility::cleanCache();
         //$cacheHelper->delete('permission');
         include_once __DIR__ . '/admin_footer.php';
