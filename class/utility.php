@@ -94,5 +94,29 @@ class NewbbUtility
             ];
         $maintenance->CleanCache($cacheList);
         xoops_setActiveModules();
-    }    
+    }
+
+    /**
+     * Checks if a user is admin of NewBB
+     *
+     * @return boolean
+     */
+    public static function userIsAdmin()
+    {
+        $helper = Newbb::getInstance();
+
+        static $newbbIsAdmin;
+
+        if (isset($newbbIsAdmin)) {
+            return $newbbIsAdmin;
+        }
+
+        if (!$GLOBALS['xoopsUser']) {
+            $newbbIsAdmin = false;
+        } else {
+            $newbbIsAdmin = $GLOBALS['xoopsUser']->isAdmin($helper->getModule()->getVar('mid'));
+        }
+
+        return $newbbIsAdmin;
+    }
 }
