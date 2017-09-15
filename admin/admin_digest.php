@@ -87,6 +87,10 @@ switch ($op) {
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(7,_AM_NEWBB_DIGESTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
+        echo '<ul><li>' . _AM_NEWBB_DIGEST_HELP_1 . '</li>';
+        echo '<li>' . _AM_NEWBB_DIGEST_HELP_2 . '</li>';
+        echo '<li>' . _AM_NEWBB_DIGEST_HELP_3 . '</li>';
+        echo '<li>' . _AM_NEWBB_DIGEST_HELP_4 . '</li></ul>';
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";

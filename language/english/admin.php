@@ -70,6 +70,10 @@ define('_AM_NEWBB_DIRNOTCREATED', 'The directory can not be created');
 define('_AM_NEWBB_PERMSET', 'The permission has been set');
 define('_AM_NEWBB_PERMNOTSET', 'The permission can not be set');
 define('_AM_NEWBB_DIGEST', 'Send New Digest');
+define('_AM_NEWBB_DIGEST_HELP_1', 'Allows you to create and send notifications about digest topics.');
+define('_AM_NEWBB_DIGEST_HELP_2', 'Create a newsletter is possible only after the topic is marked as \'Digest\'.');
+define('_AM_NEWBB_DIGEST_HELP_3', 'The dispatch is made only to users signed up for notification of digest topics.');
+define('_AM_NEWBB_DIGEST_HELP_4', 'After creating and sending, do not delete the created messages. Otherwise they will be generated again.');
 //define('_AM_NEWBB_DIGEST_PAST', '<span style="color:red;">Should be sent out %d minutes ago</span>');
 //define('_AM_NEWBB_DIGEST_NEXT', 'Need to send out in %d minutes');
 //define('_AM_NEWBB_DIGEST_ARCHIVE', 'Digest archive');
@@ -225,6 +229,7 @@ define('_AM_NEWBB_BY', 'By');
 define('_AM_NEWBB_AUTHOR_WORD_EXTRA', 'Extra words by module Author');
 // admin_report.php
 define('_AM_NEWBB_REPORTADMIN', 'Reported posts manager');
+define('_AM_NEWBB_REPORTADMIN_HELP', 'Allows you to view and process the user\'s appeal to messages from other users who appeared to them not to comply with forum rules, etc.');
 define('_AM_NEWBB_PROCESSEDREPORT', 'View processed reports');
 define('_AM_NEWBB_PROCESSREPORT', 'View new reports');
 define('_AM_NEWBB_REPORTTITLE', 'Report title');
