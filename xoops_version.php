@@ -536,15 +536,14 @@ $modversion['config'][] = [
     'name'        => 'email_digest',
     'title'       => '_MI_NEWBB_EMAIL_DIGEST',
     'description' => '_MI_NEWBB_EMAIL_DIGEST_DESC',
-    'formtype'    => 'yesno',
-//    'formtype'    => 'select',
+    'formtype'    => 'select',
     'valuetype'   => 'int',
-    'default'     => 0 //,
-//    'options'     => [
-//        _MI_NEWBB_EMAIL_NONE   => 0,
-//        _MI_NEWBB_EMAIL_DAILY  => 1,
-//        _MI_NEWBB_EMAIL_WEEKLY => 2
-//    ]
+    'default'     => 0,
+    'options'     => [
+        _MI_NEWBB_EMAIL_NONE   => 0,
+        _MI_NEWBB_EMAIL_DAILY  => 1,
+        _MI_NEWBB_EMAIL_WEEKLY => 2
+    ]
 ];
 $modversion['config'][] = [
     'name'        => 'show_ip',
