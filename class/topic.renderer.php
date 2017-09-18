@@ -625,6 +625,7 @@ class NewbbTopicRenderer
 
     /**
      * @param Smarty $xoopsTpl
+     * @throws \RuntimeException
      */
     public function buildSelection(Smarty $xoopsTpl)
     {
@@ -674,6 +675,7 @@ class NewbbTopicRenderer
 
     /**
      * @param Smarty $xoopsTpl
+     * @throws \RuntimeException
      */
     public function buildHeaders(Smarty $xoopsTpl)
     {
