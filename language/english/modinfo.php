@@ -108,7 +108,7 @@ define('_MI_NEWBB_SHOW_JUMPBOX_DESC', 'If Enabled, a drop-down menu will allow u
 define('_MI_NEWBB_SHOW_PERMISSIONTABLE', 'Show Permission Table');
 define('_MI_NEWBB_SHOW_PERMISSIONTABLE_DESC', 'Setting YES will display user\'s right');
 define('_MI_NEWBB_EMAIL_DIGEST', 'Email post digest');
-define('_MI_NEWBB_EMAIL_DIGEST_DESC', 'Set time period for sending post digest to users');
+define('_MI_NEWBB_EMAIL_DIGEST_DESC', 'Set time period for sending post digest to users<br><strong>Note:</strong> To enable this feature, read <a href="/modules/newbb/admin/admin_digest.php">recommendations</a> on setting up.');
 define('_MI_NEWBB_EMAIL_NONE', 'No email');
 define('_MI_NEWBB_EMAIL_DAILY', 'Daily');
 define('_MI_NEWBB_EMAIL_WEEKLY', 'Weekly');

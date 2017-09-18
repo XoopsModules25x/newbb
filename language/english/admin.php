@@ -74,6 +74,7 @@ define('_AM_NEWBB_DIGEST_HELP_1', 'Allows you to create and send notifications a
 define('_AM_NEWBB_DIGEST_HELP_2', 'Create a newsletter is possible only after the topic is marked as \'Digest\'.');
 define('_AM_NEWBB_DIGEST_HELP_3', 'The dispatch is made only to users signed up for notification of digest topics.');
 define('_AM_NEWBB_DIGEST_HELP_4', 'After creating and sending, do not delete the created messages. Otherwise they will be generated again.');
+define('_AM_NEWBB_DIGEST_HELP_AUTO_DIGEST', 'To configure the automatic creation and distribution of Digest topics, you need to create a cron task on your server.<br>For example: * NIX systems: <strong>0 6 * * * wget --post-data \'foo=bar\' https://example.com/modules/newbb/digest.php</strong><br>In this example, the script will run every day at 6.00 and check if there are any new Digest topics. If they are not found, mailing will not be done.<br>If for any reason you do not have the opportunity to create a task, then it is possible to create and make the dispatch on this page manually by clicking on the button above.<br>Please note that it is not recommended to delete created mailings, otherwise they will be created and sent again.');
 //define('_AM_NEWBB_DIGEST_PAST', '<span style="color:red;">Should be sent out %d minutes ago</span>');
 //define('_AM_NEWBB_DIGEST_NEXT', 'Need to send out in %d minutes');
 //define('_AM_NEWBB_DIGEST_ARCHIVE', 'Digest archive');

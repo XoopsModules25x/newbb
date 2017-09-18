@@ -119,6 +119,10 @@ switch ($op) {
 
         echo '</table>';
         echo '</td></tr></table>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _AM_NEWBB_PREFERENCES . '&nbsp;-&nbsp;' . _MI_NEWBB_ADMENU_DIGEST . '&nbsp;</legend>';
+        echo _AM_NEWBB_DIGEST_HELP_AUTO_DIGEST;
+        echo '</fieldset>';
         $nav = new XoopsPageNav($digestHandler->getDigestCount(), $limit, $start, 'start');
         echo $nav->renderNav(4);
 
