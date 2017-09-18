@@ -199,6 +199,12 @@ switch ($op) {
         }
         echo '</table>';
         echo '</td></tr></table>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_CATEGORY . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_CATEGORY_TAB;
+        echo '<br>' . newbbDisplayImage('admin_edit', _EDIT) . '&nbsp;-&nbsp;' . _EDIT;
+        echo '<br>' . newbbDisplayImage('admin_delete', _DELETE) . '&nbsp;-&nbsp;' . _DELETE;
+        echo '</fieldset>';
         break;
 }
 

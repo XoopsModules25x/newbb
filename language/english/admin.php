@@ -318,3 +318,7 @@ define('_AM_NEWBB_ERROR_COLUMN', 'Could not create column in database : %s');
 define('_AM_NEWBB_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
 define('_AM_NEWBB_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
 define('_AM_NEWBB_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
+
+// Help tab
+define('_AM_NEWBB_HELP_CATEGORY_TAB', 'To create a category, use the button above and fill in all the fields on the form.<br>By default, category images are located: /modules/newbb/assets/images/category/<br>Sponsor link should be written in the following format: https://xoops.org/modules/newbb/ newBB Support. First the link, then the sponsor\'s name or other text.');
+define('_AM_NEWBB_HELP_FORUM_TAB', 'To create and manage the forums use the buttons with the right<br>To create the forum, use the \'Create forum\' button. Then fill in all the fields of the form. You can also create a subforum.<br>To move the forum between categories, use the \'Move\' button. Follow the further instructions.<br>To merge forums, use the \'Merge\' button. Follow the further instructions.');

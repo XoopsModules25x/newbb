@@ -301,6 +301,15 @@ switch ($op) {
         echo $echo;
         echo '</table>';
         echo '</td></tr></table>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_FORUM . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_FORUM_TAB;
+        echo '<br>' . newbbDisplayImage('admin_edit', _EDIT) . '&nbsp;-&nbsp;' . _EDIT;
+        echo '<br>' . newbbDisplayImage('admin_delete', _DELETE) . '&nbsp;-&nbsp;' . _DELETE;
+        echo '<br>' . newbbDisplayImage('new_forum', _AM_NEWBB_CREATEFORUM) . '&nbsp;-&nbsp;' . _AM_NEWBB_CREATEFORUM;
+        echo '<br>' . newbbDisplayImage('admin_move', _AM_NEWBB_MOVE) . '&nbsp;-&nbsp;' . _AM_NEWBB_MOVE;
+        echo '<br>' . newbbDisplayImage('admin_merge', _AM_NEWBB_MERGE) . '&nbsp;-&nbsp;' . _AM_NEWBB_MERGE;
+        echo '</fieldset>';
         break;
 }
 include_once __DIR__ . '/admin_footer.php';
