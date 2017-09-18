@@ -42,7 +42,7 @@ class Newbb extends \Xmf\Module\Helper
     /**
      * @param bool $debug
      *
-     * @return Publisher
+     * @return Newbb
      */
     public static function getInstance($debug = false)
     {
