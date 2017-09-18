@@ -179,6 +179,10 @@ switch ($op) {
         echo '</td></tr></table>';
         $nav = new XoopsPageNav($reportHandler->getCount(new Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
         echo $nav->renderNav(4);
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_REPORT . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_REPORT_TAB;
+        echo '</fieldset>';
         break;
 }
 include_once __DIR__ . '/admin_footer.php';

@@ -114,5 +114,9 @@ if (Request::getString('submit', '', 'POST')) {
     echo '</table>';
     echo '</form>';
     echo '</td></tr></table>';
+    echo '<fieldset>';
+    echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_ORDER . '&nbsp;</legend>';
+    echo _AM_NEWBB_HELP_ORDER_TAB;
+    echo '</fieldset>';
 }
 include_once __DIR__ . '/admin_footer.php';

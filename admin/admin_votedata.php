@@ -130,6 +130,10 @@ switch ($op) {
         $page    = ($votes > 10) ? _AM_NEWBB_INDEX_PAGE : '';
         $pagenav = new XoopsPageNav($page, 20, $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $page . '' . $pagenav->renderImageNav(4) . '</div>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_VOTE . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_VOTE_TAB;
+        echo '</fieldset>';
         break;
 }
 include_once __DIR__ . '/admin_footer.php';

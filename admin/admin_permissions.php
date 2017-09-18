@@ -441,7 +441,10 @@ switch ($action) {
             unset($forums, $categories);
         }
         $form->display();
-
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_PERMISSION . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_PERMISSION_TAB;
+        echo '</fieldset>';
         // Since we can not control the permission update, a trick is used here
         /** @var \NewbbPermissionHandler $permissionHandler */
         $permissionHandler = xoops_getModuleHandler('permission', 'newbb');

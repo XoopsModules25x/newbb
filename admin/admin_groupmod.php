@@ -101,4 +101,8 @@ echo "</td><tr><tr><td class='odd' style='text-align:center;'>";
 echo '<input type="submit" value="' . _SUBMIT . '" name="submit" />';
 echo '</td></tr></table>';
 echo '</form>';
+echo '<fieldset>';
+echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_GROUPMOD . '&nbsp;</legend>';
+echo _AM_NEWBB_HELP_GROUPMOD_TAB;
+echo '</fieldset>';
 include_once __DIR__ . '/admin_footer.php';

@@ -426,6 +426,10 @@ switch ($op) {
         echo '</td></tr></table>';
         echo '</form>';
         echo '</td></tr></table>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_TYPE . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_TYPE_TAB;
+        echo '</fieldset>';
         break;
 }
 

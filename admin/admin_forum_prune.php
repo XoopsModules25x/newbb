@@ -254,5 +254,9 @@ if (Request::getString('submit', '', 'POST')) {
     $sform->display();
 }
 
-echo '</td></tr></table>';
+    echo '</td></tr></table>';
+    echo '<fieldset>';
+    echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_PRUNE . '&nbsp;</legend>';
+    echo _AM_NEWBB_HELP_PRUNE_TAB;
+    echo '</fieldset>';
 include_once __DIR__ . '/admin_footer.php';

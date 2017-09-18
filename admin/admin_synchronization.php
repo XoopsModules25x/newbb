@@ -168,4 +168,8 @@ $form .= '</form>';
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo $form;
 echo '</td></tr></table>';
+echo '<fieldset>';
+echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_SYNC . '&nbsp;</legend>';
+echo _AM_NEWBB_HELP_SYNC_TAB;
+echo '</fieldset>';
 include_once __DIR__ . '/admin_footer.php';
