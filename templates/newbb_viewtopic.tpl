@@ -258,7 +258,7 @@
     <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
     <div class="icon_left">
         <{foreach item=perm from=$permission_table}>
-            <div><{$perm}></div>
+            <div style="display:inline-block;"><{$perm}></div>
         <{/foreach}>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
