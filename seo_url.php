@@ -240,6 +240,14 @@ function forum_seo_topic($_cat_id)
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['topic_title']);
 
+    $moduleDirName = basename(__DIR__);
+    /** @var \NewbbTopicHandler $topicsHandler */
+    $topicsHandler = xoops_getModuleHandler('topic', 'newbb');
+    $criteria      = new CriteriaCompo(new Criteria('topic_id', $_cat_id, '='));
+    $fields        = ['topic_title'];
+    $ret0          = $topicsHandler->getAll($criteria, $fields, false);
+
+
     return $ret;
 }
 
