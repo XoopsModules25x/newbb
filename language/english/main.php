@@ -102,7 +102,7 @@ define('_MD_NEWBB_BEGINNING', 'From the beginning');
 define('_MD_NEWBB_SEARCHTHISFORUM', 'Search This Forum');
 define('_MD_NEWBB_TOPIC_SUBJECTC', 'Topic Prefix:');
 define('_MD_NEWBB_RATINGS', 'Ratings');
-/*
+//Pemission table
 define('_MD_NEWBB_CAN_ACCESS', 'You <strong>can</strong> access the forum.<br>');
 define('_MD_NEWBB_CANNOT_ACCESS', 'You <strong>cannot</strong> access the forum.<br>');
 define('_MD_NEWBB_CAN_POST', 'You <strong>can</strong> start a new topic.<br>');
@@ -131,7 +131,11 @@ define('_MD_NEWBB_CAN_UPLOAD', 'You <strong>can</strong> upload.<br>');
 define('_MD_NEWBB_CANNOT_UPLOAD', 'You <strong>cannot</strong> upload.<br>');
 define('_MD_NEWBB_CAN_SIGNATURE', 'You <strong>can</strong> use signature.<br>');
 define('_MD_NEWBB_CANNOT_SIGNATURE', 'You <strong>cannot</strong> use signature.<br>');
-*/
+define('_MD_NEWBB_CAN_PDF', 'You <strong>can</strong> create PDF files.<br>');
+define('_MD_NEWBB_CANNOT_PDF', 'You <strong>cannot</strong> create PDF files.<br>');
+define('_MD_NEWBB_CAN_PRINT', 'You <strong>can</strong> get print page.<br>');
+define('_MD_NEWBB_CANNOT_PRINT', 'You <strong>cannot</strong> get print page.<br>');
+/*
 define('_MD_NEWBB_CAN_ACCESS', '<img title="You can access the forum." src="/modules/newbb/assets/images/icons/accept.png"> ');
 define('_MD_NEWBB_CANNOT_ACCESS', '<img title="You cannot access the forum." src="/modules/newbb/assets/images/icons/cancel.png"> ');
 define('_MD_NEWBB_CAN_POST', '<img title="You can start a new topic." src="/modules/newbb/assets/images/icons/application_add.png"> ');
@@ -160,6 +164,11 @@ define('_MD_NEWBB_CAN_UPLOAD', '<img title="You can upload." src="/modules/newbb
 define('_MD_NEWBB_CANNOT_UPLOAD', '<img title="You cannot upload." src="/modules/newbb/assets/images/icons/drive_delete.png"> ');
 define('_MD_NEWBB_CAN_SIGNATURE', '<img title="You can use signature." src="/modules/newbb/assets/images/icons/report_add.png"> ');
 define('_MD_NEWBB_CANNOT_SIGNATURE', '<img title="You cannot use signature." src="/modules/newbb/assets/images/icons/report_delete.png"> ');
+define('_MD_NEWBB_CAN_PDF', '<img title="You can create PDF files." src="/modules/newbb/assets/images/icons/page_white_acrobat.png"> ');
+define('_MD_NEWBB_CANNOT_PDF', '<img title="You cannot create PDF files." src="/modules/newbb/assets/images/icons/page_white_delete.png"> ');
+define('_MD_NEWBB_CAN_PRINT', '<img title="You can get print page." src="/modules/newbb/assets/images/icons/printer_add.png"> ');
+define('_MD_NEWBB_CANNOT_PRINT', '<img title="You cannot get print page." src="/modules/newbb/assets/images/icons/printer_delete.png"> ');
+*/
 define('_MD_NEWBB_IMTOPICS', 'Important Topics');
 define('_MD_NEWBB_NOTIMTOPICS', 'Forum Topics');
 define('_MD_NEWBB_FORUMOPTION', 'Forum options');
@@ -519,16 +528,6 @@ define('_MD_NEWBB_SELECT_LENGTH', 'Length of selected text');
 define('_MD_NEWBB_SELECT_HTML', 'Strip all html from result?');
 define('_MD_NEWBB_SELECT_EXCLUDE', 'Exclude these tags:');
 define('_MD_NEWBB_SELECT_TAG', 'Tag');
-/*
-define('_MD_NEWBB_CAN_PDF', 'You <strong>can</strong> create PDF files.<br>');
-define('_MD_NEWBB_CANNOT_PDF', 'You <strong>cannot</strong> create PDF files.<br>');
-define('_MD_NEWBB_CAN_PRINT', 'You <strong>can</strong> get print page.<br>');
-define('_MD_NEWBB_CANNOT_PRINT', 'You <strong>cannot</strong> get print page.<br>');
-*/
-define('_MD_NEWBB_CAN_PDF', '<img title="You can create PDF files." src="/modules/newbb/assets/images/icons/page_white_acrobat.png"> ');
-define('_MD_NEWBB_CANNOT_PDF', '<img title="You cannot create PDF files." src="/modules/newbb/assets/images/icons/page_white_delete.png"> ');
-define('_MD_NEWBB_CAN_PRINT', '<img title="You can get print page." src="/modules/newbb/assets/images/icons/printer_add.png"> ');
-define('_MD_NEWBB_CANNOT_PRINT', '<img title="You cannot get print page." src="/modules/newbb/assets/images/icons/printer_delete.png"> ');
 define('_MD_NEWBB_NORIGHTTOPDF', 'You don\'t have the right to create PDF in this forum.');
 define('_MD_NEWBB_NORIGHTTOPRINT', 'You don\'t have the right to get print in this forum.');
 // irmtfan for new block system

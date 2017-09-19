@@ -272,7 +272,7 @@
     <!-- irmtfan hardcode removed  style="float: left; -->
     <div class="floatleft">
         <{foreach item=perm from=$permission_table}>
-        <div style="display:inline-block;"><{$perm}></div>
+        <div style="font-size:x-small;"><{$perm}></div>
         <{/foreach}>
     </div>
 </div>
