@@ -216,6 +216,69 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', '
     Feel free to register and login to start your topics.
 
     If you have any question concerning NewBB usage, please visit your local support site or [url=https://xoops.org/modules/newbb/]XOOPS Support Site[/url].
+
+    ------- Example rules ----------
+
+    Forum Rules
+
+    1. Each participant of the Forum bears full responsibility for the information posted at the Forum. The Administration of the Forum is not responsible for the content of any topics and/or individual messages, except for messages posted by the administration. 
+
+    2. You agree not to post on the forum and not send offensive, threatening, libelous messages, pornography, incitement to national hatred, messages degrading religious feelings or inciting hatred (racial, social or any other) against the members of the forum, and other messages. 
+
+    Attempts to post such messages may lead to your disconnection from the forum (and your provider will be notified). 
+    Moderators have access to the IP addresses of all messages, which makes such a policy possible. 
+
+    3. You agree not to publish materials in violation of copyright, not to send SPAM to the forum participants, not to use the forum for the distribution of advertisements of extraneous nature, the installation of pyramid schemes and other illegal commercial activities. 
+
+    4. You agree not to engage in deliberate imitation-provocative activities on the forum: 
+    - bluff (persistent withdrawal of the discussion aside without explanation); 
+    - cartouches (a long mutual throwing of collateral counter-arguments without discussing the topic on the merits and ignoring the other participants in the discussion); 
+    - open or veiled ohayvaniem COB, CPE or individual people (criticism must be correct and reasoned); 
+    - manipulation of the minds of readers with the help of text techniques NLP; 
+    - etc. 
+    Corresponding messages will be moved to a separate section, or immediately deleted. 
+
+    5. Our forum is designed to discuss events and opinions, but not to discuss the people who expressed these views. 
+    To "clarify the relationship" it is recommended to use "Personal Messages". 
+    Public "clarification of relations" are allowed only in the corresponding section, and only with the observance of ethical standards. 
+    There is no duplication of messages, except for important administration messages in all forums. Other identical messages are deleted. 
+
+    6. Take care that the design of messages does not create difficulties when viewing. Avoid excessive citation. It is not recommended extensive citation of Internet sources, which can be given a hyperlink. 
+    Do not neglect the preview of the message before publishing. 
+    If necessary, edit your messages. 
+
+    7. You acknowledge that: 
+    - the opinion of the forum administration may not coincide with the opinion of the authors of the messages; 
+    - the administration has the right to remove any information from the forum pages if, in its opinion, the messages carrying this information violate these Rules; 
+    - messages that violate these rules may be erased without notice to their authors, and accounts of these authors may be removed from the lists of the forum, if such violations are allowed in the future. 
+
+    8. Moderation policy: 
+
+    8.1. Off-topics are highlighted in separate topics, with cross-references. 
+    The request to participants to adhere to this rule: if you want to discuss the side branch - open a new topic and give cross-references. 
+
+    8.2. Phrases with violation of ethical standards are removed entirely; in their place is inserted * censored *, or <deleted>, or <The message is deleted as contradicting the spirit and subject of our forum, in which in the honor of good manners and respect for the interlocutor>
+
+    8.3. Flood and "clarifying the relationship" with ethical compliance: either deleted or transferred to the appropriate section (at the discretion of the moderator). 
+    Themes from the corresponding section can be deleted two weeks after the last replica in this topic. 
+
+    8.4. To those who regularly violate the rules of our forum, the translation can be applied to "pre-moderation" (all messages of such participants get to the forum only after their approval by the moderator). 
+
+    The information on sanctions for participants will be placed in the appropriate section. 
+
+    9. Discussion of the actions of moderators and the administration of the forum is allowed only in a certain section and only in the correct form (that is politely and with the justification of their point of view). 
+
+    For the solution of everyday questions on moderation, please contact the moderators and administrators via private messages. 
+
+    All questions, suggestions and comments on the forum should be posted in the appropriate section, or sent to administrators via private messages or by e-mail.
+
+    10. As a user you are aware of the fact that the information you enter will be stored in the host\'s database. Check which information about you is publicly available by clicking on the "profile" link. 
+    Although this information will not be disclosed to third parties without your permission, the administration of the forums can not be responsible for the actions of hackers, which can lead to unauthorized access to it. 
+    Consider this feature of information exchange on the Internet. 
+
+    The forum automatically uses cookies to store information on your computer. These cookies do not contain any information from your input and serve only to improve the quality of the forums. Your e-mail address is used only to confirm your registration, inform you of new messages and password (and to send a new password if you forget the current one). 
+
+    The use of the Forum is evidence of your consent to these Rules.
     ');
 define('_MI_NEWBB_ADMENU_GROUPMOD', 'Group moderate');
 //define('_MI_NEWBB_SUBJECT_PREFIX', 'Add a prefix to the topic subject');
