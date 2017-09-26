@@ -26,14 +26,17 @@ class NewbbOnlineHandler
     public $topic_id;
     public $user_ids = [];
 
+    public function __construct(XoopsDatabase $db)
+    {
+        $this->db = $db;
+    }
+
     /**
      * @param null|\NewbbForum $forum
      * @param null|Topic       $forumtopic
      */
     public function init($forum = null, $forumtopic = null)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
-//        $this->db = $GLOBALS['xoopsDB'];
         if (is_object($forum)) {
             $this->forum_id     = $forum->getVar('forum_id');
             $this->forumObject = $forum;
