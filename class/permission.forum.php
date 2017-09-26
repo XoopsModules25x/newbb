@@ -25,6 +25,8 @@ define('FORUM_PERM_ITEMS', 'access,view,post,reply,edit,delete,addpoll,vote,atta
  */
 class NewbbPermissionForumHandler extends NewbbPermissionHandler
 {
+    protected $templateFilename;
+
     /**
      * @param XoopsDatabase|null $db
      */
@@ -32,6 +34,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     {
         //        $this->NewbbPermissionHandler($db);
         parent::__construct($db);
+        $this->templateFilename = XOOPS_VAR_PATH . '/configs/newbb_permission_template.php';
     }
 
     /**
@@ -248,24 +251,20 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     }
 
     /**
-     * @return mixed|null
+     * @return array|false
      */
     public function getTemplate()
     {
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-        $perms       = $cacheHelper->read('perm_template');
-
+        $perms = \Xmf\Yaml::readWrapped($this->templateFilename);
         return $perms;
     }
 
     /**
-     * @param $perms
+     * @param array $perms
      * @return bool
      */
     public function setTemplate($perms)
     {
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-
-        return $cacheHelper->write('perm_template', $perms);
+        return \Xmf\Yaml::saveWrapped($perms, $this->templateFilename);
     }
 }
