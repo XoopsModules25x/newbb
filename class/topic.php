@@ -665,7 +665,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (!is_object($object)) {
             $object = $this->get((int)$object);
         }
-        if (null !== !$object && !$object->getVar('topic_id')) {
+        if (!is_object($object) || !$object->getVar('topic_id')) {
             return false;
         }
 
