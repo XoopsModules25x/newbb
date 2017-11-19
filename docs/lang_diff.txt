@@ -3,6 +3,13 @@ LANGUAGE DIFFERENCES
 
 Below are language differences from a version to next version.
 
+5.0 Alpha-1
+----------------
+main.php
+----------
+define('_MD_NEWBB_FORUMDESCRIPTION', 'Forum Description:');
+
+===========================================
 Version 4.3 rev.9992
 ----------------
 admin.php
@@ -114,3 +121,4 @@ define("_MB_NEWBB_CRITERIA_ORDER","Order by");
 define("_MB_NEWBB_TITLE_LENGTH_DESC","Length of topic title excerpt in block. 0 for show the whole title and no excerpt.");
 define("_MB_NEWBB_POST_EXCERPT","Post text excerpt in block");
 define("_MB_NEWBB_POST_EXCERPT_DESC","Length of post text excerpt by mouse over on topic title in block. 0 for dont show post text.");
+

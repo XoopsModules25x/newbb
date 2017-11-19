@@ -628,7 +628,7 @@ class NewbbPost extends XoopsObject
             $thread_action['pdf']['link']   = XOOPS_URL . '/modules/newbb/makepdf.php?type=post&amp;pageid=0';
             $thread_action['pdf']['name']   = _MD_NEWBB_PDF;
             $thread_action['pdf']['target'] = '_blank';
-        }        
+        }
         // irmtfan add print permission
         if ($topicHandler->getPermission($forum_id, $topic_status, 'print')) {
             $thread_action['print']['image']  = newbbDisplayImage('printer', _MD_NEWBB_PRINT);
@@ -1161,7 +1161,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
         // LEFT JOIN
         $sql .= $join;
         // WHERE
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -1191,7 +1191,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
         if (!empty($join)) {
             $sql .= $join;
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();

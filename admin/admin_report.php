@@ -111,10 +111,10 @@ switch ($op) {
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
         //    else $adminObject->displayNavigation(basename(__FILE__));
-        $adminObject->addItemButton($title_other, $item_other, $icon = 'add');          
+        $adminObject->addItemButton($title_other, $item_other, $icon = 'add');
         $adminObject->displayButton('left');
         echo _AM_NEWBB_REPORTADMIN_HELP;
-        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";        
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
@@ -142,7 +142,7 @@ switch ($op) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
                 $memo = $myts->htmlSpecialChars($report['report_memo']);
-            }            
+            }
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTPOST . ': ' . $post_link . '</td>';
             echo "<td align='center'>" . $report['report_id'] . '</td>';

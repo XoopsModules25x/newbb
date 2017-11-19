@@ -14,11 +14,11 @@
 /**
  * NewBB module for xoops
  *
- * @copyright       XOOPS Project (http://xoops.org)
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GPL 2.0 or later
  * @package         newbb
  * @since           5.0.0
- * @author          XOOPS Development Team <name@site.com> - <http://xoops.org>
+ * @author          XOOPS Development Team <name@site.com> - <https://xoops.org>
  */
 
 //defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -71,5 +71,4 @@ class Newbb extends \Xmf\Module\Helper
 
         return $this->configs[$name];
     }
-
 }

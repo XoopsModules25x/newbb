@@ -49,7 +49,7 @@ if (!in_array($op, $validOps, true)) {
 
 ///** @var \NewbbTypeHandler $typeHandler */
 //$typeHandler = xoops_getModuleHandler('type', 'newbb');
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');    
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 
 switch ($op) {
     case 'save_type':
@@ -366,10 +366,10 @@ switch ($op) {
         }
 
         if ('add' !== $op) {
-        $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
-        $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
-        $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
-        $adminObject->displayButton('left');
+            $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
+            $adminObject->addItemButton(_AM_NEWBB_TYPE_TEMPLATE, 'admin_type_manager.php?op=template', $icon = 'add');
+            $adminObject->addItemButton(_AM_NEWBB_TYPE_FORUM, 'admin_type_manager.php?op=forum', $icon = 'add');
+            $adminObject->displayButton('left');
         }
         echo _AM_NEWBB_TYPE_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";

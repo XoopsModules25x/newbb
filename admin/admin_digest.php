@@ -91,7 +91,7 @@ switch ($op) {
         echo '<li>' . _AM_NEWBB_DIGEST_HELP_2 . '</li>';
         echo '<li>' . _AM_NEWBB_DIGEST_HELP_3 . '</li>';
         echo '<li>' . _AM_NEWBB_DIGEST_HELP_4 . '</li></ul>';
-        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";        
+        echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
         echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";

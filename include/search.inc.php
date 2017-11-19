@@ -69,9 +69,12 @@ function newbb_search(
         $criteriaUser->add(new Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
     }
 
-    $count        = count($queryarray);
+    $count = 0;
+    if (is_array($queryarray)) {
+        $count = count($queryarray);
+    }
     $highlightKey = '';
-    if (is_array($queryarray) && $count > 0) {
+    if ($count > 0) {
         $criteriaKeywords = new CriteriaCompo();
         foreach ($queryarray as $queryTerm) {
             $termCriteria  = new CriteriaCompo();

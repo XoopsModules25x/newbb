@@ -295,7 +295,7 @@ class NewbbOnlineHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('newbb_online');
-        if (is_object($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (is_object($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -358,7 +358,7 @@ class NewbbOnlineHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_online');
-        if (is_object($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (is_object($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

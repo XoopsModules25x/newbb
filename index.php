@@ -196,7 +196,7 @@ foreach (array_keys($categories) as $id) {
     }
     //$cat_image = $onecat['cat_image'];
     $cat_image = '';
-    $cat_image = $onecat['cat_image'];    
+    $cat_image = $onecat['cat_image'];
     if ('' !== $cat_image && 'blank.gif' !== $cat_image && $cat_image) {
         $cat_image = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/assets/images/category/' . $cat_image;
     }

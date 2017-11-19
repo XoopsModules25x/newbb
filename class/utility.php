@@ -81,15 +81,15 @@ class NewbbUtility
         
     public static function cleanCache()
     {
-          $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-            if (method_exists($cacheHelper,'clear')) {
-                $cacheHelper->clear();
+        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        if (method_exists($cacheHelper, 'clear')) {
+            $cacheHelper->clear();
             return;
-          }
-    // for 2.5 systems, clear everything
-          require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
-          $maintenance = new SystemMaintenance();
-            $cacheList = [
+        }
+        // for 2.5 systems, clear everything
+        require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
+        $maintenance = new SystemMaintenance();
+        $cacheList = [
             3, // xoops_cache
             ];
         $maintenance->CleanCache($cacheList);

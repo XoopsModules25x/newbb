@@ -88,6 +88,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" />
     ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
+$forumDescription = $forumObject->getVar('forum_desc');
+$xoopsTpl->assign('forumDescription', $forumDescription);
+
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 $xoopsTpl->assign('forum_id', $forum_id);
 $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
@@ -164,8 +167,7 @@ $sel_sort_array = [
     't.rating'             => _MD_NEWBB_RATINGS,
     't.topic_last_post_id' => _MD_NEWBB_LASTPOSTTIME
 ];
-if (!Request::getString('sort', '', 'GET')
-    || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)) {
+if (!Request::getString('sort', '', 'GET') || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)) {
     $sort = 't.topic_last_post_id';
 } else {
     $sort = Request::getString('sort', '', 'GET');

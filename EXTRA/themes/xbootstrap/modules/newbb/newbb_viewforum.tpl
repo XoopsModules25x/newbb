@@ -124,7 +124,7 @@
     </div>
 
     </div><!-- .newbb-topic-options -->
-
+    <strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}>
     <div class="newbb-topiclist-loop">
         <div class="newbb-topiclist-header clearfix">
         <div class="col-xs-6 col-sm-6 col-md-3"><a href="<{$h_topic_link}>" title="<{$smarty.const._MD_NEWBB_TOPICS}>"><{$smarty.const._MD_NEWBB_TOPICS}></a></div>
