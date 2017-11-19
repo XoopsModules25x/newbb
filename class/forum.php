@@ -28,7 +28,7 @@ class NewbbForum extends XoopsObject
         parent::__construct();
         $this->initVar('forum_id', XOBJ_DTYPE_INT);
         $this->initVar('forum_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('forum_desc', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('forum_desc', XOBJ_DTYPE_TXTAREA);
         $this->initVar('forum_moderator', XOBJ_DTYPE_ARRAY, serialize([]));
         $this->initVar('forum_topics', XOBJ_DTYPE_INT);
         $this->initVar('forum_posts', XOBJ_DTYPE_INT);
