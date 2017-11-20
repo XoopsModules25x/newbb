@@ -126,7 +126,7 @@ define('_AM_NEWBB_DELCAT', 'Delete Category');
 define('_AM_NEWBB_WAYSYWTDTTAL', 'Note: This will NOT remove the forums under the category, you must do that via the Edit Forum section.<br><br>WARNING: Are you sure you want to delete this Category?');
 //%%%%%%        File Name  admin_forums.php           %%%%%
 define('_AM_NEWBB_FORUMNAME', 'Forum Name:');
-define('_AM_NEWBB_FORUMDESCRIPTION', 'Forum Description:<br><span style="font-size:xx-small;font-weight:normal;display:block;">The description will be shown on the main page of the forum with a limit of 440 characters. A full description will be shown on the forum page. <br> Note the use of links and images in the description. <br> If you want to change the number of characters, it is possible to do this in the file /class/forum.php in the 917 line.</span>');
+define('_AM_NEWBB_FORUMDESCRIPTION', 'Forum Description:<br><span style="font-size:xx-small;font-weight:normal;display:block;">The description will be shown on the main page of the forum with a # of characters you define in the Preferences.</span>');
 define('_AM_NEWBB_MODERATOR', 'Moderator(s):');
 define('_AM_NEWBB_REMOVE', 'Remove');
 define('_AM_NEWBB_CATEGORY', 'Category:');
