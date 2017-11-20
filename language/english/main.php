@@ -547,3 +547,7 @@ define('_MD_NEWBB_AUTO_CREATE_ABOUT', '');
 define('_MD_NEWBB_NO_SELECTION', 'Selection required');
 
 define('_MD_NEWBB_FORUMDESCRIPTION', 'Forum Description:');
+
+define('_MD_NEWBB_PDF_PAGE', 'page');
+define('_MD_NEWBB_PDF_META_DIR', 'ltr');
+
