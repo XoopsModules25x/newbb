@@ -622,7 +622,7 @@ class NewbbPost extends XoopsObject
 
         $thread_action = [];
         // irmtfan add pdf permission
-        if (!is_file(XOOPS_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')
+        if (file_exists(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')
             && $topicHandler->getPermission($forum_id, $topic_status, 'pdf')) {
             $thread_action['pdf']['image']  = newbbDisplayImage('pdf', _MD_NEWBB_PDF);
             $thread_action['pdf']['link']   = XOOPS_URL . '/modules/newbb/makepdf.php?type=post&amp;pageid=0';
