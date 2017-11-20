@@ -330,3 +330,7 @@ define('_AM_NEWBB_HELP_VOTE_TAB', 'If you have the voting function enabled, here
 define('_AM_NEWBB_HELP_TYPE_TAB', 'Allows you to create tags for highlighting themes. For example:<br><strong style="color:blue;">[Important]</strong> <strong>Topic Title</strong><br><strong style="color:red;">[ATTENTION]</strong> <strong>Topic Title</strong><br>You can set theme types when creating a theme on the user side.');
 define('_AM_NEWBB_HELP_GROUPMOD_TAB', 'Allows you to install users of certain groups as moderators for the entire module, and for individual categories and forums.<br>It is recommended to create separate groups of moderators, for more convenient management of moderators.<br>You can also assign specific users to moderators when creating a forum.');
 define('_AM_NEWBB_HELP_SYNC_TAB', 'If you notice a problem with the message dates, the appearance of blank messages, etc. Here you can synchronize and correct forum data and topics');
+
+
+define('_MI_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
+define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');

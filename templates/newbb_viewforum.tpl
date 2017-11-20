@@ -127,7 +127,7 @@
         <{/if}>
 
         <!-- start forum topic -->
-        <strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}>
+        <div><strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}></div>
 
         <{foreach name=loop item=topic from=$topics}>
 
