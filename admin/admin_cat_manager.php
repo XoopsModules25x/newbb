@@ -39,7 +39,7 @@ xoops_cp_header();
 $op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
-///** @var \NewbbCategoryHandler $categoryHandler */
+/** @var \NewbbCategoryHandler $categoryHandler */
 //$categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
 /**

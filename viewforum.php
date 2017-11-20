@@ -88,7 +88,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" />
     ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
-$forumDescription = $myts->displayTarea($forumObject->getVar('forum_desc'));
+$forumDescription = $forumObject->getVar('forum_desc');
 $xoopsTpl->assign('forumDescription', $forumDescription);
 
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);

@@ -28,7 +28,7 @@ class NewbbForum extends XoopsObject
         parent::__construct();
         $this->initVar('forum_id', XOBJ_DTYPE_INT);
         $this->initVar('forum_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('forum_desc', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('forum_desc', XOBJ_DTYPE_TXTAREA);
         $this->initVar('forum_moderator', XOBJ_DTYPE_ARRAY, serialize([]));
         $this->initVar('forum_topics', XOBJ_DTYPE_INT);
         $this->initVar('forum_posts', XOBJ_DTYPE_INT);
@@ -914,7 +914,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $_forum_data['forum_id']     = $id;
             $_forum_data['forum_cid']    = $forum['cat_id'];
             $_forum_data['forum_name']   = $forum['forum_name'];
-            $_forum_data['forum_desc']   = $myts->displayTarea($forum['forum_desc']);
+            $_forum_data['forum_desc']   = $forum['forum_desc'];
             $_forum_data['forum_topics'] = $forum['forum_topics'] + @$stats_forum[$id]['topics'];
             $_forum_data['forum_posts']  = $forum['forum_posts'] + @$stats_forum[$id]['posts'];
             //$_forum_data["forum_type"]= $forum['forum_type'];
