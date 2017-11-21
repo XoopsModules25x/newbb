@@ -138,6 +138,7 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_IMAGEMAGICK . ' %s', array_key_ex
 $adminObject->addInfoBoxLine(sprintf('NetPBM' . ': %s', array_key_exists('netpbm', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['netpbm'] : _AM_NEWBB_NOTAVAILABLE));
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_GDLIB . ' %s', array_key_exists('gd', $imageLibs) ? _AM_NEWBB_AUTODETECTED . $imageLibs['gd'] : _AM_NEWBB_NOTAVAILABLE));
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_UPLOAD . ' %s', $uploadlimit));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_INDEX_PDF_PAGE . '', ''));
 
 $adminObject->addInfoBox(_AM_NEWBB_BOARDSUMMARY);
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALTOPICS . ': %s', getTotalTopics()));

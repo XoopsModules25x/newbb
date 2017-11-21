@@ -334,3 +334,6 @@ define('_AM_NEWBB_HELP_SYNC_TAB', 'If you notice a problem with the message date
 
 define('_MI_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
 define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');
+
+//PDF
+define('_AM_NEWBB_INDEX_PDF_PAGE', 'If you want to use the PDF creation function, use <a href="https://github.com/XoopsModules25x/publisher/issues/30#issuecomment-231551905" target="_blank">instruction</a>.');
