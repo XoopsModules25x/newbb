@@ -139,14 +139,14 @@
             <select class="form-control" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                 <{if $viewer_level gt 1}>
-                    <{foreachq item=act from=$admin_actions}>
+                    <{foreach item=act from=$admin_actions}>
                         <option value="<{$act.link}>"><{$act.name}></option>
                     <{/foreach}>
                 <{/if}>
-                <{if count($adminpoll_actions) > 0 }>
+                <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
                     <option value="">--------</option>
                     <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
-                    <{foreachq item=actpoll from=$adminpoll_actions}>
+                    <{foreach item=actpoll from=$adminpoll_actions}>
                         <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
                     <{/foreach}>
                 <{/if}>
