@@ -61,14 +61,22 @@ class Newbb extends \Xmf\Module\Helper
      *
      * @return mixed
      */
-    public function setConfig($name = null, $value = null)
-    {
-        if (null === $this->configs) {
-            $this->initConfig();
-        }
-        $this->configs[$name] = $value;
-        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
+//    public function setConfig($name = null, $value = null)
+//    {
+//        if (null === $this->configs) {
+//            $this->initConfig();
+//        }
+//        $this->configs[$name] = $value;
+//        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
+//
+//        return $this->configs[$name];
+//    }
 
-        return $this->configs[$name];
+    /**
+     * @return string
+     */
+    public function getDirname()
+    {
+        return $this->dirname;
     }
 }

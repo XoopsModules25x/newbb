@@ -24,21 +24,24 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
      */
     function newbbLoadConfig()
     {
-        $moduleHelper = \Xmf\Module\Helper::getHelper('newbb');
-        //        global $xoopsModuleConfig;
+        include_once dirname(__DIR__) . '/class/helper.php';
+        $helper = NewBB::getInstance();
         static $configs = null;
 
         if (null !== $configs) {
             return $configs;
         }
 
-        $configs = is_object($moduleHelper) ? $moduleHelper->getConfig() : [];
+        $configs = is_object($helper) ? $helper->getConfig() : [];
         $plugins = include __DIR__ . '/plugin.php';
         if (is_array($configs) && is_array($plugins)) {
             $configs = array_merge($configs, $plugins);
         }
+        if (!isset($GLOBALS['xoopsModuleConfig'])) {
+            $GLOBALS['xoopsModuleConfig'] = [];
+        }
         if (is_array($configs)) {
-            $GLOBALS['xoopsModuleConfig'] = array_merge($GLOBALS['xoopsModuleConfig'], $configs);
+            $GLOBALS['xoopsModuleConfig']= array_merge( $GLOBALS['xoopsModuleConfig'], $configs);
         }
 
         return $configs;

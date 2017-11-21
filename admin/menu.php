@@ -29,29 +29,14 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-//$moduleDirName = basename(dirname(__DIR__));
-
-//$moduleHandler = xoops_getHandler('module');
-//$module        = $moduleHandler->getByDirname($moduleDirName);
-//$pathIcon32    = '../../' . $module->getInfo('sysicons32');
-//$pathModIcon32 = './' . $module->getInfo('modicons32');
-//xoops_loadLanguage('modinfo', $module->dirname());
-
-$moduleDirName = basename(dirname(__DIR__));
-
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
-
+include_once dirname(__DIR__) . '/class/helper.php';
+$helper = NewBB::getInstance();
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('main');
 
 $pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
-// Load language files
-$moduleHelper->loadLanguage('admin');
-$moduleHelper->loadLanguage('modinfo');
-$moduleHelper->loadLanguage('main');
+//$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_INDEX,
