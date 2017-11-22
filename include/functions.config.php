@@ -11,6 +11,8 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+use Xoopsmodules\newbb;
+
 defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_CONFIG_LOADED', true);
 
@@ -24,8 +26,8 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
      */
     function newbbLoadConfig()
     {
-        include_once dirname(__DIR__) . '/class/helper.php';
-        $helper = NewBB::getInstance();
+//        include_once dirname(__DIR__) . '/class/helper.php';
+        $helper = newbb\Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {

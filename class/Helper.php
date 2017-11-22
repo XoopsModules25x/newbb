@@ -1,6 +1,4 @@
-<?php
-
-//namespace Xoopsmodules\Newbb;
+<?php namespace Xoopsmodules\newbb;
 
 /*
      You may not change or alter any portion of this comment or credits
@@ -26,23 +24,24 @@
 /**
  * Class Helper
  */
-class Newbb extends \Xmf\Module\Helper
+class Helper extends \Xmf\Module\Helper
 {
-    public $debugArray = [];
+    public $debug;
 
     /**
      * @internal param $debug
+     * @param bool $debug
      */
-    protected function __construct()
+    protected function __construct($debug = false)
     {
-        //        $this->debug   = $debug;
+        $this->debug   = $debug;
         $this->dirname = basename(dirname(__DIR__));
     }
 
     /**
      * @param bool $debug
      *
-     * @return Newbb
+     * @return \Helper
      */
     public static function getInstance($debug = false)
     {
@@ -61,16 +60,16 @@ class Newbb extends \Xmf\Module\Helper
      *
      * @return mixed
      */
-//    public function setConfig($name = null, $value = null)
-//    {
-//        if (null === $this->configs) {
-//            $this->initConfig();
-//        }
-//        $this->configs[$name] = $value;
-//        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
-//
-//        return $this->configs[$name];
-//    }
+    public function setConfig($name = null, $value = null)
+    {
+        if (null === $this->configs) {
+           $this->initConfig();
+        }
+       $this->configs[$name] = $value;
+        $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
+
+        return $this->configs[$name];
+    }
 
     /**
      * @return string

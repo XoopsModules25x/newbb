@@ -19,6 +19,8 @@
  * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
+use Xoopsmodules\newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('NEWBB_DIRNAME', basename(dirname(__DIR__)));
@@ -46,7 +48,7 @@ xoops_load('utility', NEWBB_DIRNAME);
 require_once NEWBB_ROOT_PATH . '/class/helper.php';
 
 $debug     = false;
-$helper = Newbb::getInstance($debug);
+$helper = newbb\Helper::getInstance($debug);
 
 //This is needed or it will not work in blocks.
 global $newbbIsAdmin;

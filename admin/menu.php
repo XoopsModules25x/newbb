@@ -29,14 +29,14 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-include_once dirname(__DIR__) . '/class/helper.php';
-$helper = NewBB::getInstance();
-$helper->loadLanguage('admin');
-$helper->loadLanguage('modinfo');
-$helper->loadLanguage('main');
+use Xoopsmodules\newbb;
 
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-//$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+require_once __DIR__ . '/../class/Helper.php';
+//require_once __DIR__ . '/../include/common.php';
+$helper = newbb\Helper::getInstance();
+
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_INDEX,
