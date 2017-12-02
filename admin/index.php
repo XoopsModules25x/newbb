@@ -28,6 +28,9 @@
 // URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
+
+use Xoopsmodules\newbb;
+
 include_once __DIR__ . '/admin_header.php';
 include_once __DIR__ . '/../class/utility.php';
 include_once __DIR__ . '/../include/functions.stats.php';
@@ -150,7 +153,7 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportH
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new Criteria('report_result', 1))));
 
 foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
-    NewbbUtility::prepareFolder($uploadFolders[$i]);
+    newbb\Utility::prepareFolder($uploadFolders[$i]);
     $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
 }
 
@@ -159,7 +162,7 @@ $adminObject->displayIndex();
 
 include_once __DIR__ . '/admin_footer.php';
 
-$cacheHelper = NewbbUtility::cleanCache();
+$cacheHelper = newbb\Utility::cleanCache();
 //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 //$cacheHelper->delete('config');
 //$cacheHelper->delete('permission');

@@ -259,7 +259,7 @@ foreach ($postsArray as $eachpost) {
 
 $userid_array = [];
 $online       = [];
-if (count($poster_array) > 0) {
+if (is_array($poster_array) && count($poster_array) > 0) {
     /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
@@ -270,7 +270,7 @@ if (count($poster_array) > 0) {
 }
 
 $viewtopic_users = [];
-if (count($userid_array) > 0) {
+if (is_array($userid_array) && count($userid_array) > 0) {
     require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;

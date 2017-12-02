@@ -30,6 +30,8 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
+use Xoopsmodules\newbb;
+
 
 include_once __DIR__ . '/admin_header.php';
 include_once __DIR__ . '/../include/functions.render.php';
@@ -208,7 +210,7 @@ switch ($op) {
         break;
 }
 
-$cacheHelper = NewbbUtility::cleanCache();
+$cacheHelper = newbb\Utility::cleanCache();
 //$cacheHelper->delete('permission_category');
 
 include_once __DIR__ . '/admin_footer.php';

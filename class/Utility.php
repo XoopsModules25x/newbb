@@ -1,11 +1,11 @@
-<?php
+<?php namespace  Xoopsmodules\newbb;
+
 
 use Xoopsmodules\newbb;
-
 /**
- * Class NewbbUtility
+ * Class Utility
  */
-class NewbbUtility
+class Utility
 {
     /**
      * Verify that a mysql table exists
@@ -90,7 +90,7 @@ class NewbbUtility
         }
         // for 2.5 systems, clear everything
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
-        $maintenance = new SystemMaintenance();
+        $maintenance = new \SystemMaintenance();
         $cacheList = [
             3, // xoops_cache
             ];

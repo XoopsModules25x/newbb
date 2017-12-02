@@ -30,6 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
+use Xoopsmodules\newbb;
 
 //include $GLOBALS['xoops']->path('include/cp_header.php');
 include __DIR__ . '/../../../include/cp_header.php';
@@ -43,7 +44,7 @@ include_once dirname(__DIR__) . '/include/config.php';
 include_once dirname(__DIR__) . '/include/common.php';
 
 include_once dirname(__DIR__) . '/class/helper.php';
-$helper = NewBB::getInstance();
+$helper = newbb\Helper::getInstance();
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = Xmf\Module\Admin::getInstance();
 

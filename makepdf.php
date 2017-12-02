@@ -1,38 +1,28 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-//  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: https://xoops.org                                                    //
-//  Project: Article Project                                                 //
-//  ------------------------------------------------------------------------ //
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+
+/**
+ * oledrion
+ *
+ * @copyright   {@link https://xoops.org/ XOOPS Project}
+ * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @author      phppp (D.J., infomax@gmail.com)
+*/
+
 use Xmf\Request;
 //use tecnickcom\TCPDF;
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
 include_once __DIR__ . '/header.php';
+
 $attach_id = Request::getString('attachid', '', 'GET');
 $forum    = Request::getInt('forum', 0, 'GET');
 $topic_id = Request::getInt('topic_id', 0, 'GET');
@@ -40,7 +30,10 @@ $post_id  = Request::getInt('post_id', 0, 'GET');
 
 if (!is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPDF for Xoops not installed');
+} else {
+    require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 }
+
 if (empty($post_id)) {
     exit(_MD_NEWBB_ERRORTOPIC);
 }
@@ -110,7 +103,7 @@ if (function_exists('easiestml')) {
     $pdf_data = xlanguage_ml($pdf_data);
 }
 // END irmtfan to implement Xlanguage by phppp(DJ)
-require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
+
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 // load $localLanguageOptions array with language specific definitions and apply
 //if (is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/config/lang/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
