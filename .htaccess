@@ -1,3 +1,7 @@
 RewriteEngine on
-RewriteRule ^newbb/([a-z]+)-([0-9]+)(/(.+))? modules/newbb/seo.php?seoOp=$1&seoArg=$2&seoOther=$4&%{QUERY_STRING} [L]
+#.htaccess located in XOOPS_PATH. For SEO Links
+#RewriteRule ^modules/newbb/([a-z]+)-([0-9]+)(/(.+))? modules/newbb/seo.php?seoOp=$1&seoArg=$2&seoOther=$4&%{QUERY_STRING} [L]
+#.htaccess located in modules/newbb. For SEO Links
+#RewriteRule ^([a-z]+)-([0-9]+)(/(.+))? seo.php?seoOp=$1&seoArg=$2&seoOther=$4&%{QUERY_STRING} [L]
+
 #RewriteRule ^(.*)$ $1 [L]
