@@ -29,11 +29,11 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
 
 require_once __DIR__ . '/../class/Helper.php';
 //require_once __DIR__ . '/../include/common.php';
-$helper = newbb\Helper::getInstance();
+$helper = Newbb\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');

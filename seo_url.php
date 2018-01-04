@@ -275,7 +275,7 @@ function forum_seo_title($title = '', $withExt = true)
     /**
      * if XOOPS ML is present, let's sanitize the title with the current language
      */
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if (method_exists($myts, 'formatForML')) {
         $title = $myts->formatForML($title);
     }

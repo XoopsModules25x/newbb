@@ -69,7 +69,7 @@ include_once __DIR__ . '/include/functions.topic.php';
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 require_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $menumode       = 0;
 $menumode_other = [];

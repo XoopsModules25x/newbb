@@ -66,7 +66,7 @@ function b_newbb_show($options)
     include_once __DIR__ . '/../include/functions.config.php';
     include_once __DIR__ . '/../include/functions.time.php';
 
-    $myts          = MyTextSanitizer::getInstance();
+    $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
     $i             = 0;
     $order         = '';
@@ -238,7 +238,7 @@ function b_newbb_topic_show($options)
 {
     global $accessForums;
     include_once __DIR__ . '/../include/functions.time.php';
-    $myts          = MyTextSanitizer::getInstance();
+    $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
     $i             = 0;
     $order         = '';
@@ -418,7 +418,7 @@ function b_newbb_post_show($options)
     global $newbbConfig;
 
     include_once __DIR__ . '/../include/functions.time.php';
-    $myts          = MyTextSanitizer::getInstance();
+    $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
     $i             = 0;
     $order         = '';
@@ -581,7 +581,7 @@ function b_newbb_author_show($options)
 {
     global $accessForums;
     global $newbbConfig;
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     $block = [];
     //    $i              = 0;
     $type          = 'topic';

@@ -30,7 +30,8 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
+
 //include $GLOBALS['xoops']->path('include/cp_header.php');
 include __DIR__ . '/../../../include/cp_header.php';
 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
@@ -43,12 +44,12 @@ include_once dirname(__DIR__) . '/include/config.php';
 include_once dirname(__DIR__) . '/include/common.php';
 
 include_once dirname(__DIR__) . '/class/Helper.php';
-$helper = newbb\Helper::getInstance();
+$helper = Newbb\Helper::getInstance();
 //$helper = NewBB::getInstance();
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = Xmf\Module\Admin::getInstance();
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');

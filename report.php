@@ -53,7 +53,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum);
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 // Disable cache
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 include $GLOBALS['xoops']->path('header.php');

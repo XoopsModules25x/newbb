@@ -19,9 +19,20 @@
  * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
+$moduleDirName = basename(dirname(__DIR__));
+
+require_once __DIR__ . '/../class/Helper.php';
+require_once __DIR__ . '/../class/Utility.php';
+
+$db = \XoopsDatabaseFactory::getDatabase();
+$helper = \XoopsModules\Newbb\Helper::getInstance();
+
+/** @var \XoopsModules\Newbb\Utility $utility */
+$utility = new Newbb\Utility();
 
 define('NEWBB_DIRNAME', basename(dirname(__DIR__)));
 define('NEWBB_URL', XOOPS_URL . '/modules/' . NEWBB_DIRNAME);
@@ -38,17 +49,13 @@ define('NEWBB_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . NEWBB_DIRNAME); // WITHOUT
 $mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . NEWBB_AUTHOR_LOGOIMG . "' alt='XOOPS Project' /></a>";
 
-xoops_loadLanguage('common', NEWBB_DIRNAME);
+$helper->loadLanguage('common');
 
-//xoops_load('constants', NEWBB_DIRNAME);
-xoops_load('utility', NEWBB_DIRNAME);
-//xoops_load('XoopsRequest');
-//xoops_load('XoopsFilterInput');
 
 require_once NEWBB_ROOT_PATH . '/class/Helper.php';
 
-$debug     = false;
-$helper = newbb\Helper::getInstance($debug);
+//$debug     = false;
+//$helper = Newbb\Helper::getInstance($debug);
 
 //This is needed or it will not work in blocks.
 global $newbbIsAdmin;
@@ -56,10 +63,10 @@ global $newbbIsAdmin;
 // Load only if module is installed
 if (is_object($helper->getModule())) {
     // Find if the user is admin of the module
-    $publisherIsAdmin = NewbbUtility::userIsAdmin();
+    $publisherIsAdmin = Newbb\Utility::userIsAdmin();
 }
 
-$db = \XoopsDatabaseFactory::getDatabase();
+//$db = \XoopsDatabaseFactory::getDatabase();
 
 /** @var \NewbbCategoryHandler $categoryHandler */
 $categoryHandler = $helper->getHandler('category');

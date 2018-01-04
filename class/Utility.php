@@ -1,7 +1,7 @@
-<?php namespace  Xoopsmodules\newbb;
+<?php namespace  XoopsModules\Newbb;
 
 
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
 /**
  * Class Utility
  */
@@ -105,7 +105,7 @@ class Utility
      */
     public static function userIsAdmin()
     {
-        $helper = newbb\Helper::getInstance();
+        $helper = Newbb\Helper::getInstance();
 
         static $newbbIsAdmin;
 

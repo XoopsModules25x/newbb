@@ -867,7 +867,7 @@ class NewbbTopicRenderer
      */
     public function renderTopics(Smarty $xoopsTpl = null)
     {
-        $myts = MyTextSanitizer::getInstance(); // irmtfan Instanciate
+        $myts = \MyTextSanitizer::getInstance(); // irmtfan Instanciate
 
         $ret = [];
         //$this->parseVars();

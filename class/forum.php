@@ -914,7 +914,8 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $_forum_data['forum_id']     = $id;
             $_forum_data['forum_cid']    = $forum['cat_id'];
             $_forum_data['forum_name']   = $forum['forum_name'];
-            $_forum_data['forum_desc']   = $forum['forum_desc'];
+            $forumDescLength = $GLOBALS['xoopsModuleConfig']['forum_desc_length'];
+            $_forum_data['forum_desc']   = mb_strimwidth($forum['forum_desc'], 0, $forumDescLength, '...');
             $_forum_data['forum_topics'] = $forum['forum_topics'] + @$stats_forum[$id]['topics'];
             $_forum_data['forum_posts']  = $forum['forum_posts'] + @$stats_forum[$id]['posts'];
             //$_forum_data["forum_type"]= $forum['forum_type'];

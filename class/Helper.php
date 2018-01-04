@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\newbb;
+<?php namespace XoopsModules\Newbb;
 
 /*
      You may not change or alter any portion of this comment or credits

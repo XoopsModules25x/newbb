@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/admin_header.php';
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -340,7 +340,7 @@ switch ($action) {
             }
             $newbbpermHandler->applyTemplate($forum, $module_id);
         }
-        $cacheHelper = newbb\Utility::cleanCache();
+        $cacheHelper = Newbb\Utility::cleanCache();
         //$cacheHelper->delete('permission');
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
         break;
@@ -450,7 +450,7 @@ switch ($action) {
         /** @var \NewbbPermissionHandler $permissionHandler */
         $permissionHandler = xoops_getModuleHandler('permission', 'newbb');
         $permissionHandler->createPermData();
-        $cacheHelper = newbb\Utility::cleanCache();
+        $cacheHelper = Newbb\Utility::cleanCache();
         //$cacheHelper->delete('permission');
         include_once __DIR__ . '/admin_footer.php';
         break;

@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use Xoopsmodules\newbb;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/admin_header.php';
 include $GLOBALS['xoops']->path('class/xoopstree.php');
@@ -38,7 +38,7 @@ include_once $GLOBALS['xoops']->path('class/pagenav.php');
 include_once __DIR__ . '/../include/functions.forum.php';
 include_once __DIR__ . '/../include/functions.render.php';
 
-$cacheHelper = newbb\Utility::cleanCache();
+$cacheHelper = Newbb\Utility::cleanCache();
 
 xoops_cp_header();
 
