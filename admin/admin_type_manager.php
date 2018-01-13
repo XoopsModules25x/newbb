@@ -47,8 +47,8 @@ if (!in_array($op, $validOps, true)) {
     $op = '';
 }
 
-///** @var \NewbbTypeHandler $typeHandler */
-//$typeHandler = xoops_getModuleHandler('type', 'newbb');
+///** @var Newbb\TypeHandler $typeHandler */
+//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
 $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 
 switch ($op) {
@@ -85,7 +85,7 @@ switch ($op) {
             }
         }
         if (count($type_del) > 0) {
-            $type_list = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
+            $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
             xoops_confirm(['op' => 'delete', 'type_del' => serialize($type_del)], xoops_getenv('PHP_SELF'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
         } else {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
@@ -169,12 +169,12 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
         }
 
-//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
-        $categories   = $categoryHandler->getList($criteriaCategory);
-//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
+        $categories = $categoryHandler->getList($criteriaCategory);
+        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forums = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c] = '[' . $categories[$c] . ']';
             foreach (array_keys($forums[$c]) as $f) {
@@ -182,14 +182,14 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
-        $fm_select = new XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forums', null, 10, true);
+        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
+        $fm_select = new \XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forums', null, 10, true);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
-        $tray = new XoopsFormElementTray('');
-        $tray->addElement(new XoopsFormHidden('op', 'save_apply'));
-        $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
+        $tray = new \XoopsFormElementTray('');
+        $tray->addElement(new \XoopsFormHidden('op', 'save_apply'));
+        $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $tray->addElement(new \XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_TEMPLATE_APPLY);
@@ -207,7 +207,7 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        $typesObject = $typeHandler->getAll(new Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
+        $typesObject = $typeHandler->getAll(new \Criteria('type_id', '(' . implode(', ', array_values($templates)) . ')', 'IN'));
         arsort($templates);
         foreach ($templates as $order => $key) {
             if (!isset($typesObject[$key])) {
@@ -241,15 +241,15 @@ switch ($op) {
         break;
 
     case 'forum':
-//        $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
-//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $forums       = $forumHandler->getTree(array_keys($categories));
+        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forums = $forumHandler->getTree(array_keys($categories));
         if (empty($forums)) {
             redirect_header('admin_forum_manager.php', 2, _AM_NEWBB_CREATENEWFORUM);
         }
@@ -261,14 +261,14 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
-        $fm_select = new XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forum', null, 5, false);
+        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
+        $fm_select = new \XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forum', null, 5, false);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
-        $tray = new XoopsFormElementTray('');
-        $tray->addElement(new XoopsFormHidden('op', 'edit_forum'));
-        $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
+        $tray = new \XoopsFormElementTray('');
+        $tray->addElement(new \XoopsFormHidden('op', 'edit_forum'));
+        $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $tray->addElement(new \XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $fmform->addElement($tray);
 
         //loadModuleAdminMenu(11, _AM_NEWBB_TYPE_FORUM);
@@ -285,7 +285,7 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
-//        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
@@ -392,7 +392,7 @@ switch ($op) {
                 echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";
                 echo "<td><input type='text' name='type_name[{$key}]' value='" . $typeObject->getVar('type_name') . "' size='10' /></td>";
                 if ($isColorpicker) {
-                    $form_colorpicker = new XoopsFormColorPicker('', "type_color[{$key}]", $typeObject->getVar('type_color'));
+                    $form_colorpicker = new \XoopsFormColorPicker('', "type_color[{$key}]", $typeObject->getVar('type_color'));
                     echo '<td>' . $form_colorpicker->render() . '</td>';
                 } else {
                     echo "<td><input type='text' name='type_color[{$key}]' value='" . $typeObject->getVar('type_color') . "' size='10' /></td>";
@@ -409,7 +409,7 @@ switch ($op) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='text' name='type_name[{$i}]' value='' size='10' /></td>";
                 if ($isColorpicker) {
-                    $form_colorpicker = new XoopsFormColorPicker('', "type_color[{$i}]", '');
+                    $form_colorpicker = new \XoopsFormColorPicker('', "type_color[{$i}]", '');
                     echo '<td>' . $form_colorpicker->render() . '</td>';
                 } else {
                     echo "<td><input type='text' name='type_color[{$i}]' value='' size='10' /></td>";

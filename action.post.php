@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -25,17 +26,17 @@ if (0 === count($post_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
-///** @var NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
-///** @var NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+///** @var TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
 if (empty($topic_id)) {
     $forumObject = null;
 } else {
     $topicObject = $topicHandler->get($topic_id);
-    $forum_id  = $topicObject->getVar('forum_id');
+    $forum_id    = $topicObject->getVar('forum_id');
     $forumObject = $forumHandler->get($forum_id);
 }
 $isAdmin = newbbIsAdmin($forumObject);
@@ -71,12 +72,12 @@ switch ($op) {
     case 'approve':
         $post_id = array_values($post_id);
         sort($post_id);
-        $topics    = [];
-        $forums    = [];
-        $criteria  = new Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
+        $topics      = [];
+        $forums      = [];
+        $criteria    = new \Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
         $postsObject = $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
-            /** @var \NewbbPost $postObject */
+            /** @var Newbb\Post $postObject */
             $postObject = $postsObject[$post];
             if (!empty($topic_id) && $topic_id !== $postObject->getVar('topic_id')) {
                 continue;
@@ -96,10 +97,10 @@ switch ($op) {
             break;
         }
 
-        $criteria_topic = new Criteria('topic_id', '(' . implode(',', array_keys($topics)) . ')', 'IN');
+        $criteria_topic = new \Criteria('topic_id', '(' . implode(',', array_keys($topics)) . ')', 'IN');
         $topic_list     = $topicHandler->getList($criteria_topic, true);
 
-        $criteria_forum = new Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
+        $criteria_forum = new \Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
         $forum_list     = $forumHandler->getList($criteria_forum);
 
         include_once __DIR__ . '/include/notification.inc.php';
@@ -107,7 +108,7 @@ switch ($op) {
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
             $tags = [];
-            /** @var \NewbbPost[] $postsObject [$post] */
+            /** @var Newbb\Post[] $postsObject [$post] */
             $tags['THREAD_NAME'] = $topic_list[$postsObject[$post]->getVar('topic_id')];
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $postsObject[$post]->getVar('topic_id') . '&amp;forum=' . $postsObject[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$postsObject[$post]->getVar('forum_id')];
@@ -145,7 +146,7 @@ switch ($op) {
         }
         break;
     case 'split':
-        /** @var \NewbbPost $postObject */
+        /** @var Newbb\Post $postObject */
         $postObject = $postHandler->get($post_id);
         if (0 === count($post_id) || $postObject->isTopic()) {
             break;
@@ -170,27 +171,27 @@ switch ($op) {
 
         /* split a single post */
         if (1 === $mode) {
-            $criteria = new CriteriaCompo(new Criteria('topic_id', $topic_id));
-            $criteria->add(new Criteria('pid', $post_id));
+            $criteria = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
+            $criteria->add(new \Criteria('pid', $post_id));
             $postHandler->updateAll('pid', $pid, $criteria, true);
             /* split a post and its children posts */
         } elseif (2 === $mode) {
             include_once $GLOBALS['xoops']->path('class/xoopstree.php');
-            $mytree = new XoopsTree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
+            $mytree = new \XoopsTree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
             $posts  = $mytree->getAllChildId($post_id);
             if (count($posts) > 0) {
-                $criteria = new Criteria('post_id', '(' . implode(',', $posts) . ')', 'IN');
+                $criteria = new \Criteria('post_id', '(' . implode(',', $posts) . ')', 'IN');
                 $postHandler->updateAll('topic_id', $new_topic_id, $criteria, true);
             }
             /* split a post and all posts coming after */
         } elseif (3 === $mode) {
-            $criteria = new CriteriaCompo(new Criteria('topic_id', $topic_id));
-            $criteria->add(new Criteria('post_id', $post_id, '>'));
+            $criteria = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
+            $criteria->add(new \Criteria('post_id', $post_id, '>'));
             $postHandler->updateAll('topic_id', $new_topic_id, $criteria, true);
 
             unset($criteria);
-            $criteria = new CriteriaCompo(new Criteria('topic_id', $new_topic_id));
-            $criteria->add(new Criteria('post_id', $post_id, '>'));
+            $criteria = new \CriteriaCompo(new \Criteria('topic_id', $new_topic_id));
+            $criteria->add(new \Criteria('post_id', $post_id, '>'));
             $postHandler->identifierName = 'pid';
             $posts                       = $postHandler->getList($criteria);
 
@@ -206,7 +207,7 @@ switch ($op) {
                 }
             }
             if (count($post_update)) {
-                $criteria = new Criteria('post_id', '(' . implode(',', $post_update) . ')', 'IN');
+                $criteria = new \Criteria('post_id', '(' . implode(',', $post_update) . ')', 'IN');
                 $postHandler->updateAll('pid', $post_id, $criteria, true);
             }
         }

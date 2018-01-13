@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // Why the skip-DB-security check defined only for XMLRPC? We also need it!!! ~_*
 if (!defined('XOOPS_XMLRPC')) {
     define('XOOPS_XMLRPC', 1);
@@ -20,8 +22,8 @@ if (0 == $GLOBALS['xoopsModuleConfig']['email_digest']) {
 
     return false;
 }
-/** @var \NewbbDigestHandler $digestHandler */
-$digestHandler = xoops_getModuleHandler('digest', 'newbb');
+/** @var Newbb\DigestHandler $digestHandler */
+$digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
 $msg           = $digestHandler->process();
 $msg           .= ob_get_contents();
 ob_end_clean();

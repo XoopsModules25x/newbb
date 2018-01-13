@@ -9,7 +9,7 @@
         <{if $online.num_user}>
             <br>
             <{$online.num_user}> <{$smarty.const._MD_NEWBB_REGISTERED_USERS}>
-            <{foreachq item=user from=$online.users}>
+            <{foreach item=user from=$online.users}>
             <a href="<{$user.link}>">
                 <{if $user.level eq 2}>
                     <span class="online_admin"><{$user.uname}></span>

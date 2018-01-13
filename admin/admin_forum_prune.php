@@ -145,29 +145,29 @@ if (Request::getString('submit', '', 'POST')) {
                 return _MD_NEWBB_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-//            /** @var \NewbbForumHandler $forumHandler */
-//            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            //            /** @var Newbb\ForumHandler $forumHandler */
+            //            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
             $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:
         }
     }
 
-    $tform = new XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, 'prune_results', xoops_getenv('PHP_SELF'));
-    $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_FORUMS, $selected_forums));
-    $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_TOPICS, $topics_number));
-    $tform->addElement(new XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_POSTS, $posts_number));
+    $tform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, 'prune_results', xoops_getenv('PHP_SELF'));
+    $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_FORUMS, $selected_forums));
+    $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_TOPICS, $topics_number));
+    $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_POSTS, $posts_number));
     $tform->display();
 } else {
-    $sform = new XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, 'prune', xoops_getenv('PHP_SELF'));
+    $sform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, 'prune', xoops_getenv('PHP_SELF'));
     $sform->setExtra('enctype="multipart/form-data"');
 
     /* Let User select the number of days
-    $sform->addElement( new XoopsFormText(_AM_NEWBB_PRUNE_DAYS , 'days', 5, 10,100 ), true );
+    $sform->addElement( new \XoopsFormText(_AM_NEWBB_PRUNE_DAYS , 'days', 5, 10,100 ), true );
     */
     // $sql="SELECT p.topic_id, p.post_id t.post_text FROM ".$GLOBALS['xoopsDB']->prefix("newbb_posts")." p, ".$GLOBALS['xoopsDB']->prefix("newbb_posts_text")." t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id";
     // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
-    $days = new XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
+    $days = new \XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
     $days->addOptionArray([
                               604800   => _AM_NEWBB_PRUNE_WEEK,
                               1209600  => _AM_NEWBB_PRUNE_2WEEKS,
@@ -186,11 +186,11 @@ if (Request::getString('submit', '', 'POST')) {
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
     $forumSelBox    .= newbbForumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
     $forumSelBox    .= '</select>';
-    $forumEle       = new XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
-    $storeEle       = new XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
+    $forumEle       = new \XoopsFormLabel(_AM_NEWBB_PRUNE_FORUMS, $forumSelMulti . $forumSelBox);
+    $storeEle       = new \XoopsFormLabel(_AM_NEWBB_PRUNE_STORE, $forumSelSingle . $forumSelBox);
     /* irmtfan remove hardcode
-    $checkbox = new XoopsFormCheckBox(_AM_NEWBB_PRUNE_FORUMS, 'forums');
-    $radiobox = new XoopsFormRadio(_AM_NEWBB_PRUNE_STORE, 'store');
+    $checkbox = new \XoopsFormCheckBox(_AM_NEWBB_PRUNE_FORUMS, 'forums');
+    $radiobox = new \XoopsFormRadio(_AM_NEWBB_PRUNE_STORE, 'store');
     // PUAJJ I HATE IT, please tidy up
     $sql = "SELECT forum_name, forum_id FROM " . $GLOBALS['xoopsDB']->prefix("newbb_forums") . " ORDER BY forum_id";
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -211,22 +211,22 @@ if (Request::getString('submit', '', 'POST')) {
     $sform->addElement(/*$checkbox*/
         $forumEle); // irmtfan
 
-    $sticky_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_STICKY, 'sticky', 1);
+    $sticky_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_STICKY, 'sticky', 1);
     $sticky_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
     $sticky_confirmation->addOption(0, _AM_NEWBB_PRUNE_NO);
     $sform->addElement($sticky_confirmation);
 
-    $digest_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_DIGEST, 'digest', 1);
+    $digest_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_DIGEST, 'digest', 1);
     $digest_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
     $digest_confirmation->addOption(0, _AM_NEWBB_PRUNE_NO);
     $sform->addElement($digest_confirmation);
 
-    $lock_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_LOCK, 'lock', 0);
+    $lock_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_LOCK, 'lock', 0);
     $lock_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
     $lock_confirmation->addOption(0, _AM_NEWBB_PRUNE_NO);
     $sform->addElement($lock_confirmation);
 
-    $hot_confirmation = new XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
+    $hot_confirmation = new \XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
     $hot_confirmation->addOptionArray([
                                           '0'  => 0,
                                           '5'  => 5,
@@ -241,22 +241,22 @@ if (Request::getString('submit', '', 'POST')) {
     $sform->addElement(/*$radiobox*/
         $storeEle); // irmtfan
 
-    $archive_confirmation = new XoopsFormRadio(_AM_NEWBB_PRUNE_ARCHIVE, 'archive', 1);
+    $archive_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_ARCHIVE, 'archive', 1);
     $archive_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
     $archive_confirmation->addOption(0, _AM_NEWBB_PRUNE_NO);
     $sform->addElement($archive_confirmation);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'submit', _AM_NEWBB_PRUNE_SUBMIT, 'submit'));
-    $button_tray->addElement(new XoopsFormButton('', 'reset', _AM_NEWBB_PRUNE_RESET, 'reset'));
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'submit', _AM_NEWBB_PRUNE_SUBMIT, 'submit'));
+    $button_tray->addElement(new \XoopsFormButton('', 'reset', _AM_NEWBB_PRUNE_RESET, 'reset'));
     $sform->addElement($button_tray);
 
     $sform->display();
 }
 
-    echo '</td></tr></table>';
-    echo '<fieldset>';
-    echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_PRUNE . '&nbsp;</legend>';
-    echo _AM_NEWBB_HELP_PRUNE_TAB;
-    echo '</fieldset>';
+echo '</td></tr></table>';
+echo '<fieldset>';
+echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_PRUNE . '&nbsp;</legend>';
+echo _AM_NEWBB_HELP_PRUNE_TAB;
+echo '</fieldset>';
 include_once __DIR__ . '/admin_footer.php';

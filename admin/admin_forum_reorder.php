@@ -66,7 +66,7 @@ if (Request::getString('submit', '', 'POST')) {
     $adminObject->displayNavigation(basename(__FILE__));
 
     echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-    $tform = new XoopsThemeForm(_AM_NEWBB_SETFORUMORDER, '', '');
+    $tform = new \XoopsThemeForm(_AM_NEWBB_SETFORUMORDER, '', '');
     $tform->display();
     echo "<form name='reorder' method='post'>";
     echo "<table border='0' width='100%' cellpadding='2' cellspacing='1' class='outer'>";
@@ -75,11 +75,11 @@ if (Request::getString('submit', '', 'POST')) {
     echo "<td class='head' align='center'><strong>" . _AM_NEWBB_REORDERWEIGHT . '</strong></td>';
     echo '</tr>';
 
-//    /** @var \NewbbForumHandler $forumHandler */
-//    $forumHandler     = xoops_getModuleHandler('forum', 'newbb');
-//    /** @var \NewbbCategoryHandler $categoryHandler */
-//    $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-    $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+    //    /** @var Newbb\ForumHandler $forumHandler */
+    //    $forumHandler     = Newbb\Helper::getInstance()->getHandler('Forum');
+    //    /** @var Newbb\CategoryHandler $categoryHandler */
+    //    $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+    $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
     $criteriaCategory->setSort('cat_order');
     $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
     $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');

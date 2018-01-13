@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
@@ -136,7 +138,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     }
 
     /**
-     * @return NewbbIconHandler
+     * @return Newbb\IconHandler
      */
     function newbbGetIconHandler()
     {
@@ -147,11 +149,11 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
             return $iconHandler;
         }
 
-        if (!class_exists('NewbbIconHandler')) {
-            require_once dirname(__DIR__) . '/class/icon.php';
-        }
+//        if (!class_exists('IconHandler')) {
+//            require_once dirname(__DIR__) . '/class/icon.php';
+//        }
 
-        $iconHandler           = NewbbIconHandler::getInstance();
+        $iconHandler           = Newbb\IconHandler::getInstance();
         $iconHandler->template = $xoTheme->template;
         $iconHandler->init($GLOBALS['xoopsConfig']['language']);
 

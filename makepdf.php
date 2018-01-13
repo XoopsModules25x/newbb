@@ -15,18 +15,19 @@
  * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      phppp (D.J., infomax@gmail.com)
-*/
+ */
 
 use Xmf\Request;
 //use tecnickcom\TCPDF;
+
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
 include_once __DIR__ . '/header.php';
 
 $attach_id = Request::getString('attachid', '', 'GET');
-$forum    = Request::getInt('forum', 0, 'GET');
-$topic_id = Request::getInt('topic_id', 0, 'GET');
-$post_id  = Request::getInt('post_id', 0, 'GET');
+$forum     = Request::getInt('forum', 0, 'GET');
+$topic_id  = Request::getInt('topic_id', 0, 'GET');
+$post_id   = Request::getInt('post_id', 0, 'GET');
 
 if (!is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPDF for Xoops not installed');
@@ -37,23 +38,23 @@ if (!is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.p
 if (empty($post_id)) {
     exit(_MD_NEWBB_ERRORTOPIC);
 }
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 $post = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 $post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
 $forumtopic = $topicHandler->getByPost($post_id);
 $topic_id   = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler    = xoops_getModuleHandler('forum', 'newbb');
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler    = Newbb\Helper::getInstance()->getHandler('Forum');
 $forum           = $forum ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
 $parent_forums   = [];
@@ -74,17 +75,17 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
 if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'pdf')) {
     exit(_MD_NEWBB_NORIGHTTOPDF);
 }
-//$categoryHandler = xoops_getModuleHandler('category', 'newbb');
-$cat           = $viewtopic_forum->getVar('cat_id');
-$viewtopic_cat = $categoryHandler->get($cat);
+//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+$cat                                 = $viewtopic_forum->getVar('cat_id');
+$viewtopic_cat                       = $categoryHandler->get($cat);
 $GLOBALS['xoopsOption']['pdf_cache'] = 0;
-$pdf_data['author'] = $myts->undoHtmlSpecialChars($post_data['author']);
-$pdf_data['title']  = $myts->undoHtmlSpecialChars($post_data['subject']);
-$content            = '';
-$content            .= '<b>' . $pdf_data['title'] . '</b><br><br>';
-$content            .= _MD_NEWBB_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
-$content            .= _MD_NEWBB_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
-$content            .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
+$pdf_data['author']                  = $myts->undoHtmlSpecialChars($post_data['author']);
+$pdf_data['title']                   = $myts->undoHtmlSpecialChars($post_data['subject']);
+$content                             = '';
+$content                             .= '<b>' . $pdf_data['title'] . '</b><br><br>';
+$content                             .= _MD_NEWBB_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
+$content                             .= _MD_NEWBB_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
+$content                             .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
 //$content .= $post_edit . '<br>'; //reserve for future versions to display edit records
 $pdf_data['content']        = str_replace('[pagebreak]', '<br>', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');
@@ -112,8 +113,8 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET
 //    require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/config/lang/english.php';
 //}
 // set some language dependent data:
-$lg                    = [];
-$lg['a_meta_charset']  = _CHARSET;
+$lg                   = [];
+$lg['a_meta_charset'] = _CHARSET;
 //$lg['a_meta_dir']      = _MD_NEWBB_PDF_META_DIR;
 $lg['a_meta_language'] = _LANGCODE;
 $lg['w_page']          = _MD_NEWBB_PDF_PAGE2;

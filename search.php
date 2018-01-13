@@ -60,7 +60,7 @@ $start                = 0;
 $uid                  = 0;
 $forum                = 0;
 $sortby               = 'p.post_time'; // irmtfan remove DESC
-$criteriaExtra        = new CriteriaCompo(); // irmtfan new criteria
+$criteriaExtra        = new \CriteriaCompo(); // irmtfan new criteria
 $searchin             = 'both';
 $sort                 = '';
 $since                = Request::getInt('since', null);
@@ -75,8 +75,8 @@ $show_search     = 'post_text';
 $search_username = trim($uname);
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init(0);
 }
 
@@ -165,10 +165,10 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
     if (!empty($since)) {
-        $criteriaExtra->add(new Criteria('p.post_time', time() - newbbGetSinceTime($since), '>='), 'OR');
+        $criteriaExtra->add(new \Criteria('p.post_time', time() - newbbGetSinceTime($since), '>='), 'OR');
     }
     if (is_numeric($topic) && !empty($topic)) {
-        $criteriaExtra->add(new Criteria('p.topic_id', $topic), 'OR');
+        $criteriaExtra->add(new \Criteria('p.topic_id', $topic), 'OR');
     }
     // END irmtfan use criteria -  add since and topic search
 

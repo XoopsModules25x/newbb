@@ -6,6 +6,8 @@
 
 // NewBB plugin: D.J., https://xoops.org.cn
 
+use XoopsModules\Newbb;
+
 /**
  * @return array
  */
@@ -14,24 +16,24 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = [];
 
-    /** @var \NewbbForumHandler $forumHandler */
-    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+    /** @var Newbb\ForumHandler $forumHandler */
+    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
 
     /* fetch top forums */
     $forums_top_id = [];
     if (!empty($forums_allowed)) {
-        $crit_top = new CriteriaCompo(new Criteria('parent_forum', 0));
-        //$crit_top->add(new Criteria("cat_id", "(".implode(", ", array_keys($categories)).")", "IN"));
-        $crit_top->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
+        $crit_top = new \CriteriaCompo(new \Criteria('parent_forum', 0));
+        //$crit_top->add(new \Criteria("cat_id", "(".implode(", ", array_keys($categories)).")", "IN"));
+        $crit_top->add(new \Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
         $forums_top_id = $forumHandler->getIds($crit_top);
     }
 
     $forums_sub_id = [];
     if ((bool)$forums_top_id && $sitemap_configs['show_subcategoris']) {
-        $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top_id) . ')', 'IN'));
-        $crit_sub->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
+        $crit_sub = new \CriteriaCompo(new \Criteria('parent_forum', '(' . implode(', ', $forums_top_id) . ')', 'IN'));
+        $crit_sub->add(new \Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
         $forums_sub_id = $forumHandler->getIds($crit_sub);
     }
 
@@ -39,7 +41,7 @@ function b_sitemap_newbb()
     $forums_available = array_merge($forums_top_id, $forums_sub_id);
     $forums_array     = [];
     if ((bool)$forums_available) {
-        $crit_forum = new Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
+        $crit_forum = new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
         $crit_forum->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $crit_forum->setOrder('ASC');
         $forums_array = $forumHandler->getAll($crit_forum, ['forum_name', 'parent_forum', 'cat_id'], false);
@@ -64,8 +66,8 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs['show_subcategoris']) {
-        /** @var \NewbbCategoryHandler $categoryHandler */
-        $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+        /** @var Newbb\CategoryHandler $categoryHandler */
+        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);
 

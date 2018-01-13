@@ -29,12 +29,12 @@ $viewmode = (Request::getString('viewmode', '', 'GET')
              && 'flat' !== Request::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (Request::getString('viewmode', '', 'POST') ?: 'flat');
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($post_id)) {
     $topic = $topicHandler->getByPost($post_id);
@@ -48,7 +48,7 @@ if (!$topic_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-$forum     = $topic->getVar('forum_id');
+$forum       = $topic->getVar('forum_id');
 $forumObject = $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
@@ -57,8 +57,8 @@ if (!$forumHandler->getPermission($forumObject)) {
 $isAdmin = newbbIsAdmin($forumObject);
 $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
-/** @var NewbbPost $postObject */
-$postObject     = $postHandler->get($post_id);
+/** @var Post $postObject */
+$postObject   = $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
 if (($postObject->checkIdentity() || $isAdmin)
     && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')) {
@@ -71,8 +71,8 @@ if (!$isAdmin && !$postObject->checkTimelimit('delete_timelimit')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -115,8 +115,8 @@ if ($ok) {
         $postHandler->delete($postObject, $isDeleteOne);
         $forumHandler->synchronization($forum);
         $topicHandler->synchronization($topic_id);
-//        /** @var \NewbbStatsHandler $statsHandler */
-//        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+        //        /** @var Newbb\StatsHandler $statsHandler */
+        //        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
         $statsHandler->reset();
     }
 

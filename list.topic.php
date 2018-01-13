@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -29,8 +30,8 @@ include_once __DIR__ . '/include/functions.time.php';
 include_once __DIR__ . '/include/functions.render.php';
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
-require_once __DIR__ . '/./class/topic.renderer.php';
-$topic_renderer            = NewbbTopicRenderer::getInstance();
+require_once __DIR__ . '/./class/TopicRenderer.php';
+$topic_renderer            = Newbb\TopicRenderer::getInstance();
 $topic_renderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']);
 // irmtfan if list topic block is in the page then force to parse
 if (defined('LIST_TOPIC_DEFINED')) {
@@ -43,7 +44,7 @@ $topic_renderer->setVars(@$_GET);
 
 $type   = Request::getInt('type', 0, 'GET');
 $status = explode(',', $topic_renderer->vars['status']); // irmtfan to accept multiple status
-//irmtfan parse status for rendering topic correctly - remove here and move to topic.renderer.php
+//irmtfan parse status for rendering topic correctly - remove here and move to TopicRenderer.php
 //$topic_renderer->parseVar('status',$status);
 // irmtfan to accept multiple status
 $mode = count(array_intersect($status, ['active', 'pending', 'deleted'])) > 0 ? 2 : Request::getInt('mode', 0, 'GET');
@@ -55,8 +56,8 @@ if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init();
     $onlineHandler->render($xoopsTpl);
 }

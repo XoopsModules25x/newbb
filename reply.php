@@ -30,6 +30,7 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -45,19 +46,19 @@ if (!$topic_id && !$post_id) {
 }
 
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-///** @var NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+///** @var PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);
 }
 $postParentObject = $postHandler->get($pid);
-$topic_id        = $postParentObject->getVar('topic_id');
-$forum           = $postParentObject->getVar('forum_id');
-$postObject        = $postHandler->create();
+$topic_id         = $postParentObject->getVar('topic_id');
+$forum            = $postParentObject->getVar('forum_id');
+$postObject       = $postHandler->create();
 $postObject->setVar('pid', $pid);
 $postObject->setVar('topic_id', $topic_id);
 $postObject->setVar('forum_id', $forum);
@@ -67,7 +68,7 @@ if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 
-$topicObject    = $topicHandler->get($topic_id);
+$topicObject  = $topicHandler->get($topic_id);
 $topic_status = $topicObject->getVar('topic_status');
 if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
     /*
@@ -87,8 +88,8 @@ if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -103,7 +104,7 @@ include_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = xoops_getModuleHandler("category");
+$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar("cat_id"), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forumObject->getVar("cat_id"), "title" => $categoryObject->getVar('cat_title')));
 
@@ -168,14 +169,14 @@ $require_reply = 0;
 
 include __DIR__ . '/include/form.post.php';
 
-///** @var \NewbbKarmaHandler $karmaHandler */
-//$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
-$user_karma   = $karmaHandler->getUserKarma();
+///** @var Newbb\KarmaHandler $karmaHandler */
+//$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+$user_karma = $karmaHandler->getUserKarma();
 
 $posts_context = [];
 //$posts_contextObject = $postHandler->getByLimit($topic_id, 5); //mb
 $posts_contextObject = $postHandler->getByLimit(5, 0, null, null, true, $topic_id, 1);
-/** @var \NewbbPost $post_contextObject */
+/** @var Newbb\Post $post_contextObject */
 foreach ($posts_contextObject as $post_contextObject) {
     // Sorry, in order to save queries, we have to hide the non-open post_text even if you have replied or have adequate karma, even an admin.
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_contextObject->getVar('post_karma') > 0) {

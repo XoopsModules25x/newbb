@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Newbb;
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
@@ -8,6 +9,10 @@
  * @since          4.00
  * @package        module::newbb
  */
+
+use XoopsModules\Newbb;
+use XoopsModules\Tag;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
@@ -40,14 +45,14 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    /** @var NewbbTopicHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    /** @var XoopsObject $itemsObject */
-    $itemsObject = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    /** @var TopicHandler $itemHandler */
+    $itemHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    /** @var \XoopsObject $itemsObject */
+    $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            /** @var XoopsObject $itemObject */
+            /** @var \XoopsObject $itemObject */
             if (!$itemObject = $itemsObject[$item_id]) {
                 continue;
             }
@@ -73,10 +78,10 @@ function newbb_tag_iteminfo(&$items)
  */
 function newbb_tag_synchronization($mid)
 {
-    /** @var NewbbTopicHandler $itemHandler */
-    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    /** @var XoopsPersistableObjectHandler $linkHandler */
-    $linkHandler = xoops_getModuleHandler('link', 'tag');
+    /** @var TopicHandler $itemHandler */
+    $itemHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    /** @var \XoopsPersistableObjectHandler $linkHandler */
+    $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
     /* clear tag-item links */
     $sql = "    DELETE FROM {$linkHandler->table}"

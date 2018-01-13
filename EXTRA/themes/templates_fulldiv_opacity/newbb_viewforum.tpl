@@ -6,7 +6,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
         <{/foreach}>
@@ -123,7 +123,7 @@
         </div>
         <!-- start forum topic -->
 
-        <{foreachq name=loop item=topic from=$topics}>
+        <{foreach name=loop item=topic from=$topics}>
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
             <div class="head">
                 <div class="topic_folder floatleft align_center">&nbsp;</div>
@@ -233,7 +233,7 @@
 
 <div>
     <div class="floatleft">
-        <{foreachq item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table}>
         <div><{$perm}></div>
         <{/foreach}>
     </div>

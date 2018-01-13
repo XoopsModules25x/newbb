@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Newbb;
+
 //require_once __DIR__ . '/setup.php';
 
 /**
@@ -26,16 +28,15 @@
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_newbb(XoopsModule $module)
+function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
-
     include __DIR__ . '/../preloads/autoloader.php';
-    /** @var \Utility $utility */
-    $utility = new \XoopsModules\Newbb\Utility();
+    /** @var Newbb\Utility $utility */
+    $utility      = new \XoopsModules\Newbb\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
-    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
+    if (false !== $xoopsSuccess && false !== $phpSuccess) {
         $moduleTables =& $module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
@@ -52,16 +53,16 @@ function xoops_module_pre_install_newbb(XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_newbb(XoopsModule $module)
+function xoops_module_install_newbb(\XoopsModule $module)
 {
-    require_once  __DIR__ . '/../../../mainfile.php';
-    require_once  __DIR__ . '/../include/config.php';
+    require_once __DIR__ . '/../../../mainfile.php';
+    require_once __DIR__ . '/../include/config.php';
 
     $moduleDirName = basename(dirname(__DIR__));
 
     $helper       = Newbb\Helper::getInstance();
     $utility      = new Newbb\Utility();
-    $configurator = new Newbb\Configurator();
+    $configurator = new Newbb\Common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');

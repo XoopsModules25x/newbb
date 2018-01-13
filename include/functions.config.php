@@ -44,7 +44,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
             $GLOBALS['xoopsModuleConfig'] = [];
         }
         if (is_array($configs)) {
-            $GLOBALS['xoopsModuleConfig']= array_merge( $GLOBALS['xoopsModuleConfig'], $configs);
+            $GLOBALS['xoopsModuleConfig'] = array_merge($GLOBALS['xoopsModuleConfig'], $configs);
         }
 
         return $configs;

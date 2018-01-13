@@ -48,8 +48,8 @@ if (empty($post_id)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forum);
 }
 
@@ -63,7 +63,7 @@ if (Request::hasVar('submit', 'POST')) {
     $error_message = '';
     if (!is_object($GLOBALS['xoopsUser'])) {
         xoops_load('xoopscaptcha');
-        $xoopsCaptcha = XoopsCaptcha::getInstance();
+        $xoopsCaptcha = \XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $captcha_invalid = true;
             $error_message   = $xoopsCaptcha->getMessage();
@@ -72,8 +72,8 @@ if (Request::hasVar('submit', 'POST')) {
     if ('' !== $error_message) {
         xoops_error($error_message);
     } else {
-//        $reportHandler = xoops_getModuleHandler('report', 'newbb');
-        $report        = $reportHandler->create();
+        //        $reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
+        $report = $reportHandler->create();
         $report->setVar('report_text', Request::getString('report_text', '', 'POST'));
         $report->setVar('post_id', Request::getInt('post_id', 0, 'POST'));
         $report->setVar('report_time', time());
@@ -83,7 +83,7 @@ if (Request::hasVar('submit', 'POST')) {
         $report->setVar('report_memo', '');
 
         if ($report_id = $reportHandler->insert($report)) {
-//            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            //            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
             if (empty($forum)) {
             }
             $forumObject = $forumHandler->get($forum);
@@ -118,26 +118,26 @@ if (Request::hasVar('submit', 'POST')) {
     }
 }
 
-$report_form = new XoopsThemeForm('', 'reportform', 'report.php');
-$report_form->addElement(new XoopsFormText(_MD_NEWBB_REPORT_TEXT, 'report_text', 80, 255, Request::getString('report_text', '', 'POST')), true);
+$report_form = new \XoopsThemeForm('', 'reportform', 'report.php');
+$report_form->addElement(new \XoopsFormText(_MD_NEWBB_REPORT_TEXT, 'report_text', 80, 255, Request::getString('report_text', '', 'POST')), true);
 if (!is_object($GLOBALS['xoopsUser'])) {
-    $report_form->addElement(new XoopsFormCaptcha());
+    $report_form->addElement(new \XoopsFormCaptcha());
 }
 
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
-$postObject    = $postHandler->get($post_id);
-$forum       = $postObject->getVar('forum_id');
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+$postObject = $postHandler->get($post_id);
+$forum      = $postObject->getVar('forum_id');
 
-//$report_form->addElement(new XoopsFormHidden('pid', $pid));
-$report_form->addElement(new XoopsFormHidden('post_id', $post_id));
-$report_form->addElement(new XoopsFormHidden('topic_id', $topic_id));
-$report_form->addElement(new XoopsFormHidden('forum', $forum));
-$report_form->addElement(new XoopsFormHidden('viewmode', $viewmode));
-$report_form->addElement(new XoopsFormHidden('order', $order));
+//$report_form->addElement(new \XoopsFormHidden('pid', $pid));
+$report_form->addElement(new \XoopsFormHidden('post_id', $post_id));
+$report_form->addElement(new \XoopsFormHidden('topic_id', $topic_id));
+$report_form->addElement(new \XoopsFormHidden('forum', $forum));
+$report_form->addElement(new \XoopsFormHidden('viewmode', $viewmode));
+$report_form->addElement(new \XoopsFormHidden('order', $order));
 
-$button_tray   = new XoopsFormElementTray('');
-$submit_button = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
-$cancel_button = new XoopsFormButton('', 'cancel', _MD_NEWBB_CANCELPOST, 'button');
+$button_tray   = new \XoopsFormElementTray('');
+$submit_button = new \XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+$cancel_button = new \XoopsFormButton('', 'cancel', _MD_NEWBB_CANCELPOST, 'button');
 $extra         = "viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;order=$order&amp;viewmode=$viewmode";
 $cancel_button->setExtra("onclick='location=\"" . $extra . "\"'");
 $button_tray->addElement($submit_button);

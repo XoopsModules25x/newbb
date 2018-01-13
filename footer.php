@@ -34,7 +34,7 @@ $xoTheme->addStylesheet($css_rel_path . '/style.css');
 $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['language'], 'newbb', 'language/english', 'js');
 // add all local js files inside js directory
 xoops_load('XoopsLists');
-$allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
+$allfiles = \XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
     if ('js' === strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);

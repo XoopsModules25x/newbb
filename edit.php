@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -22,14 +23,14 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
-/** @var \NewbbPost $postObject */
+/** @var Newbb\Post $postObject */
 $postObject  = $postHandler->get($post_id);
 $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
 $forumObject = $forumHandler->get($postObject->getVar('forum_id'));
@@ -38,8 +39,8 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 $isAdmin = newbbIsAdmin($forumObject);
@@ -72,7 +73,7 @@ if (!empty($error_msg)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -84,7 +85,7 @@ include_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = xoops_getModuleHandler("category");
+$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forumObject->getVar('cat_id'), "title" => $categoryObject->getVar('cat_title')));
 
@@ -117,11 +118,11 @@ $require_reply = $postObject->getVar('require_reply');
 $xoopsTpl->assign('error_message', _MD_NEWBB_EDITEDBY . ' ' . $GLOBALS['xoopsUser']->uname());
 include __DIR__ . '/include/form.post.php';
 
-///** @var \NewbbKarmaHandler $karmaHandler */
-//$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
-$user_karma   = $karmaHandler->getUserKarma();
+///** @var Newbb\KarmaHandler $karmaHandler */
+//$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+$user_karma = $karmaHandler->getUserKarma();
 
-$posts_context     = [];
+$posts_context       = [];
 $posts_contextObject = $istopic ? [] : [$postHandler->get($postObject->getVar('pid'))];
 foreach ($posts_contextObject as $post_contextObject) {
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_contextObject->getVar('post_karma') > 0) {

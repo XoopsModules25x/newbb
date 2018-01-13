@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
@@ -34,8 +36,8 @@ function newbb_search(
     $forums = 0,
     $sortby = 0,
     $searchin = 'both',
-    CriteriaCompo $criteriaExtra = null
-) {
+    CriteriaCompo $criteriaExtra = null)
+{
     global $myts, $xoopsDB;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
@@ -46,27 +48,27 @@ function newbb_search(
         && 'newbb' === $GLOBALS['module']->getVar('dirname')) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
-    /** @var \NewbbForumHandler $forumHandler */
-    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+    /** @var Newbb\ForumHandler $forumHandler */
+    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
-    $criteriaPost = new CriteriaCompo();
-    $criteriaPost->add(new Criteria('p.approved', 1), 'AND'); // only active posts
+    $criteriaPost = new \CriteriaCompo();
+    $criteriaPost->add(new \Criteria('p.approved', 1), 'AND'); // only active posts
 
     $forum_list = [];// get forum lists just for forum names
     if (count($validForums) > 0) {
-        $criteriaPermissions = new CriteriaCompo();
-        $criteriaPermissions->add(new Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');
-        $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
+        $criteriaPermissions = new \CriteriaCompo();
+        $criteriaPermissions->add(new \Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');
+        $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
     }
 
     if (is_numeric($userid) && 0 !== $userid) {
-        $criteriaUser = new CriteriaCompo();
-        $criteriaUser->add(new Criteria('p.uid', $userid), 'OR');
+        $criteriaUser = new \CriteriaCompo();
+        $criteriaUser->add(new \Criteria('p.uid', $userid), 'OR');
     } elseif (is_array($userid) && count($userid) > 0) {
         $userid       = array_map('intval', $userid);
-        $criteriaUser = new CriteriaCompo();
-        $criteriaUser->add(new Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
+        $criteriaUser = new \CriteriaCompo();
+        $criteriaUser->add(new \Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
     }
 
     $count = 0;
@@ -75,15 +77,15 @@ function newbb_search(
     }
     $highlightKey = '';
     if ($count > 0) {
-        $criteriaKeywords = new CriteriaCompo();
+        $criteriaKeywords = new \CriteriaCompo();
         foreach ($queryarray as $queryTerm) {
-            $termCriteria  = new CriteriaCompo();
+            $termCriteria  = new \CriteriaCompo();
             $queryTermLike = '%' . $xoopsDB->escape($queryTerm) . '%';
             if ('title' === $searchin || 'both' === $searchin) {
-                $termCriteria->add(new Criteria('p.subject', $queryTermLike, 'LIKE'), 'OR');
+                $termCriteria->add(new \Criteria('p.subject', $queryTermLike, 'LIKE'), 'OR');
             }
             if ('text' === $searchin || 'both' === $searchin) {
-                $termCriteria->add(new Criteria('t.post_text', $queryTermLike, 'LIKE'), 'OR');
+                $termCriteria->add(new \Criteria('t.post_text', $queryTermLike, 'LIKE'), 'OR');
             }
             $criteriaKeywords->add($termCriteria, $andor);
         }
@@ -91,7 +93,7 @@ function newbb_search(
         $highlightKey = '&amp;keywords=' . implode(' ', $queryarray);
         $highlightKey = str_replace(' ', '+', $highlightKey);
     }
-    $criteria = new CriteriaCompo();
+    $criteria = new \CriteriaCompo();
     $criteria->add($criteriaPost, 'AND');
     if (isset($criteriaPermissions)) {
         $criteria->add($criteriaPermissions, 'AND');
@@ -118,14 +120,14 @@ function newbb_search(
     }
     $criteria->setOrder($order);
 
-    /** @var \NewbbPostHandler $postHandler */
-    $postHandler = xoops_getModuleHandler('post', 'newbb');
+    /** @var Newbb\PostHandler $postHandler */
+    $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];
     $i   = 0;
     foreach (array_keys($posts) as $id) {
-        /** @var \NewbbPost $post */
+        /** @var Newbb\Post $post */
         $post                  = $posts[$id];
         $post_data             = $post->getPostBody();
         $ret[$i]['topic_id']   = $post->getVar('topic_id');

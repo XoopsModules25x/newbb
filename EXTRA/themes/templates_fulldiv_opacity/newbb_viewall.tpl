@@ -143,7 +143,7 @@
             <div class="clear"></div>
         </div>
         <!-- start forum topic -->
-        <{foreachq name=loop item=topic from=$topics}>
+        <{foreach name=loop item=topic from=$topics}>
         <div class="<{cycle values="even,odd"}>">
             <div class="topic_folder floatleft <{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}> align_center"><{$topic.topic_folder}><{$topic.lock}></div>
             <div class="topic_icon floatleft align_center">

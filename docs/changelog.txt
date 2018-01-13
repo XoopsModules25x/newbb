@@ -56,16 +56,16 @@
 - fixed .htaccess (Trabis)
 - Changing TYPE to ENGINE (mamba)
 - bug fix: Prune function (mamba)
-- New topic list block using NewbbTopicRenderer class, fix topic type and prune system
+- New topic list block using TopicRenderer class, fix topic type and prune system
 - bug fix: undefined forumCookie in footer
 - bug fix: dont show topic title in list.topic.php
 - enhance the advance block add more sorts lastposttime, lastposter, lastpostmsgicon . add more display mode: attachment, read, pagenav
 - bug fix: read topics do not show for readmode = 1
 - improve: add multi topic poster and multi last poster
-- fix: multi status and multi display header in NewbbTopicRenderer class
+- fix: multi status and multi display header in TopicRenderer class
 - delete user.php from italian language
-- improve: add anon users to topic poster and last poster in NewbbTopicRenderer class (used in block and list.topic.php)
-- newbb/class/topic.renderer.php, newbb/xoops_version.php,
+- improve: add anon users to topic poster and last poster in TopicRenderer class (used in block and list.topic.php)
+- newbb/class/TopicRenderer.php, newbb/xoops_version.php,
 - newbb/list.topic.php, newbb/blocks/list_topic.php
 - bug fix: should not ban the user in forum who is moderator of that forum. in newbb/include/form.post.php and newbb/class/moderate.php
 - bug fix: uid=0 for anonymous users in newbb/class/moderate.php
@@ -102,8 +102,8 @@
 - fix: in topic merge: update vote data instead of deleting them in newbb/topicmanager.php
 - improve: add deletePoll function to 'Topic' class to use with ease in newbb/class/topic.php, newbb/class/post.php, newbb/topicmanager.php
 - add: better poll module display link and version in admin index. in newbb/admin/index.php
-- add: findPollModule function to 'NewbbTopicHandler' class to find poll module that is in used in the current newbb installtion. in newbb/class/topic.php
-- improve: add getActivePolls function to 'NewbbTopicHandler' class  to get all active poll modules in the current xoops installtion. in newbb/class/topic.php
+- add: findPollModule function to 'TopicHandler' class to find poll module that is in used in the current newbb installtion. in newbb/class/topic.php
+- improve: add getActivePolls function to 'TopicHandler' class  to get all active poll modules in the current xoops installtion. in newbb/class/topic.php
 - add: add getPoll function to 'Topic' class to get a poll object from a poll module. in newbb/class/topic.php
 - enhance: add a $pollModule dirname of the poll module to loadOldPoll function in 'Topic' class to Load functions needed for old poll module. in newbb/class/topic.php
 - add: special check to find and save the used poll module on the newbb update process. in newbb/xoops_version.pp

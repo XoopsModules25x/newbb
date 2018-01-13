@@ -17,6 +17,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -39,30 +40,30 @@ if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
-    /** @var NewbbPost $postObject */
+    /** @var Post $postObject */
     $postObject = $postHandler->get($post_id);
-    $topic_id = $postObject->getVar('topic_id');
+    $topic_id   = $postObject->getVar('topic_id');
 } else {
     $postObject = $postHandler->create();
 }
 $topicObject = $topicHandler->get($topic_id);
-$forum_id  = $topic_id ? $topicObject->getVar('forum_id') : $forum;
+$forum_id    = $topic_id ? $topicObject->getVar('forum_id') : $forum;
 $forumObject = $forumHandler->get($forum_id);
 if (!$forumHandler->getPermission($forumObject)) {
     redirect_header('index.php', 2, _NOPERM);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -101,7 +102,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     }
     if (!is_object($GLOBALS['xoopsUser'])) {
         xoops_load('captcha');
-        $xoopsCaptcha = XoopsCaptcha::getInstance();
+        $xoopsCaptcha = \XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $captcha_invalid = true;
             $error_message[] = $xoopsCaptcha->getMessage();
@@ -254,7 +255,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new Newbb\Uploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
 
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
@@ -298,7 +299,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     }
     newbbSetSession('LP', time()); // Recording last post time
     $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
-    $uid       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
+    $uid         = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
     if (newbbIsAdmin($forumObject)
         || ($topicHandler->getPermission($forumObject, $topic_status, 'type')
             && (0 == $topic_id
@@ -426,7 +427,7 @@ if (Request::getString('contents_upload', null, 'POST')) {
         $maxfilesize = $forumObject->getVar('attach_maxkb') * 1024;
         $uploaddir   = XOOPS_CACHE_PATH;
 
-        $uploader = new NewbbUploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
+        $uploader = new Newbb\Uploader($uploaddir, $forumObject->getVar('attach_ext'), (int)$maxfilesize, (int)$GLOBALS['xoopsModuleConfig']['max_img_width'], (int)$GLOBALS['xoopsModuleConfig']['max_img_height']);
         if ($_FILES['userfile']['error'] > 0) {
             switch ($_FILES['userfile']['error']) {
                 case 1:

@@ -6,7 +6,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
         <{/foreach}>
@@ -28,7 +28,7 @@
 <{if $online}>
     <div class="online_block">
         <{$smarty.const._MD_NEWBB_BROWSING}>&nbsp;
-        <{foreachq item=user from=$online.users}>
+        <{foreach item=user from=$online.users}>
         <a href="<{$user.link}>">
             <{if $user.level eq 2}>
                 <span class="online_admin"><{$user.uname}></span>
@@ -125,7 +125,7 @@
         <{/if}>
         <select name="viewmode" id="viewmode" class="menu" onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-            <{foreachq item=act from=$viewmode_options}>
+            <{foreach item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
@@ -158,7 +158,7 @@
     <div class="resultMsg"><{$smarty.const._MD_NEWBB_TOPICLOCK}></div>
     <br>
 <{/if}>
-<{foreachq item=topic_post from=$topic_posts}>
+<{foreach item=topic_post from=$topic_posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
 <br>
 <br>
@@ -176,7 +176,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
         <{/foreach}>
@@ -226,7 +226,7 @@
 
 <div>
     <div class="icon_left">
-        <{foreachq item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table}>
         <div><{$perm}></div>
         <{/foreach}>
     </div>

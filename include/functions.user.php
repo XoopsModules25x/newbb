@@ -16,6 +16,8 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
@@ -28,7 +30,7 @@
 function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
-    $ids = XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
+    $ids = \XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
 
     return $ids;
 }
@@ -106,7 +108,7 @@ function newbbIsModerator(&$forum, $user = -1)
         if (0 == $forum_id) {
             return false;
         }
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         $forum        = $forumHandler->get($forum_id);
     }
 
@@ -124,7 +126,7 @@ function newbbIsModerator(&$forum, $user = -1)
 /**
  * Function to check if a user has moderation permission over a forum
  *
- * @param  NewbbForum|int $forum
+ * @param  Newbb\Forum|int $forum
  * @return bool
  */
 function newbbIsAdmin($forum = 0)
@@ -147,7 +149,7 @@ function newbbIsAdmin($forum = 0)
     $cache_id = is_object($forum) ? $forum->getVar('forum_id', 'n') : (int)$forum;
     if (!isset($_cachedModerators[$cache_id])) {
         if (!is_object($forum)) {
-            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
             $forum        = $forumHandler->get((int)$forum);
         }
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');

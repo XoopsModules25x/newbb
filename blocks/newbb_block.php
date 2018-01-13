@@ -30,6 +30,9 @@
 //  ------------------------------------------------------------------------ //
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 // irmtfan use full path because block maybe used outside newbb
+
+use XoopsModules\Newbb;
+
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 if (defined('NEWBB_BLOCK_DEFINED')) {
@@ -83,8 +86,8 @@ function b_newbb_show($options)
     }
 
     if (!isset($accessForums)) {
-        /** @var \NewbbPermissionHandler $permHandler */
-        $permHandler = xoops_getModuleHandler('permission', 'newbb');
+        /** var Newbb\PermissionHandler $permHandler */
+        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -159,15 +162,15 @@ function b_newbb_show($options)
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
-        /** @var \NewbbTypeHandler $typeHandler */
-        $typeHandler = xoops_getModuleHandler('type', 'newbb');
-        $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
+        /** @var Newbb\TypeHandler $typeHandler */
+        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
     foreach ($rows as $arr) {
         // irmtfan add lastposticon - load main lang
         xoops_loadLanguage('main', 'newbb');
-        $topic = [];
+        $topic                  = [];
         $topic_page_jump        = newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . ']';
 
@@ -211,11 +214,11 @@ function b_newbb_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -282,8 +285,8 @@ function b_newbb_topic_show($options)
     }
 
     if (!isset($accessForums)) {
-        /** @var \NewbbPermissionHandler $permHandler */
-        $permHandler = xoops_getModuleHandler('permission', 'newbb');
+        /** var Newbb\PermissionHandler $permHandler */
+        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -342,15 +345,15 @@ function b_newbb_topic_show($options)
     include_once __DIR__ . '/../include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
-        /** @var \NewbbTypeHandler $typeHandler */
-        $typeHandler = xoops_getModuleHandler('type', 'newbb');
-        $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
+        /** @var Newbb\TypeHandler $typeHandler */
+        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
     foreach ($rows as $arr) {
         // irmtfan remove $topic_page_jump because there is no last post
         //$topic_page_jump = '';
-        $topic = [];
+        $topic                  = [];
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . '] ';
         $topic['forum_id']      = $arr['forum_id'];
         $topic['forum_name']    = $myts->htmlSpecialChars($arr['forum_name']);
@@ -389,11 +392,11 @@ function b_newbb_topic_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -437,15 +440,15 @@ function b_newbb_post_show($options)
             if (!empty($newbbConfig['allow_require_reply'])) {
                 $extraCriteria .= ' AND p.require_reply = 0';
             }
-            // no break
+        // no break
         default:
             $order = 'p.post_id';
             break;
     }
 
     if (!isset($accessForums)) {
-        /** @var \NewbbPermissionHandler $permHandler */
-        $permHandler = xoops_getModuleHandler('permission', 'newbb');
+        /** var Newbb\PermissionHandler $permHandler */
+        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -510,7 +513,7 @@ function b_newbb_post_show($options)
             $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/icon1.gif" alt="" />';
         }
         //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
-        $topic = [];
+        $topic               = [];
         $topic['forum_id']   = $arr['forum_id'];
         $topic['forum_name'] = $myts->htmlSpecialChars($arr['forum_name']);
         //$topic['id'] = $arr['topic_id'];
@@ -553,11 +556,11 @@ function b_newbb_post_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
 
     $block['indexNav'] = (int)$options[4];
@@ -615,8 +618,8 @@ function b_newbb_author_show($options)
     }
 
     if (!isset($accessForums)) {
-        /** @var \NewbbPermissionHandler $permHandler */
-        $permHandler = xoops_getModuleHandler('permission', 'newbb');
+        /** var Newbb\PermissionHandler $permHandler */
+        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -961,7 +964,7 @@ function b_newbb_custom($options)
         return false;
     }
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:newbb_block.tpl');
 }
@@ -986,7 +989,7 @@ function b_newbb_custom_topic($options)
         return false;
     }
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:newbb_block_topic.tpl');
 }
@@ -1011,7 +1014,7 @@ function b_newbb_custom_post($options)
         return false;
     }
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:newbb_block_post.tpl');
 }
@@ -1035,7 +1038,7 @@ function b_newbb_custom_author($options)
         return false;
     }
 
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:newbb_block_author.tpl');
 }

@@ -8,6 +8,7 @@
  * @link            https://xoops.org XOOPS
  */
 
+use XoopsModules\Newbb;
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -16,7 +17,7 @@
  * @return bool true if ready to uninstall, false if not
  */
 
-function xoops_module_pre_uninstall_xxxx(XoopsModule $module)
+function xoops_module_pre_uninstall_newbb(\XoopsModule $module)
 {
     // Do some synchronization
     return true;
@@ -29,15 +30,15 @@ function xoops_module_pre_uninstall_xxxx(XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_xxxx(XoopsModule $module)
+function xoops_module_uninstall_newbb(\XoopsModule $module)
 {
-//    return true;
+    //    return true;
 
-    $moduleDirName = basename(dirname(__DIR__));
-    $xsitemapHelper      = \Xmf\Module\Helper::getHelper($moduleDirName);
+    $moduleDirName  = basename(dirname(__DIR__));
+    $xsitemapHelper = \Xmf\Module\Helper::getHelper($moduleDirName);
 
-    /** @var XXXXXXUtility $utilityClass */
-    $utilityClass     = ucfirst($moduleDirName) . 'Utility';
+    /** @var Newbb\Utility $utilityClass */
+    $utilityClass = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
     }
@@ -45,14 +46,13 @@ function xoops_module_uninstall_xxxx(XoopsModule $module)
     $success = true;
     $xsitemapHelper->loadLanguage('admin');
 
-
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
     //------------------------------------------------------------------
 
     $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
     foreach ($old_directories as $old_dir) {
-        $dirInfo = new SplFileInfo($old_dir);
+        $dirInfo = new \SplFileInfo($old_dir);
         if ($dirInfo->isDir()) {
             // The directory exists so delete it
             if (false === $utilityClass::rrmdir($old_dir)) {
@@ -78,6 +78,4 @@ function xoops_module_uninstall_xxxx(XoopsModule $module)
 
     return $success;
     //------------ END  ----------------
-
 }
-

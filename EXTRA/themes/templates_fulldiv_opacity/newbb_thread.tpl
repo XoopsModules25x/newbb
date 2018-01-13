@@ -40,7 +40,7 @@
                     <{/if}>
                     <{if $topic_post.poster.groups}>
                         <div class="thread_poster_stat comUserStat"><span class="thread_poster_stat_caption comUserStatCaption"><{$smarty.const._MD_NEWBB_GROUP}></span>
-                            <{foreachq item=group from=$topic_post.poster.groups}><br><{$group}><{/foreach}>
+                            <{foreach item=group from=$topic_post.poster.groups}><br><{$group}><{/foreach}>
                         </div>
                     <{/if}>
                     <div class="thread_poster_stat comUserStat">
@@ -108,7 +108,7 @@
         <div class="icon_left">
           &nbsp;<a href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><{$p_up}></a>&nbsp;
             <{if $topic_post.thread_action}>
-                <{foreachq item=btn from=$topic_post.thread_action}>
+                <{foreach item=btn from=$topic_post.thread_action}>
                 <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>><{$btn.image}></a>&nbsp;
             <{/foreach}>
             <{/if}>
@@ -124,7 +124,7 @@
                 <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>"/>
             <{else}>
                 <{if $topic_post.thread_buttons}>
-                    <{foreachq item=btn from=$topic_post.thread_buttons}>
+                    <{foreach item=btn from=$topic_post.thread_buttons}>
                     <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>"> <{$btn.image}></a>
                 <{/foreach}>
                 <{/if}>

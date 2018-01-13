@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * NewBB module for xoops
  *
@@ -28,7 +29,7 @@ $moduleDirName = basename(dirname(__DIR__));
 require_once __DIR__ . '/../class/Helper.php';
 require_once __DIR__ . '/../class/Utility.php';
 
-$db = \XoopsDatabaseFactory::getDatabase();
+$db     = \XoopsDatabaseFactory::getDatabase();
 $helper = \XoopsModules\Newbb\Helper::getInstance();
 
 /** @var \XoopsModules\Newbb\Utility $utility */
@@ -51,7 +52,6 @@ $mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_bla
 
 $helper->loadLanguage('common');
 
-
 require_once NEWBB_ROOT_PATH . '/class/Helper.php';
 
 //$debug     = false;
@@ -68,43 +68,43 @@ if (is_object($helper->getModule())) {
 
 //$db = \XoopsDatabaseFactory::getDatabase();
 
-/** @var \NewbbCategoryHandler $categoryHandler */
+/** @var Newbb\CategoryHandler $categoryHandler */
 $categoryHandler = $helper->getHandler('category');
-/** @var \NewbbDigestHandler $digestHandler */
+/** @var Newbb\DigestHandler $digestHandler */
 $digestHandler = $helper->getHandler('digest');
-/** @var \NewbbForumHandler $forumHandler */
+/** @var Newbb\ForumHandler $forumHandler */
 $forumHandler = $helper->getHandler('forum');
-/** @var \NewbbIconHandler $iconHandler */
+/** @var Newbb\IconHandler $iconHandler */
 $iconHandler = $helper->getHandler('icon');
-/** @var \NewbbKarmaHandler $karmaHandler */
+/** @var Newbb\KarmaHandler $karmaHandler */
 $karmaHandler = $helper->getHandler('karma');
-/** @var \NewbbModerateHandler $moderateHandler */
+/** @var Newbb\ModerateHandler $moderateHandler */
 $moderateHandler = $helper->getHandler('moderate');
-/** @var \NewbbOnlineHandler $onlineHandler */
+/** @var Newbb\OnlineHandler $onlineHandler */
 $onlineHandler = $helper->getHandler('online');
-/** @var \NewbbPermissionHandler $permHandler */
+/** var Newbb\PermissionHandler $permHandler */
 $permHandler = $helper->getHandler('permission');
-/** @var \NewbbPostHandler $postHandler */
+/** @var Newbb\PostHandler $postHandler */
 $postHandler = $helper->getHandler('post');
-/** @var \NewbbRateHandler $rateHandler */
+/** @var Newbb\RateHandler $rateHandler */
 $rateHandler = $helper->getHandler('rate');
-/** @var \NewbbReadHandler $readHandler */
+/** @var Newbb\ReadHandler $readHandler */
 //$readHandler = $helper->getHandler('read' . $type);
-/** @var \NewbbReadForumHandler $readForumHandler */
+/** @var Newbb\ReadForumHandler $readForumHandler */
 $readForumHandler = $helper->getHandler('readforum');
-/** @var \NewbbReadtopicHandler $readTopicHandler */
+/** @var Newbb\ReadtopicHandler $readTopicHandler */
 $readTopicHandler = $helper->getHandler('readtopic');
-/** @var \NewbbReportHandler $reportHandler */
+/** @var Newbb\ReportHandler $reportHandler */
 $reportHandler = $helper->getHandler('report');
-/** @var \NewbbStatsHandler $statsHandler */
+/** @var Newbb\StatsHandler $statsHandler */
 $statsHandler = $helper->getHandler('stats');
-/** @var \NewbbTextHandler $textHandler */
+/** @var Newbb\TextHandler $textHandler */
 $textHandler = $helper->getHandler('text');
-/** @var \NewbbTopicHandler $topicHandler */
+/** @var Newbb\TopicHandler $topicHandler */
 $topicHandler = $helper->getHandler('topic');
-/** @var \NewbbTypeHandler $typeHandler */
+/** @var Newbb\TypeHandler $typeHandler */
 $typeHandler = $helper->getHandler('type');
-/** @var \NewbbUserstatsHandler $userstatsHandler */
+/** @var Newbb\UserstatsHandler $userstatsHandler */
 $userstatsHandler = $helper->getHandler('userstats');
-/** @var \NewbbXmlrssHandler $xmlrssHandler */
+/** @var Newbb\XmlrssHandler $xmlrssHandler */
 $xmlrssHandler = $helper->getHandler('xmlrss');

@@ -62,9 +62,9 @@ $mode = (Request::getString('status', '', 'GET')
         'deleted'
     ], true)) ? 2 : Request::getInt('mode', 0, 'GET');
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$forumObject  = $forumHandler->get($forum_id);
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+$forumObject = $forumHandler->get($forum_id);
 
 if (!$forumObject) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php', 2, _MD_NEWBB_ERRORFORUM);
@@ -111,8 +111,8 @@ if ($isAdmin) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
@@ -138,8 +138,8 @@ if ($forumHandler->getPermission($forumObject, 'post')) {
 $parentforum = $forumHandler->getParents($forumObject);
 $xoopsTpl->assign_by_ref('parentforum', $parentforum);
 
-$criteria = new CriteriaCompo(new Criteria('parent_forum', $forum_id));
-$criteria->add(new Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
+$criteria = new \CriteriaCompo(new \Criteria('parent_forum', $forum_id));
+$criteria->add(new \Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
 $criteria->setSort('forum_order');
 
 if ($forums = $forumHandler->getAll($criteria, null, false)) {
@@ -149,8 +149,8 @@ if ($forums = $forumHandler->getAll($criteria, null, false)) {
     $xoopsTpl->assign_by_ref('subforum', $subforum);
 }
 
-//$categoryHandler = xoops_getModuleHandler('category');
-$categoryObject  = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
+//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+$categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 $xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' => $categoryObject->getVar('cat_title')]);
 
 $xoopsTpl->assign('forum_index_title', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
@@ -247,8 +247,8 @@ $query_type = $query_array;
 unset($query_type['type']);
 $page_query_type = implode('&amp;', array_values($query_type));
 unset($query_type);
-///** @var \NewbbTypeHandler $typeHandler */
-//$typeHandler = xoops_getModuleHandler('type', 'newbb');
+///** @var Newbb\TypeHandler $typeHandler */
+//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
 $typeOptions = null;
 $types       = [];
 if ($types = $typeHandler->getByForum($forum_id)) {
@@ -307,7 +307,7 @@ if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
     unset($query_nav['start']);
     $page_query_nav = implode('&amp;', array_values($query_nav));
     unset($query_nav);
-    $nav = new XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', $page_query_nav);
+    $nav = new \XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', $page_query_nav);
     if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderSelect();
     } elseif ('image' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
@@ -327,8 +327,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
-//    /** @var \NewbbPermissionHandler $permHandler */
-//    $permHandler      = xoops_getModuleHandler('permission', 'newbb');
+    //    /** var Newbb\PermissionHandler $permHandler */
+    //    $permHandler      = Newbb\Helper::getInstance()->getHandler('Permission');
     $permission_table = $permHandler->getPermissionTable($forum_id, false, $isAdmin);
     $xoopsTpl->assign_by_ref('permission_table', $permission_table);
     unset($permission_table);

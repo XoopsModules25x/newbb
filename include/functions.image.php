@@ -101,7 +101,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      */
     function newbbCreateThumbnail($source, $thumb_width)
     {
-        $cmd = '';
+        $cmd        = '';
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $thumb_path = $img_path . '/thumbs';
         $src_file   = $img_path . '/' . $source;

@@ -35,7 +35,7 @@ require_once __DIR__ . '/../class/Helper.php';
 //require_once __DIR__ . '/../include/common.php';
 $helper = Newbb\Helper::getInstance();
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $adminmenu[] = [

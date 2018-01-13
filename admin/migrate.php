@@ -30,6 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -51,7 +52,7 @@ echo <<<EOF
 EOF;
 
 XoopsLoad::load('migrate', 'newbb');
-$newbbMigrate = new NewbbMigrate();
+$newbbMigrate = new Newbb\Migrate();
 
 $op        = Request::getCmd('op', 'default');
 $opShow    = Request::getCmd('show', null, 'POST');

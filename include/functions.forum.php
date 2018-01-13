@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
@@ -18,17 +20,17 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param  null|array   $value             selected forum id
-     * @param  string $permission        permission (access, all, etc.)
-     * @param  bool   $categoryDelimiter show delimiter between categories
-     * @param  bool   $see
+     * @param  null|array $value             selected forum id
+     * @param  string     $permission        permission (access, all, etc.)
+     * @param  bool       $categoryDelimiter show delimiter between categories
+     * @param  bool       $see
      * @return string
      */
     function newbbForumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
     {
         global $xoopsUser;
-        /** @var \NewbbCategoryHandler $categoryHandler */
-        $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+        /** @var Newbb\CategoryHandler $categoryHandler */
+        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
         $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
@@ -40,12 +42,12 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         sort($groups);
         $groupKey = 'forumselect_' . $permission . '_' . md5(implode(',', $groups));
         $forums   = $cacheHelper->cacheRead($groupKey, function () use ($categories, $permission) {
-            /** @var \NewbbCategoryHandler $categoryHandler */
-            $categoryHandler = xoops_getModuleHandler('category', 'newbb');
+            /** @var Newbb\CategoryHandler $categoryHandler */
+            $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
             $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
-            /** @var \NewbbForumHandler $forumHandler */
-            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            /** @var Newbb\ForumHandler $forumHandler */
+            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
             return $forums;
@@ -129,14 +131,15 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      */
     function newbbCreateSubForumList()
     {
-        /** @var \NewbbForumHandler $forumHandler */
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $criteria     = new CriteriaCompo(null, 1);
+        /** @var Newbb\ForumHandler $forumHandler */
+//        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $criteria     = new \CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
         require_once $GLOBALS['xoops']->path('modules/newbb/class/tree.php');
-        $tree        = new NewbbObjectTree($forumsObject, 'forum_id', 'parent_forum');
+        $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {
             if (!$child = array_keys($tree->getAllChild($forumsObject[$key]->getVar('forum_id')))) {
@@ -180,14 +183,14 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      */
     function newbbCreateParentForumList()
     {
-        /** @var \NewbbForumHandler $forumHandler */
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $criteria     = new Criteria('1', 1);
+        /** @var Newbb\ForumHandler $forumHandler */
+        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $criteria     = new \Criteria('1', 1);
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
         require_once $GLOBALS['xoops']->path('modules/newbb/class/tree.php');
-        $tree        = new NewbbObjectTree($forumsObject, 'forum_id', 'parent_forum');
+        $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {
             $parent_forum = $forumsObject[$key]->getVar('parent_forum');

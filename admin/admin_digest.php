@@ -38,28 +38,28 @@ $op   = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET'); 
 $item = Request::getString('op', Request::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 
 $start = Request::getInt('start', 0, 'GET');
-//$reportHandler = xoops_getModuleHandler('report', 'newbb');
+//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
 
 xoops_cp_header();
 switch ($op) {
     case 'delete':
-        $digest_ids    = Request::getArray('digest_id', [], 'POST');
-//        /** @var \NewbbDigestHandler $digestHandler */
-//        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+        $digest_ids = Request::getArray('digest_id', [], 'POST');
+        //        /** @var Newbb\DigestHandler $digestHandler */
+        //        $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
         foreach ($digest_ids as $did => $value) {
             $digest = $digestHandler->get($did);
             $digestHandler->delete($digest);
         }
         redirect_header('admin_digest.php', 1);
         break;
-        
+
     case 'digest':
         xoops_confirm(['op' => 'digestconfirmed'], 'admin_digest.php', _AM_NEWBB_DIGEST_CONFIRM);
         break;
     case 'digestconfirmed':
         $message = '';
         if ('POST' === Request::getMethod()) {
-//            $digestHandler = xoops_getModuleHandler('digest', 'newbb');
+            //            $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
 
             switch ($digestHandler->process(true)) {
                 case 0:
@@ -99,10 +99,10 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_DIGESTCONTENT . '</th>';
         echo '</tr>';
 
-        $digests       = [];
-//        /** @var \NewbbDigestHandler $digestHandler */
-//        $digestHandler = xoops_getModuleHandler('digest', 'newbb');
-        $digests       = $digestHandler->getAllDigests($start, $limit);
+        $digests = [];
+        //        /** @var Newbb\DigestHandler $digestHandler */
+        //        $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
+        $digests = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
             echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' /></td>";
@@ -110,11 +110,11 @@ switch ($op) {
             echo '</tr>';
             echo "<tr colspan='2'><td height='2'></td></tr>";
         }
-        $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+        $submit = new \XoopsFormButton('', 'submit', _SUBMIT, 'submit');
         echo "<tr><td colspan='2' align='center'>" . $submit->render() . '</td></tr>';
-        $hidden = new XoopsFormHidden('op', 'delete');
+        $hidden = new \XoopsFormHidden('op', 'delete');
         echo $hidden->render();
-        $hidden = new XoopsFormHidden('item', $item);
+        $hidden = new \XoopsFormHidden('item', $item);
         echo $hidden->render() . '</form>';
 
         echo '</table>';
@@ -123,7 +123,7 @@ switch ($op) {
         echo '<legend>&nbsp;' . _AM_NEWBB_PREFERENCES . '&nbsp;-&nbsp;' . _MI_NEWBB_ADMENU_DIGEST . '&nbsp;</legend>';
         echo _AM_NEWBB_DIGEST_HELP_AUTO_DIGEST;
         echo '</fieldset>';
-        $nav = new XoopsPageNav($digestHandler->getDigestCount(), $limit, $start, 'start');
+        $nav = new \XoopsPageNav($digestHandler->getDigestCount(), $limit, $start, 'start');
         echo $nav->renderNav(4);
 
         break;

@@ -84,7 +84,7 @@ switch ($op) {
 
         xoops_cp_header();
         $adminObject->displayNavigation(basename(__FILE__));
-        
+
         echo "<div style='padding: 8px;'>\n
         <div><strong>" . _AM_NEWBB_VOTE_USERAVG . ": </strong>$useravgrating</div>\n
         <div><strong>" . _AM_NEWBB_VOTE_TOTALRATE . ": </strong>$uservotes</div>\n
@@ -128,7 +128,7 @@ switch ($op) {
         //Include page navigation
         include_once $GLOBALS['xoops']->path('class/pagenav.php');
         $page    = ($votes > 10) ? _AM_NEWBB_INDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($page, 20, $start, 'start');
+        $pagenav = new \XoopsPageNav($page, 20, $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $page . '' . $pagenav->renderImageNav(4) . '</div>';
         echo '<fieldset>';
         echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_VOTE . '&nbsp;</legend>';

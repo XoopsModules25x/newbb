@@ -1,12 +1,21 @@
-<?php namespace  XoopsModules\Newbb;
-
+<?php namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
+use XoopsModules\Newbb\Common;
+
 /**
  * Class Utility
  */
 class Utility
 {
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+
+    use Common\ServerStats; // getServerStats Trait
+
+    use Common\FilesManagement; // Files Management Trait
+
+    //--------------- Custom module methods -----------------------------
+
     /**
      * Verify that a mysql table exists
      *
@@ -76,11 +85,12 @@ class Utility
             } else {
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        } catch (Exception $e) {
+        }
+        catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
-        
+
     public static function cleanCache()
     {
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
@@ -91,9 +101,9 @@ class Utility
         // for 2.5 systems, clear everything
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new \SystemMaintenance();
-        $cacheList = [
+        $cacheList   = [
             3, // xoops_cache
-            ];
+        ];
         $maintenance->CleanCache($cacheList);
         xoops_setActiveModules();
     }

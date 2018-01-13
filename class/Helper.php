@@ -41,7 +41,7 @@ class Helper extends \Xmf\Module\Helper
     /**
      * @param bool $debug
      *
-     * @return \Helper
+     * @return \XoopsModules\Newbb\Helper
      */
     public static function getInstance($debug = false)
     {
@@ -53,7 +53,6 @@ class Helper extends \Xmf\Module\Helper
         return $instance;
     }
 
-
     /**
      * @param null|string $name
      * @param null|string $value
@@ -63,9 +62,9 @@ class Helper extends \Xmf\Module\Helper
     public function setConfig($name = null, $value = null)
     {
         if (null === $this->configs) {
-           $this->initConfig();
+            $this->initConfig();
         }
-       $this->configs[$name] = $value;
+        $this->configs[$name] = $value;
         $this->addLog("Setting config '{$name}' : " . $this->configs[$name]);
 
         return $this->configs[$name];
@@ -77,5 +76,21 @@ class Helper extends \Xmf\Module\Helper
     public function getDirname()
     {
         return $this->dirname;
+    }
+
+    /**
+     * Get an Object Handler
+     *
+     * @param string $name name of handler to load
+     *
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     */
+    public function getHandler($name)
+    {
+        $ret   = false;
+        $db    = \XoopsDatabaseFactory::getDatabaseConnection();
+        $class = '\\XoopsModules\\' . ucfirst(strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $ret   = new $class($db);
+        return $ret;
     }
 }

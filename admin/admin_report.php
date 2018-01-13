@@ -41,8 +41,8 @@ $start = Request::getInt('start', 0);
 $op = Request::hasVar('submit', 'POST') ? 'save' : $op;
 $op = Request::hasVar('delete', 'POST') ? 'delete' : $op;
 
-///** @var \NewbbReportHandler $reportHandler */
-//$reportHandler = xoops_getModuleHandler('report', 'newbb');
+///** @var Newbb\ReportHandler $reportHandler */
+//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
 
 xoops_cp_header();
 
@@ -106,7 +106,7 @@ switch ($op) {
         }
 
         $limit = 10;
-        
+
         $adminObject->displayNavigation(basename(__FILE__));
 
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(6,_AM_NEWBB_REPORTADMIN);
@@ -121,7 +121,7 @@ switch ($op) {
         echo "<th class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</th>';
         echo "<th class='bg3' width='10%'>" . $extra . '</th>';
         echo '</tr>';
-         
+
         $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
             $post_link = '<a href="'
@@ -151,7 +151,7 @@ switch ($op) {
             echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
             $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbbGetUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
-            $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
+            $reporter      = !empty($uid) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
             echo "<td align='center'>" . $reporter . $report['reporter_ip'] . '</td>';
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
@@ -162,22 +162,22 @@ switch ($op) {
         }
         $buttons = '';
         if ('processed' !== $item) {
-            $submit  = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+            $submit  = new \XoopsFormButton('', 'submit', _SUBMIT, 'submit');
             $buttons .= $submit->render() . ' ';
         }
-        $delete  = new XoopsFormButton('', 'delete', _DELETE, 'submit');
+        $delete  = new \XoopsFormButton('', 'delete', _DELETE, 'submit');
         $buttons .= $delete->render() . ' ';
-        $cancel  = new XoopsFormButton('', 'cancel', _CANCEL, 'reset');
+        $cancel  = new \XoopsFormButton('', 'cancel', _CANCEL, 'reset');
         $buttons .= $cancel->render();
         echo "<tr colspan='2'><td align='center'>{$buttons}</td></tr>";
-        $hidden = new XoopsFormHidden('start', $start);
+        $hidden = new \XoopsFormHidden('start', $start);
         echo $hidden->render();
-        $hidden = new XoopsFormHidden('item', $item);
+        $hidden = new \XoopsFormHidden('item', $item);
         echo $hidden->render() . '</form>';
 
         echo '</table>';
         echo '</td></tr></table>';
-        $nav = new XoopsPageNav($reportHandler->getCount(new Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
+        $nav = new \XoopsPageNav($reportHandler->getCount(new \Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
         echo $nav->renderNav(4);
         echo '<fieldset>';
         echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_REPORT . '&nbsp;</legend>';

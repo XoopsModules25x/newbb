@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 ob_start();
 include_once __DIR__ . '/header.php';
@@ -22,24 +23,24 @@ if (!$post_id || !$attach_id) {
     exit(_MD_NEWBB_NO_SUCH_FILE . ': post_id:' . $post_id . '; attachid' . $attachid);
 }
 
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
-/** @var \NewbbPost $forumpost */
+/** @var Newbb\Post $forumpost */
 $forumpost = $postHandler->get($post_id);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
-///** @var NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$topicObject    = $topicHandler->getByPost($post_id);
-$topic_id     = $topicObject->getVar('topic_id');
+///** @var TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$topicObject = $topicHandler->getByPost($post_id);
+$topic_id    = $topicObject->getVar('topic_id');
 if (!$approved = $topicObject->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$forumObject    = $forumHandler->get($topicObject->getVar('forum_id'));
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+$forumObject = $forumHandler->get($topicObject->getVar('forum_id'));
 if (!$forumHandler->getPermission($forumObject)) {
     exit(_MD_NEWBB_NORIGHTTOACCESS);
 }

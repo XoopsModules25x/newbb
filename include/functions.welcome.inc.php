@@ -17,8 +17,8 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBA
 }
 
 $forum_id    = $forumObject->getVar('forum_id');
-$postHandler = xoops_getModuleHandler('post', 'newbb');
-$postObject    = $postHandler->create();
+$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+$postObject  = $postHandler->create();
 $postObject->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
 $postObject->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
 $postObject->setVar('approved', 1);
@@ -45,10 +45,10 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     if (!defined('_PROFILE_MA_ALLABOUT')) {
         $mod->loadLanguage();
     }
-    /** @var \NewbbPermissionHandler $permHandler */
-    $permHandler = xoops_getModuleHandler('permission', 'newbb');
-    $show_ids         = $permHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
-    $visible_ids      = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
+    /** var Newbb\PermissionHandler $permHandler */
+    $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+    $show_ids    = $permHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
+    $visible_ids = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
     /** @var \ProfileProfileHandler $profileHandler */

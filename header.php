@@ -22,7 +22,6 @@ $xoopsLogger->startTime('newBB_Header');
 $moduleDirName = basename(__DIR__);
 //include_once $GLOBALS['xoops']->path('header.php');
 
-
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     include_once __DIR__ . '/seo_url.php';
     /* for seo */

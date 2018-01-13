@@ -1,6 +1,8 @@
 <?php
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+use XoopsModules\Newbb;
+
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 
@@ -182,7 +184,7 @@ function forum_seo_cat($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_cat';
     $ret = false;
-    if ($ret = XoopsCache::read($key)) {
+    if ($ret = \XoopsCache::read($key)) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;
@@ -195,7 +197,7 @@ function forum_seo_cat($_cat_id)
         $_ret[$res['cat_id']] = forum_seo_title($res['cat_title']);
     }
     XoopsCache::write($key, $_ret);
-    $ret = XoopsCache::read($key);
+    $ret = \XoopsCache::read($key);
     $ret = $ret[$_cat_id];
 
     return $ret;
@@ -210,7 +212,7 @@ function forum_seo_forum($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_forum';
     $ret = false;
-    if ($ret = XoopsCache::read($key)) {
+    if ($ret = \XoopsCache::read($key)) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;
@@ -223,7 +225,7 @@ function forum_seo_forum($_cat_id)
         $_ret[$res['forum_id']] = forum_seo_title($res['forum_name']);
     }
     XoopsCache::write($key, $_ret);
-    $ret = XoopsCache::read($key);
+    $ret = \XoopsCache::read($key);
     $ret = $ret[$_cat_id];
 
     return $ret;
@@ -241,12 +243,11 @@ function forum_seo_topic($_cat_id)
     $ret    = forum_seo_title($res['topic_title']);
 
     $moduleDirName = basename(__DIR__);
-    /** @var \NewbbTopicHandler $topicsHandler */
-    $topicsHandler = xoops_getModuleHandler('topic', 'newbb');
-    $criteria      = new CriteriaCompo(new Criteria('topic_id', $_cat_id, '='));
+    /** @var Newbb\TopicHandler $topicsHandler */
+    $topicsHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    $criteria      = new \CriteriaCompo(new \Criteria('topic_id', $_cat_id, '='));
     $fields        = ['topic_title'];
     $ret0          = $topicsHandler->getAll($criteria, $fields, false);
-
 
     return $ret;
 }

@@ -54,7 +54,7 @@ if (!$GLOBALS['xoopsDB']->queryF('
     exit('Can not create tmp table for `bb_type_forum_tmp`');
 }
 
-//$typeHandler = xoops_getModuleHandler('type', 'newbb');
+//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
 $subjectpres = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
 $types       = [];
 $order       = 1;
@@ -78,9 +78,9 @@ if (0 === count($types)) {
     exit('No type item created');
 }
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-if ($forums_type = $forumHandler->getIds(new Criteria('allow_subject_prefix', 1))) {
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+if ($forums_type = $forumHandler->getIds(new \Criteria('allow_subject_prefix', 1))) {
     foreach ($forums_type as $forum_id) {
         $type_query = [];
         foreach ($types as $key => $order) {

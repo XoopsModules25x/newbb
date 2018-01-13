@@ -41,9 +41,9 @@ foreach (['topic_id', 'rate', 'forum'] as $var) {
     ${$var} = Request::getInt($var, Request::getInt($var, 0, 'POST'), 'GET');
 }
 
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$topicObject    = $topicHandler->get($topic_id);
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$topicObject = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'post')
     && !$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'reply')) {
     // irmtfan - issue with javascript:history.go(-1)
@@ -53,29 +53,29 @@ if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject
 if (empty($rate)) {
     redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_NOVOTERATE);
 }
-///** @var \NewbbRateHandler $rateHandler */
-//$rateHandler = xoops_getModuleHandler('rate', 'newbb');
+///** @var Newbb\RateHandler $rateHandler */
+//$rateHandler = Newbb\Helper::getInstance()->getHandler('Rate');
 if (0 !== $ratinguser) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
-    $crit_post = new CriteriaCompo(new Criteria('topic_id', $topic_id));
-    $crit_post->add(new Criteria('uid', $ratinguser));
-//    /** @var \NewbbPostHandler $postHandler */
-//    $postHandler = xoops_getModuleHandler('post', 'newbb');
+    $crit_post = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
+    $crit_post->add(new \Criteria('uid', $ratinguser));
+    //    /** @var Newbb\PostHandler $postHandler */
+    //    $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
     if ($postHandler->getCount($crit_post)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_CANTVOTEOWN);
     }
     // Check if REG user is trying to vote twice.
-    $crit_rate = new CriteriaCompo(new Criteria('topic_id', $topic_id));
-    $crit_rate->add(new Criteria('ratinguser', $ratinguser));
+    $crit_rate = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
+    $crit_rate->add(new \Criteria('ratinguser', $ratinguser));
     if ($rateHandler->getCount($crit_rate)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_VOTEONCE);
     }
 } else {
     // Check if ANONYMOUS user is trying to vote more than once per day.
-    $crit_rate = new CriteriaCompo(new Criteria('topic_id', $topic_id));
-    $crit_rate->add(new Criteria('ratinguser', $ratinguser));
-    $crit_rate->add(new Criteria('ratinghostname', $ip));
-    $crit_rate->add(new Criteria('ratingtimestamp', time() - (86400 * $anonwaitdays), '>'));
+    $crit_rate = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
+    $crit_rate->add(new \Criteria('ratinguser', $ratinguser));
+    $crit_rate->add(new \Criteria('ratinghostname', $ip));
+    $crit_rate->add(new \Criteria('ratingtimestamp', time() - (86400 * $anonwaitdays), '>'));
     if ($rateHandler->getCount($crit_rate)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_VOTEONCE);
     }

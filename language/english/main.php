@@ -550,4 +550,3 @@ define('_MD_NEWBB_FORUMDESCRIPTION', 'Forum Description:');
 
 define('_MD_NEWBB_PDF_PAGE2', 'page');
 define('_MD_NEWBB_PDF_META_DIR', 'ltr');
-

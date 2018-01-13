@@ -32,9 +32,9 @@ $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'G
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'POST'), 'GET');
 $forum    = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET');
 
-///** @var \NewbbTopicHandler $topicHandler */
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$topicObject    = $topicHandler->get($topic_id);
+///** @var Newbb\TopicHandler $topicHandler */
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$topicObject = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'vote')) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _NOPERM);
 }
@@ -60,8 +60,8 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         // old xoopspoll or umfrage or any clone from them
     } else {
         include $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/include/constants.php');
-        $classPoll = $topicObject->loadOldPoll();
-        $pollObject  = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
+        $classPoll  = $topicObject->loadOldPoll();
+        $pollObject = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
     }
 } else {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_POLLMODULE_ERROR);

@@ -30,6 +30,7 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -44,17 +45,17 @@ $status = (Request::getString('status', '', 'GET')
 $mode   = Request::getInt('mode', 0, 'GET');
 $mode   = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? 2 : $mode;
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 if (empty($forum_id)) {
     $forums       = $forumHandler->getByPermission(0, 'view');
     $accessForums = array_keys($forums);
     $isAdmin      = $GLOBALS['xoopsUserIsAdmin'];
 } else {
-    $forumObject         = $forumHandler->get($forum_id);
+    $forumObject       = $forumHandler->get($forum_id);
     $forums[$forum_id] = $forumObject;
     $accessForums      = [$forum_id];
     $isAdmin           = newbbIsAdmin($forumObject);
@@ -71,54 +72,54 @@ if ($mode) {
 //echo $mode.' - '.$status;
 $post_perpage = $GLOBALS['xoopsModuleConfig']['posts_per_page'];
 
-$criteria_count = new CriteriaCompo(new Criteria('forum_id', '(' . implode(',', $accessForums) . ')', 'IN'));
-$criteria_post  = new CriteriaCompo(new Criteria('p.forum_id', '(' . implode(',', $accessForums) . ')', 'IN'));
+$criteria_count = new \CriteriaCompo(new \Criteria('forum_id', '(' . implode(',', $accessForums) . ')', 'IN'));
+$criteria_post  = new \CriteriaCompo(new \Criteria('p.forum_id', '(' . implode(',', $accessForums) . ')', 'IN'));
 $criteria_post->setSort('p.post_id');
 $criteria_post->setOrder($order);
 
 if (!empty($uid)) {
-    $criteria_count->add(new Criteria('uid', $uid));
-    $criteria_post->add(new Criteria('p.uid', $uid));
+    $criteria_count->add(new \Criteria('uid', $uid));
+    $criteria_post->add(new \Criteria('p.uid', $uid));
 }
 
 $join = null;
 // START irmtfan solve the status issues and specially status = new issue
 switch ($status) {
     case 'pending':
-        $criteria_count->add(new Criteria('approved', 0)); // irmtfan add new criteria
-        $criteria_post->add(new Criteria('p.approved', 0)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', 0)); // irmtfan add new criteria
+        $criteria_post->add(new \Criteria('p.approved', 0)); // irmtfan add new criteria
         break;
     case 'deleted':
-        $criteria_count->add(new Criteria('approved', -1)); // irmtfan add new criteria
-        $criteria_post->add(new Criteria('p.approved', -1)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', -1)); // irmtfan add new criteria
+        $criteria_post->add(new \Criteria('p.approved', -1)); // irmtfan add new criteria
         break;
     case 'new':
-        //$criteria_status_count = new CriteriaCompo(new Criteria("post_time", (int)($last_visit), ">"));// irmtfan commented and removed
-        //$criteria_status_post = new CriteriaCompo(new Criteria("p.post_time", (int)($last_visit), ">"));// irmtfan commented and removed
-        $criteria_count->add(new Criteria('approved', 1)); // irmtfan uncomment
-        $criteria_post->add(new Criteria('p.approved', 1)); // irmtfan uncomment
+        //$criteria_status_count = new \CriteriaCompo(new \Criteria("post_time", (int)($last_visit), ">"));// irmtfan commented and removed
+        //$criteria_status_post = new \CriteriaCompo(new \Criteria("p.post_time", (int)($last_visit), ">"));// irmtfan commented and removed
+        $criteria_count->add(new \Criteria('approved', 1)); // irmtfan uncomment
+        $criteria_post->add(new \Criteria('p.approved', 1)); // irmtfan uncomment
         // following is for 'unread' -- not finished -- irmtfan Now it is finished!
         if (empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
-            //$criteria_status_count->add(new Criteria('approved', 1));// irmtfan commented and removed
-            //$criteria_status_post->add(new Criteria('p.approved', 1));// irmtfan commented and removed
+            //$criteria_status_count->add(new \Criteria('approved', 1));// irmtfan commented and removed
+            //$criteria_status_post->add(new \Criteria('p.approved', 1));// irmtfan commented and removed
         } elseif (2 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
             // START irmtfan use read_uid to find the unread posts when the user is logged in
             $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
             if (!empty($read_uid)) {
                 $join                 = ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_reads_topic') . ' AS r ON r.read_item = p.topic_id AND r.uid = ' . $read_uid . ' '; // irmtfan corrected add AS
-                $criteria_status_post = new CriteriaCompo();// irmtfan new criteria
-                $criteria_status_post->add(new Criteria('p.post_id', 'r.`post_id`', '>')); // irmtfan corrected - should use $value='r.``' to render in XOOPS/class/criteria.php
-                $criteria_status_post->add(new Criteria('r.read_id', null, 'IS NULL'), 'OR');// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
+                $criteria_status_post = new \CriteriaCompo();// irmtfan new criteria
+                $criteria_status_post->add(new \Criteria('p.post_id', 'r.`post_id`', '>')); // irmtfan corrected - should use $value='r.``' to render in XOOPS/class/criteria.php
+                $criteria_status_post->add(new \Criteria('r.read_id', null, 'IS NULL'), 'OR');// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
                 $criteria_post->add($criteria_status_post); // irmtfan add the status criteria to post criteria - move here
                 $criteria_count = $criteria_post;// irmtfan criteria count is equal to criteria post - move here
             } else {
             }
             // END irmtfan use read_uid to find the unread posts when the user is logged in
-            //$criteria_status_post->add(new Criteria("p.approved", 1)); // irmtfan commented and removed
+            //$criteria_status_post->add(new \Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
         } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
-            $criteria_count->add(new Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new criteria
-            $criteria_post->add(new Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
+            $criteria_count->add(new \Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new criteria
+            $criteria_post->add(new \Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
             $topics         = [];
             $topic_lastread = newbbGetCookie('LT', true);
@@ -130,25 +131,25 @@ switch ($status) {
                 }
             }
             if (count($topics) > 0) {
-                $criteria_count->add(new Criteria('topic_id', '(' . implode(',', $topics) . ')', 'NOT IN'));
-                $criteria_post->add(new Criteria('p.topic_id', '(' . implode(',', $topics) . ')', 'NOT IN'));
+                $criteria_count->add(new \Criteria('topic_id', '(' . implode(',', $topics) . ')', 'NOT IN'));
+                $criteria_post->add(new \Criteria('p.topic_id', '(' . implode(',', $topics) . ')', 'NOT IN'));
             }
             // END irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-            //$criteria_status_count->add(new Criteria("approved", 1));// irmtfan commented and removed
-            //$criteria_status_post->add(new Criteria("p.approved", 1));// irmtfan commented and removed
+            //$criteria_status_count->add(new \Criteria("approved", 1));// irmtfan commented and removed
+            //$criteria_status_post->add(new \Criteria("p.approved", 1));// irmtfan commented and removed
         }
         break;
     default:
-        $criteria_count->add(new Criteria('approved', 1)); // irmtfan add new criteria
-        $criteria_post->add(new Criteria('p.approved', 1)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', 1)); // irmtfan add new criteria
+        $criteria_post->add(new \Criteria('p.approved', 1)); // irmtfan add new criteria
         break;
 }
 //$criteria_count->add($criteria_status_count); // irmtfan commented and removed
 //$criteria_post->add($criteria_status_post); // irmtfan commented and removed
 // END irmtfan solve the status issues and specially status = new issue
-///** @var \NewbbKarmaHandler $karmaHandler */
-//$karmaHandler = xoops_getModuleHandler('karma', 'newbb');
-$user_karma   = $karmaHandler->getUserKarma();
+///** @var Newbb\KarmaHandler $karmaHandler */
+//$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+$user_karma = $karmaHandler->getUserKarma();
 
 $valid_modes     = ['flat', 'compact'];
 $viewmode_cookie = newbbGetCookie('V');
@@ -166,7 +167,7 @@ $posts     = $postHandler->getPostsByLimit($criteria_post, $post_perpage, $start
 $poster_array = [];
 if (count($posts) > 0) {
     foreach (array_keys($posts) as $id) {
-        /** @var \NewbbPost[] $posts */
+        /** @var Newbb\Post[] $posts */
         $poster_array[$posts[$id]->getVar('uid')] = 1;
     }
 }
@@ -188,7 +189,7 @@ if (!empty($forum_id)) {
     }
     if ($forumObject->getVar('parent_forum')) {
         $parent_forumObject = $forumHandler->get($forumObject->getVar('parent_forum'), ['forum_name']);
-        $parentforum      = [
+        $parentforum        = [
             'id'   => $forumObject->getVar('parent_forum'),
             'name' => $parent_forumObject->getVar('forum_name')
         ];
@@ -222,7 +223,7 @@ if (count($poster_array) > 0) {
     $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
     $user_criteria = '(' . implode(',', $userid_array) . ')';
-    $users         = $memberHandler->getUsers(new Criteria('uid', $user_criteria, 'IN'), true);
+    $users         = $memberHandler->getUsers(new \Criteria('uid', $user_criteria, 'IN'), true);
 } else {
     $user_criteria = '';
     $users         = null;
@@ -232,8 +233,8 @@ $online = [];
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-//        /** @var \NewbbOnlineHandler $onlineHandler */
-//        $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+        //        /** @var Newbb\OnlineHandler $onlineHandler */
+        //        $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
         $onlineHandler->init($forum_id);
     }
 }
@@ -242,19 +243,19 @@ $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
     require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
-    $userHandler         = new NewbbUserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
+    $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
     $viewtopic_users     = $userHandler->getUsers();
 }
 
-$pn           = 0;
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
+$pn = 0;
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
 static $suspension = [];
 foreach (array_keys($posts) as $id) {
     ++$pn;
 
-    /** @var \NewbbPost $post */
+    /** @var Newbb\Post $post */
     $post       = $posts[$id];
     $post_title = $post->getVar('subject');
 
@@ -289,8 +290,8 @@ foreach (array_keys($posts) as $id) {
 
     if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
         if (!isset($suspension[$post->getVar('forum_id')])) {
-//            /** @var \NewbbModerateHandler $moderateHandler */
-//            $moderateHandler                       = xoops_getModuleHandler('moderate', 'newbb');
+            //            /** @var Newbb\ModerateHandler $moderateHandler */
+            //            $moderateHandler                       = Newbb\Helper::getInstance()->getHandler('Moderate');
             $suspension[$post->getVar('forum_id')] = !$moderateHandler->verifyUser(-1, '', $post->getVar('forum_id'));
         }
 
@@ -366,7 +367,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 
 if ($postCount > $post_perpage) {
     include $GLOBALS['xoops']->path('class/pagenav.php');
-    $nav = new XoopsPageNav($postCount, $post_perpage, $start, 'start', 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
+    $nav = new \XoopsPageNav($postCount, $post_perpage, $start, 'start', 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . $nav->url;
     if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderSelect();

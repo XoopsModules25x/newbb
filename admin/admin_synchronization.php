@@ -32,9 +32,9 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite topic sync
     case 'topic':
         $limit = Request::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
-//        /** @var \NewbbTopicHandler $topicHandler */
-//        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-        $criteria     = new Criteria('approved', 1);
+        //        /** @var Newbb\TopicHandler $topicHandler */
+        //        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $criteria = new \Criteria('approved', 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
             break;
         }

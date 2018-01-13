@@ -102,11 +102,11 @@ function newbb_getImageLibs()
 
 xoops_cp_header();
 
-$imageLibs     = newbb_getImageLibs();
+$imageLibs = newbb_getImageLibs();
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-///** @var \NewbbReportHandler $reportHandler */
-//$reportHandler = xoops_getModuleHandler('report', 'newbb');
+///** @var Newbb\ReportHandler $reportHandler */
+//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
 
 $isOK = false;
 // START irmtfan add a poll_module config
@@ -119,7 +119,7 @@ if (is_object($xoopspoll)) {
 
 $memlimit_iniphp    = return_bytes(@ini_get('memory_limit'));
 $postmaxsize_iniphp = return_bytes(@ini_get('post_max_size'));
-$uploadlimit = _AM_NEWBB_MEMLIMITTOLARGE;
+$uploadlimit        = _AM_NEWBB_MEMLIMITTOLARGE;
 if ($postmaxsize_iniphp < $memlimit_iniphp) {
     $uploadlimit = sprintf(_AM_NEWBB_MEMLIMITOK, return_bytes($postmaxsize_iniphp, true));
 }
@@ -149,8 +149,8 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALPOSTS . ': %s', getTotalPost
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_TOTALVIEWS . ': %s', getTotalViews()));
 
 $adminObject->addInfoBox(_AM_NEWBB_REPORT);
-$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportHandler->getCount(new Criteria('report_result', 0))));
-$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new Criteria('report_result', 1))));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportHandler->getCount(new \Criteria('report_result', 0))));
+$adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new \Criteria('report_result', 1))));
 
 foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
     Newbb\Utility::prepareFolder($uploadFolders[$i]);

@@ -17,9 +17,10 @@
  * @author       XOOPS Development Team
  */
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+use XoopsModules\Newbb;
+
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -32,7 +33,7 @@ function tableExists($tablename)
 {
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
-    return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
+    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
 }
 
 /**
@@ -42,13 +43,13 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_newbb(XoopsModule $module)
+function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
     /** @var Newbb\Helper $helper */
     /** @var Newbb\Utility $utility */
-    $helper       = Newbb\Helper::getInstance();
-    $utility      = new Newbb\Utility();
+    $helper  = Newbb\Helper::getInstance();
+    $utility = new Newbb\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -64,22 +65,22 @@ function xoops_module_pre_update_newbb(XoopsModule $module)
  * @return bool true if update successful, false if not
  */
 
-function xoops_module_update_newbb(XoopsModule $module, $previousVersion = null)
+function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
     /** @var Newbb\Helper $helper */
     /** @var Newbb\Utility $utility */
-    /** @var Newbb\Configurator $configurator */
-    $helper  = Newbb\Helper::getInstance();
-    $utility = new Newbb\Utility();
-    $configurator = new Newbb\Configurator();
+    /** @var Newbb\Common\Configurator $configurator */
+    $helper       = Newbb\Helper::getInstance();
+    $utility      = new Newbb\Utility();
+    $configurator = new Newbb\Common\Configurator();
 
     if ($previousVersion < 240) {
 
         //rename column EXAMPLE
-        $tables     = new Tables();
+        $tables     = new Xmf\Database\Tables();
         $table      = 'newbbx_categories';
         $column     = 'ordre';
         $newName    = 'order';
@@ -98,7 +99,7 @@ function xoops_module_update_newbb(XoopsModule $module, $previousVersion = null)
                 if (is_dir($templateFolder)) {
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
-                        $fileInfo = new SplFileInfo($templateFolder . $v);
+                        $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
@@ -127,7 +128,7 @@ function xoops_module_update_newbb(XoopsModule $module, $previousVersion = null)
             foreach (array_keys($configurator->oldFolders) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFolders[$i]);
                 /* @var $folderHandler XoopsObjectHandler */
-                $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
+                $folderHandler = \XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
         }
@@ -156,8 +157,6 @@ function xoops_module_update_newbb(XoopsModule $module, $previousVersion = null)
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
     return true;
 }
-

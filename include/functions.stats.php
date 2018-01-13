@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
@@ -22,8 +24,8 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbbGetStats()
     {
-        /** @var \NewbbStatsHandler $statsHandler */
-        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+        /** @var Newbb\StatsHandler $statsHandler */
+        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
         $stats        = $statsHandler->getStats();
 
         return $stats;
@@ -37,8 +39,8 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbbUpdateStats($id, $type, $increment = 1)
     {
-        /** @var \NewbbStatsHandler $statsHandler */
-        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+        /** @var Newbb\StatsHandler $statsHandler */
+        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
 
         return $statsHandler->update($id, $type, $increment);
     }
@@ -52,11 +54,11 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalTopics($forum_id = '')
     {
-        /** @var \NewbbTopicHandler $topicHandler */
-        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-        $criteria     = new CriteriaCompo(new Criteria('approved', 0, '>'));
+        /** @var Newbb\TopicHandler $topicHandler */
+        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $criteria     = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         if ($forum_id) {
-            $criteria->add(new Criteria('forum_id', (int)$forum_id));
+            $criteria->add(new \Criteria('forum_id', (int)$forum_id));
         }
 
         return $topicHandler->getCount($criteria);
@@ -73,18 +75,18 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalPosts($id = 0, $type = 'all')
     {
-        /** @var \NewbbPostHandler $postHandler */
-        $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $criteria    = new CriteriaCompo(new Criteria('approved', 0, '>'));
+        /** @var Newbb\PostHandler $postHandler */
+        $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+        $criteria    = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('forum_id', (int)$id));
+                    $criteria->add(new \Criteria('forum_id', (int)$id));
                 }
                 break;
             case 'topic':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('topic_id', (int)$id));
+                    $criteria->add(new \Criteria('topic_id', (int)$id));
                 }
                 break;
             case 'all':

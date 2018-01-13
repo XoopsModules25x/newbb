@@ -41,10 +41,8 @@ define('_MI_NEWBB_DO_REWRITE_DESC', 'rewrites the URL, you need mod_rewrite and 
 //define('_MI_NEWBB_THEMESET', 'Theme set');
 //define('_MI_NEWBB_THEMESET_DESC', "Module-wide, select '' . _NONE . '' will use site-wide theme");
 define('_MI_NEWBB_DIR_ATTACHMENT', 'Attachments physical path.');
-define(
-    '_MI_NEWBB_DIR_ATTACHMENT_DESC',
-       "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'"
-);
+define('_MI_NEWBB_DIR_ATTACHMENT_DESC',
+       "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'");
 define('_MI_NEWBB_PATH_MAGICK', 'Path for ImageMagick');
 define('_MI_NEWBB_PATH_MAGICK_DESC', "Usually it is '/usr/bin/X11'. Leave it BLANK if you do not have ImageMagicK installed or for autodetecting.");
 define('_MI_NEWBB_SUBFORUM_DISPLAY', 'Display Mode of subforums on index page');
@@ -80,10 +78,8 @@ define('_MI_NEWBB_NULL', 'disable');
 define('_MI_NEWBB_TEXT', 'text');
 define('_MI_NEWBB_GRAPHIC', 'graphic');
 define('_MI_NEWBB_USERLEVEL', 'HP/MP/EXP Level Mode');
-define(
-    '_MI_NEWBB_USERLEVEL_DESC',
-       '<strong>HP</strong>  is determined by your average posts per day.<br><strong>MP</strong>  is determined by your join date related to your post count.<br><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.'
-);
+define('_MI_NEWBB_USERLEVEL_DESC',
+       '<strong>HP</strong>  is determined by your average posts per day.<br><strong>MP</strong>  is determined by your join date related to your post count.<br><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.');
 define('_MI_NEWBB_RSS_ENABLE', 'Enable RSS Feed');
 define('_MI_NEWBB_RSS_ENABLE_DESC', 'Enable RSS Feed, edit options below for maximum Items and Description length');
 define('_MI_NEWBB_RSS_MAX_ITEMS', 'RSS Max. Items');
@@ -324,7 +320,7 @@ define('_MI_NEWBB_POLL_MODULE_DESC', 'XoopsPoll or clone. Leave blank to disable
 
 //Help
 define('_MI_NEWBB_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_NEWBB_HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('_MI_NEWBB_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_NEWBB_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_NEWBB_OVERVIEW', 'Overview');
 

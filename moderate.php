@@ -24,8 +24,8 @@ if (!$isAdmin) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
 }
 $is_administrator = $GLOBALS['xoopsUserIsAdmin'];
-///** @var \NewbbModerateHandler $moderateHandler */
-//$moderateHandler = xoops_getModuleHandler('moderate', 'newbb');
+///** @var Newbb\ModerateHandler $moderateHandler */
+//$moderateHandler = Newbb\Helper::getInstance()->getHandler('Moderate');
 
 if (Request::hasVar('submit', 'POST') && Request::getInt('expire', 0, 'POST')) {
     $ipWithMask = '';
@@ -87,16 +87,16 @@ switch ($sortname) {
         break;
 }
 // show all bans for module admin - for moderator just show its forum_id bans
-$criteria = new CriteriaCompo();
+$criteria = new \CriteriaCompo();
 if (!$is_administrator) {
-    $criteria->add(new Criteria('forum_id', $forum_id, '='));
+    $criteria->add(new \Criteria('forum_id', $forum_id, '='));
 }
 $criteria->setLimit($GLOBALS['xoopsModuleConfig']['topics_per_page']);
 $criteria->setStart($start);
 $criteria->setSort($sort);
 $criteria->setOrder($order);
-$moderateObjects  = $moderateHandler->getObjects($criteria);
-$moderate_count = $moderateHandler->getCount($criteria);
+$moderateObjects = $moderateHandler->getObjects($criteria);
+$moderate_count  = $moderateHandler->getCount($criteria);
 
 $url = 'moderate.php';
 if ($forum_id) {
@@ -143,9 +143,9 @@ if (!empty($moderate_count)) {
     ];
     $xoopsTpl->assign('columnHeaders', $columnHeaders);
 
-//    /** @var \NewbbForumHandler $forumHandler */
-//    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-    $forum_list   = $forumHandler->getAll(null, ['forum_name'], false);
+    //    /** @var Newbb\ForumHandler $forumHandler */
+    //    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    $forum_list = $forumHandler->getAll(null, ['forum_name'], false);
 
     $columnRows = [];
     foreach (array_keys($moderateObjects) as $id) {
@@ -163,7 +163,7 @@ if (!empty($moderate_count)) {
 
     if ($moderate_count > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
         include $GLOBALS['xoops']->path('class/pagenav.php');
-        $nav = new XoopsPageNav($moderate_count, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', 'forum=' . $forum_id . '&amp;sort=' . $sortname);
+        $nav = new \XoopsPageNav($moderate_count, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', 'forum=' . $forum_id . '&amp;sort=' . $sortname);
         //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         //    $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . ' /' . $nav->url;
         //}
@@ -172,11 +172,11 @@ if (!empty($moderate_count)) {
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-$forum_form = new XoopsThemeForm(_ADD, 'suspend_form', 'moderate.php', 'post', true);
-$forum_form->addElement(new XoopsFormSelectUser(_MD_NEWBB_SUSPEND_UID, 'uid', true, $forum_userid, 1, false));
-$forum_form->addElement(new XoopsFormText(_MD_NEWBB_SUSPEND_IP, 'ip', 50, 50));
-$forum_form->addElement(new XoopsFormText(_MD_NEWBB_SUSPEND_DURATION, 'expire', 20, 25, '5'), true);
-$forum_form->addElement(new XoopsFormText(_MD_NEWBB_SUSPEND_DESC, 'desc', 50, 255));
+$forum_form = new \XoopsThemeForm(_ADD, 'suspend_form', 'moderate.php', 'post', true);
+$forum_form->addElement(new \XoopsFormSelectUser(_MD_NEWBB_SUSPEND_UID, 'uid', true, $forum_userid, 1, false));
+$forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_IP, 'ip', 50, 50));
+$forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DURATION, 'expire', 20, 25, '5'), true);
+$forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DESC, 'desc', 50, 255));
 include_once __DIR__ . '/include/functions.forum.php';
 if (newbbIsAdmin()) {
     $forumSel = '<select name="forum">';// if user doesn't select, default is "0" all forums
@@ -187,13 +187,13 @@ if (newbbIsAdmin()) {
     $forumSel                         .= '>' . _ALL . '</option>';
     $forumSel                         .= newbbForumSelectBox($forum_id, 'access', false); //$accessForums, $permission = "access", $delimitorCategory = true
     $forumSel                         .= '</select>';
-    $forumEle                         = new XoopsFormLabel(_MD_NEWBB_SELFORUM, $forumSel);
+    $forumEle                         = new \XoopsFormLabel(_MD_NEWBB_SELFORUM, $forumSel);
     $forumEle->customValidationCode[] = 'if (document.suspend.forum.value < 0) {return false;} ';
     $forum_form->addElement($forumEle);
 } else {
-    $forum_form->addElement(new XoopsFormHidden('forum', $forum_id));
+    $forum_form->addElement(new \XoopsFormHidden('forum', $forum_id));
 }
-$forum_form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+$forum_form->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $forum_form->assign($xoopsTpl);
 
 include_once __DIR__ . '/footer.php';

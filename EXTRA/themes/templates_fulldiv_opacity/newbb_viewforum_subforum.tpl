@@ -7,7 +7,7 @@
         <div class="forum_lastpost"><{$smarty.const._MD_NEWBB_LASTPOST}></div>
     </div>
     <!-- start subforums -->
-    <{foreachq item=sforum from=$subforum}>
+    <{foreach item=sforum from=$subforum}>
     <div class="forum_row">
         <div class="forum_folder even align_center"><{$sforum.forum_folder}></div>
         <div class="forum_name odd left">

@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 include_once __DIR__ . '/header.php';
 
@@ -29,8 +30,8 @@ if (Request::getInt('mark_read', 0)) {
 }
 
 $viewcat = Request::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
-///** @var \NewbbCategoryHandler $categoryHandler */
-//$categoryHandler = xoops_getModuleHandler('category', 'newbb');
+///** @var Newbb\CategoryHandler $categoryHandler */
+//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
 
 $categories = [];
 if (!$viewcat) {
@@ -70,15 +71,15 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('forum_index_title', $forum_index_title);
 //if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
-//    /** @var \NewbbOnlineHandler $onlineHandler */
-//    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init();
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-///** @var \NewbbPostHandler $postHandler */
-//$postHandler = xoops_getModuleHandler('post', 'newbb');
+/** @var Newbb\ForumHandler $forumHandler */
+$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+///** @var Newbb\PostHandler $postHandler */
+//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 /* Allowed forums */
 $forums_allowed = $forumHandler->getIdsByPermission();
@@ -87,9 +88,9 @@ $forums_allowed = $forumHandler->getIdsByPermission();
 $forums_top = [];
 
 if (!empty($forums_allowed)) {
-    $crit_top = new CriteriaCompo(new Criteria('parent_forum', 0));
-    $crit_top->add(new Criteria('cat_id', '(' . implode(', ', array_keys($categories)) . ')', 'IN'));
-    $crit_top->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
+    $crit_top = new \CriteriaCompo(new \Criteria('parent_forum', 0));
+    $crit_top->add(new \Criteria('cat_id', '(' . implode(', ', array_keys($categories)) . ')', 'IN'));
+    $crit_top->add(new \Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
     $forums_top = $forumHandler->getIds($crit_top);
 }
 
@@ -97,8 +98,8 @@ if (!empty($forums_allowed)) {
 if ('hidden' === $GLOBALS['xoopsModuleConfig']['subforum_display'] || 0 === count($forums_top)) {
     $forums_sub = [];
 } else {
-    $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top) . ')', 'IN'));
-    $crit_sub->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
+    $crit_sub = new \CriteriaCompo(new \Criteria('parent_forum', '(' . implode(', ', $forums_top) . ')', 'IN'));
+    $crit_sub->add(new \Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
     $forums_sub = $forumHandler->getIds($crit_sub);
 }
 
@@ -110,18 +111,18 @@ $deletetopics     = 0;
 $newposts         = 0;
 $deleteposts      = 0;
 if (0 !== count($forums_available)) {
-    $crit_forum = new Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
+    $crit_forum = new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
     $crit_forum->setSort('cat_id ASC, parent_forum ASC, forum_order');
     $crit_forum->setOrder('ASC');
     $forums       = $forumHandler->getAll($crit_forum, null, false);
     $newtopics    = $forumHandler->getTopicCount($forums, 0, 'pending');
     $deletetopics = $forumHandler->getTopicCount($forums, 0, 'deleted');
     $forums_array = $forumHandler->display($forums, $GLOBALS['xoopsModuleConfig']['length_title_index'], $GLOBALS['xoopsModuleConfig']['count_subforum']);
-    $crit         = new CriteriaCompo(new Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN'));
-    $crit->add(new Criteria('approved', '-1'));
+    $crit         = new \CriteriaCompo(new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN'));
+    $crit->add(new \Criteria('approved', '-1'));
     $deleteposts = $postHandler->getCount($crit);
-    $crit        = new CriteriaCompo(new Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN'));
-    $crit->add(new Criteria('approved', '0'));
+    $crit        = new \CriteriaCompo(new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN'));
+    $crit->add(new \Criteria('approved', '0'));
     $newposts = $postHandler->getCount($crit);
 }
 
@@ -138,9 +139,9 @@ if ($deleteposts > 0) {
     $xoopsTpl->assign('delete_post', $deleteposts);
 }
 
-///** @var \NewbbReportHandler $reportHandler */
-//$reportHandler = xoops_getModuleHandler('report', 'newbb');
-$reported      = $reportHandler->getCount(new Criteria('report_result', 0));
+///** @var Newbb\ReportHandler $reportHandler */
+//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
+$reported = $reportHandler->getCount(new \Criteria('report_result', 0));
 $xoopsTpl->assign('reported_count', $reported);
 if ($reported > 0) {
     $xoopsTpl->assign('report_post', sprintf(_MD_NEWBB_SEEWAITREPORT, $reported));
@@ -186,7 +187,7 @@ foreach (array_keys($categories) as $id) {
     }
 
     $cat_sponsor = [];
-    @list($url, $title) = array_map('trim', preg_split('/ /', $onecat['cat_url'], 2));
+    @list($url, $title) = array_map('trim', explode(" ", $onecat['cat_url'], 2));
     if ('' === $title) {
         $title = $url;
     }
@@ -227,8 +228,8 @@ $xoopsTpl->assign([
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = [];
     if (is_object($GLOBALS['xoopsUser'])) {
-//        /** @var \NewbbUserstatsHandler $userstatsHandler */
-//        $userstatsHandler         = xoops_getModuleHandler('userstats');
+        //        /** @var Newbb\UserstatsHandler $userstatsHandler */
+        //        $userstatsHandler         = Newbb\Helper::getInstance()->getHandler('Userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
         $userstats['topics']      = sprintf(_MD_NEWBB_USER_TOPICS, (int)(@$userstats_row['user_topics']));
         $userstats['posts']       = sprintf(_MD_NEWBB_USER_POSTS, (int)(@$userstats_row['user_posts']));
@@ -244,9 +245,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
 }
 
 /* display forum stats */
-///** @var \NewbbStatsHandler $statsHandler */
-//$statsHandler = xoops_getModuleHandler('stats', 'newbb');
-$stats        = $statsHandler->getStats(array_merge([0], $forums_available));
+///** @var Newbb\StatsHandler $statsHandler */
+//$statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+$stats = $statsHandler->getStats(array_merge([0], $forums_available));
 $xoopsTpl->assign_by_ref('stats', $stats);
 $xoopsTpl->assign('subforum_display', $GLOBALS['xoopsModuleConfig']['subforum_display']);
 $xoopsTpl->assign('mark_read', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/index.php?mark_read=1');

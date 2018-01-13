@@ -30,6 +30,7 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 
 /*
  * Print contents of a post or a topic
@@ -54,9 +55,9 @@ if (!Request::getString('post_data', '', 'POST')) {
     }
 
     if (0 !== $post_id) {
-//        /** @var \NewbbPostHandler $postHandler */
-//        $postHandler = xoops_getModuleHandler('post', 'newbb');
-        /** @var \NewbbPost $post */
+        //        /** @var Newbb\PostHandler $postHandler */
+        //        $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+        /** @var Newbb\Post $post */
         $post = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
             exit(_MD_NEWBB_NORIGHTTOVIEW);
@@ -72,11 +73,11 @@ if (!Request::getString('post_data', '', 'POST')) {
         }
     }
 
-//    /** @var \NewbbTopicHandler $topicHandler */
-//    $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-    $topicObject    = $topicHandler->get($topic_id);
-    $topic_id     = $topicObject->getVar('topic_id');
-    $forum        = $topicObject->getVar('forum_id');
+    //    /** @var Newbb\TopicHandler $topicHandler */
+    //    $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    $topicObject = $topicHandler->get($topic_id);
+    $topic_id    = $topicObject->getVar('topic_id');
+    $forum       = $topicObject->getVar('forum_id');
     if (!$approved = $topicObject->getVar('approved')) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
@@ -86,10 +87,10 @@ if (!Request::getString('post_data', '', 'POST')) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-//    /** @var \NewbbForumHandler $forumHandler */
-//    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-    $forum        = $topicObject->getVar('forum_id');
-    $forumObject    = $forumHandler->get($forum);
+    //    /** @var Newbb\ForumHandler $forumHandler */
+    //    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    $forum       = $topicObject->getVar('forum_id');
+    $forumObject = $forumHandler->get($forum);
     if (!$forumHandler->getPermission($forumObject)) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }

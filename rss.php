@@ -50,16 +50,16 @@ if ('' !== $forumSet) {
     $forums = array_map('intval', array_map('trim', explode('|', $forumSet)));
 }
 
-///** @var \NewbbForumHandler $forumHandler */
-//$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-//$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-$validForums  = $forumHandler->getIdsByPermission(); // get all accessible forums
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$validForums = $forumHandler->getIdsByPermission(); // get all accessible forums
 
 if (is_array($forums) && count($forums) > 0) {
     $validForums = array_intersect($forums, $validForums);
 } elseif ($category > 0) {
-    $crit_top = new CriteriaCompo(new Criteria('cat_id', $category));
-    $crit_top->add(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'));
+    $crit_top = new \CriteriaCompo(new \Criteria('cat_id', $category));
+    $crit_top->add(new \Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'));
     $forums_top  = $forumHandler->getIds($crit_top);
     $validForums = array_intersect($forums_top, $validForums);
 }
@@ -73,7 +73,7 @@ $forumSet = implode(',', $validForums);
 $charset = 'UTF-8';
 header('Content-Type:text/xml; charset=' . $charset);
 
-$tpl                 = new XoopsTpl();
+$tpl                 = new \XoopsTpl();
 $tpl->caching        = 2;
 $tpl->cache_lifetime = $GLOBALS['xoopsModuleConfig']['rss_cachetime'] * 60;
 if (!empty($GLOBALS['xoopsConfig']['rewrite'])) {
@@ -86,9 +86,9 @@ $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     include_once __DIR__ . '/include/functions.time.php';
 
-//    /** @var \NewbbXmlrssHandler $xmlrssHandler */
-//    $xmlrssHandler = xoops_getModuleHandler('xmlrss', 'newbb');
-    $rss           = $xmlrssHandler->create();
+    //    /** @var Newbb\XmlrssHandler $xmlrssHandler */
+    //    $xmlrssHandler = Newbb\Helper::getInstance()->getHandler('Xmlrss');
+    $rss = $xmlrssHandler->create();
 
     $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_NEWBB_FORUM);
     $rss->channel_link = XOOPS_URL . '/';
@@ -167,9 +167,9 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-//        /** @var \NewbbTypeHandler $typeHandler */
-//        $typeHandler = xoops_getModuleHandler('type', 'newbb');
-        $type_list   = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
+        //        /** @var Newbb\TypeHandler $typeHandler */
+        //        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
     foreach ($rows as $topic) {

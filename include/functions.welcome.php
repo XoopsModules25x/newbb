@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
@@ -29,9 +31,9 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
         if (!$forumId) {
             return false;
         }
-        /** @var \NewbbForumHandler $forumHandler */
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $forumObject    = $forumHandler->get($forumId);
+        /** @var Newbb\ForumHandler $forumHandler */
+        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumObject  = $forumHandler->get($forumId);
         if (!$forumObject || !$forumHandler->getPermission($forumObject)) {
             unset($forumObject);
 
