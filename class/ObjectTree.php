@@ -120,7 +120,8 @@ if (!class_exists('ObjectTree')) {
             $selected = '',
             $addEmptyOption = false,
             $key = 0,
-            $extra = '') //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
+            $extra = ''
+        ) //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
         {
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");

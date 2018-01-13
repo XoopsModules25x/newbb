@@ -85,8 +85,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $fields = null,
         $asObject = true,
         $topic_id = 0,
-        $approved = 1)
-    {
+        $approved = 1
+    ) {
         $sql    = 'SELECT p.*, t.*, tp.topic_status FROM '
                   . $this->db->prefix('newbb_posts')
                   . ' p LEFT JOIN '
