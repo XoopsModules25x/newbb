@@ -45,7 +45,7 @@ class Configurator
         $moduleDirName = basename(dirname(__DIR__));
         $capsDirName   = strtoupper($moduleDirName);
 
-        $config = include __DIR__ . '/../../include/config.php';
+        include_once __DIR__ . '/../../include/config.php';        $config = getConfig();
 
         $this->name            = $config->name;
         $this->paths           = $config->paths;

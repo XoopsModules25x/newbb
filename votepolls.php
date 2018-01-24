@@ -26,6 +26,7 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use XoopsModules\Xoopspoll;
 
 include_once __DIR__ . '/header.php';
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'GET');
@@ -51,10 +52,10 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('constants', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
 
-        /** @var \XoopspollPollHandler $xpPollHandler */
-        $xpPollHandler = xoops_getModuleHandler('poll', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        /** @var \XoopspollLogHandler $xpLogHandler */
-        $xpLogHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+        /** @var Xoopspoll\PollHandler $xpPollHandler */
+        $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
+        /** @var Xoopspoll\LogHandler $xpLogHandler */
+        $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
         /** @var \XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
@@ -70,7 +71,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 $mail_author = false;
 // new xoopspoll module
 if ($pollModuleHandler->getVar('version') >= 140) {
-    $classConstants = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
+    $classConstants = Xoopspoll\Constants();
     if (is_object($pollObject)) {
         if ($pollObject->getVar('multiple')) {
             $optionId = Request::getInt('option_id', 0, 'POST');
@@ -105,9 +106,9 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                 /* set anon user vote (and the time they voted) */
                 if (!is_object($GLOBALS['xoopsUser'])) {
                     xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
-                    /** @var XoopspollPollUtility $classPollUtility */
-                    $classPollUtility = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'PollUtility';
-                    $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
+                    /** @var Xoopspoll\Utility $classPollUtility */
+                    $classPollUtility = new \Xoopspoll\Utility();
+                    $classXoopspoll\Utility::setVoteCookie($poll_id, $voteTime, 0);
                 }
             } else {
                 $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_CANNOTVOTE');

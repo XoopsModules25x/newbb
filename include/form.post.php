@@ -37,7 +37,7 @@ $moderated_forum = $forumObject->getVar('forum_id');
 $moderateHandler = Newbb\Helper::getInstance()->getHandler('Moderate');
 if (!$moderateHandler->verifyUser($moderated_id, '', $moderated_forum)) {
     $criteria = new \CriteriaCompo();
-    $criteria->add(new criteria('uid', $moderated_id, '='));
+    $criteria->add(new \Criteria('uid', $moderated_id, '='));
     $criteria->setSort('mod_end');
     $criteria->setOrder('DESC');
     $mod  = $moderateHandler->getObjects($criteria, false, false);

@@ -32,7 +32,7 @@
 use XoopsModules\Newbb;
 
 include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../class/Utility.php';
+//include_once __DIR__ . '/../class/Utility.php';
 include_once __DIR__ . '/../include/functions.stats.php';
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');

@@ -43,7 +43,7 @@ include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 include_once dirname(__DIR__) . '/include/config.php';
 include_once dirname(__DIR__) . '/include/common.php';
 
-include_once dirname(__DIR__) . '/class/Helper.php';
+//include_once dirname(__DIR__) . '/class/Helper.php';
 $helper = Newbb\Helper::getInstance();
 //$helper = NewBB::getInstance();
 /** @var Xmf\Module\Admin $adminObject */

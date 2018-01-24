@@ -11,6 +11,7 @@
  */
 
 use XoopsModules\Newbb;
+use XoopsModules\Xoopspoll;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
@@ -97,11 +98,11 @@ class Topic extends \XoopsObject
         if (!empty($pollModule)) {
             $newbbConfig['poll_module'] = $pollModule;
         }
-        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
-        include_once $relPath . '.php';
-        include_once $relPath . 'option.php';
-        include_once $relPath . 'log.php';
-        include_once $relPath . 'renderer.php';
+//        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
+//        include_once $relPath . '.php';
+//        include_once $relPath . 'option.php';
+//        include_once $relPath . 'log.php';
+//        include_once $relPath . 'renderer.php';
         $classes = get_declared_classes();
         foreach (array_reverse($classes) as $class) {
             if (strtolower($class) == $newbbConfig['poll_module']) {
@@ -137,17 +138,17 @@ class Topic extends \XoopsObject
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             /** @var \XoopsPollHandler $pollHandler */
-            $pollHandler = xoops_getModuleHandler('poll', $newbbConfig['poll_module']);
+            $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             if (false !== $pollHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='))) {
-                /** @var \XoopspollOptionHandler $optionHandler */
-                $optionHandler = xoops_getModuleHandler('option', $newbbConfig['poll_module']);
+                /** @var XoopsPoll\OptionHandler $optionHandler */
+                $optionHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
                 $optionHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
-                /** @var \XoopspollLogHandler $logHandler */
-                $logHandler = xoops_getModuleHandler('log', $newbbConfig['poll_module']);
+                /** @var XoopsPoll\LogHandler $logHandler */
+                $logHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $logHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
                 xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
             }
-            // old xoopspoll or umfrage or any clone from them
+            // old Xoopspoll or Umfrage or any clone from them
         } else {
             $classPoll = $this->loadOldPoll();
             /** @var \XoopsPoll $poll */
@@ -191,7 +192,7 @@ class Topic extends \XoopsObject
         }
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $pollHandler = xoops_getModuleHandler('poll', $newbbConfig['poll_module']);
+            $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             $pollObject  = $pollHandler->get($poll_id);
             // old xoopspoll or umfrage or any clone from them
         } else {

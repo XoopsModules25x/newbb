@@ -170,7 +170,7 @@ switch ($op) {
         }
 
         //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
@@ -242,7 +242,7 @@ switch ($op) {
 
     case 'forum':
         //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {

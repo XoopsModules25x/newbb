@@ -77,7 +77,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('request', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('admin', $GLOBALS['xoopsModuleConfig']['poll_module']);
         /** @var \XoopspollPollHandler $xpPollHandler */
-        $xpPollHandler = xoops_getModuleHandler('poll', $GLOBALS['xoopsModuleConfig']['poll_module']);
+        $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
         /** @var \XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
@@ -348,9 +348,9 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             /** @var \XoopspollOptionHandler $xpOptHandler */
-            $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
+            $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
             /** @var \XoopspollLogHandler $xpLogHandler */
-            $xpLogHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+            $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
             //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
             $classConstants   = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
             $notify           = Request::getInt('notify', $classConstants::NOTIFICATION_ENABLED, 'POST');
@@ -502,7 +502,7 @@ switch ($op) {
         $poll_form->addElement(new \XoopsFormLabel(_MD_NEWBB_POLL_POLLQUESTION, $question));
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
+            $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
             $option_tray  = $xpOptHandler->renderOptionFormTray($poll_id);
             // old xoopspoll or umfrage or any clone from them
         } else {
@@ -556,7 +556,7 @@ switch ($op) {
             if ('' !== $optxt) {
                 // new xoopspoll module
                 if ($pollModuleHandler->getVar('version') >= 140) {
-                    $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
+                    $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
                     $optionObject = $xpOptHandler->create();
                     $optionObject->setVar('option_text', $optxt);
                     $optionObject->setVar('poll_id', $poll_id);
@@ -596,8 +596,8 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 140) {
             $status = $xpPollHandler->delete($pollObject);
             if (false !== $status) {
-                $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
-                $xpLogHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+                $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
+                $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $xpOptHandler->deleteByPollId($poll_id);
                 $xpLogHandler->deleteByPollId($poll_id);
             } else {
@@ -706,9 +706,9 @@ switch ($op) {
             }
             if (Request::getInt('reset', 0, 'POST')) { // reset all vote/voter counters
                 /** @var \XoopspollOptionHandler $xpOptHandler */
-                $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
+                $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
                 /** @var \XoopspollLogHandler $xpLogHandler */
-                $xpLogHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+                $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $xpLogHandler->deleteByPollId($poll_id);
                 $xpOptHandler->resetCountByPollId($poll_id);
                 $xpPollHandler->updateCount($pollObject);

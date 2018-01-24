@@ -26,8 +26,8 @@ use XoopsModules\Newbb;
 
 $moduleDirName = basename(dirname(__DIR__));
 
-require_once __DIR__ . '/../class/Helper.php';
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Helper.php';
+// require_once __DIR__ . '/../class/Utility.php';
 
 $db     = \XoopsDatabaseFactory::getDatabase();
 $helper = \XoopsModules\Newbb\Helper::getInstance();

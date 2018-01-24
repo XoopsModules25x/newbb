@@ -301,7 +301,7 @@ switch ($action) {
 
         /** @var Newbb\CategoryHandler $categoryHandler */
         $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
@@ -349,7 +349,7 @@ switch ($action) {
         xoops_cp_header();
 
         $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
@@ -418,7 +418,7 @@ switch ($action) {
         $form = new NewbbXoopsGroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
         $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if ('category' === $op) {

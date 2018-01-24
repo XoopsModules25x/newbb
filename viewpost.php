@@ -86,12 +86,12 @@ $join = null;
 // START irmtfan solve the status issues and specially status = new issue
 switch ($status) {
     case 'pending':
-        $criteria_count->add(new \Criteria('approved', 0)); // irmtfan add new criteria
-        $criteria_post->add(new \Criteria('p.approved', 0)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', 0)); // irmtfan add new \Criteria
+        $criteria_post->add(new \Criteria('p.approved', 0)); // irmtfan add new \Criteria
         break;
     case 'deleted':
-        $criteria_count->add(new \Criteria('approved', -1)); // irmtfan add new criteria
-        $criteria_post->add(new \Criteria('p.approved', -1)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', -1)); // irmtfan add new \Criteria
+        $criteria_post->add(new \Criteria('p.approved', -1)); // irmtfan add new \Criteria
         break;
     case 'new':
         //$criteria_status_count = new \CriteriaCompo(new \Criteria("post_time", (int)($last_visit), ">"));// irmtfan commented and removed
@@ -107,7 +107,7 @@ switch ($status) {
             $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
             if (!empty($read_uid)) {
                 $join                 = ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_reads_topic') . ' AS r ON r.read_item = p.topic_id AND r.uid = ' . $read_uid . ' '; // irmtfan corrected add AS
-                $criteria_status_post = new \CriteriaCompo();// irmtfan new criteria
+                $criteria_status_post = new \CriteriaCompo();// irmtfan new \Criteria
                 $criteria_status_post->add(new \Criteria('p.post_id', 'r.`post_id`', '>')); // irmtfan corrected - should use $value='r.``' to render in XOOPS/class/criteria.php
                 $criteria_status_post->add(new \Criteria('r.read_id', null, 'IS NULL'), 'OR');// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
                 $criteria_post->add($criteria_status_post); // irmtfan add the status criteria to post criteria - move here
@@ -118,8 +118,8 @@ switch ($status) {
             //$criteria_status_post->add(new \Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
         } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
-            $criteria_count->add(new \Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new criteria
-            $criteria_post->add(new \Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
+            $criteria_count->add(new \Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new \Criteria
+            $criteria_post->add(new \Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new \Criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
             $topics         = [];
             $topic_lastread = newbbGetCookie('LT', true);
@@ -140,8 +140,8 @@ switch ($status) {
         }
         break;
     default:
-        $criteria_count->add(new \Criteria('approved', 1)); // irmtfan add new criteria
-        $criteria_post->add(new \Criteria('p.approved', 1)); // irmtfan add new criteria
+        $criteria_count->add(new \Criteria('approved', 1)); // irmtfan add new \Criteria
+        $criteria_post->add(new \Criteria('p.approved', 1)); // irmtfan add new \Criteria
         break;
 }
 //$criteria_count->add($criteria_status_count); // irmtfan commented and removed
@@ -242,7 +242,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
-    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+//    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;

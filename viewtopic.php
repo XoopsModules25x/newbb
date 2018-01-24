@@ -32,6 +32,7 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb;
+use XoopsModules\Xoopspoll;
 
 include_once __DIR__ . '/header.php';
 $xoopsLogger->startTime('newBB_viewtopic');
@@ -498,7 +499,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $pollModuleHandler = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            xoops_load('renderer', $GLOBALS['xoopsModuleConfig']['poll_module']);
+//            xoops_load('renderer', $GLOBALS['xoopsModuleConfig']['poll_module']);
             xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
             // old xoopspoll or umfrage or any clone from them
         } else {
@@ -511,7 +512,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $xpollHandler = xoops_getModuleHandler('poll', $GLOBALS['xoopsModuleConfig']['poll_module']);
+            $xpollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             /** @var \XoopsPoll $pollObject */
             $pollObject = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
@@ -535,12 +536,12 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                                                  'back_link'       => ''
                                              ]);
                 $classRenderer = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Renderer';
-                /** @var \XoopsPollRenderer $renderer */
+                /** @var Xoopspoll\Renderer $renderer */
                 $renderer = new $classRenderer($pollObject);
                 // check to see if user has voted, show form if not, otherwise get results for form
 
-                /** @var \XoopspollLogHandler $logHandler */
-                $logHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
+                /** @var Xoopspoll\LogHandler $logHandler */
+                $logHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 if ($pollObject->isAllowedToVote()
                     && (!$logHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $uid))) {
                     $myTpl = new \XoopsTpl();
