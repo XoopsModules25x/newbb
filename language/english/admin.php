@@ -340,8 +340,8 @@ define('_AM_NEWBB_HELP_GROUPMOD_TAB',
        'Allows you to install users of certain groups as moderators for the entire module, and for individual categories and forums.<br>It is recommended to create separate groups of moderators, for more convenient management of moderators.<br>You can also assign specific users to moderators when creating a forum.');
 define('_AM_NEWBB_HELP_SYNC_TAB', 'If you notice a problem with the message dates, the appearance of blank messages, etc. Here you can synchronize and correct forum data and topics');
 
-define('_MI_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
-define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');
+define('_AM_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
+define('_AM_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');
 
 //PDF
 define('_AM_NEWBB_INDEX_PDF_PAGE', 'If you want to use the PDF creation function, use <a href="https://github.com/XoopsModules25x/publisher/issues/30#issuecomment-231551905" target="_blank">instruction</a>.');

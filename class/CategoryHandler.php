@@ -64,7 +64,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
      */
     public function insert(\XoopsObject $category, $force = true)
     {
-        $className = 'Category';
+        $className = Category::class;
         if (!($category instanceof $className)) {
             return false;
         }
@@ -84,7 +84,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
      */
     public function delete(\XoopsObject $category, $force = false)//delete(Category $category)
     {
-        $className = 'Category';
+        $className = Category::class;
         if (!($category instanceof $className)) {
             return false;
         }

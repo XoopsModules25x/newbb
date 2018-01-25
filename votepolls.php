@@ -56,7 +56,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
         /** @var Xoopspoll\LogHandler $xpLogHandler */
         $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
-        /** @var \XoopsPoll $pollObject */
+        /** @var Xoopspoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
