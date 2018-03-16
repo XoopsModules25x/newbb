@@ -224,7 +224,7 @@ function newbbIsForumModerators(array $uid = [], $mid = 0)
 
     $sql = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['forum_moderator'])) {
                 continue;
             }
