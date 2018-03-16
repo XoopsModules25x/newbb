@@ -933,7 +933,7 @@ class TopicRenderer
         $forums    = [];
         $anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
 
-        while ($myrow = $this->handler->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
                 ++$sticky;
             }

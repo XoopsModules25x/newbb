@@ -232,7 +232,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         }
         $rows  = [];
         $users = [];
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $users[$row['uid']] = 1;
             $rows[]             = $row;
         }

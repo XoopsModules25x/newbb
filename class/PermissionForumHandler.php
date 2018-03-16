@@ -146,7 +146,7 @@ class PermissionForumHandler extends PermissionHandler
         // Add criteria for gpermnames
         $criteria->add(new \Criteria('gperm_name', '(' . $gperm_names . ')', 'IN'));
         // Get all permission objects in this module and for this user's groups
-        $userpermissions =& $this->getObjects($criteria, true);
+        $userpermissions = $this->getObjects($criteria, true);
 
         // Set the granted permissions to 1
         foreach ($userpermissions as $gperm_id => $gperm) {

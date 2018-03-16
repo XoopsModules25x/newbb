@@ -153,7 +153,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $rows  = [];
     $types = [];
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $users[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
             $types[$row['type_id']] = 1;

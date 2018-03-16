@@ -161,7 +161,7 @@ class StatsHandler
                   . (empty($_periods) ? '' : 'AND stats_period IN (' . implode(', ', $_periods) . ')');
         $result = $this->db->query($sql);
 
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $ret[(string)$row['stats_id']][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
         }
 

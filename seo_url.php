@@ -193,7 +193,7 @@ function forum_seo_cat($_cat_id)
     $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_categories');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = [];
-    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['cat_id']] = forum_seo_title($res['cat_title']);
     }
     XoopsCache::write($key, $_ret);
@@ -221,7 +221,7 @@ function forum_seo_forum($_cat_id)
     $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
     $result = $GLOBALS['xoopsDB']->query($query);
     $_ret   = [];
-    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['forum_id']] = forum_seo_title($res['forum_name']);
     }
     XoopsCache::write($key, $_ret);

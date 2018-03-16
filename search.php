@@ -122,7 +122,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_NEWBB_ERROROCCURED);
         }
         $uid = [];
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $uid[] = $row['uid'];
         }
     } else {

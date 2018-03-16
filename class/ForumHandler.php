@@ -782,7 +782,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
 
         $forum_stats = [];
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $forum_stats[$row['id']] = ['topics' => $row['topics'], 'posts' => $row['posts']];
         }
 

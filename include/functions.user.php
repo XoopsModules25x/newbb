@@ -198,7 +198,7 @@ function newbbIsModuleAdministrators(array $uid = [])
            . ' GROUP BY l.uid';
 
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (!empty($myrow['count'])) {
                 $module_administrators[] = $myrow['uid'];
             }

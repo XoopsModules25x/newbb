@@ -87,7 +87,7 @@ if (Request::getString('submit', '', 'POST')) {
         return _MD_NEWBB_ERROR;
     }
     // Dave_L code
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $topics[] = $row['topic_id'];
     }
     $topics_number = count($topics);
@@ -102,7 +102,7 @@ if (Request::getString('submit', '', 'POST')) {
             return _MD_NEWBB_ERROR;
         }
         // Dave_L code
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $posts[] = $row['post_id'];
         }
         $posts_number = count($posts);

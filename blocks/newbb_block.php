@@ -146,7 +146,7 @@ function b_newbb_show($options)
     $author             = [];
     $types              = [];
 
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
@@ -332,7 +332,7 @@ function b_newbb_topic_show($options)
     $rows               = [];
     $author             = [];
     $types              = [];
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]                       = $row;
         $author[$row['topic_poster']] = 1;
         if ($row['type_id'] > 0) {
@@ -495,7 +495,7 @@ function b_newbb_post_show($options)
     $block['disp_mode'] = ('text' === $options[0]) ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
     }
@@ -655,7 +655,7 @@ function b_newbb_author_show($options)
         return $block;
     }
     $author = [];
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $author[$row['author']]['count'] = $row['count'];
     }
     if (count($author) < 1) {
