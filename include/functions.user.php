@@ -59,7 +59,7 @@ function newbbIsAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {
@@ -112,7 +112,7 @@ function newbbIsModerator(&$forum, $user = -1)
         $forum        = $forumHandler->get($forum_id);
     }
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {

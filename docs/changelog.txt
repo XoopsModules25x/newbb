@@ -9,6 +9,11 @@
 - Short syntax in array literals (mamba)
 - added forumDescription to viewforum.php (aerograf/mamba)
 - namespaces, autoload (mamba)
+- RGB to HEX (mamba)
+- changed exit() to die() (mamba)
+- assignment in Condition (mamba)
+
+
 
 4.33 RC 13  (XOOPS 2.5.8)      (NOT RELEASED)
 ===========================================

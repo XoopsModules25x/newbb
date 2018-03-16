@@ -363,13 +363,13 @@ class TopicRenderer
                 break;
 
             case 'uid': // irmtfan add multi topic poster
-                if ($val !== -1) {
+                if (-1 !== $val) {
                     $val                    = implode(',', array_map('intval', explode(',', $val)));
                     $this->query['where'][] = 't.topic_poster IN ( ' . $val . ' )';
                 }
                 break;
             case 'lastposter': // irmtfan add multi lastposter
-                if ($val !== -1) {
+                if (-1 !== $val) {
                     $val                    = implode(',', array_map('intval', explode(',', $val)));
                     $this->query['where'][] = 'p.uid IN ( ' . $val . ' )';
                 }

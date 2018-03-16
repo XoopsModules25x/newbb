@@ -55,7 +55,7 @@ if (Request::getString('submit', '', 'POST')) {
                 }
             }
         }
-        if ($fforum == -1) { // alle Foren
+        if (-1 == $fforum) { // alle Foren
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
