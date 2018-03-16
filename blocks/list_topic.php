@@ -12,7 +12,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;

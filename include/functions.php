@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_LOADED', true);

@@ -89,7 +89,7 @@ $rateObject->setVar('ratingtimestamp', time());
 
 $ratingid = $rateHandler->insert($rateObject);
 
-$query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
+$query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . ' ';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;

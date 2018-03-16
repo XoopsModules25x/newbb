@@ -12,7 +12,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 //defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_CATEGORY", 1);

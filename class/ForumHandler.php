@@ -19,7 +19,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class ForumHandler
@@ -294,7 +294,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         /** @var Newbb\TypeHandler $typeHandler */
         $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
         $typen       = $typeHandler->getByForum($forum->getVar('forum_id'));
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
                 ++$sticky;
             }

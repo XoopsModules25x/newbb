@@ -24,7 +24,7 @@ use XoopsModules\Userlog;
  * @author          irmtfan (irmtfan@yahoo.com)
  * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\PluginInterface
 {

@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 include_once __DIR__ . '/functions.session.php';
 

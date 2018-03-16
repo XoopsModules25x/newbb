@@ -15,18 +15,18 @@
             <{$smarty.const._MD_NEWBB_TOPIC}>:
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{if $wait_new_topic}>(
-                    <span style="color:red;"><b><{$wait_new_topic}></b></span>
+                    <span style="color:#ff0000;"><b><{$wait_new_topic}></b></span>
                     ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{if $delete_topic}>(
-                    <span style="color:red;"><b><{$delete_topic}></b></span>
+                    <span style="color:#ff0000;"><b><{$delete_topic}></b></span>
                     ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a><br>
             <{$smarty.const._MD_NEWBB_POST2}>:
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{if $wait_new_post}>(
-                    <span style="color:red;"><b><{$wait_new_post}></b></span>
+                    <span style="color:#ff0000;"><b><{$wait_new_post}></b></span>
                     ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{if $delete_post}>(
-                    <span style="color:red;"><b><{$delete_post}></b></span>
+                    <span style="color:#ff0000;"><b><{$delete_post}></b></span>
                     ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
         </div>
         <div class="forum_stats_col right floatright">

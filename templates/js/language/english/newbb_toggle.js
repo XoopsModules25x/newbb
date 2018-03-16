@@ -85,6 +85,9 @@ function SetCookie(name, value, expires) {
     document.cookie = name + "=" + escape(value) + "; expires=" + expires.toGMTString() + "; path=/";
 }
 
+/**
+ * @return {string}
+ */
 function GetCookie(name) {
     cookie_name = name + "=";
     cookie_length = document.cookie.length;

@@ -366,10 +366,10 @@ span.forum_icon.forum_button {
     background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
     background-image: -o-linear-gradient(top, #407DC7, #4279B8);
     border-width: 1px;
-    color: white;
+    color: #ffffff;
     padding: 4px 4px;
-    text-shadow: 0 1px 0 gray;
-    border-color: white #A1C1E6 #2B4763 #A1C1E6;
+    text-shadow: 0 1px 0 #808080;
+    border-color: #ffffff #A1C1E6 #2B4763 #A1C1E6;
     border-style: solid;
     border-radius: 5px;
     box-shadow: 0 1px 7px #080808;
@@ -382,7 +382,7 @@ span.forum_icon.forum_button:hover {
 
 span.forum_icon.forum_button:active {
     box-shadow: inset 0 1px 7px #565656;
-    border-color: white #a1c1e6 black #a1c1e6;
+    border-color: #ffffff #a1c1e6 #000000 #a1c1e6;
     font-weight: normal;
 }
 

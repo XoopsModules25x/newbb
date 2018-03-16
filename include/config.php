@@ -19,7 +19,7 @@
  * @author          XOOPS Development Team - ( https://xoops.org )
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 include_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));

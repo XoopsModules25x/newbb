@@ -14,7 +14,7 @@ use Xmf\Request;
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)

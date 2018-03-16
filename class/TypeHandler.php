@@ -10,7 +10,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Type object handler class.
@@ -55,7 +55,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
             return $ret;
         }
 
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow[$this->keyName]] = [
                 'type_id'    => $myrow[$this->keyName],
                 'type_order' => $myrow['type_order'],

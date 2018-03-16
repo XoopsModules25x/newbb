@@ -32,7 +32,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -100,7 +100,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $this->create(false);
             $post->assignVars($myrow);
 
@@ -385,7 +385,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
             /* delete pending post directly */
         } else {
-            $sql = sprintf('DELETE FROM %s WHERE post_id = %u', $this->db->prefix('newbb_posts'), $post->getVar('post_id'));
+            $sql = sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('delete post error: ' . $sql);
 
@@ -527,7 +527,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $this->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;

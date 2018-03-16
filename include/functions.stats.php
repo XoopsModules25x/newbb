@@ -11,7 +11,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_STATS_LOADED', true);
@@ -102,7 +102,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalViews()
     {
-        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '';
+        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' ';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }

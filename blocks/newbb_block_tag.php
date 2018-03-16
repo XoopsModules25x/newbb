@@ -9,7 +9,7 @@
  * @package        module::newbb/tag
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**#@+
  * Function to display tag cloud

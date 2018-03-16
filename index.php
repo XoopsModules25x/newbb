@@ -187,7 +187,7 @@ foreach (array_keys($categories) as $id) {
     }
 
     $cat_sponsor = [];
-    @list($url, $title) = array_map('trim', explode(" ", $onecat['cat_url'], 2));
+    @list($url, $title) = array_map('trim', explode(' ', $onecat['cat_url'], 2));
     if ('' === $title) {
         $title = $url;
     }

@@ -61,7 +61,7 @@ function newCategory()
 function editCategory(\XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
-    //    $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
     if (null === $categoryObject) {
         $categoryObject = $categoryHandler->create();
     }

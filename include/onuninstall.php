@@ -56,7 +56,7 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
         if ($dirInfo->isDir()) {
             // The directory exists so delete it
             if (false === $utilityClass::rrmdir($old_dir)) {
-                $module->setErrors(sprintf(_AM_XXXXX_ERROR_BAD_DEL_PATH, $old_dir));
+                $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $old_dir));
                 $success = false;
             }
         }

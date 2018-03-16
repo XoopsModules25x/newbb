@@ -12,7 +12,7 @@
 
 use Xmf\IPAddress;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class ModerateHandler
@@ -37,7 +37,7 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
     public function clearGarbage($expire = 0)
     {
         $expire = time() - (int)$expire;
-        $sql    = sprintf('DELETE FROM %s WHERE mod_end < %u', $this->db->prefix('newbb_moderates'), $expire);
+        $sql    = sprintf('DELETE FROM `%s` WHERE mod_end < %u', $this->db->prefix('newbb_moderates'), $expire);
         $this->db->queryF($sql);
     }
 

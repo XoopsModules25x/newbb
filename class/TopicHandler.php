@@ -12,7 +12,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -288,7 +288,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return $ret;
         }
         $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $postHandler->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;
@@ -363,7 +363,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return [];
         }
         $ret = [];
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['uid'];
         }
 
@@ -387,7 +387,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postHandler->delete($postObject, false, $force);
 
         $newbbConfig = newbbLoadConfig();
-        /** @var \TagTagHandler $tagHandler */
+        /** @var \XoopsModules\Tag\Handler $tagHandler */
         if (!empty($newbbConfig['do_tag']) && $tagHandler = @xoops_getModuleHandler('tag', 'tag', true)) {
             $tagHandler->updateByItem([], $topic_id, 'newbb');
         }

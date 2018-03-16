@@ -65,7 +65,7 @@ class Utility
     public function addField($field, $table)
     {
         global $xoopsDB;
-        $result = $xoopsDB->queryF('ALTER TABLE ' . $table . " ADD $field;");
+        $result = $xoopsDB->queryF('ALTER TABLE ' . $table . " ADD $field");
 
         return $result;
     }

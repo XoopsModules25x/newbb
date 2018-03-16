@@ -13,7 +13,7 @@
 use Xmf\IPAddress;
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 include_once __DIR__ . '/../include/functions.config.php';
 
@@ -240,7 +240,7 @@ class OnlineHandler
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {
-            $sql = sprintf('INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_forum, online_topic) VALUES (%u, %s, %u, %s, %u, %u)', $this->db->prefix('newbb_online'), $uid, $this->db->quote($uname), $time, $this->db->quote($ip), $forum_id, $topic_id);
+            $sql = sprintf('INSERT INTO `%s` (online_uid, online_uname, online_updated, online_ip, online_forum, online_topic) VALUES (%u, %s, %u, %s, %u, %u)', $this->db->prefix('newbb_online'), $uid, $this->db->quote($uname), $time, $this->db->quote($ip), $forum_id, $topic_id);
         }
         if (!$this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -310,7 +310,7 @@ class OnlineHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;
             if ($myrow['online_uid'] > 0) {
                 $this->user_ids[] = $myrow['online_uid'];

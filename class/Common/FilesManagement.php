@@ -28,7 +28,7 @@ trait FilesManagement
     {
         try {
             if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
+                if (!is_dir($folder) && !mkdir($folder) && !is_dir($folder)) {
                     throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
                 }
 
@@ -183,7 +183,7 @@ trait FilesManagement
         }
 
         // If the destination directory does not exist and could not be created stop processing
-        if (!is_dir($dest) && !mkdir($dest, 0755)) {
+        if (!is_dir($dest) && !mkdir($dest) && !is_dir($dest)) {
             return false;
         }
 
@@ -226,7 +226,7 @@ trait FilesManagement
         }
 
         // If the destination directory does not exist and could not be created stop processing
-        if (!is_dir($dest) && !mkdir($dest, 0755)) {
+        if (!is_dir($dest) && !mkdir($dest) && !is_dir($dest)) {
             return false;
         }
 

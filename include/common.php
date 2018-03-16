@@ -22,14 +22,14 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $moduleDirName = basename(dirname(__DIR__));
 
 // require_once __DIR__ . '/../class/Helper.php';
-// require_once __DIR__ . '/../class/Utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 
-$db     = \XoopsDatabaseFactory::getDatabase();
+$db     = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper = \XoopsModules\Newbb\Helper::getInstance();
 
 /** @var \XoopsModules\Newbb\Utility $utility */
@@ -66,7 +66,7 @@ if (is_object($helper->getModule())) {
     $publisherIsAdmin = Newbb\Utility::userIsAdmin();
 }
 
-//$db = \XoopsDatabaseFactory::getDatabase();
+//$db = \XoopsDatabaseFactory::getDatabaseConnection();
 
 /** @var Newbb\CategoryHandler $categoryHandler */
 $categoryHandler = $helper->getHandler('category');

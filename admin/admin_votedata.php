@@ -42,7 +42,7 @@ switch ($op) {
         $sql      = $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . " WHERE ratingid = $rid");
         $GLOBALS['xoopsDB']->query($sql);
 
-        $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
+        $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . ' ';
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
@@ -51,7 +51,7 @@ switch ($op) {
         }
         $finalrating = $totalrating / $votesDB;
         $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
+        $sql         = sprintf('UPDATE `%s` SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
         $GLOBALS['xoopsDB']->queryF($sql);
 
         redirect_header('admin_votedata.php', 1, _AM_NEWBB_VOTEDELETED);
@@ -67,7 +67,7 @@ switch ($op) {
         $results = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($results);
 
-        $sql           = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . '';
+        $sql           = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' ';
         $result2       = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
@@ -107,7 +107,7 @@ switch ($op) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
-            $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . '';
+            $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . ' ';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
             $formatted_date = formatTimestamp($ratingtimestamp, _DATESTRING);

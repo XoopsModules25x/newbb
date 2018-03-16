@@ -9,7 +9,7 @@
  * @since          4.00
  * @package        module::newbb
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Category extends \XoopsObject
 {

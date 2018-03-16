@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Newbb;
 

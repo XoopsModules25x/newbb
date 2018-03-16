@@ -12,7 +12,7 @@
  */
 xoops_loadLanguage('main', 'newbb');
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /* some static xoopsModuleConfig */
 $customConfig = [];
 

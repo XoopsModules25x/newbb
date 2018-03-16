@@ -107,8 +107,8 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                 if (!is_object($GLOBALS['xoopsUser'])) {
                     xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
                     /** @var Xoopspoll\Utility $classPollUtility */
-                    $classPollUtility = new \Xoopspoll\Utility();
-                    $classXoopspoll\Utility::setVoteCookie($poll_id, $voteTime, 0);
+                    $classPollUtility = new Xoopspoll\Utility();
+                    $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
                 }
             } else {
                 $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_CANNOTVOTE');

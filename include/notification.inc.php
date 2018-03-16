@@ -28,7 +28,7 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.php');
 if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
     define('NEWBB_NOTIFY_ITEMINFO', 1);

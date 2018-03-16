@@ -290,7 +290,7 @@ if (Request::getString('submit', '', 'POST')) {
         }
 
         if (!empty($action[$mode]['sql'])) {
-            $sql = sprintf('UPDATE %s SET ' . $action[$mode]['sql'] . ' WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $topic_id);
+            $sql = sprintf('UPDATE `%s` SET ' . $action[$mode]['sql'] . ' WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
                 redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;order=$order&amp;viewmode=$viewmode", 2, _MD_NEWBB_ERROR_BACK . '<br>sql: ' . $sql);
             }

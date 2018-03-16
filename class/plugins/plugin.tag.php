@@ -13,7 +13,7 @@
 use XoopsModules\Newbb;
 use XoopsModules\Tag;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:

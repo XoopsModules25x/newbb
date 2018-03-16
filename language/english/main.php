@@ -523,7 +523,7 @@ define('_MD_NEWBB_SEARCHTOPIC', 'Search Topic');
 define('_MD_NEWBB_SHOWSEARCH', 'Show results:');
 define('_MD_NEWBB_SEARCHPOSTTEXT', 'Posts text');
 define('_MD_NEWBB_SELECT_STARTLAG', 'Start lag of selected text');
-define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'SELECT text FROM X characters BEFORE the FIRST keyword');
+define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'Select text from X characters before the first keyword');
 define('_MD_NEWBB_SELECT_LENGTH', 'Length of selected text');
 define('_MD_NEWBB_SELECT_HTML', 'Strip all html from result?');
 define('_MD_NEWBB_SELECT_EXCLUDE', 'Exclude these tags:');
