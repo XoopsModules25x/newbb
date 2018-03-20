@@ -27,8 +27,8 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once __DIR__ . '/admin_header.php';
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 xoops_cp_header();
 $adminObject->displayNavigation(basename(__FILE__));
@@ -125,7 +125,7 @@ if (Request::getString('submit', '', 'POST')) {
             // ARCHIVING POSTS
             if (1 == $archive) {
                 $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
-                while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+                while (false !== (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result))) {
                     $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
                 }
             }
@@ -179,8 +179,8 @@ if (Request::getString('submit', '', 'POST')) {
                           ]);
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
-    include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
-    include_once __DIR__ . '/../include/functions.forum.php';
+    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
+    require_once __DIR__ . '/../include/functions.forum.php';
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
@@ -198,7 +198,7 @@ if (Request::getString('submit', '', 'POST')) {
             do {
                 $checkbox->addOption($myrow['forum_id'], $myrow['forum_name']);
                 $radiobox->addOption($myrow['forum_id'], $myrow['forum_name']);
-            } while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result));
+            } while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)));
         } else {
             echo "NO FORUMS";
         }
@@ -259,4 +259,4 @@ echo '<fieldset>';
 echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_PRUNE . '&nbsp;</legend>';
 echo _AM_NEWBB_HELP_PRUNE_TAB;
 echo '</fieldset>';
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

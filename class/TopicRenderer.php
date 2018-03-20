@@ -111,7 +111,7 @@ class TopicRenderer
             case 'forum':
                 if (is_numeric($val)) {
                     $val = (int)$val;
-                    // START irmtfan - if the forum is array
+                // START irmtfan - if the forum is array
                 } elseif (is_array($val)) {
                     $val = implode('|', $val);
                     //} elseif (!empty($val)) {
@@ -354,7 +354,7 @@ class TopicRenderer
 
                 if (empty($accessForums)) {
                     $this->noperm = true;
-                    // irmtfan - it just return return the forum_id only when the forum_id is the first allowed forum - no need for this code implode is enough removed.
+                // irmtfan - it just return return the forum_id only when the forum_id is the first allowed forum - no need for this code implode is enough removed.
                     //} elseif (count($accessForums) === 1) {
                     //$this->query["where"][] = "t.forum_id = " . $accessForums[0];
                 } else {
@@ -635,7 +635,7 @@ class TopicRenderer
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
-        include_once __DIR__ . '/../include/functions.forum.php';
+        require_once __DIR__ . '/../include/functions.forum.php';
         $forum_selected     = empty($this->vars['forum']) ? null : explode('|', @$this->vars['forum']);
         $selection['forum'] = '<select name="forum[]" multiple="multiple">';
         $selection['forum'] .= '<option value="0">' . _MD_NEWBB_ALL . '</option>';
@@ -919,11 +919,11 @@ class TopicRenderer
             return $ret;
         }
 
-        include_once __DIR__ . '/../include/functions.render.php';
-        include_once __DIR__ . '/../include/functions.session.php';
-        include_once __DIR__ . '/../include/functions.time.php';
-        include_once __DIR__ . '/../include/functions.read.php';
-        include_once __DIR__ . '/../include/functions.topic.php';
+        require_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.session.php';
+        require_once __DIR__ . '/../include/functions.time.php';
+        require_once __DIR__ . '/../include/functions.read.php';
+        require_once __DIR__ . '/../include/functions.topic.php';
 
         $sticky    = 0;
         $topics    = [];
@@ -1118,7 +1118,7 @@ class TopicRenderer
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
             if ($result = $this->handler->db->query($sql)) {
-                while (list($topic_id) = $this->handler->db->fetchRow($result)) {
+                while (false !== (list($topic_id) = $this->handler->db->fetchRow($result))) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
             }

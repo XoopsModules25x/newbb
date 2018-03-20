@@ -28,7 +28,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopspoll;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'GET');
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'POST'), 'GET');
 $forum    = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET');

@@ -37,7 +37,7 @@ if (defined('XOOPS_MODULE_NEWBB_FUCTIONS')) {
 }
 define('XOOPS_MODULE_NEWBB_FUCTIONS', 1);
 
-include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * @param  XoopsModule $module
@@ -81,7 +81,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
     array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
-        include_once __DIR__ . '/../include/functions.recon.php';
+        require_once __DIR__ . '/../include/functions.recon.php';
         newbbSynchronization();
     }
 
@@ -181,7 +181,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
     }
 
     /* Create a test post */
-    include_once __DIR__ . '/functions.user.php';
+    require_once __DIR__ . '/functions.user.php';
     /** @var Newbb\PostHandler $postHandler */
     $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
     /** @var  $forumpost */

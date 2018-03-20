@@ -40,7 +40,9 @@ class UserHandler
 
     public function loadUserInfo()
     {
-        @include_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
+        $helper = Newbb\Helper::getInstance();
+        $helper->loadLanguage('user');
+//        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
         if (class_exists('UserLanguage')) {
             $handler = new Newbb\UserLanguage();
         } else {
@@ -56,7 +58,7 @@ class UserHandler
         if (empty($this->users) || !$this->enableOnline) {
             return;
         }
-        include_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.render.php';
         $image_online  = newbbDisplayImage('online', _MD_NEWBB_ONLINE);
         $image_offline = newbbDisplayImage('offline', _MD_NEWBB_OFFLINE);
 

@@ -11,12 +11,12 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 if (!Request::getInt('forum', 0, 'GET')) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
-include_once __DIR__ . '/include/functions.read.php';
+require_once __DIR__ . '/include/functions.read.php';
 
 /*
  * Build the page query
@@ -80,8 +80,8 @@ $xoops_pagetitle = $forumObject->getVar('forum_name') . ' [' . $xoopsModule->get
 $xoopsOption['template_main']   = 'newbb_viewforum.tpl';
 $xoopsOption['xoops_pagetitle'] = $xoops_pagetitle;
 
-include_once $GLOBALS['xoops']->path('header.php');
-include_once __DIR__ . '/include/functions.render.php';
+require_once $GLOBALS['xoops']->path('header.php');
+require_once __DIR__ . '/include/functions.render.php';
 
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
@@ -191,7 +191,7 @@ $forum_selection_order .= '</select>';
 $xoopsTpl->assign_by_ref('forum_selection_order', $forum_selection_order);
 
 $since = Request::getInt('since', $GLOBALS['xoopsModuleConfig']['since_default'], 'GET');
-include_once __DIR__ . '/include/functions.time.php';
+require_once __DIR__ . '/include/functions.time.php';
 $forum_selection_since = newbbSinceSelectBox($since);
 $xoopsTpl->assign_by_ref('forum_selection_since', $forum_selection_since);
 
@@ -261,7 +261,7 @@ if ($types = $typeHandler->getByForum($forum_id)) {
     }
 }
 if ($type > 0) {
-    include_once __DIR__ . '/include/functions.topic.php';
+    require_once __DIR__ . '/include/functions.topic.php';
     $xoopsTpl->assign('forum_topictype', getTopicTitle('', $types[$type]['type_name'], $types[$type]['type_color']));
 }
 $xoopsTpl->assign_by_ref('typeOptions', $typeOptions);
@@ -302,7 +302,7 @@ $xoopsTpl->assign('forum_topicstatus', $current_status);
 
 $all_topics = $forumHandler->getTopicCount($forumObject, $startdate, $status);
 if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
-    include_once $GLOBALS['xoops']->path('class/pagenav.php');
+    require_once $GLOBALS['xoops']->path('class/pagenav.php');
     $query_nav = $query_array;
     unset($query_nav['start']);
     $page_query_nav = implode('&amp;', array_values($query_nav));
@@ -322,7 +322,7 @@ if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
 }
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    include_once __DIR__ . '/include/functions.forum.php';
+    require_once __DIR__ . '/include/functions.forum.php';
     $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
@@ -338,5 +338,5 @@ if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
     $xoopsTpl->assign('rss_button', "<div align='right'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/rss.php?f=' . $forum_id . "' title='RSS feed' target='_blank'>" . newbbDisplayImage('rss', 'RSS feed') . '</a></div>');
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

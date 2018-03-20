@@ -32,7 +32,7 @@
 
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/read.php';
+require_once __DIR__ . '/read.php';
 
 /**
  * A handler for read/unread handling

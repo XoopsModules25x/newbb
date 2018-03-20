@@ -32,7 +32,7 @@ use XoopsModules\Newbb;
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 if (Request::getString('submit', '', 'POST')) {
     foreach (['forum', 'newforum', 'newtopic'] as $getint) {
@@ -109,7 +109,7 @@ $action['digest']['sql']   = 'topic_digest = 1, digest_time = ' . time();
 // Disable cache
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 if (Request::getString('submit', '', 'POST')) {
     $mode = Request::getString('mode', '', 'POST');// $_POST['mode'];
@@ -377,5 +377,5 @@ if (Request::getString('submit', '', 'POST')) {
     echo '</td></tr></form></table></td></tr></table>';
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

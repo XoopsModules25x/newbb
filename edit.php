@@ -12,7 +12,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 foreach (['forum', 'topic_id', 'post_id', 'order'] as $getint) {
     ${$getint} = Request::getInt($getint, 0, 'GET');
@@ -80,7 +80,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
@@ -150,5 +150,5 @@ foreach ($posts_contextObject as $post_contextObject) {
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

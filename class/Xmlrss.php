@@ -89,7 +89,7 @@ class Xmlrss
             }
             if (!empty($description)) {
                 $description = $this->cleanup($description, $this->max_item_description);
-                //$description .= ' ' . $label;
+            //$description .= ' ' . $label;
             } else {
                 //$description = $label;
             }

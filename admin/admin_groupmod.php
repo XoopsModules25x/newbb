@@ -31,9 +31,9 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $adminObject->displayNavigation(basename(__FILE__));
 /** @var \XoopsMemberHandler $memberHandler */
 $memberHandler = xoops_getHandler('member');
@@ -105,4 +105,4 @@ echo '<fieldset>';
 echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_GROUPMOD . '&nbsp;</legend>';
 echo _AM_NEWBB_HELP_GROUPMOD_TAB;
 echo '</fieldset>';
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

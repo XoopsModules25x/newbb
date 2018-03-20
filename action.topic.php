@@ -12,7 +12,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $forum_id = Request::getInt('forum_id', 0, 'POST');
 $topic_id = Request::getArray('topic_id', null, 'POST');
@@ -75,7 +75,7 @@ switch ($op) {
             break;
         }
 
-        include_once __DIR__ . '/include/notification.inc.php';
+        require_once __DIR__ . '/include/notification.inc.php';
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         foreach (array_keys($topicsObject) as $id) {
@@ -191,5 +191,5 @@ if (empty($forum_id)) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewforum.php?forum={$forum_id}", 2, _MD_NEWBB_DBUPDATED);
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

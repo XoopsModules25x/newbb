@@ -19,7 +19,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 foreach ([
              'forum',
@@ -293,9 +293,9 @@ if (Request::getString('contents_submit', '', 'POST')) {
     $postid = $postHandler->insert($postObject);
 
     if (!$postid) {
-        include_once $GLOBALS['xoops']->path('header.php');
+        require_once $GLOBALS['xoops']->path('header.php');
         xoops_error($postObject->getErrors());
-        include_once $GLOBALS['xoops']->path('footer.php');
+        require_once $GLOBALS['xoops']->path('footer.php');
     }
     newbbSetSession('LP', time()); // Recording last post time
     $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
@@ -329,7 +329,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $tags['THREAD_NAME'] = Request::getString('subject', '', 'POST');
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
         $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
-        include_once __DIR__ . '/include/notification.inc.php';
+        require_once __DIR__ . '/include/notification.inc.php';
         $forum_info         = newbb_notify_iteminfo('forum', $forumObject->getVar('forum_id'));
         $tags['FORUM_NAME'] = $forum_info['name'];
         $tags['FORUM_URL']  = $forum_info['url'];
@@ -406,7 +406,7 @@ $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 if (Request::getString('contents_upload', null, 'POST')) {
@@ -531,5 +531,5 @@ if (Request::getString('contents_upload', null, 'POST') || Request::getString('c
     include __DIR__ . '/include/form.post.php';
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

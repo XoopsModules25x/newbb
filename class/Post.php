@@ -210,7 +210,7 @@ class Post extends \XoopsObject
         if (is_array($attachments) && count($attachments) > 0) {
             $iconHandler = newbbGetIconHandler();
             $mime_path   = $iconHandler->getPath('mime');
-            include_once dirname(__DIR__) . '/include/functions.image.php';
+            require_once dirname(__DIR__) . '/include/functions.image.php';
             $image_extensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp']; // need improve !!!
             $post_attachment  .= '<br><strong>' . _MD_NEWBB_ATTACHMENT . '</strong>:';
             $post_attachment  .= '<br><hr size="1" noshade="noshade" /><br>';
@@ -381,8 +381,8 @@ class Post extends \XoopsObject
     {
         global $viewtopic_users;
         $newbbConfig = newbbLoadConfig();
-        include_once __DIR__ . '/../include/functions.user.php';
-        include_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.user.php';
+        require_once __DIR__ . '/../include/functions.render.php';
 
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         /** @var KarmaHandler $karmaHandler */
@@ -485,8 +485,8 @@ class Post extends \XoopsObject
             $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
 
-        include_once __DIR__ . '/../include/functions.time.php';
-        include_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.time.php';
+        require_once __DIR__ . '/../include/functions.render.php';
 
         $post_id  = $this->getVar('post_id');
         $topic_id = $this->getVar('topic_id');

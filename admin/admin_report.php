@@ -31,8 +31,8 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('class/pagenav.php');
+require_once __DIR__ . '/admin_header.php';
+require_once $GLOBALS['xoops']->path('class/pagenav.php');
 
 $op    = Request::getCmd('op', 'default');
 $item  = Request::getString('item', 'process');
@@ -90,8 +90,8 @@ switch ($op) {
 
     case 'default':
     default:
-        include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-        include_once __DIR__ . '/../include/functions.user.php';
+        require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+        require_once __DIR__ . '/../include/functions.user.php';
 
         if ('processed' !== $item) {
             $process_result = 0;
@@ -185,4 +185,4 @@ switch ($op) {
         echo '</fieldset>';
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

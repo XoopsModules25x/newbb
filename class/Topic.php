@@ -74,7 +74,7 @@ class Topic extends \XoopsObject
             return $topic_title;
         }
 
-        include_once __DIR__ . '/../include/functions.topic.php';
+        require_once __DIR__ . '/../include/functions.topic.php';
 
         return getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
     }
@@ -99,10 +99,10 @@ class Topic extends \XoopsObject
             $newbbConfig['poll_module'] = $pollModule;
         }
 //        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
-//        include_once $relPath . '.php';
-//        include_once $relPath . 'option.php';
-//        include_once $relPath . 'log.php';
-//        include_once $relPath . 'renderer.php';
+//        require_once $relPath . '.php';
+//        require_once $relPath . 'option.php';
+//        require_once $relPath . 'log.php';
+//        require_once $relPath . 'renderer.php';
         $classes = get_declared_classes();
         foreach (array_reverse($classes) as $class) {
             if (strtolower($class) == $newbbConfig['poll_module']) {
@@ -194,7 +194,7 @@ class Topic extends \XoopsObject
         if ($pollModuleHandler->getVar('version') >= 140) {
             $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             $pollObject  = $pollHandler->get($poll_id);
-            // old xoopspoll or umfrage or any clone from them
+        // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll  = $this->loadOldPoll($newbbConfig['poll_module']);
             $pollObject = new $classPoll($poll_id);

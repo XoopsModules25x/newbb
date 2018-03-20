@@ -34,16 +34,16 @@ use XoopsModules\Newbb;
 
 //include $GLOBALS['xoops']->path('include/cp_header.php');
 include __DIR__ . '/../../../include/cp_header.php';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
-//include_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
-//include_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
+require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
+require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
+require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
+//require_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
+//require_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 
-include_once dirname(__DIR__) . '/include/config.php';
-include_once dirname(__DIR__) . '/include/common.php';
+require_once dirname(__DIR__) . '/include/config.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
-//include_once dirname(__DIR__) . '/class/Helper.php';
+//require_once dirname(__DIR__) . '/class/Helper.php';
 $helper = Newbb\Helper::getInstance();
 //$helper = NewBB::getInstance();
 /** @var Xmf\Module\Admin $adminObject */

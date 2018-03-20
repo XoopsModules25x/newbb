@@ -294,7 +294,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         /** @var Newbb\TypeHandler $typeHandler */
         $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
         $typen       = $typeHandler->getByForum($forum->getVar('forum_id'));
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
                 ++$sticky;
             }
@@ -458,7 +458,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
             if ($result = $this->db->query($sql)) {
-                while (list($topic_id) = $this->db->fetchRow($result)) {
+                while (false !== (list($topic_id) = $this->db->fetchRow($result))) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
             }
@@ -572,7 +572,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             return true;
         }
 
-        include_once __DIR__ . '/../include/functions.user.php';
+        require_once __DIR__ . '/../include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }

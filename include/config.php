@@ -20,7 +20,7 @@
  */
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-include_once __DIR__ . '/common.php';
+require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $uploadFolders = [
@@ -88,4 +88,3 @@ function getConfig()
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
     ];
 }
-

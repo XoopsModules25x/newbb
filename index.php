@@ -12,7 +12,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 /* deal with marks */
 if (Request::getInt('mark_read', 0)) {
@@ -23,7 +23,7 @@ if (Request::getInt('mark_read', 0)) {
         $markvalue  = 0;
         $markresult = _MD_NEWBB_MARK_UNREAD;
     }
-    include_once __DIR__ . '/include/functions.read.php';
+    require_once __DIR__ . '/include/functions.read.php';
     newbbSetReadForum($markvalue);
     $url = XOOPS_URL . '/modules/newbb/index.php';
     redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
@@ -56,8 +56,8 @@ $xoopsOption['xoops_pagetitle'] = $xoops_pagetitle;
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header'] = $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
-include_once __DIR__ . '/include/functions.render.php';
+require_once $GLOBALS['xoops']->path('header.php');
+require_once __DIR__ . '/include/functions.render.php';
 /* rss feed */
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
@@ -286,5 +286,5 @@ $xoopsTpl->assign([
                   ]);
 
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

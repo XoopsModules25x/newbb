@@ -31,12 +31,12 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
-include_once $GLOBALS['xoops']->path('class/template.php');
-include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
+require_once __DIR__ . '/header.php';
+require_once $GLOBALS['xoops']->path('class/template.php');
+require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once __DIR__ . '/seo_url.php';
+    require_once __DIR__ . '/seo_url.php';
 }
 /* for seo */
 
@@ -84,7 +84,7 @@ if (!empty($GLOBALS['xoopsConfig']['rewrite'])) {
 $xoopsCachedTemplateId = "newbbb_rss_$forumSet";
 $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
-    include_once __DIR__ . '/include/functions.time.php';
+    require_once __DIR__ . '/include/functions.time.php';
 
     //    /** @var Newbb\XmlrssHandler $xmlrssHandler */
     //    $xmlrssHandler = Newbb\Helper::getInstance()->getHandler('Xmlrss');

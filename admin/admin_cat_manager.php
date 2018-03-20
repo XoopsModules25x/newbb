@@ -32,8 +32,8 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../include/functions.render.php';
+require_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/../include/functions.render.php';
 
 xoops_cp_header();
 
@@ -66,7 +66,7 @@ function editCategory(\XoopsObject $categoryObject = null)
         $categoryObject = $categoryHandler->create();
     }
     $groups_cat_access = null;
-    include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+    require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
     if (!$categoryObject->isNew()) {
         $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
@@ -213,4 +213,4 @@ switch ($op) {
 $cacheHelper = Newbb\Utility::cleanCache();
 //$cacheHelper->delete('permission_category');
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

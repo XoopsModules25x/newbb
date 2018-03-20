@@ -11,7 +11,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 if (!$forum = Request::getString('forum', '', 'GET')) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_ERRORFORUM);
@@ -52,7 +52,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 
 $xoopsOption['template_main']                                        = 'newbb_edit_post.tpl';
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0; // Disable cache
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 if (1 == $GLOBALS['xoopsModuleConfig']['disc_show'] || 3 == $GLOBALS['xoopsModuleConfig']['disc_show']) {
     $xoopsTpl->assign('disclaimer', $GLOBALS['xoopsModuleConfig']['disclaimer']);
@@ -72,5 +72,5 @@ $post_id       = 0;
 $topic_id      = 0;
 include __DIR__ . '/include/form.post.php';
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

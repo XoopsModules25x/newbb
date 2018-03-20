@@ -29,7 +29,7 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-include_once __DIR__ . '/read.php';
+require_once __DIR__ . '/read.php';
 
 /**
  * A handler for read/unread handling

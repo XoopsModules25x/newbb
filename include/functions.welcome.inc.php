@@ -125,7 +125,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
     $tags['THREAD_NAME'] = $subject;
     $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '&amp;topic_id=' . $postObject->getVar('topic_id') . '&amp;forum=' . $forum_id;
     $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post_id;
-    include_once __DIR__ . '/notification.inc.php';
+    require_once __DIR__ . '/notification.inc.php';
     $forum_info         = newbb_notify_iteminfo('forum', $forum_id);
     $tags['FORUM_NAME'] = $forum_info['name'];
     $tags['FORUM_URL']  = $forum_info['url'];

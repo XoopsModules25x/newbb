@@ -25,7 +25,7 @@ if (!is_object($forumObject)) {
 }
 
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 // The forum instanciation
 $form_forum = new \XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . ' ' . $forumObject->getVar('forum_name'), 'form_forum', xoops_getenv('PHP_SELF'));

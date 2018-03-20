@@ -32,11 +32,11 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 include $GLOBALS['xoops']->path('class/xoopstree.php');
-include_once $GLOBALS['xoops']->path('class/pagenav.php');
-include_once __DIR__ . '/../include/functions.forum.php';
-include_once __DIR__ . '/../include/functions.render.php';
+require_once $GLOBALS['xoops']->path('class/pagenav.php');
+require_once __DIR__ . '/../include/functions.forum.php';
+require_once __DIR__ . '/../include/functions.render.php';
 
 $cacheHelper = Newbb\Utility::cleanCache();
 
@@ -313,4 +313,4 @@ switch ($op) {
         echo '</fieldset>';
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

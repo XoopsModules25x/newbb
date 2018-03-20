@@ -12,9 +12,9 @@
 use Xmf\Request;
 
 // irmtfan - TODO - should be changed completly with Newbb new function newbbSynchronization
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-include_once __DIR__ . '/../include/functions.recon.php';
+require_once __DIR__ . '/../include/functions.recon.php';
 $form = '';
 $form .= $adminObject->displayNavigation(basename(__FILE__));
 
@@ -65,7 +65,7 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $sql    = '    SELECT uid' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('users');
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
-        while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        while (false !== (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
@@ -172,4 +172,4 @@ echo '<fieldset>';
 echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_SYNC . '&nbsp;</legend>';
 echo _AM_NEWBB_HELP_SYNC_TAB;
 echo '</fieldset>';
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

@@ -11,7 +11,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_LANGUAGE_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_LANGUAGE')) {
@@ -25,8 +25,8 @@ if (!defined('NEWBB_FUNCTIONS_LANGUAGE')) {
     function newbbLoadLanguage($page, $dirname = 'newbb')
     {
         $page = str_replace('..', '', $page);
-        if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/{$GLOBALS['xoopsConfig']['language']}/{$language}.php")) {
-            if (!@include_once $GLOBALS['xoops']->path("modules/{$dirname}/language/{$language}.php")) {
+        if (!@require_once $GLOBALS['xoops']->path("modules/{$dirname}/{$GLOBALS['xoopsConfig']['language']}/{$language}.php")) {
+            if (!@require_once $GLOBALS['xoops']->path("modules/{$dirname}/language/{$language}.php")) {
                 return false;
             }
         }

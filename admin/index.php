@@ -31,9 +31,9 @@
 
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/admin_header.php';
-//include_once __DIR__ . '/../class/Utility.php';
-include_once __DIR__ . '/../include/functions.stats.php';
+require_once __DIR__ . '/admin_header.php';
+//require_once __DIR__ . '/../class/Utility.php';
+require_once __DIR__ . '/../include/functions.stats.php';
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
@@ -160,7 +160,7 @@ foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';
 
 $cacheHelper = Newbb\Utility::cleanCache();
 //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');

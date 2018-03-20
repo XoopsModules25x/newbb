@@ -31,7 +31,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op = $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 
@@ -46,7 +46,7 @@ switch ($op) {
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -72,7 +72,7 @@ switch ($op) {
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
 
-        while (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
+        while (false !== (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
             //            $useravgrating = $useravgrating + $rating2;
             $useravgrating += $rating2;
         }
@@ -106,7 +106,7 @@ switch ($op) {
         if (0 == $votes) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
-        while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
+        while (false !== (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results))) {
             $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . ' ';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
@@ -126,7 +126,7 @@ switch ($op) {
         echo '</table>';
         echo '</td></tr></table>';
         //Include page navigation
-        include_once $GLOBALS['xoops']->path('class/pagenav.php');
+        require_once $GLOBALS['xoops']->path('class/pagenav.php');
         $page    = ($votes > 10) ? _AM_NEWBB_INDEX_PAGE : '';
         $pagenav = new \XoopsPageNav($page, 20, $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $page . '' . $pagenav->renderImageNav(4) . '</div>';
@@ -136,4 +136,4 @@ switch ($op) {
         echo '</fieldset>';
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

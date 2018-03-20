@@ -32,10 +32,10 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once __DIR__ . '/admin_header.php';
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 if (!class_exists('XoopsGroupPermForm')) {
-    include_once $GLOBALS['xoops']->path('class/xoopsform/grouppermform.php');
+    require_once $GLOBALS['xoops']->path('class/xoopsform/grouppermform.php');
 }
 
 /**
@@ -266,7 +266,7 @@ switch ($action) {
         $ret .= '</td></tr>';
         $ret .= '</table></form>';
         echo $ret;
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
     case 'template_save':
@@ -327,7 +327,7 @@ switch ($action) {
         $tray->addElement(new \XoopsFormButton('', 'reset', _CANCEL, 'reset'));
         $fmform->addElement($tray);
         $fmform->display();
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
     case 'apply_save':
@@ -452,6 +452,6 @@ switch ($action) {
         $permissionHandler->createPermData();
         $cacheHelper = Newbb\Utility::cleanCache();
         //$cacheHelper->delete('permission');
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 }

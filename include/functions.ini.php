@@ -38,5 +38,5 @@ define('NEWBB_FUNCTIONS_INI', 1);
 /**
  * @return array
  */
-include_once __DIR__ . '/functions.config.php';
-include_once __DIR__ . '/functions.session.php';
+require_once __DIR__ . '/functions.config.php';
+require_once __DIR__ . '/functions.session.php';

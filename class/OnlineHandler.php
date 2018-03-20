@@ -15,7 +15,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-include_once __DIR__ . '/../include/functions.config.php';
+require_once __DIR__ . '/../include/functions.config.php';
 
 /**
  * Class OnlineHandler
@@ -96,8 +96,8 @@ class OnlineHandler
      */
     public function render(\Smarty $xoopsTpl)
     {
-        include_once __DIR__ . '/../include/functions.render.php';
-        include_once __DIR__ . '/../include/functions.user.php';
+        require_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);
@@ -155,8 +155,8 @@ class OnlineHandler
      */
     public function showOnline()
     {
-        include_once __DIR__ . '/../include/functions.render.php';
-        include_once __DIR__ . '/../include/functions.user.php';
+        require_once __DIR__ . '/../include/functions.render.php';
+        require_once __DIR__ . '/../include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);
@@ -310,7 +310,7 @@ class OnlineHandler
         if (!$result) {
             return $ret;
         }
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;
             if ($myrow['online_uid'] > 0) {
                 $this->user_ids[] = $myrow['online_uid'];
@@ -342,7 +342,7 @@ class OnlineHandler
             if (!$result) {
                 return $ret;
             }
-            while (list($uid) = $this->db->fetchRow($result)) {
+            while (false !== (list($uid) = $this->db->fetchRow($result))) {
                 $online_users[] = $uid;
             }
         }

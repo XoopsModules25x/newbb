@@ -31,7 +31,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $cat_orders = Request::getArray('cat_orders', null, 'POST');
 $orders     = Request::getArray('orders', null, 'POST');
@@ -55,7 +55,7 @@ if (Request::getString('submit', '', 'POST')) {
     }
     redirect_header('admin_forum_reorder.php', 1, _AM_NEWBB_BOARDREORDER);
 } else {
-    include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+    require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $orders     = [];
     $cat_orders = [];
     $forum      = [];
@@ -119,4 +119,4 @@ if (Request::getString('submit', '', 'POST')) {
     echo _AM_NEWBB_HELP_ORDER_TAB;
     echo '</fieldset>';
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

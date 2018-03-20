@@ -31,7 +31,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $ratinguser   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 $anonwaitdays = 1;
@@ -93,7 +93,7 @@ $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_voteda
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
-while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
+while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult))) {
     $totalrating += $rating;
 }
 $finalrating = $totalrating / $votesDB;

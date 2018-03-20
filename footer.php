@@ -22,7 +22,7 @@
 
 global $xoTheme;
 
-include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
+require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
 $iconHandler = newbbGetIconHandler();
 //  get css rel path from setted language
 $css_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['language'], 'newbb', 'language/english', 'css');

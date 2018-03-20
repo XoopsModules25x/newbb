@@ -31,7 +31,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $GPC = '_GET';
 if (Request::getString('submit', '', 'POST')) {

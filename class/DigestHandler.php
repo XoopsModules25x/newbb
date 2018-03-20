@@ -90,7 +90,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //        $reportHandler =  Newbb\Helper::getInstance()->getHandler('Report');
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow; // return as array
         }
 
@@ -119,7 +119,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql);
         if (!$result) {
             $this->last_digest = 0;
-            // echo "<br>no data:".$query;
+        // echo "<br>no data:".$query;
         } else {
             $array             = $this->db->fetchArray($result);
             $this->last_digest = isset($array['last_digest']) ? $array['last_digest'] : 0;

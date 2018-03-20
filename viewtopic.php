@@ -34,10 +34,10 @@ use Xmf\Request;
 use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $xoopsLogger->startTime('newBB_viewtopic');
-include_once __DIR__ . '/include/functions.read.php';
-include_once __DIR__ . '/include/functions.render.php';
+require_once __DIR__ . '/include/functions.read.php';
+require_once __DIR__ . '/include/functions.render.php';
 xoops_loadLanguage('user');
 
 /*Build the page query*/
@@ -162,7 +162,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'newbb_viewtopic.tpl';
 // irmtfan remove and move to footer.php
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
@@ -501,7 +501,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         if ($pollModuleHandler->getVar('version') >= 140) {
 //            xoops_load('renderer', $GLOBALS['xoopsModuleConfig']['poll_module']);
             xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
-            // old xoopspoll or umfrage or any clone from them
+        // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll = $topicObject->loadOldPoll();
         }
@@ -682,7 +682,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rating_enabled'])) {
 
 // create jump box
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    include_once __DIR__ . '/include/functions.forum.php';
+    require_once __DIR__ . '/include/functions.forum.php';
     $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
@@ -824,10 +824,10 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
 }
 
 if ($GLOBALS['xoopsModuleConfig']['do_tag']
-    && @include_once $GLOBALS['xoops']->path('modules/tag/include/tagbar.php')) {
+    && @require_once $GLOBALS['xoops']->path('modules/tag/include/tagbar.php')) {
     $xoopsTpl->assign('tagbar', tagBar($topicObject->getVar('topic_tags', 'n')));
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');
 $xoopsLogger->stopTime('newBB_viewtopic');

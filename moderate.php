@@ -11,7 +11,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 global $xoTheme, $xoopsTpl;
 $GLOBALS['xoopsOption']['template_main'] = 'newbb_moderate.tpl';
@@ -171,13 +171,13 @@ if (!empty($moderate_count)) {
     }
 }
 
-include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $forum_form = new \XoopsThemeForm(_ADD, 'suspend_form', 'moderate.php', 'post', true);
 $forum_form->addElement(new \XoopsFormSelectUser(_MD_NEWBB_SUSPEND_UID, 'uid', true, $forum_userid, 1, false));
 $forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_IP, 'ip', 50, 50));
 $forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DURATION, 'expire', 20, 25, '5'), true);
 $forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DESC, 'desc', 50, 255));
-include_once __DIR__ . '/include/functions.forum.php';
+require_once __DIR__ . '/include/functions.forum.php';
 if (newbbIsAdmin()) {
     $forumSel = '<select name="forum">';// if user doesn't select, default is "0" all forums
     $forumSel .= '<option value="0"';
@@ -196,5 +196,5 @@ if (newbbIsAdmin()) {
 $forum_form->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $forum_form->assign($xoopsTpl);
 
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

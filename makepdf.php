@@ -23,7 +23,7 @@ use Xmf\Request;
 
 // a complete rewrite by irmtfan to enhance: 1- RTL 2- Multilanguage (EMLH and Xlanguage)
 error_reporting(0);
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $attach_id = Request::getString('attachid', '', 'GET');
 $forum     = Request::getInt('forum', 0, 'GET');
@@ -99,7 +99,7 @@ $pdf_data['HeadSecondLine'] = _MD_NEWBB_FORUMHOME . ' - ' . $pdf_data['cat_title
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {
     $pdf_data = easiestml($pdf_data);
-    // END irmtfan to implement EMLH by GIJ
+// END irmtfan to implement EMLH by GIJ
     // START irmtfan to implement Xlanguage by phppp(DJ)
 } elseif (function_exists('xlanguage_ml')) {
     $pdf_data = xlanguage_ml($pdf_data);

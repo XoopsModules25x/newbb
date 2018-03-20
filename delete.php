@@ -11,7 +11,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $ok = Request::getInt('ok', 0, 'POST');
 

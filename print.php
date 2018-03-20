@@ -40,7 +40,7 @@ use XoopsModules\Newbb;
  *
  */
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 error_reporting(0);
 $xoopsLogger->activated = false;

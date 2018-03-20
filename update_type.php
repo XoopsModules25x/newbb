@@ -8,7 +8,7 @@
  * @since          4.00
  * @package        module::newbb
  */
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 if (!is_object($GLOBALS['xoopsUser']) || !$GLOBALS['xoopsUser']->isAdmin()) {
     exit(_NOPERM);

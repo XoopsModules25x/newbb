@@ -17,10 +17,10 @@ define('NEWBB_FUNCTIONS_LOADED', true);
 if (!defined('NEWBB_FUNCTIONS')) {
     define('NEWBB_FUNCTIONS', 1);
 
-    include_once __DIR__ . '/functions.image.php';
-    include_once __DIR__ . '/functions.user.php';
-    include_once __DIR__ . '/functions.render.php';
-    include_once __DIR__ . '/functions.forum.php';
-    include_once __DIR__ . '/functions.session.php';
-    include_once __DIR__ . '/functions.stats.php';
+    require_once __DIR__ . '/functions.image.php';
+    require_once __DIR__ . '/functions.user.php';
+    require_once __DIR__ . '/functions.render.php';
+    require_once __DIR__ . '/functions.forum.php';
+    require_once __DIR__ . '/functions.session.php';
+    require_once __DIR__ . '/functions.stats.php';
 }

@@ -11,6 +11,7 @@
  */
 
 use XoopsModules\Newbb;
+use XoopsModules\Tag;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -69,7 +70,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag'])
-            && @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
+            && @require_once $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
             if ($tagHandler = tag_getTagHandler()) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
@@ -288,7 +289,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return $ret;
         }
         $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $postHandler->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;
@@ -305,7 +306,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      */
     public function &getPostTree(&$postArray, $pid = 0)
     {
-        //        include_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
+        //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
         $NewBBTree = new Newbb\Tree('newbb_posts');
         $NewBBTree->setPrefix('&nbsp;&nbsp;');
         $NewBBTree->setPostArray($postArray);
@@ -363,7 +364,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return [];
         }
         $ret = [];
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['uid'];
         }
 
@@ -387,8 +388,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postHandler->delete($postObject, false, $force);
 
         $newbbConfig = newbbLoadConfig();
-        /** @var \XoopsModules\Tag\Handler $tagHandler */
-        if (!empty($newbbConfig['do_tag']) && $tagHandler = @xoops_getModuleHandler('tag', 'tag', true)) {
+        /** @var \XoopsModules\Tag\TagHandler $tagHandler */
+        if (!empty($newbbConfig['do_tag']) && $tagHandler = Tag\Helper::getInstance()->getHandler('Tag')) { //@xoops_getModuleHandler('tag', 'tag', true)) {
             $tagHandler->updateByItem([], $topic_id, 'newbb');
         }
 
@@ -407,7 +408,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
     {
         static $_cachedTopicPerms;
-        include_once __DIR__ . '/../include/functions.user.php';
+        require_once __DIR__ . '/../include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }

@@ -12,7 +12,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 
 define('NEWBB_STATS_TYPE_TOPIC', 1);
 define('NEWBB_STATS_TYPE_POST', 2);
@@ -181,7 +181,7 @@ class StatsHandler
 
         $sql = '    SELECT forum_id' . '    FROM ' . $this->db->prefix('newbb_forums');
         $ret = $this->db->query($sql);
-        while (list($forum_id) = $this->db->fetchRow($ret)) {
+        while (false !== (list($forum_id) = $this->db->fetchRow($ret))) {
             $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
             list($topics, $views) = $this->db->fetchRow($result);

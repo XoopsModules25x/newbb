@@ -10,8 +10,8 @@
  */
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
-include_once __DIR__ . '/functions.session.php';
+require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+require_once __DIR__ . '/functions.session.php';
 
 // NewBB cookie structure
 /* NewBB cookie storage

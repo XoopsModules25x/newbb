@@ -20,10 +20,10 @@ $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
 //$dirname = $xoopsModule->getVar('dirname');
 $moduleDirName = basename(__DIR__);
-//include_once $GLOBALS['xoops']->path('header.php');
+//require_once $GLOBALS['xoops']->path('header.php');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
-    include_once __DIR__ . '/seo_url.php';
+    require_once __DIR__ . '/seo_url.php';
     /* for seo */
     $toseo_url = ['index.php', 'viewforum.php', 'viewtopic.php', 'rss.php'];
 
@@ -61,10 +61,10 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     }
 }
 
-include_once $GLOBALS['xoops']->path('modules/' . $moduleDirName . '/include/vars.php');
+require_once $GLOBALS['xoops']->path('modules/' . $moduleDirName . '/include/vars.php');
 
-include_once __DIR__ . '/include/functions.user.php';
-include_once __DIR__ . '/include/functions.topic.php';
+require_once __DIR__ . '/include/functions.user.php';
+require_once __DIR__ . '/include/functions.topic.php';
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 require_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
@@ -82,7 +82,7 @@ $menu_url       .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;men
 
 if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['welcome_forum'])
     && !$GLOBALS['xoopsUser']->getVar('posts')) {
-    include_once __DIR__ . '/include/functions.welcome.php';
+    require_once __DIR__ . '/include/functions.welcome.php';
 }
 // irmtfan for backward compatibility
 $pollmodules = $GLOBALS['xoopsModuleConfig']['poll_module'];

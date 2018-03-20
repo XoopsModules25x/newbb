@@ -13,7 +13,7 @@ use Xmf\Request;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_SESSION_LOADED', true);
 xoops_load('XoopsRequest');
 

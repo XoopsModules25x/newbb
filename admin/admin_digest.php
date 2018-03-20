@@ -31,8 +31,8 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
-include_once $GLOBALS['xoops']->path('class/pagenav.php');
+require_once __DIR__ . '/admin_header.php';
+require_once $GLOBALS['xoops']->path('class/pagenav.php');
 
 $op   = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET'); // !empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"default");
 $item = Request::getString('op', Request::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
@@ -77,7 +77,7 @@ switch ($op) {
         break;
 
     default:
-        include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+        require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
         $limit = 5;
         $adminObject->displayNavigation(basename(__FILE__));
@@ -128,4 +128,4 @@ switch ($op) {
 
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

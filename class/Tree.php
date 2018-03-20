@@ -31,7 +31,7 @@
 // ------------------------------------------------------------------------ //
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-include_once $GLOBALS['xoops']->path('class/xoopstree.php');
+require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
  * Class Newbbtree

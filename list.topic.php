@@ -12,12 +12,12 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 //$xoopsOption['xoops_module_header']= $xoops_module_header;
 $GLOBALS['xoopsOption']['template_main'] = 'newbb_viewall.tpl';
 // irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
@@ -26,8 +26,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
 }
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
-include_once __DIR__ . '/include/functions.time.php';
-include_once __DIR__ . '/include/functions.render.php';
+require_once __DIR__ . '/include/functions.time.php';
+require_once __DIR__ . '/include/functions.render.php';
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
 require_once __DIR__ . '/./class/TopicRenderer.php';
@@ -87,7 +87,7 @@ $xoopsTpl->assign('post_link', 'viewpost.php');
 $xoopsTpl->assign('newpost_link', 'viewpost.php?status=new');
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    include_once __DIR__ . '/include/functions.forum.php';
+    require_once __DIR__ . '/include/functions.forum.php';
     $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox());
 }
 $xoopsTpl->assign('menumode', $menumode);
@@ -102,5 +102,5 @@ $xoopsTpl->assign('forum_index_title', $pagetitle);
 $xoopsTpl->assign('xoops_pagetitle', $pagetitle);
 
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

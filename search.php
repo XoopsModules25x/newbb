@@ -34,7 +34,7 @@ use Xmf\Request;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
 /** @var \XoopsConfigHandler $configHandler */
 $configHandler     = xoops_getHandler('config');
@@ -45,13 +45,13 @@ if (1 !== $xoopsConfigSearch['enable_search']) {
 
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 $xoopsOption['template_main']                                        = 'newbb_search.tpl';
-include_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
-include_once __DIR__ . '/include/functions.render.php';
-include_once __DIR__ . '/include/functions.forum.php';
-include_once __DIR__ . '/include/functions.time.php';
+require_once __DIR__ . '/include/functions.render.php';
+require_once __DIR__ . '/include/functions.forum.php';
+require_once __DIR__ . '/include/functions.time.php';
 
-include_once $GLOBALS['xoops']->path('modules/newbb/include/search.inc.php');
+require_once $GLOBALS['xoops']->path('modules/newbb/include/search.inc.php');
 $limit = $GLOBALS['xoopsModuleConfig']['topics_per_page'];
 
 $queries              = [];
@@ -354,5 +354,5 @@ if ($xoopsConfigSearch['keyword_min'] > 0) {
     $xoopsTpl->assign('search_rule', sprintf(_SR_KEYIGNORE, $xoopsConfigSearch['keyword_min']));
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

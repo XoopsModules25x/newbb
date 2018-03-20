@@ -12,7 +12,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
 $post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
@@ -103,7 +103,7 @@ switch ($op) {
         $criteria_forum = new \Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
         $forum_list     = $forumHandler->getList($criteria_forum);
 
-        include_once __DIR__ . '/include/notification.inc.php';
+        require_once __DIR__ . '/include/notification.inc.php';
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
@@ -174,9 +174,9 @@ switch ($op) {
             $criteria = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
             $criteria->add(new \Criteria('pid', $post_id));
             $postHandler->updateAll('pid', $pid, $criteria, true);
-            /* split a post and its children posts */
+        /* split a post and its children posts */
         } elseif (2 === $mode) {
-            include_once $GLOBALS['xoops']->path('class/xoopstree.php');
+            require_once $GLOBALS['xoops']->path('class/xoopstree.php');
             $mytree = new \XoopsTree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
             $posts  = $mytree->getAllChildId($post_id);
             if (count($posts) > 0) {
@@ -228,5 +228,5 @@ if (!empty($topic_id)) {
     redirect_header(XOOPS_URL . "/modules/newbb/viewpost.php?uid=$uid", 2, _MD_NEWBB_DBUPDATED);
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');

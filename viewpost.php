@@ -32,7 +32,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $start    = Request::getInt('start', 0, 'GET');
 $forum_id = Request::getInt('forum', 0, 'GET');
@@ -176,9 +176,9 @@ $xoops_pagetitle                = $xoopsModule->getVar('name') . ' - ' . _MD_NEW
 $xoopsOption['xoops_pagetitle'] = $xoops_pagetitle;
 $xoopsOption['template_main']   = 'newbb_viewpost.tpl';
 
-include_once $GLOBALS['xoops']->path('header.php');
-include_once __DIR__ . '/include/functions.time.php';
-include_once __DIR__ . '/include/functions.render.php';
+require_once $GLOBALS['xoops']->path('header.php');
+require_once __DIR__ . '/include/functions.time.php';
+require_once __DIR__ . '/include/functions.render.php';
 
 //global $xoTheme;
 //$xoTheme->addScript('/Frameworks/textsanitizer/xoops.js');
@@ -361,7 +361,7 @@ foreach (array_keys($posts) as $id) {
 unset($viewtopic_users, $forums);
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    include_once __DIR__ . '/include/functions.forum.php';
+    require_once __DIR__ . '/include/functions.forum.php';
     $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
@@ -448,5 +448,5 @@ $xoopsTpl->assign('uid', $uid);
 $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 include $GLOBALS['xoops']->path('footer.php');
