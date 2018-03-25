@@ -35,12 +35,12 @@ $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['lang
 xoops_load('XoopsLists');
 $allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
-    if (strtolower(pathinfo($jsfile, PATHINFO_EXTENSION)) === 'js') {
+    if ('js' === strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
-$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '";';
-$xoTheme->addScript(null, array('type' => 'text/javascript'), $toggle_script);
+$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G' . '";';
+$xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);

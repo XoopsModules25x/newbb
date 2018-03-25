@@ -13,18 +13,18 @@ include_once __DIR__ . '/header.php';
 
 $ok = XoopsRequest::getInt('ok', 0, 'POST');
 
-foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
+foreach (['forum', 'topic_id', 'post_id', 'order', 'pid', 'act'] as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
 }
 
-foreach (array('forum', 'topic_id', 'post_id', 'order', 'pid', 'act') as $getint) {
+foreach (['forum', 'topic_id', 'post_id', 'order', 'pid', 'act'] as $getint) {
     ${$getint} = !empty(${$getint}) ? ${$getint} : XoopsRequest::getInt($getint, 0, 'GET');
 }
 //$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
 $viewmode = (XoopsRequest::getString('viewmode', '', 'GET')
-             && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
+             && 'flat' !== XoopsRequest::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (XoopsRequest::getString('viewmode', '', 'POST') ?: 'flat');
 
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -72,7 +72,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 
 if ($ok) {
     $isDeleteOne = (1 === $ok);
-    if ($post_obj->isTopic() && $topic->getVar('topic_replies') == 0) {
+    if ($post_obj->isTopic() && 0 == $topic->getVar('topic_replies')) {
         $isDeleteOne = false;
     }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar('topic_replies') > 0) {
@@ -95,13 +95,13 @@ if ($ok) {
                 $xoopsMailer->setToUsers($senduser);
                 $xoopsMailer->setFromName($GLOBALS['xoopsUser']->getVar('uname'));
                 $xoopsMailer->setSubject(_MD_DELEDEDMSG_SUBJECT);
-                $forenurl = "<a href=\""
+                $forenurl = '<a href="'
                             . XOOPS_URL
                             . '/modules/'
                             . $xoopsModule->getVar('dirname')
                             . '/viewtopic.php?topic_id='
                             . $post_obj->getVar('topic_id')
-                            . "\">"
+                            . '">'
                             . $post_obj->getVar('subject')
                             . '</a>';
                 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
@@ -145,14 +145,14 @@ if ($ok) {
           </form>
           </div>';
     if ($isadmin) {
-        xoops_confirm(array(
+        xoops_confirm([
                           'post_id'  => $post_id,
                           'viewmode' => $viewmode,
                           'order'    => $order,
                           'forum'    => $forum,
                           'topic_id' => $topic_id,
                           'ok'       => 99
-                      ), 'delete.php', _MD_DEL_RELATED);
+                      ], 'delete.php', _MD_DEL_RELATED);
     }
     include $GLOBALS['xoops']->path('footer.php');
 }

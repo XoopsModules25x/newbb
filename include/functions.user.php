@@ -70,7 +70,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {
@@ -114,14 +114,14 @@ function newbb_isModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)$forum;
-        if ($forum_id == 0) {
+        if (0 == $forum_id) {
             return false;
         }
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forum        = $forumHandler->get($forum_id);
     }
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {
@@ -151,7 +151,7 @@ function newbb_isAdmin($forum = 0)
         return false;
     }
 
-    if ($GLOBALS['xoopsUserIsAdmin'] && $xoopsModule->getVar('dirname') === 'newbb') {
+    if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $xoopsModule->getVar('dirname')) {
         return true;
     }
 
@@ -172,10 +172,10 @@ function newbb_isAdmin($forum = 0)
  * @param  array $uid
  * @return array
  */
-function newbb_isModuleAdministrators(array $uid = array())
+function newbb_isModuleAdministrators(array $uid = [])
 {
     global $xoopsModule;
-    $module_administrators = array();
+    $module_administrators = [];
 
     if (!(bool)$uid) {
         return $module_administrators;
@@ -196,7 +196,7 @@ function newbb_isModuleAdministrators(array $uid = array())
            . "'"
            . ' GROUP BY l.uid';
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (!empty($myrow['count'])) {
                 $module_administrators[] = $myrow['uid'];
             }
@@ -212,9 +212,9 @@ function newbb_isModuleAdministrators(array $uid = array())
  * @param  int   $mid
  * @return array
  */
-function newbb_isForumModerators(array $uid = array(), $mid = 0)
+function newbb_isForumModerators(array $uid = [], $mid = 0)
 {
-    $forum_moderators = array();
+    $forum_moderators = [];
 
     if (!(bool)$uid) {
         return $forum_moderators;
@@ -222,7 +222,7 @@ function newbb_isForumModerators(array $uid = array(), $mid = 0)
 
     $sql = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['forum_moderator'])) {
                 continue;
             }

@@ -31,7 +31,7 @@
 
 include_once __DIR__ . '/header.php';
 
-foreach (array('forum', 'topic_id', 'post_id', 'order', 'start') as $getint) {
+foreach (['forum', 'topic_id', 'post_id', 'order', 'start'] as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');
 }
 
@@ -66,8 +66,8 @@ if (!$topicHandler->getPermission($forum_obj, $topic_status, 'reply')) {
     /*
      * Build the page query
      */
-    $query_vars  = array('topic_id', 'post_id', 'status', 'order', 'mode', 'viewmode');
-    $query_array = array();
+    $query_vars  = ['topic_id', 'post_id', 'status', 'order', 'mode', 'viewmode'];
+    $query_array = [];
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
             $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');
@@ -109,10 +109,10 @@ if ((2 == $GLOBALS['xoopsModuleConfig']['disc_show']) || (3 == $GLOBALS['xoopsMo
 
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
 
-$xoopsTpl->assign(array(
+$xoopsTpl->assign([
                       'forum_id'   => $forum_obj->getVar('forum_id'),
                       'forum_name' => $forum_obj->getVar('forum_name')
-                  ));
+                  ]);
 
 if ($post_parent_obj->getVar('uid')) {
     $r_name = newbb_getUnameFromId($post_parent_obj->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
@@ -164,7 +164,7 @@ include __DIR__ . '/include/form.post.php';
 $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
-$posts_context = array();
+$posts_context = [];
 //$posts_context_obj = $postHandler->getByLimit($topic_id, 5); //mb
 $posts_context_obj = $postHandler->getByLimit(5, 0, null, null, true, $topic_id, 1);
 foreach ($posts_context_obj as $post_context_obj) {
@@ -186,11 +186,11 @@ foreach ($posts_context_obj as $post_context_obj) {
     $p_date    = formatTimestamp($post_context_obj->getVar('post_time'));
     $p_subject = $post_context_obj->getVar('subject');
 
-    $posts_context[] = array(
+    $posts_context[] = [
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
         'content' => $p_message
-    );
+    ];
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php

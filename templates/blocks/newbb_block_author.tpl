@@ -5,7 +5,7 @@
             <th class="head" nowrap="nowrap"><{$smarty.const._MB_NEWBB_AUTHOR}></th>
             <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MB_NEWBB_COUNT}></th>
         </tr>
-        <{foreachq item=author key=uid from=$block.authors}>
+        <{foreach item=author key=uid from=$block.authors}>
         <tr class="<{cycle values="even,odd"}>">
             <td><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$author.name}></a></td>
             <td align="center"><{$author.count}></td>
@@ -14,7 +14,7 @@
 
     <{elseif $block.disp_mode == 1}>
 
-        <{foreachq item=author key=uid from=$block.authors}>
+        <{foreach item=author key=uid from=$block.authors}>
         <tr class="<{cycle values="even,odd"}>">
             <td><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$author.name}></a> <{$author.count}></td>
         </tr>

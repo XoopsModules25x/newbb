@@ -34,7 +34,7 @@ mod_loadFunctions('stats', 'newbb');
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
-$folder      = array($attach_path, $thumb_path);
+$folder      = [$attach_path, $thumb_path];
 
 /**
  * @param $path
@@ -86,9 +86,9 @@ function newbb_admin_chmod($target, $mode = 0777)
  */
 function newbb_getImageLibs()
 {
-    $imageLibs = array();
+    $imageLibs = [];
     unset($output, $status);
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/imagemagick[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -97,7 +97,7 @@ function newbb_getImageLibs()
 
         unset($output, $status);
     }
-    if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 2 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
+    if (2 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
         @exec($path . 'jpegtopnm -version 2>&1', $output, $status);
         if (empty($status) && !empty($output) && preg_match("/netpbm[ \t]+([0-9\.]+)/i", $output[0], $matches)) {
@@ -191,9 +191,9 @@ switch ($op) {
         // START irmtfan better poll module display link and version - check if xoops poll module is available
         if ($isOK) {
             $pollLink = _AM_NEWBB_AVAILABLE . ': ';
-            $pollLink .= "<a href=\"" . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . "/admin/index.php\"";
-            $pollLink .= " alt=\"" . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ") \"";
-            $pollLink .= " title=\"" . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ") \"";
+            $pollLink .= '<a href="' . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . '/admin/index.php"';
+            $pollLink .= ' alt="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
+            $pollLink .= ' title="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
             $pollLink .= '>' . '(' . $xoopspoll->getVar('name') . ')</a>';
         } else {
             $pollLink = _AM_NEWBB_NOTAVAILABLE;
@@ -252,7 +252,7 @@ mod_clearCacheFile('permission', 'newbb');
  */
 function returnBytes($sizeAsString, $b = false)
 {
-    if ($b === false) {
+    if (false === $b) {
         switch (substr($sizeAsString, -1)) {
             case 'M':
             case 'm':
@@ -268,7 +268,7 @@ function returnBytes($sizeAsString, $b = false)
         }
     } else {
         $base   = log($sizeAsString) / log(1024);
-        $suffix = array('', 'KB', 'MB', 'GB', 'TB');
+        $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
 
         return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
     }

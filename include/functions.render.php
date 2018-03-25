@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      */
     function newbb_htmlspecialchars(&$text)
     {
-        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), htmlspecialchars($text));
+        return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], htmlspecialchars($text));
     }
 
     /**
@@ -42,19 +42,19 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     {
         global $myts;
 
-        if ($html !== 1) {
+        if (1 !== $html) {
             // html not allowed
             $text = newbb_htmlspecialchars($text);
         }
         $text = $myts->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
         $text = $myts->makeClickable($text);
-        if ($smiley !== 0) {
+        if (0 !== $smiley) {
             // process smiley
             $text = $myts->smiley($text);
         }
-        if ($xcode !== 0) {
+        if (0 !== $xcode) {
             // decode xcode
-            if ($image !== 0) {
+            if (0 !== $image) {
                 // image allowed
                 $text = $myts->xoopsCodeDecode($text);
             } else {
@@ -62,7 +62,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
                 $text = $myts->xoopsCodeDecode($text, 0);
             }
         }
-        if ($br !== 0) {
+        if (0 !== $br) {
             $text = $myts->nl2Br($text);
         }
         $text = $myts->codeConv($text, $xcode, $image);    // Ryuji_edit(2003-11-18)
@@ -117,7 +117,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         // START hacked by irmtfan
         // to show text links instead of buttons - func_num_args()==2 => only when $image, $alt is set and optional $display not set
 
-        if (func_num_args() == 2) {
+        if (2 == func_num_args()) {
             // overall setting
             if (!empty($GLOBALS['xoopsModuleConfig']['display_text_links'])) {
                 $display = false;

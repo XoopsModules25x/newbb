@@ -44,7 +44,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('newbb');
 
-        if ($category === 'global') {
+        if ('global' === $category) {
             $item['name'] = '';
             $item['url']  = '';
 
@@ -52,7 +52,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         }
         $item_id = (int)$item_id;
 
-        if ($category === 'forum') {
+        if ('forum' === $category) {
             // Assume we have a valid forum id
             $sql = 'SELECT forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . ' WHERE forum_id = ' . $item_id;
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -66,7 +66,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
             return $item;
         }
 
-        if ($category === 'thread') {
+        if ('thread' === $category) {
             // Assume we have a valid topid id
             $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM '
                    . $GLOBALS['xoopsDB']->prefix('bb_topics')
@@ -86,7 +86,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
             return $item;
         }
 
-        if ($category === 'post') {
+        if ('post' === $category) {
             // Assume we have a valid post id
             $sql = 'SELECT subject,topic_id,forum_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE post_id = ' . $item_id . ' LIMIT 1';
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {

@@ -8,7 +8,7 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{/if}>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
         <{/foreach}>
@@ -78,7 +78,7 @@
         <select name="viewmode" id="viewmode" class="menu"
                 onchange="if(this.options[this.selectedIndex].value.length >0 )  { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_VIEWMODE}></option>
-            <{foreachq item=act from=$viewmode_options}>
+            <{foreach item=act from=$viewmode_options}>
             <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
@@ -90,7 +90,7 @@
 <div class="clear"></div>
 <br>
 <br>
-<{foreachq item=post from=$posts}>
+<{foreach item=post from=$posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$post}>
 <div class="icon_right">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_VIEWTOPIC}></strong></a>

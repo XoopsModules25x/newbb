@@ -22,6 +22,7 @@ define('_MD_MARK_READ', 'read');
 define('_MD_ALL_FORUM_MARKED', 'All forums marked');
 define('_MD_ALL_TOPIC_MARKED', 'All topics marked');
 define('_MD_BOARD_DISCLAIMER', 'Forum Disclaimer');
+define('_MD_POSTEDON', 'Posted on: ');
 //index.php
 define('_MD_ADMINCP', 'Admin Panel');
 define('_MD_FORUM', 'Forum');
@@ -251,7 +252,7 @@ define('_MD_LOGOUT', 'Logout');
 define('_MD_REGISTER', 'Register');
 define('_MD_SUBJECTC', 'Subject:');
 define('_MD_MESSAGEICON', 'Message Icon:');
-define('_MD_MESSAGEC', 'Message:');
+//define('_MD_MESSAGEC', 'Message:');
 define('_MD_ALLOWEDHTML', 'Allowed HTML:');
 define('_MD_OPTIONS', 'Options:');
 define('_MD_POSTANONLY', 'Post Anonymously');

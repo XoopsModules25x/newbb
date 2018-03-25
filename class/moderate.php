@@ -123,7 +123,7 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
      */
     public function forumList($uid = -1, $ip = '')
     {
-        static $forums = array();
+        static $forums = [];
         $uid = ($uid < 0) ? (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0) : $uid;
         $ip  = empty($ip) ? newbb_getIP(true) : $ip;
         if (isset($forums[$uid][$ip])) {
@@ -149,15 +149,15 @@ class NewbbModerateHandler extends XoopsPersistableObjectHandler
         $sql             = sprintf('SELECT forum_id, COUNT(*) AS count FROM %s WHERE (%s OR %s) AND (%s) GROUP BY forum_id', $this->db->prefix('bb_moderates'), $uid_criteria, $ip_criteria,
                                    $expire_criteria);
         if (!$result = $this->db->query($sql)) {
-            return $forums[$uid][$ip] = array();
+            return $forums[$uid][$ip] = [];
         }
-        $_forums = array();
-        while ($row = $this->db->fetchArray($result)) {
+        $_forums = [];
+        while (false !== ($row = $this->db->fetchArray($result))) {
             if ($row['count'] > 0) {
                 $_forums[$row['forum_id']] = 1;
             }
         }
-        $forums[$uid][$ip] = count($_forums) ? array_keys($_forums) : array(-1);
+        $forums[$uid][$ip] = count($_forums) ? array_keys($_forums) : [-1];
         if (!empty($GLOBALS['xoopsModuleConfig']['cache_enabled'])) {
             newbb_setsession('sf' . $uid . '_' . ip2long($ip), $forums[$uid][$ip]);
         }

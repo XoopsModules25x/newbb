@@ -12,9 +12,9 @@ $seoOp = XoopsRequest::getString('seoOp', '', 'GET');
 $seoArg = XoopsRequest::getInt('seoArg', 0, 'GET');
 $seoOther = XoopsRequest::getString('seoOther', '', 'GET');
 
-$seos = array('c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf');
+$seos = ['c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf'];
 
-$seoMap = array(
+$seoMap = [
     'c'   => 'index.php',
     'f'   => 'viewforum.php',
     't'   => 'viewtopic.php',
@@ -23,7 +23,7 @@ $seoMap = array(
     'rf'  => 'rss.php',
     'pr'  => 'print.php',
     'pdf' => 'makepdf.php'
-);
+];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
@@ -66,7 +66,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
 
 } else {
     $last = $seoOp . '/' . $seoArg;
-    if ($seoOther !== '') {
+    if ('' !== $seoOther) {
         $last .= '/' . $seoOther;
     }
     include $last;

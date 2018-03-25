@@ -31,7 +31,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     function newbb_setsession($name, $string = '')
     {
         if (is_array($string)) {
-            $value = array();
+            $value = [];
             foreach ($string as $key => $val) {
                 $value[] = $key . '|' . $val;
             }
@@ -49,8 +49,8 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     {
         $value = !empty($_SESSION['newbb_' . $name]) ? $_SESSION['newbb_' . $name] : false;
         if ($isArray) {
-            $_value = $value ? explode(',', $value) : array();
-            $value  = array();
+            $_value = $value ? explode(',', $value) : [];
+            $value  = [];
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $key         = substr($string, 0, strpos($string, '|'));
@@ -73,7 +73,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     {
         global $forumCookie;
         if (is_array($string)) {
-            $value = array();
+            $value = [];
             foreach ($string as $key => $val) {
                 $value[] = $key . '|' . $val;
             }
@@ -94,12 +94,12 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
         $value = XoopsRequest::getString($forumCookie['prefix'] . $name, null, 'COOKIE');
 
         if ($isArray) {
-            $_value = $value ? explode(',', $value) : array();
-            $value  = array();
+            $_value = $value ? explode(',', $value) : [];
+            $value  = [];
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $sep = strpos($string, '|');
-                    if ($sep === false) {
+                    if (false === $sep) {
                         $value[] = $string;
                     } else {
                         $key         = substr($string, 0, $sep);

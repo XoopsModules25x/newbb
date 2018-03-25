@@ -69,7 +69,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     if (is_object($poll_obj)) {
         if ($poll_obj->getVar('multiple')) {
             $optionId = XoopsRequest::getArray('option_id', 0, 'POST');
-            $optionId = (array)$optionId; // type cast to make sure it's an array
+            $optionId = $optionId; // type cast to make sure it's an array
             $optionId = array_map('intval', $optionId); // make sure values are integers
         } else {
             $optionId = XoopsRequest::getInt('option_id', 0, 'POST');
@@ -92,7 +92,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                         $msg = constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_THANKSFORVOTE');
                     } else {
                         /* there was a problem registering the vote */
-                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', array('poll_id' => $poll_id)), $classConstants::REDIRECT_DELAY_MEDIUM,
+                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', ['poll_id' => $poll_id]), $classConstants::REDIRECT_DELAY_MEDIUM,
                                         constant('_MD_' . strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE_ERROR'));
                     }
                 } else {
@@ -117,7 +117,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     if (null !== $url) {
         redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     } else {
-        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', array('topic_id' => $topic_id)), $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
+        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', ['topic_id' => $topic_id]), $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
     }
     // old xoopspoll or umfrage or any clone from them
 } else {

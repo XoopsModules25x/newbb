@@ -35,13 +35,13 @@ class NewbbUploader extends XoopsMediaUploader
         //        $this->XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
 
         if (!is_array($allowedMimeTypes)) {
-            if (empty($allowedMimeTypes) || $allowedMimeTypes === '*') {
-                $allowedMimeTypes = array();
+            if (empty($allowedMimeTypes) || '*' === $allowedMimeTypes) {
+                $allowedMimeTypes = [];
             } else {
                 $allowedMimeTypes = array_filter(array_map('trim', explode('|', strtolower($allowedMimeTypes))));
             }
         }
-        $_allowedMimeTypes = array();
+        $_allowedMimeTypes = [];
         $extensionToMime   = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         foreach ($allowedMimeTypes as $type) {
             if (isset($extensionToMime[$type])) {

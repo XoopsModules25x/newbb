@@ -16,20 +16,20 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
     $statsHandler = xoops_getModuleHandler('stats', 'newbb');
 
     $result = $GLOBALS['xoopsDB']->query('SELECT `forum_id`, `forum_topics`, `forum_posts` FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums'));
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $statsHandler->update($row['forum_id'], 'topic', $row['forum_topics']);
         $statsHandler->update($row['forum_id'], 'post', $row['forum_posts']);
     }
     $result = $GLOBALS['xoopsDB']->query('SELECT `forum_id`, SUM(topic_views) AS views FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' GROUP BY `forum_id`');
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $statsHandler->update($row['forum_id'], 'view', $row['views']);
     }
     $result = $GLOBALS['xoopsDB']->query('SELECT `forum_id`, COUNT(*) AS digests FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_digest = 1 GROUP BY `forum_id`');
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $statsHandler->update($row['forum_id'], 'digest', $row['digests']);
     }
     $result = $GLOBALS['xoopsDB']->query('SELECT SUM(forum_topics) AS topics, SUM(forum_posts) AS posts FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums'));
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $statsHandler->update(-1, 'topic', $row['topics']);
         $statsHandler->update(-1, 'post', $row['posts']);
     }
@@ -94,10 +94,10 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
         $sql = '    SELECT topic_id, topic_tags' . "    FROM {$table_topic}";
-        if (($result = $GLOBALS['xoopsDB']->query($sql)) === false) {
+        if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['topic_tags'])) {
                 continue;
             }

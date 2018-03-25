@@ -22,7 +22,7 @@ class NewbbOnlineHandler
     public $forum_id;
     public $forum_object;
     public $topic_id;
-    public $user_ids = array();
+    public $user_ids = [];
 
     /**
      * @param null $forum
@@ -97,27 +97,27 @@ class NewbbOnlineHandler
         $num_total = count($users);
 
         $num_user     = 0;
-        $users_id     = array();
-        $users_online = array();
+        $users_id     = [];
+        $users_online = [];
         for ($i = 0; $i < $num_total; ++$i) {
             if (empty($users[$i]['online_uid'])) {
                 continue;
             }
             $users_id[]                             = $users[$i]['online_uid'];
-            $users_online[$users[$i]['online_uid']] = array(
+            $users_online[$users[$i]['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
                 'uname' => $users[$i]['online_uname']
-            );
+            ];
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
-        $online                  = array();
+        $online                  = [];
         $online['image']         = newbbDisplayImage('whosonline');
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;
         $administrator_list      = newbb_isModuleAdministrators($users_id);
-        $moderator_list          = array();
+        $moderator_list          = [];
         if ($member_list = array_diff(array_keys($administrator_list), $users_id)) {
             if (is_object($this->forum_object)) {
                 $moderator_list = $this->forum_object->getVar('forum_moderator');
@@ -156,28 +156,28 @@ class NewbbOnlineHandler
         $num_total = count($users);
 
         $num_user     = 0;
-        $users_id     = array();
-        $users_online = array();
+        $users_id     = [];
+        $users_online = [];
         for ($i = 0; $i < $num_total; ++$i) {
             if (empty($users[$i]['online_uid'])) {
                 continue;
             }
             $users_id[]                             = $users[$i]['online_uid'];
-            $users_online[$users[$i]['online_uid']] = array(
+            $users_online[$users[$i]['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
                 'uname' => $users[$i]['online_uname']
-            );
+            ];
             ++$num_user;
         }
         $num_anonymous           = $num_total - $num_user;
-        $online                  = array();
+        $online                  = [];
         $online['image']         = newbbDisplayImage('whosonline');
         $online['statistik']     = newbbDisplayImage('statistik');
         $online['num_total']     = $num_total;
         $online['num_user']      = $num_user;
         $online['num_anonymous'] = $num_anonymous;
         $administrator_list      = newbb_isModuleAdministrators($users_id);
-        $moderator_list          = array();
+        $moderator_list          = [];
         if ($member_list = array_diff($users_id, array_keys($administrator_list))) {
             if (is_object($this->forum_object)) {
                 $moderator_list = $this->forum_object->getVar('forum_moderator');
@@ -234,7 +234,7 @@ class NewbbOnlineHandler
                    . $topic_id
                    . "' WHERE online_uid = "
                    . $uid;
-            if ($uid == 0) {
+            if (0 == $uid) {
                 $sql .= " AND online_ip='" . $ip . "'";
             }
         } else {
@@ -247,7 +247,7 @@ class NewbbOnlineHandler
         }
 
 //        $mysql_version = substr(trim(mysqli_get_server_info($xoopsDB->conn)), 0, 3);
-        $mysql_version = $GLOBALS['xoopsDB']->getServerVersion;
+        $mysql_version = $GLOBALS['xoopsDB']->getServerVersion();
         /* for MySQL 4.1+ */
         if ($mysql_version >= '4.1') {
             $sql = 'DELETE FROM '
@@ -327,7 +327,7 @@ class NewbbOnlineHandler
      */
     public function getAll(CriteriaElement $criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('bb_online');
         if (is_object($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -339,7 +339,7 @@ class NewbbOnlineHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;
             if ($myrow['online_uid'] > 0) {
                 $this->user_ids[] = $myrow['online_uid'];
@@ -357,8 +357,8 @@ class NewbbOnlineHandler
      */
     public function checkStatus($uids)
     {
-        $online_users = array();
-        $ret          = array();
+        $online_users = [];
+        $ret          = [];
         if (!empty($this->user_ids)) {
             $online_users = $this->user_ids;
         } else {

@@ -8,7 +8,7 @@
             <div class="_col_end"><{$smarty.const._MB_NEWBB_AUTHOR}></div>
             <div class="clear"></div>
         </div>
-        <{foreachq item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics}>
         <div class="align_center <{cycle values="even,odd"}>">
             <div class="block_full_forum floatleft left"><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a>
             </div>
@@ -25,7 +25,7 @@
             <div class="_col_end"><{$smarty.const._MB_NEWBB_AUTHOR}></div>
             <div class="clear"></div>
         </div>
-        <{foreachq item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics}>
         <div class="<{cycle values="even,odd"}>">
             <div class="block_compact_topic floatleft left"><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a>
             </div>
@@ -34,7 +34,7 @@
         </div>
     <{/foreach}>
     <{elseif $block.disp_mode == 2}>
-        <{foreachq item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics}>
         <div class="<{cycle values="even,odd"}>">
             <div><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></div>
         </div>

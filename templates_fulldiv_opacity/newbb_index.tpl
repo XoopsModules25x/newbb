@@ -53,7 +53,7 @@
 <!-- start index categories -->
 <div class="index_category">
     <!-- start forum categories -->
-    <{foreachq item=category from=$categories}>
+    <{foreach item=category from=$categories}>
     <div class="head align_center">
         <div class="pointer floatleft"
              onclick="ToggleBlockCategory('<{$category.cat_element_id}>',(this.firstElementChild || this.children[0]) , '<{$category_icon.expand}>', '<{$category_icon.collapse}>','<{$smarty.const._MD_NEWBB_HIDE|escape:'quotes'}>','<{$smarty.const._MD_NEWBB_SEE|escape:'quotes'}>','toggle_block','toggle_none');">
@@ -85,7 +85,7 @@
                     <div class="forum_lastpost"><{$smarty.const._MD_LASTPOST}></div>
                 </div>
                 <!-- start forums -->
-                <{foreachq item=forum from=$category.forums}>
+                <{foreach item=forum from=$category.forums}>
                 <div class="forum_row head align_center">
                     <div class="forum_folder even <{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new<{/if}> align_center"><{$forum.forum_folder}></div>
                     <div class="forum_name left odd">
@@ -108,7 +108,7 @@
                         </div>
                         <{if $forum.subforum && $subforum_display == "collapse"}>
                             <div class="left"><{$smarty.const._MD_SUBFORUMS}>&nbsp;<{$img_subforum}>&nbsp;
-                                <{foreachq item=subforum from=$forum.subforum}>
+                                <{foreach item=subforum from=$forum.subforum}>
                                 &nbsp;[<a
                                         href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                                 <{/foreach}>
@@ -156,7 +156,7 @@
                             <div class="forum_posts">&nbsp;</div>
                             <div class="forum_lastpost">&nbsp;</div>
                         </div>
-                        <{foreachq item=subforum from=$forum.subforum}>
+                        <{foreach item=subforum from=$forum.subforum}>
                         <div class="forum_row head align_center">
                             <div class="forum_folder odd">&nbsp;</div>
                             <div class="subforum_name left">

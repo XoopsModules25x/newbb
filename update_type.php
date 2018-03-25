@@ -58,7 +58,7 @@ if (!$GLOBALS['xoopsDB']->queryF('
 
 $typeHandler = xoops_getModuleHandler('type', 'newbb');
 $subjectpres = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
-$types       = array();
+$types       = [];
 $order       = 1;
 foreach ($subjectpres as $subjectpre) {
     if (preg_match("/<[^#]*color=[\"'](#[^'\"\s]*)[^>]>[\[]?([^<\]]*)[\]]?/is", $subjectpre, $matches)) {
@@ -84,13 +84,13 @@ if (0 === count($types)) {
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 if ($forums_type = $forumHandler->getIds(new Criteria('allow_subject_prefix', 1))) {
     foreach ($forums_type as $forum_id) {
-        $type_query = array();
+        $type_query = [];
         foreach ($types as $key => $order) {
             $type_query[] = "({$key}, {$forum_id}, {$order})";
         }
 
         $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
-        if (($result = $GLOBALS['xoopsDB']->queryF($sql)) === false) {
+        if (false === ($result = $GLOBALS['xoopsDB']->queryF($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
     }

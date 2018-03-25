@@ -40,7 +40,7 @@
         <div class="clear"></div>
     </div>
     <!-- start forum topic -->
-    <{foreachq name=loop item=topic from=$block.topics}>
+    <{foreach name=loop item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}> border">
         <div class="<{$block_topic}> floatleft left">
             <{if $block.headers.approve}>

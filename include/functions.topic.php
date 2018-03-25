@@ -42,7 +42,7 @@ if (!defined('NEWBB_FUNCTIONS_TOPIC')) {
         if (empty($prefixName)) {
             return $topicTitle;
         }
-        $topicPrefix = $prefixColor ? "<em style=\"font-style: normal; color: " . $prefixColor . ";\">[" . $prefixName . ']</em> ' : '[' . $prefixName . '] ';
+        $topicPrefix = $prefixColor ? '<em style="font-style: normal; color: ' . $prefixColor . ';">[' . $prefixName . ']</em> ' : '[' . $prefixName . '] ';
 
         return $topicPrefix . $topicTitle;
     }

@@ -23,7 +23,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
      */
     function newbb_synchronization($type = null)
     {
-        $allTypes = array(
+        $allTypes = [
             'category',
             'forum',
             'topic',
@@ -34,12 +34,12 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
             'readtopic',
             'readforum',
             'stats'
-        );
-        $type     = array();
-        $type     = empty($type) ? $allTypes : (is_array($type) ? $type : array($type));
+        ];
+        $type     = [];
+        $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
             $handler = xoops_getModuleHandler($item, 'newbb');
-            if ($item !== 'stats') {
+            if ('stats' !== $item) {
                 $handler->synchronization();
             } else {
                 $handler->reset();

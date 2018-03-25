@@ -77,7 +77,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
         $mpf -= 2;
     }
 
-    $level              = array();
+    $level              = [];
     $level['level']     = $showlevel;
     $level['exp']       = $ep;
     $level['exp_width'] = $ep . '%';
@@ -109,55 +109,55 @@ class NewbbUser
     {
         global $isadmin;
 
-        $userbar = array();
+        $userbar = [];
         if (empty($GLOBALS['xoopsModuleConfig']['userbar_enabled'])) {
             return $userbar;
         }
 
         $user               = $this->user;
-        $userbar['profile'] = array(
+        $userbar['profile'] = [
             'link' => XOOPS_URL . '/userinfo.php?uid=' . $user->getVar('uid'),
             'name' => _PROFILE
-        );
+        ];
 
         if (is_object($GLOBALS['xoopsUser'])) {
-            $userbar['pm'] = array(
+            $userbar['pm'] = [
                 'link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);",
                 'name' => _MD_PM
-            );
+            ];
         }
         if ($user->getVar('user_viewemail') || $isadmin) {
-            $userbar['email'] = array(
+            $userbar['email'] = [
                 'link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');",
                 'name' => _MD_EMAIL
-            );
+            ];
         }
         if ($url = $user->getVar('url')) {
-            $userbar['url'] = array('link' => "javascript:void window.open('" . $url . "', 'new');", 'name' => _MD_WWW);
+            $userbar['url'] = ['link' => "javascript:void window.open('" . $url . "', 'new');", 'name' => _MD_WWW];
         }
         if ($icq = $user->getVar('user_icq')) {
-            $userbar['icq'] = array(
+            $userbar['icq'] = [
                 'link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
                 'name' => _MD_ICQ
-            );
+            ];
         }
         if ($aim = $user->getVar('user_aim')) {
-            $userbar['aim'] = array(
+            $userbar['aim'] = [
                 'link' => "javascript:void window.open('aim:goim?screenname=" . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there?' . "', 'new');",
                 'name' => _MD_AIM
-            );
+            ];
         }
         if ($yim = $user->getVar('user_yim')) {
-            $userbar['yim'] = array(
+            $userbar['yim'] = [
                 'link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
                 'name' => _MD_YIM
-            );
+            ];
         }
         if ($msn = $user->getVar('user_msnm')) {
-            $userbar['msnm'] = array(
+            $userbar['msnm'] = [
                 'link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');",
                 'name' => _MD_MSNM
-            );
+            ];
         }
 
         return $userbar;
@@ -172,12 +172,12 @@ class NewbbUser
 
         $level = newbb_calculateLevel($this->user->getVar('posts'), $this->user->getVar('user_regdate'));
         $info  = '';
-        if ($GLOBALS['xoopsModuleConfig']['user_level'] == 2) {
+        if (2 == $GLOBALS['xoopsModuleConfig']['user_level']) {
             static $rpg_images;
             if (!isset($rpg_images)) {
                 $iconHandler = newbbGetIconHandler();
                 $rpg_path    = $iconHandler->getPath('rpg');
-                foreach (array('img_left', 'img_backing', 'img_right', 'blue', 'green', 'orange') as $img) {
+                foreach (['img_left', 'img_backing', 'img_right', 'blue', 'green', 'orange'] as $img) {
                     // irmtfan fix: double "/" removed
                     $rpg_images[$img] = XOOPS_URL . $rpg_path . '/' . $img . '.gif';
                 }
@@ -217,7 +217,7 @@ class NewbbUser
                 $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
             }
 
-            return array('name' => $name_anonymous, 'link' => $name_anonymous);
+            return ['name' => $name_anonymous, 'link' => $name_anonymous];
         }
 
         $this->user = $user;
@@ -232,7 +232,7 @@ class NewbbUser
         $userinfo['avatar'] = $user->getVar('user_avatar');
         // START hacked by irmtfan - easier rank getting - consistency with previous version back rank.title and rank.image
         $userrank         = $user->rank();
-        $userinfo['rank'] = array();
+        $userinfo['rank'] = [];
         if (isset($userrank['image']) && $userrank['image']) {
             $userinfo['rank']['image'] = $userrank['image'];
             $userinfo['rank']['title'] = $userrank['title'];
@@ -240,7 +240,7 @@ class NewbbUser
         // END hacked by irmtfan - easier rank getting  - a little correctness dot removed
         // START hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         //checks for user's groups
-        $userinfo['groups'] = array();
+        $userinfo['groups'] = [];
         $memberHandler      = xoops_getHandler('member');
         $usergroups         = $memberHandler->getGroupsByUser($userinfo['uid'], true);
         foreach ($usergroups as $group) {
@@ -276,8 +276,8 @@ class NewbbUserHandler
 {
     public $enableGroup;
     public $enableOnline;
-    public $userlist = array();
-    public $users    = array();
+    public $userlist = [];
+    public $users    = [];
 
     //var $online = array();
 
@@ -335,7 +335,7 @@ class NewbbUserHandler
 
         $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('bb_user_stats') . ' WHERE uid IN( ' . implode(', ', array_keys($this->users)) . ')';
         $result = $GLOBALS['xoopsDB']->query($sql);
-        while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
         }
     }

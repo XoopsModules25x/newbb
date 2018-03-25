@@ -36,7 +36,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $criteria->setStart($start);
         $criteria->setLimit($limit);
-        $topicObjs = array();
+        $topicObjs = [];
         $topicObjs = $topicHandler->getAll($criteria);
         foreach ($topicObjs as $tObj) {
             $topicHandler->synchronization($tObj);
@@ -87,7 +87,7 @@ switch (XoopsRequest::getString('type', '', 'GET')) {// @$_GET['type'])
         break;
     // START irmtfan add read sync
     case 'read':
-        $result = newbb_synchronization(array('readtopic', 'readforum'));
+        $result = newbb_synchronization(['readtopic', 'readforum']);
         if (!empty($result)) {
             redirect_header('admin_synchronization.php', 2, _AM_NEWBB_SYNC_TYPE_READ . '<br>' . _AM_NEWBB_DATABASEUPDATED);
         }

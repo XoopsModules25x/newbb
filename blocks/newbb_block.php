@@ -66,7 +66,7 @@ function b_newbb_show($options)
     mod_loadFunctions('time', 'newbb');
 
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -137,11 +137,11 @@ function b_newbb_show($options)
         return false;
     }
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    $types              = array();
+    $rows               = [];
+    $author             = [];
+    $types              = [];
 
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
@@ -207,11 +207,11 @@ function b_newbb_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -235,7 +235,7 @@ function b_newbb_topic_show($options)
     global $accessForums;
     mod_loadFunctions('time', 'newbb');
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -321,10 +321,10 @@ function b_newbb_topic_show($options)
         return $block;
     }
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    $types              = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $rows               = [];
+    $author             = [];
+    $types              = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]                       = $row;
         $author[$row['topic_poster']] = 1;
         if ($row['type_id'] > 0) {
@@ -382,11 +382,11 @@ function b_newbb_topic_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -411,7 +411,7 @@ function b_newbb_post_show($options)
 
     mod_loadFunctions('time', 'newbb');
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -465,7 +465,7 @@ function b_newbb_post_show($options)
 
     $query = 'SELECT';
     $query .= '    p.post_id, p.subject, p.post_time, p.icon, p.uid, p.poster_name,';
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $query .= '    pt.dohtml, pt.dosmiley, pt.doxcode, pt.dobr, pt.post_text,';
     }
     $query .= '    f.forum_id, f.forum_name'
@@ -475,7 +475,7 @@ function b_newbb_post_show($options)
               . '    LEFT JOIN '
               . $GLOBALS['xoopsDB']->prefix('bb_forums')
               . ' AS f ON f.forum_id=p.forum_id';
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $query .= '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('bb_posts_text') . ' AS pt ON pt.post_id=p.post_id';
     }
     $query .= '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
@@ -485,10 +485,10 @@ function b_newbb_post_show($options)
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
-    $block['disp_mode'] = ($options[0] === 'text') ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $block['disp_mode'] = ('text' === $options[0]) ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
+    $rows               = [];
+    $author             = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
     }
@@ -511,7 +511,7 @@ function b_newbb_post_show($options)
         //$topic['id'] = $arr['topic_id'];
 
         $title = $myts->htmlSpecialChars($arr['subject']);
-        if ($options[0] !== 'text' && !empty($options[5])) {
+        if ('text' !== $options[0] && !empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
         $topic['title']   = $title;
@@ -524,7 +524,7 @@ function b_newbb_post_show($options)
         }
         $topic['topic_poster'] = $topic_poster;
 
-        if ($options[0] === 'text') {
+        if ('text' === $options[0]) {
             $post_text = $myts->displayTarea($arr['post_text'], $arr['dohtml'], $arr['dosmiley'], $arr['doxcode'], 1, $arr['dobr']);
             if (!empty($options[5])) {
                 $post_text = xoops_substr(strip_tags($post_text), 0, $options[5]);
@@ -548,11 +548,11 @@ function b_newbb_post_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
 
     $block['indexNav'] = (int)$options[4];
@@ -575,10 +575,10 @@ function b_newbb_post_show($options)
 function b_newbb_author_show($options)
 {
     global $accessForums;
-    //    global $newbbConfig;
+    global $newbbConfig;
 
     $myts  = MyTextSanitizer::getInstance();
-    $block = array();
+    $block = [];
     //    $i              = 0;
     $type          = 'topic';
     $order         = 'count';
@@ -627,7 +627,7 @@ function b_newbb_author_show($options)
         return false;
     }
 
-    if ($type === 'topic') {
+    if ('topic' === $type) {
         $forumCriteria   = ' AND forum_id IN (' . implode(',', $allowedForums) . ')';
         $approveCriteria = ' AND approved = 1';
         $query           = 'SELECT DISTINCT topic_poster AS author, COUNT(*) AS count
@@ -646,8 +646,8 @@ function b_newbb_author_show($options)
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
-    $author = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $author = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $author[$row['author']]['count'] = $row['count'];
     }
     if (count($author) < 1) {
@@ -675,7 +675,7 @@ function b_newbb_edit($options)
 
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
-    if ($options[0] === 'time') {
+    if ('time' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
@@ -697,13 +697,13 @@ function b_newbb_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -712,9 +712,9 @@ function b_newbb_edit($options)
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected';
     }
@@ -734,27 +734,27 @@ function b_newbb_topic_edit($options)
     mod_loadFunctions('forum', 'newbb');
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
-    if ($options[0] === 'time') {
+    if ('time' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TIME . '</option>';
     $form .= "<option value='views'";
-    if ($options[0] === 'views') {
+    if ('views' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_VIEWS . '</option>';
     $form .= "<option value='replies'";
-    if ($options[0] === 'replies') {
+    if ('replies' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_REPLIES . '</option>';
     $form .= "<option value='digest'";
-    if ($options[0] === 'digest') {
+    if ('digest' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGEST . '</option>';
     $form .= "<option value='sticky'";
-    if ($options[0] === 'sticky') {
+    if ('sticky' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKY . '</option>';
@@ -776,13 +776,13 @@ function b_newbb_topic_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -792,11 +792,11 @@ function b_newbb_topic_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
 
-    $isAll = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $isAll = (0 === count($optionsForum) || empty($optionsForum[0])) ? true : false;
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
@@ -814,12 +814,12 @@ function b_newbb_post_edit($options)
     mod_loadFunctions('forum', 'newbb');
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='title'";
-    if ($options[0] === 'title') {
+    if ('title' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TITLE . '</option>';
     $form .= "<option value='text'";
-    if ($options[0] === 'text') {
+    if ('text' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TEXT . '</option>';
@@ -841,13 +841,13 @@ function b_newbb_post_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -856,11 +856,11 @@ function b_newbb_post_edit($options)
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0])) ? true : false;
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
@@ -878,22 +878,22 @@ function b_newbb_author_edit($options)
     mod_loadFunctions('forum', 'newbb');
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='post'";
-    if ($options[0] === 'post') {
+    if ('post' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_POST . '</option>';
     $form .= "<option value='topic'";
-    if ($options[0] === 'topic') {
+    if ('topic' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_TOPIC . '</option>';
     $form .= "<option value='digest'";
-    if ($options[0] === 'digest') {
+    if ('digest' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_DIGESTS . '</option>';
     $form .= "<option value='sticky'";
-    if ($options[0] === 'sticky') {
+    if ('sticky' === $options[0]) {
         $form .= ' selected ';
     }
     $form .= '>' . _MB_NEWBB_CRITERIA_STICKYS . '</option>';
@@ -911,24 +911,24 @@ function b_newbb_author_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
     $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
-    $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $isAll        = (0 === count($optionsForum) || empty($optionsForum[0])) ? true : false;
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);

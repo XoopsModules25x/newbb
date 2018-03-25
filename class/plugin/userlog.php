@@ -49,9 +49,9 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
     public function item($subscribe_from)
     {
         if (empty($subscribe_from)) {
-            $script_arr             = array();
-            $script_arr['topic_id'] = array('viewtopic.php');
-            $script_arr['forum']    = array('viewforum.php');
+            $script_arr             = [];
+            $script_arr['topic_id'] = ['viewtopic.php'];
+            $script_arr['forum']    = ['viewforum.php'];
 
             return $script_arr;
         }
@@ -67,16 +67,16 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
                     $topic_id  = $topic_obj->getVar('topic_id');
                 } elseif (!empty($move)) {
                     $forum_id  = XoopsRequest::getInt('forum_id', 0); //!empty($_REQUEST["forum_id"]) ? (int)($_REQUEST["forum_id"]) : 0;
-                    $topic_obj = $topicHandler->getByMove($topic_id, ($move === 'prev') ? -1 : 1, $forum_id);
+                    $topic_obj = $topicHandler->getByMove($topic_id, ('prev' === $move) ? -1 : 1, $forum_id);
                     $topic_id  = $topic_obj->getVar('topic_id');
                 }
 
-                return array('item_name' => 'topic_id', 'item_id' => $topic_id);
+                return ['item_name' => 'topic_id', 'item_id' => $topic_id];
                 break;
             case 'viewforum.php':
                 $forum_id = XoopsRequest::getInt('forum', 0); // !empty($_REQUEST["forum"]) ? (int)($_REQUEST["forum"]) : 0;
 
-                return array('item_name' => 'forum', 'item_id' => $forum_id);
+                return ['item_name' => 'forum', 'item_id' => $forum_id];
                 break;
         }
 

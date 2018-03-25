@@ -14,7 +14,7 @@ $forum_id = XoopsRequest::getInt('forum_id', 0, 'POST');
 $topic_id = XoopsRequest::getArray('topic_id', null, 'POST');
 
 $op = XoopsRequest::getCmd('op', '', 'POST');
-$op = in_array($op, array('approve', 'delete', 'restore', 'move'), true) ? $op : '';
+$op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
 
 if (0 === count($topic_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)
@@ -32,7 +32,7 @@ if (!$isadmin) {
 }
 switch ($op) {
     case 'restore':
-        $forums     = array();
+        $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];
@@ -48,7 +48,7 @@ switch ($op) {
         unset($topics_obj, $forums_obj);
         break;
     case 'approve':
-        $forums     = array();
+        $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];
@@ -71,7 +71,7 @@ switch ($op) {
         $notificationHandler = xoops_getHandler('notification');
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj           =& $topics_obj[$id];
-            $tags                = array();
+            $tags                = [];
             $tags['THREAD_NAME'] = $topic_obj->getVar('topic_title');
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $id . '&amp;forum=' . $topic_obj->getVar('forum_id');
             $tags['FORUM_NAME']  = $forums_obj[$topic_obj->getVar('forum_id')]->getVar('forum_name');
@@ -92,7 +92,7 @@ switch ($op) {
         unset($topics_obj, $forums_obj);
         break;
     case 'delete':
-        $forums     = array();
+        $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];

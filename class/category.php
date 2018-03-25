@@ -59,7 +59,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
     {
-        $categories = array();
+        $categories = [];
         if (!$valid_ids = $this->getIdsByPermission($permission)) {
             return $categories;
         }
@@ -123,7 +123,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getPermission($category, $perm = 'access')
     {
-        if ($GLOBALS['xoopsUserIsAdmin'] && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+        if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
             return true;
         }
 

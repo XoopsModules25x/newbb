@@ -1,4 +1,4 @@
-<{foreachq item=topic from=$block.topics}>
+<{foreach item=topic from=$block.topics}>
 <div>
     <strong><a href="<{$xoops_url}>/modules/newbb/viewtopic.php?forum=<{$topic.forum_id}>&amp;post_id=<{$topic.post_id}>#forumpost<{$topic.post_id}>"><{$topic.title}></a></strong>
 </div>
