@@ -11,7 +11,7 @@
 
 $modversion['version']             = 4.33;
 $modversion['module_status']       = 'Final';
-$modversion['release_date']        = '2016/11/27';
+$modversion['release_date']        = '2018/03/24';
 $modversion['name']                = _MI_NEWBB_NAME;
 $modversion['description']         = _MI_NEWBB_DESC;
 $modversion['credits']             = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';

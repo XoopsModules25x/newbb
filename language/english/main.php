@@ -22,6 +22,7 @@ define('_MD_MARK_READ', 'read');
 define('_MD_ALL_FORUM_MARKED', 'All forums marked');
 define('_MD_ALL_TOPIC_MARKED', 'All topics marked');
 define('_MD_BOARD_DISCLAIMER', 'Forum Disclaimer');
+define('_MD_POSTEDON', 'Posted on: ');
 //index.php
 define('_MD_ADMINCP', 'Admin Panel');
 define('_MD_FORUM', 'Forum');
