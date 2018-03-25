@@ -88,7 +88,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
         if ($tables->useTable($table)) {
             $tables->alterColumn($table, $column, $attributes, $newName);
             if (!$tables->executeQueue()) {
-                echo '<br>' . _AM_XXXXX_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
+                echo '<br>' . _AM_NEWBB_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
             }
         }
 

@@ -31,7 +31,7 @@ class IpCheck
         if (filter_var($this->ipin, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
 
             // Look for embedded IPv4 in an embedded IPv6 address, where FFFF is appended.
-            if (0 === strpos($this->ipin, '::FFFF:')) {
+            if (0 === strncmp($this->ipin, '::FFFF:', 7)) {
                 $ipv4addr = substr($this->ipin, 7);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;

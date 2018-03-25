@@ -101,7 +101,7 @@ $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
 //$filname = XOOPS_URL.$_SERVER['REQUEST_URI'];
 
-$forum_form = new \XoopsThemeForm(htmlspecialchars(@$form_title), 'form_post', XOOPS_URL . '/modules/newbb/post.php', 'post', true);
+$forum_form = new \XoopsThemeForm(htmlspecialchars(@$form_title, ENT_QUOTES | ENT_HTML5), 'form_post', XOOPS_URL . '/modules/newbb/post.php', 'post', true);
 $forum_form->setExtra('enctype="multipart/form-data"');
 
 if ($editby) {

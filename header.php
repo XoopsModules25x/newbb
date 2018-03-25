@@ -72,7 +72,7 @@ $myts = \MyTextSanitizer::getInstance();
 
 $menumode       = 0;
 $menumode_other = [];
-$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI', '', 'SERVER')));
+$menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI', '', 'SERVER')), ENT_QUOTES | ENT_HTML5);
 $menu_url       .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
 //foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
 //    if ($key !== $menumode) {

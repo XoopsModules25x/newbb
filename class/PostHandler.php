@@ -130,7 +130,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  Post $post
+     * @param  int|Post $post
      * @param  bool $force
      * @return bool
      */

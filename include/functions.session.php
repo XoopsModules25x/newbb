@@ -28,7 +28,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      */
     /**
      * @param        $name
-     * @param string $string
+     * @param string|array $string
      */
     function newbbSetSession($name, $string = '')
     {
@@ -68,7 +68,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
 
     /**
      * @param        $name
-     * @param string $string
+     * @param string|array $string
      * @param int    $expire
      */
     function newbbSetCookie($name, $string = '', $expire = 0)

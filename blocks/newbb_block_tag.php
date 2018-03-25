@@ -9,6 +9,8 @@
  * @package        module::newbb/tag
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**#@+

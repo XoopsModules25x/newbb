@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
      */
     function newbbLoadConfig()
     {
-        require_once dirname(__DIR__) . '/class/Helper.php';
+//        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
         $helper = Newbb\Helper::getInstance();
         static $configs = null;

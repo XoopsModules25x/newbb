@@ -370,7 +370,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
                 unset($mod);
             }
         }
-        if (is_callable([&$this->XoopsGroupPermHandler, 'deleteRight'])) {
+        if (is_callable('parent::deleteRight')) {
             return parent::deleteRight($perm, $itemid, $groupid, $mid);
         } else {
             $criteria = new \CriteriaCompo(new \Criteria('gperm_name', $perm));

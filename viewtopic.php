@@ -48,7 +48,7 @@ foreach ($query_vars as $var) {
         $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
     }
 }
-$page_query = htmlspecialchars(implode('&', array_values($query_array)));
+$page_query = htmlspecialchars(implode('&', array_values($query_array)), ENT_QUOTES | ENT_HTML5);
 unset($query_array);
 
 $forum_id = Request::getInt('forum', 0, 'GET');
@@ -237,7 +237,7 @@ if ($topicHandler->getPermission($forumObject, $topicObject->getVar('topic_statu
         $xoopsTpl->assign('topic_lock', _MD_NEWBB_TOPICLOCKED);
     }
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars($xoopsRequestUri) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
+        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
     }
 }
 // irmtfan for backward compatibility assign forum_post_or_register smarty again.
@@ -273,7 +273,7 @@ if (is_array($poster_array) && count($poster_array) > 0) {
 
 $viewtopic_users = [];
 if (is_array($userid_array) && count($userid_array) > 0) {
-    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+//    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;

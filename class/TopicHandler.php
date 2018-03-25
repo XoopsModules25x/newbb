@@ -327,7 +327,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postArray['post_time'] = newbbFormatTimestamp($postArray['post_time']);
 
         if (!empty($postArray['icon'])) {
-            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($postArray['icon']) . '" alt="" />';
+            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($postArray['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" />';
         } else {
             $postArray['icon'] = '<a name="' . $postArray['post_id'] . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" /></a>';
         }

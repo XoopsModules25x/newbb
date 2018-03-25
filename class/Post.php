@@ -500,7 +500,7 @@ class Post extends \XoopsObject
                 $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
             }
         }
-        $page_query = htmlspecialchars(implode('&', array_values($query_array)));
+        $page_query = htmlspecialchars(implode('&', array_values($query_array)), ENT_QUOTES | ENT_HTML5);
 
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 

@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb;
+
 global $xoopsModule, $myts, $xoopsUser, $forumObject;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBALS['xoopsUser'])

@@ -260,7 +260,7 @@ foreach (array_keys($posts) as $id) {
     $post_title = $post->getVar('subject');
 
     if ($posticon = $post->getVar('icon')) {
-        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon) . '" alt="" /></a>';
+        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" /></a>';
     } else {
         $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" /></a>';
     }

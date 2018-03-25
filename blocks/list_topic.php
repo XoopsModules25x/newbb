@@ -20,7 +20,7 @@ if (defined('LIST_TOPIC_DEFINED')) {
 define('LIST_TOPIC_DEFINED', true);
 
 //require_once dirname(__DIR__) . '/include/functions.ini.php';
-require_once dirname(__DIR__) . '/class/TopicRenderer.php';
+//require_once dirname(__DIR__) . '/class/TopicRenderer.php';
 require_once dirname(__DIR__) . '/footer.php'; // to include js/style files like validate function
 
 xoops_loadLanguage('main', 'newbb');

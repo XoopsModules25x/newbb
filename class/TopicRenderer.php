@@ -942,7 +942,7 @@ class TopicRenderer
             // START irmtfan remove topic_icon hardcode smarty
             // topic_icon: just regular topic_icon
             if (!empty($myrow['icon'])) {
-                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon']) . '" alt="" />';
+                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" />';
             } else {
                 $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" />';
             }

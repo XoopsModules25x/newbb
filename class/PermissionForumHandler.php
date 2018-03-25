@@ -109,7 +109,7 @@ class PermissionForumHandler extends PermissionHandler
     * @return array
     */
     /**
-     * @param  int $id
+     * @param  int|array $id
      * @return bool|array
      */
     public function getPermissions($id = 0)

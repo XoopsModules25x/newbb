@@ -71,6 +71,7 @@ class Digest extends \XoopsObject
         $clean = strip_tags($clean);
         $clean = htmlspecialchars($clean, ENT_QUOTES);
 
+
         return $clean;
     }
 

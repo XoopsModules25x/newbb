@@ -18,6 +18,8 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb;
+use XoopsModules\Xoopspoll;
+//use XoopsModules\Xoopspoll\Constants;
 
 // rewrite by irmtfan and zyspec to accept xoopspoll 1.4 and all old xoopspoll and umfrage versions and all clones
 
@@ -76,7 +78,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_load('request', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('admin', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        /** @var \XoopspollPollHandler $xpPollHandler */
+        /** @var Xoopspoll\PollHandler $xpPollHandler */
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
         /** @var \XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
@@ -292,10 +294,10 @@ switch ($op) {
             $pollObject->setVar('user_id', Request::getInt('user_id', 0, 'POST'));
             if (Request::getInt('notify', 0, 'POST') && $end_time > time()) {
                 // if notify, set mail status to "not mailed"
-                $pollObject->setVar('mail_status', POLL_NOTMAILED);
+                $pollObject->setVar('mail_status', Xoopspoll\Constants::POLL_NOT_MAILED);
             } else {
                 // if not notify, set mail status to already "mailed"
-                $pollObject->setVar('mail_status', POLL_MAILED);
+                $pollObject->setVar('mail_status', Xoopspoll\Constants::POLL_MAILED);
             }
             $new_poll_id = $pollObject->store();
             if (empty($new_poll_id)) {
@@ -307,7 +309,7 @@ switch ($op) {
             $classOption  = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
                 $optxt = trim($optxt);
-                /** @var XoopspollOption $optionObject */
+                /** @var Xoopspoll\Option $optionObject */
                 $optionObject = new $classOption();
                 if ('' !== $optxt) {
                     $optionObject->setVar('option_text', $optxt);
@@ -349,12 +351,12 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            /** @var \XoopspollOptionHandler $xpOptHandler */
+            /** @var Xoopspoll\OptionHandler $xpOptHandler */
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-            /** @var \XoopspollLogHandler $xpLogHandler */
+            /** @var Xoopspoll\LogHandler $xpLogHandler */
             $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
             //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
-            $classConstants   = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
+            $classConstants   = new XoopsModules\Xoopspoll\Constants();
             $notify           = Request::getInt('notify', $classConstants::NOTIFICATION_ENABLED, 'POST');
             $currentTimestamp = time();
             //$xuEndTimestamp   = method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime(Request::getString('xu_end_time', null, 'POST'))
@@ -450,10 +452,10 @@ switch ($op) {
             $pollObject->setVar('user_id', Request::getInt('user_id', 0, 'POST'));
             if (Request::getInt('notify', 0, 'POST') && $end_time > time()) {
                 // if notify, set mail status to "not mailed"
-                $pollObject->setVar('mail_status', POLL_NOTMAILED);
+                $pollObject->setVar('mail_status', $classConstants::POLL_NOT_MAILED);
             } else {
                 // if not notify, set mail status to already "mailed"
-                $pollObject->setVar('mail_status', POLL_MAILED);
+                $pollObject->setVar('mail_status', $classConstants::POLL_MAILED);
             }
 
             if (!$pollObject->store()) {
@@ -642,7 +644,7 @@ switch ($op) {
     case 'restart':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $classConstants        = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
+            $classConstants   = new XoopsModules\Xoopspoll\Constants();
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
         // old xoopspoll or umfrage or any clone from them
         } else {
@@ -679,15 +681,15 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $classConstants        = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
+            $classConstants   = new XoopsModules\Xoopspoll\Constants();
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
             $poll_not_mailed       = $classConstants::POLL_NOT_MAILED;
             $poll_mailed           = $classConstants::POLL_MAILED;
         // old xoopspoll or umfrage or any clone from them
         } else {
             $default_poll_duration = (86400 * 10);
-            $poll_not_mailed       = POLL_NOTMAILED;
-            $poll_mailed           = POLL_MAILED;
+            $poll_not_mailed       = Xoopspoll\Constants::POLL_NOT_MAILED;
+            $poll_mailed           = Xoopspoll\Constants::POLL_MAILED;
         }
 
         $end_time = !Request::getInt('end_time', 0, 'POST');
@@ -714,9 +716,9 @@ switch ($op) {
                 exit();
             }
             if (Request::getInt('reset', 0, 'POST')) { // reset all vote/voter counters
-                /** @var \XoopspollOptionHandler $xpOptHandler */
+                /** @var Xoopspoll\OptionHandler $xpOptHandler */
                 $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-                /** @var \XoopspollLogHandler $xpLogHandler */
+                /** @var Xoopspoll\LogHandler $xpLogHandler */
                 $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $xpLogHandler->deleteByPollId($poll_id);
                 $xpOptHandler->resetCountByPollId($poll_id);

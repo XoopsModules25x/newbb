@@ -67,7 +67,7 @@ if (!empty($error_msg)) {
             $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
         }
     }
-    $page_query = htmlspecialchars(implode('&', array_values($query_array)));
+    $page_query = htmlspecialchars(implode('&', array_values($query_array)), ENT_QUOTES | ENT_HTML5);
     unset($query_array);
     redirect_header("viewtopic.php?{$page_query}", 2, $error_msg);
 }
@@ -137,7 +137,7 @@ foreach ($posts_contextObject as $post_contextObject) {
         $p_name = newbbGetUnameFromId($post_contextObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     } else {
         $poster_name = $post_contextObject->getVar('poster_name');
-        $p_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
+        $p_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
     }
     $p_date    = formatTimestamp($post_contextObject->getVar('post_time'));
     $p_subject = $post_contextObject->getVar('subject');

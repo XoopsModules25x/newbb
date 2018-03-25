@@ -28,6 +28,9 @@ $uploadFolders = [
     NEWBB_UPLOAD_PATH . '/thumbs'
 ];
 
+/**
+ * @return object
+ */
 function getConfig()
 {
     $moduleDirName      = basename(dirname(__DIR__));

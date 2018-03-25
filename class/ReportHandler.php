@@ -47,7 +47,7 @@ class ReportHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int    $forums
+     * @param  int|array    $forums
      * @param  string $order
      * @param  int    $perpage
      * @param         $start

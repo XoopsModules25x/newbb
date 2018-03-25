@@ -231,14 +231,14 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($num_results == $limit) {
             $next            = $start + $limit;
             $queries         = implode(',', $queries);
-            $search_url_next = htmlspecialchars($search_url . "&direction=next&start={$next}");
+            $search_url_next = htmlspecialchars($search_url . "&direction=next&start={$next}", ENT_QUOTES | ENT_HTML5);
             $search_next     = '<a href="' . $search_url_next . '">' . _SR_NEXT . '</a>';
             $xoopsTpl->assign('search_next', $search_next);
             $xoopsTpl->assign('search_next_url', $search_url_next);
         }
         if ($start > 0) {
             $prev            = $start - $limit;
-            $search_url_prev = htmlspecialchars($search_url . "&direction=previous&start={$prev}");
+            $search_url_prev = htmlspecialchars($search_url . "&direction=previous&start={$prev}", ENT_QUOTES | ENT_HTML5);
             $search_prev     = '<a href="' . $search_url_prev . '">' . _SR_PREVIOUS . '</a>';
             $xoopsTpl->assign('search_prev', $search_prev);
             $xoopsTpl->assign('search_prev_url', $search_url_prev);

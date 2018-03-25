@@ -39,7 +39,7 @@ if (!$topicHandler->getPermission($forumObject, 0, 'post')) {
             $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
         }
     }
-    $page_query = htmlspecialchars(implode('&', array_values($query_array)));
+    $page_query = htmlspecialchars(implode('&', array_values($query_array)), ENT_QUOTES | ENT_HTML5);
     unset($query_array);
     redirect_header(XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query}", 2, _MD_NEWBB_NORIGHTTOPOST);
 }

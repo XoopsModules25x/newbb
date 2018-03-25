@@ -14,8 +14,8 @@ include __DIR__ . '/preloads/autoloader.php';
 $moduleDirName = basename(__DIR__);
 $modversion    = [
     'version'             => 5.00,
-    'module_status'       => 'Alpha 1',
-    'release_date'        => '2017/09/12',
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2018/03/25',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
