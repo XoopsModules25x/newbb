@@ -31,17 +31,17 @@
 include_once __DIR__ . '/header.php';
 
 if (XoopsRequest::getString('submit', '', 'POST')) {
-    foreach (array('forum', 'newforum', 'newtopic') as $getint) {
+    foreach (['forum', 'newforum', 'newtopic'] as $getint) {
         ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// (int)(@$_POST[$getint]);
     }
-    foreach (array('topic_id') as $getint) {
+    foreach (['topic_id'] as $getint) {
         ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');// (int)(@$_POST[$getint]);
     }
     if (!is_array($topic_id)) {
-        $topic_id = array($topic_id);
+        $topic_id = [$topic_id];
     }
 } else {
-    foreach (array('forum', 'topic_id') as $getint) {
+    foreach (['forum', 'topic_id'] as $getint) {
         ${$getint} = XoopsRequest::getInt($getint, 0, 'GET');// (int)(@$_GET[$getint]);
     }
 }
@@ -71,7 +71,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum);
 }
 // irmtfan add restore to viewtopic
-$action_array = array(
+$action_array = [
     'merge',
     'delete',
     'restore',
@@ -82,15 +82,15 @@ $action_array = array(
     'unsticky',
     'digest',
     'undigest'
-);
+];
 foreach ($action_array as $_action) {
-    $action[$_action] = array(
+    $action[$_action] = [
         'name'   => $_action,
         'desc'   => constant(strtoupper("_MD_DESC_{$_action}")),
         'submit' => constant(strtoupper("_MD_{$_action}")),
         'sql'    => "topic_{$_action}=1",
         'msg'    => constant(strtoupper("_MD_TOPIC{$_action}"))
-    );
+    ];
 }
 $action['lock']['sql']     = 'topic_status = 1';
 $action['unlock']['sql']   = 'topic_status = 0';
@@ -130,7 +130,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
              . '</a></p>';
     } elseif ('restore' === $mode) {
         //$topicHandler = xoops_getModuleHandler('topic', 'newbb');
-        $forums     = array();
+        $forums     = [];
         $topics_obj = $topicHandler->getAll(new Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topics_obj) as $id) {
             $topic_obj =& $topics_obj[$id];

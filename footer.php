@@ -43,4 +43,4 @@ global $forumCookie;  // for $forumCookie["prefix"] revert last change - use glo
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
 $toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '";';
-$xoTheme->addScript(null, array('type' => 'text/javascript'), $toggle_script);
+$xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);

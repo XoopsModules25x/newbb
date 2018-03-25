@@ -6,7 +6,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             &nbsp;
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
@@ -47,7 +47,7 @@
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <div class='outer'>
-        <{foreachq item=element from=$form_post.elements}>
+        <{foreach item=element from=$form_post.elements}>
         <{if $element.hidden != true}>
             <div class="edit_col1 head floatleft">
                 <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span
@@ -61,7 +61,7 @@
         <{/if}>
         <{/foreach}>
     </div>
-    <{foreachq item=element from=$form_post.elements}>
+    <{foreach item=element from=$form_post.elements}>
     <{if $element.hidden == true}>
         <{$element.body}>
         <div class="clear"></div>
@@ -74,7 +74,7 @@
 
 <{if $posts_context}>
     <div class='outer'>
-        <{foreachq item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context}>
         <div class="head"><{$post.subject}></div>
         <div class="<{cycle values="even,odd"}>"><{$post.meta}><br><br>
             <{$post.content}>

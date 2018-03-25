@@ -103,7 +103,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
     public function setReadItemsCookie($status, $items)
     {
         $cookie_name = 'LF';
-        $items       = array();
+        $items       = [];
         if (!empty($status)) {
             $itemHandler = xoops_getModuleHandler('forum', 'newbb');
             $items_id    = $itemHandler->getIds();
@@ -137,7 +137,7 @@ class NewbbReadForumHandler extends NewbbReadHandler
         }
 
         $itemHandler = xoops_getModuleHandler('forum', 'newbb');
-        $items_obj   = $itemHandler->getAll(null, array('forum_last_post_id'));
+        $items_obj   = $itemHandler->getAll(null, ['forum_last_post_id']);
         foreach (array_keys($items_obj) as $key) {
             $this->setRead_db($key, $items_obj[$key]->getVar('forum_last_post_id'), $uid);
         }

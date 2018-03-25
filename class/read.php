@@ -311,7 +311,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
         $cookie_name = ($this->type === 'forum') ? 'LF' : 'LT';
         $cookie_vars = newbb_getcookie($cookie_name, true);
 
-        $ret = array();
+        $ret = [];
         foreach ($items as $key => $last_update) {
             $ret[$key] = (max(@$GLOBALS['last_visit'], @$cookie_vars[$key]) >= $last_update);
         }
@@ -326,7 +326,7 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
      */
     public function isRead_items_db(&$items, $uid)
     {
-        $ret = array();
+        $ret = [];
         if (empty($items)) {
             return $ret;
         }
@@ -341,9 +341,9 @@ class NewbbReadHandler extends XoopsPersistableObjectHandler
 
         $criteria = new CriteriaCompo(new Criteria('uid', $uid));
         $criteria->add(new Criteria('read_item', '(' . implode(', ', array_map('intval', array_keys($items))) . ')', 'IN'));
-        $items_obj = $this->getAll($criteria, array('read_item', 'post_id'));
+        $items_obj = $this->getAll($criteria, ['read_item', 'post_id']);
 
-        $items_list = array();
+        $items_list = [];
         foreach (array_keys($items_obj) as $key) {
             $items_list[$items_obj[$key]->getVar('read_item')] = $items_obj[$key]->getVar('post_id');
         }

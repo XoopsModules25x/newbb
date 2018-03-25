@@ -48,7 +48,7 @@ class NewbbUtilities
      * @copyright (c) Hervé Thouzard
      * @param $field
      * @param $table
-     * @return
+     * @return bool|\mysqli_result
      */
     public function addField($field, $table)
     {

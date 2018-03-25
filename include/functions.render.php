@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      */
     function newbb_htmlspecialchars(&$text)
     {
-        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), htmlspecialchars($text));
+        return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], htmlspecialchars($text));
     }
 
     /**

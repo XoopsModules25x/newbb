@@ -47,7 +47,7 @@ switch ($op) {
         if (0 === count($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
         }
-        $report_memos = XoopsRequest::getArray('report_memo', array(), 'POST'); // isset($_POST['report_memo']) ? $_POST['report_memo'] : array();
+        $report_memos = XoopsRequest::getArray('report_memo', [], 'POST'); // isset($_POST['report_memo']) ? $_POST['report_memo'] : array();
         foreach ($report_ids as $rid => $value) {
             if (!$value) {
                 continue;
@@ -63,7 +63,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $report_ids = XoopsRequest::getArray('report_id', array(), 'POST');// $_POST['report_id'];
+        $report_ids = XoopsRequest::getArray('report_id', [], 'POST');// $_POST['report_id'];
         // irmtfan add error redirect header
         if (0 === count($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);

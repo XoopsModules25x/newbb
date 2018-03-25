@@ -20,7 +20,7 @@
                     <height><{$rss.image_height}></height>
                 </image>
             <{/if}>
-            <{foreachq item=item from=$rss.items}>
+            <{foreach item=item from=$rss.items}>
             <item>
                 <title><{$item.title}></title>
                 <link><{$item.link}></link>

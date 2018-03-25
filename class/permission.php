@@ -105,7 +105,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      * @param  array $groups
      * @return mixed
      */
-    public function setCategoryPermission($category, array $groups = array())
+    public function setCategoryPermission($category, array $groups = [])
     {
         mod_clearCacheFile('permission_category', 'newbb');
         $handler = $this->_loadHandler('category');
@@ -127,7 +127,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             $ret = true;
         }
 
-        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
         if (!$groups) {
             $ret = false;
         }
@@ -171,9 +171,9 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
      */
     public function getAllowedItems($type, $perm_name)
     {
-        $ret = array();
+        $ret = [];
 
-        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
         if (count($groups) < 1) {
             return $ret;
         }
@@ -182,7 +182,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             return $ret;
         }
 
-        $allowed_items = array();
+        $allowed_items = [];
         foreach ($_cachedPerms as $id => $allowed_groups) {
             if ($id == 0 || empty($allowed_groups)) {
                 continue;
@@ -206,7 +206,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function getGroups($gperm_name, $id = 0)
     {
         $_cachedPerms = $this->loadPermData($gperm_name);
-        $groups       = empty($_cachedPerms[$id]) ? array() : array_unique($_cachedPerms[$id]);
+        $groups       = empty($_cachedPerms[$id]) ? [] : array_unique($_cachedPerms[$id]);
         unset($_cachedPerms);
 
         return $groups;
@@ -219,7 +219,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
     public function createPermData($perm_name = 'forum_all')
     {
         global $xoopsModule;
-        $perms = array();
+        $perms = [];
 
         if (is_object($xoopsModule) && $xoopsModule->getVar('dirname') === 'newbb') {
             $modid = $xoopsModule->getVar('mid');
@@ -231,7 +231,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
             unset($module);
         }
 
-        if (in_array($perm_name, array('forum_all', 'category_all'), true)) {
+        if (in_array($perm_name, ['forum_all', 'category_all'], true)) {
             $memberHandler = xoops_getHandler('member');
             $groups        = array_keys($memberHandler->getGroupList());
 
@@ -366,7 +366,7 @@ class NewbbPermissionHandler extends XoopsGroupPermHandler
                 unset($mod);
             }
         }
-        if (is_callable(array(&$this->XoopsGroupPermHandler, 'deleteRight'))) {
+        if (is_callable([&$this->XoopsGroupPermHandler, 'deleteRight'])) {
             return parent::deleteRight($perm, $itemid, $groupid, $mid);
         } else {
             $criteria = new CriteriaCompo(new Criteria('gperm_name', $perm));

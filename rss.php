@@ -41,7 +41,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-$forums   = array();
+$forums   = [];
 $category = XoopsRequest::getString('c', '', 'GET');
 if (XoopsRequest::getString('f', 0, 'GET')) {
     $forums = array_map('intval', array_map('trim', explode('|', XoopsRequest::getString('f', 0, 'GET'))));
@@ -147,9 +147,9 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         //return $xmlrss_handler->get($rss);
     }
-    $rows  = array();
-    $types = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $rows  = [];
+    $types = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $users[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
             $types[$row['type_id']] = 1;

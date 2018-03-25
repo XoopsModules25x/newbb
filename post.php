@@ -18,7 +18,7 @@
 
 include_once __DIR__ . '/header.php';
 
-foreach (array(
+foreach ([
              'forum',
              'topic_id',
              'post_id',
@@ -27,7 +27,7 @@ foreach (array(
              'start',
              'isreply',
              'isedit'
-         ) as $getint) {
+         ] as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, 0, 'POST');
 }
 
@@ -59,7 +59,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init($forum_obj);
 }
 
-$error_message = array();
+$error_message = [];
 
 if (XoopsRequest::getString('contents_submit', '', 'POST')) {
     $token_valid = false;
@@ -78,7 +78,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                 $user->setVar('last_login', time());
                 if (!$memberHandler->insertUser($user)) {
                 }
-                $_SESSION                    = array();
+                $_SESSION                    = [];
                 $_SESSION['xoopsUserId']     = $user->getVar('uid');
                 $_SESSION['xoopsUserGroups'] = $user->getGroups();
                 if ($GLOBALS['xoopsConfig']['use_mysession'] && $GLOBALS['xoopsConfig']['session_name'] !== '') {
@@ -145,7 +145,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
                             _MD_NORIGHTTOEDIT);
         }
 
-        $delete_attach = XoopsRequest::getArray('delete_attach', array(), 'POST');
+        $delete_attach = XoopsRequest::getArray('delete_attach', [], 'POST');
         if (is_array($delete_attach) && count($delete_attach) > 0) {
             $post_obj->deleteAttachment($delete_attach);
         }
@@ -272,7 +272,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
             }
         } else {
             $uploader->setCheckMediaTypeByExt();
-            $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
+            $temp = XoopsRequest::getArray('xoops_upload_file', [], 'POST');
             if ($uploader->fetchMedia($temp[0])) {
                 $prefix = is_object($GLOBALS['xoopsUser']) ? (string)$GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
@@ -328,7 +328,7 @@ if (XoopsRequest::getString('contents_submit', '', 'POST')) {
 
     // Define tags for notification message
     if (!empty($isnew) && $approved && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
-        $tags                = array();
+        $tags                = [];
         $tags['THREAD_NAME'] = XoopsRequest::getString('subject', '', 'POST');
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
         $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
@@ -414,9 +414,9 @@ include_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 if (XoopsRequest::getString('contents_upload', null, 'POST')) {
-    $attachments_tmp = array();
+    $attachments_tmp = [];
     if (XoopsRequest::getArray('attachments_tmp', null, 'POST')) {
-        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp', array(), 'POST')));
+        $attachments_tmp = unserialize(base64_decode(XoopsRequest::getArray('attachments_tmp', [], 'POST')));
         if (XoopsRequest::getArray('delete_tmp', null, 'POST')
             && count(XoopsRequest::getArray('delete_tmp', null, 'POST'))
         ) {
@@ -449,7 +449,7 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
             }
         } else {
             $uploader->setCheckMediaTypeByExt();
-            $temp = XoopsRequest::getArray('xoops_upload_file', array(), 'POST');
+            $temp = XoopsRequest::getArray('xoops_upload_file', [], 'POST');
             if ($uploader->fetchMedia($temp[0])) {
                 $prefix = is_object($GLOBALS['xoopsUser']) ? (string)$GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
@@ -457,11 +457,11 @@ if (XoopsRequest::getString('contents_upload', null, 'POST')) {
                     $error_message[] = $error_upload = $uploader->getErrors();
                 } else {
                     if (is_file($uploader->getSavedDestination())) {
-                        $attachments_tmp[(string)time()] = array(
+                        $attachments_tmp[(string)time()] = [
                             $uploader->getSavedFileName(),
                             $uploader->getMediaName(),
                             $uploader->getMediaType()
-                        );
+                        ];
                     }
                 }
             } else {
@@ -498,11 +498,11 @@ if (XoopsRequest::getString('contents_preview', XoopsRequest::getString('content
         $p_name = XoopsRequest::getString('poster_name', '', 'POST') ? htmlspecialchars(XoopsRequest::getString('poster_name', '', 'POST')) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
     }
 
-    $post_preview = array(
+    $post_preview = [
         'subject' => $p_subject,
         'meta'    => _MD_BY . ' ' . $p_name . ' ' . _MD_ON . ' ' . $p_date,
         'content' => $p_message
-    );
+    ];
     $xoopsTpl->assign_by_ref('post_preview', $post_preview);
 }
 

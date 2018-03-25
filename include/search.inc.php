@@ -52,7 +52,7 @@ function newbb_search(
     $criteriaPost = new CriteriaCompo();
     $criteriaPost->add(new Criteria('p.approved', 1), 'AND'); // only active posts
 
-    $forum_list = array();// get forum lists just for forum names
+    $forum_list = [];// get forum lists just for forum names
     if (count($validForums) > 0) {
         $criteriaPermissions = new CriteriaCompo();
         $criteriaPermissions->add(new Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');
@@ -123,7 +123,7 @@ function newbb_search(
     $postHandler = xoops_getModuleHandler('post', 'newbb');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
-    $ret = array();
+    $ret = [];
     $i   = 0;
     foreach (array_keys($posts) as $id) {
         $post                  =& $posts[$id];

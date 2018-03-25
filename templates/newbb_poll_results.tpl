@@ -13,7 +13,7 @@
                 <{*-- irmtfan hardcode removed align="right" --*}>
                 <td class="head align_right" colspan="2"><{$poll.end_text}> </td>
             </tr>
-            <{foreachq item=option from=$poll.options}>
+            <{foreach item=option from=$poll.options}>
             <tr>
                 <{*-- irmtfan hardcode removed align="left" --*}>
                 <td class="even align_left width30"><{$option.text}></td>

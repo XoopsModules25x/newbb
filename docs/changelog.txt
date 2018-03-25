@@ -1,6 +1,9 @@
-4.33 Final  (XOOPS 2.5.8)      2016-11-27
+4.33 Final  (XOOPS 2.5.8)      2018-03-24
 ===========================================
-- few last minute cosmetics (mamba)
+- cosmetics (mamba)
+- array short syntax (mamba)
+- assignment in condition (mamba)
+
 
 
 4.33 RC 13  (XOOPS 2.5.8)      2016-10-18

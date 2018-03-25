@@ -30,7 +30,7 @@ echo $indexAdmin->addNavigation(basename(__FILE__));
  * </ol>
  */
 $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');// !empty($_GET['op'])? $_GET['op'] : ( !empty($_POST['op']) ? $_POST['op'] : "" );
-if (!in_array($op, array(
+if (!in_array($op, [
     'save_type',
     'delete',
     'template',
@@ -41,7 +41,7 @@ if (!in_array($op, array(
     'edit_forum',
     'save_forum',
     'add'
-), true)
+], true)
 ) {
     $op = '';
 }
@@ -52,7 +52,7 @@ switch ($op) {
     case 'save_type':
         $type_names0 = $_POST['type_name'];
         $type_names  = XoopsRequest::getArray('type_name', null, 'POST');// $_POST['type_name'];
-        $type_del    = array();
+        $type_del    = [];
         foreach (array_keys($type_names) as $key) {
             if (XoopsRequest::getBool('isnew', '', 'POST')) {
                 $type_obj = $typeHandler->create();
@@ -66,7 +66,7 @@ switch ($op) {
                 $type_del[] = $key;
                 continue;
             } else {
-                foreach (array('type_name', 'type_color', 'type_description') as $var) {
+                foreach (['type_name', 'type_color', 'type_description'] as $var) {
                     //                    if ($type_obj->getVar($var) != @$_POST[$var][$key]) {
                     //                        $type_obj->setVar($var, @$_POST[$var][$key]);
                     //                    }
@@ -83,7 +83,7 @@ switch ($op) {
         }
         if (count($type_del) > 0) {
             $type_list = $typeHandler->getList(new Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
-            xoops_confirm(array('op' => 'delete', 'type_del' => serialize($type_del)), xoops_getenv('PHP_SELF'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
+            xoops_confirm(['op' => 'delete', 'type_del' => serialize($type_del)], xoops_getenv('PHP_SELF'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
         } else {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_DBUPDATED);
         }
@@ -173,7 +173,7 @@ switch ($op) {
         break;
 
     case 'save_template':
-        $templates = array_flip(array_filter(XoopsRequest::getArray('type_order', array(), 'POST')));
+        $templates = array_flip(array_filter(XoopsRequest::getArray('type_order', [], 'POST')));
         mod_createCacheFile($templates, 'type_template');
         redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _MD_DBUPDATED);
         break;
@@ -263,7 +263,7 @@ switch ($op) {
         if (!$templates = mod_loadCacheFile('type_template')) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
-        foreach (XoopsRequest::getArray('forums', array(), 'POST') as $forum) {
+        foreach (XoopsRequest::getArray('forums', [], 'POST') as $forum) {
             if ($forum < 1) {
                 continue;
             }
@@ -373,7 +373,7 @@ switch ($op) {
         echo '</tr>';
 
         $types       = $typeHandler->getByForum(XoopsRequest::getInt('forum', 0, 'POST'));
-        $types_order = array();
+        $types_order = [];
         foreach ($types as $key => $type) {
             $types_order[] = $type['type_order'];
         }

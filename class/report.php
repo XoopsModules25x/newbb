@@ -56,12 +56,12 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
      */
     public function getByPost($posts)
     {
-        $ret = array();
+        $ret = [];
         if (!$posts) {
             return $ret;
         }
         if (!is_array($posts)) {
-            $posts = array($posts);
+            $posts = [$posts];
         }
         $post_criteria = new Criteria('post_id', '(' . implode(', ', $posts) . ')', 'IN');
         $ret           = $this->getAll($post_criteria);
@@ -105,7 +105,7 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
         if (!$forums) {
             $forumCriteria = '';
         } elseif (!is_array($forums)) {
-            $forums        = array($forums);
+            $forums        = [$forums];
             $forumCriteria = ' AND p.forum_id IN (' . implode(',', $forums) . ')';
         }
         $tables_criteria = ' FROM ' . $this->db->prefix('bb_report') . ' r, ' . $this->db->prefix('bb_posts') . ' p WHERE r.post_id= p.post_id';
@@ -121,9 +121,9 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
 
         $sql    = 'SELECT r.*, p.subject, p.topic_id, p.forum_id' . $tables_criteria . $forumCriteria . $result_criteria . $order_criteria;
         $result = $this->db->query($sql, $perpage, $start);
-        $ret    = array();
+        $ret    = [];
         //$reportHandler = xoops_getModuleHandler('report', 'newbb');
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow; // return as array
         }
 

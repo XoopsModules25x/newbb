@@ -68,7 +68,7 @@ function newbb_list_topic_show($options)
 
     // set and parse values:
     // forum: parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
-    $topicRenderer->setVars(array(
+    $topicRenderer->setVars([
                                 'status'     => $optionsStatus,
                                 'uid'        => $options[1],
                                 'lastposter' => $options[2],
@@ -77,8 +77,8 @@ function newbb_list_topic_show($options)
                                 'order'      => $options[5],
                                 'since'      => $options[7],
                                 'forum'      => $optionsForum
-                            ));
-    $block = array();
+                            ]);
+    $block = [];
     // headers to display in block
     $block['headers'] = $topicRenderer->getHeader($options[8]);
 

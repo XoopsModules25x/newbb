@@ -32,7 +32,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      */
     public function getValidItems($mid, $id = 0)
     {
-        $full_items = array();
+        $full_items = [];
         if (empty($mid)) {
             return $full_items;
         }
@@ -65,7 +65,7 @@ class NewbbPermissionCategoryHandler extends NewbbPermissionHandler
      * @param  array $groups
      * @return bool
      */
-    public function setCategoryPermission($category, array $groups = array())
+    public function setCategoryPermission($category, array $groups = [])
     {
         if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
             $mid = $GLOBALS['xoopsModule']->getVar('mid');

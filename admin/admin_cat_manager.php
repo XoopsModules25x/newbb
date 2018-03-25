@@ -123,7 +123,7 @@ switch ($op) {
 
     case 'del':
         if (!XoopsRequest::getBool('confirm', '', 'POST')) {
-            xoops_confirm(array('op' => 'del', 'cat_id' => XoopsRequest::getInt('cat_id', 0, 'GET'), 'confirm' => 1), 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
+            xoops_confirm(['op' => 'del', 'cat_id' => XoopsRequest::getInt('cat_id', 0, 'GET'), 'confirm' => 1], 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
         } else {
             $category_obj = $categoryHandler->create(false);

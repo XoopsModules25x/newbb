@@ -59,7 +59,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
     {
-        $categories = array();
+        $categories = [];
         if (!$valid_ids = $this->getIdsByPermission($permission)) {
             return $categories;
         }

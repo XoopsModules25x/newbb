@@ -19,7 +19,7 @@ xoops_load('XoopsRequest');
 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     include_once __DIR__ . '/seo_url.php';
     /* for seo */
-    $toseo_url = array('index.php', 'viewforum.php', 'viewtopic.php', 'rss.php');
+    $toseo_url = ['index.php', 'viewforum.php', 'viewtopic.php', 'rss.php'];
 
     if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0)
         && (strpos(getenv('REQUEST_URI'), '.html') === false)
@@ -66,12 +66,12 @@ require_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
 $myts = MyTextSanitizer::getInstance();
 
 $menumode       = 0;
-$menumode_other = array();
+$menumode_other = [];
 $menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', $_SERVER['REQUEST_URI']));
 $menu_url .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
 foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
     if ($key !== $menumode) {
-        $menumode_other[] = array('title' => $val, 'link' => $menu_url . $key);
+        $menumode_other[] = ['title' => $val, 'link' => $menu_url . $key];
     }
 }
 // irmtfan new method for add js scripts - commented and move to footer.php

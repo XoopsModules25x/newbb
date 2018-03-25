@@ -34,7 +34,7 @@ mod_loadFunctions('stats', 'newbb');
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
-$folder      = array($attach_path, $thumb_path);
+$folder      = [$attach_path, $thumb_path];
 
 /**
  * @param $path
@@ -86,7 +86,7 @@ function newbb_admin_chmod($target, $mode = 0777)
  */
 function newbb_getImageLibs()
 {
-    $imageLibs = array();
+    $imageLibs = [];
     unset($output, $status);
     if ($GLOBALS['xoopsModuleConfig']['image_lib'] == 1 || $GLOBALS['xoopsModuleConfig']['image_lib'] == 0) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
@@ -268,7 +268,7 @@ function returnBytes($sizeAsString, $b = false)
         }
     } else {
         $base   = log($sizeAsString) / log(1024);
-        $suffix = array('', 'KB', 'MB', 'GB', 'TB');
+        $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
 
         return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
     }

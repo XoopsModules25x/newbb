@@ -56,7 +56,7 @@
 <!-- start forum categories -->
 <div class="index_category">
     <!-- start forum categories -->
-    <{foreachq item=category from=$categories}>
+    <{foreach item=category from=$categories}>
     <table class="index_category" cellspacing="0" width="100%">
         <tr class="head">
             <td width="3%" valign="middle" align="center">
@@ -104,7 +104,7 @@
 
             <!-- start forums -->
             <{if $subforum_display == "expand"}>
-                <{foreachq item=forum from=$category.forums}>
+                <{foreach item=forum from=$category.forums}>
                 <tr>
                     <!-- irmtfan add forum-read/forum-new smarty variable  -->
                     <td width="5%" class="even <{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new<{/if}>"
@@ -164,7 +164,7 @@
                         <td width="9%" nowrap="nowrap">&nbsp;</td>
                         <td width="40%" nowrap="nowrap">&nbsp;</td>
                     </tr>
-                    <{foreachq item=subforum from=$forum.subforum}>
+                    <{foreach item=subforum from=$forum.subforum}>
                     <tr>
                         <td class="odd" width="5%">&nbsp;</td>
                         <!-- irmtfan add forum-read/forum-new smarty variable  -->
@@ -223,7 +223,7 @@
 
             <{elseif $subforum_display == "collapse"}>
 
-                <{foreachq item=forum from=$category.forums}>
+                <{foreach item=forum from=$category.forums}>
                 <tr>
                     <{if $forum.subforum}>
                         <!-- irmtfan add forum-read/forum-new smarty variable  -->
@@ -285,7 +285,7 @@
 
                         <td class="odd" colspan="4" class="align_left"><{$smarty.const._MD_SUBFORUMS}>
                             &nbsp;<{$img_subforum}>&nbsp;
-                            <{foreachq item=subforum from=$forum.subforum}>
+                            <{foreach item=subforum from=$forum.subforum}>
                             &nbsp;[<a
                                     href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                             <{/foreach}>
@@ -296,7 +296,7 @@
 
             <{else}>
 
-                <{foreachq item=forum from=$category.forums}>
+                <{foreach item=forum from=$category.forums}>
                 <tr>
                     <!-- irmtfan add forum-read/forum-new smarty variable  -->
                     <td class="even <{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new<{/if}>" align="center"

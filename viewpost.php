@@ -37,9 +37,9 @@ $order    = XoopsRequest::getString('order', 'DESC', 'GET');
 $uid = XoopsRequest::getInt('uid', 0, 'GET');
 
 $status = (XoopsRequest::getString('status', '', 'GET')
-           && in_array(XoopsRequest::getString('status', '', 'GET'), array('active', 'pending', 'deleted', 'new', 'all', 'digest'), true)) ? XoopsRequest::getString('status', '', 'GET') : '';
+           && in_array(XoopsRequest::getString('status', '', 'GET'), ['active', 'pending', 'deleted', 'new', 'all', 'digest'], true)) ? XoopsRequest::getString('status', '', 'GET') : '';
 $mode   = XoopsRequest::getInt('mode', 0, 'GET');
-$mode   = (!empty($status) && in_array($status, array('active', 'pending', 'deleted'), true)) ? 2 : $mode;
+$mode   = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? 2 : $mode;
 
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
 $postHandler  = xoops_getModuleHandler('post', 'newbb');
@@ -51,13 +51,13 @@ if (empty($forum_id)) {
 } else {
     $forum_obj         = $forumHandler->get($forum_id);
     $forums[$forum_id] = $forum_obj;
-    $accessForums      = array($forum_id);
+    $accessForums      = [$forum_id];
     $isadmin           = newbb_isAdmin($forum_obj);
 }
 
 /* Only admin has access to admin mode */
 if (!$isadmin && $mode === 2) {
-    $status = in_array($status, array('active', 'pending', 'deleted'), true) ? '' : $status;
+    $status = in_array($status, ['active', 'pending', 'deleted'], true) ? '' : $status;
     $mode   = 0;
 }
 if ($mode) {
@@ -115,7 +115,7 @@ switch ($status) {
             $criteria_count->add(new Criteria('post_time', (int)$last_visit, '>')); // irmtfan add new criteria
             $criteria_post->add(new Criteria('p.post_time', (int)$last_visit, '>')); // irmtfan add new criteria
             // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-            $topics         = array();
+            $topics         = [];
             $topic_lastread = newbb_getcookie('LT', true);
             if (count($topic_lastread) > 0) {
                 foreach ($topic_lastread as $id => $time) {
@@ -144,7 +144,7 @@ switch ($status) {
 $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
 $user_karma   = $karmaHandler->getUserKarma();
 
-$valid_modes     = array('flat', 'compact');
+$valid_modes     = ['flat', 'compact'];
 $viewmode_cookie = newbb_getcookie('V');
 
 if ('compact' === XoopsRequest::getString('viewmode', '', 'GET')) {
@@ -157,7 +157,7 @@ $viewmode = in_array($viewmode, $valid_modes) ? $viewmode : $valid_modes[0];
 $postCount = $postHandler->getPostCount($criteria_count, $join);// irmtfan add join for read_mode = 2
 $posts     = $postHandler->getPostsByLimit($criteria_post, $post_perpage, $start, $join);// irmtfan add join for read_mode = 2
 
-$poster_array = array();
+$poster_array = [];
 if (count($posts) > 0) {
     foreach (array_keys($posts) as $id) {
         $poster_array[$posts[$id]->getVar('uid')] = 1;
@@ -183,11 +183,11 @@ if (!empty($forum_id)) {
         redirect_header(XOOPS_URL . '/index.php', 2, _MD_NORIGHTTOACCESS);
     }
     if ($forum_obj->getVar('parent_forum')) {
-        $parent_forum_obj = $forumHandler->get($forum_obj->getVar('parent_forum'), array('forum_name'));
-        $parentforum      = array(
+        $parent_forum_obj = $forumHandler->get($forum_obj->getVar('parent_forum'), ['forum_name']);
+        $parentforum      = [
             'id'   => $forum_obj->getVar('parent_forum'),
             'name' => $parent_forum_obj->getVar('forum_name')
-        );
+        ];
         unset($parent_forum_obj);
         $xoopsTpl->assign_by_ref('parentforum', $parentforum);
     }
@@ -223,7 +223,7 @@ if (!empty($forum_id)) {
 $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 // irmtfan - remove icon_path and use newbbDisplayImage
 $xoopsTpl->assign('anonym_avatar', newbbDisplayImage('anonym'));
-$userid_array = array();
+$userid_array = [];
 if (count($poster_array) > 0) {
     $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
@@ -234,7 +234,7 @@ if (count($poster_array) > 0) {
     $users         = null;
 }
 
-$online = array();
+$online = [];
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
@@ -243,7 +243,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     }
 }
 
-$viewtopic_users = array();
+$viewtopic_users = [];
 
 if (count($userid_array) > 0) {
     require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
@@ -255,7 +255,7 @@ if (count($userid_array) > 0) {
 
 $pn           = 0;
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-static $suspension = array();
+static $suspension = [];
 foreach (array_keys($posts) as $id) {
     ++$pn;
 
@@ -267,11 +267,11 @@ foreach (array_keys($posts) as $id) {
     } else {
         $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" /></a>';
     }
-    $poster = array(
+    $poster = [
         'uid'  => 0,
         'name' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
         'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous'])
-    );
+    ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
     }
@@ -289,7 +289,7 @@ foreach (array_keys($posts) as $id) {
         $post_attachment = $post->displayAttachment();
     }
 
-    $thread_buttons = array();
+    $thread_buttons = [];
 
     if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
         if (!isset($suspension[$post->getVar('forum_id')])) {
@@ -376,9 +376,9 @@ foreach (array_keys($posts) as $id) {
                                              . $post->getVar('topic_id');
         $thread_buttons['report']['name']  = _MD_REPORT;
     }
-    $thread_action = array();
+    $thread_action = [];
 
-    $xoopsTpl->append('posts', array(
+    $xoopsTpl->append('posts', [
         'post_id'         => $post->getVar('post_id'),
         'topic_id'        => $post->getVar('topic_id'),
         'forum_id'        => $post->getVar('forum_id'),
@@ -395,7 +395,7 @@ foreach (array_keys($posts) as $id) {
         'thread_action'   => $thread_action,
         'thread_buttons'  => $thread_buttons,
         'poster'          => $poster
-    ));
+    ]);
 
     unset($thread_buttons, $poster);
 }
@@ -467,17 +467,17 @@ $xoopsTpl->assign('digest_link', $digest_link);
 $xoopsTpl->assign('unreplied_link', $unreplied_link);
 $xoopsTpl->assign('unread_link', $unread_link);
 
-$viewmode_options = array();
+$viewmode_options = [];
 if ($order === 'DESC') {
-    $viewmode_options[] = array(
+    $viewmode_options[] = [
         'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewpost.php?viewmode=flat&amp;order=ASC&amp;forum=' . $forum_id,
         'title' => _OLDESTFIRST
-    );
+    ];
 } else {
-    $viewmode_options[] = array(
+    $viewmode_options[] = [
         'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewpost.php?viewmode=flat&amp;order=DESC&amp;forum=' . $forum_id,
         'title' => _NEWESTFIRST
-    );
+    ];
 }
 
 //$xoopsTpl->assign('viewmode_compact', ($viewmode=="compact")?1:0);

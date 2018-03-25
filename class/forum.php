@@ -28,7 +28,7 @@ class Forum extends XoopsObject
         $this->initVar('forum_id', XOBJ_DTYPE_INT);
         $this->initVar('forum_name', XOBJ_DTYPE_TXTBOX);
         $this->initVar('forum_desc', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('forum_moderator', XOBJ_DTYPE_ARRAY, serialize(array()));
+        $this->initVar('forum_moderator', XOBJ_DTYPE_ARRAY, serialize([]));
         $this->initVar('forum_topics', XOBJ_DTYPE_INT);
         $this->initVar('forum_posts', XOBJ_DTYPE_INT);
         $this->initVar('forum_last_post_id', XOBJ_DTYPE_INT);
@@ -128,7 +128,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function &getByPermission($cat = 0, $permission = 'access', $tags = null, $asObject = true)
     {
-        $_cachedForums = array();
+        $_cachedForums = [];
         if (!$valid_ids = $this->getIdsByPermission($permission)) {
             return $_cachedForums;
         }
@@ -160,21 +160,21 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             return $forums;
         }
 
-        $forums_array = array();
-        $array_cat    = array();
-        $array_forum  = array();
+        $forums_array = [];
+        $array_cat    = [];
+        $array_forum  = [];
         if (!is_array($forums)) {
-            return array();
+            return [];
         }
         foreach (array_keys($forums) as $forumid) {
             $forum                                                  =& $forums[$forumid];
-            $forums_array[$forum->getVar('parent_forum')][$forumid] = array(
+            $forums_array[$forum->getVar('parent_forum')][$forumid] = [
                 'cid'   => $forum->getVar('cat_id'),
                 'title' => $forum->getVar('forum_name')
-            );
+            ];
         }
         if (!isset($forums_array[0])) {
-            $ret = array();
+            $ret = [];
 
             return $ret;
         }
@@ -205,7 +205,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.topic.php');
 
-        $criteria_vars = array('startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt');
+        $criteria_vars = ['startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt'];
         foreach ($criteria_vars as $var) {
             ${$var} = $criteria[$var];
         }
@@ -230,7 +230,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $criteria_approve = ' AND t.approved = 1';
         $post_on          = ' p.post_id = t.topic_last_post_id';
         $leftjoin         = ' LEFT JOIN ' . $this->db->prefix('bb_posts') . ' p ON p.post_id = t.topic_last_post_id';
-        $sort_array       = array();
+        $sort_array       = [];
         switch ($status) {
             case 'digest':
                 $criteria_extra = ' AND t.topic_digest = 1';
@@ -255,7 +255,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
-                        $topics         = array();
+                        $topics         = [];
                         $topic_lastread = newbb_getcookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
@@ -318,14 +318,14 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         $sticky  = 0;
-        $topics  = array();
-        $posters = array();
-        $reads   = array();
-        $types   = array();
+        $topics  = [];
+        $posters = [];
+        $reads   = [];
+        $types   = [];
 
         $typeHandler = xoops_getModuleHandler('type', 'newbb');
         $typen       = $typeHandler->getByForum($forum->getVar('forum_id'));
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
                 ++$sticky;
             }
@@ -414,7 +414,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
             }
             // START irmtfan move here
-            $topics[$myrow['topic_id']] = array(
+            $topics[$myrow['topic_id']] = [
                 'topic_id'             => $myrow['topic_id'],
                 'topic_icon'           => $topic_icon,
                 'type_id'              => $myrow['type_id'],
@@ -439,16 +439,16 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 'topic_forum_link'       => $forum_link,
                 'topic_excerpt'          => $topic_excerpt,
                 'stick'                  => empty($myrow['topic_sticky']),
-                'stats'                  => array(
+                'stats'                  => [
                     $myrow['topic_status'],
                     $myrow['topic_digest'],
                     $myrow['topic_replies']
-                ),
+                ],
                 /* irmtfan uncomment use ib the for loop*/
                 //"topic_poster"              => $topic_poster,/*irmtfan remove here and move to for loop*/
                 //"topic_last_poster"         => $topic_last_poster,/*irmtfan remove here and move to for loop*/
                 //"topic_folder"              => newbbDisplayImage($topic_folder,$topic_folder_text),/*irmtfan remove here and move to for loop*/
-            );
+            ];
             // END irmtfan move here
             /* users */
             $posters[$myrow['topic_poster']] = 1;
@@ -503,7 +503,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
         }
 
-        return array($topics, $sticky);
+        return [$topics, $sticky];
     }
 
     /**
@@ -543,7 +543,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
-                        $topics         = array();
+                        $topics         = [];
                         $topic_lastread = newbb_getcookie('LT', true);
                         if (count($topic_lastread) > 0) {
                             foreach ($topic_lastread as $id => $time) {
@@ -691,7 +691,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     // START irmtfan rewrite forum cleanOrphan function. add parent_forum and cat_id orphan check
     //    public function cleanOrphan(array $forum_ids = array())
-    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '', $forum_ids = array())
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '', $forum_ids = [])
     {
         // check parent_forum orphan forums
         if (empty($forum_ids)) {
@@ -792,12 +792,13 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
      */
     public function getSubforumStats($subforums = null)
     {
-        $stats = array();
+        $stats = [];
+        $sub_forums = [];
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.forum.php');
 
         $_subforums = newbb_getSubForum();
-        if (empty($subforums)) {
+        if (null === $subforums) {
             $sub_forums = $_subforums;
         } else {
             foreach ($subforums as $id) {
@@ -807,7 +808,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             }
         }
 
-        $forums_id = array();
+        $forums_id = [];
         foreach (array_keys($sub_forums) as $id) {
             if (empty($sub_forums[$id])) {
                 continue;
@@ -822,16 +823,16 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             return $stats;
         }
 
-        $forum_stats = array();
-        while ($row = $this->db->fetchArray($result)) {
-            $forum_stats[$row['id']] = array('topics' => $row['topics'], 'posts' => $row['posts']);
+        $forum_stats = [];
+        while (false !== ($row = $this->db->fetchArray($result))) {
+            $forum_stats[$row['id']] = ['topics' => $row['topics'], 'posts' => $row['posts']];
         }
 
         foreach (array_keys($sub_forums) as $id) {
             if (empty($sub_forums[$id])) {
                 continue;
             }
-            $stats[$id] = array('topics' => 0, 'posts' => 0);
+            $stats[$id] = ['topics' => 0, 'posts' => 0];
             foreach ($sub_forums[$id] as $fid) {
                 $stats[$id]['topics'] += $forum_stats[$fid]['topics'];
                 $stats[$id]['posts'] += $forum_stats[$fid]['posts'];
@@ -851,14 +852,14 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     {
         global $myts;
 
-        $posts     = array();
-        $posts_obj = array();
+        $posts     = [];
+        $posts_obj = [];
         foreach (array_keys($forums) as $id) {
             $posts[] = $forums[$id]['forum_last_post_id'];
         }
         if (!empty($posts)) {
             $postHandler = xoops_getModuleHandler('post', 'newbb');
-            $tags_post   = array('uid', 'topic_id', 'post_time', 'poster_name', 'icon');
+            $tags_post   = ['uid', 'topic_id', 'post_time', 'poster_name', 'icon'];
             if (!empty($length_title_index)) {
                 $tags_post[] = 'subject';
             }
@@ -866,15 +867,15 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
 
         // Get topic/post stats per forum
-        $stats_forum = array();
+        $stats_forum = [];
 
         if (!empty($count_subforum)) {
             $stats_forum = $this->getSubforumStats(array_keys($forums)); // irmtfan uncomment to count sub forum posts/topics
         }
 
-        $users  = array();
-        $reads  = array();
-        $topics = array();
+        $users  = [];
+        $reads  = [];
+        $topics = [];
 
         foreach (array_keys($forums) as $id) {
             $forum =& $forums[$id];
@@ -905,13 +906,13 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $forum_isread = newbb_isRead('forum', $reads);
         $users_linked = newbb_getUnameFromIds(array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
-        $forums_array   = array();
+        $forums_array   = [];
         $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
 
         foreach (array_keys($forums) as $id) {
             $forum =& $forums[$id];
 
-            $_forum_data                 = array();
+            $_forum_data                 = [];
             $_forum_data['forum_order']  = $forum['forum_order'];
             $_forum_data['forum_id']     = $id;
             $_forum_data['forum_cid']    = $forum['cat_id'];
@@ -921,7 +922,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $_forum_data['forum_posts']  = $forum['forum_posts'] + @$stats_forum[$id]['posts'];
             //$_forum_data["forum_type"]= $forum['forum_type'];
 
-            $forum_moderators = array();
+            $forum_moderators = [];
             if (!empty($moderators[$id])) {
                 foreach (@$moderators[$id] as $moderator) {
                     $forum_moderators[] = @$users_linked[$moderator];
@@ -983,12 +984,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $pid         = (int)$pid;
         $perm_string = $permission;
         if (!is_array($tags) || count($tags) === 0) {
-            $tags = array('forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id');
+            $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
         $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
 
         require_once __DIR__ . '/tree.php';
-        $forums_structured = array();
+        $forums_structured = [];
         foreach (array_keys($forums_obj) as $key) {
             $forums_structured[$forums_obj[$key]->getVar('cat_id')][$key] = $forums_obj[$key];
         }
@@ -1019,12 +1020,12 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $pid         = (int)$pid;
         $perm_string = $permission;
         if (!is_array($tags) || count($tags) === 0) {
-            $tags = array('forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id');
+            $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
         $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
 
         require_once __DIR__ . '/tree.php';
-        $forums_structured = array();
+        $forums_structured = [];
         foreach (array_keys($forums_obj) as $key) {
             $forum_obj                                             =& $forums_obj[$key];
             $forums_structured[$forum_obj->getVar('cat_id')][$key] = $forums_obj[$key];
@@ -1055,7 +1056,10 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         }
         $parents_list = $this->getList(new Criteria('forum_id', '(' . implode(', ', $parents) . ')', 'IN'));
         foreach ($parents as $key => $id) {
-            $ret[] = array('forum_id' => $id, 'forum_name' => $parents_list[$id]);
+            $ret[] = [
+                'forum_id'   => $id,
+                'forum_name' => $parents_list[$id]
+            ];
         }
         unset($parents, $parents_list);
 
@@ -1079,10 +1083,10 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         if (empty($values)) {
             return $validForums;
         }
-        $values = is_numeric($values) ? array($values) : $values;
+        $values = is_numeric($values) ? [$values] : $values;
         //parse negative values to category IDs
-        $forums = array();
-        $cats   = array();
+        $forums = [];
+        $cats   = [];
         foreach ($values as $val) {
             if ($val == 0) {
                 // value=0 => all valid forums

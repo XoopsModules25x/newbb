@@ -28,8 +28,8 @@ if (!$topicHandler->getPermission($forum_obj, 0, 'post')) {
     /*
      * Build the page query
      */
-    $query_vars  = array('forum', 'order', 'mode', 'viewmode');
-    $query_array = array();
+    $query_vars  = ['forum', 'order', 'mode', 'viewmode'];
+    $query_array = [];
     foreach ($query_vars as $var) {
         if (XoopsRequest::getString($var, '', 'GET')) {
             $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');

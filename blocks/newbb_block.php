@@ -66,7 +66,7 @@ function b_newbb_show($options)
     mod_loadFunctions('time', 'newbb');
 
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -137,11 +137,11 @@ function b_newbb_show($options)
         return false;
     }
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    $types              = array();
+    $rows               = [];
+    $author             = [];
+    $types              = [];
 
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
         if ($row['type_id'] > 0) {
@@ -235,7 +235,7 @@ function b_newbb_topic_show($options)
     global $accessForums;
     mod_loadFunctions('time', 'newbb');
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -321,10 +321,10 @@ function b_newbb_topic_show($options)
         return $block;
     }
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    $types              = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $rows               = [];
+    $author             = [];
+    $types              = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]                       = $row;
         $author[$row['topic_poster']] = 1;
         if ($row['type_id'] > 0) {
@@ -411,7 +411,7 @@ function b_newbb_post_show($options)
 
     mod_loadFunctions('time', 'newbb');
     $myts          = MyTextSanitizer::getInstance();
-    $block         = array();
+    $block         = [];
     $i             = 0;
     $order         = '';
     $extraCriteria = '';
@@ -486,9 +486,9 @@ function b_newbb_post_show($options)
         return $block;
     }
     $block['disp_mode'] = ($options[0] === 'text') ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
-    $rows               = array();
-    $author             = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $rows               = [];
+    $author             = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
     }
@@ -575,10 +575,10 @@ function b_newbb_post_show($options)
 function b_newbb_author_show($options)
 {
     global $accessForums;
-    //    global $newbbConfig;
+    global $newbbConfig;
 
     $myts  = MyTextSanitizer::getInstance();
-    $block = array();
+    $block = [];
     //    $i              = 0;
     $type          = 'topic';
     $order         = 'count';
@@ -646,8 +646,8 @@ function b_newbb_author_show($options)
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
-    $author = array();
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $author = [];
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $author[$row['author']]['count'] = $row['count'];
     }
     if (count($author) < 1) {

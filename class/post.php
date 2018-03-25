@@ -40,7 +40,7 @@ newbb_load_object();
 class Post extends XoopsObject
 {
     //class Post extends XoopsObject {
-    public $attachmentArray = array();
+    public $attachmentArray = [];
 
     /**
      *
@@ -137,13 +137,13 @@ class Post extends XoopsObject
         if (!is_array($attachOld) || count($attachOld) < 1) {
             return true;
         }
-        $this->attachmentArray = array();
+        $this->attachmentArray = [];
 
         if ($attachArray === null) {
             $attachArray = array_keys($attachOld);
         } // to delete all!
         if (!is_array($attachArray)) {
-            $attachArray = array($attachArray);
+            $attachArray = [$attachArray];
         }
 
         foreach ($attachOld as $key => $attach) {
@@ -176,12 +176,12 @@ class Post extends XoopsObject
         $this->attachmentArray = $this->getAttachment();
         if ($name_saved) {
             $key                         = (string)(time() + $counter++);
-            $this->attachmentArray[$key] = array(
+            $this->attachmentArray[$key] = [
                 'name_saved'  => $name_saved,
                 'nameDisplay' => isset($nameDisplay) ? $nameDisplay : $name_saved,
                 'mimetype'    => $mimetype,
                 'numDownload' => isset($numDownload) ? (int)$numDownload : 0
-            );
+            ];
         }
         $attachmentSave = null;
         if (is_array($this->attachmentArray)) {
@@ -207,7 +207,7 @@ class Post extends XoopsObject
             $iconHandler = newbbGetIconHandler();
             $mime_path   = $iconHandler->getPath('mime');
             include_once __DIR__ . '/../include/functions.image.php';
-            $image_extensions = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // need improve !!!
+            $image_extensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp']; // need improve !!!
             $post_attachment .= '<br><strong>' . _MD_ATTACHMENT . '</strong>:';
             $post_attachment .= '<br><hr size="1" noshade="noshade" /><br>';
             foreach ($attachments as $key => $att) {
@@ -308,7 +308,7 @@ class Post extends XoopsObject
                 $edit_user = $GLOBALS['xoopsUser']->getVar('uname');
             }
         }
-        $post_edit              = array();
+        $post_edit              = [];
         $post_edit['edit_user'] = $edit_user; // The proper way is to store uid instead of name. However, to save queries when displaying, the current way is ok.
         $post_edit['edit_time'] = time();
         $post_edit['edit_msg']  = $post_editmsg;
@@ -318,7 +318,7 @@ class Post extends XoopsObject
             $post_edits = unserialize(base64_decode($post_edits));
         }
         if (!is_array($post_edits)) {
-            $post_edits = array();
+            $post_edits = [];
         }
         $post_edits[] = $post_edit;
         $post_edit    = base64_encode(serialize($post_edits));
@@ -345,7 +345,7 @@ class Post extends XoopsObject
             $post_edits = unserialize(base64_decode($post_edits));
         }
         if (!isset($post_edits) || !is_array($post_edits)) {
-            $post_edits = array();
+            $post_edits = [];
         }
         if (is_array($post_edits) && count($post_edits) > 0) {
             foreach ($post_edits as $postedit) {
@@ -384,7 +384,7 @@ class Post extends XoopsObject
         $karmaHandler = xoops_getModuleHandler('karma', 'newbb');
         $user_karma   = $karmaHandler->getUserKarma();
 
-        $post               = array();
+        $post               = [];
         $post['attachment'] = false;
         $post_text          = newbb_displayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'),
                                                  $this->getVar('dobr'));
@@ -487,8 +487,8 @@ class Post extends XoopsObject
         $topic_id = $this->getVar('topic_id');
         $forum_id = $this->getVar('forum_id');
 
-        $query_vars              = array('status', 'order', 'start', 'mode', 'viewmode');
-        $query_array             = array();
+        $query_vars              = ['status', 'order', 'start', 'mode', 'viewmode'];
+        $query_array             = [];
         $query_array['topic_id'] = "topic_id={$topic_id}";
         foreach ($query_vars as $var) {
             if (XoopsRequest::getString($var, '', 'GET')) {
@@ -536,11 +536,11 @@ class Post extends XoopsObject
             $poster = $viewtopic_users[$this->getVar('uid')];
         } else {
             $name   = ($post_name = $this->getVar('poster_name')) ? $post_name : $name_anonymous;
-            $poster = array(
+            $poster = [
                 'poster_uid' => 0,
                 'name'       => $name,
                 'link'       => $name
-            );
+            ];
         }
 
         if ($posticon = $this->getVar('icon')) {
@@ -549,8 +549,8 @@ class Post extends XoopsObject
             $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/icons/posticon.gif" alt="" /></a>';
         }
 
-        $thread_buttons = array();
-        $mod_buttons    = array();
+        $thread_buttons = [];
+        $mod_buttons    = [];
 
         if ($isadmin && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') !== $this->getVar('uid'))
             && $this->getVar('uid') > 0
@@ -620,7 +620,7 @@ class Post extends XoopsObject
             $thread_buttons['report']['name']  = _MD_REPORT;
         }
 
-        $thread_action = array();
+        $thread_action = [];
         // irmtfan add pdf permission
         if (file_exists(XOOPS_PATH . '/vendor/tcpdf/tcpdf.php')
             && $topicHandler->getPermission($forum_id, $topic_status, 'pdf')
@@ -684,7 +684,7 @@ class Post extends XoopsObject
             $thread_action['social_wong']['target'] = '_blank';
         }
 
-        $post = array(
+        $post = [
             'post_id'         => $post_id,
             'post_parent_id'  => $this->getVar('pid'),
             'post_date'       => newbb_formatTimestamp($this->getVar('post_time')),
@@ -704,7 +704,7 @@ class Post extends XoopsObject
             'mod_buttons'     => $mod_buttons,
             'poster'          => $poster,
             'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>'
-        );
+        ];
 
         unset($thread_buttons, $mod_buttons, $eachposter);
 
@@ -776,8 +776,8 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
                   . $approved
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
-        $ret    = array();
-        while ($myrow = $this->db->fetchArray($result)) {
+        $ret    = [];
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $this->create(false);
             $post->assignVars($myrow);
 
@@ -904,7 +904,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
             $topic_obj = $topicHandler->create();
         }
         $textHandler    = xoops_getModuleHandler('text', 'newbb');
-        $post_text_vars = array('post_text', 'post_edit', 'dohtml', 'doxcode', 'dosmiley', 'doimage', 'dobr');
+        $post_text_vars = ['post_text', 'post_edit', 'dohtml', 'doxcode', 'dosmiley', 'doimage', 'dobr'];
         if ($post->isNew()) {
             if (!$topic_id = $post->getVar('topic_id')) {
                 $topic_obj->setVar('topic_title', $post->getVar('subject', 'n'));
@@ -1180,7 +1180,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
      */
     public function getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
     {
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT p.*, t.* ' . ' FROM ' . $this->db->prefix('bb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' AS t ON t.post_id = p.post_id';
         if (!empty($join)) {
             $sql .= $join;
@@ -1196,7 +1196,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $this->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;

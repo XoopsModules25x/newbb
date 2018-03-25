@@ -7,7 +7,7 @@
         <td nowrap="nowrap"><{$smarty.const._MD_LASTPOST}></td>
     </tr>
     <!-- start subforums -->
-    <{foreachq item=sforum from=$subforum}>
+    <{foreach item=sforum from=$subforum}>
     <tr>
         <td class="even" align="center" valign="middle"><{$sforum.forum_folder}></td>
         <td class="odd" onclick="window.location='<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>'">

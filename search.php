@@ -49,7 +49,7 @@ mod_loadFunctions('text', 'newbb'); // irmtfan add text functions
 include_once $GLOBALS['xoops']->path('modules/newbb/include/search.inc.php');
 $limit = $GLOBALS['xoopsModuleConfig']['topics_per_page'];
 
-$queries              = array();
+$queries              = [];
 $andor                = '';
 $start                = 0;
 $uid                  = 0;
@@ -95,7 +95,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $start = XoopsRequest::getInt('start', 0, 'GET');
     $forum = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', null, 'POST'), 'GET');
     if (empty($forum) || $forum === 'all' || (is_array($forum) && in_array('all', $forum, true))) {
-        $forum = array();
+        $forum = [];
     } elseif (!is_array($forum)) {
         $forum = array_map('intval', explode('|', $forum));
     }
@@ -111,7 +111,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
 
     $addterms             = XoopsRequest::getString('andor', XoopsRequest::getString('andor', '', 'GET'), 'POST');
     $next_search['andor'] = $addterms;
-    if (!in_array(strtolower($addterms), array('or', 'and', 'exact'), true)) {
+    if (!in_array(strtolower($addterms), ['or', 'and', 'exact'], true)) {
         // irmtfan change default to AND
         $andor = 'AND';
     } else {
@@ -126,8 +126,8 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         if (!$result = $GLOBALS['xoopsDB']->query('SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_ERROROCCURED);
         }
-        $uid = array();
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        $uid = [];
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $uid[] = $row['uid'];
         }
     } else {
@@ -138,7 +138,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $query               = trim($term);
 
     if ($andor !== 'EXACT') {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
+        $ignored_queries = []; // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
             $q = trim($q);
@@ -156,11 +156,11 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         if (!$uname_required && (strlen($query) < $xoopsConfigSearch['keyword_min'])) {
             redirect_header(XOOPS_URL . '/search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = array($myts->addSlashes($query));
+        $queries = [$myts->addSlashes($query)];
     }
 
     // entries must be lowercase
-    $allowed = array('p.post_time', 'p.subject'); // irmtfan just post time and subject
+    $allowed = ['p.post_time', 'p.subject']; // irmtfan just post time and subject
 
     $sortby                = XoopsRequest::getString('sortby', XoopsRequest::getString('sortby', null, 'POST'), 'GET');
     $next_search['sortby'] = $sortby;
@@ -178,7 +178,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     // END irmtfan use criteria -  add since and topic search
 
     if ($uname_required && (!$uid || count($uid) < 1)) {
-        $results = array();
+        $results = [];
     } // irmtfan bug fix array()
     else {
         $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra);
@@ -215,7 +215,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 continue;
             }
             // add newbb_highlightText function to subject - add post_text
-            $xoopsTpl->append('results', array(
+            $xoopsTpl->append('results', [
                 'forum_name' => $row['forum_name'],
                 'forum_link' => $row['forum_link'],
                 'link'       => $row['link'],
@@ -223,13 +223,13 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 'poster'     => $row['poster'],
                 'post_time'  => formatTimestamp($row['time'], 'm'),
                 'post_text'  => $post_text
-            ));
+            ]);
         }
         // END irmtfan add show search post_text
         unset($results);
 
         if (count($next_search) > 0) {
-            $items = array();
+            $items = [];
             foreach ($next_search as $para => $val) {
                 if (!empty($val) || $para === 'selecthtml') {
                     $items[] = "{$para}={$val}";

@@ -83,12 +83,12 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
     $sql .= ' AND p.post_time<= ' . $prune_ddays . ' ';
     // Ok now we have the sql query completed, go for topic_id's and posts_id's
-    $topics = array();
+    $topics = [];
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
         return _MD_ERROR;
     }
     // Dave_L code
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $topics[] = $row['topic_id'];
     }
     $topics_number = count($topics);
@@ -98,12 +98,12 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     if ('' !== $topic_list) {
         $sql = 'SELECT post_id FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . ' WHERE topic_id IN (' . $topic_list . ')';
 
-        $posts = array();
+        $posts = [];
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return _MD_ERROR;
         }
         // Dave_L code
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $posts[] = $row['post_id'];
         }
         $posts_number = count($posts);
@@ -172,7 +172,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
     $days = new XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
-    $days->addOptionArray(array(
+    $days->addOptionArray([
                               604800   => _AM_NEWBB_PRUNE_WEEK,
                               1209600  => _AM_NEWBB_PRUNE_2WEEKS,
                               2592000  => _AM_NEWBB_PRUNE_MONTH,
@@ -180,7 +180,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                               10368000 => _AM_NEWBB_PRUNE_4MONTH,
                               31536000 => _AM_NEWBB_PRUNE_YEAR,
                               63072000 => _AM_NEWBB_PRUNE_2YEARS
-                          ));
+                          ]);
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
@@ -202,7 +202,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             do {
                 $checkbox->addOption($myrow['forum_id'], $myrow['forum_name']);
                 $radiobox->addOption($myrow['forum_id'], $myrow['forum_name']);
-            } while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result));
+            } while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result);
         } else {
             echo "NO FORUMS";
         }
@@ -231,7 +231,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $sform->addElement($lock_confirmation);
 
     $hot_confirmation = new XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
-    $hot_confirmation->addOptionArray(array(
+    $hot_confirmation->addOptionArray([
                                           '0'  => 0,
                                           '5'  => 5,
                                           '10' => 10,
@@ -239,7 +239,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                                           '20' => 20,
                                           '25' => 25,
                                           '30' => 30
-                                      ));
+                                      ]);
     $sform->addElement($hot_confirmation);
 
     $sform->addElement(/*$radiobox*/

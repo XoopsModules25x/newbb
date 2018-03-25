@@ -23,7 +23,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = xoops_getModuleHandler('category');
-$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), array('cat_title'));
+$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), ['cat_title']);
 
 //check banning
 $moderated_id = (is_object($GLOBALS['xoopsUser'])
@@ -45,12 +45,12 @@ if ($moderateHandler->verifyUser($moderated_id, $moderated_ip, $moderated_forum)
     exit();
 }
 
-$xoopsTpl->assign('category', array('id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')));
+$xoopsTpl->assign('category', ['id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')]);
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
-$xoopsTpl->assign(array(
+$xoopsTpl->assign([
                       'forum_id'   => $forum_obj->getVar('forum_id'),
                       'forum_name' => $forum_obj->getVar('forum_name')
-                  ));
+                  ]);
 
 if (!is_object($topic_obj)) {
     $topic_obj = $topicHandler->create();
@@ -70,7 +70,7 @@ if ($topic_obj->isNew()) {
 }
 $xoopsTpl->assign('form_title', $form_title);
 
-foreach (array(
+foreach ([
              'start',
              'topic_id',
              'post_id',
@@ -78,17 +78,17 @@ foreach (array(
              'isreply',
              'isedit',
              'contents_preview'
-         ) as $getint) {
+         ] as $getint) {
     ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
-foreach (array(
+foreach ([
              'order',
              'viewmode',
              'hidden',
              'newbb_form',
              'icon',
              'op'
-         ) as $getstr) {
+         ] as $getstr) {
     ${$getstr} = XoopsRequest::getString($getstr, ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
@@ -162,7 +162,7 @@ if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
 
 $forum_form->addElement(new XoopsFormSelectEditor($forum_form, 'editor', $editor, $nohtml, @$GLOBALS['xoopsModuleConfig']['editor_allowed'][0]));
 
-$editor_configs           = array();
+$editor_configs           = [];
 $editor_configs['name']   = 'message';
 $editor_configs['value']  = $message;
 $editor_configs['rows']   = empty($GLOBALS['xoopsModuleConfig']['editor_rows']) ? 10 : $GLOBALS['xoopsModuleConfig']['editor_rows'];

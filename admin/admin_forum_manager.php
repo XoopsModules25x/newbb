@@ -152,13 +152,13 @@ switch ($op) {
         $forum_obj->setVar('forum_name', XoopsRequest::getString('forum_name', '', 'POST'));
         $forum_obj->setVar('forum_desc', XoopsRequest::getString('forum_desc', '', 'POST'));
         $forum_obj->setVar('forum_order', XoopsRequest::getInt('forum_order', 0, 'POST'));
-        $forum_obj->setVar('forum_moderator', XoopsRequest::getArray('forum_moderator', array(), 'POST'));
+        $forum_obj->setVar('forum_moderator', XoopsRequest::getArray('forum_moderator', [], 'POST'));
         $forum_obj->setVar('parent_forum', XoopsRequest::getInt('parent_forum', 0, 'POST'));
         $forum_obj->setVar('attach_maxkb', XoopsRequest::getInt('attach_maxkb', 0, 'POST'));
         $forum_obj->setVar('attach_ext', XoopsRequest::getString('attach_ext', '', 'POST'));
         $forum_obj->setVar('hot_threshold', XoopsRequest::getInt('hot_threshold', 0, 'POST'));
         if (XoopsRequest::getInt('parent_forum', 0, 'POST')) {
-            $parent_obj      = $forumHandler->get(XoopsRequest::getInt('parent_forum', 0, 'POST'), array('cat_id'));
+            $parent_obj      = $forumHandler->get(XoopsRequest::getInt('parent_forum', 0, 'POST'), ['cat_id']);
             $_POST['cat_id'] = $parent_obj->getVar('cat_id');
         }
         $forum_obj->setVar('cat_id', XoopsRequest::getInt('cat_id', 0, 'POST'));
@@ -202,7 +202,7 @@ switch ($op) {
 
     case 'del':
         if (1 !== XoopsRequest::getInt('confirm', 0, 'POST')) {
-            xoops_confirm(array('op' => 'del', 'forum' => XoopsRequest::getInt('forum', 0, 'GET'), 'confirm' => 1), 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
+            xoops_confirm(['op' => 'del', 'forum' => XoopsRequest::getInt('forum', 0, 'GET'), 'confirm' => 1], 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
             break;
         } else {
             $forum_obj = $forumHandler->get(XoopsRequest::getInt('forum', 0, 'POST'));

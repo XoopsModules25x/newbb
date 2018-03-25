@@ -29,7 +29,7 @@ if (XoopsRequest::getInt('mark_read', 0)) { //TODO mb check if this is GET or PO
 $viewcat         = XoopsRequest::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
 $categoryHandler = xoops_getModuleHandler('category', 'newbb');
 
-$categories = array();
+$categories = [];
 if (!$viewcat) {
     $categories        = $categoryHandler->getByPermission('access', null, false);
     $forum_index_title = '';
@@ -78,7 +78,7 @@ $postHandler  = xoops_getModuleHandler('post', 'newbb');
 $forums_allowed = $forumHandler->getIdsByPermission();
 
 /* fetch top forums */
-$forums_top = array();
+$forums_top = [];
 
 if (!empty($forums_allowed)) {
     $crit_top = new CriteriaCompo(new Criteria('parent_forum', 0));
@@ -89,7 +89,7 @@ if (!empty($forums_allowed)) {
 
 /* fetch subforums if required to display */
 if ('hidden' === $GLOBALS['xoopsModuleConfig']['subforum_display'] || 0 === count($forums_top)) {
-    $forums_sub = array();
+    $forums_sub = [];
 } else {
     $crit_sub = new CriteriaCompo(new Criteria('parent_forum', '(' . implode(', ', $forums_top) . ')', 'IN'));
     $crit_sub->add(new Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
@@ -98,7 +98,7 @@ if ('hidden' === $GLOBALS['xoopsModuleConfig']['subforum_display'] || 0 === coun
 
 /* Fetch forum data */
 $forums_available = array_merge($forums_top, $forums_sub);
-$forums_array     = array();
+$forums_array     = [];
 $newtopics        = 0;
 $deletetopics     = 0;
 $newposts         = 0;
@@ -147,16 +147,16 @@ if (count($forums_array) > 0) {
     }
 }
 
-$category_array = array();
+$category_array = [];
 $toggles        = newbb_getcookie('G', true);
 $iconHandler    = newbbGetIconHandler();
-$category_icon  = array(
+$category_icon  = [
     'expand'   => $iconHandler->getImageSource('minus'),
     'collapse' => $iconHandler->getImageSource('plus')
-);
+];
 
 foreach (array_keys($categories) as $id) {
-    $forums = array();
+    $forums = [];
     $onecat = $categories[$id];
 
     $cat_element_id = 'cat_' . $onecat['cat_id'];
@@ -177,21 +177,21 @@ foreach (array_keys($categories) as $id) {
         $forums = $forumsByCat[$onecat['cat_id']];
     }
 
-    $cat_sponsor = array();
+    $cat_sponsor = [];
     @list($url, $title) = array_map('trim', preg_split('/ /', $onecat['cat_url'], 2));
     if ('' === $title) {
         $title = $url;
     }
     $title = $myts->htmlSpecialChars($title);
     if ('' !== $url) {
-        $cat_sponsor = array('title' => $title, 'link' => formatURL($url));
+        $cat_sponsor = ['title' => $title, 'link' => formatURL($url)];
     }
     $cat_image = $onecat['cat_image'];
     $cat_image = '';
     if ('' !== $cat_image && 'blank.gif' !== $cat_image && 0 !== (int)$cat_image) {
         $cat_image = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/assets/images/category/' . $cat_image;
     }
-    $category_array[] = array(
+    $category_array[] = [
         'cat_id'           => $onecat['cat_id'],
         'cat_title'        => $myts->displayTarea($onecat['cat_title'], 1),
         'cat_image'        => $cat_image,
@@ -201,7 +201,7 @@ foreach (array_keys($categories) as $id) {
         'cat_display'      => $cat_display,
         'cat_displayImage' => $cat_displayImage,
         'forums'           => $forums
-    );
+    ];
 }
 
 unset($categories, $forums_array, $forumsByCat);
@@ -209,14 +209,14 @@ $xoopsTpl->assign_by_ref('category_icon', $category_icon);
 $xoopsTpl->assign_by_ref('categories', $category_array);
 $xoopsTpl->assign('notifyicon', $category_icon);
 
-$xoopsTpl->assign(array(
+$xoopsTpl->assign([
                       'index_title' => sprintf(_MD_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
                       'index_desc'  => _MD_TOSTART
-                  ));
+                  ]);
 
 /* display user stats */
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
-    $userstats = array();
+    $userstats = [];
     if (is_object($GLOBALS['xoopsUser'])) {
         $userstatsHandler         = xoops_getModuleHandler('userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
@@ -235,7 +235,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
 
 /* display forum stats */
 $statsHandler = xoops_getModuleHandler('stats');
-$stats        = $statsHandler->getStats(array_merge(array(0), $forums_available));
+$stats        = $statsHandler->getStats(array_merge([0], $forums_available));
 $xoopsTpl->assign_by_ref('stats', $stats);
 $xoopsTpl->assign('subforum_display', $GLOBALS['xoopsModuleConfig']['subforum_display']);
 $xoopsTpl->assign('mark_read', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/index.php?mark_read=1');
@@ -260,18 +260,18 @@ $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
 
 /* To be removed */
 if ($isadmin) {
-    $xoopsTpl->assign('forum_index_cpanel', array('link' => 'admin/index.php', 'name' => _MD_ADMINCP));
+    $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_ADMINCP]);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
     $xoopsTpl->assign('rss_enable', 1);
     $xoopsTpl->assign('rss_button', newbbDisplayImage('rss', 'RSS feed'));
 }
-$xoopsTpl->assign(array(
+$xoopsTpl->assign([
                       'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWPOSTS),
                       'img_forum'     => newbbDisplayImage('forum', _MD_NONEWPOSTS),
                       'img_subforum'  => newbbDisplayImage('subforum')
-                  ));
+                  ]);
 
 // irmtfan move to footer.php
 include_once __DIR__ . '/footer.php';

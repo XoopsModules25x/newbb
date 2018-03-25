@@ -66,7 +66,7 @@ if (!$approved = $forumtopic->getVar('approved')) {
 $forumHandler    = xoops_getModuleHandler('forum', 'newbb');
 $forum           = $forum ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
-$parent_forums   = array();
+$parent_forums   = [];
 $parent_forums   = $forumHandler->getParents($viewtopic_forum);
 $pf_title        = '';
 if ($parent_forums) {
@@ -145,7 +145,7 @@ $pdf->SetSubject($pdf_data['subject']);
 $pdf->SetKeywords($pdf_data['keywords']);
 
 //$pdf->SetHeaderData('', '5', $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine']);
-$pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine'], array(0, 64, 255), array(0, 64, 128));
+$pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdf_data['HeadFirstLine'], $pdf_data['HeadSecondLine'], [0, 64, 255], [0, 64, 128]);
 
 //set margins
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
@@ -154,9 +154,9 @@ $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 //set auto page breaks
 $pdf->SetAutoPageBreak(true, 25);
 
-$pdf->setHeaderFont(array(PDF_FONT_NAME_SUB, '', PDF_FONT_SIZE_SUB));
-$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-$pdf->setFooterData($tc = array(0, 64, 0), $lc = array(0, 64, 128));
+$pdf->setHeaderFont([PDF_FONT_NAME_SUB, '', PDF_FONT_SIZE_SUB]);
+$pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA]);
+$pdf->setFooterData($tc = [0, 64, 0], $lc = [0, 64, 128]);
 
 $pdf->Open();
 $pdf->AddPage();

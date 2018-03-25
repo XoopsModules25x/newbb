@@ -35,7 +35,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $GPC = '_POST';
 }
 
-foreach (array('post_id', 'order', 'forum', 'topic_id') as $getint) {
+foreach (['post_id', 'order', 'forum', 'topic_id'] as $getint) {
     ${$getint} = (int)(@${$GPC}[$getint]);
 }
 $viewmode = (isset(${$GPC}['viewmode']) && ${$GPC}['viewmode'] !== 'flat') ? 'thread' : 'flat';
@@ -86,7 +86,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
             if (is_object($forum_obj)) {
                 $mods          = $forum_obj->getVar('forum_moderator');
-                $emails        = array();
+                $emails        = [];
                 $memberHandler = xoops_getHandler('member');
                 foreach ($mods as $mod) {
                     $thisUser = $memberHandler->getUser($mod);

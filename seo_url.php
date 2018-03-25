@@ -17,7 +17,7 @@ function seo_urls($s)
     $XPS_URL     = str_replace('/', '\/', quotemeta(XOOPS_URL));
     $module_name = str_replace('/', '\/', quotemeta(SEO_MODULE_NAME));
 
-    $search = array(
+    $search = [
 
         // Search URLs of modules' directory.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
@@ -27,7 +27,7 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(newtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i'
-    );
+    ];
 
     $s = preg_replace_callback($search, 'replace_links', $s);
 
@@ -192,8 +192,8 @@ function forum_seo_cat($_cat_id)
     }
     $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_categories');
     $result = $GLOBALS['xoopsDB']->query($query);
-    $_ret   = array();
-    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $_ret   = [];
+    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['cat_id']] = forum_seo_title($res['cat_title']);
     }
     XoopsCache::write($key, $_ret);
@@ -220,8 +220,8 @@ function forum_seo_forum($_cat_id)
     }
     $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
     $result = $GLOBALS['xoopsDB']->query($query);
-    $_ret   = array();
-    while ($res = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    $_ret   = [];
+    while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['forum_id']] = forum_seo_title($res['forum_name']);
     }
     XoopsCache::write($key, $_ret);
@@ -279,7 +279,7 @@ function forum_seo_title($title = '', $withExt = true)
     $title = rawurlencode(strtolower($title));
 
     // Transformation des ponctuations
-    $pattern = array(
+    $pattern = [
         '/%09/', // Tab
         '/%20/', // Space
         '/%21/', // !
@@ -308,8 +308,8 @@ function forum_seo_title($title = '', $withExt = true)
         '/%7D/', // }
         '/%7E/', // ~
         "/\./" // .
-    );
-    $rep_pat = array(
+    ];
+    $rep_pat = [
         '-',
         '-',
         '',
@@ -339,12 +339,12 @@ function forum_seo_title($title = '', $withExt = true)
         '-',
         '',
         ''
-    );
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     // Transformation des caractères accentués
     //
-    $pattern = array(
+    $pattern = [
         '/%B0/', // °
         '/%E8/', // è
         '/%E9/', // é
@@ -369,8 +369,8 @@ function forum_seo_title($title = '', $withExt = true)
         '/%E3%B6/', //
         '/%E3%A4/', //
         '/%E3%9F/' //
-    );
-    $rep_pat = array(
+    ];
+    $rep_pat = [
         '-',
         'e',
         'e',
@@ -395,7 +395,7 @@ function forum_seo_title($title = '', $withExt = true)
         'oe',
         'ae',
         'ss'
-    );
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     /*$string = str_replace(' ', '-', $title);

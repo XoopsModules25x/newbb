@@ -187,10 +187,10 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        $items_obj  = $itemHandler->getAll($criteria_topic, array('topic_last_post_id'));
-        $sticky_obj = $itemHandler->getAll($criteria_sticky, array('topic_last_post_id'));
+        $items_obj  = $itemHandler->getAll($criteria_topic, ['topic_last_post_id']);
+        $sticky_obj = $itemHandler->getAll($criteria_sticky, ['topic_last_post_id']);
         $items_obj += $sticky_obj;
-        $items = array();
+        $items = [];
         foreach (array_keys($items_obj) as $key) {
             $items[$key] = $items_obj[$key]->getVar('topic_last_post_id');
         }

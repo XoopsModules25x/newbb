@@ -165,7 +165,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         }
 
         $type            = $imginfo[2];
-        $supported_types = array();
+        $supported_types = [];
 
         if (!extension_loaded('gd')) {
             return false;

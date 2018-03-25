@@ -46,7 +46,7 @@ class Xmlrss
 
     public $max_items;
     public $max_item_description;
-    public $items = array();
+    public $items = [];
 
     /**
      *
@@ -60,7 +60,7 @@ class Xmlrss
         $this->image_width          = 88;
         $this->max_items            = 10;
         $this->max_item_description = 0;
-        $this->items                = array();
+        $this->items                = [];
     }
 
     /**
@@ -95,13 +95,13 @@ class Xmlrss
 
             $title         = $this->cleanup($title) . ' ' . $label;
             $pubdate       = $this->cleanup($pubdate);
-            $this->items[] = array(
+            $this->items[] = [
                 'title'       => $title,
                 'link'        => $link,
                 'guid'        => $link,
                 'description' => $description,
                 'pubdate'     => $pubdate
-            );
+            ];
         }
 
         return true;
@@ -147,7 +147,7 @@ class NewbbXmlrssHandler
      */
     public function &get(Xmlrss $rss)
     {
-        $rss_array                      = array();
+        $rss_array                      = [];
         $rss_array['xml_version']       = $rss->xml_version;
         $rss_array['xml_encoding']      = $rss->xml_encoding;
         $rss_array['rss_version']       = $rss->rss_version;

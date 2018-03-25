@@ -23,7 +23,7 @@ include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('class/xoopsblock.php');
 xoops_load('XoopsLocal');
 $op      = 'add';
-$goodOps = array(
+$goodOps = [
     'add',
     'save',
     'edit',
@@ -35,7 +35,7 @@ $goodOps = array(
     'restart',
     'restart_ok',
     'log'
-);
+];
 $op      = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'add';
 $op      = (!in_array($op, $goodOps)) ? 'add' : $op;
 
@@ -106,7 +106,7 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_POLL_CREATNEWPOLL . "</h4>\n";
-            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', array('topic_id' => $topic_id));
+            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
@@ -181,7 +181,7 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_POLL_EDITPOLL . "</h4>\n";
-            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', array('topic_id' => $topic_id));
+            $poll_obj->renderForm($_SERVER['PHP_SELF'], 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
@@ -389,7 +389,7 @@ switch ($op) {
                 $startTimestamp = $poll_obj->getVar('start_time'); //don't change start time
             }
 
-            $poll_vars = array(
+            $poll_vars = [
                 'user_id'     => XoopsRequest::getInt('user_id', $GLOBALS['xoopsUser']->uid(), 'POST'),
                 'question'    => XoopsRequest::getString('question', null, 'POST'),
                 'description' => XoopsRequest::getText('description', null, 'POST'),
@@ -403,7 +403,7 @@ switch ($op) {
                 'multiple'    => XoopsRequest::getInt('multiple', $classConstants::NOT_MULTIPLE_SELECT_POLL, 'POST'),
                 'multilimit'  => XoopsRequest::getInt('multilimit', $classConstants::MULTIPLE_SELECT_LIMITLESS, 'POST'),
                 'anonymous'   => XoopsRequest::getInt('anonymous', $classConstants::ANONYMOUS_VOTING_DISALLOWED, 'POST')
-            );
+            ];
             $poll_obj->setVars($poll_vars);
             $poll_id = $xpPollHandler->insert($poll_obj);
             if (!$poll_id) {
@@ -412,10 +412,10 @@ switch ($op) {
             }
 
             // now get the options
-            $optionIdArray    = XoopsRequest::getArray('option_id', array(), 'POST');
+            $optionIdArray    = XoopsRequest::getArray('option_id', [], 'POST');
             $optionIdArray    = array_map('intval', $optionIdArray);
-            $optionTextArray  = XoopsRequest::getArray('option_text', array(), 'POST');
-            $optionColorArray = XoopsRequest::getArray('option_color', array(), 'POST');
+            $optionTextArray  = XoopsRequest::getArray('option_text', [], 'POST');
+            $optionColorArray = XoopsRequest::getArray('option_color', [], 'POST');
 
             foreach ($optionIdArray as $key => $oId) {
                 if (!empty($oId) && ($option_obj = $xpOptHandler->get($oId))) {
@@ -604,7 +604,7 @@ switch ($op) {
 
     case 'delete':
         echo '<h4>' . _MD_POLL_POLLCONF . "</h4>\n";
-        xoops_confirm(array('op' => 'delete_ok', 'topic_id' => $topic_id, 'poll_id' => $poll_id), 'polls.php', sprintf(_MD_POLL_RUSUREDEL, $poll_obj->getVar('question')));
+        xoops_confirm(['op' => 'delete_ok', 'topic_id' => $topic_id, 'poll_id' => $poll_id], 'polls.php', sprintf(_MD_POLL_RUSUREDEL, $poll_obj->getVar('question')));
         break;
 
     case 'delete_ok':

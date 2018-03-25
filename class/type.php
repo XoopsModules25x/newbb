@@ -63,9 +63,9 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
      */
     public function getByForum($forums = null)
     {
-        $ret = array();
+        $ret = [];
 
-        $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : array((int)$forums)));
+        $forums = (is_array($forums) ? array_filter(array_map('intval', array_map('trim', $forums))) : (empty($forums) ? 0 : [(int)$forums]));
 
         $sql = '    SELECT o.type_id, o.type_name, o.type_color, l.type_order'
                . '     FROM '
@@ -81,13 +81,13 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
             return $ret;
         }
 
-        while ($myrow = $this->db->fetchArray($result)) {
-            $ret[$myrow[$this->keyName]] = array(
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
+            $ret[$myrow[$this->keyName]] = [
                 'type_id'    => $myrow[$this->keyName],
                 'type_order' => $myrow['type_order'],
                 'type_name'  => htmlspecialchars($myrow['type_name']),
                 'type_color' => htmlspecialchars($myrow['type_color'])
-            );
+            ];
         }
 
         return $ret;
@@ -108,9 +108,9 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         }
 
         $types_existing = $this->getByForum($forum_id);
-        $types_valid    = array();
-        $types_add      = array();
-        $types_update   = array();
+        $types_valid    = [];
+        $types_add      = [];
+        $types_update   = [];
         foreach (array_keys($types_existing) as $key) {
             if (empty($types[$key])) {
                 continue;
@@ -145,7 +145,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         }
 
         if (!empty($types_update)) {
-            $type_query = array();
+            $type_query = [];
             foreach ($types_update as $key) {
                 $order = $types[$key];
                 if ($types_existing[$key]['type_order'] == $order) {
@@ -158,7 +158,7 @@ class NewbbTypeHandler extends XoopsPersistableObjectHandler
         }
 
         if (!empty($types_add)) {
-            $type_query = array();
+            $type_query = [];
             foreach ($types_add as $key) {
                 $order = $types[$key];
                 //if (!in_array($key, $types_add)) continue;

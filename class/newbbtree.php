@@ -87,14 +87,14 @@ class newbbtree extends XoopsTree
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
     {
         if (!is_array($postTree_array)) {
-            $postTree_array = array();
+            $postTree_array = [];
         }
 
-        $newPostArray = array();
+        $newPostArray = [];
         $prefix .= $this->increment;
         foreach ($this->postArray as $post) {
             if ($post->getVar('pid') == $pid) {
-                $postTree_array[] = array(
+                $postTree_array[] = [
                     'prefix'      => $prefix,
                     'icon'        => $post->getVar('icon'),
                     'post_time'   => $post->getVar('post_time'),
@@ -103,7 +103,7 @@ class newbbtree extends XoopsTree
                     'subject'     => $post->getVar('subject'),
                     'poster_name' => $post->getVar('poster_name'),
                     'uid'         => $post->getVar('uid')
-                );
+                ];
                 $this->getPostTree($postTree_array, $post->getVar('post_id'), $prefix);
             } else {
                 $newPostArray[] = $post;

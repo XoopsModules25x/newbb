@@ -15,7 +15,7 @@ $post_id  = XoopsRequest::getArray('post_id', XoopsRequest::getArray('post_id', 
 $uid      = XoopsRequest::getInt('uid', 0, 'GET');
 
 $op   = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
-$op   = in_array($op, array('approve', 'delete', 'restore', 'split'), true) ? $op : '';
+$op   = in_array($op, ['approve', 'delete', 'restore', 'split'], true) ? $op : '';
 $mode = XoopsRequest::getInt('mode', 1, 'GET');
 
 if (0 === count($post_id) || 0 === count($op)) {
@@ -43,8 +43,8 @@ switch ($op) {
     case 'restore':
         $post_id = array_values($post_id);
         sort($post_id);
-        $topics = array();
-        $forums = array();
+        $topics = [];
+        $forums = [];
         foreach ($post_id as $post) {
             $post_obj = $postHandler->get($post);
             if ($post_obj->getVar('topic_id') < 1) {
@@ -65,8 +65,8 @@ switch ($op) {
     case 'approve':
         $post_id = array_values($post_id);
         sort($post_id);
-        $topics    = array();
-        $forums    = array();
+        $topics    = [];
+        $forums    = [];
         $criteria  = new Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
         $posts_obj = $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
@@ -98,7 +98,7 @@ switch ($op) {
         include_once __DIR__ . '/include/notification.inc.php';
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
-            $tags                = array();
+            $tags                = [];
             $tags['THREAD_NAME'] = $topic_list[$posts_obj[$post]->getVar('topic_id')];
             $tags['THREAD_URL']  = XOOPS_URL
                                    . '/modules/'
@@ -122,8 +122,8 @@ switch ($op) {
     case 'delete':
         $post_id = array_values($post_id);
         rsort($post_id);
-        $topics = array();
-        $forums = array();
+        $topics = [];
+        $forums = [];
         foreach ($post_id as $post) {
             $post_obj = $postHandler->get($post);
             if (!empty($topic_id) && $topic_id !== $post_obj->getVar('topic_id')) {
@@ -191,7 +191,7 @@ switch ($op) {
             $posts                       = $postHandler->getList($criteria);
 
             unset($criteria);
-            $post_update = array();
+            $post_update = [];
             foreach ($posts as $postid => $pid) {
                 //                if (!in_array($pid, array_keys($posts))) {
                 if (!array_key_exists($pid, $posts)) {

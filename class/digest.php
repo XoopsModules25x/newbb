@@ -28,7 +28,7 @@ class Digest extends XoopsObject
         $this->initVar('digest_id', XOBJ_DTYPE_INT);
         $this->initVar('digest_time', XOBJ_DTYPE_INT);
         $this->initVar('digest_content', XOBJ_DTYPE_TXTAREA);
-        $this->items = array();
+        $this->items = [];
     }
 
     public function setHtml()
@@ -54,7 +54,7 @@ class Digest extends XoopsObject
         if (!empty($summary)) {
             $summary = $this->cleanup($summary);
         }
-        $this->items[] = array('title' => $title, 'link' => $link, 'author' => $author, 'summary' => $summary);
+        $this->items[] = ['title' => $title, 'link' => $link, 'author' => $author, 'summary' => $summary];
     }
 
     /**
@@ -206,9 +206,9 @@ class NewbbDigestHandler extends XoopsObjectHandler
 
         $sql    = 'SELECT * FROM ' . $this->db->prefix('bb_digest') . ' ORDER BY digest_id DESC';
         $result = $this->db->query($sql, $perpage, $start);
-        $ret    = array();
+        $ret    = [];
         //        $reportHandler = xoops_getModuleHandler('report', 'newbb');
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow; // return as array
         }
 
@@ -347,9 +347,9 @@ class NewbbDigestHandler extends XoopsObjectHandler
             //echo "<br>No result:<br>$query";
             return false;
         }
-        $rows  = array();
-        $users = array();
-        while ($row = $this->db->fetchArray($result)) {
+        $rows  = [];
+        $users = [];
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $users[$row['uid']] = 1;
             $rows[]             = $row;
         }
@@ -362,7 +362,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
             $user_criteria = new Criteria('uid', '(' . implode(',', $uids) . ')', 'IN');
             $users         = $memberHandler->getUsers(new Criteria('uid', '(' . implode(',', $uids) . ')', 'IN'), true);
         } else {
-            $users = array();
+            $users = [];
         }
 
         foreach ($rows as $topic) {
