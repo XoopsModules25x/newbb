@@ -568,7 +568,7 @@ function b_newbb_post_show($options)
 
 /**
  * @param $options
- * @return array
+ * @return array|bool
  */
 function b_newbb_author_show($options)
 {
