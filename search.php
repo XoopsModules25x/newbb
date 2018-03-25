@@ -293,10 +293,10 @@ $xoopsTpl->assign('search_term', $term);
 $andor_select = '<select name=\'andor\'>';
 $andor_select .= '<option value=\'OR\'';
 if ('OR' === $andor) {
-    $andor_select .= " selected=\"selected\"";
+    $andor_select .= ' selected="selected"';
 }
 $andor_select .= '>' . _SR_ANY . '</option>';
-$andor_select .= "<option value=\"AND\"";
+$andor_select .= '<option value="AND"';
 if ('AND' === $andor || empty($andor)) {
     $andor_select .= ' selected=\'selected\'';
 }
@@ -361,7 +361,7 @@ if ('p.post_time' === $sortby || empty($sortby)) {
 $sortby_select .= '>' . _MD_DATE . '</option>';
 $sortby_select .= '<option value=\'p.subject\'';
 if ('p.subject' === $sortby) {
-    $sortby_select .= " selected=\"selected\"";
+    $sortby_select .= ' selected="selected"';
 }
 $sortby_select .= '>' . _MD_TOPIC . '</option>';
 $sortby_select .= '</select>';
@@ -380,7 +380,7 @@ if (!empty($selecthtml)) {
     $selecthtml_select .= ' checked';
 }
 $selecthtml_select .= ' />' . _YES . '&nbsp;&nbsp;';
-$selecthtml_select .= "<input type=\"radio\" name=\"selecthtml\" value=\"0\" onclick=\"javascript: {document.Search.selectexcludeset.disabled=true;}\"";
+$selecthtml_select .= '<input type="radio" name="selecthtml" value="0" onclick="javascript: {document.Search.selectexcludeset.disabled=true;}"';
 if (empty($selecthtml)) {
     $selecthtml_select .= ' checked';
 }
@@ -388,7 +388,7 @@ $selecthtml_select .= ' />' . _NO . '&nbsp;&nbsp;';
 $xoopsTpl->assign('selecthtml_radio', $selecthtml_select);
 
 /* selectexclude */
-$selectexclude_select = "<fieldset name=\"selectexcludeset\"";
+$selectexclude_select = '<fieldset name="selectexcludeset"';
 if (empty($selecthtml)) {
     $selectexclude_select .= ' disabled';
 }

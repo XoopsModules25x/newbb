@@ -160,19 +160,19 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
     {
         if ($option['id'] > 0) {
             $tree .= $prefix
-                     . "<input type=\"checkbox\" name=\""
+                     . '<input type="checkbox" name="'
                      . $this->getName()
                      . '[groups]['
                      . $this->_groupId
                      . ']['
                      . $option['id']
-                     . "]\" id=\""
+                     . ']" id="'
                      . $this->getName()
                      . '[groups]['
                      . $this->_groupId
                      . ']['
                      . $option['id']
-                     . "]\" onclick=\"";
+                     . ']" onclick="';
             foreach ($parentIds as $pid) {
                 if ($pid <= 0) {
                     continue;
@@ -190,21 +190,21 @@ class NewbbXoopsGroupFormCheckBox extends XoopsGroupFormCheckBox
             }
             $tree .= ' />'
                      . $option['name']
-                     . "<input type=\"hidden\" name=\""
+                     . '<input type="hidden" name="'
                      . $this->getName()
                      . '[parents]['
                      . $option['id']
-                     . "]\" value=\""
+                     . ']" value="'
                      . implode(':', $parentIds)
-                     . "\" /><input type=\"hidden\" name=\""
+                     . '" /><input type="hidden" name="'
                      . $this->getName()
                      . '[itemname]['
                      . $option['id']
-                     . "]\" value=\""
+                     . ']" value="'
                      . htmlspecialchars($option['name'])
                      . "\" /><br>\n";
         } else {
-            $tree .= $prefix . $option['name'] . "<input type=\"hidden\" id=\"" . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br>\n";
+            $tree .= $prefix . $option['name'] . '<input type="hidden" id="' . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" /><br>\n";
         }
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {

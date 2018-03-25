@@ -547,7 +547,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (isset($viewtopic_users[$postArray['uid']]['name'])) {
             $postArray['poster'] = $viewtopic_users[$postArray['uid']]['name'];
             if ($postArray['uid'] > 0) {
-                $postArray['poster'] = "<a href=\"" . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . "\">" . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
+                $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
             $postArray['poster'] = empty($postArray['poster_name']) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];

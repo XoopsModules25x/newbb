@@ -95,13 +95,13 @@ if ($ok) {
                 $xoopsMailer->setToUsers($senduser);
                 $xoopsMailer->setFromName($GLOBALS['xoopsUser']->getVar('uname'));
                 $xoopsMailer->setSubject(_MD_DELEDEDMSG_SUBJECT);
-                $forenurl = "<a href=\""
+                $forenurl = '<a href="'
                             . XOOPS_URL
                             . '/modules/'
                             . $xoopsModule->getVar('dirname')
                             . '/viewtopic.php?topic_id='
                             . $post_obj->getVar('topic_id')
-                            . "\">"
+                            . '">'
                             . $post_obj->getVar('subject')
                             . '</a>';
                 if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {

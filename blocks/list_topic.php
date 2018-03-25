@@ -184,7 +184,7 @@ function newbb_list_topic_edit($options)
     $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
     $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
-    $forumSel .= "<option value=\"0\" ";
+    $forumSel .= '<option value="0" ';
     if ($isAll) {
         $forumSel .= ' selected';
         $accessForums = null; // just select _ALL option

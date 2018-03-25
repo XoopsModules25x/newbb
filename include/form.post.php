@@ -63,9 +63,9 @@ if ($topic_obj->isNew()) {
     if (empty($post_parent_obj)) {
         $post_parent_obj = $postHandler->get($pid);
     }
-    $form_title = _MD_REPLY . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar('subject') . '</a>';
+    $form_title = _MD_REPLY . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar('subject') . '</a>';
 } else {
-    $form_title = _EDIT . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id={$post_id}\" rel=\"external\">" . $post_obj->getVar('subject') . '</a>';
+    $form_title = _EDIT . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id={$post_id}\" rel=\"external\">" . $post_obj->getVar('subject') . '</a>';
     $editby     = true;
 }
 $xoopsTpl->assign('form_title', $form_title);
@@ -79,7 +79,7 @@ foreach ([
              'isedit',
              'contents_preview'
          ] as $getint) {
-    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
+    ${$getint} = XoopsRequest::getInt($getint, (!empty(${$getint}) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
 foreach ([
              'order',
@@ -89,7 +89,7 @@ foreach ([
              'icon',
              'op'
          ] as $getstr) {
-    ${$getstr} = XoopsRequest::getString($getstr, ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
+    ${$getstr} = XoopsRequest::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');

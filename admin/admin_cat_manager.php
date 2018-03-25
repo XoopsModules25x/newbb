@@ -184,9 +184,9 @@ switch ($op) {
         echo '</tr>';
 
         foreach ($categories as $key => $onecat) {
-            $cat_edit_link  = "<a href=\"admin_cat_manager.php?op=mod&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
-            $cat_del_link   = "<a href=\"admin_cat_manager.php?op=del&cat_id=" . $onecat->getVar('cat_id') . "\">" . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
-            $cat_title_link = "<a href=\"" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?cat=' . $onecat->getVar('cat_id') . "\">" . $onecat->getVar('cat_title') . '</a>';
+            $cat_edit_link  = '<a href="admin_cat_manager.php?op=mod&cat_id=' . $onecat->getVar('cat_id') . '">' . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
+            $cat_del_link   = '<a href="admin_cat_manager.php?op=del&cat_id=' . $onecat->getVar('cat_id') . '">' . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
+            $cat_title_link = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?cat=' . $onecat->getVar('cat_id') . '">' . $onecat->getVar('cat_title') . '</a>';
 
             echo "<tr class='odd' align='left'>";
             echo '<td>' . $cat_title_link . '</td>';

@@ -372,7 +372,7 @@ if ($total_posts > $GLOBALS['xoopsModuleConfig']['posts_per_page']) {
 
 if (empty($post_id)) {
     $first   = array_keys($postsArray);
-    $post_id = (!empty($first[0])) ? $first[0] : 0;
+    $post_id = !empty($first[0]) ? $first[0] : 0;
 }
 if (!empty($postsArray[$post_id])) {
     $xoops_pagetitle = $postsArray[$post_id]->getVar('subject') . ' [' . $forum_obj->getVar('forum_name') . ']';
@@ -798,7 +798,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     }
 
     //$quickform = ( !empty($GLOBALS['xoopsModuleConfig']["editor_default"]) ) ? $GLOBALS['xoopsModuleConfig']["editor_default"] : "textarea";
-    $quickform               = (!empty($GLOBALS['xoopsModuleConfig']['editor_quick_default'])) ? $GLOBALS['xoopsModuleConfig']['editor_quick_default'] : 'textarea';
+    $quickform               = !empty($GLOBALS['xoopsModuleConfig']['editor_quick_default']) ? $GLOBALS['xoopsModuleConfig']['editor_quick_default'] : 'textarea';
     $editor_configs          = [];
     $editor_configs ['name'] = 'message';
     //$editor_configs [ "value" ]     = $message ;

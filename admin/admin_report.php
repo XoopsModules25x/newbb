@@ -118,7 +118,7 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports(0, 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = "<a href=\""
+            $post_link = '<a href="'
                          . XOOPS_URL
                          . '/modules/'
                          . $xoopsModule->getVar('dirname')
@@ -128,7 +128,7 @@ switch ($op) {
                          . $report['topic_id']
                          . '&amp;forum='
                          . $report['forum_id']
-                         . "&amp;viewmode=thread\" target=\"checkreport\">"
+                         . '&amp;viewmode=thread" target="checkreport">'
                          . $myts->htmlSpecialChars($report['subject'])
                          . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked />';
@@ -146,7 +146,7 @@ switch ($op) {
             echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
             $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbb_getUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
-            $reporter      = (!empty($uid)) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
+            $reporter      = !empty($uid) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';
 
             echo "<td align='center'>" . $reporter . long2ip($report['reporter_ip']) . '</td>';
             echo '</tr>';

@@ -148,7 +148,7 @@ switch ($op) {
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/"
                                         . $GLOBALS['xoopsModuleConfig']['poll_module']
-                                        . "/assets/images/colorbars\", \"\", \""
+                                        . '/assets/images/colorbars", "", "'
                                         . XOOPS_URL
                                         . "\")'");
                 $color_label = new XoopsFormLabel('', "<img src='"

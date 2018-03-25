@@ -207,11 +207,11 @@ function b_newbb_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -382,11 +382,11 @@ function b_newbb_topic_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
     $block['indexNav'] = (int)$options[4];
 
@@ -548,11 +548,11 @@ function b_newbb_post_show($options)
     }
     // START irmtfan remove hardcoded html in URLs
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME;
-    $block['seo_top_allforums'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allforums'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/list.topic.php';
-    $block['seo_top_alltopics'] = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_alltopics'] = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     $seo_top_allforums          = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewpost.php';
-    $block['seo_top_allposts']  = (!empty($newbbConfig['do_rewrite'])) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
+    $block['seo_top_allposts']  = !empty($newbbConfig['do_rewrite']) ? seo_urls($seo_top_allforums) : $seo_top_allforums;
     // END irmtfan remove hardcoded html in URLs
 
     $block['indexNav'] = (int)$options[4];
@@ -697,13 +697,13 @@ function b_newbb_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -713,8 +713,8 @@ function b_newbb_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0]));
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
         $form .= ' selected';
     }
@@ -776,13 +776,13 @@ function b_newbb_topic_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -793,10 +793,10 @@ function b_newbb_topic_edit($options)
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
 
     $isAll = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
@@ -841,13 +841,13 @@ function b_newbb_post_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -857,10 +857,10 @@ function b_newbb_post_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);
@@ -911,13 +911,13 @@ function b_newbb_author_edit($options)
     }
     $form .= ' />&nbsp;' . _MB_NEWBB_DISPLAYMODE_LITE;
 
-    $form .= '<br>' . _MB_NEWBB_INDEXNAV . "<input type=\"radio\" name=\"options[4]\" value=\"1\"";
+    $form .= '<br>' . _MB_NEWBB_INDEXNAV . '<input type="radio" name="options[4]" value="1"';
     if (1 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
-    $form .= ' />' . _YES . "<input type=\"radio\" name=\"options[4]\" value=\"0\"";
+    $form .= ' />' . _YES . '<input type="radio" name="options[4]" value="0"';
     if (0 == $options[4]) {
-        $form .= " checked=\"checked\"";
+        $form .= ' checked="checked"';
     }
     $form .= ' />' . _NO;
 
@@ -925,10 +925,10 @@ function b_newbb_author_edit($options)
 
     $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
     $isAll        = (count($optionsForum) === 0 || empty($optionsForum[0])) ? true : false;
-    $form .= "<br>&nbsp;&nbsp;<select name=\"options[]\" multiple=\"multiple\">";
-    $form .= "<option value=\"0\" ";
+    $form .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
+    $form .= '<option value="0" ';
     if ($isAll) {
-        $form .= " selected=\"selected\"";
+        $form .= ' selected="selected"';
     }
     $form .= '>' . _ALL . '</option>';
     $form .= newbb_forumSelectBox($optionsForum);

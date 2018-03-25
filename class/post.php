@@ -351,7 +351,7 @@ class Post extends XoopsObject
             foreach ($post_edits as $postedit) {
                 $edit_time = (int)$postedit['edit_time'];
                 $edit_user = $myts->stripSlashesGPC($postedit['edit_user']);
-                $edit_msg  = (!empty($postedit['edit_msg'])) ? $myts->stripSlashesGPC($postedit['edit_msg']) : '';
+                $edit_msg  = !empty($postedit['edit_msg']) ? $myts->stripSlashesGPC($postedit['edit_msg']) : '';
                 // Start irmtfan add option to do only the latest edit when do_latestedit=0 (Alfred)
                 if (empty($GLOBALS['xoopsModuleConfig']['do_latestedit'])) {
                     $post_edit = '';

@@ -191,9 +191,9 @@ switch ($op) {
         // START irmtfan better poll module display link and version - check if xoops poll module is available
         if ($isOK) {
             $pollLink = _AM_NEWBB_AVAILABLE . ': ';
-            $pollLink .= "<a href=\"" . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . "/admin/index.php\"";
-            $pollLink .= " alt=\"" . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ") \"";
-            $pollLink .= " title=\"" . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ") \"";
+            $pollLink .= '<a href="' . XOOPS_URL . '/modules/' . $xoopspoll->getVar('dirname') . '/admin/index.php"';
+            $pollLink .= ' alt="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
+            $pollLink .= ' title="' . $xoopspoll->getVar('name') . ' ' . _VERSION . ' (' . $xoopspoll->getInfo('version') . ') "';
             $pollLink .= '>' . '(' . $xoopspoll->getVar('name') . ')</a>';
         } else {
             $pollLink = _AM_NEWBB_NOTAVAILABLE;
