@@ -90,7 +90,7 @@ if ($forums_type = $forumHandler->getIds(new Criteria('allow_subject_prefix', 1)
         }
 
         $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp') . ' (type_id, forum_id, type_order) ' . ' VALUES ' . implode(', ', $type_query);
-        if (($result = $GLOBALS['xoopsDB']->queryF($sql)) === false) {
+        if (false === ($result = $GLOBALS['xoopsDB']->queryF($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
     }

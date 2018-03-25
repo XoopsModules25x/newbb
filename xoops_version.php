@@ -812,7 +812,7 @@ $isPref = (// action module "system"
     is_object($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n')
     && // current action
     !empty($_REQUEST['fct'])
-    && $_REQUEST['fct'] === 'preferences');
+    && 'preferences' === $_REQUEST['fct']);
 xoops_loadLanguage('admin', $modversion['dirname']);
 // if in pref AND click on save AND 'poll_module' !== 0
 if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
@@ -823,7 +823,7 @@ if ($isPref && XoopsRequest::getInt('poll_module', 0, 'POST')) {
     $criteria->add(new Criteria('conf_id', '(' . implode(', ', XoopsRequest::getArray('conf_ids', [], 'POST')) . ')', 'IN'), 'AND');
     $pollOptions = $hModConfig->getConfigs($criteria);
     $pollOptions = end($pollOptions);
-    if (is_object($pollOptions) && $pollOptions->getVar('conf_value') !== '0') {
+    if (is_object($pollOptions) && '0' !== $pollOptions->getVar('conf_value')) {
         $topicHandler = xoops_getModuleHandler('topic', $modversion['dirname']);
         $topicPolls   = $topicHandler->getCount(new Criteria('topic_haspoll', 1));
         if ($topicPolls > 0) {

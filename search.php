@@ -32,7 +32,7 @@ include_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
 $configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-if ($xoopsConfigSearch['enable_search'] !== 1) {
+if (1 !== $xoopsConfigSearch['enable_search']) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
 }
 
@@ -94,7 +94,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
 
     $start = XoopsRequest::getInt('start', 0, 'GET');
     $forum = XoopsRequest::getInt('forum', XoopsRequest::getInt('forum', null, 'POST'), 'GET');
-    if (empty($forum) || $forum === 'all' || (is_array($forum) && in_array('all', $forum, true))) {
+    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum, true))) {
         $forum = [];
     } elseif (!is_array($forum)) {
         $forum = array_map('intval', explode('|', $forum));
@@ -137,7 +137,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
     $next_search['term'] = $term;
     $query               = trim($term);
 
-    if ($andor !== 'EXACT') {
+    if ('EXACT' !== $andor) {
         $ignored_queries = []; // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
@@ -148,7 +148,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
                 $ignored_queries[] = $myts->addSlashes($q);
             }
         }
-        if (!$uname_required && count($queries) === 0) {
+        if (!$uname_required && 0 === count($queries)) {
             redirect_header(XOOPS_URL . '/search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
     } else {
@@ -197,7 +197,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
             $post_text           = '';
             $post_text_select    = 'have text';
             $post_subject_select = 'have text';
-            if ($show_search === 'post_text') {
+            if ('post_text' === $show_search) {
                 $post_text        = newbb_selectText($row['post_text'], $queries, $selectstartlag, $selectlength, $selecthtml, implode('', $selectexclude)); // strip html tags = $selecthtml
                 $post_text_select = $post_text;
                 $post_text        = newbb_highlightText($post_text, $queries);
@@ -231,7 +231,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         if (count($next_search) > 0) {
             $items = [];
             foreach ($next_search as $para => $val) {
-                if (!empty($val) || $para === 'selecthtml') {
+                if (!empty($val) || 'selecthtml' === $para) {
                     $items[] = "{$para}={$val}";
                 }// irmtfan add { and } - add $para when selecthtml = 0 (no strip)
             }
@@ -265,7 +265,7 @@ if (!empty($uname) || XoopsRequest::getString('submit', '') || !empty($term)) {
         // irmtfan if all results skipped then redirect to the next/previous page
         if ($num_results == $skipresults) {
             $direction           = XoopsRequest::getString('direction', XoopsRequest::getString('direction', 'next', 'GET'), 'POST');
-            $search_url_redirect = (strtolower($direction) === 'next') ? $search_url_next : $search_url_prev;
+            $search_url_redirect = ('next' === strtolower($direction)) ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
         }
     }

@@ -67,7 +67,7 @@ class NewbbUserlogPlugin extends Userlog_Module_Plugin_Abstract implements Userl
                     $topic_id  = $topic_obj->getVar('topic_id');
                 } elseif (!empty($move)) {
                     $forum_id  = XoopsRequest::getInt('forum_id', 0); //!empty($_REQUEST["forum_id"]) ? (int)($_REQUEST["forum_id"]) : 0;
-                    $topic_obj = $topicHandler->getByMove($topic_id, ($move === 'prev') ? -1 : 1, $forum_id);
+                    $topic_obj = $topicHandler->getByMove($topic_id, ('prev' === $move) ? -1 : 1, $forum_id);
                     $topic_id  = $topic_obj->getVar('topic_id');
                 }
 

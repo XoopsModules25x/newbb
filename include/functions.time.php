@@ -30,10 +30,10 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         $newbbConfig = newbbLoadConfig();
 
         $format = strtolower($format);
-        if ($format === 'reg' || $format === '') {
+        if ('reg' === $format || '' === $format) {
             $format = 'c';
         }
-        if (($format === 'custom' || $format === 'c') && !empty($newbbConfig['formatTimestamp_custom'])) {
+        if (('custom' === $format || 'c' === $format) && !empty($newbbConfig['formatTimestamp_custom'])) {
             $format = $newbbConfig['formatTimestamp_custom'];
         }
 

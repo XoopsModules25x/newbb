@@ -86,7 +86,7 @@ class NewbbReportHandler extends XoopsPersistableObjectHandler
         $report_result = 0,
         $report_id = 0
     ) {
-        if ($order === 'DESC') {
+        if ('DESC' === $order) {
             $operator_for_position = '>';
         } else {
             $order                 = 'ASC';

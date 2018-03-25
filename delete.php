@@ -24,7 +24,7 @@ foreach (['forum', 'topic_id', 'post_id', 'order', 'pid', 'act'] as $getint) {
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
 $viewmode = (XoopsRequest::getString('viewmode', '', 'GET')
-             && XoopsRequest::getString('viewmode', '', 'GET') !== 'flat') ? 'thread' : 'flat';
+             && 'flat' !== XoopsRequest::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (XoopsRequest::getString('viewmode', '', 'POST') ?: 'flat');
 
 $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -72,7 +72,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 
 if ($ok) {
     $isDeleteOne = (1 === $ok);
-    if ($post_obj->isTopic() && $topic->getVar('topic_replies') == 0) {
+    if ($post_obj->isTopic() && 0 == $topic->getVar('topic_replies')) {
         $isDeleteOne = false;
     }
     if ($isDeleteOne && $post_obj->isTopic() && $topic->getVar('topic_replies') > 0) {

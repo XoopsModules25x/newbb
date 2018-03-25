@@ -453,7 +453,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         }
 
         if ($post_id) {
-            if ($order === 'DESC') {
+            if ('DESC' === $order) {
                 $operator_for_position = '>';
             } else {
                 $order                 = 'ASC';
@@ -774,13 +774,13 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             }
             // Only one poll module should has this poll_id
             // if 0 there is an error
-            if ($poll_idInMod == 0) {
+            if (0 == $poll_idInMod) {
                 xoops_error("Error: Cannot find poll module for poll_id='{$tObj->getVar('poll_id')}'");
 
                 return false;
             }
             // if 1 => $dir_def is correct
-            if ($poll_idInMod == 1) {
+            if (1 == $poll_idInMod) {
                 return $dir_def;
             }
             // if more than 1 continue

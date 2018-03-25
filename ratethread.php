@@ -52,7 +52,7 @@ if (empty($rate)) {
     redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NOVOTERATE);
 }
 $rateHandler = xoops_getModuleHandler('rate', $xoopsModule->getVar('dirname'));
-if ($ratinguser !== 0) {
+if (0 !== $ratinguser) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post = new CriteriaCompo(new Criteria('topic_id', $topic_id));
     $crit_post->add(new Criteria('uid', $ratinguser));

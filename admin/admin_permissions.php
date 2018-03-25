@@ -119,7 +119,7 @@ class NewbbXoopsGroupPermForm extends XoopsGroupPermForm
                 $ret .= $elements[$i];
             } elseif (!$elements[$i]->isHidden()) {
                 $ret .= "<tr valign='top' align='left'><td class='head'>" . $elements[$i]->getCaption();
-                if ($elements[$i]->getDescription() !== '') {
+                if ('' !== $elements[$i]->getDescription()) {
                     $ret .= '<br><br><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
@@ -254,7 +254,7 @@ switch ($action) {
             $option_ids = [];
             foreach ($perms as $perm) {
                 ++$ii;
-                if ($ii % 5 == 0) {
+                if (0 == $ii % 5) {
                     $ret_ele .= '</tr><tr>';
                 }
                 $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
@@ -315,7 +315,7 @@ switch ($action) {
 
     case 'apply':
         $perm_template = $newbbpermHandler->getTemplate();
-        if ($perm_template === null) {
+        if (null === $perm_template) {
             redirect_header('admin_permissions.php?action=template', 2, _AM_NEWBB_PERM_TEMPLATE);
         }
         xoops_cp_header();
@@ -451,7 +451,7 @@ switch ($action) {
         $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
-        if ($op === 'category') {
+        if ('category' === $op) {
             foreach (array_keys($categories) as $key) {
                 $form->addItem($key, $categories[$key]);
             }

@@ -113,7 +113,7 @@ class NewbbReadtopicHandler extends NewbbReadHandler
             return true;
         }
 
-        if ($this->mode == 1) {
+        if (1 == $this->mode) {
             return $this->setReadItemsCookie($status, $forum_id);
         } else {
             return $this->setReadItemsDb($status, $forum_id, $uid);

@@ -238,7 +238,7 @@ class NewbbTopicRenderer
                 // Skip
                 if (empty($this->config['read_mode'])) {
                     // Use database
-                } elseif ($this->config['read_mode'] == 2) {
+                } elseif (2 == $this->config['read_mode']) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
@@ -248,7 +248,7 @@ class NewbbTopicRenderer
                     }
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
-                } elseif ($this->config['read_mode'] == 1) {
+                } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
@@ -280,7 +280,7 @@ class NewbbTopicRenderer
                 // Skip
                 if (empty($this->config['read_mode'])) {
                     // Use database
-                } elseif ($this->config['read_mode'] == 2) {
+                } elseif (2 == $this->config['read_mode']) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
@@ -290,7 +290,7 @@ class NewbbTopicRenderer
                     }
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
-                } elseif ($this->config['read_mode'] == 1) {
+                } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbb_getSinceTime($this->vars['since'])) : 0;
                     if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
@@ -371,13 +371,13 @@ class NewbbTopicRenderer
                 break;
 
             case 'uid': // irmtfan add multi topic poster
-                if ($val !== -1) {
+                if (-1 !== $val) {
                     $val                    = implode(',', array_map('intval', explode(',', $val)));
                     $this->query['where'][] = 't.topic_poster IN ( ' . $val . ' )';
                 }
                 break;
             case 'lastposter': // irmtfan add multi lastposter
-                if ($val !== -1) {
+                if (-1 !== $val) {
                     $val                    = implode(',', array_map('intval', explode(',', $val)));
                     $this->query['where'][] = 'p.uid IN ( ' . $val . ' )';
                 }
@@ -387,7 +387,7 @@ class NewbbTopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbb_getSinceTime($val);
-                    if (in_array('unread', explode(',', $this->vars['status'], true)) && $this->config['read_mode'] == 1
+                    if (in_array('unread', explode(',', $this->vars['status'], true)) && 1 == $this->config['read_mode']
                         && $GLOBALS['last_visit'] > $startdate
                     ) {
                         break;
@@ -412,7 +412,7 @@ class NewbbTopicRenderer
                 // START irmtfan to accept multiple status
                 $val = explode(',', $val);
                 // irmtfan - add 'all' to always parse t.approved = 1
-                if (count(array_intersect($val, ['all', 'active', 'pending', 'deleted'])) === 0) {
+                if (0 === count(array_intersect($val, ['all', 'active', 'pending', 'deleted']))) {
                     $val[] = 'all';
                 }
                 foreach ($val as $key => $status) {
@@ -549,7 +549,7 @@ class NewbbTopicRenderer
                 'sort'  => 't.type_id'
             ];
         }
-        if ($this->userlevel == 2) {
+        if (2 == $this->userlevel) {
             $headers['approve'] = [
                 'title' => _MD_APPROVE,
                 'sort'  => 't.approved'
@@ -691,7 +691,7 @@ class NewbbTopicRenderer
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
-            if ($var === 'sort' || $var === 'order') {
+            if ('sort' === $var || 'order' === $var) {
                 continue;
             }
             $args[] = "{$var}={$val}";
@@ -716,7 +716,7 @@ class NewbbTopicRenderer
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
-            if ($var === 'status') {
+            if ('status' === $var) {
                 continue;
             }
             $args[] = "{$var}={$val}";
@@ -764,7 +764,7 @@ class NewbbTopicRenderer
 
         $args = [];
         foreach ($this->vars as $var => $val) {
-            if ($var === 'type') {
+            if ('type' === $var) {
                 continue;
             }
             $args[] = "{$var}={$val}";
@@ -810,7 +810,7 @@ class NewbbTopicRenderer
         if ($count_topic > $this->config['topics_per_page']) {
             $args = [];
             foreach ($this->vars as $var => $val) {
-                if ($var === 'start') {
+                if ('start' === $var) {
                     continue;
                 }
                 $args[] = "{$var}={$val}";
@@ -820,9 +820,9 @@ class NewbbTopicRenderer
             if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
                 $nav->url = formatURL($_SERVER['SERVER_NAME']) . ' /' . $nav->url;
             }
-            if ($this->config['pagenav_display'] === 'select') {
+            if ('select' === $this->config['pagenav_display']) {
                 $navi = $nav->renderSelect();
-            } elseif ($this->config['pagenav_display'] === 'image') {
+            } elseif ('image' === $this->config['pagenav_display']) {
                 $navi = $nav->renderImageNav(4);
             } else {
                 $navi = $nav->renderNav(4);
@@ -1070,7 +1070,7 @@ class NewbbTopicRenderer
             $posters[$myrow['uid']]          = 1;
             // reads
             if (!empty($this->config['read_mode'])) {
-                $reads[$myrow['topic_id']] = ($this->config['read_mode'] == 1) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
+                $reads[$myrow['topic_id']] = (1 == $this->config['read_mode']) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
             }
             // types
             if (!empty($myrow['type_id'])) {

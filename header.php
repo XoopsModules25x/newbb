@@ -22,17 +22,17 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     $toseo_url = ['index.php', 'viewforum.php', 'viewtopic.php', 'rss.php'];
 
     if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0)
-        && (strpos(getenv('REQUEST_URI'), '.html') === false)
+        && (false === strpos(getenv('REQUEST_URI'), '.html'))
     ) {
         $redir = false;
-        if (strpos(getenv('REQUEST_URI'), 'mark_read=') === true || strpos(getenv('REQUEST_URI'), 'mark=') === true) {
+        if (true === strpos(getenv('REQUEST_URI'), 'mark_read=') || true === strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
         } else {
             if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
                 //rewrite only for files
 
-                if (trim(getenv('SCRIPT_NAME')) !== '') {
-                    if (strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/') === false) {
+                if ('' !== trim(getenv('SCRIPT_NAME'))) {
+                    if (false === strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
                         $redir = true;
                     } elseif (getenv('QUERY_STRING')) {
                         $redir = true;
@@ -41,7 +41,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
             }
         }
 
-        if ($redir === true) {
+        if (true === $redir) {
             $s      = 'http://' . getenv('HTTP_HOST') . getenv('REQUEST_URI');
             $s      = str_replace('/' . REAL_MODULE_NAME . '/', '/' . SEO_MODULE_NAME . '/', $s);
             $newurl = seo_urls('<a href="' . $s . '"></a>');

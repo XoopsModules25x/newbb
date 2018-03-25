@@ -39,8 +39,8 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
     $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
     $fuser   = [];
-    if ($fforum !== 0) {
-        if ($fgroups !== '') {
+    if (0 !== $fforum) {
+        if ('' !== $fgroups) {
             $gg = [];
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
@@ -51,7 +51,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                 }
             }
         }
-        if ($fforum == -1) { // alle Foren
+        if (-1 == $fforum) { // alle Foren
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;

@@ -192,10 +192,10 @@ $forum_selection_sort .= '</select>';
 $xoopsTpl->assign_by_ref('forum_selection_sort', $forum_selection_sort);
 
 $order                 = (!XoopsRequest::getString('order', '', 'GET')
-                          || XoopsRequest::getString('order', '', 'GET') !== 'ASC') ? 'DESC' : 'ASC';
+                          || 'ASC' !== XoopsRequest::getString('order', '', 'GET')) ? 'DESC' : 'ASC';
 $forum_selection_order = '<select name="order">';
-$forum_selection_order .= '<option value="ASC"' . (($order === 'ASC') ? ' selected' : '') . '>' . _MD_ASCENDING . '</option>';
-$forum_selection_order .= '<option value="DESC"' . (($order === 'DESC') ? ' selected' : '') . '>' . _MD_DESCENDING . '</option>';
+$forum_selection_order .= '<option value="ASC"' . (('ASC' === $order) ? ' selected' : '') . '>' . _MD_ASCENDING . '</option>';
+$forum_selection_order .= '<option value="DESC"' . (('DESC' === $order) ? ' selected' : '') . '>' . _MD_DESCENDING . '</option>';
 $forum_selection_order .= '</select>';
 
 $xoopsTpl->assign_by_ref('forum_selection_order', $forum_selection_order);
@@ -211,20 +211,20 @@ $page_query_sort = implode('&amp;', array_values($query_sort));
 unset($query_sort);
 // irmtfan - edit: u.uname => t.topic_poster | t.topic_time => t.topic_id | p.post_time => t.topic_last_post_id
 $xoopsTpl->assign('h_topic_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_title&amp;order=" . (($sort === 't.topic_title' && $order === 'DESC') ? 'ASC' : 'DESC'));
+                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_title&amp;order=" . (('t.topic_title' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_reply_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_replies&amp;order=" . (($sort === 't.topic_replies' && $order === 'DESC') ? 'ASC' : 'DESC'));
+                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_replies&amp;order=" . (('t.topic_replies' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_poster_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_poster&amp;order=" . (($sort === 't.topic_poster' && $order === 'DESC') ? 'ASC' : 'DESC'));
+                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_poster&amp;order=" . (('t.topic_poster' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_views_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_views&amp;order=" . (($sort === 't.topic_views' && $order === 'DESC') ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_rating_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.rating&amp;order=" . (($sort === 't.rating'
-                                                                                                                                  && $order
-                                                                                                                                     === 'DESC') ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
+                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_views&amp;order=" . (('t.topic_views' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_rating_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.rating&amp;order=" . (('t.rating' === $sort
+                                                                                                                                  && 'DESC'
+                                                                                                                                     === $order) ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
 $xoopsTpl->assign('h_date_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (($sort === 't.topic_last_post_id' && $order === 'DESC') ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (($sort === 't.topic_id'
-                                                                                                                                     && $order === 'DESC') ? 'ASC' : 'DESC'));
+                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (('t.topic_last_post_id' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (('t.topic_id' === $sort
+                                                                                                                                     && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('forum_since', $since); // For $since in search.php
 
 // irmtfan - if no since it should be 0
@@ -323,9 +323,9 @@ if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
     $page_query_nav = implode('&amp;', array_values($query_nav));
     unset($query_nav);
     $nav = new XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', $page_query_nav);
-    if ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'select') {
+    if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderSelect();
-    } elseif ($GLOBALS['xoopsModuleConfig']['pagenav_display'] === 'image') {
+    } elseif ('image' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderImageNav(4);
     } else {
         $navi = $nav->renderNav(4);
@@ -348,7 +348,7 @@ if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
     unset($permission_table);
 }
 
-if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
+if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
     $xoopsTpl->assign('rss_button',
                       "<div align='right'><a href='"
                       . XOOPS_URL

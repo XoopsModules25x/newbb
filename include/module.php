@@ -64,7 +64,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     //$oldconfig = $module->getVar('hasconfig');
     // NewBB 1.0 -- no config
     //if (empty($oldconfig)) {
-    if ($oldversion == 100) {
+    if (100 == $oldversion) {
         include_once __DIR__ . '/module.v100.php';
         xoops_module_update_newbb_v100($module);
     }
@@ -145,7 +145,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
                 @unlink($templateDirectory . $v);
             }
         }
@@ -153,7 +153,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
                 @unlink($templateDirectory . $v);
             }
         }

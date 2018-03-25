@@ -103,7 +103,7 @@ switch ($op) {
 
     case 'template':
         $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        if (0 === count($types_obj)) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -339,7 +339,7 @@ switch ($op) {
         }
 
         $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        if (0 === count($types_obj)) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD);
         }
 
@@ -422,14 +422,14 @@ switch ($op) {
     case 'add':
     default:
         $types_obj = $typeHandler->getAll();
-        if (count($types_obj) === 0) {
+        if (0 === count($types_obj)) {
             $op    = 'add';
             $title = _AM_NEWBB_TYPE_ADD;
         } else {
             $title = _AM_NEWBB_TYPE_LIST;
         }
 
-        if ($op !== 'add') {
+        if ('add' !== $op) {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_NEWBB_ACTION . '</legend>';
             echo '<br>';
             echo "<a style='border: 1px solid #5E5D63; color: #000000; font-family: verdana, tahoma, arial, helvetica, sans-serif; font-size: 1em; padding: 4px 8px; text-align:center;' href='"
@@ -455,7 +455,7 @@ switch ($op) {
         echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
-        if ($op !== 'add') {
+        if ('add' !== $op) {
             echo "<td class='bg3' width='5%'>" . _DELETE . '</td>';
         }
         echo "<th align='left' class='bg3' width='20%'>" . _AM_NEWBB_TYPE_NAME . '</th>';
@@ -465,7 +465,7 @@ switch ($op) {
 
         $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
 
-        if ($op !== 'add') {
+        if ('add' !== $op) {
             foreach ($types_obj as $key => $type_obj) {
                 echo "<tr class='odd' align='left'>";
                 echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";

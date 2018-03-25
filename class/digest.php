@@ -252,7 +252,7 @@ class NewbbDigestHandler extends XoopsObjectHandler
         if (!isset($this->last_digest)) {
             $this->getLastDigest();
         }
-        $deadline  = ($GLOBALS['xoopsModuleConfig']['email_digest'] == 1) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
+        $deadline  = (1 == $GLOBALS['xoopsModuleConfig']['email_digest']) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
         $time_diff = time() - $this->last_digest;
 
         return $time_diff - $deadline;

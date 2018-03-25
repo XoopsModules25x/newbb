@@ -107,7 +107,7 @@ if ($editby) {
 $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 if (newbb_isAdmin($forum_obj)
     || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
-        && ($topic_id == 0
+        && (0 == $topic_id
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))
 ) {
     $type_id     = $topicHandler->get(@$topic_id, 'type_id');
@@ -186,8 +186,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $pos
 }
 
 $options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br>');
-if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
-    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
+if (is_object($GLOBALS['xoopsUser']) && 1 == $GLOBALS['xoopsModuleConfig']['allow_user_anonymous']) {
+    $noname          = (!empty($isedit) && is_object($post_obj) && 0 == $post_obj->getVar('uid')) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
     $noname_checkbox->addOption(1, _MD_POSTANONLY);
     $options_tray->addElement($noname_checkbox);
@@ -249,7 +249,7 @@ if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
     $upload_tray->addElement(new XoopsFormButton('', 'contents_upload', _MD_UPLOAD, 'submit'));
     $upload_tray->addElement(new XoopsFormLabel('<br><br>' . _MD_MAX_FILESIZE . ':', $forum_obj->getVar('attach_maxkb') . 'Kb; '));
     $extensions = trim(str_replace('|', ' ', $forum_obj->getVar('attach_ext')));
-    $extensions = (empty($extensions) || $extensions === '*') ? _ALL : $extensions;
+    $extensions = (empty($extensions) || '*' === $extensions) ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ':', $extensions));
     $upload_tray->addElement(new XoopsFormLabel('<br>' . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
     $forum_form->addElement($upload_tray);

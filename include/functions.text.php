@@ -52,7 +52,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         while ($startpos < $endpos) {
             $pos = $endpos;
             foreach ($queryarray as $query) {
-                if (($thispos = strpos($text_i, $query, $startpos)) !== false) {
+                if (false !== ($thispos = strpos($text_i, $query, $startpos))) {
                     $pos = min($thispos, $pos);
                 }
             }

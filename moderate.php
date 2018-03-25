@@ -242,7 +242,7 @@ mod_loadFunctions('forum', 'newbb');
 if (newbb_isAdmin()) {
     $forumSel = '<select name=\'forum\'>';// if user dont select any it select "0"
     $forumSel .= '<option value=\'0\' ';
-    if ($forum_id == 0) {
+    if (0 == $forum_id) {
         $forumSel .= ' selected';
     }
     $forumSel .= '>' . _ALL . '</option>';

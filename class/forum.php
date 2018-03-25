@@ -242,7 +242,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             case 'unread':
                 if (empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
-                } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 2) {
+                } elseif (2 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
                     if (!empty($read_uid)) {
@@ -251,7 +251,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     } else {
                     }
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
-                } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
+                } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
@@ -301,7 +301,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $select .= ', p.post_karma, p.require_reply, pt.post_text';
             $from .= ' LEFT JOIN ' . $this->db->prefix('bb_posts_text') . ' pt ON pt.post_id = t.topic_last_post_id';
         }
-        if ($sort === 'u.uname') {
+        if ('u.uname' === $sort) {
             $sort = 't.topic_poster';
         }
 
@@ -405,7 +405,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 $topic_title = "<span class='digest'>" . $topic_title . '</span>';
             }
 
-            if ($excerpt == 0) {
+            if (0 == $excerpt) {
                 $topic_excerpt = '';
             } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbb_isAdmin($forum)) {
                 $topic_excerpt = '';
@@ -455,7 +455,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             $posters[$myrow['uid']]          = 1;
             // reads
             if (!empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
-                $reads[$myrow['topic_id']] = ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
+                $reads[$myrow['topic_id']] = (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) ? $myrow['last_post_time'] : $myrow['topic_last_post_id'];
             }
         }// irmtfan while end
         // START irmtfan move to a for loop
@@ -475,7 +475,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
             // ------------------------------------------------------
             // topic_folder: priority: newhot -> hot/new -> regular
             list($topic_status, $topic_digest, $topic_replies) = $topics[$id]['stats'];
-            if ($topic_status == 1) {
+            if (1 == $topic_status) {
                 $topic_folder      = 'topic_locked';
                 $topic_folder_text = _MD_TOPICLOCKED;
             } else {
@@ -529,7 +529,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                 break;
             case 'unread':
                 if (empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
-                } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 2) {
+                } elseif (2 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan use read_uid to find the unread posts when the user is logged in
 
                     $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -539,7 +539,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
                     } else {
                     }
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
-                } elseif ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) {
+                } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
@@ -606,7 +606,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         global $xoopsModule;
         static $_cachedPerms;
 
-        if ($type === 'all') {
+        if ('all' === $type) {
             return true;
         }
         // irmtfan - if user is forum moderator then return true
@@ -895,7 +895,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
 
             // reads
             if (!empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
-                $reads[$id] = ($GLOBALS['xoopsModuleConfig']['read_mode'] == 1) ? $post['post_time'] : $post['post_id'];
+                $reads[$id] = (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) ? $post['post_time'] : $post['post_id'];
             }
         }
 
@@ -983,7 +983,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     {
         $pid         = (int)$pid;
         $perm_string = $permission;
-        if (!is_array($tags) || count($tags) === 0) {
+        if (!is_array($tags) || 0 === count($tags)) {
             $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
         $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
@@ -1019,7 +1019,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
     {
         $pid         = (int)$pid;
         $perm_string = $permission;
-        if (!is_array($tags) || count($tags) === 0) {
+        if (!is_array($tags) || 0 === count($tags)) {
             $tags = ['forum_id', 'parent_forum', 'forum_name', 'forum_order', 'cat_id'];
         }
         $forums_obj = $this->getByPermission($cat_id, $perm_string, $tags);
@@ -1088,7 +1088,7 @@ class NewbbForumHandler extends XoopsPersistableObjectHandler
         $forums = [];
         $cats   = [];
         foreach ($values as $val) {
-            if ($val == 0) {
+            if (0 == $val) {
                 // value=0 => all valid forums
                 return $validForums;
             } elseif ($val > 0) {

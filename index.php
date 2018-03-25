@@ -43,7 +43,7 @@ if (!$viewcat) {
     $xoops_pagetitle   = $category_obj->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
 }
 
-if (count($categories) === 0) {
+if (0 === count($categories)) {
     redirect_header(XOOPS_URL, 2, _MD_NORIGHTTOACCESS);
 }
 
@@ -263,7 +263,7 @@ if ($isadmin) {
     $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_ADMINCP]);
 }
 
-if ($GLOBALS['xoopsModuleConfig']['rss_enable'] == 1) {
+if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
     $xoopsTpl->assign('rss_enable', 1);
     $xoopsTpl->assign('rss_button', newbbDisplayImage('rss', 'RSS feed'));
 }

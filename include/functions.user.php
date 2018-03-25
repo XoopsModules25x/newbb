@@ -70,7 +70,7 @@ function newbb_isAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {
@@ -114,14 +114,14 @@ function newbb_isModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)$forum;
-        if ($forum_id == 0) {
+        if (0 == $forum_id) {
             return false;
         }
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
         $forum        = $forumHandler->get($forum_id);
     }
 
-    if (is_numeric($user) && $user == -1) {
+    if (is_numeric($user) && -1 == $user) {
         $user = $GLOBALS['xoopsUser'];
     }
     if (!is_object($user) && (int)$user < 1) {
@@ -151,7 +151,7 @@ function newbb_isAdmin($forum = 0)
         return false;
     }
 
-    if ($GLOBALS['xoopsUserIsAdmin'] && $xoopsModule->getVar('dirname') === 'newbb') {
+    if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $xoopsModule->getVar('dirname')) {
         return true;
     }
 

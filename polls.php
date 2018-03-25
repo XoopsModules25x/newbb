@@ -141,7 +141,7 @@ switch ($op) {
             $option_tray    = new XoopsFormElementTray(_MD_POLL_POLLOPTIONS, '');
             $barcolor_array = XoopsLists::getImgListAsArray($GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/'));
             for ($i = 0; $i < 10; ++$i) {
-                $current_bar = (current($barcolor_array) !== 'blank.gif') ? current($barcolor_array) : next($barcolor_array);
+                $current_bar = ('blank.gif' !== current($barcolor_array)) ? current($barcolor_array) : next($barcolor_array);
                 $option_text = new XoopsFormText('', 'option_text[]', 50, 255);
                 $option_tray->addElement($option_text);
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);
@@ -286,7 +286,7 @@ switch ($op) {
             }
             $option_text = XoopsRequest::getArray('option_text', '', 'POST');
             foreach ($option_text as $optxt) {
-                if (trim($optxt) !== '') {
+                if ('' !== trim($optxt)) {
                     $option_empty = false;
                     break;
                 }
@@ -328,7 +328,7 @@ switch ($op) {
             foreach ($option_text as $optxt) {
                 $optxt      = trim($optxt);
                 $option_obj = new $classOption();
-                if ($optxt !== '') {
+                if ('' !== $optxt) {
                     $option_obj->setVar('option_text', $optxt);
                     $option_obj->setVar('option_color', $option_color[$i]);
                     $option_obj->setVar('poll_id', $new_poll_id);
@@ -485,12 +485,12 @@ switch ($op) {
             foreach ($option_id as $opid) {
                 $option_obj      = new $classOption($opid);
                 $option_text[$i] = trim($option_text[$i]);
-                if ($option_text[$i] !== '') {
+                if ('' !== $option_text[$i]) {
                     $option_obj->setVar('option_text', $option_text[$i]);
                     $option_obj->setVar('option_color', $option_color[$i]);
                     $option_obj->store();
                 } else {
-                    if ($option_obj->delete() !== false) {
+                    if (false !== $option_obj->delete()) {
                         $classLog::deleteByOptionId($option->getVar('option_id'));
                     }
                 }
@@ -528,7 +528,7 @@ switch ($op) {
             $option_tray    = new XoopsFormElementTray(_MD_POLL_POLLOPTIONS, '');
             $barcolor_array = XoopsLists::getImgListAsArray($GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/'));
             for ($i = 0; $i < 10; ++$i) {
-                $current_bar = (current($barcolor_array) !== 'blank.gif') ? current($barcolor_array) : next($barcolor_array);
+                $current_bar = ('blank.gif' !== current($barcolor_array)) ? current($barcolor_array) : next($barcolor_array);
                 $option_text = new XoopsFormText('', 'option_text[]', 50, 255);
                 $option_tray->addElement($option_text);
                 $color_select = new XoopsFormSelect('', "option_color[{$i}]", $current_bar);

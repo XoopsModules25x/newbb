@@ -86,7 +86,7 @@ switch ($op) {
         include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/xoopsformloader.php');
         mod_loadFunctions('user', 'newbb');
 
-        if ($item !== 'processed') {
+        if ('processed' !== $item) {
             $process_result = 0;
             $item_other     = 'processed';
             $title_other    = _AM_NEWBB_PROCESSEDREPORT;
@@ -132,7 +132,7 @@ switch ($op) {
                          . $myts->htmlSpecialChars($report['subject'])
                          . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked />';
-            if ($item !== 'processed') {
+            if ('processed' !== $item) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
             } else {
                 $memo = $myts->htmlSpecialChars($report['report_memo']);
@@ -157,7 +157,7 @@ switch ($op) {
             echo "<tr colspan='2'><td height='2'></td></tr>";
         }
         $buttons = '';
-        if ($item !== 'processed') {
+        if ('processed' !== $item) {
             $submit = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
             $buttons .= $submit->render() . ' ';
         }

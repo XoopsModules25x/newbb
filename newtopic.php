@@ -69,7 +69,7 @@ $form_title = _MD_POSTNEW;
 $xoopsTpl->assign("form_title", $form_title);
 */
 
-if ($GLOBALS['xoopsModuleConfig']['disc_show'] == 1 || $GLOBALS['xoopsModuleConfig']['disc_show'] == 3) {
+if (1 == $GLOBALS['xoopsModuleConfig']['disc_show'] || 3 == $GLOBALS['xoopsModuleConfig']['disc_show']) {
     $xoopsTpl->assign('disclaimer', $GLOBALS['xoopsModuleConfig']['disclaimer']);
 }
 

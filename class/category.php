@@ -123,7 +123,7 @@ class NewbbCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function getPermission($category, $perm = 'access')
     {
-        if ($GLOBALS['xoopsUserIsAdmin'] && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+        if ($GLOBALS['xoopsUserIsAdmin'] && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
             return true;
         }
 

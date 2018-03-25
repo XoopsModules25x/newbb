@@ -39,7 +39,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
             $handler = xoops_getModuleHandler($item, 'newbb');
-            if ($item !== 'stats') {
+            if ('stats' !== $item) {
                 $handler->synchronization();
             } else {
                 $handler->reset();

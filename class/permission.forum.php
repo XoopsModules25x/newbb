@@ -109,7 +109,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
     public function getPermissions($id = 0)
     {
         $permissions = [];
-        if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+        if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
             /** @var XoopsModuleHandler $moduleHandler */
@@ -172,13 +172,13 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
         $perm_items = $this->getValidPerms();
         foreach ($perm_items as $item) {
-            if ($item === 'access') {
+            if ('access' === $item) {
                 continue;
             }
             if ($isadmin
                 || (isset($permission_set[$forum_id]['forum_' . $item])
                     && (!$topic_locked
-                        || $item === 'view'))
+                        || 'view' === $item))
             ) {
                 $perm[] = constant('_MD_CAN_' . strtoupper($item));
             } else {
@@ -220,7 +220,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         if (empty($mid)) {
-            if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+            if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
                 /** @var XoopsModuleHandler $moduleHandler */

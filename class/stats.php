@@ -88,7 +88,7 @@ class NewbbStatsHandler
                   . "        AND stats_type='{$type}' ";
         $result = $this->db->queryF($sql);
         $rows   = $this->db->getAffectedRows();
-        if ($rows == 0) {
+        if (0 == $rows) {
             $sql    = "    INSERT INTO {$this->table}"
                       . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) '
                       . '    VALUES '

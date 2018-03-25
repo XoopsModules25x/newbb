@@ -114,7 +114,7 @@ class Xmlrss
      */
     public function cleanup($text, $trim = 0)
     {
-        if (strtolower($this->xml_encoding) === 'utf-8' && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
+        if ('utf-8' === strtolower($this->xml_encoding) && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
             $text = XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {

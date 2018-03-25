@@ -94,7 +94,7 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
         $sql = '    SELECT topic_id, topic_tags' . "    FROM {$table_topic}";
-        if (($result = $GLOBALS['xoopsDB']->query($sql)) === false) {
+        if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {

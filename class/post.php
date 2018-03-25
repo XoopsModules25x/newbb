@@ -139,7 +139,7 @@ class Post extends XoopsObject
         }
         $this->attachmentArray = [];
 
-        if ($attachArray === null) {
+        if (null === $attachArray) {
             $attachArray = array_keys($attachOld);
         } // to delete all!
         if (!is_array($attachArray)) {
@@ -361,7 +361,7 @@ class Post extends XoopsObject
                 // display/save all edit records.
                 $post_edit .= _MD_EDITEDBY . ' ' . $edit_user . ' ' . _MD_ON . ' ' . formatTimestamp($edit_time) . '<br>';
                 // if reason is not empty
-                if ($edit_msg !== '') {
+                if ('' !== $edit_msg) {
                     $post_edit .= _MD_EDITEDMSG . ' ' . $edit_msg . '<br>';
                 }
                 // START hacked by irmtfan
@@ -500,7 +500,7 @@ class Post extends XoopsObject
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
         ++$post_NO;
-        if (strtolower($order) === 'desc') {
+        if ('desc' === strtolower($order)) {
             $post_no = $total_posts - ($start + $post_NO) + 1;
         } else {
             $post_no = $start + $post_NO;
@@ -1005,7 +1005,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
      */
     public function delete(XoopsObject $post, $isDeleteOne = true, $force = false)
     {
-        if (!is_object($post) || $post->getVar('post_id') == 0) {
+        if (!is_object($post) || 0 == $post->getVar('post_id')) {
             return false;
         }
 
@@ -1046,7 +1046,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
     {
         global $xoopsModule;
 
-        if (!is_object($post) || $post->getVar('post_id') == 0) {
+        if (!is_object($post) || 0 == $post->getVar('post_id')) {
             return false;
         }
 
@@ -1187,7 +1187,7 @@ class NewbbPostHandler extends XoopsPersistableObjectHandler
         }
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() !== '') {
+            if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
         }
