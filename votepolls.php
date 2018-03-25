@@ -69,7 +69,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
     if (is_object($poll_obj)) {
         if ($poll_obj->getVar('multiple')) {
             $optionId = XoopsRequest::getArray('option_id', 0, 'POST');
-            $optionId = (array)$optionId; // type cast to make sure it's an array
+            $optionId = $optionId; // type cast to make sure it's an array
             $optionId = array_map('intval', $optionId); // make sure values are integers
         } else {
             $optionId = XoopsRequest::getInt('option_id', 0, 'POST');

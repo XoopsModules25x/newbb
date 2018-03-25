@@ -48,12 +48,12 @@ switch ($op) {
         if (XoopsRequest::getInt('dest_forum', 0, 'POST')) {
             $dest = XoopsRequest::getInt('dest_forum', 0, 'POST');
             if ($dest > 0) {
-                $pid        = (int)$dest;
+                $pid        = $dest;
                 $forum_dest = $forumHandler->get($pid);
                 $cid        = $forum_dest->getVar('cat_id');
                 unset($forum_dest);
             } else {
-                $cid = abs((int)$dest);
+                $cid = abs($dest);
                 $pid = 0;
             }
             $forum_obj = $forumHandler->get($forum_id);
