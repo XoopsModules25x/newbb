@@ -28,7 +28,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
     {
 //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
-        $helper = Newbb\Helper::getInstance();
+        $helper = \XoopsModules\Newbb\Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {

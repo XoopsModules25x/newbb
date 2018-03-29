@@ -947,7 +947,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
         $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
-        require_once __DIR__ . '/tree.php';
+        require_once __DIR__ . '/Tree.php';
         $forums_structured = [];
         foreach (array_keys($forumsObject) as $key) {
             $forums_structured[$forumsObject[$key]->getVar('cat_id')][$key] = $forumsObject[$key];
@@ -983,7 +983,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
         $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
-        require_once __DIR__ . '/tree.php';
+        require_once __DIR__ . '/Tree.php';
         $forums_structured = [];
         foreach (array_keys($forumsObject) as $key) {
             $forumObject                                             =& $forumsObject[$key];

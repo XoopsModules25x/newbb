@@ -32,7 +32,7 @@
 
 use XoopsModules\Newbb;
 
-require_once __DIR__ . '/read.php';
+require_once __DIR__ . '/Read.php';
 
 /**
  * A handler for read/unread handling
@@ -46,7 +46,7 @@ require_once __DIR__ . '/read.php';
 /**
  * Class ReadForumHandler
  */
-class ReadForumHandler extends ReadHandler
+class ReadForumHandler extends Newbb\ReadHandler
 {
     /**
      * @param \XoopsDatabase|null $db
