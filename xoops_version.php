@@ -12,6 +12,7 @@
 include __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
+
 $modversion    = [
     'version'             => 5.00,
     'module_status'       => 'Beta 1',
