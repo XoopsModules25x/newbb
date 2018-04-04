@@ -32,7 +32,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
         $exp = 1;
     }
     $ppd       = round($RPG / $exp, 0);
-    $level     = pow(log10($RPG), 3);
+    $level     = log10($RPG) ** 3;
     $ep        = floor(100 * ($level - floor($level)));
     $showlevel = floor($level + 1);
     $hpmulti   = round($ppd / 6, 1);

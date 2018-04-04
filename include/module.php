@@ -149,8 +149,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Set corresponding permissions for the category and the forum */
     $module_id = $module->getVar('mid');
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
+    /** @var XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
     $groups_view  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
     $groups_post  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
@@ -170,13 +170,13 @@ function xoops_module_install_newbb(\XoopsModule $module)
         'print'
     ];
     foreach ($groups_view as $group_id) {
-        $gpermHandler->addRight('category_access', $cat_id, $group_id, $module_id);
-        $gpermHandler->addRight('forum_access', $forum_id, $group_id, $module_id);
-        $gpermHandler->addRight('forum_view', $forum_id, $group_id, $module_id);
+        $grouppermHandler->addRight('category_access', $cat_id, $group_id, $module_id);
+        $grouppermHandler->addRight('forum_access', $forum_id, $group_id, $module_id);
+        $grouppermHandler->addRight('forum_view', $forum_id, $group_id, $module_id);
     }
     foreach ($groups_post as $group_id) {
         foreach ($post_items as $item) {
-            $gpermHandler->addRight('forum_' . $item, $forum_id, $group_id, $module_id);
+            $grouppermHandler->addRight('forum_' . $item, $forum_id, $group_id, $module_id);
         }
     }
 

@@ -393,7 +393,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
             $post->deleteAttachment();
 
-            $sql = sprintf('DELETE FROM %s WHERE post_id = %u', $this->db->prefix('newbb_posts_text'), $post->getVar('post_id'));
+            $sql = sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts_text'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('Could not remove post text: ' . $sql);
 
@@ -422,11 +422,11 @@ class PostHandler extends \XoopsPersistableObjectHandler
                     // END irmtfan poll_module
                 }
 
-                $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->db->prefix('newbb_topics'), $post->getVar('topic_id'));
+                $sql = sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_topics'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
-                $sql = sprintf('DELETE FROM %s WHERE topic_id = %u', $this->db->prefix('newbb_votedata'), $post->getVar('topic_id'));
+                $sql = sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_votedata'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }

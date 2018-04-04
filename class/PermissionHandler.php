@@ -249,7 +249,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
                 $perms[$perm_name][$item_id] = $groups;
             }
         } else {
-            $gpermHandler = xoops_getHandler('groupperm');
+            $grouppermHandler = xoops_getHandler('groupperm');
             $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $modid));
             if (!empty($perm_name) && 'forum_all' !== $perm_name && 'category_all' !== $perm_name) {
                 $criteria->add(new \Criteria('gperm_name', $perm_name));

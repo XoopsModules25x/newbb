@@ -37,14 +37,14 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
     $moduleDirName  = basename(dirname(__DIR__));
     $xsitemapHelper = \Xmf\Module\Helper::getHelper($moduleDirName);
 
-    /** @var Newbb\Utility $utilityClass */
-    $utilityClass = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utilityClass)) {
+    /** @var Newbb\Utility $utility */
+    $utility = ucfirst($moduleDirName) . 'Utility';
+    if (!class_exists($utility)) {
         xoops_load('utility', $moduleDirName);
     }
 
     $success = true;
-    $xsitemapHelper->loadLanguage('admin');
+    $helper->loadLanguage('admin');
 
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
@@ -55,7 +55,7 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
         $dirInfo = new \SplFileInfo($old_dir);
         if ($dirInfo->isDir()) {
             // The directory exists so delete it
-            if (false === $utilityClass::rrmdir($old_dir)) {
+            if (false === $utility::rrmdir($old_dir)) {
                 $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH'), $old_dir));
                 $success = false;
             }

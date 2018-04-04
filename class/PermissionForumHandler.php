@@ -204,13 +204,13 @@ class PermissionForumHandler extends PermissionHandler
         if (empty($forum_id)) {
             return false;
         }
-        $gpermHandler = xoops_getHandler('groupperm');
+        $grouppermHandler = xoops_getHandler('groupperm');
         $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $items        = $this->getValidPerms(true);
         $criteria->add(new \Criteria('gperm_name', "('" . implode("', '", $items) . "')", 'IN'));
         $criteria->add(new \Criteria('gperm_itemid', $forum_id));
 
-        return $gpermHandler->deleteAll($criteria);
+        return $grouppermHandler->deleteAll($criteria);
     }
 
     /**

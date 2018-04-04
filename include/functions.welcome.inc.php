@@ -41,7 +41,7 @@ $categories = [];
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 if ($mod = @$moduleHandler->getByDirname('profile', true)) {
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
     $groups       = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 
     if (!defined('_PROFILE_MA_ALLABOUT')) {

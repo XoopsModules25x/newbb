@@ -59,13 +59,13 @@ class PermissionCategoryHandler extends Newbb\PermissionHandler
         if (empty($cat_id)) {
             return false;
         }
-        /** @var \XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler = xoops_getHandler('groupperm');
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
         $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $criteria->add(new \Criteria('gperm_name', 'category_access'));
         $criteria->add(new \Criteria('gperm_itemid', $cat_id));
 
-        return $gpermHandler->deleteAll($criteria);
+        return $grouppermHandler->deleteAll($criteria);
     }
 
     /**
