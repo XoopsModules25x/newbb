@@ -15,7 +15,6 @@ use Xmf\Request;
 
 defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_SESSION_LOADED', true);
-xoops_load('XoopsRequest');
 
 if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     define('NEWBB_FUNCTIONS_SESSION', 1);
