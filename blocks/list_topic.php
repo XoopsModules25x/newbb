@@ -25,11 +25,11 @@ require_once dirname(__DIR__) . '/footer.php'; // to include js/style files like
 
 xoops_loadLanguage('main', 'newbb');
 
-require_once __DIR__ . '/../include/functions.config.php';
-require_once __DIR__ . '/../include/functions.time.php';
-require_once __DIR__ . '/../include/functions.session.php';
-require_once __DIR__ . '/../include/functions.render.php';
-require_once __DIR__ . '/../include/functions.user.php';
+require_once  dirname(__DIR__) . '/include/functions.config.php';
+require_once  dirname(__DIR__) . '/include/functions.time.php';
+require_once  dirname(__DIR__) . '/include/functions.session.php';
+require_once  dirname(__DIR__) . '/include/functions.render.php';
+require_once  dirname(__DIR__) . '/include/functions.user.php';
 
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -180,7 +180,7 @@ function newbb_list_topic_edit($options)
 
     //  forum element
     $optionsForum = explode(',', $options[12]);
-    require_once __DIR__ . '/../include/functions.forum.php';
+    require_once  dirname(__DIR__) . '/include/functions.forum.php';
     /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums

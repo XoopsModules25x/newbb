@@ -635,7 +635,7 @@ class TopicRenderer
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
-        require_once __DIR__ . '/../include/functions.forum.php';
+        require_once  dirname(__DIR__) . '/include/functions.forum.php';
         $forum_selected     = empty($this->vars['forum']) ? null : explode('|', @$this->vars['forum']);
         $selection['forum'] = '<select name="forum[]" multiple="multiple">';
         $selection['forum'] .= '<option value="0">' . _MD_NEWBB_ALL . '</option>';
@@ -919,11 +919,11 @@ class TopicRenderer
             return $ret;
         }
 
-        require_once __DIR__ . '/../include/functions.render.php';
-        require_once __DIR__ . '/../include/functions.session.php';
-        require_once __DIR__ . '/../include/functions.time.php';
-        require_once __DIR__ . '/../include/functions.read.php';
-        require_once __DIR__ . '/../include/functions.topic.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.session.php';
+        require_once  dirname(__DIR__) . '/include/functions.time.php';
+        require_once  dirname(__DIR__) . '/include/functions.read.php';
+        require_once  dirname(__DIR__) . '/include/functions.topic.php';
 
         $sticky    = 0;
         $topics    = [];

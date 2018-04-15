@@ -91,7 +91,7 @@ switch ($op) {
     case 'default':
     default:
         require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
 
         if ('processed' !== $item) {
             $process_result = 0;

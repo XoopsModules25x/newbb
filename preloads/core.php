@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class NewbbCorePreload
  */
-class NewbbCorePreload extends XoopsPreloadItem
+class NewbbCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

@@ -15,7 +15,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once __DIR__ . '/../include/functions.config.php';
+require_once  dirname(__DIR__) . '/include/functions.config.php';
 
 /**
  * Class OnlineHandler
@@ -96,8 +96,8 @@ class OnlineHandler
      */
     public function render(\Smarty $xoopsTpl)
     {
-        require_once __DIR__ . '/../include/functions.render.php';
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);
@@ -155,8 +155,8 @@ class OnlineHandler
      */
     public function showOnline()
     {
-        require_once __DIR__ . '/../include/functions.render.php';
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);

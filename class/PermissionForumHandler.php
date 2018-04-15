@@ -74,7 +74,7 @@ class PermissionForumHandler extends PermissionHandler
             return $full_items;
         }
 
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip  = \Xmf\IPAddress::fromRequest()->asReadable();
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])

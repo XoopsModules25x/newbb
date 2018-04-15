@@ -19,8 +19,6 @@
  * @author          XOOPS Development Team - ( https://xoops.org )
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $uploadFolders = [
@@ -76,8 +74,8 @@ function getConfig()
             '/class/registry.php',
             '/class/utilities.php',
             '/class/util.php',
-            '/include/constants.php',
-            '/include/functions.php',
+            // '/include/constants.php',
+            // '/include/functions.php',
             '/ajaxrating.txt',
         ],
         'oldFolders'      => [

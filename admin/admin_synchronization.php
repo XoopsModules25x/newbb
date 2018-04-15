@@ -14,7 +14,7 @@ use Xmf\Request;
 // irmtfan - TODO - should be changed completly with Newbb new function newbbSynchronization
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-require_once __DIR__ . '/../include/functions.recon.php';
+require_once  dirname(__DIR__) . '/include/functions.recon.php';
 $form = '';
 $form .= $adminObject->displayNavigation(basename(__FILE__));
 

@@ -32,8 +32,8 @@
 use XoopsModules\Newbb;
 
 require_once __DIR__ . '/admin_header.php';
-//require_once __DIR__ . '/../class/Utility.php';
-require_once __DIR__ . '/../include/functions.stats.php';
+//require_once  dirname(__DIR__) . '/class/Utility.php';
+require_once  dirname(__DIR__) . '/include/functions.stats.php';
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';

@@ -572,7 +572,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             return true;
         }
 
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }

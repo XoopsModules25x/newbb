@@ -74,7 +74,7 @@ class Topic extends \XoopsObject
             return $topic_title;
         }
 
-        require_once __DIR__ . '/../include/functions.topic.php';
+        require_once  dirname(__DIR__) . '/include/functions.topic.php';
 
         return getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
     }
@@ -180,6 +180,7 @@ class Topic extends \XoopsObject
         if (empty($poll_id)) {
             return false;
         }
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbbConfig   = newbbLoadConfig();
         if (!empty($pollModule)) {

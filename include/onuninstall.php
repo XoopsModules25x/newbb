@@ -35,13 +35,10 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
     //    return true;
 
     $moduleDirName  = basename(dirname(__DIR__));
-    $xsitemapHelper = \Xmf\Module\Helper::getHelper($moduleDirName);
+    $helper = \XoopsModules\Newbb\Helper::getInstance();
 
     /** @var Newbb\Utility $utility */
-    $utility = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    $utility = new \XoopsModules\Newbb\Utility();
 
     $success = true;
     $helper->loadLanguage('admin');

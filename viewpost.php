@@ -402,7 +402,7 @@ switch ($status) {
         break;
 }
 if ($uid > 0) {
-    $lang_title .= ' (' . XoopsUser::getUnameFromId($uid) . ')';
+    $lang_title .= ' (' . \XoopsUser::getUnameFromId($uid) . ')';
 }
 $xoopsTpl->assign('lang_title', $lang_title);
 // irmtfan up to p_up

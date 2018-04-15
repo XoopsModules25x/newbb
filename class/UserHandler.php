@@ -58,7 +58,7 @@ class UserHandler
         if (empty($this->users) || !$this->enableOnline) {
             return;
         }
-        require_once __DIR__ . '/../include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
         $image_online  = newbbDisplayImage('online', _MD_NEWBB_ONLINE);
         $image_offline = newbbDisplayImage('offline', _MD_NEWBB_OFFLINE);
 

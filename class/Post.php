@@ -381,8 +381,8 @@ class Post extends \XoopsObject
     {
         global $viewtopic_users;
         $newbbConfig = newbbLoadConfig();
-        require_once __DIR__ . '/../include/functions.user.php';
-        require_once __DIR__ . '/../include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
 
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         /** @var KarmaHandler $karmaHandler */
@@ -485,8 +485,8 @@ class Post extends \XoopsObject
             $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
 
-        require_once __DIR__ . '/../include/functions.time.php';
-        require_once __DIR__ . '/../include/functions.render.php';
+        require_once  dirname(__DIR__) . '/include/functions.time.php';
+        require_once  dirname(__DIR__) . '/include/functions.render.php';
 
         $post_id  = $this->getVar('post_id');
         $topic_id = $this->getVar('topic_id');

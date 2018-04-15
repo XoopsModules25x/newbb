@@ -408,7 +408,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
     {
         static $_cachedTopicPerms;
-        require_once __DIR__ . '/../include/functions.user.php';
+        require_once  dirname(__DIR__) . '/include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }

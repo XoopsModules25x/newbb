@@ -254,7 +254,7 @@ class User
         // END hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         $userinfo['from'] = $user->getVar('user_from');
 
-        require_once __DIR__ . '/../include/functions.time.php';
+        require_once  dirname(__DIR__) . '/include/functions.time.php';
         $userinfo['regdate']    = newbbFormatTimestamp($user->getVar('user_regdate'), 'reg');
         $userinfo['last_login'] = newbbFormatTimestamp($user->getVar('last_login')); // irmtfan add last_login
 

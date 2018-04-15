@@ -45,7 +45,7 @@ function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
 
-    return XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
+    return \XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
 }
 
 /**
@@ -88,10 +88,10 @@ function newbbIsAdministrator($user = -1, $mid = 0)
     $memberHandler = xoops_getHandler('member');
     $groups        = $memberHandler->getGroupsByUser($uid);
 
-    /** @var \XoopsGroupPermHandler $modulepermHandler */
-    $modulepermHandler = xoops_getHandler('groupperm');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
-    return $modulepermHandler->checkRight('module_admin', $mid, $groups);
+    return $grouppermHandler->checkRight('module_admin', $mid, $groups);
 }
 
 /**

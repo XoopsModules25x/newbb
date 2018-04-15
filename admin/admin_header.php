@@ -33,7 +33,7 @@ use Xmf\Request;
 use XoopsModules\Newbb;
 
 //include $GLOBALS['xoops']->path('include/cp_header.php');
-include __DIR__ . '/../../../include/cp_header.php';
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');

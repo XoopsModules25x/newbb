@@ -22,8 +22,8 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
-include __DIR__ . '/../preloads/autoloader.php';
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+include  dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
@@ -83,48 +83,48 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 //    $publisherIsAdmin = Newbb\Utility::userIsAdmin();
 //}
 
-//$db = \XoopsDatabaseFactory::getDatabase();
+//$db = \XoopsDatabaseFactory::getDatabaseConnection();
 
 /** @var Newbb\CategoryHandler $categoryHandler */
-$categoryHandler = $helper->getHandler('category');
+$categoryHandler = $helper->getHandler('Category');
 /** @var Newbb\DigestHandler $digestHandler */
-$digestHandler = $helper->getHandler('digest');
+$digestHandler = $helper->getHandler('Digest');
 /** @var Newbb\ForumHandler $forumHandler */
-$forumHandler = $helper->getHandler('forum');
+$forumHandler = $helper->getHandler('Forum');
 /** @var Newbb\IconHandler $iconHandler */
-$iconHandler = $helper->getHandler('icon');
+$iconHandler = $helper->getHandler('Icon');
 /** @var Newbb\KarmaHandler $karmaHandler */
-$karmaHandler = $helper->getHandler('karma');
+$karmaHandler = $helper->getHandler('Karma');
 /** @var Newbb\ModerateHandler $moderateHandler */
-$moderateHandler = $helper->getHandler('moderate');
+$moderateHandler = $helper->getHandler('Moderate');
 /** @var Newbb\OnlineHandler $onlineHandler */
-$onlineHandler = $helper->getHandler('online');
+$onlineHandler = $helper->getHandler('Online');
 /** var Newbb\PermissionHandler $permHandler */
-$permHandler = $helper->getHandler('permission');
+$permHandler = $helper->getHandler('Permission');
 /** @var Newbb\PostHandler $postHandler */
-$postHandler = $helper->getHandler('post');
+$postHandler = $helper->getHandler('Post');
 /** @var Newbb\RateHandler $rateHandler */
-$rateHandler = $helper->getHandler('rate');
+$rateHandler = $helper->getHandler('Rate');
 /** @var Newbb\ReadHandler $readHandler */
 //$readHandler = $helper->getHandler('read' . $type);
 /** @var Newbb\ReadForumHandler $readForumHandler */
-$readForumHandler = $helper->getHandler('readforum');
+$readForumHandler = $helper->getHandler('ReadForum');
 /** @var Newbb\ReadtopicHandler $readTopicHandler */
-$readTopicHandler = $helper->getHandler('readtopic');
+$readTopicHandler = $helper->getHandler('Readtopic');
 /** @var Newbb\ReportHandler $reportHandler */
-$reportHandler = $helper->getHandler('report');
+$reportHandler = $helper->getHandler('Report');
 /** @var Newbb\StatsHandler $statsHandler */
-$statsHandler = $helper->getHandler('stats');
+$statsHandler = $helper->getHandler('Stats');
 /** @var Newbb\TextHandler $textHandler */
-$textHandler = $helper->getHandler('text');
+$textHandler = $helper->getHandler('Text');
 /** @var Newbb\TopicHandler $topicHandler */
-$topicHandler = $helper->getHandler('topic');
+$topicHandler = $helper->getHandler('Topic');
 /** @var Newbb\TypeHandler $typeHandler */
-$typeHandler = $helper->getHandler('type');
+$typeHandler = $helper->getHandler('Type');
 /** @var Newbb\UserstatsHandler $userstatsHandler */
-$userstatsHandler = $helper->getHandler('userstats');
+$userstatsHandler = $helper->getHandler('Userstats');
 /** @var Newbb\XmlrssHandler $xmlrssHandler */
-$xmlrssHandler = $helper->getHandler('xmlrss');
+$xmlrssHandler = $helper->getHandler('Xmlrss');
 
 
 $pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
