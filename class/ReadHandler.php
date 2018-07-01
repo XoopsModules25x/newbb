@@ -147,9 +147,9 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         }
         if (1 == $this->mode) {
             return $this->getReadCookie($read_item);
-        } else {
-            return $this->getReadDb($read_item, $uid);
         }
+
+        return $this->getReadDb($read_item, $uid);
     }
 
     /**
@@ -200,11 +200,12 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         if (empty($this->mode)) {
             return true;
         }
+
         if (1 == $this->mode) {
             return $this->setReadCookie($read_item, $post_id);
-        } else {
-            return $this->setReadDb($read_item, $post_id, $uid);
         }
+
+        return $this->setReadDb($read_item, $post_id, $uid);
     }
 
     /**

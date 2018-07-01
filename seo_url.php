@@ -418,7 +418,7 @@ function forum_seo_title($title = '', $withExt = true)
         }
 
         return $title;
-    } else {
-        return '';
     }
+
+    return '';
 }
