@@ -40,7 +40,6 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $criteria->setStart($start);
         $criteria->setLimit($limit);
-        $topicObjs = [];
         $topicObjs = $topicHandler->getAll($criteria);
         foreach ($topicObjs as $tObj) {
             $topicHandler->synchronization($tObj);
