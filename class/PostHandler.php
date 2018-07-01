@@ -142,7 +142,6 @@ class PostHandler extends \XoopsPersistableObjectHandler
         if (is_numeric($post)) {
             $post = $this->get($post);
         }
-        $post_id = $post->getVar('post_id');
 
         $wasApproved = $post->getVar('approved');
         // irmtfan approve post if the approved = 0 (pending) or -1 (deleted)
