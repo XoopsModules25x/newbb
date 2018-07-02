@@ -190,6 +190,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
             $items[$key] = $itemsObject[$key]->getVar('topic_last_post_id');
         }
         unset($itemsObject, $stickyObject);
+
         foreach (array_keys($items) as $key) {
             $this->setReadDb($key, $items[$key], $uid);
         }

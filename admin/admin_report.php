@@ -66,7 +66,6 @@ switch ($op) {
         }
         // irmtfan add message
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTSAVE);
-
         break;
 
     case 'delete':
@@ -85,7 +84,6 @@ switch ($op) {
         }
         // irmtfan add message
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTDELETE);
-
         break;
 
     case 'default':
