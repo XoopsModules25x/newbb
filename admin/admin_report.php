@@ -175,7 +175,13 @@ switch ($op) {
 
         echo '</table>';
         echo '</td></tr></table>';
-        $nav = new \XoopsPageNav($reportHandler->getCount(new \Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
+        $nav = new \XoopsPageNav(
+            $reportHandler->getCount(new \Criteria('report_result', $process_result)),
+            $limit,
+            $start,
+            'start',
+            'item=' . $item
+        );
         echo $nav->renderNav(4);
         echo '<fieldset>';
         echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_REPORT . '&nbsp;</legend>';
