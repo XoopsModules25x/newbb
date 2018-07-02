@@ -31,7 +31,7 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
  */
 class Breadcrumb
 {
-    public $dirname;
+    private $dirname;
     private $bread = [];
 
     /**
