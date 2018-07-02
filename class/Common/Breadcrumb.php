@@ -31,12 +31,12 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
  */
 class Breadcrumb
 {
+    /** @var string */
     private $dirname;
+
+    /** @var array */
     private $bread = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->dirname = basename(dirname(__DIR__));
@@ -59,6 +59,7 @@ class Breadcrumb
     /**
      * Render Pedigree BreadCrumb
      *
+     * @return string
      */
     public function render()
     {
