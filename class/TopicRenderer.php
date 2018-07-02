@@ -25,10 +25,7 @@ use XoopsModules\Newbb;
  */
 class TopicRenderer
 {
-    /**
-     * reference to an object handler
-     */
-    public $handler;
+    public $vars = [];
 
     /**
      * reference to moduleConfig
@@ -36,15 +33,9 @@ class TopicRenderer
     public $config;
 
     /**
-     * Requested page
+     * Current user has no access to current page
      */
-    public $page = 'list.topic.php';
-
-    /**
-     * query variables
-     */
-    public $args = ['forum', 'uid', 'lastposter', 'type', 'status', 'mode', 'sort', 'order', 'start', 'since'];
-    public $vars = [];
+    private $noperm = false;
 
     /**
      * For multiple forums
@@ -61,15 +52,22 @@ class TopicRenderer
      */
     public $userlevel = 0;
 
-    /**
-     * Current user has no access to current page
-     */
-    public $noperm = false;
+    public $query = [];
 
     /**
-     *
+     * reference to an object handler
      */
-    public $query = [];
+    private $handler;
+
+    /**
+     * Requested page
+     */
+    private $page = 'list.topic.php';
+
+    /**
+     * query variables
+     */
+    private $args = ['forum', 'uid', 'lastposter', 'type', 'status', 'mode', 'sort', 'order', 'start', 'since'];
 
     /**
      * Constructor

@@ -44,23 +44,22 @@ class IconHandler
     /**
      * image set
      */
-    public $forumImage = [];
+    private $forumImage = [];
 
     /**
      * prefix
      */
-    public $prefix = '';
+    private $prefix = '';
 
     /**
      * postfix, including extension
      */
-    //var $postfix = ".gif";
-    public $postfix = '.png';
+    private $postfix = '.png';
 
     /**
      * images to be assigned to template
      */
-    public $images = [];
+    private $images = [];
 
     /**
      * Constructor

@@ -44,7 +44,7 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
 class Post extends \XoopsObject
 {
     //class Post extends \XoopsObject {
-    public $attachmentArray = [];
+    private $attachmentArray = [];
 
     /**
      *

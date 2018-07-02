@@ -38,12 +38,17 @@ require_once $GLOBALS['xoops']->path('class/xoopstree.php');
  */
 class Tree extends \XoopsTree
 {
-    public $prefix    = '&nbsp;&nbsp;';
-    public $increment = '&nbsp;&nbsp;';
-    public $postArray = [];
+    /** @var string */
+    private $prefix = '&nbsp;&nbsp;';
+
+    /** @var string */
+    private $increment = '&nbsp;&nbsp;';
+
+    /** @var array */
+    private $postArray = [];
 
     /**
-     * @param        $table_name
+     * @param string $table_name
      * @param string $id_name
      * @param string $pid_name
      */

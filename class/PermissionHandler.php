@@ -27,9 +27,11 @@ if (!class_exists('XoopsGroupPermHandler')) {
  */
 class PermissionHandler extends \XoopsGroupPermHandler
 {
-    public $_handler;
     /** @var \Xmf\Module\Helper\Cache */
     protected $cacheHelper;
+
+    /** @var array */
+    private $_handler;
 
     /**
      * @param $db
