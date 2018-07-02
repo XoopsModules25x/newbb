@@ -11,8 +11,6 @@
  */
 class KarmaHandler
 {
-    public $user;
-
     /**
      * @param  null $user
      * @return int
