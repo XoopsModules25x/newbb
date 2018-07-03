@@ -46,7 +46,7 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      *
      *
      * @param  int    $uid user id
-     * @param  string $ip  user ip
+     * @param  string|bool $ip  user ip
      * @param  int    $forum
      * @return bool true if IP is banned
      */

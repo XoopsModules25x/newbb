@@ -1027,7 +1027,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     /**
      * function for get forum Ids by positive and negative values
      *
-     * @param  int|text $values : positive values = forums | negative values = cats | $values=0 = all valid forums, $permission , true/false $parse_cats
+     * @param  int|text|array $values : positive values = forums | negative values = cats | $values=0 = all valid forums, $permission , true/false $parse_cats
      * @param  string   $permission
      * @param  bool     $parse_cats
      * @return array|mixed $validForums

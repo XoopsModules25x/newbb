@@ -965,13 +965,10 @@ function b_newbb_custom($options)
  */
 function b_newbb_custom_topic($options)
 {
-
+    /** @var \XoopsModules\Newbb\Helper $helper */
+    $helper = \XoopsModules\Newbb\Helper::getInstance();
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
-    } else {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
-    }
+    $helper->loadLanguage('blocks');
 
     $options = explode('|', $options);
     $block   = b_newbb_topic_show($options);
@@ -990,13 +987,10 @@ function b_newbb_custom_topic($options)
  */
 function b_newbb_custom_post($options)
 {
-
+    /** @var \XoopsModules\Newbb\Helper $helper */
+    $helper = \XoopsModules\Newbb\Helper::getInstance();
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
-    } else {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
-    }
+    $helper->loadLanguage('blocks');
 
     $options = explode('|', $options);
     $block   = b_newbb_post_show($options);
@@ -1015,12 +1009,10 @@ function b_newbb_custom_post($options)
  */
 function b_newbb_custom_author($options)
 {
+    /** @var \XoopsModules\Newbb\Helper $helper */
+    $helper = \XoopsModules\Newbb\Helper::getInstance();
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
-    } else {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
-    }
+    $helper->loadLanguage('blocks');
 
     $options = explode('|', $options);
     $block   = b_newbb_author_show($options);

@@ -16,24 +16,24 @@ ob_start();
 require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('header.php');
 
-$attach_id = Request::getInt('attachid', 0, 'GET');
-$post_id   = Request::getInt('post_id', 0, 'GET');
+$attachId = Request::getInt('attachid', 0, 'GET');
+$postId   = Request::getInt('post_id', 0, 'GET');
 
-if (!$post_id || !$attach_id) {
-    exit(_MD_NEWBB_NO_SUCH_FILE . ': post_id:' . $post_id . '; attachid' . $attachid);
+if (!$postId || !$attachId) {
+    exit(_MD_NEWBB_NO_SUCH_FILE . ': post_id:' . $postId . '; attachid' . $attachId);
 }
 
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
 
 /** @var Newbb\Post $forumpost */
-$forumpost = $postHandler->get($post_id);
+$forumpost = $postHandler->get($postId);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 ///** @var TopicHandler $topicHandler */
 //$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
-$topicObject = $topicHandler->getByPost($post_id);
+$topicObject = $topicHandler->getByPost($postId);
 $topic_id    = $topicObject->getVar('topic_id');
 if (!$approved = $topicObject->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
@@ -49,7 +49,7 @@ if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_stat
 }
 
 $attachments = $forumpost->getAttachment();
-$attach      = $attachments[$attach_id];
+$attach      = $attachments[$attachId];
 if (!$attach) {
     exit(_MD_NEWBB_NO_SUCH_FILE);
 }
@@ -57,7 +57,7 @@ $file_saved = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachm
 if (!file_exists($file_saved)) {
     exit(_MD_NEWBB_NO_SUCH_FILE);
 }
-if ($down = $forumpost->incrementDownload($attach_id)) {
+if ($down = $forumpost->incrementDownload($attachId)) {
     $forumpost->saveAttachment();
 }
 unset($forumpost);

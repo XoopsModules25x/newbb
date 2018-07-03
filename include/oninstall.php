@@ -69,7 +69,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
     $helper->loadLanguage('modinfo');
 
     // default Permission Settings ----------------------
-    global $xoopsModule;
+    global $xoopsModule, $xoopsDB;
     $moduleId     = $xoopsModule->getVar('mid');
     $moduleId2    = $helper->getModule()->mid();
     $grouppermHandler = xoops_getHandler('groupperm');

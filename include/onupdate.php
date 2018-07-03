@@ -77,20 +77,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
     $utility      = new Newbb\Utility();
     $configurator = new Newbb\Common\Configurator();
 
-    if ($previousVersion < 240) {
-
-        //rename column EXAMPLE
-        $tables     = new Xmf\Database\Tables();
-        $table      = 'newbbx_categories';
-        $column     = 'ordre';
-        $newName    = 'order';
-        $attributes = "INT(5) NOT NULL DEFAULT '0'";
-        if ($tables->useTable($table)) {
-            $tables->alterColumn($table, $column, $attributes, $newName);
-            if (!$tables->executeQueue()) {
-                echo '<br>' . _AM_NEWBB_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
-            }
-        }
+    if ($previousVersion < 510) {
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {

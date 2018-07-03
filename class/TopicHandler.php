@@ -195,7 +195,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param $topic_id
-     * @return null|\Post
+     * @return null|Newbb\Post
      */
     public function &getTopPost($topic_id)
     {

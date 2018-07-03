@@ -51,7 +51,7 @@ function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
 /**
  * Function to check if a user is an administrator of the module
  *
- * @param  int|string $user
+ * @param  int|string|array|\XoopsUser $user
  * @param  int $mid
  * @return bool
  */
@@ -98,7 +98,7 @@ function newbbIsAdministrator($user = -1, $mid = 0)
  * Function to check if a user is a moderator of a forum
  *
  * @param       $forum
- * @param  int  $user
+ * @param  int|string|\XoopsUser  $user
  * @return bool
  */
 function newbbIsModerator(&$forum, $user = -1)

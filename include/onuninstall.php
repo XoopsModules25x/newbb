@@ -35,6 +35,7 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
     //    return true;
 
     $moduleDirName  = basename(dirname(__DIR__));
+    $moduleDirNameUpper   = strtoupper($moduleDirName);
     /** @var \XoopsModules\Newbb\Helper $helper */
     $helper = \XoopsModules\Newbb\Helper::getInstance();
 

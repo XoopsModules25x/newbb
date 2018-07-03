@@ -45,7 +45,6 @@ require_once dirname(__DIR__) . '/include/common.php';
 
 /** @var Newbb\Helper $helper */
 $helper = Newbb\Helper::getInstance();
-//$helper = NewBB::getInstance();
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = Xmf\Module\Admin::getInstance();
 
