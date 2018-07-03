@@ -92,7 +92,7 @@ $customConfig['display_text_links'] = false;
 // This is for each link.
 // It means you can overwrite the above $customConfig["display_text_links"] overall value for each link one by one.
 // go to /modules/newbb/include/display.php to set for each link
-$customConfig['display_text_each_link'] = include $GLOBALS['xoops']->path('modules/newbb/include/display.php');
+$customConfig['display_text_each_link'] = require_once $GLOBALS['xoops']->path('modules/newbb/include/display.php');
 // jump to last post read in the topic
 $customConfig['jump_to_topic_last_post_read_enabled'] = true;
 // highlight keywords in search

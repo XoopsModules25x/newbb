@@ -12,7 +12,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 //load_functions('locale');
 
 /**
@@ -78,7 +78,7 @@ class Xmlrss
      * @param         $link
      * @param  string $description
      * @param  string $label
-     * @param  int    $pubdate
+     * @param  int|string    $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)

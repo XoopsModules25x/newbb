@@ -31,8 +31,8 @@
 
 use XoopsModules\Newbb;
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Newbb\Helper $helper */
 $helper = Newbb\Helper::getInstance();
 
 $pathIcon32    = \Xmf\Module\Admin::menuIconPath('');

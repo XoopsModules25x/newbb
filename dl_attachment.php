@@ -14,7 +14,7 @@ use XoopsModules\Newbb;
 
 ob_start();
 require_once __DIR__ . '/header.php';
-include $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 $attach_id = Request::getInt('attachid', 0, 'GET');
 $post_id   = Request::getInt('post_id', 0, 'GET');

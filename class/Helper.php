@@ -16,7 +16,7 @@
  * @license         GPL 2.0 or later
  * @package         newbb
  * @since           5.0.0
- * @author          XOOPS Development Team <name@site.com> - <https://xoops.org>
+ * @author          XOOPS Development Team <https://xoops.org>
  */
 
 //defined('XOOPS_ROOT_PATH') || die('Restricted access');

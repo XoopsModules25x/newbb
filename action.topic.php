@@ -133,7 +133,7 @@ switch ($op) {
             $forumHandler->synchronization(Request::getInt('newforum', 0, 'POST'));
             $forumHandler->synchronization($forum_id);
         } else {
-            include $GLOBALS['xoops']->path('header.php');
+            require_once $GLOBALS['xoops']->path('header.php');
             //            /** @var Newbb\CategoryHandler $categoryHandler */
             //            $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
             $categories = $categoryHandler->getByPermission('access');
@@ -177,7 +177,7 @@ switch ($op) {
             echo "<input type='submit' name='submit' value='" . _SUBMIT . "' />";
             echo '</td></tr></table></td></tr></table>';
             echo '</form>';
-            include $GLOBALS['xoops']->path('footer.php');
+            require_once $GLOBALS['xoops']->path('footer.php');
             exit();
         }
         break;
@@ -192,4 +192,4 @@ if (empty($forum_id)) {
 }
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

@@ -8,5 +8,5 @@
  * @since          4.00
  * @package        module::newbb
  */
-include __DIR__ . '/header.php';
-include $GLOBALS['xoops']->path('modules/tag/list.tag.php');
+require_once __DIR__   . '/header.php';
+require_once $GLOBALS['xoops']->path('modules/tag/list.tag.php');

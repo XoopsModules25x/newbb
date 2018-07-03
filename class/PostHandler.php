@@ -34,7 +34,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class PostHandler
@@ -130,7 +130,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int|Post $post
+     * @param  int|Post|\XoopsObject $post
      * @param  bool $force
      * @return bool
      */
@@ -326,7 +326,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param \XoopsObject $post
+     * @param \XoopsObject|Post $post
      * @param  bool        $isDeleteOne
      * @param  bool        $force
      * @return bool
@@ -366,7 +366,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  Post $post
+     * @param  Post|\XoopsObject $post
      * @param  bool $force
      * @return bool
      */

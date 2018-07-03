@@ -114,6 +114,7 @@ class Utility
      */
     public static function userIsAdmin()
     {
+        /** @var Newbb\Helper $helper */
         $helper = Newbb\Helper::getInstance();
 
         static $newbbIsAdmin;

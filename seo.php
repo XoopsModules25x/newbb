@@ -63,13 +63,13 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
             $_GET['topic_id']       = $seoArg;
             break;
     }
-    include $seoMap[$seoOp];
+    require_once $seoMap[$seoOp];
 } else {
     $last = $seoOp . '/' . $seoArg;
     if ('' !== $seoOther) {
         $last .= '/' . $seoOther;
     }
-    include $last;
+    require_once $last;
 }
 exit();
 

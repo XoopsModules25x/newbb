@@ -60,7 +60,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
-        include $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/include/constants.php');
+        require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/include/constants.php');
         $classPoll  = $topicObject->loadOldPoll();
         $pollObject = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
     }

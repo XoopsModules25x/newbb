@@ -38,7 +38,7 @@ $adminObject->displayNavigation(basename(__FILE__));
 
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 
-if (Request::getString('submit', '', 'POST')) {
+if (Request::hasVar('submit', 'POST')) {
     $post_list       = null;
     $topic_list      = null;
     $topics_number   = 0;
@@ -180,7 +180,7 @@ if (Request::getString('submit', '', 'POST')) {
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
-    require_once  dirname(__DIR__) . '/include/functions.forum.php';
+    require_once dirname(__DIR__) . '/include/functions.forum.php';
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';

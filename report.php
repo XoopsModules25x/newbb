@@ -56,8 +56,8 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $myts = \MyTextSanitizer::getInstance();
 // Disable cache
 $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
-include $GLOBALS['xoops']->path('header.php');
-include $GLOBALS['xoops']->path('class/xoopsformloader.php');
+require_once $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 if (Request::hasVar('submit', 'POST')) {
     $error_message = '';
@@ -168,4 +168,4 @@ $r_content .= $r_message;
 echo "<br><table cellpadding='4' cellspacing='1' width='98%' class='outer'><tr><td class='head'>" . $r_subject . '</td></tr>';
 echo '<tr><td><br>' . $r_content . '<br></td></tr></table>';
 
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

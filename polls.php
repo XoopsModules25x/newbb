@@ -84,7 +84,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
-        include $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/include/constants.php');
+        require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/include/constants.php');
         $classPoll  = $topicObject->loadOldPoll();
         $pollObject = new $classPoll($poll_id); // will create poll if poll_id = 0 exist
     }
@@ -93,7 +93,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_POLLMODULE_ERROR);
 }
 // include header
-include $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 // no admin user permission
 if (is_object($GLOBALS['xoopsUser']) && !newbbIsAdmin($forumObject)) {
@@ -757,4 +757,4 @@ switch ($op) {
 
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

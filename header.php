@@ -11,7 +11,7 @@
 
 use Xmf\Request;
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');

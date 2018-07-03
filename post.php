@@ -70,7 +70,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $error_message = [];
 
 if (Request::getString('contents_submit', '', 'POST')) {
-    $token_valid = false;
+//    $token_valid = false;
     $token_valid = $GLOBALS['xoopsSecurity']->check();
 
     $captcha_invalid = false;
@@ -528,8 +528,8 @@ if (Request::getString('contents_upload', null, 'POST') || Request::getString('c
     $attachments = $postObject->getAttachment();
     $xoopsTpl->assign('error_message', implode('<br>', $error_message));
 
-    include __DIR__ . '/include/form.post.php';
+    require_once __DIR__   . '/include/form.post.php';
 }
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

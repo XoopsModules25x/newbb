@@ -142,7 +142,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
     /**
      * delete an object as well as links relying on it
      *
-     * @param \XoopsObject $object {@link Type}
+     * @param Type|\XoopsObject $object {@link Type}
      * @param  bool        $force  flag to force the query execution despite security settings
      * @return bool
      */

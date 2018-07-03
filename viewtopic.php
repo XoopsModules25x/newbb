@@ -273,7 +273,7 @@ if (is_array($poster_array) && count($poster_array) > 0) {
 
 $viewtopic_users = [];
 if (is_array($userid_array) && count($userid_array) > 0) {
-//    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+//    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
@@ -337,7 +337,7 @@ foreach ($postsArray as $eachpost) {
 }
 
 if ($total_posts > $GLOBALS['xoopsModuleConfig']['posts_per_page']) {
-    include $GLOBALS['xoops']->path('class/pagenav.php');
+    require_once $GLOBALS['xoops']->path('class/pagenav.php');
 
     $nav = new \XoopsPageNav($total_posts, $GLOBALS['xoopsModuleConfig']['posts_per_page'], $start, 'start', 'topic_id=' . $topic_id . '&amp;order=' . $order . '&amp;status=' . $status . '&amp;mode=' . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite']) && $GLOBALS['xoopsModuleConfig']['do_rewrite'] === 1) $nav->url = XOOPS_URL . $nav->url;
@@ -829,5 +829,5 @@ if ($GLOBALS['xoopsModuleConfig']['do_tag']
 }
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');
 $xoopsLogger->stopTime('newBB_viewtopic');

@@ -9,4 +9,4 @@
  * @package        module::newbb
  */
 require_once __DIR__ . '/header.php';
-include $GLOBALS['xoops']->path('modules/tag/view.tag.php');
+require_once $GLOBALS['xoops']->path('modules/tag/view.tag.php');

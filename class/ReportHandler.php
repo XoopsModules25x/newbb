@@ -12,7 +12,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class ReportHandler

@@ -23,7 +23,7 @@
 use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-include  dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
@@ -34,7 +34,7 @@ $moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper  = Newbb\Helper::getInstance();
 $utility = new Newbb\Utility();
-//$configurator = new Newbb\common\Configurator();
+//$configurator = new Newbb\Common\Configurator();
 
 $helper->loadLanguage('common');
 

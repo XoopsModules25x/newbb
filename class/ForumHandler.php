@@ -87,7 +87,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int    $cat
+     * @param  int|array    $cat
      * @param  string $permission
      * @param  null   $tags
      * @param  bool   $asObject
@@ -935,7 +935,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * @param  int    $pid        Top forum ID
      * @param  string $permission permission type
      * @param  string $prefix     prefix for display
-     * @param  string $tags       variables to fetch
+     * @param  string|array|null $tags       variables to fetch
      * @return array  associative array of category IDs and sanitized titles
      */
     public function &getTree($cat_id = 0, $pid = 0, $permission = 'access', $prefix = '--', $tags = null)
@@ -970,7 +970,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * @param  int     $cat_id     category ID
      * @param  int     $pid        Top forum ID
      * @param  string  $permission permission type
-     * @param  string  $tags       variables to fetch
+     * @param  string|array|null  $tags       variables to fetch
      * @param  integer $depth      level of subcategories
      * @return array   associative array of category IDs and sanitized titles
      */

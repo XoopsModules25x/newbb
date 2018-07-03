@@ -30,7 +30,7 @@ use XoopsModules\Newbb;
  */
 function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
-    include  dirname(__DIR__) . '/preloads/autoloader.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Newbb\Utility $utility */
     $utility      = new \XoopsModules\Newbb\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -60,7 +60,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
 
-    $helper       = Newbb\Helper::getInstance();
+    /** @var Newbb\Helper $helper */
+    $helper = Newbb\Helper::getInstance();
     $utility      = new Newbb\Utility();
     $configurator = new Newbb\Common\Configurator();
     // Load language files

@@ -9,7 +9,7 @@
  * @package        module::newbb
  */
 
-include __DIR__ . '/preloads/autoloader.php';
+require_once __DIR__   . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 

@@ -167,7 +167,7 @@ $attachsig     = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->get
 $post_karma    = 0;
 $require_reply = 0;
 
-include __DIR__ . '/include/form.post.php';
+require_once __DIR__   . '/include/form.post.php';
 
 ///** @var Newbb\KarmaHandler $karmaHandler */
 //$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
@@ -205,4 +205,4 @@ foreach ($posts_contextObject as $post_contextObject) {
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

@@ -14,7 +14,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-//defined("NEWBB_HANDLER_PERMISSION") || include __DIR__.'/permission.php';
+//defined("NEWBB_HANDLER_PERMISSION") || require_once __DIR__  .'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_FORUM", 1);
 
 if (defined('FORUM_PERM_ITEMS') && class_exists('ForumPermissionHandler')) {

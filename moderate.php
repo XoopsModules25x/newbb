@@ -15,7 +15,7 @@ require_once __DIR__ . '/header.php';
 
 global $xoTheme, $xoopsTpl;
 $GLOBALS['xoopsOption']['template_main'] = 'newbb_moderate.tpl';
-include $GLOBALS['xoops']->path('header.php');
+require_once $GLOBALS['xoops']->path('header.php');
 
 $forum_userid = Request::getInt('uid', 0);
 $forum_id     = Request::getInt('forum', 0);
@@ -162,7 +162,7 @@ if (!empty($moderate_count)) {
     $xoopsTpl->assign('columnRows', $columnRows);
 
     if ($moderate_count > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
-        include $GLOBALS['xoops']->path('class/pagenav.php');
+        require_once $GLOBALS['xoops']->path('class/pagenav.php');
         $nav = new \XoopsPageNav($moderate_count, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', 'forum=' . $forum_id . '&amp;sort=' . $sortname);
         //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         //    $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . ' /' . $nav->url;
@@ -197,4 +197,4 @@ $forum_form->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 $forum_form->assign($xoopsTpl);
 
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

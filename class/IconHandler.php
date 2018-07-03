@@ -134,7 +134,7 @@ class IconHandler
         $language = 'english',
         $dirname = 'newbb'
     ) {
-        $this->forumImage = include $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
+        $this->forumImage = require_once $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
         $this->forumImage['icon']     = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
         $this->forumImage['language'] = XOOPS_URL . $this->getPath("language/{$language}", $dirname, 'language/english') . '/';

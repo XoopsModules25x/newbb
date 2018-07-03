@@ -51,7 +51,7 @@ function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
 /**
  * Function to check if a user is an administrator of the module
  *
- * @param  int $user
+ * @param  int|string $user
  * @param  int $mid
  * @return bool
  */

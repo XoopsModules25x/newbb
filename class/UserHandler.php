@@ -14,7 +14,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class UserHandler
@@ -40,6 +40,7 @@ class UserHandler
 
     public function loadUserInfo()
     {
+        /** @var Newbb\Helper $helper */
         $helper = Newbb\Helper::getInstance();
         $helper->loadLanguage('user');
 //        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');

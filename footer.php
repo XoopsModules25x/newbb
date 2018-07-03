@@ -40,7 +40,7 @@ foreach ($allfiles as $jsfile) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }
-global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
+global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
 $toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G";';

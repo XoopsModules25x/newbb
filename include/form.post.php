@@ -44,7 +44,7 @@ if (!$moderateHandler->verifyUser($moderated_id, '', $moderated_forum)) {
     $tage = ($mod[0]['mod_end'] - $mod[0]['mod_start']) / 60 / 60 / 24;
     $msg  = $myts->displayTarea(sprintf(_MD_NEWBB_SUSPEND_TEXT, newbbGetUnameFromId($moderated_id), (int)$tage, $mod[0]['mod_desc'], formatTimestamp($mod[0]['mod_end'])), 1);
     xoops_error($msg, _MD_NEWBB_SUSPEND_NOACCESS);
-    include $GLOBALS['xoops']->path('footer.php');
+    require_once $GLOBALS['xoops']->path('footer.php');
     exit();
 }
 

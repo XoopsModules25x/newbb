@@ -28,7 +28,8 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
     {
 //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
-        $helper = \XoopsModules\Newbb\Helper::getInstance();
+        /** @var Newbb\Helper $helper */
+        $helper = Newbb\Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {
@@ -36,7 +37,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
         }
 
         $configs = is_object($helper) ? $helper->getConfig() : [];
-        $plugins = include __DIR__ . '/plugin.php';
+        $plugins = require_once __DIR__   . '/plugin.php';
         if (is_array($configs) && is_array($plugins)) {
             $configs = array_merge($configs, $plugins);
         }

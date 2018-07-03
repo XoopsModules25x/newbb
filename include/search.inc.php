@@ -22,7 +22,7 @@ require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param                $offset
  * @param                $userid
  * @param  int           $forums
- * @param  int           $sortby
+ * @param  int|string    $sortby
  * @param  string        $searchin
  * @param  CriteriaCompo $criteriaExtra
  * @return array

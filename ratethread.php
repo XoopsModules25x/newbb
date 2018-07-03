@@ -104,4 +104,4 @@ $GLOBALS['xoopsDB']->queryF($sql);
 $ratemessage = _MD_NEWBB_VOTEAPPRE . '<br>' . sprintf(_MD_NEWBB_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
 redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 2, $ratemessage);
 // irmtfan enhance include footer.php
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');

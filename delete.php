@@ -126,7 +126,7 @@ if ($ok) {
         redirect_header(XOOPS_URL . "/modules/newbb/viewforum.php?forum=$forum", 2, _MD_NEWBB_POSTSDELETED);
     }
 } else {
-    include $GLOBALS['xoops']->path('header.php');
+    require_once $GLOBALS['xoops']->path('header.php');
     //xoops_confirm(array('post_id' => $post_id, 'viewmode' => $viewmode, 'order' => $order, 'forum' => $forum, 'topic_id' => $topic_id, 'ok' => 1), 'delete.php', _MD_NEWBB_DEL_ONE);
     echo '<div class="confirmMsg">' . _MD_NEWBB_DEL_ONE . '<br>
           <form method="post" action="' . XOOPS_URL . '/modules/newbb/delete.php">';
@@ -152,5 +152,5 @@ if ($ok) {
                           'ok'       => 99
                       ], 'delete.php', _MD_NEWBB_DEL_RELATED);
     }
-    include $GLOBALS['xoops']->path('footer.php');
+    require_once $GLOBALS['xoops']->path('footer.php');
 }

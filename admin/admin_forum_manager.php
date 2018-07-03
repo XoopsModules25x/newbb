@@ -33,7 +33,7 @@ use Xmf\Request;
 use XoopsModules\Newbb;
 
 require_once __DIR__ . '/admin_header.php';
-include $GLOBALS['xoops']->path('class/xoopstree.php');
+require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once  dirname(__DIR__) . '/include/functions.forum.php';
 require_once  dirname(__DIR__) . '/include/functions.render.php';
@@ -202,7 +202,7 @@ switch ($op) {
 
     case 'mod':
         $forumObject = $forumHandler->get($forum_id);
-        include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
+        require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
 
     case 'del':
@@ -227,7 +227,7 @@ switch ($op) {
         $forumObject = $forumHandler->create();
         $forumObject->setVar('parent_forum', $parent_forum);
         $forumObject->setVar('cat_id', $cat_id);
-        include $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
+        require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
 
     default:

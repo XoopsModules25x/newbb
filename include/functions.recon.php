@@ -13,7 +13,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || include __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__   . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RECON_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_RECON')) {

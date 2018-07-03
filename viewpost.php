@@ -242,7 +242,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
-//    require $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+//    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
@@ -366,7 +366,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 }
 
 if ($postCount > $post_perpage) {
-    include $GLOBALS['xoops']->path('class/pagenav.php');
+    require_once $GLOBALS['xoops']->path('class/pagenav.php');
     $nav = new \XoopsPageNav($postCount, $post_perpage, $start, 'start', 'forum=' . $forum_id . '&amp;viewmode=' . $viewmode . '&amp;status=' . $status . '&amp;uid=' . $uid . '&amp;order=' . $order . '&amp;mode=' . $mode);
     //if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . $nav->url;
     if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
@@ -449,4 +449,4 @@ $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once $GLOBALS['xoops']->path('footer.php');
