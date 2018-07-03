@@ -512,7 +512,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $xpollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
+            $xpollHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Poll');
             /** @var \XoopsPoll $pollObject */
             $pollObject = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
@@ -536,12 +536,12 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                                                  'back_link'       => ''
                                              ]);
                 $classRenderer = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Renderer';
-                /** @var Xoopspoll\Renderer $renderer */
+                /** @var \XoopsModules\Xoopspoll\Renderer $renderer */
                 $renderer = new $classRenderer($pollObject);
                 // check to see if user has voted, show form if not, otherwise get results for form
 
-                /** @var Xoopspoll\LogHandler $logHandler */
-                $logHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
+                /** @var \XoopsModules\Xoopspoll\LogHandler $logHandler */
+                $logHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Log');
                 if ($pollObject->isAllowedToVote()
                     && (!$logHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $uid))) {
                     $myTpl = new \XoopsTpl();

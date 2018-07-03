@@ -344,3 +344,6 @@ Since the forum works in real time, it is impossible to verify or confirm the ac
 ');
 define('_MI_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
 define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');
+
+
+define('_MI_NEWBB_ADMENU_MIGRATE', 'Migrate');

@@ -94,8 +94,8 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
  */
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
-    XoopsLoad::load('migrate', 'newbb');
-    $newbbMigrate = new Newbb\Migrate();
+//    XoopsLoad::load('migrate', 'newbb');
+    $newbbMigrate = new \XoopsModules\Newbb\Common\Migrate();
     $newbbMigrate->synchronizeSchema();
 
     return true;

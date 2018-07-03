@@ -51,8 +51,10 @@ echo <<<EOF
 </form>
 EOF;
 
-XoopsLoad::load('migrate', 'newbb');
-$newbbMigrate = new Newbb\Migrate();
+//XoopsLoad::load('migrate', 'newbb');
+
+/** @var \XoopsModules\Newbb\Common\Migrate $newbbMigrate */
+$newbbMigrate = new \XoopsModules\Newbb\Common\Migrate();
 
 $op        = Request::getCmd('op', 'default');
 $opShow    = Request::getCmd('show', null, 'POST');

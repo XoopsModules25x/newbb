@@ -19,7 +19,6 @@
  * @author          XOOPS Development Team - ( https://xoops.org )
  */
 
-
 $moduleDirName = basename(dirname(__DIR__));
 $uploadFolders = [
     NEWBB_UPLOAD_PATH,
@@ -85,7 +84,29 @@ function getConfig()
             '/tcpdf',
             '/images',
         ],
-        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+
+        'renameTables' => [
+            'bb_archive'     => 'newbb_archive',
+            'bb_categories'  => 'newbb_categories',
+            'bb_votedata'    => 'newbb_votedata',
+            'bb_forums'      => 'newbb_forums',
+            'bb_posts'       => 'newbb_posts',
+            'bb_posts_text'  => 'newbb_posts_text',
+            'bb_topics'      => 'newbb_topics',
+            'bb_online'      => 'newbb_online',
+            'bb_digest'      => 'newbb_digest',
+            'bb_report'      => 'newbb_report',
+            'bb_attachments' => 'newbb_attachments',
+            'bb_moderates'   => 'newbb_moderates',
+            'bb_reads_forum' => 'newbb_reads_forum',
+            'bb_reads_topic' => 'newbb_reads_topic',
+            'bb_type'        => 'newbb_type',
+            'bb_type_forum'  => 'newbb_type_forum',
+            'bb_stats'       => 'newbb_stats',
+            'bb_user_stats'  => 'newbb_user_stats',
+        ],
+
+        'modCopyright' => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
     ];
 }

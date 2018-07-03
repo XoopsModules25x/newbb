@@ -75,7 +75,7 @@ CREATE TABLE `newbb_moderates` (
   `mod_end`   INT(10) UNSIGNED     NOT NULL DEFAULT '0',
   `mod_desc`  VARCHAR(255)         NOT NULL DEFAULT '',
   `uid`       INT(10) UNSIGNED     NOT NULL DEFAULT '0',
-  `ip`        VARCHAR(50)          NOT NULL DEFAULT '',
+  `ip`        VARCHAR(45)          NOT NULL DEFAULT '',
   `forum_id`  SMALLINT(4) UNSIGNED NOT NULL DEFAULT '0',
 
   PRIMARY KEY (`mod_id`),

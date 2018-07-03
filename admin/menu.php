@@ -111,6 +111,11 @@ $adminmenu[] = [
 ];
 
 $adminmenu[] = [
+    'title' => _MI_NEWBB_ADMENU_MIGRATE,
+    'link'  => 'admin/migrate.php',
+    'icon'  => $pathIcon32 . 'database_go.png'
+];
+$adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_ABOUT,
     'link'  => 'admin/about.php',
     'icon'  => $pathIcon32 . 'about.png'

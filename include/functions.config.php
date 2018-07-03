@@ -13,7 +13,7 @@
 
 use XoopsModules\Newbb;
 
-defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_CONFIG_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
@@ -28,8 +28,8 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
     {
 //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
-        /** @var Newbb\Helper $helper */
-        $helper = Newbb\Helper::getInstance();
+        /** @var \XoopsModules\Newbb\Helper $helper */
+        $helper = \XoopsModules\Newbb\Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {
@@ -37,7 +37,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
         }
 
         $configs = is_object($helper) ? $helper->getConfig() : [];
-        $plugins = require_once __DIR__   . '/plugin.php';
+        $plugins = require __DIR__   . '/plugin.php';
         if (is_array($configs) && is_array($plugins)) {
             $configs = array_merge($configs, $plugins);
         }
