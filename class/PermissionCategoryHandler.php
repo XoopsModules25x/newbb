@@ -26,7 +26,7 @@ class PermissionCategoryHandler extends Newbb\PermissionHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         //        $this->PermissionHandler($db);
         parent::__construct($db);

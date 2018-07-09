@@ -23,7 +23,7 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_user_stats', Userstats::class, 'uid', '');
     }

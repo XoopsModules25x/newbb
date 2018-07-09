@@ -145,7 +145,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         global $xoTheme;
         static $iconHandler;
 
-        if (isset($iconHandler)) {
+        if (null !== $iconHandler) {
             return $iconHandler;
         }
 

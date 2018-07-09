@@ -22,7 +22,7 @@ class ReportHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_report', Report::class, 'report_id', '');
     }

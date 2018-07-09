@@ -22,7 +22,7 @@ class TextHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_posts_text', Text::class, 'post_id', '');
     }

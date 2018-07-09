@@ -52,7 +52,7 @@ function newbb_admin_mkdir($target, $mode = 0777)
     $target = str_replace('..', '', $target);
 
     // http://www.php.net/manual/en/function.mkdir.php
-    return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) && mkdir($target, $mode));
+    return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) && (!mkdir($target, $mode) && !is_dir($target)));
 }
 
 /**

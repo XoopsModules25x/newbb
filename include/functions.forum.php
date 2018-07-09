@@ -111,7 +111,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbGetSubForum($pid = 0, $refresh = false)
     {
         static $list;
-        if (!isset($list)) {
+        if (null === $list) {
             $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
             $list        = $cacheHelper->read('forum_sub');
         }
@@ -164,7 +164,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     {
         static $list = null;
 
-        if (!isset($list)) {
+        if (null === $list) {
             $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
             $list        = $cacheHelper->read('forum_parent');
         }

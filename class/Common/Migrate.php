@@ -22,7 +22,7 @@
  */
 class Migrate extends \Xmf\Database\Migrate
 {
-    private $renameTables = [];
+    private $renameTables;
 
     /**
      * Migrate constructor.

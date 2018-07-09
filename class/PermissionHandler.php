@@ -34,9 +34,9 @@ class PermissionHandler extends \XoopsGroupPermHandler
     private $_handler;
 
     /**
-     * @param $db
+     * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         $this->cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 

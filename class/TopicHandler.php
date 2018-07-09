@@ -25,7 +25,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_topics', Topic::class, 'topic_id', 'topic_title');
     }

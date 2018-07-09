@@ -430,7 +430,7 @@ class TopicRenderer
     {
         static $parsed;
         // irmtfan - force to parse vars (run against static vars)
-        if (isset($parsed) && !$this->force) {
+        if (null !== $parsed && !$this->force) {
             return true;
         }
 

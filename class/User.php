@@ -178,7 +178,7 @@ class User
         $info  = '';
         if (2 == $GLOBALS['xoopsModuleConfig']['user_level']) {
             static $rpg_images;
-            if (!isset($rpg_images)) {
+            if (null === $rpg_images) {
                 $iconHandler = newbbGetIconHandler();
                 $rpg_path    = $iconHandler->getPath('rpg');
                 foreach (['img_left', 'img_backing', 'img_right', 'blue', 'green', 'orange'] as $img) {
@@ -217,7 +217,7 @@ class User
         static $name_anonymous;
 
         if (!is_object($user) || !$user->isActive()) {
-            if (!isset($name_anonymous)) {
+            if (null === $name_anonymous) {
                 $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
             }
 

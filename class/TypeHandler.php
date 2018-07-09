@@ -24,7 +24,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
     /**
      * @param null|\XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_type', Type::class, 'type_id', 'type_name');
     }

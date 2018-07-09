@@ -95,7 +95,7 @@ function newbb_search(
     }
     $criteria = new \CriteriaCompo();
     $criteria->add($criteriaPost, 'AND');
-    if (isset($criteriaPermissions)) {
+    if (null !== $criteriaPermissions) {
         $criteria->add($criteriaPermissions, 'AND');
     }
     if (isset($criteriaUser)) {

@@ -22,7 +22,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     /**
      * @param null|\XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_categories', Category::class, 'cat_id', 'cat_title');
     }

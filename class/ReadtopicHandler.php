@@ -59,7 +59,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
     /**
      * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'topic');
         $newbbConfig           = newbbLoadConfig();

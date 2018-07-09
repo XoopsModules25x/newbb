@@ -98,7 +98,7 @@ function newbbIsAdministrator($user = -1, $mid = 0)
  * Function to check if a user is a moderator of a forum
  *
  * @param       $forum
- * @param  int|string|\XoopsUser  $user
+ * @param  int|array |string|\XoopsUser  $user
  * @return bool
  */
 function newbbIsModerator(&$forum, $user = -1)

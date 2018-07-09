@@ -44,7 +44,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'newbb_posts', Post::class, 'post_id', 'subject');
     }
@@ -485,7 +485,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         // LEFT JOIN
         $sql .= $join;
         // WHERE
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -515,7 +515,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         if (!empty($join)) {
             $sql .= $join;
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();

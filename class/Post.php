@@ -481,7 +481,7 @@ class Post extends \XoopsObject
         static $name_anonymous;
         /** @var TopicHandler $topicHandler */
         $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
-        if (!isset($name_anonymous)) {
+        if (null === $name_anonymous) {
             $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }
 

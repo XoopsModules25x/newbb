@@ -32,7 +32,7 @@ class OnlineHandler
      * OnlineHandler constructor.
      * @param \XoopsDatabase $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         $this->db = $db;
     }
