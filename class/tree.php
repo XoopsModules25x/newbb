@@ -61,16 +61,16 @@ if (!class_exists('NewbbObjectTree')) {
             if ($key > 0) {
                 if (count($tags) > 0) {
                     foreach ($tags as $tag) {
-                        $ret[$key][$tag] = $this->_tree[$key]['obj']->getVar($tag);
+                        $ret[$key][$tag] = $this->tree[$key]['obj']->getVar($tag);
                     }
                 } else {
-                    $ret[$key]['forum_name'] = $this->_tree[$key]['obj']->getVar('forum_name');
+                    $ret[$key]['forum_name'] = $this->tree[$key]['obj']->getVar('forum_name');
                 }
                 $ret[$key]['prefix'] = $prefix_curr;
                 $prefix_curr .= $prefix_orig;
             }
-            if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
-                foreach ($this->_tree[$key]['child'] as $childkey) {
+            if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
+                foreach ($this->tree[$key]['child'] as $childkey) {
                     $this->_makeTreeItems($childkey, $ret, $prefix_orig, $prefix_curr, $tags);
                 }
             }
