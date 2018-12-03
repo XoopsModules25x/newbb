@@ -152,10 +152,12 @@ $adminObject->addInfoBox(_AM_NEWBB_REPORT);
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportHandler->getCount(new \Criteria('report_result', 0))));
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new \Criteria('report_result', 1))));
 
-foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
-    Newbb\Utility::prepareFolder($uploadFolders[$i]);
-    $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
+$_ufolders = $newbb_config->uploadFolders;
+foreach ($_ufolders as $wert) { 
+    Newbb\Utility::prepareFolder($wert);
+    $adminObject->addConfigBoxLine($wert, 'folder');
 }
+
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
