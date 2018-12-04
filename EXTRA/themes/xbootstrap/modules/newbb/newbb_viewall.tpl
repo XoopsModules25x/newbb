@@ -65,7 +65,7 @@
             <br>
         <{/if}>
         <div class="clear"></div>
-    
+
         <div>
             <div>
                 <{if $menumode eq 0}>
@@ -102,7 +102,7 @@
                                         &nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></a>
                                     <a class="item" href="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
                                         &nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></a>
-    
+
                                 </td>
                             </tr>
                         </table>
@@ -133,7 +133,7 @@
                                                             &nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></a></div>
                                                     <div class="item"><a href="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
                                                             &nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></a></div>
-    
+
                                                 </td>
                                             </tr>
                                         </table>
@@ -156,7 +156,7 @@
     <{if $mode gt 1}>
     </form>
     <{/if}>
-    
+
         </div> <!-- end column -->
     </div><!-- end row -->
 <table class="table table-responsive" width="100%" align="center">

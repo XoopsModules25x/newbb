@@ -13,7 +13,7 @@
                 <{else}>
                    <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-responsive img-thumbnail">
             <{/if}>
-                
+
             <{if $topic_post.poster.rank.title !=""}>
                 <ul class="list-unstyled">
                     <li><{$topic_post.poster.rank.title}></li>
@@ -81,7 +81,7 @@
                 <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
             <{/if}>
         </ul>
-            
+
 </div>
 
 <div class="col-sm-9 col-md-9 newbb-message-area">
@@ -94,7 +94,7 @@
             </a>
         <{/if}>
     </div><!-- .newbb-forum-title -->
-            
+
     <{$topic_post.post_text}>
 
     <{if $topic_post.post_attachment}>
@@ -116,7 +116,7 @@
     <{/if}>
 </div>
 </div><!-- .newbb-thread -->
-            
+
 <div class="clearfix newbb-links mb10">
     <div class="col-md-6 nompl hidden-xs">
     <{if $topic_post.thread_action}>

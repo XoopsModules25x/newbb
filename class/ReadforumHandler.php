@@ -44,9 +44,9 @@ require_once __DIR__ . '/Read.php';
  */
 
 /**
- * Class ReadForumHandler
+ * Class ReadforumHandler
  */
-class ReadForumHandler extends Newbb\ReadHandler
+class ReadforumHandler extends Newbb\ReadHandler
 {
     /**
      * @param \XoopsDatabase|null $db

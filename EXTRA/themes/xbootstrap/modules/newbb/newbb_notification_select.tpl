@@ -37,7 +37,7 @@
                 <td class="foot txtcenter" colspan="3"><input type="submit" name="not_submit" value="<{$lang_updatenow}>"/></td>
             </tr>
         </table>
-        <div class="txtcenter"> 
+        <div class="txtcenter">
             <{$lang_notificationmethodis}>:&nbsp;<{$user_method}>&nbsp;&nbsp;
             [<a href="<{$editprofile_url}>" title="<{$lang_change}>"><{$lang_change}></a>]
         </div>

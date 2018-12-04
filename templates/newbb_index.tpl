@@ -39,7 +39,7 @@
         </div>
         <div style="clear:both;"></div>
     </div>
-  </fieldset>    
+  </fieldset>
 <{/if}>
 <br style="clear: both;"/>
 <div class="dropdown">

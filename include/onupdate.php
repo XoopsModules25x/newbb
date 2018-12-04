@@ -24,6 +24,8 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
     exit('Restricted access' . PHP_EOL);
 }
 
+require_once dirname(__DIR__)   . '/preloads/autoloader.php';
+
 /**
  * @param string $tablename
  *
@@ -46,13 +48,19 @@ function tableExists($tablename)
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var Newbb\Helper $helper */
-    /** @var Newbb\Utility $utility */
-    $helper  = Newbb\Helper::getInstance();
-    $utility = new Newbb\Utility();
+//    /** @var \XoopsModules\Newbb\Helper $helper */
+//    $helper  = \XoopsModules\Newbb\Helper::getInstance();
+    /** @var \XoopsModules\Newbb\Utility $utility */
+    $utility = new \XoopsModules\Newbb\Utility();
+    /** @var XoopsModules\Newbb\Common\Configurator $configurator */
+    $configurator = new \XoopsModules\Newbb\Common\Configurator();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
+    $migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
+    $migrator->synchronizeSchema();
+
     return $xoopsSuccess && $phpSuccess;
 }
 
@@ -68,14 +76,14 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
+    $moduleDirNameUpper   = strtoupper($moduleDirName);
 
-    /** @var Newbb\Helper $helper */
-    /** @var Newbb\Utility $utility */
-    /** @var Newbb\Common\Configurator $configurator */
-    $helper       = Newbb\Helper::getInstance();
-    $utility      = new Newbb\Utility();
-    $configurator = new Newbb\Common\Configurator();
+    /** @var \XoopsModules\Newbb\Helper $helper */
+    /** @var \XoopsModules\Newbb\Utility $utility */
+    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
+    $helper       = \XoopsModules\Newbb\Helper::getInstance();
+    $utility      = new \XoopsModules\Newbb\Utility();
+    $configurator = new \XoopsModules\Newbb\Common\Configurator();
 
     if ($previousVersion < 510) {
 

@@ -34,7 +34,7 @@
         <!-- end each result -->
         <{/section}>
         <!-- end search results -->
-        
+
         <{if $search_next or $search_prev}>
         <tr>
             <!-- irmtfan hardcode removed align="left" -->

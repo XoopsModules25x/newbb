@@ -185,7 +185,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($postObject) || $p
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
     if (xoops_load('formtag', 'tag') && class_exists('TagFormTag')) {
-        $forum_form->addElement(new TagFormTag('topic_tags', 60, 255, $topic_tags));
+        $forum_form->addElement(new \XoopsModules\Tag\FormTag('topic_tags', 60, 255, $topic_tags));
     }
 }
 

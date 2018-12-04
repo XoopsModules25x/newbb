@@ -53,12 +53,12 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param  null $uid
      * @return mixed
      */
-    function newbbSetReadForum($status = 0, $uid = null)
+    function newbbSetReadforum($status = 0, $uid = null)
     {
-        /** @var Newbb\ReadForumHandler $readHandler */
-        $readForumHandler = Newbb\Helper::getInstance()->getHandler('Readforum');
+        /** @var Newbb\ReadforumHandler $readHandler */
+        $ReadforumHandler = Newbb\Helper::getInstance()->getHandler('Readforum');
 
-        return $readForumHandler->setReadItems($status, $uid);
+        return $ReadforumHandler->setReadItems($status, $uid);
     }
 
     /**

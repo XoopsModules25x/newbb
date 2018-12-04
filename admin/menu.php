@@ -36,7 +36,9 @@ use XoopsModules\Newbb;
 $helper = Newbb\Helper::getInstance();
 
 $pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_INDEX,
@@ -109,12 +111,13 @@ $adminmenu[] = [
     'link'  => 'admin/admin_synchronization.php',
     'icon'  => $pathIcon32 . 'synchronized.png'
 ];
-
-$adminmenu[] = [
-    'title' => _MI_NEWBB_ADMENU_MIGRATE,
-    'link'  => 'admin/migrate.php',
-    'icon'  => $pathIcon32 . 'database_go.png'
-];
+if ($helper->getConfig('displayDeveloperTools')) {
+    $adminmenu[] = [
+        'title' => _MI_NEWBB_ADMENU_MIGRATE,
+        'link'  => 'admin/migrate.php',
+        'icon'  => $pathIcon32 . 'database_go.png'
+    ];
+}
 $adminmenu[] = [
     'title' => _MI_NEWBB_ADMENU_ABOUT,
     'link'  => 'admin/about.php',

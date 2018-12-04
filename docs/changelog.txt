@@ -10,7 +10,7 @@
 WORK IN PROGRESS
 
 
-<h5>5.00 Alpha (XOOPS 2.5.9)  (NOT RELEASED)</h5> 
+<h5>5.00 Alpha (XOOPS 2.5.9)  (NOT RELEASED)</h5>
 <hr>
 - Remove use of Art framework (geekwright)
 - standardize names of classes, tables and constants to include "newbb" (geekwright)

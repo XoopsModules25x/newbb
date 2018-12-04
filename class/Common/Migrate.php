@@ -10,6 +10,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use XoopsModules\Newbb;
+
 /**
  * Class Migrate synchronize existing tables with target schema
  *
@@ -26,13 +28,12 @@ class Migrate extends \Xmf\Database\Migrate
 
     /**
      * Migrate constructor.
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @param \XoopsModules\Newbb\Common\Configurator $configurator
      */
-    public function __construct()
+    public function __construct(Newbb\Common\Configurator $configurator)
     {   require_once  dirname(dirname(__DIR__)) . '/include/config.php';
-        $config = getConfig();
-        $this->renameTables            = $config->renameTables;
+//        $config = getConfig();
+        $this->renameTables            = $configurator->renameTables;
 
         $moduleDirName = basename(dirname(dirname(__DIR__)));
         parent::__construct($moduleDirName);
@@ -44,8 +45,14 @@ class Migrate extends \Xmf\Database\Migrate
     private function changePrefix()
     {
         foreach ($this->renameTables as $oldName => $newName) {
-            if ($this->tableHandler->useTable($oldName)) {
+            if ($this->tableHandler->useTable($oldName) && !$this->tableHandler->useTable($newName)) {
                 $this->tableHandler->renameTable($oldName, $newName);
+            } else {
+//                Newbb\Helper::getInstance()->getModule()->setErrors('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
+                Newbb\Helper::getInstance()->getModule()->setErrors('<span style="font-weight: bold; color: red;">' . 'Could not migrate table: '. '</span>' . $oldName . '<span style="font-weight: bold; color: red;">'.' The table ' . '</span>' .$newName . '<span style="font-weight: bold; color: red;">'. ' already exist!' . '</span>');
+
+                trigger_error('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
+
             }
         }
     }

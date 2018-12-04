@@ -322,7 +322,7 @@
             <{includeq file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="http://www.simple-xoops.de" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
         <{if $rss_button}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">

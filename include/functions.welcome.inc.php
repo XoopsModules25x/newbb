@@ -54,13 +54,13 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
     /** @var \ProfileProfileHandler $profileHandler */
-    $profileHandler = xoops_getModuleHandler('profile', 'profile');
+    $profileHandler = $helper->getHandler('Profile', 'profile');
     $fields         = $profileHandler->loadFields();
     /** @var \ProfileCategoryHandler $catHandler */
-    $catHandler = xoops_getModuleHandler('category', 'profile');
+    $catHandler = $helper->getHandler('Category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
     /** @var \ProfileFieldHandler $fieldcatHandler */
-    $fieldcatHandler = xoops_getModuleHandler('category', 'profile');
+    $fieldcatHandler = $helper->getHandler('Category', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
 
     // Add core fields

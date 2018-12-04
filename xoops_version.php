@@ -719,6 +719,18 @@ $modversion['config'][] = [
     'default'     => 440
 ];
 
+/**
+ * Show Developer Tools?
+ */
+$modversion['config'][] = [
+    'name'        => 'displayDeveloperTools',
+    'title'       => '_MI_NEWBB_SHOW_DEV_TOOLS',
+    'description' => '_MI_NEWBB_SHOW_DEV_TOOLS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+
 // Notification
 $modversion['notification']                = [];
 $modversion['hasNotification']             = 1;

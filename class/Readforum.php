@@ -43,7 +43,7 @@ require_once __DIR__ . '/Read.php';
  * @author        D.J. (phppp, http://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
-class ReadForum extends Newbb\Read
+class Readforum extends Newbb\Read
 {
     /**
      *

@@ -24,7 +24,7 @@ if (Request::getInt('mark_read', 0)) {
         $markresult = _MD_NEWBB_MARK_UNREAD;
     }
     require_once __DIR__ . '/include/functions.read.php';
-    newbbSetReadForum($markvalue);
+    newbbSetReadforum($markvalue);
     $url = XOOPS_URL . '/modules/newbb/index.php';
     redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
 }

@@ -34,7 +34,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     private $_handler;
 
     /**
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {
@@ -65,7 +65,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
      */
     public function getValidForumPerms($fullname = false)
     {
-        $handler = $this->loadHandler('forum');
+        $handler = $this->loadHandler('Forum');
 
         return $handler->getValidPerms($fullname);
     }
@@ -78,7 +78,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
      */
     public function getPermissionTable($forum = 0, $topic_locked = false, $isAdmin = false)
     {
-        $handler = $this->loadHandler('forum');
+        $handler = $this->loadHandler('Forum');
         $perm    = $handler->getPermissionTable($forum, $topic_locked, $isAdmin);
 
         return $perm;
@@ -91,7 +91,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function deleteByForum($forum_id)
     {
         $this->cacheHelper->delete('permission_forum');
-        $handler = $this->loadHandler('forum');
+        $handler = $this->loadHandler('Forum');
 
         return $handler->deleteByForum($forum_id);
     }
@@ -103,7 +103,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function deleteByCategory($cat_id)
     {
         $this->cacheHelper->delete('permission_category');
-        $handler = $this->loadHandler('category');
+        $handler = $this->loadHandler('Category');
 
         return $handler->deleteByCategory($cat_id);
     }
@@ -116,7 +116,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function setCategoryPermission($category, array $groups = [])
     {
         $this->cacheHelper->delete('permission_category');
-        $handler = $this->loadHandler('category');
+        $handler = $this->loadHandler('Category');
 
         return $handler->setCategoryPermission($category, $groups);
     }
@@ -399,7 +399,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function applyTemplate($forum, $mid = 0)
     {
         $this->cacheHelper->delete('permission_forum');
-        $handler = $this->loadHandler('forum');
+        $handler = $this->loadHandler('Forum');
 
         return $handler->applyTemplate($forum, $mid);
     }
@@ -409,7 +409,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
      */
     public function getTemplate()
     {
-        $handler  = $this->loadHandler('forum');
+        $handler  = $this->loadHandler('Forum');
         $template = $handler->getTemplate();
 
         return $template;
@@ -421,7 +421,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
      */
     public function setTemplate($perms)
     {
-        $handler = $this->loadHandler('forum');
+        $handler = $this->loadHandler('Forum');
 
         return $handler->setTemplate($perms);
     }

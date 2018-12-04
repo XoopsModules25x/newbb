@@ -53,8 +53,11 @@ EOF;
 
 //XoopsLoad::load('migrate', 'newbb');
 
-/** @var \XoopsModules\Newbb\Common\Migrate $newbbMigrate */
-$newbbMigrate = new \XoopsModules\Newbb\Common\Migrate();
+/** @var Newbb\Common\Configurator $configurator */
+$configurator = new Newbb\Common\Configurator();
+
+/** @var \XoopsModules\Newbb\Common\Migrate $migrator */
+$migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
 
 $op        = Request::getCmd('op', 'default');
 $opShow    = Request::getCmd('show', null, 'POST');
@@ -68,7 +71,7 @@ $message = '';
 
 switch ($op) {
     case 'show':
-        $queue = $newbbMigrate->getSynchronizeDDL();
+        $queue = $migrator->getSynchronizeDDL();
         if (!empty($queue)) {
             echo "<pre>\n";
             foreach ($queue as $line) {
@@ -78,7 +81,7 @@ switch ($op) {
         }
         break;
     case 'migrate':
-        $newbbMigrate->synchronizeSchema();
+        $migrator->synchronizeSchema();
         $message = 'Database migrated to current schema.';
         break;
     case 'schema':
@@ -86,7 +89,7 @@ switch ($op) {
         break;
     case 'confirmwrite':
         if ($GLOBALS['xoopsSecurity']->check()) {
-            $newbbMigrate->saveCurrentSchema();
+            $migrator->saveCurrentSchema();
             $message = 'Current schema file written';
         }
         break;

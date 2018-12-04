@@ -26,8 +26,10 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
      */
     function newbbLoadConfig()
     {
+        require_once dirname(__DIR__)   . '/preloads/autoloader.php';
 //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
+
         /** @var \XoopsModules\Newbb\Helper $helper */
         $helper = \XoopsModules\Newbb\Helper::getInstance();
         static $configs = null;

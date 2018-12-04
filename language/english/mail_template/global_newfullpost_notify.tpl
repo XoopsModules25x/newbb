@@ -14,11 +14,11 @@ Follow this link to view the post in the forums (where you can reply):
 You are receiving this message because you selected to be notified of all new posts.
 
 If this is an error or you wish not to receive further such notifications, pleas
-e update your subscriptions by visiting the link below: 
+e update your subscriptions by visiting the link below:
 {X_UNSUBSCRIBE_URL}
 
 -----------
 
-{X_SITENAME} ({X_SITEURL}) 
+{X_SITENAME} ({X_SITEURL})
 webmaster
 {X_ADMINMAIL}

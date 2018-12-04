@@ -33,7 +33,7 @@ use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op = $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
+$op = $op = Request::getString('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 
 switch ($op) {
     case 'delvotes':

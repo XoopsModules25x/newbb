@@ -26,9 +26,9 @@
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
             <{/if}>
         <{/if}>
-    
+
         <{if $forum_topictype}><{$forum_topictype}><{/if}>
-    
+
         <{if $forum_topicstatus}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
         <{else}>
@@ -36,11 +36,11 @@
                 <{$smarty.const._MD_NEWBB_DIGEST}>
             </a>
         <{/if}>
-    
+
         <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
             <span class="glyphicon glyphicon-search"></span>
         </a>
-    
+
         <{if $subforum}>
             <{includeq file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
@@ -75,7 +75,7 @@
                 <{if $mode gt 1}>
                     <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
                 <{/if}>
-            
+
                 <{if $viewer_level gt 1}>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
                 <{if $mode gt 1}>
@@ -103,7 +103,7 @@
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a>
                 <{/if}>
-            
+
                 <{else}>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
                 <{/if}>
@@ -245,7 +245,7 @@
     <{includeq file="db:newbb_online.tpl"}>
 <{/if}>
 
-<a title="NewBB" href="http://www.simple-xoops.de" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
+<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
 <{if $rss_button}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>

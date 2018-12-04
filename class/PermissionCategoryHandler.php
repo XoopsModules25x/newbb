@@ -24,7 +24,7 @@ use XoopsModules\Newbb;
 class PermissionCategoryHandler extends Newbb\PermissionHandler
 {
     /**
-     * @param \XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
     public function __construct(\XoopsDatabase $db = null)
     {

@@ -21,8 +21,10 @@
 
 $moduleDirName = basename(dirname(__DIR__));
 $uploadFolders = [
-    NEWBB_UPLOAD_PATH,
-    NEWBB_UPLOAD_PATH . '/thumbs'
+    //    NEWBB_UPLOAD_PATH,
+    //    NEWBB_UPLOAD_PATH . '/thumbs'
+    XOOPS_UPLOAD_URL . '/' . $moduleDirName,
+    XOOPS_UPLOAD_URL . '/' . $moduleDirName . '/thumbs',
 ];
 
 /**
@@ -43,22 +45,21 @@ function getConfig()
             'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
         ],
         'uploadFolders'  => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
 
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
         'copyBlankFiles' => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
 
         'copyTestFolders' => [
-            //        constant($moduleDirNameUpper . '_UPLOAD_PATH'),
             //[
             //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
-            //    constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
+            //    XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
             //]
         ],
 
@@ -84,28 +85,26 @@ function getConfig()
             '/tcpdf',
             '/images',
         ],
-
         'renameTables' => [
-            'bb_archive'     => 'newbb_archive',
-            'bb_categories'  => 'newbb_categories',
-            'bb_votedata'    => 'newbb_votedata',
-            'bb_forums'      => 'newbb_forums',
-            'bb_posts'       => 'newbb_posts',
-            'bb_posts_text'  => 'newbb_posts_text',
-            'bb_topics'      => 'newbb_topics',
-            'bb_online'      => 'newbb_online',
-            'bb_digest'      => 'newbb_digest',
-            'bb_report'      => 'newbb_report',
-            'bb_attachments' => 'newbb_attachments',
-            'bb_moderates'   => 'newbb_moderates',
+            'bb_archive'    => 'newbb_archive',
+            'bb_attachments'    => 'newbb_attachments',
+            'bb_categories' => 'newbb_categories',
+            'bb_digest' => 'newbb_digest',
+            'bb_forums'   => 'newbb_forums',
+            'bb_moderates'    => 'newbb_moderates',
+            'bb_online' => 'newbb_online',
+            'bb_posts'   => 'newbb_posts',
+            'bb_posts_text'    => 'newbb_posts_text',
             'bb_reads_forum' => 'newbb_reads_forum',
-            'bb_reads_topic' => 'newbb_reads_topic',
-            'bb_type'        => 'newbb_type',
-            'bb_type_forum'  => 'newbb_type_forum',
-            'bb_stats'       => 'newbb_stats',
-            'bb_user_stats'  => 'newbb_user_stats',
+            'bb_reads_topic'   => 'newbb_reads_topic',
+            'bb_report' => 'newbb_report',
+            'bb_stats' => 'newbb_stats',
+            'bb_topics' => 'newbb_topics',
+            'bb_type' => 'newbb_type',
+            'bb_type_forum' => 'newbb_type_forum',
+            'bb_user_stats' => 'newbb_user_stats',
+            'bb_votedata'   => 'newbb_votedata',
         ],
-
         'modCopyright' => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
     ];
