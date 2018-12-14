@@ -91,11 +91,11 @@ class Topic extends \XoopsObject
     public function loadOldPoll($pollModule = null)
     {
         static $classPoll = false;
-        if ($classPoll && empty($pollModule)) {
+        if ($classPoll && null === $pollModule) {
             return $classPoll;
         }
         $newbbConfig = newbbLoadConfig();
-        if (!empty($pollModule)) {
+        if (null !== $pollModule) {
             $newbbConfig['poll_module'] = $pollModule;
         }
 //        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
@@ -183,7 +183,7 @@ class Topic extends \XoopsObject
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbbConfig   = newbbLoadConfig();
-        if (!empty($pollModule)) {
+        if (null !== $pollModule) {
             $newbbConfig['poll_module'] = $pollModule;
         }
 
