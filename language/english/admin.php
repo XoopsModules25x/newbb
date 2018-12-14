@@ -53,8 +53,8 @@ define('_AM_NEWBB_POLL_OK', 'Ready for use');
 define('_AM_NEWBB_GDLIB', 'GD library:');
 define('_AM_NEWBB_AUTODETECTED', 'Autodetected: ');
 define('_AM_NEWBB_AVAILABLE', 'Available');
-define('_AM_NEWBB_NOTAVAILABLE', '<span style="color:red;">is not available. </span>');
-define('_AM_NEWBB_NOTWRITABLE', '<span style="color:red;">Not writable</span>');
+define('_AM_NEWBB_NOTAVAILABLE', '<span style="color:#ff0000;">is not available. </span>');
+define('_AM_NEWBB_NOTWRITABLE', '<span style="color:#ff0000;">Not writable</span>');
 define('_AM_NEWBB_IMAGEMAGICK', 'ImageMagicK:');
 define('_AM_NEWBB_IMAGEMAGICK_NOTSET', 'Not set');
 define('_AM_NEWBB_ATTACHPATH', 'Path for attachment storage');
@@ -283,7 +283,7 @@ define('_AM_NEWBB_TYPE_LIST', 'Type list');
 define('_AM_NEWBB_TODEL_TYPE', 'Are you sure to delete the types: [%s]?');
 define('_AM_NEWBB_TYPE_EDITFORUM_DESC', 'The data have not been saved yet. You must submit to save it.');
 define('_AM_NEWBB_TYPE_ORDER_DESC', 'To activate a type for a forum, a value greater than 0 is required for \'type_order\'; In other words, a type will be inactive for a forum if \'type_order\' is set to 0.');
-define('_AM_NEWBB_TYPE_HELP', 'Allows you to create \'Types\' of forums, to highlight forum topics. Example: <strong style="color:blue;">[Important]</strong>, <strong style="color:red;">[ATTENTION]</strong> etc.');
+define('_AM_NEWBB_TYPE_HELP', ' of forums, to highlight forum topics. Example: <strong style="color:#0000ff;">[Important]</strong>, <strong style="color:#ff0000;">[ATTENTION]</strong> etc.');
 // admin_synchronization.php
 define('_AM_NEWBB_SYNC_TYPE_FORUM', 'Forum Data');
 define('_AM_NEWBB_SYNC_TYPE_TOPIC', 'Topic Data');
@@ -344,7 +344,7 @@ define(
 define('_AM_NEWBB_HELP_VOTE_TAB', 'If you have the voting function enabled, here you can see the results of the voting.<br>This vote is not associated with other XOOPS modules.');
 define(
     '_AM_NEWBB_HELP_TYPE_TAB',
-       'Allows you to create tags for highlighting themes. For example:<br><strong style="color:blue;">[Important]</strong> <strong>Topic Title</strong><br><strong style="color:red;">[ATTENTION]</strong> <strong>Topic Title</strong><br>You can set theme types when creating a theme on the user side.'
+    'Allows you to create tags for highlighting themes. For example:<br><strong style="color:#0000ff;">[Important]</strong> <strong>Topic Title</strong><br><strong style="color:#ff0000;">[ATTENTION]</strong> <strong>Topic Title</strong><br>You can set theme types when creating a theme on the user side.'
 );
 define(
     '_AM_NEWBB_HELP_GROUPMOD_TAB',

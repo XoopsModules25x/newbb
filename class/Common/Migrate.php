@@ -49,7 +49,10 @@ class Migrate extends \Xmf\Database\Migrate
                 $this->tableHandler->renameTable($oldName, $newName);
             } else {
 //                Newbb\Helper::getInstance()->getModule()->setErrors('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
-                Newbb\Helper::getInstance()->getModule()->setErrors('<span style="font-weight: bold; color: red;">' . 'Could not migrate table: '. '</span>' . $oldName . '<span style="font-weight: bold; color: red;">'.' The table ' . '</span>' .$newName . '<span style="font-weight: bold; color: red;">'. ' already exist!' . '</span>');
+                Newbb\Helper::getInstance()->getModule()->setErrors('<span style="font-weight: bold; color: #ff0000;">'
+                                                                    . 'Could not migrate table: ' . '</span>' . $oldName . '<span style="font-weight: bold; color: #ff0000;">'
+                                                                    . ' The table ' . '</span>' . $newName . '<span style="font-weight: bold; color: #ff0000;">'
+                                                                    . ' already exist!' . '</span>');
 
                 trigger_error('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
 
