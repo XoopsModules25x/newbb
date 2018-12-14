@@ -37,7 +37,7 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
      * @param string $tree
      * @param array  $option
      * @param string $prefix
-     * @param array  $parentIds
+     * @param array|null  $parentIds
      */
     public function _renderOptionTree(&$tree, $option, $prefix, array $parentIds = null)
     {
