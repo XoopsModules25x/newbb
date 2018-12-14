@@ -113,7 +113,7 @@
     <div class="dropdown">
         <select name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
-            <{if $viewer_level gt 1}>
+            <{if $viewer_level > 1}>
                 <{foreach item=act from=$admin_actions}>
                     <option value="<{$act.link}>"><{$act.name}></option>
                 <{/foreach}>

@@ -128,7 +128,7 @@ if (!class_exists('ObjectTree')) {
 
             $ret = '<select name=' . $name . '>';
             if (!empty($addEmptyOption)) {
-                $ret .= '<option value="0">' . (is_string($EmptyOption) ? $EmptyOption : '') . '</option>';
+                $ret .= '<option value="0">' . (is_string($addEmptyOption) ? $addEmptyOption : '') . '</option>';
             }
             $this->_makeSelBoxOptions('forum_name', $selected, $key, $ret, $prefix);
             $ret .= '</select>';
