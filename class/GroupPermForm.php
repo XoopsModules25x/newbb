@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
@@ -15,7 +17,6 @@ class GroupPermForm extends \XoopsGroupPermForm
      * @param        $permdesc
      * @param string $url
      */
-
     public function __construct($title, $modid, $permname, $permdesc, $url = '')
     {
         parent::__construct($title, $modid, $permname, $permdesc, $url);
@@ -36,6 +37,7 @@ class GroupPermForm extends \XoopsGroupPermForm
         self::__construct($title, $modid, $permname, $permdesc, $url);
     }
 */
+
     /**
      * @return string
      */

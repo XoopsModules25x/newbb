@@ -16,7 +16,6 @@ use XoopsModules\Newbb;
  *
  * @return bool true if ready to uninstall, false if not
  */
-
 function xoops_module_pre_uninstall_newbb(\XoopsModule $module)
 {
     // Do some synchronization
@@ -24,7 +23,6 @@ function xoops_module_pre_uninstall_newbb(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -34,8 +32,8 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
 {
     //    return true;
 
-    $moduleDirName  = basename(dirname(__DIR__));
-    $moduleDirNameUpper   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
     /** @var \XoopsModules\Newbb\Helper $helper */
     $helper = \XoopsModules\Newbb\Helper::getInstance();
 

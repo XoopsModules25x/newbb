@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -61,7 +63,7 @@ class PermissionCategoryHandler extends Newbb\PermissionHandler
         }
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
-        $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
+        $criteria         = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $criteria->add(new \Criteria('gperm_name', 'category_access'));
         $criteria->add(new \Criteria('gperm_itemid', $cat_id));
 

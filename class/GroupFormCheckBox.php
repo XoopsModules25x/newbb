@@ -1,6 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
 
-use XoopsModules\Newbb;
+namespace XoopsModules\Newbb;
 
 /**
  * TODO: synchronize cascade permissions for multi-level
@@ -34,10 +34,10 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
     }
 
     /**
-     * @param string $tree
-     * @param array  $option
-     * @param string $prefix
-     * @param array|null  $parentIds
+     * @param string     $tree
+     * @param array      $option
+     * @param string     $prefix
+     * @param array|null $parentIds
      */
     public function _renderOptionTree(&$tree, $option, $prefix, array $parentIds = null)
     {
@@ -55,7 +55,7 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
                 $tree      .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
             }
             $tree .= '" value="1"';
-            if (in_array($option['id'], $this->_value)) {
+            if (in_array($option['id'], $this->_value, true)) {
                 $tree .= ' checked';
             }
             $tree .= ' />'

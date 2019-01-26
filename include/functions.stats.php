@@ -97,9 +97,6 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
         return $postHandler->getCount($criteria);
     }
 
-    /**
-     * @return null
-     */
     function getTotalViews()
     {
         $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' ';

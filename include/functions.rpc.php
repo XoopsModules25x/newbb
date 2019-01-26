@@ -11,7 +11,7 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require __DIR__   . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RPC_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_RPC')) {
@@ -40,11 +40,10 @@ if (!defined('NEWBB_FUNCTIONS_RPC')) {
             echo '<message>$error_message</message>\n';
             echo '</response>';
             exit();
-        } else {
-            echo '<?xml version="1.0" encoding="' . $charset . '"?' . ">\n";
-            echo '<response>\n';
-            echo '<error>0</error>\n';
-            echo '</response>';
         }
+        echo '<?xml version="1.0" encoding="' . $charset . '"?' . ">\n";
+        echo '<response>\n';
+        echo '<error>0</error>\n';
+        echo '</response>';
     }
 }

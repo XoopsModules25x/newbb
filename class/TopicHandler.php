@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -111,14 +113,14 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * get previous/next topic
      *
-     * @param integer $topic_id current topic ID
-     * @param integer $action
+     * @param int $topic_id     current topic ID
+     * @param int $action
      *                          <ul>
      *                          <li> -1: previous </li>
      *                          <li> 0: current </li>
      *                          <li> 1: next </li>
      *                          </ul>
-     * @param integer $forum_id the scope for moving
+     * @param int $forum_id     the scope for moving
      *                          <ul>
      *                          <li> >0 : inside the forum </li>
      *                          <li> <= 0: global </li>
@@ -373,7 +375,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param Topic|\XoopsObject $topic
-     * @param  bool        $force
+     * @param  bool              $force
      * @return bool
      */
     public function delete(\XoopsObject $topic, $force = true)
@@ -399,16 +401,17 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     // get permission
     // parameter: $type: 'post', 'view',  'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach'
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
+
     /**
      * @param   Newbb\Forum $forum
-     * @param  int     $topic_locked
-     * @param  string  $type
+     * @param  int          $topic_locked
+     * @param  string       $type
      * @return bool
      */
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
     {
         static $_cachedTopicPerms;
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }
@@ -513,8 +516,10 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return ($b1 && $b2 && $b3);
     }
+
     // END irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
     // START irmtfan getActivePolls
+
     /**
      * get all active poll modules in the current xoops installtion.
      * @access public
@@ -533,9 +538,11 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return $pollDirs;
     }
+
     // END irmtfan getActivePolls
 
     // START irmtfan findPollModule
+
     /**
      * find poll module that is in used in the current newbb installtion.
      * @access public
@@ -587,5 +594,6 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return false;
     }
+
     // END irmtfan findPollModule
 }

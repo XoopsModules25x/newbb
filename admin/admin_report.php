@@ -67,9 +67,8 @@ switch ($op) {
         // irmtfan add message
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTSAVE);
         break;
-
     case 'delete':
-        $report_ids = Request::getArray('report_id', [], 'POST');// $_POST['report_id'];
+        $report_ids = Request::getArray('report_id', [], 'POST'); // $_POST['report_id'];
         // irmtfan add error redirect header
         if (0 === count($report_ids)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
@@ -85,11 +84,10 @@ switch ($op) {
         // irmtfan add message
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTDELETE);
         break;
-
     case 'default':
     default:
         require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
 
         if ('processed' !== $item) {
             $process_result = 0;
@@ -175,13 +173,7 @@ switch ($op) {
 
         echo '</table>';
         echo '</td></tr></table>';
-        $nav = new \XoopsPageNav(
-            $reportHandler->getCount(new \Criteria('report_result', $process_result)),
-            $limit,
-            $start,
-            'start',
-            'item=' . $item
-        );
+        $nav = new \XoopsPageNav($reportHandler->getCount(new \Criteria('report_result', $process_result)), $limit, $start, 'start', 'item=' . $item);
         echo $nav->renderNav(4);
         echo '<fieldset>';
         echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_REPORT . '&nbsp;</legend>';

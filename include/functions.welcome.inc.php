@@ -42,7 +42,7 @@ $categories = [];
 $moduleHandler = xoops_getHandler('module');
 if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $grouppermHandler = xoops_getHandler('groupperm');
-    $groups       = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
+    $groups           = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 
     if (!defined('_PROFILE_MA_ALLABOUT')) {
         $mod->loadLanguage();
@@ -69,7 +69,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     if (!empty($avatar) && 'blank.gif' !== $avatar) {
         $categories[0]['fields'][] = [
             'title' => _MD_NEWBB_AUTO_CREATE_AVATARS,
-            'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />"
+            'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />",
         ];
         $weights[0][]              = 0;
     }
@@ -81,7 +81,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
 
     // Add dynamic fields
     foreach (array_keys($fields) as $i) {
-        if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
+        if (in_array($fields[$i]->getVar('fieldid'), $fieldids, true)) {
             $catid = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? $fieldcats[$fields[$i]->getVar('fieldid')]['catid'] : 0;
             $value = $fields[$i]->getOutputValue($GLOBALS['xoopsUser']);
             if (is_array($value)) {

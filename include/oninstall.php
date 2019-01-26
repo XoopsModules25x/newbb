@@ -22,7 +22,6 @@ use XoopsModules\Newbb;
 //require_once __DIR__ . '/setup.php';
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -37,7 +36,7 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
     $phpSuccess   = $utility::checkVerPhp($module);
 
     if (false !== $xoopsSuccess && false !== $phpSuccess) {
-        $moduleTables =& $module->getInfo('tables');
+        $moduleTables = &$module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
@@ -47,7 +46,6 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during installation of the module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -55,13 +53,13 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
  */
 function xoops_module_install_newbb(\XoopsModule $module)
 {
-    require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    require_once  dirname(__DIR__) . '/include/config.php';
+    require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+    require_once dirname(__DIR__) . '/include/config.php';
 
     $moduleDirName = basename(dirname(__DIR__));
 
     /** @var Newbb\Helper $helper */
-    $helper = Newbb\Helper::getInstance();
+    $helper       = Newbb\Helper::getInstance();
     $utility      = new Newbb\Utility();
     $configurator = new Newbb\Common\Configurator();
     // Load language files
@@ -70,8 +68,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     // default Permission Settings ----------------------
     global $xoopsModule, $xoopsDB;
-    $moduleId     = $xoopsModule->getVar('mid');
-    $moduleId2    = $helper->getModule()->mid();
+    $moduleId         = $xoopsModule->getVar('mid');
+    $moduleId2        = $helper->getModule()->mid();
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -90,7 +88,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        $file = dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);

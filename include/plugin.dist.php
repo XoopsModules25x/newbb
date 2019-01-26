@@ -74,7 +74,7 @@ $customConfig['length_title_index'] = 255;
 $valid_menumodes = [
     0 => _MD_NEWBB_MENU_SELECT,    // for selectbox
     1 => _MD_NEWBB_MENU_CLICK,    // for 'click to expand'
-    2 => _MD_NEWBB_MENU_HOVER        // for 'mouse hover to expand'
+    2 => _MD_NEWBB_MENU_HOVER,        // for 'mouse hover to expand'
 ];
 
 return $customConfig;

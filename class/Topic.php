@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -22,9 +24,6 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
  */
 class Topic extends \XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();
@@ -61,7 +60,6 @@ class Topic extends \XoopsObject
      * Create full title of the topic
      *
      * the title is composed of [type_name] if type_id is greater than 0 plus topic_title
-     *
      */
     public function getFullTitle()
     {
@@ -74,10 +72,11 @@ class Topic extends \XoopsObject
             return $topic_title;
         }
 
-        require_once  dirname(__DIR__) . '/include/functions.topic.php';
+        require_once dirname(__DIR__) . '/include/functions.topic.php';
 
         return getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
     }
+
     // START irmtfan loadOldPoll function
 
     /**
@@ -87,7 +86,6 @@ class Topic extends \XoopsObject
      * @param  string $pollModule dirname of the poll module
      * @return string|false $classPoll = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
      */
-
     public function loadOldPoll($pollModule = null)
     {
         static $classPoll = false;
@@ -98,14 +96,14 @@ class Topic extends \XoopsObject
         if (null !== $pollModule) {
             $newbbConfig['poll_module'] = $pollModule;
         }
-//        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
-//        require_once $relPath . '.php';
-//        require_once $relPath . 'option.php';
-//        require_once $relPath . 'log.php';
-//        require_once $relPath . 'renderer.php';
+        //        $relPath = $GLOBALS['xoops']->path('modules/' . $newbbConfig['poll_module'] . '/class/' . $newbbConfig['poll_module']);
+        //        require_once $relPath . '.php';
+        //        require_once $relPath . 'option.php';
+        //        require_once $relPath . 'log.php';
+        //        require_once $relPath . 'renderer.php';
         $classes = get_declared_classes();
         foreach (array_reverse($classes) as $class) {
-            if (strtolower($class) == $newbbConfig['poll_module']) {
+            if (mb_strtolower($class) == $newbbConfig['poll_module']) {
                 $classPoll = $class;
 
                 return $classPoll;
@@ -114,8 +112,10 @@ class Topic extends \XoopsObject
 
         return false;
     }
+
     // END irmtfan loadOldPoll function
     // START irmtfan add deletePoll function
+
     /**
      * delete a poll in database
      *
@@ -140,10 +140,10 @@ class Topic extends \XoopsObject
             /** @var \XoopsPollHandler $pollHandler */
             $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             if (false !== $pollHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='))) {
-                /** @var XoopsPoll\OptionHandler $optionHandler */
+                /** @var \XoopsPoll\OptionHandler $optionHandler */
                 $optionHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
                 $optionHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
-                /** @var XoopsPoll\LogHandler $logHandler */
+                /** @var \XoopsPoll\LogHandler $logHandler */
                 $logHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $logHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
                 xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
@@ -164,9 +164,11 @@ class Topic extends \XoopsObject
 
         return true;
     }
+
     // END irmtfan add deletePoll function
 
     // START irmtfan add getPoll function
+
     /**
      * get a poll object from a poll module.
      * note: can be used to find if a poll exist in a module
@@ -195,7 +197,7 @@ class Topic extends \XoopsObject
         if ($pollModuleHandler->getVar('version') >= 140) {
             $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             $pollObject  = $pollHandler->get($poll_id);
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $classPoll  = $this->loadOldPoll($newbbConfig['poll_module']);
             $pollObject = new $classPoll($poll_id);
@@ -203,5 +205,6 @@ class Topic extends \XoopsObject
 
         return $pollObject;
     }
+
     // END irmtfan add getPoll function
 }

@@ -29,7 +29,6 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use Xmf\Request;
 use XoopsModules\Newbb;
 
 //require_once $GLOBALS['xoops']->path('include/cp_header.php');

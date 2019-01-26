@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -383,5 +385,6 @@ class ReadHandler extends \XoopsPersistableObjectHandler
 
         return true;
     }
+
     // END irmtfan add clear duplicated rows function
 }

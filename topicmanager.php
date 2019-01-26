@@ -36,17 +36,17 @@ require_once __DIR__ . '/header.php';
 
 if (Request::getString('submit', '', 'POST')) {
     foreach (['forum', 'newforum', 'newtopic'] as $getint) {
-        ${$getint} = Request::getInt($getint, 0, 'POST');// (int)(@$_POST[$getint]);
+        ${$getint} = Request::getInt($getint, 0, 'POST'); // (int)(@$_POST[$getint]);
     }
     foreach (['topic_id'] as $getint) {
-        ${$getint} = Request::getInt($getint, 0, 'POST');// (int)(@$_POST[$getint]);
+        ${$getint} = Request::getInt($getint, 0, 'POST'); // (int)(@$_POST[$getint]);
     }
     if (!is_array($topic_id)) {
         $topic_id = [$topic_id];
     }
 } else {
     foreach (['forum', 'topic_id'] as $getint) {
-        ${$getint} = Request::getInt($getint, 0, 'GET');// (int)(@$_GET[$getint]);
+        ${$getint} = Request::getInt($getint, 0, 'GET'); // (int)(@$_GET[$getint]);
     }
 }
 
@@ -89,15 +89,15 @@ $action_array = [
     'sticky',
     'unsticky',
     'digest',
-    'undigest'
+    'undigest',
 ];
 foreach ($action_array as $_action) {
     $action[$_action] = [
         'name'   => $_action,
-        'desc'   => constant(strtoupper("_MD_NEWBB_DESC_{$_action}")),
-        'submit' => constant(strtoupper("_MD_NEWBB_{$_action}")),
+        'desc'   => constant(mb_strtoupper("_MD_NEWBB_DESC_{$_action}")),
+        'submit' => constant(mb_strtoupper("_MD_NEWBB_{$_action}")),
         'sql'    => "topic_{$_action}=1",
-        'msg'    => constant(strtoupper("_MD_NEWBB_TOPIC{$_action}"))
+        'msg'    => constant(mb_strtoupper("_MD_NEWBB_TOPIC{$_action}")),
     ];
 }
 $action['lock']['sql']     = 'topic_status = 1';
@@ -112,7 +112,7 @@ $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 require_once $GLOBALS['xoops']->path('header.php');
 
 if (Request::getString('submit', '', 'POST')) {
-    $mode = Request::getString('mode', '', 'POST');// $_POST['mode'];
+    $mode = Request::getString('mode', '', 'POST'); // $_POST['mode'];
 
     if ('delete' === $mode) {
         foreach ($topic_id as $tid) {
@@ -202,9 +202,9 @@ if (Request::getString('submit', '', 'POST')) {
             if ($poll_id > 0 && (0 == $newtopicObject->getVar('poll_id'))) {
                 $newtopicObject->setVar('topic_haspoll', 1);
                 $newtopicObject->setVar('poll_id', $poll_id);
-                $poll_id = 0;// set to not delete the poll
+                $poll_id = 0; // set to not delete the poll
                 $topicObject->setVar('topic_haspoll', 0); // set to not delete the poll
-                $topicObject->setVar('poll_id', 0);// set to not delete the poll
+                $topicObject->setVar('poll_id', 0); // set to not delete the poll
             }
             //update and sync newtopic after merge
             //$topicHandler->insert($newtopicObject, true);

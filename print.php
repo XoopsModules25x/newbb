@@ -103,7 +103,7 @@ if (!Request::getString('post_data', '', 'POST')) {
         exit(_MD_NEWBB_NORIGHTTOPRINT);
     }
 } else {
-    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST')));
+    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST'), true));
     $isPost    = 1;
 }
 

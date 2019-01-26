@@ -35,8 +35,8 @@ use XoopsModules\Newbb;
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/pagenav.php');
-require_once  dirname(__DIR__) . '/include/functions.forum.php';
-require_once  dirname(__DIR__) . '/include/functions.render.php';
+require_once dirname(__DIR__) . '/include/functions.forum.php';
+require_once dirname(__DIR__) . '/include/functions.render.php';
 
 $cacheHelper = Newbb\Utility::cleanCache();
 
@@ -96,7 +96,6 @@ switch ($op) {
             echo '</td></tr></table>';
         }
         break;
-
     case 'mergeforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
 
@@ -146,7 +145,6 @@ switch ($op) {
             echo '</td></tr></table>';
         }
         break;
-
     case 'save':
 
         if ($forum_id) {
@@ -184,7 +182,7 @@ switch ($op) {
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
                         $ids = $permHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
-                        if (!in_array($forumObject->getVar('forum_id'), $ids)) {
+                        if (!in_array($forumObject->getVar('forum_id'), $ids, true)) {
                             if (empty($perm_template[$group][$perm])) {
                                 $permHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {
@@ -199,24 +197,21 @@ switch ($op) {
             redirect_header('admin_forum_manager.php?op=mod&amp;forum=' . $forumObject->getVar('forum_id') . '', 2, _AM_NEWBB_FORUM_ERROR);
         }
         break;
-
     case 'mod':
         $forumObject = $forumHandler->get($forum_id);
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
-
     case 'del':
         if (1 !== Request::getInt('confirm', 0, 'POST')) {
             xoops_confirm(['op' => 'del', 'forum' => Request::getInt('forum', 0, 'GET'), 'confirm' => 1], 'admin_forum_manager.php', _AM_NEWBB_TWDAFAP);
             break;
-        } else {
-            $forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'));
-            $forumHandler->delete($forumObject);
-            //$cacheHelper->delete('forum');
-            redirect_header('admin_forum_manager.php?op=manage', 1, _AM_NEWBB_FORUMREMOVED);
         }
-        break;
+        $forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'));
+        $forumHandler->delete($forumObject);
+        //$cacheHelper->delete('forum');
+        redirect_header('admin_forum_manager.php?op=manage', 1, _AM_NEWBB_FORUMREMOVED);
 
+        break;
     case 'addforum':
         echo '<br>';
         $parent_forum = Request::getInt('forum', 0, 'GET');
@@ -229,7 +224,6 @@ switch ($op) {
         $forumObject->setVar('cat_id', $cat_id);
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
-
     default:
 
         //        /** @var Newbb\CategoryHandler $categoryHandler */

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -44,9 +46,6 @@ require_once __DIR__ . '/Read.php';
  */
 class Readtopic extends Newbb\Read
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

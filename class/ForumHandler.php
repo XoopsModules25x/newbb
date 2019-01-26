@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * Newbb module
@@ -40,7 +42,6 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * @return bool
      * @internal param \XoopsObject $forum
      */
-
     public function insert(\XoopsObject $object, $force = true) //insert($forum)
     {
         $forum = $object;
@@ -83,14 +84,15 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     {
         /** var Newbb\PermissionHandler $permHandler */
         $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+
         return $permHandler->getForums($perm);
     }
 
     /**
-     * @param  int|array    $cat
-     * @param  string $permission
-     * @param  null   $tags
-     * @param  bool   $asObject
+     * @param  int|array $cat
+     * @param  string    $permission
+     * @param  null      $tags
+     * @param  bool      $asObject
      * @return array
      */
     public function &getByPermission($cat = 0, $permission = 'access', $tags = null, $asObject = true)
@@ -137,7 +139,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $forum                                                  = $forums[$forumid];
             $forums_array[$forum->getVar('parent_forum')][$forumid] = [
                 'cid'   => $forum->getVar('cat_id'),
-                'title' => $forum->getVar('forum_name')
+                'title' => $forum->getVar('forum_name'),
             ];
         }
         if (!isset($forums_array[0])) {
@@ -203,11 +205,9 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             case 'digest':
                 $criteria_extra = ' AND t.topic_digest = 1';
                 break;
-
             case 'unreplied':
                 $criteria_extra = ' AND t.topic_replies < 1';
                 break;
-
             case 'unread':
                 if (empty($GLOBALS['xoopsModuleConfig']['read_mode'])) {
                 } elseif (2 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
@@ -216,8 +216,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     if (!empty($read_uid)) {
                         $leftjoin      .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $criteria_post .= ' AND (r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
-                    } else {
                     }
+
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
                 } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
@@ -244,15 +244,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $criteria_post    .= ' AND p.pid = 0';
                 $criteria_approve = ' AND t.approved = 0';
                 break;
-
             case 'deleted':
                 $criteria_approve = ' AND t.approved = -1';
                 break;
-
             case 'all': // For viewall.php; do not display sticky topics at first
             case 'active': // same as "all"
                 break;
-
             default:
                 if ($startdate > 0) {
                     $criteria_post = ' (p.post_time > ' . $startdate . ' OR t.topic_sticky=1)';
@@ -403,7 +400,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 'stats'                  => [
                     $myrow['topic_status'],
                     $myrow['topic_digest'],
-                    $myrow['topic_replies']
+                    $myrow['topic_replies'],
                 ],
                 /* irmtfan uncomment use ib the for loop*/
                 //"topic_poster"              => $topic_poster,/*irmtfan remove here and move to for loop*/
@@ -497,8 +494,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     if (!empty($read_uid)) {
                         $leftjoin      .= ' LEFT JOIN ' . $this->db->prefix('newbb_reads_topic') . ' r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $criteria_post .= ' AND (r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
-                    } else {
                     }
+
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
                 } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
@@ -572,7 +569,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             return true;
         }
 
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
         if (newbbIsAdmin($forum)) {
             return true;
         }
@@ -593,7 +590,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
         }
 
-        $type = strtolower($type);
+        $type = mb_strtolower($type);
         // START irmtfan commented and removed
         //if ('moderate' === $type) {
         //require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');
@@ -688,6 +685,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         return ($b1 && $b2);
     }
+
     // END irmtfan rewrite forum cleanOrphan function. add parent_forum and cat_id orphan check
 
     /**
@@ -696,7 +694,6 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * @param  mixed $object null for all forums; integer for forum_id; object for forum object
      * @return bool
      * @internal param int $mode 1 for stats only; 2 for forum index data only; 0 for both
-     *
      */
     public function synchronization($object = null)
     {
@@ -836,7 +833,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $topics = [];
 
         foreach (array_keys($forums) as $id) {
-            $forum =& $forums[$id];
+            $forum = &$forums[$id];
 
             if (!$forum['forum_last_post_id']) {
                 continue;
@@ -868,7 +865,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
 
         foreach (array_keys($forums) as $id) {
-            $forum =& $forums[$id];
+            $forum = &$forums[$id];
 
             $_forum_data                 = [];
             $_forum_data['forum_order']  = $forum['forum_order'];
@@ -891,7 +888,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
             // irmtfan change if/endif to if{} method
             if ($post_id = $forum['forum_last_post_id']) {
-                $post                               =& $posts[$post_id];
+                $post                               = &$posts[$post_id];
                 $_forum_data['forum_lastpost_id']   = $post_id;
                 $_forum_data['forum_lastpost_time'] = newbbFormatTimestamp($post['post_time']);
                 if (!empty($users_linked[$post['uid']])) {
@@ -931,10 +928,10 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      *
      * {@link newbbTree}
      *
-     * @param  int    $cat_id     category ID
-     * @param  int    $pid        Top forum ID
-     * @param  string $permission permission type
-     * @param  string $prefix     prefix for display
+     * @param  int               $cat_id     category ID
+     * @param  int               $pid        Top forum ID
+     * @param  string            $permission permission type
+     * @param  string            $prefix     prefix for display
      * @param  string|array|null $tags       variables to fetch
      * @return array  associative array of category IDs and sanitized titles
      */
@@ -967,11 +964,11 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      *
      * {@link newbbTree}
      *
-     * @param  int     $cat_id     category ID
-     * @param  int     $pid        Top forum ID
-     * @param  string  $permission permission type
-     * @param  string|array|null  $tags       variables to fetch
-     * @param  integer $depth      level of subcategories
+     * @param  int               $cat_id     category ID
+     * @param  int               $pid        Top forum ID
+     * @param  string            $permission permission type
+     * @param  string|array|null $tags       variables to fetch
+     * @param  int               $depth      level of subcategories
      * @return array   associative array of category IDs and sanitized titles
      */
     public function &getArrayTree($cat_id = 0, $pid = 0, $permission = 'access', $tags = null, $depth = 0)
@@ -986,7 +983,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         require_once __DIR__ . '/Tree.php';
         $forums_structured = [];
         foreach (array_keys($forumsObject) as $key) {
-            $forumObject                                             =& $forumsObject[$key];
+            $forumObject                                             = &$forumsObject[$key];
             $forums_structured[$forumObject->getVar('cat_id')][$key] = $forumsObject[$key];
         }
         foreach (array_keys($forums_structured) as $cid) {
@@ -1028,8 +1025,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * function for get forum Ids by positive and negative values
      *
      * @param  int|text|array $values : positive values = forums | negative values = cats | $values=0 = all valid forums, $permission , true/false $parse_cats
-     * @param  string   $permission
-     * @param  bool     $parse_cats
+     * @param  string         $permission
+     * @param  bool           $parse_cats
      * @return array|mixed $validForums
      */
     public function getIdsByValues($values = 0, $permission = 'access', $parse_cats = true)
@@ -1064,5 +1061,6 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         return array_intersect($validForums, $forums);
     }
+
     // END irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
 }

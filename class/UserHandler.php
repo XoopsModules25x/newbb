@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -48,7 +50,7 @@ class UserHandler
         /** @var Newbb\Helper $helper */
         $helper = Newbb\Helper::getInstance();
         $helper->loadLanguage('user');
-//        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
+        //        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
         if (class_exists('UserLanguage')) {
             $handler = new Newbb\UserLanguage();
         } else {
@@ -64,7 +66,7 @@ class UserHandler
         if (empty($this->users) || !$this->enableOnline) {
             return;
         }
-        require_once  dirname(__DIR__) . '/include/functions.render.php';
+        require_once dirname(__DIR__) . '/include/functions.render.php';
         $image_online  = newbbDisplayImage('online', _MD_NEWBB_ONLINE);
         $image_offline = newbbDisplayImage('offline', _MD_NEWBB_OFFLINE);
 
@@ -76,6 +78,7 @@ class UserHandler
             $this->userlist[$uid]['status'] = empty($onlines[$uid]) ? $image_offline : $image_online;
         }
     }
+
     // START irmtfan remove function - no deprecated is needed because just use in this file
     //    function loadUserGroups()
     //    {
@@ -95,6 +98,7 @@ class UserHandler
             $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
         }
     }
+
     // START irmtfan remove function
     //    function loadUserRank()
     //    {

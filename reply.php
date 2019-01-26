@@ -120,7 +120,7 @@ $xoopsTpl->assign('parentforum', $forumHandler->getParents($forumObject));
 
 $xoopsTpl->assign([
                       'forum_id'   => $forumObject->getVar('forum_id'),
-                      'forum_name' => $forumObject->getVar('forum_name')
+                      'forum_name' => $forumObject->getVar('forum_name'),
                   ]);
 
 if ($postParentObject->getVar('uid')) {
@@ -167,7 +167,7 @@ $attachsig     = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->get
 $post_karma    = 0;
 $require_reply = 0;
 
-require_once __DIR__   . '/include/form.post.php';
+require_once __DIR__ . '/include/form.post.php';
 
 ///** @var Newbb\KarmaHandler $karmaHandler */
 //$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
@@ -199,7 +199,7 @@ foreach ($posts_contextObject as $post_contextObject) {
     $posts_context[] = [
         'subject' => $p_subject,
         'meta'    => _MD_NEWBB_BY . ' ' . $p_name . ' ' . _MD_NEWBB_ON . ' ' . $p_date,
-        'content' => $p_message
+        'content' => $p_message,
     ];
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);

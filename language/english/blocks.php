@@ -3,9 +3,9 @@
 // Blocks
 if (defined('NEWBB_BLOCKS_DEFINED')) {
     return;
-} else {
-    define('NEWBB_BLOCKS_DEFINED', true);
 }
+define('NEWBB_BLOCKS_DEFINED', true);
+
 define('_MB_NEWBB_FORUM', 'Forum');
 define('_MB_NEWBB_TOPIC', 'Topic');
 define('_MB_NEWBB_RPLS', 'Replies');

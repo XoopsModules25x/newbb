@@ -8,7 +8,6 @@
  * @since          4.00
  * @package        module::newbb
  */
-
 xoops_loadLanguage('main', 'newbb');
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');

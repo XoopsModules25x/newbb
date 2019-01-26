@@ -40,7 +40,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
             return false;
         }
 
-        require_once __DIR__   . '/functions.welcome.inc.php';
+        require_once __DIR__ . '/functions.welcome.inc.php';
         unset($forumObject);
 
         return $ret;

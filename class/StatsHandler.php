@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -26,7 +28,6 @@ define('NEWBB_STATS_PERIOD_MONTH', 4);
 
 /**
  * Stats for forum
- *
  */
 class StatsHandler
 {
@@ -34,7 +35,7 @@ class StatsHandler
     public $table;
     public $param = [
         'type'   => ['topic', 'post', 'digest', 'view'],
-        'period' => ['total', 'day', 'week', 'month']
+        'period' => ['total', 'day', 'week', 'month'],
     ];
 
     /**
@@ -74,7 +75,7 @@ class StatsHandler
         $id        = (int)$id;
         $increment = (int)$increment;
 
-        if (empty($increment) || false === ($type = array_search($type, $this->param['type']))) {
+        if (empty($increment) || false === ($type = array_search($type, $this->param['type'], true))) {
             return false;
         }
 
@@ -141,11 +142,11 @@ class StatsHandler
 
         $_types = [];
         foreach ($types as $type) {
-            $_types[] = array_search($type, $this->param['type']);
+            $_types[] = array_search($type, $this->param['type'], true);
         }
         $_periods = [];
         foreach ($periods as $period) {
-            $_periods[] = array_search($period, $this->param['period']);
+            $_periods[] = array_search($period, $this->param['period'], true);
         }
         $sql    = '    SELECT stats_id, stats_value, stats_type, stats_period '
                   . "    FROM {$this->table} "
@@ -175,7 +176,7 @@ class StatsHandler
         $time_start = [
             'day'   => '%Y%j',
             'week'  => '%Y%u',
-            'month' => '%Y%m'
+            'month' => '%Y%m',
         ];
         $counts     = [];
 
@@ -209,7 +210,7 @@ class StatsHandler
                                   . "        ('{$forum_id}', '{$topics}', '"
                                   . array_search('topic', $this->param['type'], true)
                                   . "', '"
-                                  . array_search($period, $this->param['period'])
+                                  . array_search($period, $this->param['period'], true)
                                   . "', NOW(), '{$format}')");
                 $this->db->queryF("    INSERT INTO {$this->table}"
                                   . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) '
@@ -217,7 +218,7 @@ class StatsHandler
                                   . "        ('{$forum_id}', '{$views}', '"
                                   . array_search('view', $this->param['type'], true)
                                   . "', '"
-                                  . array_search($period, $this->param['period'])
+                                  . array_search($period, $this->param['period'], true)
                                   . "', NOW(), '{$format}')");
                 @$counts['topic'][$period] += $topics;
                 @$counts['view'][$period] += $views;
@@ -231,7 +232,7 @@ class StatsHandler
                                   . "        ('{$forum_id}', '{$digests}', '"
                                   . array_search('digest', $this->param['type'], true)
                                   . "', '"
-                                  . array_search($period, $this->param['period'])
+                                  . array_search($period, $this->param['period'], true)
                                   . "', NOW(), '{$format}')");
                 @$counts['digest'][$period] += $digests;
 
@@ -242,7 +243,7 @@ class StatsHandler
                                   . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) '
                                   . '    VALUES '
                                   . "        ('{$forum_id}', '{$posts}', '"
-                                  . array_search('post', $this->param['type'])
+                                  . array_search('post', $this->param['type'], true)
                                   . "', '"
                                   . array_search($period, $this->param['period'], true)
                                   . "', NOW(), '{$format}')");

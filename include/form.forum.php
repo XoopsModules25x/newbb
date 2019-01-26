@@ -71,14 +71,14 @@ $form_forum->addElement($perm_tray);
 $form_forum->addElement(new \XoopsFormHidden('forum', $forumObject->getVar('forum_id')));
 $form_forum->addElement(new \XoopsFormHidden('op', 'save'));
 
-$button_tray = new \XoopsFormElementTray('', '');
-$button_tray->addElement(new \XoopsFormButton('', '', _SUBMIT, 'submit'));
+$buttonTray = new \XoopsFormElementTray('', '');
+$buttonTray->addElement(new \XoopsFormButton('', '', _SUBMIT, 'submit'));
 
-$button_tray->addElement(new \XoopsFormButton('', '', _AM_NEWBB_CLEAR, 'reset'));
+$buttonTray->addElement(new \XoopsFormButton('', '', _AM_NEWBB_CLEAR, 'reset'));
 
 $butt_cancel = new \XoopsFormButton('', '', _CANCEL, 'button');
 $butt_cancel->setExtra('onclick="history.go(-1)"');
-$button_tray->addElement($butt_cancel);
+$buttonTray->addElement($butt_cancel);
 
-$form_forum->addElement($button_tray);
+$form_forum->addElement($buttonTray);
 $form_forum->display();

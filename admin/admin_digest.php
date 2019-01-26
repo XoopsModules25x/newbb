@@ -52,7 +52,6 @@ switch ($op) {
         }
         redirect_header('admin_digest.php', 1);
         break;
-
     case 'digest':
         xoops_confirm(['op' => 'digestconfirmed'], 'admin_digest.php', _AM_NEWBB_DIGEST_CONFIRM);
         break;
@@ -75,7 +74,6 @@ switch ($op) {
         }
         redirect_header('admin_digest.php', 1, $message);
         break;
-
     default:
         require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 

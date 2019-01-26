@@ -116,7 +116,7 @@ $post_karma    = $postObject->getVar('post_karma');
 $require_reply = $postObject->getVar('require_reply');
 
 $xoopsTpl->assign('error_message', _MD_NEWBB_EDITEDBY . ' ' . $GLOBALS['xoopsUser']->uname());
-require_once __DIR__   . '/include/form.post.php';
+require_once __DIR__ . '/include/form.post.php';
 
 ///** @var Newbb\KarmaHandler $karmaHandler */
 //$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
@@ -145,7 +145,7 @@ foreach ($posts_contextObject as $post_contextObject) {
     $posts_context[] = [
         'subject' => $p_subject,
         'meta'    => _MD_NEWBB_BY . ' ' . $p_name . ' ' . _MD_NEWBB_ON . ' ' . $p_date,
-        'content' => $p_message
+        'content' => $p_message,
     ];
 }
 $xoopsTpl->assign_by_ref('posts_context', $posts_context);

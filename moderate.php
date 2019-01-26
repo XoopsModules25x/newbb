@@ -179,7 +179,7 @@ $forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DURATION, 'expire',
 $forum_form->addElement(new \XoopsFormText(_MD_NEWBB_SUSPEND_DESC, 'desc', 50, 255));
 require_once __DIR__ . '/include/functions.forum.php';
 if (newbbIsAdmin()) {
-    $forumSel = '<select name="forum">';// if user doesn't select, default is "0" all forums
+    $forumSel = '<select name="forum">'; // if user doesn't select, default is "0" all forums
     $forumSel .= '<option value="0"';
     if (0 == $forum_id) {
         $forumSel .= ' selected';

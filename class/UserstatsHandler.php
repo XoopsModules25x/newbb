@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -16,7 +18,6 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
 
 /**
  * user stats
- *
  */
 class UserstatsHandler extends \XoopsPersistableObjectHandler
 {
@@ -90,6 +91,7 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
 
         return $row;
     }
+
     /*
         function insert(\XoopsObject $object, $force = true)
         {

@@ -29,7 +29,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         xoops_loadLanguage('locale');
         $newbbConfig = newbbLoadConfig();
 
-        $format = strtolower($format);
+        $format = mb_strtolower($format);
         if ('reg' === $format || '' === $format) {
             $format = 'c';
         }
@@ -113,8 +113,8 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         //if ($since==1000) return 0;
         if ($since > 0) {
             return (int)$since * 24 * 3600;
-        } else {
-            return (int)abs($since) * 3600;
         }
+
+        return (int)abs($since) * 3600;
     }
 }

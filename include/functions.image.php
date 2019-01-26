@@ -129,7 +129,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $newHeight = (int)($imginfo[1] * $newWidth / $imginfo[0]);
 
         if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
-            if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
+            if (preg_match('#[A-Z]:|\\\\#Ai', __FILE__)) {
                 $cur_dir     = __DIR__;
                 $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $src_file) . '"';
                 $new_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $new_file) . '"';
@@ -180,7 +180,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         $imageCreateFunction = function_exists('imagecreatetruecolor') ? 'imagecreatetruecolor' : 'imagecreate';
 
-        if (in_array($type, $supported_types)) {
+        if (in_array($type, $supported_types, true)) {
             switch ($type) {
                 case 1:
                     if (!function_exists('imagecreatefromgif')) {
@@ -214,8 +214,8 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (file_exists($new_file)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

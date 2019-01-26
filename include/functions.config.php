@@ -26,8 +26,8 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
      */
     function newbbLoadConfig()
     {
-        require_once dirname(__DIR__)   . '/preloads/autoloader.php';
-//        require_once dirname(__DIR__) . '/class/Helper.php';
+        require_once dirname(__DIR__) . '/preloads/autoloader.php';
+        //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
 
         /** @var \XoopsModules\Newbb\Helper $helper */
@@ -39,7 +39,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
         }
 
         $configs = is_object($helper) ? $helper->getConfig() : [];
-        $plugins = require __DIR__   . '/plugin.php';
+        $plugins = require __DIR__ . '/plugin.php';
         if (is_array($configs) && is_array($plugins)) {
             $configs = array_merge($configs, $plugins);
         }

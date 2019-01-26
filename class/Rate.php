@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -39,9 +41,6 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
  */
 class Rate extends \XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

@@ -41,7 +41,7 @@ $validOps = [
     'forum',
     'edit_forum',
     'save_forum',
-    'add'
+    'add',
 ];
 if (!in_array($op, $validOps, true)) {
     $op = '';
@@ -68,21 +68,20 @@ switch ($op) {
             if ($temp[$key]) {
                 $type_del[] = $key;
                 continue;
-            } else {
-                foreach (['type_name', 'type_color', 'type_description'] as $var) {
-                    //                    if ($typeObject->getVar($var) != @$_POST[$var][$key]) {
-                    //                        $typeObject->setVar($var, @$_POST[$var][$key]);
-                    //                    }
-                    $temp = Request::getArray($var, '', 'POST');
-                    if ($typeObject->getVar($var) != $temp[$key]) {
-                        $typeObject->setVar($var, $temp[$key]);
-                    }
-
-                    //                    $typeObject->setVar($var, Request::getArray($var, '', 'POST')[$key]);
-                }
-                $typeHandler->insert($typeObject);
-                unset($typeObject);
             }
+            foreach (['type_name', 'type_color', 'type_description'] as $var) {
+                //                    if ($typeObject->getVar($var) != @$_POST[$var][$key]) {
+                //                        $typeObject->setVar($var, @$_POST[$var][$key]);
+                //                    }
+                $temp = Request::getArray($var, '', 'POST');
+                if ($typeObject->getVar($var) != $temp[$key]) {
+                    $typeObject->setVar($var, $temp[$key]);
+                }
+
+                //                    $typeObject->setVar($var, Request::getArray($var, '', 'POST')[$key]);
+            }
+            $typeHandler->insert($typeObject);
+            unset($typeObject);
         }
         if (count($type_del) > 0) {
             $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
@@ -91,7 +90,6 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         }
         break;
-
     case 'delete':
         $type_dels = @unserialize(Request::getString('type_del', '', 'POST'));
         foreach ($type_dels as $key) {
@@ -103,7 +101,6 @@ switch ($op) {
         }
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
-
     case 'template':
         $typesObject = $typeHandler->getAll();
         if (0 === count($typesObject)) {
@@ -157,13 +154,11 @@ switch ($op) {
         echo '</form>';
         echo '</td></tr></table>';
         break;
-
     case 'save_template':
         $templates = array_flip(array_filter(Request::getArray('type_order', [], 'POST')));
         $cacheHelper->write('type_template', $templates);
         redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _MD_NEWBB_DBUPDATED);
         break;
-
     case 'apply':
         if (!$templates = $cacheHelper->read('type_template')) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
@@ -226,7 +221,6 @@ switch ($op) {
         echo '<br>';
         $fmform->display();
         break;
-
     case 'save_apply':
         if (!$templates = $cacheHelper->read('type_template')) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
@@ -239,7 +233,6 @@ switch ($op) {
         }
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
-
     case 'forum':
         //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('1', 1));
@@ -279,7 +272,6 @@ switch ($op) {
 
         $fmform->display();
         break;
-
     case 'edit_forum':
         if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
@@ -346,7 +338,6 @@ switch ($op) {
         echo '</form>';
         echo '</td></tr></table>';
         break;
-
     case 'save_forum':
         if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
@@ -354,7 +345,6 @@ switch ($op) {
         $typeHandler->updateByForum(Request::getInt('forum', 0, 'POST'), Request::getArray('type_order', null, 'POST'));
         redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _MD_NEWBB_DBUPDATED);
         break;
-
     case 'add':
     default:
         $typesObject = $typeHandler->getAll();
@@ -384,7 +374,7 @@ switch ($op) {
         echo "<th align='left' class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-//        $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
+        //        $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
         xoops_load('XoopsFormColorPicker');
 
         if ('add' !== $op) {

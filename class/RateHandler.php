@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -47,9 +49,6 @@ class RateHandler extends \XoopsPersistableObjectHandler
         parent::__construct($db, 'newbb_votedata', Rate::class, 'ratingid', '');
     }
 
-    /**
-     *
-     */
     public function synchronization()
     {
         //        return;

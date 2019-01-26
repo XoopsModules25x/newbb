@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -60,7 +62,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
                 'type_id'    => $myrow[$this->keyName],
                 'type_order' => $myrow['type_order'],
                 'type_name'  => htmlspecialchars($myrow['type_name'], ENT_QUOTES | ENT_HTML5),
-                'type_color' => htmlspecialchars($myrow['type_color'], ENT_QUOTES | ENT_HTML5)
+                'type_color' => htmlspecialchars($myrow['type_color'], ENT_QUOTES | ENT_HTML5),
             ];
         }
 
@@ -70,9 +72,9 @@ class TypeHandler extends \XoopsPersistableObjectHandler
     /**
      * Update types linked to a forum
      *
-     * @param  integer $forum_id
-     * @param  array   $types
-     * @return boolean
+     * @param  int   $forum_id
+     * @param  array $types
+     * @return bool
      */
     public function updateByForum($forum_id, $types)
     {
@@ -143,7 +145,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
      * delete an object as well as links relying on it
      *
      * @param Type|\XoopsObject $object {@link Type}
-     * @param  bool        $force  flag to force the query execution despite security settings
+     * @param  bool             $force  flag to force the query execution despite security settings
      * @return bool
      */
     public function delete(\XoopsObject $object, $force = true)

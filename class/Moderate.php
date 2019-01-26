@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -9,8 +11,6 @@
  * @since          4.00
  * @package        module::newbb
  */
-
-use Xmf\IPAddress;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -24,9 +24,6 @@ use Xmf\IPAddress;
  */
 class Moderate extends \XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

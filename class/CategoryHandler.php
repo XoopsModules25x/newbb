@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -35,6 +37,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     {
         /** var Newbb\PermissionHandler $permHandler */
         $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+
         return $permHandler->getCategories($perm);
     }
 
@@ -94,11 +97,10 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         if ($result = parent::delete($category)) {
             // Delete group permissions
             return $this->deletePermission($category);
-        } else {
-            $category->setErrors('delete category error');
-
-            return false;
         }
+        $category->setErrors('delete category error');
+
+        return false;
     }
 
     /**
@@ -118,6 +120,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         $cat_id = is_object($category) ? $category->getVar('cat_id') : (int)$category;
         /** @var PermissionHandler $permHandler */
         $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+
         return $permHandler->getPermission('category', $perm, $cat_id);
     }
 
@@ -129,6 +132,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     {
         /** @var PermissionHandler $permHandler */
         $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+
         return $permHandler->deleteByCategory($category->getVar('cat_id'));
     }
 
@@ -140,6 +144,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     {
         /** @var PermissionHandler $permHandler */
         $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+
         return $permHandler->setCategoryPermission($category->getVar('cat_id'));
     }
 

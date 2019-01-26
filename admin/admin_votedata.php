@@ -56,7 +56,6 @@ switch ($op) {
 
         redirect_header('admin_votedata.php', 1, _AM_NEWBB_VOTEDELETED);
         break;
-
     case 'main':
     default:
         $start         = Request::getInt('start', 0, 'POST');

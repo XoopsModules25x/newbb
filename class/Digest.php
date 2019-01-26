@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -9,7 +11,6 @@
  * @since          4.00
  * @package        module::newbb
  */
-
 class Digest extends \XoopsObject
 {
     public $digest_id;
@@ -20,9 +21,6 @@ class Digest extends \XoopsObject
     public $isHtml    = false;
     public $isSummary = true;
 
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();
@@ -67,10 +65,9 @@ class Digest extends \XoopsObject
         global $myts;
 
         $clean = stripslashes($text);
-        $clean =& $myts->displayTarea($clean, 1, 0, 1);
+        $clean = &$myts->displayTarea($clean, 1, 0, 1);
         $clean = strip_tags($clean);
         $clean = htmlspecialchars($clean, ENT_QUOTES);
-
 
         return $clean;
     }

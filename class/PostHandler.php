@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -68,13 +70,13 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int             $limit
-     * @param  int             $start
+     * @param  int              $limit
+     * @param  int              $start
      * @param  \CriteriaElement $criteria
-     * @param  null            $fields
-     * @param  bool            $asObject
-     * @param  int             $topic_id
-     * @param  int             $approved
+     * @param  null             $fields
+     * @param  bool             $asObject
+     * @param  int              $topic_id
+     * @param  int              $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -85,8 +87,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $fields = null,
         $asObject = true,
         $topic_id = 0,
-        $approved = 1
-    ) {
+        $approved = 1)
+    {
         $sql    = 'SELECT p.*, t.*, tp.topic_status FROM '
                   . $this->db->prefix('newbb_posts')
                   . ' p LEFT JOIN '
@@ -131,7 +133,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param  int|Post|\XoopsObject $post
-     * @param  bool $force
+     * @param  bool                  $force
      * @return bool
      */
     public function approve(&$post, $force = false)
@@ -269,9 +271,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
             if (!$post_id = parent::insert($post, $force)) {
                 return false;
-            } else {
-                $post->unsetNew();
             }
+            $post->unsetNew();
 
             $textObject->setVar('post_id', $post_id);
             if (!$textHandler->insert($textObject, $force)) {
@@ -310,9 +311,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
             if (!$post_id = parent::insert($post, $force)) {
                 //xoops_error($post->getErrors());
                 return false;
-            } else {
-                $post->unsetNew();
             }
+            $post->unsetNew();
+
             if (!$textHandler->insert($textObject, $force)) {
                 $post->setErrors('update post text error');
 
@@ -326,8 +327,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject|Post $post
-     * @param  bool        $isDeleteOne
-     * @param  bool        $force
+     * @param  bool             $isDeleteOne
+     * @param  bool             $force
      * @return bool
      */
     public function delete(\XoopsObject $post, $isDeleteOne = true, $force = false)
@@ -347,26 +348,25 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
 
             return $this->myDelete($post, $force);
-        } else {
-            require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-            $mytree = new \XoopsTree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
-            $arr    = $mytree->getAllChild($post->getVar('post_id'));
-            // irmtfan - delete childs in a reverse order
-            for ($i = count($arr) - 1; $i >= 0; $i--) {
-                $childpost = $this->create(false);
-                $childpost->assignVars($arr[$i]);
-                $this->myDelete($childpost, $force);
-                unset($childpost);
-            }
-            $this->myDelete($post, $force);
         }
+        require_once $GLOBALS['xoops']->path('class/xoopstree.php');
+        $mytree = new \XoopsTree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
+        $arr    = $mytree->getAllChild($post->getVar('post_id'));
+        // irmtfan - delete childs in a reverse order
+        for ($i = count($arr) - 1; $i >= 0; $i--) {
+            $childpost = $this->create(false);
+            $childpost->assignVars($arr[$i]);
+            $this->myDelete($childpost, $force);
+            unset($childpost);
+        }
+        $this->myDelete($post, $force);
 
         return true;
     }
 
     /**
      * @param  Post|\XoopsObject $post
-     * @param  bool $force
+     * @param  bool              $force
      * @return bool
      */
     public function myDelete(Post $post, $force = false)
@@ -443,7 +443,6 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $postcount_toupdate = $post->getVar('approved');
 
         if ($postcount_toupdate > 0) {
-
             // Update user stats
             if ($post->getVar('uid') > 0) {
                 /** @var \XoopsMemberHandler $memberHandler */
@@ -497,10 +496,12 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
         return $count;
     }
+
     // END irmtfan enhance getPostCount when there is join (read_mode = 2)
     /*
      * TODO: combining viewtopic.php
      */
+
     /**
      * @param  null $criteria
      * @param  int  $limit

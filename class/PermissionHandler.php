@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -51,7 +53,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function loadHandler($name)
     {
         if (!isset($this->_handler[$name])) {
-//            require_once __DIR__ . "/permission.{$name}.php";
+            //            require_once __DIR__ . "/permission.{$name}.php";
             $className             = '\\XoopsModules\\Newbb\\Permission' . ucfirst($name) . 'Handler';
             $this->_handler[$name] = new $className($this->db);
         }
@@ -252,7 +254,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
             }
         } else {
             $grouppermHandler = xoops_getHandler('groupperm');
-            $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $modid));
+            $criteria         = new \CriteriaCompo(new \Criteria('gperm_modid', $modid));
             if (!empty($perm_name) && 'forum_all' !== $perm_name && 'category_all' !== $perm_name) {
                 $criteria->add(new \Criteria('gperm_name', $perm_name));
             }
@@ -374,19 +376,18 @@ class PermissionHandler extends \XoopsGroupPermHandler
         }
         if (is_callable('parent::deleteRight')) {
             return parent::deleteRight($perm, $itemid, $groupid, $mid);
-        } else {
-            $criteria = new \CriteriaCompo(new \Criteria('gperm_name', $perm));
-            $criteria->add(new \Criteria('gperm_groupid', $groupid));
-            $criteria->add(new \Criteria('gperm_itemid', $itemid));
-            $criteria->add(new \Criteria('gperm_modid', $mid));
-            $permsObject = $this->getObjects($criteria);
-            if (!empty($permsObject)) {
-                foreach ($permsObject as $permObject) {
-                    $this->delete($permObject);
-                }
-            }
-            unset($criteria, $permsObject);
         }
+        $criteria = new \CriteriaCompo(new \Criteria('gperm_name', $perm));
+        $criteria->add(new \Criteria('gperm_groupid', $groupid));
+        $criteria->add(new \Criteria('gperm_itemid', $itemid));
+        $criteria->add(new \Criteria('gperm_modid', $mid));
+        $permsObject = $this->getObjects($criteria);
+        if (!empty($permsObject)) {
+            foreach ($permsObject as $permObject) {
+                $this->delete($permObject);
+            }
+        }
+        unset($criteria, $permsObject);
 
         return true;
     }

@@ -16,15 +16,12 @@
  * @since
  * @author       XOOPS Development Team
  */
-
-use XoopsModules\Newbb;
-
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
-require_once dirname(__DIR__)   . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 /**
  * @param string $tablename
@@ -39,7 +36,6 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -48,11 +44,11 @@ function tableExists($tablename)
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-//    /** @var \XoopsModules\Newbb\Helper $helper */
-//    $helper  = \XoopsModules\Newbb\Helper::getInstance();
+    //    /** @var \XoopsModules\Newbb\Helper $helper */
+    //    $helper  = \XoopsModules\Newbb\Helper::getInstance();
     /** @var \XoopsModules\Newbb\Utility $utility */
     $utility = new \XoopsModules\Newbb\Utility();
-    /** @var XoopsModules\Newbb\Common\Configurator $configurator */
+    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
     $configurator = new \XoopsModules\Newbb\Common\Configurator();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -65,18 +61,16 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $moduleDirNameUpper   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var \XoopsModules\Newbb\Helper $helper */
     /** @var \XoopsModules\Newbb\Utility $utility */
@@ -86,7 +80,6 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
     $configurator = new \XoopsModules\Newbb\Common\Configurator();
 
     if ($previousVersion < 510) {
-
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -138,7 +131,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -149,9 +142,11 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
+
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+
     return true;
 }

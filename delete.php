@@ -149,7 +149,7 @@ if ($ok) {
                           'order'    => $order,
                           'forum'    => $forum,
                           'topic_id' => $topic_id,
-                          'ok'       => 99
+                          'ok'       => 99,
                       ], 'delete.php', _MD_NEWBB_DEL_RELATED);
     }
     require_once $GLOBALS['xoops']->path('footer.php');

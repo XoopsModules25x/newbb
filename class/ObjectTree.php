@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 // ------------------------------------------------------------------------ //
@@ -80,9 +82,9 @@ if (!class_exists('ObjectTree')) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string  $prefix         String to indent deeper levels
-         * @param  integer $key            ID of the object to display as the root of select options
-         * @param  null    $tags
+         * @param  string $prefix          String to indent deeper levels
+         * @param  int    $key             ID of the object to display as the root of select options
+         * @param  null   $tags
          * @return array|string  HTML select box
          * @internal param string $name Name of the select box
          * @internal param string $fieldName Name of the member variable from the
@@ -101,14 +103,14 @@ if (!class_exists('ObjectTree')) {
         /**
          * Make a select box with options from the tree
          *
-         * @param  string  $name           Name of the select box
-         * @param  string  $fieldName      Name of the member variable from the
+         * @param  string $name            Name of the select box
+         * @param  string $fieldName       Name of the member variable from the
          *                                 node objects that should be used as the title for the options.
-         * @param  string  $prefix         String to indent deeper levels
-         * @param  string  $selected       Value to display as selected
-         * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
-         * @param  integer $key            ID of the object to display as the root of select options
-         * @param  string  $extra
+         * @param  string $prefix          String to indent deeper levels
+         * @param  string $selected        Value to display as selected
+         * @param  bool   $addEmptyOption  Set TRUE to add an empty option with value "0" at the top of the hierarchy
+         * @param  int    $key             ID of the object to display as the root of select options
+         * @param  string $extra
          * @return string  HTML select box
          *
          * @deprecated since 2.5.9, please use makeSelectElement()
@@ -120,8 +122,7 @@ if (!class_exists('ObjectTree')) {
             $selected = '',
             $addEmptyOption = false,
             $key = 0,
-            $extra = ''
-        ) //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
+            $extra = '') //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
         {
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
@@ -139,10 +140,9 @@ if (!class_exists('ObjectTree')) {
         /**
          * Make a tree for the array of a given category
          *
-         * @param  string  $key   top key of the tree
-         * @param  array   $ret   the tree
-         * @param  integer $depth level of subcategories
-         * @return void
+         * @param  string $key   top key of the tree
+         * @param  array  $ret   the tree
+         * @param  int    $depth level of subcategories
          * @internal param array $tags fields to be used
          */
         public function getAllChildObject($key, &$ret, $depth = 0)
@@ -165,7 +165,7 @@ if (!class_exists('ObjectTree')) {
          * Make a tree for the array
          *
          * @param  int|string $key   top key of the tree
-         * @param  integer    $depth level of subcategories
+         * @param  int        $depth level of subcategories
          * @return array
          * @internal param array $tags fields to be used
          */
@@ -183,11 +183,10 @@ if (!class_exists('ObjectTree')) {
         /**
          * Make a tree for the array of a given category
          *
-         * @param  string  $key   top key of the tree
-         * @param  array   $ret   the tree
-         * @param  array   $tags  fields to be used
-         * @param  integer $depth level of subcategories
-         * @return void
+         * @param  string $key   top key of the tree
+         * @param  array  $ret   the tree
+         * @param  array  $tags  fields to be used
+         * @param  int    $depth level of subcategories
          */
         public function getAllChildArray($key, &$ret, array $tags = [], $depth = 0)
         {
@@ -217,7 +216,7 @@ if (!class_exists('ObjectTree')) {
          *
          * @param  int|string $key   top key of the tree
          * @param  array      $tags  fields to be used
-         * @param  integer    $depth level of subcategories
+         * @param  int        $depth level of subcategories
          * @return array
          */
         public function &makeArrayTree($key = 0, $tags = null, $depth = 0)
@@ -282,6 +281,7 @@ if (!class_exists('ObjectTree')) {
 
             return $pids;
         }
+
         /**#@-*/
     }
 }

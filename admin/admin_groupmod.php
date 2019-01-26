@@ -40,8 +40,8 @@ $memberHandler = xoops_getHandler('member');
 ///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
 if (Request::getString('submit', '', 'POST')) {
-    $fgroups = Request::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
-    $fforum  = Request::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
+    $fgroups = Request::getArray('group', '', 'POST'); // !empty($_POST['group']) ? $_POST['group'] : '';
+    $fforum  = Request::getInt('forenid', 0, 'POST'); // (int)($_POST['forenid']);
     $fuser   = [];
     if (0 !== $fforum) {
         if ('' !== $fgroups) {
@@ -49,7 +49,7 @@ if (Request::getString('submit', '', 'POST')) {
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
-                    if (!in_array($f, $fuser)) {
+                    if (!in_array($f, $fuser, true)) {
                         $fuser[] = $f;
                     }
                 }

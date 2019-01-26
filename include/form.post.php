@@ -52,7 +52,7 @@ $xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' =
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forumObject));
 $xoopsTpl->assign([
                       'forum_id'   => $forumObject->getVar('forum_id'),
-                      'forum_name' => $forumObject->getVar('forum_name')
+                      'forum_name' => $forumObject->getVar('forum_name'),
                   ]);
 
 if (!is_object($topicObject)) {
@@ -80,7 +80,7 @@ foreach ([
              'pid',
              'isreply',
              'isedit',
-             'contents_preview'
+             'contents_preview',
          ] as $getint) {
     ${$getint} = Request::getInt($getint, (!empty(${$getint}) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
@@ -90,7 +90,7 @@ foreach ([
              'hidden',
              'newbb_form',
              'icon',
-             'op'
+             'op',
          ] as $getstr) {
     ${$getstr} = Request::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
@@ -154,11 +154,11 @@ if (Request::getString('editor', '', 'POST')) {
     newbbSetCookie('editor', $editor);
 } elseif (!$editor = newbbGetCookie('editor')) {
     if (empty($editor)) {
-        $editor = @ $GLOBALS['xoopsModuleConfig']['editor_default'];
+        $editor = @$GLOBALS['xoopsModuleConfig']['editor_default'];
     }
 }
 if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
-    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'])) {
+    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'], true)) {
         $editor = $GLOBALS['xoopsModuleConfig']['editor_allowed'][0];
         newbbSetCookie('editor', $editor);
     }
@@ -320,7 +320,7 @@ $forum_form->addElement(new \XoopsFormHidden('isreply', @$isreply));
 $forum_form->addElement(new \XoopsFormHidden('isedit', @$isedit));
 $forum_form->addElement(new \XoopsFormHidden('op', @$op));
 
-$button_tray = new \XoopsFormElementTray('');
+$buttonTray = new \XoopsFormElementTray('');
 
 $submit_button = new \XoopsFormButton('', 'contents_submit', _SUBMIT, 'submit');
 $submit_button->setExtra("tabindex='3'");
@@ -340,7 +340,7 @@ if (!empty($isreply) && !empty($hidden)) {
     $quote_button = new \XoopsFormButton('', 'quote', _MD_NEWBB_QUOTE, 'button');
     $quote_button->setExtra("onclick='xoopsGetElementById(\"message\").value=xoopsGetElementById(\"message\").value+ xoopsGetElementById(\"hidden\").value;xoopsGetElementById(\"hidden\").value=\"\";'");
     $quote_button->setExtra("tabindex='4'");
-    $button_tray->addElement($quote_button);
+    $buttonTray->addElement($quote_button);
 }
 
 $preview_button = new \XoopsFormButton('', 'btn_preview', _PREVIEW, 'button');
@@ -348,10 +348,10 @@ $preview_button->setExtra("tabindex='5'");
 $preview_button->setExtra('onclick="window.document.forms.' . $forum_form->getName() . '.contents_preview.value=1; window.document.forms.' . $forum_form->getName() . '.submit() ;"');
 $forum_form->addElement(new \XoopsFormHidden('contents_preview', 0));
 
-$button_tray->addElement($preview_button);
-$button_tray->addElement($submit_button);
-$button_tray->addElement($cancel_button);
-$forum_form->addElement($button_tray);
+$buttonTray->addElement($preview_button);
+$buttonTray->addElement($submit_button);
+$buttonTray->addElement($cancel_button);
+$forum_form->addElement($buttonTray);
 
 //$forum_form->display();
 $forum_form->assign($xoopsTpl);

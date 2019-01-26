@@ -52,7 +52,7 @@ function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
  * Function to check if a user is an administrator of the module
  *
  * @param  int|string|array|\XoopsUser $user
- * @param  int $mid
+ * @param  int                         $mid
  * @return bool
  */
 function newbbIsAdministrator($user = -1, $mid = 0)
@@ -97,8 +97,8 @@ function newbbIsAdministrator($user = -1, $mid = 0)
 /**
  * Function to check if a user is a moderator of a forum
  *
- * @param       $forum
- * @param  int|array |string|\XoopsUser  $user
+ * @param                               $forum
+ * @param  int|array |string|\XoopsUser $user
  * @return bool
  */
 function newbbIsModerator(&$forum, $user = -1)
@@ -155,7 +155,7 @@ function newbbIsAdmin($forum = 0)
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');
     }
 
-    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id]);
+    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id], true);
 }
 
 /* use hardcoded DB query to save queries */

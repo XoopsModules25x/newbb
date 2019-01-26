@@ -175,13 +175,13 @@ if (Request::hasVar('submit', 'POST')) {
                               5184000  => _AM_NEWBB_PRUNE_2MONTH,
                               10368000 => _AM_NEWBB_PRUNE_4MONTH,
                               31536000 => _AM_NEWBB_PRUNE_YEAR,
-                              63072000 => _AM_NEWBB_PRUNE_2YEARS
+                              63072000 => _AM_NEWBB_PRUNE_2YEARS,
                           ]);
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
     require_once dirname(__DIR__) . '/include/functions.forum.php';
-    $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">";// disable all categories
+    $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">"; // disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';
     $forumSelBox    .= newbbForumSelectBox(null, 'access', false); //$accessForums = nothing, $permission = "access", $delimitorCategory = false
@@ -234,7 +234,7 @@ if (Request::hasVar('submit', 'POST')) {
                                           '15' => 15,
                                           '20' => 20,
                                           '25' => 25,
-                                          '30' => 30
+                                          '30' => 30,
                                       ]);
     $sform->addElement($hot_confirmation);
 
@@ -246,10 +246,10 @@ if (Request::hasVar('submit', 'POST')) {
     $archive_confirmation->addOption(0, _AM_NEWBB_PRUNE_NO);
     $sform->addElement($archive_confirmation);
 
-    $button_tray = new \XoopsFormElementTray('', '');
-    $button_tray->addElement(new \XoopsFormButton('', 'submit', _AM_NEWBB_PRUNE_SUBMIT, 'submit'));
-    $button_tray->addElement(new \XoopsFormButton('', 'reset', _AM_NEWBB_PRUNE_RESET, 'reset'));
-    $sform->addElement($button_tray);
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $buttonTray->addElement(new \XoopsFormButton('', 'submit', _AM_NEWBB_PRUNE_SUBMIT, 'submit'));
+    $buttonTray->addElement(new \XoopsFormButton('', 'reset', _AM_NEWBB_PRUNE_RESET, 'reset'));
+    $sform->addElement($buttonTray);
 
     $sform->display();
 }

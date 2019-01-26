@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -19,9 +21,6 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
  */
 class Report extends \XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

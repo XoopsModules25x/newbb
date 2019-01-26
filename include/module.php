@@ -81,7 +81,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
     array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
-        require_once  dirname(__DIR__) . '/include/functions.recon.php';
+        require_once dirname(__DIR__) . '/include/functions.recon.php';
         newbbSynchronization();
     }
 
@@ -94,8 +94,8 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
  */
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
-//    XoopsLoad::load('migrate', 'newbb');
-    /** @var XoopsModules\Newbb\Common\Configurator $configurator */
+    //    XoopsLoad::load('migrate', 'newbb');
+    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
     $configurator = new \XoopsModules\Newbb\Common\Configurator();
 
     $migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
@@ -110,7 +110,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
  */
 function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = &$module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -152,10 +152,10 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Set corresponding permissions for the category and the forum */
     $module_id = $module->getVar('mid');
-    /** @var XoopsGroupPermHandler $grouppermHandler */
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
-    $groups_view  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
-    $groups_post  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
+    $groups_view      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
+    $groups_post      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
     $post_items = [
         'post',
@@ -170,7 +170,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
         'html',
         'signature',
         'pdf',
-        'print'
+        'print',
     ];
     foreach ($groups_view as $group_id) {
         $grouppermHandler->addRight('category_access', $cat_id, $group_id, $module_id);
@@ -187,7 +187,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
     require_once __DIR__ . '/functions.user.php';
     /** @var Newbb\PostHandler $postHandler */
     $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
-    /** @var  $forumpost */
+    /** @var $forumpost */
     $forumpost = $postHandler->create();
     $forumpost->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));

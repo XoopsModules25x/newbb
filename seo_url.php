@@ -18,7 +18,6 @@ function seo_urls($s)
     $module_name = str_replace('/', '\/', quotemeta(SEO_MODULE_NAME));
 
     $search = [
-
         // Search URLs of modules' directry.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewpost.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
@@ -26,7 +25,7 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewforum.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(viewtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(newtopic.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
-        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i'
+        '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/' . $module_name . '\/(.*)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
     ];
 
     $s = preg_replace_callback($search, 'replace_links', $s);
@@ -283,7 +282,7 @@ function forum_seo_title($title = '', $withExt = true)
 
     // Transformation de la chaine en minuscule
     // Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
-    $title = rawurlencode(strtolower($title));
+    $title = rawurlencode(mb_strtolower($title));
 
     // Transformation des ponctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
@@ -316,7 +315,7 @@ function forum_seo_title($title = '', $withExt = true)
         '/%7D/',
         '/%7E/',
         '/\./',
-        '/%2A/'
+        '/%2A/',
     ];
     $rep_pat = [
         '-',
@@ -347,7 +346,7 @@ function forum_seo_title($title = '', $withExt = true)
         '',
         '-',
         '',
-        ''
+        '',
     ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
@@ -377,7 +376,7 @@ function forum_seo_title($title = '', $withExt = true)
         '/%E3%FF/',
         '/%E3%B6/',
         '/%E3%A4/',
-        '/%E3%9F/'
+        '/%E3%9F/',
     ];
     $rep_pat = [
         '-',
@@ -403,7 +402,7 @@ function forum_seo_title($title = '', $withExt = true)
         'ss',
         'oe',
         'ae',
-        'ss'
+        'ss',
     ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 

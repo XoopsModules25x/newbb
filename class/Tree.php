@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 // ------------------------------------------------------------------------ //
@@ -109,7 +111,7 @@ class Tree extends \XoopsTree
                     'forum_id'    => $post->getVar('forum_id'),
                     'subject'     => $post->getVar('subject'),
                     'poster_name' => $post->getVar('poster_name'),
-                    'uid'         => $post->getVar('uid')
+                    'uid'         => $post->getVar('uid'),
                 ];
                 $this->getPostTree($postTree_array, $post->getVar('post_id'), $prefix);
             } else {

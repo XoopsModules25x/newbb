@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /*
      You may not change or alter any portion of this comment or credits
@@ -29,7 +31,6 @@ class Helper extends \Xmf\Module\Helper
     public $debug;
 
     /**
-     *
      * @param bool $debug
      */
     public function __construct($debug = false)
@@ -89,7 +90,7 @@ class Helper extends \Xmf\Module\Helper
     public function getHandler($name)
     {
         $db    = \XoopsDatabaseFactory::getDatabaseConnection();
-        $class = '\\XoopsModules\\' . ucfirst(strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
         $ret   = new $class($db);
 
         return $ret;

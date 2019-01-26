@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -45,9 +47,9 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param  int    $uid user id
+     * @param  int         $uid user id
      * @param  string|bool $ip  user ip
-     * @param  int    $forum
+     * @param  int         $forum
      * @return bool true if IP is banned
      */
     public function verifyUser($uid = -1, $ip = '', $forum = 0)
@@ -104,8 +106,8 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      * Get latest expiration for a user moderation
      *
      *
-     * @param  mixed  $item user id or ip
-     * @param  bool $isUid
+     * @param  mixed $item user id or ip
+     * @param  bool  $isUid
      * @return int
      */
     public function getLatest($item, $isUid = true)

@@ -16,7 +16,6 @@
  * @since
  * @author       XOOPS Development Team
  */
-
 global $pathIcon32;
 
 if (!class_exists('\Xoops', false)) {

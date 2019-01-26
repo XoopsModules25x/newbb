@@ -53,14 +53,14 @@ function b_sitemap_newbb()
             $forums[$forum['parent_forum']]['fchild'][$forumid] = [
                 'id'    => $forumid,
                 'url'   => 'viewforum.php?forum=' . $forumid,
-                'title' => $forum['forum_name']
+                'title' => $forum['forum_name'],
             ];
         } else {
             $forums[$forumid] = [
                 'id'    => $forumid,
                 'cid'   => $forum['cat_id'],
                 'url'   => 'viewforum.php?forum=' . $forumid,
-                'title' => $forum['forum_name']
+                'title' => $forum['forum_name'],
             ];
         }
     }

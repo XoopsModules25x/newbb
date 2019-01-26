@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -21,7 +23,6 @@ use XoopsModules\Newbb;
  * @author    D.J. (phppp)
  * @copyright copyright &copy; Xoops Project
  * @package   module::newbb
- *
  */
 class TopicRenderer
 {
@@ -109,7 +110,7 @@ class TopicRenderer
             case 'forum':
                 if (is_numeric($val)) {
                     $val = (int)$val;
-                // START irmtfan - if the forum is array
+                    // START irmtfan - if the forum is array
                 } elseif (is_array($val)) {
                     $val = implode('|', $val);
                     //} elseif (!empty($val)) {
@@ -117,7 +118,6 @@ class TopicRenderer
                 }
                 // END irmtfan - if the forum is array
                 break;
-
             case 'type':
             case 'mode':
             case 'order':
@@ -125,11 +125,9 @@ class TopicRenderer
             case 'since':
                 $val = (int)$val;
                 break;
-
             case 'uid': // irmtfan add multi topic poster
             case 'lastposter': // irmtfan add multi lastposter
                 break;
-
             case 'status':
                 // START irmtfan to accept multiple status
                 $val = is_array($val) ? $val : [$val];
@@ -138,7 +136,6 @@ class TopicRenderer
                 //if ($val === "all" && !$this->is_multiple) $val = ""; irmtfan commented because it is done in sort
                 // END irmtfan to accept multiple status
                 break;
-
             default:
                 break;
         }
@@ -154,7 +151,7 @@ class TopicRenderer
         $this->init();
 
         foreach ($vars as $var => $val) {
-            if (!in_array($var, $this->args)) {
+            if (!in_array($var, $this->args, true)) {
                 continue;
             }
             $this->vars[$var] = $this->setVar($var, $val);
@@ -171,59 +168,45 @@ class TopicRenderer
             case 'digest':
                 $this->query['where'][] = 't.topic_digest = 1';
                 break;
-
             case 'undigest':
                 $this->query['where'][] = 't.topic_digest = 0';
                 break;
-
             case 'sticky':
                 $this->query['where'][] = 't.topic_sticky = 1';
                 break;
-
             case 'unsticky':
                 $this->query['where'][] = 't.topic_sticky = 0';
                 break;
-
             case 'lock':
                 $this->query['where'][] = 't.topic_status = 1';
                 break;
-
             case 'unlock':
                 $this->query['where'][] = 't.topic_status = 0';
                 break;
-
             case 'poll':
                 $this->query['where'][] = 't.topic_haspoll = 1';
                 break;
-
             case 'unpoll':
                 $this->query['where'][] = 't.topic_haspoll = 0';
                 break;
-
             case 'voted':
                 $this->query['where'][] = 't.votes > 0';
                 break;
-
             case 'unvoted':
                 $this->query['where'][] = 't.votes < 1';
                 break;
-
             case 'replied':
                 $this->query['where'][] = 't.topic_replies > 0';
                 break;
-
             case 'unreplied':
                 $this->query['where'][] = 't.topic_replies < 1';
                 break;
-
             case 'viewed':
                 $this->query['where'][] = 't.topic_views > 0';
                 break;
-
             case 'unviewed':
                 $this->query['where'][] = 't.topic_views < 1';
                 break;
-
             case 'read':
                 // Skip
                 if (empty($this->config['read_mode'])) {
@@ -234,8 +217,8 @@ class TopicRenderer
                     if (!empty($read_uid)) {
                         $this->query['join'][]  = 'LEFT JOIN ' . $this->handler->db->prefix('newbb_reads_topic') . ' AS r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $this->query['where'][] = 'r.post_id = t.topic_last_post_id';
-                    } else {
                     }
+
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
                 } elseif (1 == $this->config['read_mode']) {
@@ -265,7 +248,6 @@ class TopicRenderer
                     // END irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                 }
                 break;
-
             case 'unread':
                 // Skip
                 if (empty($this->config['read_mode'])) {
@@ -276,8 +258,8 @@ class TopicRenderer
                     if (!empty($read_uid)) {
                         $this->query['join'][]  = 'LEFT JOIN ' . $this->handler->db->prefix('newbb_reads_topic') . ' AS r ON r.read_item = t.topic_id AND r.uid = ' . $read_uid . ' ';
                         $this->query['where'][] = '(r.read_id IS NULL OR r.post_id < t.topic_last_post_id)';
-                    } else {
                     }
+
                     // END irmtfan change criteria to get from uid p.uid = last post submit user id
                     // User cookie
                 } elseif (1 == $this->config['read_mode']) {
@@ -303,7 +285,6 @@ class TopicRenderer
                     // END irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                 }
                 break;
-
             case 'pending':
                 if ($this->userlevel < 2) {
                     $this->noperm = true;
@@ -311,7 +292,6 @@ class TopicRenderer
                     $this->query['where'][] = 't.approved = 0';
                 }
                 break;
-
             case 'deleted':
                 if ($this->userlevel < 2) {
                     $this->noperm = true;
@@ -319,12 +299,10 @@ class TopicRenderer
                     $this->query['where'][] = 't.approved = -1';
                 }
                 break;
-
             case 'all': // For viewall.php; do not display sticky topics at first
             case 'active': // same as 'all'
                 $this->query['where'][] = 't.approved = 1';
                 break;
-
             default: // irmtfan do nothing
                 break;
         }
@@ -352,14 +330,13 @@ class TopicRenderer
 
                 if (empty($accessForums)) {
                     $this->noperm = true;
-                // irmtfan - it just return return the forum_id only when the forum_id is the first allowed forum - no need for this code implode is enough removed.
+                    // irmtfan - it just return return the forum_id only when the forum_id is the first allowed forum - no need for this code implode is enough removed.
                     //} elseif (count($accessForums) === 1) {
                     //$this->query["where"][] = "t.forum_id = " . $accessForums[0];
                 } else {
                     $this->query['where'][] = 't.forum_id IN ( ' . implode(', ', $accessForums) . ' )';
                 }
                 break;
-
             case 'uid': // irmtfan add multi topic poster
                 if (-1 !== $val) {
                     $val                    = implode(',', array_map('intval', explode(',', $val)));
@@ -372,17 +349,16 @@ class TopicRenderer
                     $this->query['where'][] = 'p.uid IN ( ' . $val . ' )';
                 }
                 break;
-
             case 'since':
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbbGetSinceTime($val);
-                    if (in_array('unread', explode(',', $this->vars['status'], true)) && 1 == $this->config['read_mode']
+                    if (in_array('unread', explode(',', $this->vars['status'], true), true) && 1 == $this->config['read_mode']
                         && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
-                    if (in_array('digest', explode(',', $this->vars['status'], true))) {
+                    if (in_array('digest', explode(',', $this->vars['status'], true), true)) {
                         $this->query['where'][] = 't.digest_time > ' . $startdate;
                     }
                     // irmtfan - should be >= instead of =
@@ -390,13 +366,11 @@ class TopicRenderer
                     // END irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query
                 }
                 break;
-
             case 'type':
                 if (!empty($val)) {
                     $this->query['where'][] = 't.type_id = ' . $val;
                 }
                 break;
-
             case 'status':
                 // START irmtfan to accept multiple status
                 $val = explode(',', $val);
@@ -409,7 +383,6 @@ class TopicRenderer
                 }
                 // END irmtfan to accept multiple status
                 break;
-
             case 'sort':
                 if ($sort = $this->getSort($val, 'sort')) {
                     $this->query['sort'][] = $sort . (empty($this->vars['order']) ? ' DESC' : ' ASC');
@@ -417,7 +390,6 @@ class TopicRenderer
                     $this->query['sort'][] = 't.topic_last_post_id' . (empty($this->vars['order']) ? ' DESC' : ' ASC');
                 }
                 break;
-
             default:
                 break;
         }
@@ -467,41 +439,41 @@ class TopicRenderer
         $headers = [
             'topic'           => [
                 'title' => _MD_NEWBB_TOPICS,
-                'sort'  => 't.topic_title'
+                'sort'  => 't.topic_title',
             ],
             'forum'           => [
                 'title' => _MD_NEWBB_FORUM,
-                'sort'  => 't.forum_id'
+                'sort'  => 't.forum_id',
             ],
             'poster'          => [
                 'title' => _MD_NEWBB_TOPICPOSTER, /*irmtfan _MD_NEWBB_POSTER to _MD_NEWBB_TOPICPOSTER*/
-                'sort'  => 't.topic_poster'
+                'sort'  => 't.topic_poster',
             ],
             'replies'         => [
                 'title' => _MD_NEWBB_REPLIES,
-                'sort'  => 't.topic_replies'
+                'sort'  => 't.topic_replies',
             ],
             'views'           => [
                 'title' => _MD_NEWBB_VIEWS,
-                'sort'  => 't.topic_views'
+                'sort'  => 't.topic_views',
             ],
             'lastpost'        => [ // irmtfan show topic_page_jump_icon smarty
                                    'title' => _MD_NEWBB_LASTPOST,
                                    /*irmtfan _MD_NEWBB_DATE to _MD_NEWBB_LASTPOSTTIME again change to _MD_LASTPOST*/
-                                   'sort'  => 't.topic_last_post_id'
+                                   'sort'  => 't.topic_last_post_id',
             ],
             // START irmtfan add more sorts
             'lastposttime'    => [ // irmtfan same as lastpost
                                    'title' => _MD_NEWBB_LASTPOSTTIME,
-                                   'sort'  => 't.topic_last_post_id'
+                                   'sort'  => 't.topic_last_post_id',
             ],
             'lastposter'      => [ // irmtfan
                                    'title' => _MD_NEWBB_POSTER,
-                                   'sort'  => 'p.uid',// poster uid
+                                   'sort'  => 'p.uid', // poster uid
             ],
             'lastpostmsgicon' => [ // irmtfan
                                    'title' => _MD_NEWBB_MESSAGEICON,
-                                   'sort'  => 'p.icon',// post message icon
+                                   'sort'  => 'p.icon', // post message icon
             ],
             'ratings'         => [
                 'title' => _MD_NEWBB_RATINGS,
@@ -509,40 +481,40 @@ class TopicRenderer
             ],
             'votes'           => [
                 'title' => _MD_NEWBB_VOTES,
-                'sort'  => 't.votes'
+                'sort'  => 't.votes',
             ],
             'publish'         => [
                 'title' => _MD_NEWBB_TOPICTIME,
-                'sort'  => 't.topic_id'
+                'sort'  => 't.topic_id',
             ],
             'digest'          => [
                 'title' => _MD_NEWBB_DIGEST,
-                'sort'  => 't.digest_time'
+                'sort'  => 't.digest_time',
             ],
             'sticky'          => [
                 'title' => _MD_NEWBB_STICKY,
-                'sort'  => 't.topic_sticky'
+                'sort'  => 't.topic_sticky',
             ],
             'lock'            => [
                 'title' => _MD_NEWBB_LOCK,
-                'sort'  => 't.topic_status'
+                'sort'  => 't.topic_status',
             ],
             'poll'            => [
                 'title' => _MD_NEWBB_POLL_POLL,
-                'sort'  => 't.poll_id'
-            ]
+                'sort'  => 't.poll_id',
+            ],
         ];
         $types   = $this->getTypes();
         if (!empty($types)) {
             $headers['type'] = [
                 'title' => _MD_NEWBB_TYPE,
-                'sort'  => 't.type_id'
+                'sort'  => 't.type_id',
             ];
         }
         if (2 == $this->userlevel) {
             $headers['approve'] = [
                 'title' => _MD_NEWBB_APPROVE,
-                'sort'  => 't.approved'
+                'sort'  => 't.approved',
             ];
         }
         // END irmtfan add more sorts
@@ -609,17 +581,17 @@ class TopicRenderer
             'replied'   => _MD_NEWBB_REPLIED, // irmtfan add
             'unreplied' => _MD_NEWBB_UNREPLIED,
             'read'      => _MD_NEWBB_READ, // irmtfan add
-            'unread'    => _MD_NEWBB_UNREAD
+            'unread'    => _MD_NEWBB_UNREAD,
         ];
         $links_admin = [
             'active'  => _MD_NEWBB_TYPE_ADMIN,
             'pending' => _MD_NEWBB_TYPE_PENDING,
-            'deleted' => _MD_NEWBB_TYPE_DELETED
+            'deleted' => _MD_NEWBB_TYPE_DELETED,
         ];
 
         // all status, for admin
         if ($type > 1) {
-            $links = array_merge($links, $links_admin);// irmtfan to accept multiple status
+            $links = array_merge($links, $links_admin); // irmtfan to accept multiple status
         }
 
         return $this->getFromKeys($links, $status); // irmtfan to accept multiple status
@@ -633,7 +605,7 @@ class TopicRenderer
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
-        require_once  dirname(__DIR__) . '/include/functions.forum.php';
+        require_once dirname(__DIR__) . '/include/functions.forum.php';
         $forum_selected     = empty($this->vars['forum']) ? null : explode('|', @$this->vars['forum']);
         $selection['forum'] = '<select name="forum[]" multiple="multiple">';
         $selection['forum'] .= '<option value="0">' . _MD_NEWBB_ALL . '</option>';
@@ -917,11 +889,11 @@ class TopicRenderer
             return $ret;
         }
 
-        require_once  dirname(__DIR__) . '/include/functions.render.php';
-        require_once  dirname(__DIR__) . '/include/functions.session.php';
-        require_once  dirname(__DIR__) . '/include/functions.time.php';
-        require_once  dirname(__DIR__) . '/include/functions.read.php';
-        require_once  dirname(__DIR__) . '/include/functions.topic.php';
+        require_once dirname(__DIR__) . '/include/functions.render.php';
+        require_once dirname(__DIR__) . '/include/functions.session.php';
+        require_once dirname(__DIR__) . '/include/functions.time.php';
+        require_once dirname(__DIR__) . '/include/functions.read.php';
+        require_once dirname(__DIR__) . '/include/functions.topic.php';
 
         $sticky    = 0;
         $topics    = [];
@@ -1110,7 +1082,7 @@ class TopicRenderer
             $topics[$id]['topic_folder'] = newbbDisplayImage($topic_folder, $topic_folder_text);
             // END irmtfan - add topic_folder_text for alt
 
-            unset($topics[$id]['topic_poster_name'], $topics[$id]['topic_last_poster_name']);// irmtfan remove $topics[$id]["stats"] because it is not exist now
+            unset($topics[$id]['topic_poster_name'], $topics[$id]['topic_last_poster_name']); // irmtfan remove $topics[$id]["stats"] because it is not exist now
         }
 
         if (count($topics) > 0) {
@@ -1153,5 +1125,6 @@ class TopicRenderer
 
         return $ret;
     }
+
     // END irmtfan to create an array from selected keys of an array
 }

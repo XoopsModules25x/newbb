@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb\Common;
+<?php
+
+namespace XoopsModules\Newbb\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -52,7 +54,7 @@ class Breadcrumb
     {
         $this->bread[] = [
             'link'  => $link,
-            'title' => $title
+            'title' => $title,
         ];
     }
 

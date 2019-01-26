@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * Newbb module
@@ -16,14 +18,10 @@
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Forum extends \XoopsObject
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

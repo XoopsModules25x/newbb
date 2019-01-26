@@ -33,7 +33,7 @@ use XoopsModules\Newbb;
 
 require_once __DIR__ . '/admin_header.php';
 //require_once  dirname(__DIR__) . '/class/Utility.php';
-require_once  dirname(__DIR__) . '/include/functions.stats.php';
+require_once dirname(__DIR__) . '/include/functions.stats.php';
 
 $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/');
 $thumb_path  = $attach_path . 'thumbs/';
@@ -153,11 +153,10 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportH
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new \Criteria('report_result', 1))));
 
 $_ufolders = $newbb_config->uploadFolders;
-foreach ($_ufolders as $wert) { 
+foreach ($_ufolders as $wert) {
     Newbb\Utility::prepareFolder($wert);
     $adminObject->addConfigBoxLine($wert, 'folder');
 }
-
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
@@ -177,7 +176,7 @@ $cacheHelper = Newbb\Utility::cleanCache();
 function return_bytes($sizeAsString, $b = false)
 {
     if (false === $b) {
-        switch (substr($sizeAsString, -1)) {
+        switch (mb_substr($sizeAsString, -1)) {
             case 'M':
             case 'm':
                 return (int)$sizeAsString * 1048576;
@@ -194,6 +193,6 @@ function return_bytes($sizeAsString, $b = false)
         $base   = log($sizeAsString) / log(1024);
         $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
 
-        return round(1024 ** ($base - floor($base))) . ' ' . $suffix[(int)floor($base)];
+        return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
     }
 }

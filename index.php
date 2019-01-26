@@ -29,7 +29,7 @@ if (Request::getInt('mark_read', 0)) {
     redirect_header($url, 2, _MD_NEWBB_ALL_FORUM_MARKED . ' ' . $markresult);
 }
 
-$viewcat = Request::getInt('cat', 0, 'GET');//TODO mb check if this is GET or POST?
+$viewcat = Request::getInt('cat', 0, 'GET'); //TODO mb check if this is GET or POST?
 ///** @var Newbb\CategoryHandler $categoryHandler */
 //$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
 
@@ -161,7 +161,7 @@ $toggles        = newbbGetCookie('G', true);
 $iconHandler    = newbbGetIconHandler();
 $category_icon  = [
     'expand'   => $iconHandler->getImageSource('minus'),
-    'collapse' => $iconHandler->getImageSource('plus')
+    'collapse' => $iconHandler->getImageSource('plus'),
 ];
 
 foreach (array_keys($categories) as $id) {
@@ -169,7 +169,7 @@ foreach (array_keys($categories) as $id) {
     $onecat = $categories[$id];
 
     $cat_element_id = 'cat_' . $onecat['cat_id'];
-    $expand         = (count($toggles) > 0) ? (in_array($cat_element_id, $toggles) ? false : true) : true;
+    $expand         = (count($toggles) > 0) ? (in_array($cat_element_id, $toggles, true) ? false : true) : true;
     // START irmtfan to improve newbbDisplayImage
     if ($expand) {
         $cat_display      = 'block';        //irmtfan move semicolon
@@ -210,7 +210,7 @@ foreach (array_keys($categories) as $id) {
         'cat_element_id'   => $cat_element_id,
         'cat_display'      => $cat_display,
         'cat_displayImage' => $cat_displayImage,
-        'forums'           => $forums
+        'forums'           => $forums,
     ];
 }
 
@@ -221,7 +221,7 @@ $xoopsTpl->assign('notifyicon', $category_icon);
 
 $xoopsTpl->assign([
                       'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
-                      'index_desc'  => _MD_NEWBB_TOSTART
+                      'index_desc'  => _MD_NEWBB_TOSTART,
                   ]);
 
 /* display user stats */
@@ -282,7 +282,7 @@ if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
 $xoopsTpl->assign([
                       'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWBB_NEWPOSTS),
                       'img_forum'     => newbbDisplayImage('forum', _MD_NEWBB_NONEWPOSTS),
-                      'img_subforum'  => newbbDisplayImage('subforum')
+                      'img_subforum'  => newbbDisplayImage('subforum'),
                   ]);
 
 // irmtfan move to footer.php

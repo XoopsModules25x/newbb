@@ -1,7 +1,8 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
-use XoopsModules\Newbb\Common;
 
 /**
  * Class Utility
@@ -74,18 +75,16 @@ class Utility
      * Function responsible for checking if a directory exists, we can also write in and create an index.html file
      *
      * @param string $folder Le chemin complet du répertoire à vérifier
-     *
-     * @return void
      */
     public static function prepareFolder($folder)
     {
         try {
             if (!@mkdir($folder) && !is_dir($folder)) {
                 throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-            } else {
-                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        } catch (\Exception $e) {
+            file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+        }
+        catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -95,6 +94,7 @@ class Utility
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
         if (method_exists($cacheHelper, 'clear')) {
             $cacheHelper->clear();
+
             return;
         }
         // for 2.5 systems, clear everything
@@ -110,7 +110,7 @@ class Utility
     /**
      * Checks if a user is admin of NewBB
      *
-     * @return boolean
+     * @return bool
      */
     public static function userIsAdmin()
     {

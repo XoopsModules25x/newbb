@@ -28,16 +28,16 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
     $toseo_url = ['index.php', 'viewforum.php', 'viewtopic.php', 'rss.php'];
 
     if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite']) && (!isset($_POST) || count($_POST) <= 0)
-        && (false === strpos(getenv('REQUEST_URI'), '.html'))) {
+        && (false === mb_strpos(getenv('REQUEST_URI'), '.html'))) {
         $redir = false;
-        if (true === strpos(getenv('REQUEST_URI'), 'mark_read=') || true === strpos(getenv('REQUEST_URI'), 'mark=')) {
+        if (true === mb_strpos(getenv('REQUEST_URI'), 'mark_read=') || true === mb_strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
         } else {
-            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
+            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url, true)) {
                 //rewrite only for files
 
                 if ('' !== trim(getenv('SCRIPT_NAME'))) {
-                    if (false === strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
+                    if (false === mb_strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
                         $redir = true;
                     } elseif (getenv('QUERY_STRING')) {
                         $redir = true;
@@ -73,7 +73,7 @@ $myts = \MyTextSanitizer::getInstance();
 $menumode       = 0;
 $menumode_other = [];
 $menu_url       = htmlspecialchars(preg_replace('/&menumode=[^&]/', '', Request::getString('REQUEST_URI', '', 'SERVER')), ENT_QUOTES | ENT_HTML5);
-$menu_url       .= (false === strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
+$menu_url       .= (false === mb_strpos($menu_url, '?')) ? '?menumode=' : '&amp;menumode=';
 //foreach ($GLOBALS['xoopsModuleConfig']['valid_menumodes'] as $key => $val) {
 //    if ($key !== $menumode) {
 //        $menumode_other[] = array('title' => $val, 'link' => $menu_url . $key);

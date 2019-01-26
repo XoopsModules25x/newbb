@@ -18,7 +18,6 @@
  * @since           1.03
  * @author          XOOPS Development Team - ( https://xoops.org )
  */
-
 $moduleDirName = basename(dirname(__DIR__));
 
 /*
@@ -36,9 +35,10 @@ $uploadFolders = [
 function getConfig()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
     return (object)[
-        'name'           => strtoupper($moduleDirName) . ' Module Configurator',
+        'name'           => mb_strtoupper($moduleDirName) . ' Module Configurator',
         'paths'          => [
             'dirname'    => $moduleDirName,
             'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
@@ -69,8 +69,7 @@ function getConfig()
         'templateFolders' => [
             '/templates/',
             '/templates/blocks/',
-            '/templates/admin/'
-
+            '/templates/admin/',
         ],
         'oldFiles'        => [
             '/class/request.php',
@@ -88,27 +87,27 @@ function getConfig()
             '/tcpdf',
             '/images',
         ],
-        'renameTables' => [
-            'bb_archive'    => 'newbb_archive',
-            'bb_attachments'    => 'newbb_attachments',
-            'bb_categories' => 'newbb_categories',
-            'bb_digest' => 'newbb_digest',
-            'bb_forums'   => 'newbb_forums',
-            'bb_moderates'    => 'newbb_moderates',
-            'bb_online' => 'newbb_online',
-            'bb_posts'   => 'newbb_posts',
-            'bb_posts_text'    => 'newbb_posts_text',
+        'renameTables'    => [
+            'bb_archive'     => 'newbb_archive',
+            'bb_attachments' => 'newbb_attachments',
+            'bb_categories'  => 'newbb_categories',
+            'bb_digest'      => 'newbb_digest',
+            'bb_forums'      => 'newbb_forums',
+            'bb_moderates'   => 'newbb_moderates',
+            'bb_online'      => 'newbb_online',
+            'bb_posts'       => 'newbb_posts',
+            'bb_posts_text'  => 'newbb_posts_text',
             'bb_reads_forum' => 'newbb_reads_forum',
-            'bb_reads_topic'   => 'newbb_reads_topic',
-            'bb_report' => 'newbb_report',
-            'bb_stats' => 'newbb_stats',
-            'bb_topics' => 'newbb_topics',
-            'bb_type' => 'newbb_type',
-            'bb_type_forum' => 'newbb_type_forum',
-            'bb_user_stats' => 'newbb_user_stats',
-            'bb_votedata'   => 'newbb_votedata',
+            'bb_reads_topic' => 'newbb_reads_topic',
+            'bb_report'      => 'newbb_report',
+            'bb_stats'       => 'newbb_stats',
+            'bb_topics'      => 'newbb_topics',
+            'bb_type'        => 'newbb_type',
+            'bb_type_forum'  => 'newbb_type_forum',
+            'bb_user_stats'  => 'newbb_user_stats',
+            'bb_votedata'    => 'newbb_votedata',
         ],
-        'modCopyright' => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
     ];
 }

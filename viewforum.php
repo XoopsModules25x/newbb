@@ -52,14 +52,14 @@ $status   = (Request::getString('status', '', 'GET')
         'deleted',
         'digest',
         'unreplied',
-        'unread'
+        'unread',
     ], true)) ? Request::getString('status', '', 'GET') : '';
 
 $mode = (Request::getString('status', '', 'GET')
          && in_array(Request::getString('status', '', 'GET'), [
         'active',
         'pending',
-        'deleted'
+        'deleted',
     ], true)) ? 2 : Request::getInt('mode', 0, 'GET');
 
 ///** @var Newbb\ForumHandler $forumHandler */
@@ -127,7 +127,7 @@ if ($forumHandler->getPermission($forumObject, 'post')) {
 } else {
     $xoopsTpl->assign('viewer_level', 0);
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $redirect = preg_replace("|(.*)\/modules\/Newbb\/(.*)|", "\\1/modules/newbb/newtopic.php?forum=" . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
+        $redirect = preg_replace("|(.*)\/modules\/Newbb\/(.*)|", '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
         $xoopsTpl->assign('forum_post_or_register', "<a href='" . XOOPS_URL . "/user.php?xoops_redirect={$redirect}'>" . _MD_NEWBB_REGTOPOST . '</a>');
         $xoopsTpl->assign('forum_addpoll', '');
     } else {
@@ -165,7 +165,7 @@ $sel_sort_array = [
     't.topic_replies'      => _MD_NEWBB_NUMBERREPLIES,
     't.topic_views'        => _MD_NEWBB_VIEWS,
     't.rating'             => _MD_NEWBB_RATINGS,
-    't.topic_last_post_id' => _MD_NEWBB_LASTPOSTTIME
+    't.topic_last_post_id' => _MD_NEWBB_LASTPOSTTIME,
 ];
 if (!Request::getString('sort', '', 'GET') || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)) {
     $sort = 't.topic_last_post_id';
@@ -256,7 +256,7 @@ if ($types = $typeHandler->getByForum($forum_id)) {
     foreach ($types as $key => $item) {
         $typeOptions[] = [
             'title' => $item['type_name'],
-            'link'  => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}"
+            'link'  => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}",
         ];
     }
 }

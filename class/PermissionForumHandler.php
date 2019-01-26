@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -74,7 +76,7 @@ class PermissionForumHandler extends PermissionHandler
             return $full_items;
         }
 
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip  = \Xmf\IPAddress::fromRequest()->asReadable();
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])
@@ -108,6 +110,7 @@ class PermissionForumHandler extends PermissionHandler
     *
     * @return array
     */
+
     /**
      * @param  int|array $id
      * @return bool|array
@@ -185,9 +188,9 @@ class PermissionForumHandler extends PermissionHandler
                 || (isset($permission_set[$forumId]['forum_' . $item])
                     && (!$topic_locked
                         || 'view' === $item))) {
-                $perm[] = constant('_MD_NEWBB_CAN_' . strtoupper($item));
+                $perm[] = constant('_MD_NEWBB_CAN_' . mb_strtoupper($item));
             } else {
-                $perm[] = constant('_MD_NEWBB_CANNOT_' . strtoupper($item));
+                $perm[] = constant('_MD_NEWBB_CANNOT_' . mb_strtoupper($item));
             }
         }
 
@@ -205,8 +208,8 @@ class PermissionForumHandler extends PermissionHandler
             return false;
         }
         $grouppermHandler = xoops_getHandler('groupperm');
-        $criteria     = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
-        $items        = $this->getValidPerms(true);
+        $criteria         = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
+        $items            = $this->getValidPerms(true);
         $criteria->add(new \Criteria('gperm_name', "('" . implode("', '", $items) . "')", 'IN'));
         $criteria->add(new \Criteria('gperm_itemid', $forum_id));
 
@@ -259,6 +262,7 @@ class PermissionForumHandler extends PermissionHandler
     public function getTemplate()
     {
         $perms = \Xmf\Yaml::readWrapped($this->templateFilename);
+
         return $perms;
     }
 

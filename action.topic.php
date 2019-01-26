@@ -142,7 +142,6 @@ switch ($op) {
             $box = '<select name="newforum" size="1">';
             if (count($categories) > 0 && count($forums) > 0) {
                 foreach (array_keys($forums) as $key) {
-
                     /** @var Newbb\Category[] $categories */
                     $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . ']</option>';
                     foreach ($forums[$key] as $forumid => $_forum) {

@@ -107,13 +107,13 @@ switch ($status) {
             $read_uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
             if (!empty($read_uid)) {
                 $join                 = ' LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('newbb_reads_topic') . ' AS r ON r.read_item = p.topic_id AND r.uid = ' . $read_uid . ' '; // irmtfan corrected add AS
-                $criteria_status_post = new \CriteriaCompo();// irmtfan new \Criteria
+                $criteria_status_post = new \CriteriaCompo(); // irmtfan new \Criteria
                 $criteria_status_post->add(new \Criteria('p.post_id', 'r.`post_id`', '>')); // irmtfan corrected - should use $value='r.``' to render in XOOPS/class/criteria.php
-                $criteria_status_post->add(new \Criteria('r.read_id', null, 'IS NULL'), 'OR');// irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
+                $criteria_status_post->add(new \Criteria('r.read_id', null, 'IS NULL'), 'OR'); // irmtfan corrected - should use "IS NULL" to render in XOOPS/class/criteria.php
                 $criteria_post->add($criteria_status_post); // irmtfan add the status criteria to post criteria - move here
-                $criteria_count = $criteria_post;// irmtfan criteria count is equal to criteria post - move here
-            } else {
+                $criteria_count = $criteria_post; // irmtfan criteria count is equal to criteria post - move here
             }
+
             // END irmtfan use read_uid to find the unread posts when the user is logged in
             //$criteria_status_post->add(new \Criteria("p.approved", 1)); // irmtfan commented and removed
             //$criteria_status_count =& $criteria_status_post;
@@ -159,10 +159,10 @@ if ('compact' === Request::getString('viewmode', '', 'GET')) {
 }
 
 $viewmode = Request::getString('viewmode', (!empty($viewmode_cookie) ? $viewmode_cookie : (@$valid_modes[$GLOBALS['xoopsModuleConfig']['view_mode'] - 1])), 'GET');
-$viewmode = in_array($viewmode, $valid_modes) ? $viewmode : $valid_modes[0];
+$viewmode = in_array($viewmode, $valid_modes, true) ? $viewmode : $valid_modes[0];
 
-$postCount = $postHandler->getPostCount($criteria_count, $join);// irmtfan add join for read_mode = 2
-$posts     = $postHandler->getPostsByLimit($criteria_post, $post_perpage, $start, $join);// irmtfan add join for read_mode = 2
+$postCount = $postHandler->getPostCount($criteria_count, $join); // irmtfan add join for read_mode = 2
+$posts     = $postHandler->getPostsByLimit($criteria_post, $post_perpage, $start, $join); // irmtfan add join for read_mode = 2
 
 $poster_array = [];
 if (count($posts) > 0) {
@@ -191,7 +191,7 @@ if (!empty($forum_id)) {
         $parent_forumObject = $forumHandler->get($forumObject->getVar('parent_forum'), ['forum_name']);
         $parentforum        = [
             'id'   => $forumObject->getVar('parent_forum'),
-            'name' => $parent_forumObject->getVar('forum_name')
+            'name' => $parent_forumObject->getVar('forum_name'),
         ];
         unset($parent_forumObject);
         $xoopsTpl->assign_by_ref('parentforum', $parentforum);
@@ -242,7 +242,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
-//    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+    //    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
     $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
@@ -267,7 +267,7 @@ foreach (array_keys($posts) as $id) {
     $poster = [
         'uid'  => 0,
         'name' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
-        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous'])
+        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
     ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
@@ -353,7 +353,7 @@ foreach (array_keys($posts) as $id) {
         'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
         'thread_action'   => $thread_action,
         'thread_buttons'  => $thread_buttons,
-        'poster'          => $poster
+        'poster'          => $poster,
     ]);
 
     unset($thread_buttons, $poster);
@@ -429,12 +429,12 @@ $viewmode_options = [];
 if ('DESC' === $order) {
     $viewmode_options[] = [
         'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewpost.php?viewmode=flat&amp;order=ASC&amp;forum=' . $forum_id,
-        'title' => _OLDESTFIRST
+        'title' => _OLDESTFIRST,
     ];
 } else {
     $viewmode_options[] = [
         'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewpost.php?viewmode=flat&amp;order=DESC&amp;forum=' . $forum_id,
-        'title' => _NEWESTFIRST
+        'title' => _NEWESTFIRST,
     ];
 }
 

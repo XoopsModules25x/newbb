@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb\Common;
+<?php
+
+namespace XoopsModules\Newbb\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,9 +33,10 @@ class Migrate extends \Xmf\Database\Migrate
      * @param \XoopsModules\Newbb\Common\Configurator $configurator
      */
     public function __construct(Newbb\Common\Configurator $configurator)
-    {   require_once  dirname(dirname(__DIR__)) . '/include/config.php';
-//        $config = getConfig();
-        $this->renameTables            = $configurator->renameTables;
+    {
+        require_once dirname(dirname(__DIR__)) . '/include/config.php';
+        //        $config = getConfig();
+        $this->renameTables = $configurator->renameTables;
 
         $moduleDirName = basename(dirname(dirname(__DIR__)));
         parent::__construct($moduleDirName);
@@ -48,14 +51,20 @@ class Migrate extends \Xmf\Database\Migrate
             if ($this->tableHandler->useTable($oldName) && !$this->tableHandler->useTable($newName)) {
                 $this->tableHandler->renameTable($oldName, $newName);
             } else {
-//                Newbb\Helper::getInstance()->getModule()->setErrors('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
+                //                Newbb\Helper::getInstance()->getModule()->setErrors('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
                 Newbb\Helper::getInstance()->getModule()->setErrors('<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . 'Could not migrate table: ' . '</span>' . $oldName . '<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . ' The table ' . '</span>' . $newName . '<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . ' already exist!' . '</span>');
+                                                                    . 'Could not migrate table: '
+                                                                    . '</span>'
+                                                                    . $oldName
+                                                                    . '<span style="font-weight: bold; color: #ff0000;">'
+                                                                    . ' The table '
+                                                                    . '</span>'
+                                                                    . $newName
+                                                                    . '<span style="font-weight: bold; color: #ff0000;">'
+                                                                    . ' already exist!'
+                                                                    . '</span>');
 
-                trigger_error('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
-
+                trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
             }
         }
     }
@@ -65,15 +74,13 @@ class Migrate extends \Xmf\Database\Migrate
      *
      * @param string $tableName  table to convert
      * @param string $columnName column with IP address
-     *
-     * @return void
      */
     private function convertIPAddresses($tableName, $columnName)
     {
         if ($this->tableHandler->useTable($tableName)) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, $columnName);
-            if (false !== strpos($attributes, ' int(')) {
-                if (false === strpos($attributes, 'unsigned')) {
+            if (false !== mb_strpos($attributes, ' int(')) {
+                if (false === mb_strpos($attributes, 'unsigned')) {
                     $this->tableHandler->alterColumn($tableName, $columnName, " bigint(16) NOT NULL  DEFAULT '0' ");
                     $this->tableHandler->update($tableName, [$columnName => "4294967296 + $columnName"], "WHERE $columnName < 0", false);
                 }
@@ -85,8 +92,6 @@ class Migrate extends \Xmf\Database\Migrate
 
     /**
      * Move do* columns from newbb_posts to newbb_posts_text table
-     *
-     * @return void
      */
     private function moveDoColumns()
     {
@@ -111,8 +116,6 @@ class Migrate extends \Xmf\Database\Migrate
      * Some typical uses include
      *   table and column renames
      *   data conversions
-     *
-     * @return void
      */
     protected function preSyncActions()
     {

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -25,10 +27,11 @@ use XoopsModules\Tag;
  * uname
  * tags
  *
- * @var array $items associative array of items: [modid][catid][itemid]
+ * @var array   $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
  *
+ * @param mixed $items
+ * @return bool
  */
 function newbb_tag_iteminfo(&$items)
 {
@@ -62,7 +65,7 @@ function newbb_tag_iteminfo(&$items)
                 'link'    => "viewtopic.php?topic_id={$item_id}",
                 'time'    => $itemObject->getVar('topic_time'),
                 'tags'    => tag_parse_tag($itemObject->getVar('topic_tags', 'n')),
-                'content' => ''
+                'content' => '',
             ];
         }
     }

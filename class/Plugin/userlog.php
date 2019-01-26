@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb\Plugin;
+<?php
+
+namespace XoopsModules\Newbb\Plugin;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -66,8 +68,8 @@ class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\Plu
             case 'viewtopic.php':
                 /** @var Newbb\TopicHandler $topicHandler */
                 $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
-                $post_id      = Request::getInt('post_id', 0);// !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
-                $move         = strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
+                $post_id      = Request::getInt('post_id', 0); // !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
+                $move         = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
                 $topic_id     = Request::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;
                 if (!empty($post_id)) {
                     $topicObject = $topicHandler->getByPost($post_id);

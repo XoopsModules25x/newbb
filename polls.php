@@ -19,6 +19,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
+
 //use XoopsModules\Xoopspoll\Constants;
 
 // rewrite by irmtfan and zyspec to accept xoopspoll 1.4 and all old xoopspoll and umfrage versions and all clones
@@ -40,10 +41,10 @@ $goodOps = [
     'delete_ok',
     'restart',
     'restart_ok',
-    'log'
+    'log',
 ];
 $op      = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'add';
-$op      = (!in_array($op, $goodOps)) ? 'add' : $op;
+$op      = (!in_array($op, $goodOps, true)) ? 'add' : $op;
 
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'GET'), 'POST');
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'GET'), 'POST');
@@ -78,7 +79,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_load('request', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('admin', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        /** @var Xoopspoll\PollHandler $xpPollHandler */
+        /** @var \Xoopspoll\PollHandler $xpPollHandler */
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
         /** @var \XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
@@ -116,17 +117,17 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_CREATNEWPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new \XoopsThemeForm(_MD_NEWBB_POLL_CREATNEWPOLL, 'poll_form', 'polls.php', 'post', true);
             $author_label = new \XoopsFormLabel(_MD_NEWBB_POLL_AUTHOR, is_object($GLOBALS['xoopsUser']) ? ("<a href='"
-                                                                                                          . XOOPS_URL
-                                                                                                          . '/userinfo.php?uid='
-                                                                                                          . $GLOBALS['xoopsUser']->getVar('uid')
-                                                                                                          . "'>"
-                                                                                                          . newbbGetUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname'])
-                                                                                                          . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
+                                                                                                           . XOOPS_URL
+                                                                                                           . '/userinfo.php?uid='
+                                                                                                           . $GLOBALS['xoopsUser']->getVar('uid')
+                                                                                                           . "'>"
+                                                                                                           . newbbGetUnameFromId($GLOBALS['xoopsUser']->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname'])
+                                                                                                           . '</a>') : $GLOBALS['xoopsConfig']['anonymous']);
             $poll_form->addElement($author_label);
             $question_text = new \XoopsFormText(_MD_NEWBB_POLL_POLLQUESTION, 'question', 50, 255);
             $poll_form->addElement($question_text);
@@ -156,12 +157,12 @@ switch ($op) {
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/" . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars", "", "' . XOOPS_URL . "\")'");
                 $color_label = new \XoopsFormLabel('', "<img src='"
-                                                      . XOOPS_URL
-                                                      . '/modules/'
-                                                      . $GLOBALS['xoopsModuleConfig']['poll_module']
-                                                      . '/assets/images/colorbars/'
-                                                      . $current_bar
-                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
+                                                       . XOOPS_URL
+                                                       . '/modules/'
+                                                       . $GLOBALS['xoopsModuleConfig']['poll_module']
+                                                       . '/assets/images/colorbars/'
+                                                       . $current_bar
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 if (!next($barcolor_array)) {
@@ -180,13 +181,12 @@ switch ($op) {
             $poll_form->display();
         }
         break; // op: add
-
     case 'edit':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_EDITPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
             $poll_form    = new \XoopsThemeForm(_MD_NEWBB_POLL_EDITPOLL, 'poll_form', 'polls.php', 'post', true);
@@ -202,17 +202,15 @@ switch ($op) {
                 $poll_form->addElement($expire_text);
             } else {
                 // irmtfan full URL - add topic_id
-                $restart_label = new \XoopsFormLabel(
-                    _MD_NEWBB_POLL_EXPIRATION,
-                                                    sprintf(_MD_NEWBB_POLL_EXPIREDAT, $date) . "<br><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_NEWBB_POLL_RESTART . '</a>'
-                );
+                $restart_label = new \XoopsFormLabel(_MD_NEWBB_POLL_EXPIRATION,
+                                                     sprintf(_MD_NEWBB_POLL_EXPIREDAT, $date) . "<br><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_NEWBB_POLL_RESTART . '</a>');
                 $poll_form->addElement($restart_label);
             }
             $weight_text = new \XoopsFormText(_MD_NEWBB_POLL_DISPLAYORDER, 'weight', 6, 5, $pollObject->getVar('weight'));
             $poll_form->addElement($weight_text);
             $multi_yn = new \XoopsFormRadioYN(_MD_NEWBB_POLL_ALLOWMULTI, 'multiple', $pollObject->getVar('multiple'));
             $poll_form->addElement($multi_yn);
-            $options_arr  =& $classOption::getAllByPollId($poll_id);
+            $options_arr  = &$classOption::getAllByPollId($poll_id);
             $notify_value = 1;
             if (0 !== $pollObject->getVar('mail_status')) {
                 $notify_value = 0;
@@ -230,8 +228,8 @@ switch ($op) {
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[" . $i . "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
                 $color_label = new \XoopsFormLabel('', "<img src='"
-                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E'))
-                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                                                       . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E'))
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label);
@@ -250,7 +248,6 @@ switch ($op) {
             $poll_form->display();
         }
         break; // op: edit
-
     case 'save':
         // old xoopspoll or umfrage or any clone from them
         if ($pollModuleHandler->getVar('version') < 140) {
@@ -309,7 +306,7 @@ switch ($op) {
             $classOption  = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
                 $optxt = trim($optxt);
-                /** @var Xoopspoll\Option $optionObject */
+                /** @var \Xoopspoll\Option $optionObject */
                 $optionObject = new $classOption();
                 if ('' !== $optxt) {
                     $optionObject->setVar('option_text', $optxt);
@@ -333,7 +330,7 @@ switch ($op) {
             } else {
                 redirect_header("viewtopic.php?topic_id={$topic_id}", 2, _MD_NEWBB_POLL_DBUPDATED);
             }
-            break;// op: save
+            break; // op: save
         }
     // no break
     case 'update':
@@ -351,9 +348,9 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            /** @var Xoopspoll\OptionHandler $xpOptHandler */
+            /** @var \Xoopspoll\OptionHandler $xpOptHandler */
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-            /** @var Xoopspoll\LogHandler $xpLogHandler */
+            /** @var \Xoopspoll\LogHandler $xpLogHandler */
             $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
             //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
             $classConstants   = new XoopsModules\Xoopspoll\Constants();
@@ -387,7 +384,7 @@ switch ($op) {
                 'weight'      => Request::getInt('weight', $classConstants::DEFAULT_WEIGHT, 'POST'),
                 'multiple'    => Request::getInt('multiple', $classConstants::NOT_MULTIPLE_SELECT_POLL, 'POST'),
                 'multilimit'  => Request::getInt('multilimit', $classConstants::MULTIPLE_SELECT_LIMITLESS, 'POST'),
-                'anonymous'   => Request::getInt('anonymous', $classConstants::ANONYMOUS_VOTING_DISALLOWED, 'POST')
+                'anonymous'   => Request::getInt('anonymous', $classConstants::ANONYMOUS_VOTING_DISALLOWED, 'POST'),
             ];
             $pollObject->setVars($poll_vars);
             $poll_id = $xpPollHandler->insert($pollObject);
@@ -497,8 +494,7 @@ switch ($op) {
         } else {
             redirect_header("viewtopic.php?topic_id={$topic_id}", 2, _MD_NEWBB_POLL_DBUPDATED);
         }
-        break;// op: save | update
-
+        break; // op: save | update
     case 'addmore':
         $question = $pollObject->getVar('question');
         unset($pollObject);
@@ -508,7 +504,7 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 140) {
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
             $option_tray  = $xpOptHandler->renderOptionFormTray($poll_id);
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $option_tray    = new \XoopsFormElementTray(_MD_NEWBB_POLL_POLLOPTIONS, '');
             $barcolor_array = \XoopsLists::getImgListAsArray($GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModuleConfig']['poll_module'] . '/assets/images/colorbars/'));
@@ -520,8 +516,8 @@ switch ($op) {
                 $color_select->addOptionArray($barcolor_array);
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
                 $color_label = new \XoopsFormLabel('', "<img src='"
-                                                      . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
-                                                      . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                                                       . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label, $option_text);
@@ -539,7 +535,6 @@ switch ($op) {
         echo '<h4>' . _MD_NEWBB_POLL_POLLCONF . "</h4>\n";
         $poll_form->display();
         break;
-
     case 'savemore':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -566,7 +561,7 @@ switch ($op) {
                     $optionObject->setVar('poll_id', $poll_id);
                     $optionObject->setVar('option_color', $option_color[$i]);
                     $xpOptHandler->insert($optionObject);
-                // old xoopspoll or umfrage or any clone from them
+                    // old xoopspoll or umfrage or any clone from them
                 } else {
                     $classOption  = $classPoll . 'Option';
                     $optionObject = new $classOption();
@@ -584,12 +579,10 @@ switch ($op) {
         xoops_template_clear_module_cache($pollModuleHandler->getVar('mid'));
         redirect_header("polls.php?op=edit&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}", 2, _MD_NEWBB_POLL_DBUPDATED);
         break;
-
     case 'delete':
         echo '<h4>' . _MD_NEWBB_POLL_POLLCONF . "</h4>\n";
         xoops_confirm(['op' => 'delete_ok', 'topic_id' => $topic_id, 'poll_id' => $poll_id], 'polls.php', sprintf(_MD_NEWBB_POLL_RUSUREDEL, $pollObject->getVar('question')));
         break;
-
     case 'delete_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -640,27 +633,19 @@ switch ($op) {
         }
         redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_NEWBB_POLL_DBUPDATED);
         break;
-
     case 'restart':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $classConstants   = new XoopsModules\Xoopspoll\Constants();
+            $classConstants        = new XoopsModules\Xoopspoll\Constants();
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $default_poll_duration = (86400 * 10);
         }
         $poll_form   = new \XoopsThemeForm(_MD_NEWBB_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
-        $expire_text = new \XoopsFormText(
-            _MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br>' . sprintf(
-            _MD_NEWBB_POLL_EXPIREDAT,
-                                                                                                                                                                                                                     formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')
-        ) . '</small>',
-                                         'end_time',
-            20,
-            19,
-            formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s')
-        );
+        $expire_text = new \XoopsFormText(_MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br>' . sprintf(_MD_NEWBB_POLL_EXPIREDAT,
+                                                                                                                                                                                                                      formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')) . '</small>',
+                                          'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new \XoopsFormRadioYN(_MD_NEWBB_POLL_NOTIFY, 'notify', 1));
         $poll_form->addElement(new \XoopsFormRadioYN(_MD_NEWBB_POLL_RESET, 'reset', 0));
@@ -672,7 +657,6 @@ switch ($op) {
         echo '<h4>' . _MD_NEWBB_POLL_POLLCONF . "</h4>\n";
         $poll_form->display();
         break;
-
     case 'restart_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -681,11 +665,11 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            $classConstants   = new XoopsModules\Xoopspoll\Constants();
+            $classConstants        = new XoopsModules\Xoopspoll\Constants();
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
             $poll_not_mailed       = $classConstants::POLL_NOT_MAILED;
             $poll_mailed           = $classConstants::POLL_MAILED;
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             $default_poll_duration = (86400 * 10);
             $poll_not_mailed       = Xoopspoll\Constants::POLL_NOT_MAILED;
@@ -716,9 +700,9 @@ switch ($op) {
                 exit();
             }
             if (Request::getInt('reset', 0, 'POST')) { // reset all vote/voter counters
-                /** @var Xoopspoll\OptionHandler $xpOptHandler */
+                /** @var \Xoopspoll\OptionHandler $xpOptHandler */
                 $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-                /** @var Xoopspoll\LogHandler $xpLogHandler */
+                /** @var \Xoopspoll\LogHandler $xpLogHandler */
                 $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $xpLogHandler->deleteByPollId($poll_id);
                 $xpOptHandler->resetCountByPollId($poll_id);
@@ -743,12 +727,11 @@ switch ($op) {
         xoops_template_clear_module_cache($pollModuleHandler->getVar('mid'));
         redirect_header(XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}", 1, _MD_NEWBB_POLL_DBUPDATED);
         break;
-
     case 'log':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             redirect_header($GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/admin/main.php?op=log&amp;poll_id={$poll_id}"), 2, _MD_NEWBB_POLL_VIEWLOG);
-        // old xoopspoll or umfrage or any clone from them
+            // old xoopspoll or umfrage or any clone from them
         } else {
             redirect_header($GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/admin/index.php?op=log&amp;poll_id={$poll_id}"), 2, _MD_NEWBB_POLL_VIEWLOG);
         }

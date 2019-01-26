@@ -13,7 +13,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require __DIR__   . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_FORUM_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_FORUM')) {
@@ -66,10 +66,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
                     continue;
                 }
                 foreach ($forums[$key] as $f => $forum) {
-                    if ($see && in_array($f, $value)) {
+                    if ($see && in_array($f, $value, true)) {
                         continue;
                     }
-                    $box .= "<option value='{$f}' " . (in_array($f, $value) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
+                    $box .= "<option value='{$f}' " . (in_array($f, $value, true) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
                 }
             }
         } else {
@@ -121,9 +121,9 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         if (0 == $pid) {
             return $list;
-        } else {
-            return @$list[$pid];
         }
+
+        return @$list[$pid];
     }
 
     /**
@@ -132,13 +132,13 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbCreateSubForumList()
     {
         /** @var Newbb\ForumHandler $forumHandler */
-//        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         $criteria     = new \CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
-//        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
+        //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
         $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {
@@ -173,9 +173,9 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         if (0 == $forum_id) {
             return $list;
-        } else {
-            return @$list[$forum_id];
         }
+
+        return @$list[$forum_id];
     }
 
     /**
@@ -189,7 +189,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
-//        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
+        //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
         $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {

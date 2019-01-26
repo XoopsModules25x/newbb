@@ -70,7 +70,7 @@ $require_reply = 0;
 $attachsig     = (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->getVar('attachsig')) ? 1 : 0;
 $post_id       = 0;
 $topic_id      = 0;
-require_once __DIR__   . '/include/form.post.php';
+require_once __DIR__ . '/include/form.post.php';
 
 require_once __DIR__ . '/footer.php';
 require_once $GLOBALS['xoops']->path('footer.php');

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB, XOOPS forum module
@@ -21,7 +23,13 @@ class Uploader extends \XoopsMediaUploader
 {
     /**
      * No admin check for uploads
+     * @param mixed $uploadDir
+     * @param mixed $allowedMimeTypes
+     * @param mixed $maxFileSize
+     * @param mixed $maxWidth
+     * @param mixed $maxHeight
      */
+
     /**
      * Constructor
      *
@@ -39,7 +47,7 @@ class Uploader extends \XoopsMediaUploader
             if (empty($allowedMimeTypes) || '*' === $allowedMimeTypes) {
                 $allowedMimeTypes = [];
             } else {
-                $allowedMimeTypes = array_filter(array_map('trim', explode('|', strtolower($allowedMimeTypes))));
+                $allowedMimeTypes = array_filter(array_map('trim', explode('|', mb_strtolower($allowedMimeTypes))));
             }
         }
         $_allowedMimeTypes = [];
@@ -91,7 +99,7 @@ class Uploader extends \XoopsMediaUploader
      */
     public function getExt()
     {
-        $this->ext = strtolower(ltrim(strrchr($this->getMediaName(), '.'), '.'));
+        $this->ext = mb_strtolower(ltrim(mb_strrchr($this->getMediaName(), '.'), '.'));
 
         return $this->ext;
     }

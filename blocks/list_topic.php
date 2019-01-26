@@ -25,11 +25,11 @@ require_once dirname(__DIR__) . '/footer.php'; // to include js/style files like
 
 xoops_loadLanguage('main', 'newbb');
 
-require_once  dirname(__DIR__) . '/include/functions.config.php';
-require_once  dirname(__DIR__) . '/include/functions.time.php';
-require_once  dirname(__DIR__) . '/include/functions.session.php';
-require_once  dirname(__DIR__) . '/include/functions.render.php';
-require_once  dirname(__DIR__) . '/include/functions.user.php';
+require_once dirname(__DIR__) . '/include/functions.config.php';
+require_once dirname(__DIR__) . '/include/functions.time.php';
+require_once dirname(__DIR__) . '/include/functions.session.php';
+require_once dirname(__DIR__) . '/include/functions.render.php';
+require_once dirname(__DIR__) . '/include/functions.user.php';
 
 // options[0] - Status in WHERE claus: all(by default), sticky, digest,lock, poll, voted, viewed, replied, read, (UN_) , active, pending, deleted (admin) (It is  multi-select)
 // options[1] - Uid in WHERE claus: uid of the topic poster : -1 - all users (by default)
@@ -59,7 +59,7 @@ function newbb_list_topic_show($options)
     $topicRenderer->force = true; // force against static vars for parse
 
     $topicRenderer->is_multiple = true; // is it for multiple forums
-    $topicRenderer->config      =& $newbbConfig; // get all configs
+    $topicRenderer->config      = &$newbbConfig; // get all configs
     if (!empty($options[6])) {
         $topicRenderer->config['topics_per_page'] = (int)$options[6]; // number of topics (items) to display
     }
@@ -79,7 +79,7 @@ function newbb_list_topic_show($options)
                                 'sort'       => $options[4],
                                 'order'      => $options[5],
                                 'since'      => $options[7],
-                                'forum'      => $optionsForum
+                                'forum'      => $optionsForum,
                             ]);
     $block = [];
     // headers to display in block
@@ -121,7 +121,7 @@ function newbb_list_topic_edit($options)
     $topicPosterRadioEle->addOption(-1, _MD_NEWBB_TOTALUSER);
     $topicPosterRadioEle->addOption((-1 !== $options[1]) ? $options[1] : 0, _SELECT); // if no user in selection box it select uid=0 anon users
     $topicPosterRadioEle->setExtra("onchange=\"var el=document.getElementById('options[1]'); el.disabled=(this.id == 'options[1]1'); if (!el.value) {el.value= this.value}\""); // if user dont select any option it select "all"
-    $topicPosterSelectEle = new \XoopsFormSelectUser(_MB_NEWBB_AUTHOR, 'options[1]', true, explode(',', $options[1]), 5, true);// show $limit = 200 users when no user is selected;
+    $topicPosterSelectEle = new \XoopsFormSelectUser(_MB_NEWBB_AUTHOR, 'options[1]', true, explode(',', $options[1]), 5, true); // show $limit = 200 users when no user is selected;
     $topicPosterEle       = new \XoopsFormLabel(_MB_NEWBB_AUTHOR, $topicPosterRadioEle->render() . $topicPosterSelectEle->render());
 
     // lastposter element
@@ -129,7 +129,7 @@ function newbb_list_topic_edit($options)
     $lastPosterRadioEle->addOption(-1, _MD_NEWBB_TOTALUSER);
     $lastPosterRadioEle->addOption((-1 !== $options[2]) ? $options[2] : 0, _SELECT); // if no user in selection box it select uid=1
     $lastPosterRadioEle->setExtra("onchange=\"var el=document.getElementById('options[2]'); el.disabled=(this.id == 'options[2]1'); if (!el.value) {el.value= this.value}\""); // if user dont select any option it select "all"
-    $lastPosterSelectEle = new \XoopsFormSelectUser(_MD_NEWBB_POSTER, 'options[2]', true, explode(',', $options[2]), 5, true);// show $limit = 200 users when no user is selected;
+    $lastPosterSelectEle = new \XoopsFormSelectUser(_MD_NEWBB_POSTER, 'options[2]', true, explode(',', $options[2]), 5, true); // show $limit = 200 users when no user is selected;
     $lastPosterEle       = new \XoopsFormLabel(_MD_NEWBB_POSTER, $lastPosterRadioEle->render() . $lastPosterSelectEle->render());
 
     // type element
@@ -180,14 +180,14 @@ function newbb_list_topic_edit($options)
 
     //  forum element
     $optionsForum = explode(',', $options[12]);
-    require_once  dirname(__DIR__) . '/include/functions.forum.php';
+    require_once dirname(__DIR__) . '/include/functions.forum.php';
     /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
     $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
-    $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">";// if user dont select any it select "0"
+    $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">"; // if user dont select any it select "0"
     $forumSel     .= '<option value="0" ';
     if ($isAll) {
         $forumSel     .= ' selected';

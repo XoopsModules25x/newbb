@@ -24,7 +24,7 @@ require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param  int           $forums
  * @param  int|string    $sortby
  * @param  string        $searchin
- * @param  CriteriaCompo $criteriaExtra
+ * @param  \CriteriaCompo $criteriaExtra
  * @return array
  */
 function newbb_search(
@@ -36,8 +36,8 @@ function newbb_search(
     $forums = 0,
     $sortby = 0,
     $searchin = 'both',
-    CriteriaCompo $criteriaExtra = null
-) {
+    \CriteriaCompo $criteriaExtra = null)
+{
     global $myts, $xoopsDB;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
@@ -55,7 +55,7 @@ function newbb_search(
     $criteriaPost = new \CriteriaCompo();
     $criteriaPost->add(new \Criteria('p.approved', 1), 'AND'); // only active posts
 
-    $forum_list = [];// get forum lists just for forum names
+    $forum_list = []; // get forum lists just for forum names
     if (count($validForums) > 0) {
         $criteriaPermissions = new \CriteriaCompo();
         $criteriaPermissions->add(new \Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');

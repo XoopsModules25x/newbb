@@ -29,7 +29,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetRead($type, $item_id, $post_id, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read'.$type);
+        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->setRead($item_id, $post_id, $uid);
     }
@@ -43,7 +43,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbGetRead($type, $item_id, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read'.$type);
+        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->getRead($item_id, $uid);
     }
@@ -84,7 +84,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbIsRead($type, &$items, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read'.$type);
+        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->isReadItems($items, $uid);
     }

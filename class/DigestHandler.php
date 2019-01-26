@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -106,11 +108,10 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql);
         if (!$result) {
             return 0;
-        } else {
-            $array = $this->db->fetchArray($result);
-
-            return $array['count'];
         }
+        $array = $this->db->fetchArray($result);
+
+        return $array['count'];
     }
 
     public function getLastDigest()
@@ -119,7 +120,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql);
         if (!$result) {
             $this->last_digest = 0;
-        // echo "<br>no data:".$query;
+            // echo "<br>no data:".$query;
         } else {
             $array             = $this->db->fetchArray($result);
             $this->last_digest = isset($array['last_digest']) ? $array['last_digest'] : 0;
@@ -148,6 +149,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     public function insert(\XoopsObject $digest, $force = true)
     {
         $digest->setVar('digest_time', time());
+
         return parent::insert($digest, $force);
         /*
         $content = $digest->getVar('digest_content', 'E');

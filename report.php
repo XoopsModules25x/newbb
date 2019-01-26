@@ -135,14 +135,14 @@ $report_form->addElement(new \XoopsFormHidden('forum', $forum));
 $report_form->addElement(new \XoopsFormHidden('viewmode', $viewmode));
 $report_form->addElement(new \XoopsFormHidden('order', $order));
 
-$button_tray   = new \XoopsFormElementTray('');
+$buttonTray    = new \XoopsFormElementTray('');
 $submit_button = new \XoopsFormButton('', 'submit', _SUBMIT, 'submit');
 $cancel_button = new \XoopsFormButton('', 'cancel', _MD_NEWBB_CANCELPOST, 'button');
 $extra         = "viewtopic.php?forum=$forum&amp;topic_id=$topic_id&amp;post_id=$post_id&amp;order=$order&amp;viewmode=$viewmode";
 $cancel_button->setExtra("onclick='location=\"" . $extra . "\"'");
-$button_tray->addElement($submit_button);
-$button_tray->addElement($cancel_button);
-$report_form->addElement($button_tray);
+$buttonTray->addElement($submit_button);
+$buttonTray->addElement($cancel_button);
+$report_form->addElement($buttonTray);
 $report_form->display();
 
 $r_subject = $postObject->getVar('subject', 'E');

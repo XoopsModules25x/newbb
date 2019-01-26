@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //adopted from poweradmin (https://github.com/poweradmin)
 
@@ -34,18 +36,17 @@ class IpCheck
 
         // IPv6 is at least a little more complex.
         if (filter_var($this->ipin, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-
             // Look for embedded IPv4 in an embedded IPv6 address, where FFFF is appended.
             if (0 === strncmp($this->ipin, '::FFFF:', 7)) {
-                $ipv4addr = substr($this->ipin, 7);
+                $ipv4addr = mb_substr($this->ipin, 7);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;
                     $this->ipout = $ipv4addr;
                 }
 
                 // Look for an IPv4 address embedded as ::x.x.x.x
-            } elseif (0 === strpos($this->ipin, '::')) {
-                $ipv4addr = substr($this->ipin, 2);
+            } elseif (0 === mb_strpos($this->ipin, '::')) {
+                $ipv4addr = mb_substr($this->ipin, 2);
                 if (filter_var($ipv4addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $this->ipver = 4;
                     $this->ipout = $ipv4addr;

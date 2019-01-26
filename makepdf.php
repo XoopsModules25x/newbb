@@ -99,7 +99,7 @@ $pdf_data['HeadSecondLine'] = _MD_NEWBB_FORUMHOME . ' - ' . $pdf_data['cat_title
 // START irmtfan to implement EMLH by GIJ
 if (function_exists('easiestml')) {
     $pdf_data = easiestml($pdf_data);
-// END irmtfan to implement EMLH by GIJ
+    // END irmtfan to implement EMLH by GIJ
     // START irmtfan to implement Xlanguage by phppp(DJ)
 } elseif (function_exists('xlanguage_ml')) {
     $pdf_data = xlanguage_ml($pdf_data);

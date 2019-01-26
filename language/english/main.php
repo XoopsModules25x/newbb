@@ -1,5 +1,5 @@
 <?php
-//
+
 if (defined('NEWBB_MAIN_DEFINED')) {
     return;
 }
@@ -35,7 +35,7 @@ define('_MD_NEWBB_MODERATOR', 'Moderator');
 define('_MD_NEWBB_NEWPOSTS', 'New posts');
 define('_MD_NEWBB_NONEWPOSTS', 'No new posts');
 define('_MD_NEWBB_PRIVATEFORUM', 'Inactive Forum');
-define('_MD_NEWBB_BY', 'by');// Posted by
+define('_MD_NEWBB_BY', 'by'); // Posted by
 define('_MD_NEWBB_TOSTART', 'To start viewing messages, select the forum that you want to visit from the list below.');
 define('_MD_NEWBB_TOTALTOPICSC', 'Total Topics: ');
 define('_MD_NEWBB_TOTALPOSTSC', 'Total Posts: ');
@@ -274,8 +274,8 @@ define('_MD_NEWBB_COULDNOTREMOVETXT', 'Error - Could not remove post texts!');
 define('_MD_NEWBB_TIMEISUP', 'You\'ve reached the time limit for editing your post.');
 define('_MD_NEWBB_TIMEISUPDEL', 'You\'ve reached the time limit for deleting your post.');
 //reply.php
-define('_MD_NEWBB_ON', 'on');//Posted on
-define('_MD_NEWBB_USERWROTE', '%s wrote:');// %s is username
+define('_MD_NEWBB_ON', 'on'); //Posted on
+define('_MD_NEWBB_USERWROTE', '%s wrote:'); // %s is username
 define('_MD_NEWBB_RE', 'Re');
 //post.php
 define('_MD_NEWBB_EDITNOTALLOWED', 'You\'re not allowed to edit this post!');
@@ -284,7 +284,7 @@ define('_MD_NEWBB_ANONNOTALLOWED', 'Anonymous users are not allowed to post.<br>
 define('_MD_NEWBB_THANKSSUBMIT', 'Thanks for your submission!');
 define('_MD_NEWBB_REPLYPOSTED', 'A reply to your topic has been posted.');
 define('_MD_NEWBB_HELLO', 'Hello %s,');
-define('_MD_NEWBB_URRECEIVING', 'You are receiving this email because a message you posted on %s forums has been replied to.');// %s is your site name
+define('_MD_NEWBB_URRECEIVING', 'You are receiving this email because a message you posted on %s forums has been replied to.'); // %s is your site name
 define('_MD_NEWBB_CLICKBELOW', 'Click on the link below to view the thread:');
 define('_MD_NEWBB_WAITFORAPPROVAL', 'Thank you. Your post will be approved before publication.');
 define('_MD_NEWBB_POSTING_LIMITED', 'Why not take a break and come back in %d sec');
@@ -378,7 +378,7 @@ define('_MD_NEWBB_NO_SUCH_FILE', 'File does not exist!');
 define('_MD_NEWBB_CANTVOTEOWN', 'You cannot vote on the topic you submitted.<br>All votes are logged and reviewed.');
 define('_MD_NEWBB_VOTEONCE', 'Please do not vote for the same topic more than once.');
 define('_MD_NEWBB_VOTEAPPRE', 'Your vote is appreciated.');
-define('_MD_NEWBB_THANKYOU', 'Thank you for taking the time to vote here at %s');// %s is your site name
+define('_MD_NEWBB_THANKYOU', 'Thank you for taking the time to vote here at %s'); // %s is your site name
 define('_MD_NEWBB_VOTES', 'Votes');
 define('_MD_NEWBB_NOVOTERATE', 'You did not rate this Topic');
 // polls.php
@@ -523,7 +523,7 @@ define('_MD_NEWBB_SEARCHTOPIC', 'Search Topic');
 define('_MD_NEWBB_SHOWSEARCH', 'Show results:');
 define('_MD_NEWBB_SEARCHPOSTTEXT', 'Posts text');
 define('_MD_NEWBB_SELECT_STARTLAG', 'Start lag of selected text');
-define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'Select text from X characters before the first keyword');
+define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'SELECT text FROM X characters BEFORE the FIRST keyword');
 define('_MD_NEWBB_SELECT_LENGTH', 'Length of selected text');
 define('_MD_NEWBB_SELECT_HTML', 'Strip all html from result?');
 define('_MD_NEWBB_SELECT_EXCLUDE', 'Exclude these tags:');

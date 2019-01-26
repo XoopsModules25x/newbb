@@ -13,7 +13,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require __DIR__   . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RENDER_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_RENDER')) {
@@ -89,7 +89,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param          $link
      * @param          $button
      * @param  string  $alt     alt message
-     * @param  boolean $asImage true for image mode; false for text mode
+     * @param  bool    $asImage true for image mode; false for text mode
      * @param  string  $extra   extra attribute for the button
      * @return mixed
      * @internal param string $image image/button name, without extension
@@ -107,10 +107,10 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     /**
      * Display forrum images
      *
-     * @param  string  $image   image name, without extension
-     * @param  string  $alt     alt message
-     * @param  boolean $display true for return image anchor; faulse for assign to $xoopsTpl
-     * @param  string  $extra   extra attribute for the image
+     * @param  string $image   image name, without extension
+     * @param  string $alt     alt message
+     * @param  bool   $display true for return image anchor; faulse for assign to $xoopsTpl
+     * @param  string $extra   extra attribute for the image
      * @return mixed
      */
     function newbbDisplayImage($image, $alt = '', $display = true, $extra = "class='forum_icon'")
@@ -132,9 +132,9 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         // END hacked by irmtfan
         if (empty($display)) {
             return $iconHandler->assignImage($image, $alt, $extra);
-        } else {
-            return $iconHandler->getImage($image, $alt, $extra);
         }
+
+        return $iconHandler->getImage($image, $alt, $extra);
     }
 
     /**
@@ -149,9 +149,9 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
             return $iconHandler;
         }
 
-//        if (!class_exists('IconHandler')) {
-//            require_once dirname(__DIR__) . '/class/icon.php';
-//        }
+        //        if (!class_exists('IconHandler')) {
+        //            require_once dirname(__DIR__) . '/class/icon.php';
+        //        }
 
         $iconHandler           = Newbb\IconHandler::getInstance();
         $iconHandler->template = $xoTheme->template;

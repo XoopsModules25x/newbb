@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -21,7 +23,6 @@ defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/
  */
 function newbb_calculateLevel($RPG, $RPGDIFF)
 {
-
     //$RPG = $user->getVar('posts');
     //$RPGDIFF = $user->getVar('user_regdate');
 
@@ -118,49 +119,49 @@ class User
         $user               = $this->user;
         $userbar['profile'] = [
             'link' => XOOPS_URL . '/userinfo.php?uid=' . $user->getVar('uid'),
-            'name' => _PROFILE
+            'name' => _PROFILE,
         ];
 
         if (is_object($GLOBALS['xoopsUser'])) {
             $userbar['pm'] = [
                 'link' => "javascript:void openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $user->getVar('uid') . "', 'pmlite', 450, 380);",
-                'name' => _MD_NEWBB_PM
+                'name' => _MD_NEWBB_PM,
             ];
         }
         if ($user->getVar('user_viewemail') || $isAdmin) {
             $userbar['email'] = [
                 'link' => "javascript:void window.open('mailto:" . $user->getVar('email') . "', 'new');",
-                'name' => _MD_NEWBB_EMAIL
+                'name' => _MD_NEWBB_EMAIL,
             ];
         }
         if ($url = $user->getVar('url')) {
             $userbar['url'] = [
                 'link' => "javascript:void window.open('" . $url . "', 'new');",
-                'name' => _MD_NEWBB_WWW
+                'name' => _MD_NEWBB_WWW,
             ];
         }
         if ($icq = $user->getVar('user_icq')) {
             $userbar['icq'] = [
                 'link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
-                'name' => _MD_NEWBB_ICQ
+                'name' => _MD_NEWBB_ICQ,
             ];
         }
         if ($aim = $user->getVar('user_aim')) {
             $userbar['aim'] = [
                 'link' => "javascript:void window.open('aim:goim?screenname=" . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there?' . "', 'new');",
-                'name' => _MD_NEWBB_AIM
+                'name' => _MD_NEWBB_AIM,
             ];
         }
         if ($yim = $user->getVar('user_yim')) {
             $userbar['yim'] = [
                 'link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
-                'name' => _MD_NEWBB_YIM
+                'name' => _MD_NEWBB_YIM,
             ];
         }
         if ($msn = $user->getVar('user_msnm')) {
             $userbar['msnm'] = [
                 'link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');",
-                'name' => _MD_NEWBB_MSNM
+                'name' => _MD_NEWBB_MSNM,
             ];
         }
 
@@ -254,7 +255,7 @@ class User
         // END hacked by irmtfan - easier groups getting - can we use $_SESSION['xoopsUserGroups']???
         $userinfo['from'] = $user->getVar('user_from');
 
-        require_once  dirname(__DIR__) . '/include/functions.time.php';
+        require_once dirname(__DIR__) . '/include/functions.time.php';
         $userinfo['regdate']    = newbbFormatTimestamp($user->getVar('user_regdate'), 'reg');
         $userinfo['last_login'] = newbbFormatTimestamp($user->getVar('last_login')); // irmtfan add last_login
 

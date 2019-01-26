@@ -23,10 +23,10 @@ $seoMap = [
     'rc'  => 'rss.php',
     'rf'  => 'rss.php',
     'pr'  => 'print.php',
-    'pdf' => 'makepdf.php'
+    'pdf' => 'makepdf.php',
 ];
 
-if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
+if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos, true)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
     $ori_self               = Request::getString('PHP_SELF', '', 'SERVER');
@@ -89,12 +89,12 @@ function checker(&$value)
     $value = trim($value);
 
     // pruefe auf javascript include
-    if (false !== strpos($value, '<script')) {
+    if (false !== mb_strpos($value, '<script')) {
         $value = '';
     }
 
     // pruefe auf Kommentare (SQL-Injections)
-    if (false !== strpos($value, '/*')) {
+    if (false !== mb_strpos($value, '/*')) {
         $value = '';
     }
 
@@ -104,18 +104,18 @@ function checker(&$value)
     }
 
     // Nullbyte Injection
-    if (false !== strpos($value, chr(0))) {
+    if (false !== mb_strpos($value, chr(0))) {
         $value = '';
     }
 
     //pruefe Verzeichnis
-    if (false !== strpos($value, '../')) {
+    if (false !== mb_strpos($value, '../')) {
         $value = '';
     }
 
     //pruefe auf externe
-    $str = strstr($value, '://');
-    if (false !== strpos($value, '://')) {
+    $str = mb_strstr($value, '://');
+    if (false !== mb_strpos($value, '://')) {
         $value = '';
     }
 

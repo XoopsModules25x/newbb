@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
      *
      */
     /**
-     * @param        $name
+     * @param              $name
      * @param string|array $string
      */
     function newbbSetSession($name, $string = '')
@@ -54,8 +54,8 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             $value  = [];
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
-                    $key         = substr($string, 0, strpos($string, '|'));
-                    $val         = substr($string, strpos($string, '|') + 1);
+                    $key         = mb_substr($string, 0, mb_strpos($string, '|'));
+                    $val         = mb_substr($string, mb_strpos($string, '|') + 1);
                     $value[$key] = $val;
                 }
             }
@@ -66,9 +66,9 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     }
 
     /**
-     * @param        $name
+     * @param              $name
      * @param string|array $string
-     * @param int    $expire
+     * @param int          $expire
      */
     function newbbSetCookie($name, $string = '', $expire = 0)
     {
@@ -99,12 +99,12 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             $value  = [];
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
-                    $sep = strpos($string, '|');
+                    $sep = mb_strpos($string, '|');
                     if (false === $sep) {
                         $value[] = $string;
                     } else {
-                        $key         = substr($string, 0, $sep);
-                        $val         = substr($string, $sep + 1);
+                        $key         = mb_substr($string, 0, $sep);
+                        $val         = mb_substr($string, $sep + 1);
                         $value[$key] = $val;
                     }
                 }

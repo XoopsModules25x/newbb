@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -108,9 +110,9 @@ class ReadtopicHandler extends Newbb\ReadHandler
 
         if (1 == $this->mode) {
             return $this->setReadItemsCookie($status, $forum_id);
-        } else {
-            return $this->setReadItemsDb($status, $forum_id, $uid);
         }
+
+        return $this->setReadItemsDb($status, $forum_id, $uid);
     }
 
     /**
@@ -198,9 +200,6 @@ class ReadtopicHandler extends Newbb\ReadHandler
         return true;
     }
 
-    /**
-     *
-     */
     public function synchronization()
     {
         //        return;

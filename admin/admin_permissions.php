@@ -53,7 +53,7 @@ if (!class_exists('XoopsGroupPermForm')) {
  */
 
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
-$action    = strtolower(Request::getCmd('action', ''));
+$action    = mb_strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
 /** var Newbb\PermissionHandler $newbbpermHandler */
 $newbbpermHandler = Newbb\Helper::getInstance()->getHandler('Permission');
@@ -71,7 +71,7 @@ switch ($action) {
                                        'no'       => _SELECT,
                                        'template' => _AM_NEWBB_PERM_TEMPLATE,
                                        'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP
+                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP,
                                    ]);
         $opform->addElement($op_select);
         $opform->display();
@@ -92,10 +92,10 @@ switch ($action) {
                 if (0 == $ii % 5) {
                     $ret_ele .= '</tr><tr>';
                 }
-                $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
+                $checked      = in_array('forum_' . $perm, $selected, true) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . strtoupper($perm)) . '<br></td>';
+                $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)) . '<br></td>';
             }
             $ret_ele    .= '</tr></table></td><td class="even">';
             $ret_ele    .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
@@ -117,7 +117,6 @@ switch ($action) {
         echo $ret;
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'template_save':
         //        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0);
         $res = $newbbpermHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
@@ -143,7 +142,7 @@ switch ($action) {
         $op_select->addOptionArray([
                                        'no'       => _SELECT,
                                        'template' => _AM_NEWBB_PERM_TEMPLATE,
-                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP
+                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
                                    ]);
         $opform->addElement($op_select);
         $opform->display();
@@ -178,7 +177,6 @@ switch ($action) {
         $fmform->display();
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'apply_save':
         if (!Request::getArray('forums', '', 'POST')) {
             break;
@@ -193,7 +191,6 @@ switch ($action) {
         //$cacheHelper->delete('permission');
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
         break;
-
     default:
         xoops_cp_header();
 
@@ -222,7 +219,7 @@ switch ($action) {
                                        'no'       => _SELECT,
                                        'template' => _AM_NEWBB_PERM_TEMPLATE,
                                        'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP
+                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP,
                                    ]);
         $opform->addElement($op_select);
         $opform->display();
@@ -233,25 +230,25 @@ switch ($action) {
                 'title'     => _AM_NEWBB_CAT_ACCESS,
                 'item'      => 'category_access',
                 'desc'      => '',
-                'anonymous' => true
-            ]
+                'anonymous' => true,
+            ],
         ];
         foreach ($perms as $perm) {
-            $op_options[$perm] = constant('_AM_NEWBB_CAN_' . strtoupper($perm));
+            $op_options[$perm] = constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm));
             $fm_options[$perm] = [
-                'title'     => constant('_AM_NEWBB_CAN_' . strtoupper($perm)),
+                'title'     => constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)),
                 'item'      => 'forum_' . $perm,
                 'desc'      => '',
-                'anonymous' => true
+                'anonymous' => true,
             ];
         }
 
         $op_keys = array_keys($op_options);
-        $op      = strtolower(Request::getCmd('op', Request::getCmd('op', '', 'COOKIE'), 'GET'));
+        $op      = mb_strtolower(Request::getCmd('op', Request::getCmd('op', '', 'COOKIE'), 'GET'));
         if (empty($op)) {
             $op = $op_keys[0];
             setcookie('op', isset($op_keys[1]) ? $op_keys[1] : '');
-        } elseif (false !== ($key = array_search($op, $op_keys))) {
+        } elseif (false !== ($key = array_search($op, $op_keys, true))) {
             setcookie('op', isset($op_keys[$key + 1]) ? $op_keys[$key + 1] : '');
         }
 

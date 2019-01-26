@@ -33,7 +33,7 @@ use Xmf\Request;
 use XoopsModules\Newbb;
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(__DIR__) . '/include/functions.render.php';
+require_once dirname(__DIR__) . '/include/functions.render.php';
 
 xoops_cp_header();
 
@@ -45,7 +45,6 @@ $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET')
 
 /**
  * newCategory()
- *
  */
 function newCategory()
 {
@@ -99,18 +98,18 @@ function editCategory(\XoopsObject $categoryObject = null)
     $sform->addElement(new \XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $categoryObject->getVar('cat_url', 'E')), false);
     $sform->addElement(new \XoopsFormHidden('cat_id', $categoryObject->getVar('cat_id')));
 
-    $button_tray = new \XoopsFormElementTray('', '');
-    $button_tray->addElement(new \XoopsFormHidden('op', 'save'));
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $buttonTray->addElement(new \XoopsFormHidden('op', 'save'));
 
     $butt_save = new \XoopsFormButton('', '', _SUBMIT, 'submit');
     $butt_save->setExtra('onclick="this.form.elements.op.value=\'save\'"');
-    $button_tray->addElement($butt_save);
+    $buttonTray->addElement($butt_save);
     if ($categoryObject->getVar('cat_id')) {
         $butt_delete = new \XoopsFormButton('', '', _CANCEL, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'default\'"');
-        $button_tray->addElement($butt_delete);
+        $buttonTray->addElement($butt_delete);
     }
-    $sform->addElement($button_tray);
+    $sform->addElement($buttonTray);
     $sform->display();
 }
 
@@ -126,20 +125,18 @@ switch ($op) {
         echo '<br>';
         editCategory($categoryObject);
         break;
-
     case 'del':
         if (!Request::getBool('confirm', '', 'POST')) {
             xoops_confirm(['op' => 'del', 'cat_id' => Request::getInt('cat_id', 0, 'GET'), 'confirm' => 1], 'admin_cat_manager.php', _AM_NEWBB_WAYSYWTDTTAL);
             break;
-        } else {
-            $categoryObject = $categoryHandler->create(false);
-            $categoryObject->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
-            $categoryHandler->delete($categoryObject);
-
-            redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
         }
-        break;
+        $categoryObject = $categoryHandler->create(false);
+        $categoryObject->setVar('cat_id', Request::getInt('cat_id', 0, 'POST'));
+        $categoryHandler->delete($categoryObject);
 
+        redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CATEGORYDELETED);
+
+        break;
     case 'save':
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
         $cacheHelper->delete('permission_category');
@@ -166,7 +163,6 @@ switch ($op) {
         }
         redirect_header('admin_cat_manager.php', 2, $message);
         break;
-
     default:
         if (!$categories = $categoryHandler->getByPermission('all')) {
             $adminObject->addItemButton(_AM_NEWBB_CREATENEWCATEGORY, 'admin_cat_manager.php?op=mod', $icon = 'add');

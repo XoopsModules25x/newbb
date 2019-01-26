@@ -25,8 +25,8 @@ use XoopsModules\Newbb;
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-$moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
 /** @var Newbb\Helper $helper */
@@ -64,7 +64,6 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
     define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
 }
-
 
 // module information
 //$mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
@@ -126,9 +125,8 @@ $userstatsHandler = $helper->getHandler('Userstats');
 /** @var Newbb\XmlrssHandler $xmlrssHandler */
 $xmlrssHandler = $helper->getHandler('Xmlrss');
 
-
-$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = Xmf\Module\Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 

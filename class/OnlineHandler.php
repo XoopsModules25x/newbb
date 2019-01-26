@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -15,7 +17,7 @@ use XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once  dirname(__DIR__) . '/include/functions.config.php';
+require_once dirname(__DIR__) . '/include/functions.config.php';
 
 /**
  * Class OnlineHandler
@@ -39,7 +41,7 @@ class OnlineHandler
 
     /**
      * @param null|Newbb\Forum $forum
-     * @param null|Topic  $forumtopic
+     * @param null|Topic       $forumtopic
      */
     public function init($forum = null, $forumtopic = null)
     {
@@ -66,7 +68,7 @@ class OnlineHandler
     {
         global $xoopsModule;
 
-        mt_srand((double)microtime() * 1000000);
+        mt_srand((float)microtime() * 1000000);
         // set gc probabillity to 10% for now..
         if (mt_rand(1, 100) < 60) {
             $this->gc(150);
@@ -96,8 +98,8 @@ class OnlineHandler
      */
     public function render(\Smarty $xoopsTpl)
     {
-        require_once  dirname(__DIR__) . '/include/functions.render.php';
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.render.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);
@@ -117,7 +119,7 @@ class OnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname']
+                'uname' => $users[$i]['online_uname'],
             ];
             ++$num_user;
         }
@@ -155,8 +157,8 @@ class OnlineHandler
      */
     public function showOnline()
     {
-        require_once  dirname(__DIR__) . '/include/functions.render.php';
-        require_once  dirname(__DIR__) . '/include/functions.user.php';
+        require_once dirname(__DIR__) . '/include/functions.render.php';
+        require_once dirname(__DIR__) . '/include/functions.user.php';
         $criteria = null;
         if ($this->topic_id) {
             $criteria = new \Criteria('online_topic', $this->topic_id);
@@ -176,7 +178,7 @@ class OnlineHandler
             $users_id[]                             = $users[$i]['online_uid'];
             $users_online[$users[$i]['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname']
+                'uname' => $users[$i]['online_uname'],
             ];
             ++$num_user;
         }
@@ -198,9 +200,9 @@ class OnlineHandler
         }
 
         foreach ($users_online as $uid => $user) {
-            if (in_array($uid, $administrator_list)) {
+            if (in_array($uid, $administrator_list, true)) {
                 $user['level'] = 2;
-            } elseif (in_array($uid, $moderator_list)) {
+            } elseif (in_array($uid, $moderator_list, true)) {
                 $user['level'] = 1;
             } else {
                 $user['level'] = 0;
@@ -267,10 +269,9 @@ class OnlineHandler
 
         if ($result = $this->db->queryF($sql)) {
             return true;
-        } else {
-            //xoops_error($this->db->error());
-            return false;
         }
+        //xoops_error($this->db->error());
+        return false;
     }
 
     /**
@@ -347,7 +348,7 @@ class OnlineHandler
             }
         }
         foreach ($uids as $uid) {
-            if (in_array($uid, $online_users)) {
+            if (in_array($uid, $online_users, true)) {
                 $ret[$uid] = 1;
             }
         }

@@ -1,7 +1,7 @@
 <?php
 
-use Xmf\Metagen;
 use Xmf\Highlighter;
+use Xmf\Metagen;
 use Xmf\Request;
 
 //
@@ -108,7 +108,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $addterms             = Request::getString('andor', 'AND');
     $next_search['andor'] = $addterms;
-    $andor                = strtoupper($addterms);
+    $andor                = mb_strtoupper($addterms);
     if (!in_array($addterms, ['OR', 'AND'], true)) {
         $andor = 'AND';
     }
@@ -137,7 +137,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $temp_queries    = str_getcsv($query, ' ', '"');
         foreach ($temp_queries as $q) {
             $q = trim($q);
-            if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
+            if (mb_strlen($q) >= $xoopsConfigSearch['keyword_min']) {
                 $queries[] = $q;
             } else {
                 $ignored_queries[] = $q;
@@ -148,7 +148,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         }
     } else {
         //$query = trim($query);
-        if (!$uname_required && (strlen($query) < $xoopsConfigSearch['keyword_min'])) {
+        if (!$uname_required && (mb_strlen($query) < $xoopsConfigSearch['keyword_min'])) {
             redirect_header(XOOPS_URL . '/search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
         $queries = [$query];
@@ -160,7 +160,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $sortby                = Request::getString('sortby', 'p.post_time');
     $next_search['sortby'] = $sortby;
     //$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  't.topic_last_post_id';
-    $sortby                  = in_array(strtolower($sortby), $allowed) ? $sortby : 'p.post_time';
+    $sortby                  = in_array(mb_strtolower($sortby), $allowed, true) ? $sortby : 'p.post_time';
     $searchin                = Request::getString('searchin', 'both');
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
@@ -204,7 +204,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
                 'title'      => $post_subject_select,
                 'poster'     => $row['poster'],
                 'post_time'  => formatTimestamp($row['time'], 'm'),
-                'post_text'  => $post_text_select
+                'post_text'  => $post_text_select,
             ]);
         }
         unset($results);
@@ -246,8 +246,8 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         // irmtfan if all results skipped then redirect to the next/previous page
         if ($num_results == $skipresults) {
             $direction           = Request::getString('direction', 'next');
-            $search_url_redirect = ('next' === strtolower($direction)) ? $search_url_next : $search_url_prev;
-            redirect_header($search_url_redirect, 1, constant(strtoupper("_SR_{$direction}")));
+            $search_url_redirect = ('next' === mb_strtolower($direction)) ? $search_url_next : $search_url_prev;
+            redirect_header($search_url_redirect, 1, constant(mb_strtoupper("_SR_{$direction}")));
         }
     }
     $search_info = _SR_KEYWORDS . ': ' . $search_info_keywords;

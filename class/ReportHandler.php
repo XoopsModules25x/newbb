@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Newbb;
+<?php
+
+namespace XoopsModules\Newbb;
 
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
@@ -47,12 +49,12 @@ class ReportHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int|array    $forums
-     * @param  string $order
-     * @param  int    $perpage
-     * @param         $start
-     * @param  int    $report_result
-     * @param  int    $report_id
+     * @param  int|array $forums
+     * @param  string    $order
+     * @param  int       $perpage
+     * @param            $start
+     * @param  int       $report_result
+     * @param  int       $report_id
      * @return array
      */
     public function getAllReports(
@@ -109,9 +111,6 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         return $ret;
     }
 
-    /**
-     *
-     */
     public function synchronization()
     {
         //        return;
