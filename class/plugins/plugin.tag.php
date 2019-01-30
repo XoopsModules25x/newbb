@@ -27,8 +27,6 @@ use XoopsModules\Tag;
  * uname
  * tags
  *
- * @var array   $items associative array of items: [modid][catid][itemid]
- *
  *
  * @param mixed $items
  * @return bool

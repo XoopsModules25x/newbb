@@ -52,11 +52,11 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('constants', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
 
-        /** @var \Xoopspoll\PollHandler $xpPollHandler */
+        /** @var \XoopsModules\Xoopspoll\PollHandler $xpPollHandler */
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
-        /** @var \Xoopspoll\LogHandler $xpLogHandler */
+        /** @var \XoopsModules\Xoopspoll\LogHandler $xpLogHandler */
         $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
-        /** @var \Xoopspoll\Poll $pollObject */
+        /** @var \XoopsModules\Xoopspoll\Poll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
@@ -106,8 +106,8 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                 /* set anon user vote (and the time they voted) */
                 if (!is_object($GLOBALS['xoopsUser'])) {
                     xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
-                    /** @var \Xoopspoll\Utility $classPollUtility */
-                    $classPollUtility = new Xoopspoll\Utility();
+                    /** @var \XoopsModules\Xoopspoll\Utility $classPollUtility */
+                    $classPollUtility = new \XoopsModules\Xoopspoll\Utility();
                     $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
                 }
             } else {

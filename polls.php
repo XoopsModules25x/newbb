@@ -79,9 +79,9 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_load('request', $GLOBALS['xoopsModuleConfig']['poll_module']);
         xoops_loadLanguage('admin', $GLOBALS['xoopsModuleConfig']['poll_module']);
-        /** @var \Xoopspoll\PollHandler $xpPollHandler */
+        /** @var \XoopsModules\Xoopspoll\PollHandler $xpPollHandler */
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
-        /** @var \XoopsPoll $pollObject */
+        /** @var \XoopsModules\XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
         // old xoopspoll or umfrage or any clone from them
     } else {
@@ -306,7 +306,7 @@ switch ($op) {
             $classOption  = $classPoll . 'Option';
             foreach ($option_text as $optxt) {
                 $optxt = trim($optxt);
-                /** @var \Xoopspoll\Option $optionObject */
+                /** @var \XoopsModules\Xoopspoll\Option $optionObject */
                 $optionObject = new $classOption();
                 if ('' !== $optxt) {
                     $optionObject->setVar('option_text', $optxt);
@@ -348,9 +348,9 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            /** @var \Xoopspoll\OptionHandler $xpOptHandler */
+            /** @var \XoopsModules\Xoopspoll\OptionHandler $xpOptHandler */
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-            /** @var \Xoopspoll\LogHandler $xpLogHandler */
+            /** @var \XoopsModules\Xoopspoll\LogHandler $xpLogHandler */
             $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
             //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
             $classConstants   = new XoopsModules\Xoopspoll\Constants();
@@ -700,9 +700,9 @@ switch ($op) {
                 exit();
             }
             if (Request::getInt('reset', 0, 'POST')) { // reset all vote/voter counters
-                /** @var \Xoopspoll\OptionHandler $xpOptHandler */
+                /** @var \XoopsModules\Xoopspoll\OptionHandler $xpOptHandler */
                 $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
-                /** @var \Xoopspoll\LogHandler $xpLogHandler */
+                /** @var \XoopsModules\Xoopspoll\LogHandler $xpLogHandler */
                 $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $xpLogHandler->deleteByPollId($poll_id);
                 $xpOptHandler->resetCountByPollId($poll_id);

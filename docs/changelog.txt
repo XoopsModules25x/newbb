@@ -6,6 +6,10 @@
 - cosmetics (mamba)
 - extracted classes GroupPermForm, GroupFormCheckBox (mamba)
 - added  ENT_QUOTES | ENT_HTML5 to htmlspecialchars() (mamba)
+- fix: missing Tag check (aquaportail/mamba)
+- replace column # with column name  (aquaportail/mamba)
+- remove mt_srand() (mamba)
+
 
 WORK IN PROGRESS
 

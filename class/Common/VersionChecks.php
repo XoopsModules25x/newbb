@@ -103,8 +103,8 @@ trait VersionChecks
             if (function_exists('curl_init') && false !== ($curlHandle = curl_init())) {
                 curl_setopt($curlHandle, CURLOPT_URL, $infoReleasesUrl);
                 curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array("User-Agent:Publisher\r\n"));
+                curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);                
+                curl_setopt($curlHandle, CURLOPT_HTTPHEADER, ["User-Agent:Publisher\r\n"]);
                 $curlReturn = curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     trigger_error(curl_error($curlHandle));

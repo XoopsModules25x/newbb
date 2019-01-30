@@ -25,8 +25,7 @@ foreach (['forum', 'topic_id', 'post_id', 'order', 'pid', 'act'] as $getint) {
 //$viewmode = (isset($_GET['viewmode']) && $_GET['viewmode'] !== 'flat') ? 'thread' : 'flat';
 //$viewmode = ($viewmode) ? $viewmode: (isset($_POST['viewmode'])?$_POST['viewmode'] : 'flat');
 
-$viewmode = (Request::getString('viewmode', '', 'GET')
-             && 'flat' !== Request::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
+$viewmode = (Request::getString('viewmode', '', 'GET') && 'flat' !== Request::getString('viewmode', '', 'GET')) ? 'thread' : 'flat';
 $viewmode = $viewmode ?: (Request::getString('viewmode', '', 'POST') ?: 'flat');
 
 ///** @var Newbb\ForumHandler $forumHandler */

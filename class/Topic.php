@@ -137,14 +137,14 @@ class Topic extends \XoopsObject
         }
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
-            /** @var \XoopsPollHandler $pollHandler */
+            /** @var \XoopsModules\Xoopspoll\PollHandler $pollHandler */
             $pollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
             if (false !== $pollHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='))) {
-                /** @var \XoopsPoll\OptionHandler $optionHandler */
-                $optionHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
+                /** @var \XoopsModules\XoopsPoll\OptionHandler $optionHandler */
+                $optionHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Option');
                 $optionHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
-                /** @var \XoopsPoll\LogHandler $logHandler */
-                $logHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
+                /** @var \XoopsModules\XoopsPoll\LogHandler $logHandler */
+                $logHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $logHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
                 xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
             }

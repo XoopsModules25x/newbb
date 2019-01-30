@@ -49,6 +49,9 @@ class RateHandler extends \XoopsPersistableObjectHandler
         parent::__construct($db, 'newbb_votedata', Rate::class, 'ratingid', '');
     }
 
+    /**
+     * @return bool|void
+     */
     public function synchronization()
     {
         //        return;

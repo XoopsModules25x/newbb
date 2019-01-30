@@ -68,7 +68,6 @@ class OnlineHandler
     {
         global $xoopsModule;
 
-        mt_srand((float)microtime() * 1000000);
         // set gc probabillity to 10% for now..
         if (mt_rand(1, 100) < 60) {
             $this->gc(150);

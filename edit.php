@@ -56,7 +56,7 @@ if (!$topicHandler->getPermission($forumObject, $topic_status, 'edit') || (!$isA
     $error_msg = _MD_NEWBB_TIMEISUP;
 }
 
-if (!empty($error_msg)) {
+if (null !== $error_msg) {
     /*
      * Build the page query
      */
