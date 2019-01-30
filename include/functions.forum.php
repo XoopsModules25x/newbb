@@ -185,7 +185,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     {
         /** @var Newbb\ForumHandler $forumHandler */
         $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
-        $criteria     = new \Criteria('1', 1);
+        $criteria     = new \Criteria('forum_id', 1);
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
