@@ -55,8 +55,8 @@ if (!class_exists('XoopsGroupPermForm')) {
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
 $action    = mb_strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
-/** var Newbb\PermissionHandler $newbbpermHandler */
-$newbbpermHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+/** var \XoopsModules\Newbb\PermissionHandler $newbbpermHandler */
+$newbbpermHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 $perms            = $newbbpermHandler->getValidForumPerms();
 
 switch ($action) {

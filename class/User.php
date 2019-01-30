@@ -14,7 +14,7 @@ namespace XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * @param $RPG
@@ -33,7 +33,7 @@ function newbb_calculateLevel($RPG, $RPGDIFF)
         $exp = 1;
     }
     $ppd       = round($RPG / $exp, 0);
-    $level     = log10($RPG) ** 3;
+    $level     = pow(log10($RPG),3);
     $ep        = floor(100 * ($level - floor($level)));
     $showlevel = floor($level + 1);
     $hpmulti   = round($ppd / 6, 1);

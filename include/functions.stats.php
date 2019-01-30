@@ -98,7 +98,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     }
 
     /**
-     * @return |null
+     * @return null
      */
     function getTotalViews()
     {

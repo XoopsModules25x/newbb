@@ -63,7 +63,7 @@ $editby = false;
 if ($topicObject->isNew()) {
     $form_title = _MD_NEWBB_POSTNEW;
 } elseif ($postObject->isNew()) {
-    if (empty($postParentObject)) {
+    if (null === $postParentObject) {
         $postParentObject = $postHandler->get($pid);
     }
     $form_title = _MD_NEWBB_REPLY . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $postParentObject->getVar('subject') . '</a>';
