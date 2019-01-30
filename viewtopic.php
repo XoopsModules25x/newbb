@@ -821,8 +821,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     $xoopsTpl->assign('quickreply', ['show' => 0]);
 }
 
-if ($GLOBALS['xoopsModuleConfig']['do_tag']
-    && @require_once $GLOBALS['xoops']->path('modules/tag/include/tagbar.php')) {
+if ($GLOBALS['xoopsModuleConfig']['do_tag'] &&  class_exists('TagFormTag')
+    && @require $GLOBALS['xoops']->path('modules/tag/include/tagbar.php')) {
     $xoopsTpl->assign('tagbar', tagBar($topicObject->getVar('topic_tags', 'n')));
 }
 // irmtfan move to footer.php

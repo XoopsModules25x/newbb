@@ -20,7 +20,7 @@ use XoopsModules\Newbb;
  */
 function newbb_tag_block_cloud_show($options)
 {
-    if (!@require_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
+    if ((!class_exists('TagFormTag') ) || (class_exists('TagFormTag') && !@require $GLOBALS['xoops']->path('modules/tag/blocks/block.php'))) {
         return null;
     }
     $block_content = tag_block_cloud_show($options, 'newbb');
@@ -34,7 +34,7 @@ function newbb_tag_block_cloud_show($options)
  */
 function newbb_tag_block_cloud_edit($options)
 {
-    if (!@require_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
+    if ((!class_exists('TagFormTag') ) || (class_exists('TagFormTag') && !@require $GLOBALS['xoops']->path('modules/tag/blocks/block.php'))) {
         return null;
     }
     $form = tag_block_cloud_edit($options);
@@ -49,7 +49,7 @@ function newbb_tag_block_cloud_edit($options)
  */
 function newbb_tag_block_top_show($options)
 {
-    if (!@require_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
+    if ((!class_exists('TagFormTag') ) || (class_exists('TagFormTag') && !@require $GLOBALS['xoops']->path('modules/tag/blocks/block.php'))) {
         return null;
     }
     $block_content = tag_block_top_show($options, 'newbb');
@@ -63,7 +63,7 @@ function newbb_tag_block_top_show($options)
  */
 function newbb_tag_block_top_edit($options)
 {
-    if (!@require_once $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
+    if (!@require $GLOBALS['xoops']->path('modules/tag/blocks/block.php')) {
         return null;
     }
     $form = tag_block_top_edit($options);
