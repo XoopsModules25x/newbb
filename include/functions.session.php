@@ -86,7 +86,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     /**
      * @param             $name
      * @param  bool       $isArray
-     * @return array|null
+     * @return array|null|string
      */
     function newbbGetCookie($name, $isArray = false)
     {

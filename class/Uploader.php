@@ -51,7 +51,7 @@ class Uploader extends \XoopsMediaUploader
             }
         }
         $_allowedMimeTypes = [];
-        $extensionToMime   = require_once $GLOBALS['xoops']->path('include/mimetypes.inc.php');
+        $extensionToMime   = require $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         foreach ($allowedMimeTypes as $type) {
             if (isset($extensionToMime[$type])) {
                 $_allowedMimeTypes[] = $extensionToMime[$type];

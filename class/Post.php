@@ -152,8 +152,10 @@ class Post extends \XoopsObject
 
         foreach ($attachOld as $key => $attach) {
             if (in_array($key, $attachArray, true)) {
-                @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']));
-                @unlink($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
+                $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
+                @unlink($file);
+                $file = ($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
+                @unlink($file);
                 continue;
             }
             $this->attachmentArray[$key] = $attach;

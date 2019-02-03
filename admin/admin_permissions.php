@@ -75,7 +75,7 @@ switch ($action) {
                                    ]);
         $opform->addElement($op_select);
         $opform->display();
-
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $glist         = $memberHandler->getGroupList();
         $elements      = [];

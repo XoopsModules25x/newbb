@@ -77,7 +77,10 @@ if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
     //$mimetype = $attach['mimetype'];
 
     if (ini_get('zlib.output_compression')) {
-        @ini_set('zlib.output_compression', 'Off');
+        if (false === @ini_set('zlib.output_compression', 'Off')) {
+            throw new \RuntimeException('Setting of zlib.output_compression failed.');
+        }
+
     }
 
     if (function_exists('mb_http_output')) {
