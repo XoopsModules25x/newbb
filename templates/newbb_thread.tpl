@@ -35,12 +35,12 @@
         <td width="20%" class="odd" rowspan="2" valign="top">
             <{if $topic_post.poster.uid != 0}>
                 <!-- START hacked by irmtfan rank_title -> rank.title -->
-                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
+                <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" ><{/if}></div>
                 <!-- END hacked by irmtfan -->
 
                 <{if $topic_post.poster.avatar != "blank.gif"}>
                     <br>
-                    <img class="comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt=""/>
+                    <img class="comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="">
                 <{else}>
                     <!-- irmtfan remove icon_path -->
                     <br>
@@ -163,7 +163,7 @@
                             |
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>"><{$smarty.const._MD_NEWBB_SPLIT_ALL}></a>
                             |
-                            <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>"/>
+                            <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
                         <{else}>
                             <{if $topic_post.thread_buttons}>
                                 <{foreach item=btn from=$topic_post.thread_buttons}>

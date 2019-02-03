@@ -168,12 +168,12 @@ switch ($op) {
             echo $box;
             echo '</td></tr>';
             echo '<tr class="bg3"><td colspan="2" align="center">';
-            echo "<input type='hidden' name='op' value='move' />";
-            echo "<input type='hidden' name='forum_id' value='{$forum_id}' />";
+            echo "<input type='hidden' name='op' value='move' >";
+            echo "<input type='hidden' name='forum_id' value='{$forum_id}' >";
             foreach ($topic_id as $id) {
-                echo "<input type='hidden' name='topic_id[]' value='" . $id . "' />";
+                echo "<input type='hidden' name='topic_id[]' value='" . $id . "' >";
             }
-            echo "<input type='submit' name='submit' value='" . _SUBMIT . "' />";
+            echo "<input type='submit' name='submit' value='" . _SUBMIT . "' >";
             echo '</td></tr></table></td></tr></table>';
             echo '</form>';
             require_once $GLOBALS['xoops']->path('footer.php');

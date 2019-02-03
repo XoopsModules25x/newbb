@@ -98,7 +98,7 @@ switch ($action) {
                 $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)) . '<br></td>';
             }
             $ret_ele    .= '</tr></table></td><td class="even">';
-            $ret_ele    .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" />';
+            $ret_ele    .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" >';
             $ret_ele    .= '</td></tr></table>';
             $ret_ele    .= '</td></tr>';
             $elements[] = $ret_ele;

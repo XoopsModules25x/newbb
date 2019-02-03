@@ -95,10 +95,10 @@ echo "</td><tr><tr><td class='even'>";
 
 $groups = $memberHandler->getGroups();
 foreach ($groups as $value) {
-    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br>';
+    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" > ' . $value->getVar('name') . '<br>';
 }
 echo "</td><tr><tr><td class='odd' style='text-align:center;'>";
-echo '<input type="submit" value="' . _SUBMIT . '" name="submit" />';
+echo '<input type="submit" value="' . _SUBMIT . '" name="submit" >';
 echo '</td></tr></table>';
 echo '</form>';
 echo '<fieldset>';

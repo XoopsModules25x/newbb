@@ -108,7 +108,7 @@ $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_FORUM . '</h2>';
 $form .= '<input type="hidden" name="type" value="forum">';
 // $form .= _AM_NEWBB_SYNC_ITEMS.'<input type="text" name="limit" value="20">'; // irmtfan remove
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 
@@ -117,7 +117,7 @@ $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_TOPIC . '</h2>';
 $form .= '<input type="hidden" name="type" value="topic">';
 $form .= _AM_NEWBB_SYNC_ITEMS . '<input type="text" name="limit" value="1000">';
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 
@@ -126,7 +126,7 @@ $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_POST . '</h2>';
 $form .= '<input type="hidden" name="type" value="post">';
 // $form .= _AM_NEWBB_SYNC_ITEMS.'<input type="text" name="limit" value="1000">'; // irmtfan remove
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 
@@ -135,7 +135,7 @@ $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_USER . '</h2>';
 $form .= '<input type="hidden" name="type" value="user">';
 $form .= _AM_NEWBB_SYNC_ITEMS . '<input type="text" name="limit" value="1000">';
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 // START irmtfan add read sync
@@ -143,7 +143,7 @@ $form .= '<form action="admin_synchronization.php" method="get">';
 $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_READ . '</h2>';
 $form .= '<input type="hidden" name="type" value="read">';
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 // END irmtfan add read sync
@@ -153,7 +153,7 @@ $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_STATS . '</h2>';
 $form .= '<input type="hidden" name="type" value="stats">';
 //$form .= _AM_NEWBB_SYNC_ITEMS.'<input type="text" name="limit" value="1000">';
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 
@@ -161,7 +161,7 @@ $form .= '<form action="admin_synchronization.php" method="get">';
 $form .= '<div style="padding: 10px 2px;">';
 $form .= '<h2>' . _AM_NEWBB_SYNC_TYPE_MISC . '</h2>';
 $form .= '<input type="hidden" name="type" value="misc">';
-$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' />';
+$form .= '<input type="submit" name="submit" value=' . _SUBMIT . ' >';
 $form .= '</div>';
 $form .= '</form>';
 echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";

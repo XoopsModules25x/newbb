@@ -2,7 +2,7 @@
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h2>
         <!-- irmtfan hardcode removed align="left" -->
-        <hr class="align_left" width="50%" size="1"/>
+        <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
         <{if $parent_forum}>
             <span class="delimiter">&raquo;</span>
@@ -30,7 +30,7 @@
         <div class="pagenav" id="admin">
             <{if $mode gt 1}>
                 <{$smarty.const._ALL}>:
-                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                 <select name="op">
                     <option value="0"><{$smarty.const._SELECT}></option>
                     <option value="delete"><{$smarty.const._DELETE}></option>
@@ -43,8 +43,8 @@
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
                     <{/if}>
                 </select>
-                <input type="hidden" name="forum_id" value="<{$forum_id}>"/>
-                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="hidden" name="forum_id" value="<{$forum_id}>">
+                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
                 <!-- irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading -->
@@ -149,7 +149,7 @@
             <td width="5%" colspan="2">
                 <{if $mode gt 1}>
                     <{$smarty.const._ALL}>:
-                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');"/>
+                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
                 <{else}>
                     &nbsp;
                 <{/if}>
@@ -168,7 +168,7 @@
             <!-- irmtfan add topic-read/topic-new smarty variable  -->
             <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
                 <{if $mode gt 1}>
-                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"/>
+                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
                 <{else}>
                     <!-- irmtfan add lock -->
                     <{$topic.topic_folder}><{$topic.lock}>
@@ -223,11 +223,11 @@
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
                         <!-- irmtfan correct name="$hidvar" -->
-                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
                 <{/foreach}>
                 <!-- irmtfan remove name="refresh" -->
-                <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
@@ -254,14 +254,14 @@
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-            <input name="term" id="term" type="text" size="15"/>
+            <input name="term" id="term" type="text" size="15">
             <{foreach item=hidval key=hidvar from=$search}>
                 <{if $hidval }>
                     <!-- irmtfan correct name="$hidvar" -->
-                    <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                    <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                 <{/if}>
             <{/foreach}>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/><br>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>
@@ -271,10 +271,10 @@
                 <{$selection.forum}>&nbsp;
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "forum"}>
-                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
                 <{/foreach}>
-                <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
             <br>
             <{$forum_jumpbox}>

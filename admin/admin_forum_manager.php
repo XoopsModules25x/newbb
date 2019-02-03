@@ -85,13 +85,13 @@ switch ($op) {
 
             echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
             echo '<form action="./admin_forum_manager.php" method="post" name="forummove" id="forummove">';
-            echo '<input type="hidden" name="op" value="moveforum" />';
-            echo '<input type="hidden" name="forum" value=' . $forum_id . ' />';
+            echo '<input type="hidden" name="op" value="moveforum" >';
+            echo '<input type="hidden" name="forum" value=' . $forum_id . ' >';
             echo '<table border="0" cellpadding="1" cellspacing="0" align="center" valign="top" width="95%"><tr>';
             echo '<td class="bg2" align="center"><strong>' . _AM_NEWBB_MOVETHISFORUM . '</strong></td>';
             echo '</tr>';
             echo '<tr><td class="bg1" align="center">' . $box . '</td></tr>';
-            echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" /></td></tr>';
+            echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" ></td></tr>';
             echo '</table></form>';
             echo '</td></tr></table>';
         }
@@ -133,14 +133,14 @@ switch ($op) {
             $box .= '</select>';
             echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
             echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post" name="forummove" id="forummove">';
-            echo '<input type="hidden" name="op" value="mergeforum" />';
-            echo '<input type="hidden" name="forum" value=' . $forum_id . ' />';
+            echo '<input type="hidden" name="op" value="mergeforum" >';
+            echo '<input type="hidden" name="forum" value=' . $forum_id . ' >';
             echo '<table border="0" cellpadding="1" cellspacing="0" align="center" valign="top" width="95%"><tr>';
             echo '<td class="bg2" align="center"><strong>' . _AM_NEWBB_MERGETHISFORUM . '</strong></td>';
             echo '</tr>';
             echo '<tr><td class="bg1" align="center">' . _AM_NEWBB_MERGETO_FORUM . '</td></tr>';
             echo '<tr><td class="bg1" align="center">' . $box . '</td></tr>';
-            echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" /></td></tr>';
+            echo '<tr><td align="center"><input type="submit" name="save" value=' . _GO . ' class="button" ></td></tr>';
             echo '</form></table>';
             echo '</td></tr></table>';
         }

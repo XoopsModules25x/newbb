@@ -3,7 +3,7 @@
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$index_title}></a></h2>
         <!-- irmtfan hardcode remove align="left" -->
-        <hr class="align_left" width="50%" size="1"/>
+        <hr class="align_left" width="50%" size="1">
         <{$index_desc}>
     </div>
 </div>
@@ -41,11 +41,11 @@
     </div>
   </fieldset>
 <{/if}>
-<br style="clear: both;"/>
+<br style="clear: both;">
 <div class="dropdown">
     <{include file="db:newbb_index_menu.tpl"}>
 </div>
-<br style="clear: both;"/>
+<br style="clear: both;">
 <br>
 
 <!-- start forum categories -->
@@ -62,7 +62,7 @@
                     </div>
                 </td>
                 <{if $category.cat_image}>
-                    <td width="8%"><img src="<{$category.cat_image}>" alt="<{$category.cat_title}>"/></td>
+                    <td width="8%"><img src="<{$category.cat_image}>" alt="<{$category.cat_title}>"></td>
                 <{/if}>
                 <!-- irmtfan hardcode removed align="left" -->
                 <td class="align_left">
@@ -327,16 +327,16 @@
     <{$img_forum_new}> = <{$smarty.const._MD_NEWBB_NEWPOSTS}><br>
     <{$img_forum}> = <{$smarty.const._MD_NEWBB_NONEWPOSTS}><br>
 </div>
-<br style="clear:both;"/>
+<br style="clear:both;">
 <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
 <div class="icon_right">
     <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="post" name="search" id="search">
-        <input name="term" id="term" type="text" size="20"/>
-        <input type="hidden" name="forum" id="forum" value="all"/>
-        <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
-        <input type="hidden" name="searchin" id="searchin" value="both"/>
+        <input name="term" id="term" type="text" size="20">
+        <input type="hidden" name="forum" id="forum" value="all">
+        <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
+        <input type="hidden" name="searchin" id="searchin" value="both">
         <!-- irmtfan remove name="submit" -->
-        <input type="submit" id="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/>
+        <input type="submit" id="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>">
         <br>
         [ <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a> ]
     </form>
@@ -350,7 +350,7 @@
         <br>
     <{/if}>
 </div>
-<br style="clear: both;"/>
+<br style="clear: both;">
 <{if $currenttime}>
     <div>
         <div class="even" style="padding: 5px; line-height: 150%;">
@@ -390,9 +390,9 @@
             </div>
         </div>
     </div>
-    <br style="clear:both;"/>
+    <br style="clear:both;">
 <{/if}>
-<br style="clear: both;"/>
+<br style="clear: both;">
 <{if $online}>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>

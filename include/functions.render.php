@@ -96,7 +96,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      */
     function newbbGetButton($link, $button, $alt = '', $asImage = true, $extra = "class='forum_button'")
     {
-        $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' />";
+        $button = "<input type='button' name='{$button}' {$extra} value='{$alt}' onclick='window.location.href={$link}' >";
         if (empty($asImage)) {
             $button = "<a href='{$link}' title='{$alt}' {$extra}>" . newbbDisplayImage($button, $alt, true) . '</a>';
         }

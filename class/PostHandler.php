@@ -350,7 +350,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             return $this->myDelete($post, $force);
         }
         require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-        $mytree = new \XoopsTree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
+        $mytree = new Newbb\Tree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
         $arr    = $mytree->getAllChild($post->getVar('post_id'));
         // irmtfan - delete childs in a reverse order
         for ($i = count($arr) - 1; $i >= 0; $i--) {

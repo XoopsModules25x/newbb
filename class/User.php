@@ -190,11 +190,11 @@ class User
             // irmtfan hardcore removed align="left"
             $table = "<table class='userlevel'><tr><td class='end'><img src='"
                      . $rpg_images['img_left']
-                     . "' alt='' /></td><td class='center' background='"
+                     . "' alt='' ></td><td class='center' background='"
                      . $rpg_images['img_backing']
-                     . "'><img src='%s' width='%d' alt='' class='icon_left' /></td><td><img src='"
+                     . "'><img src='%s' width='%d' alt='' class='icon_left' ></td><td><img src='"
                      . $rpg_images['img_right']
-                     . "' alt='' /></td></tr></table>";
+                     . "' alt='' ></td></tr></table>";
 
             $info = _MD_NEWBB_LEVEL . ' ' . $level['level'] . '<br><span title="' . _MD_NEWBB_HP_DESC . '">' . _MD_NEWBB_HP . ' ' . $level['hp'] . ' / ' . $level['hp_max'] . '</span><br>' . sprintf($table, $rpg_images['orange'], $level['hp_width']);
             $info .= '<span title="' . _MD_NEWBB_MP_DESC . '">' . _MD_NEWBB_MP . ' ' . $level['mp'] . ' / ' . $level['mp_max'] . '</span><br>' . sprintf($table, $rpg_images['green'], $level['mp_width']);

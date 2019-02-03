@@ -92,7 +92,7 @@ function editCategory(\XoopsObject $categoryObject = null)
     $cat_image_select->setExtra("onchange=\"showImgSelected('img', 'cat_image', '/" . $imgdir . "/', '', '" . XOOPS_URL . "')\"");
     $cat_image_tray = new \XoopsFormElementTray(_AM_NEWBB_IMAGE, '&nbsp;');
     $cat_image_tray->addElement($cat_image_select);
-    $cat_image_tray->addElement(new \XoopsFormLabel('', "<br><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' />"));
+    $cat_image_tray->addElement(new \XoopsFormLabel('', "<br><img src='" . XOOPS_URL . $imgdir . '/' . $cat_image . " 'name='img' id='img' alt='' >"));
     $sform->addElement($cat_image_tray);
 
     $sform->addElement(new \XoopsFormText(_AM_NEWBB_SPONSORLINK, 'cat_url', 50, 80, $categoryObject->getVar('cat_url', 'E')), false);

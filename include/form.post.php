@@ -143,7 +143,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 $icons_radio   = new \XoopsFormRadio(_MD_NEWBB_MESSAGEICON, 'icon', $icon);
 $subject_icons = \XoopsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
-    $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
+    $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" >');
 }
 $forum_form->addElement($icons_radio);
 

@@ -204,12 +204,12 @@ if (!empty($forum_id)) {
     // irmtfan new method
     if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
         $xoopsTpl->assign('xoops_module_header', '
-            <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" />
+            <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" >
             ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
     }
 } elseif (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
-        <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php" />
+        <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php" >
     ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
 // irmtfan remove and move to footer.php
@@ -260,9 +260,9 @@ foreach (array_keys($posts) as $id) {
     $post_title = $post->getVar('subject');
 
     if ($posticon = $post->getVar('icon')) {
-        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" /></a>';
+        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" ></a>';
     } else {
-        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" /></a>';
+        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
     }
     $poster = [
         'uid'  => 0,

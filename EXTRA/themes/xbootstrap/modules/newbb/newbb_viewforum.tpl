@@ -80,7 +80,7 @@
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
                 <{if $mode gt 1}>
                     <{$smarty.const._ALL}>:
-                    <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                    <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>

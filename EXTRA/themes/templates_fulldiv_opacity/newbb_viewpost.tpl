@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></h2>
-        <hr class="align_left"/>
+        <hr class="align_left">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
         <{if $category}>
             <span class="delimiter">&raquo;</span>
@@ -26,7 +26,7 @@
         <{if $mode gt 1}>
         <!-- START admin form -->
         <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');"/>
+            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
             <select name="op">
                 <option value="0"><{$smarty.const._SELECT}></option>
                 <option value="delete"><{$smarty.const._DELETE}></option>
@@ -36,8 +36,8 @@
                     <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                 <{/if}>
             </select>
-            <input type="hidden" name="uid" value="<{$uid}>"/> |
-            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/> |
+            <input type="hidden" name="uid" value="<{$uid}>"> |
+            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"> |
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
             <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
@@ -111,11 +111,11 @@
 <div>
     <div class="icon_left">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-            <input name="term" id="term" type="text" size="15"/>
-            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
-            <input type="hidden" name="action" id="action" value="yes"/>
-            <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/><br>
+            <input name="term" id="term" type="text" size="15">
+            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
+            <input type="hidden" name="action" id="action" value="yes">
+            <input type="hidden" name="searchin" id="searchin" value="both">
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
     </div>

@@ -167,7 +167,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
-    <link rel="alternate" type="application/rss+xml" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forumObject->getVar('forum_id') . '" />
+    <link rel="alternate" type="application/rss+xml" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forumObject->getVar('forum_id') . '" >
     ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
 

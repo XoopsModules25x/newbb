@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h2>
-        <hr class="align_left"/>
+        <hr class="align_left">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
@@ -40,7 +40,7 @@
         <div class="_col_end right">
             <{if $mode gt 1}>
                 <{$smarty.const._ALL}>:
-                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                 <select name="op">
                     <option value="0"><{$smarty.const._SELECT}></option>
                     <option value="delete"><{$smarty.const._DELETE}></option>
@@ -53,8 +53,8 @@
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
                     <{/if}>
                 </select>
-                <input type="hidden" name="forum_id" value="<{$forum_id}>"/>
-                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="hidden" name="forum_id" value="<{$forum_id}>">
+                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
             <{else}>
@@ -96,7 +96,7 @@
             </div>
             <div class="topic_icon floatleft align_center">
                 <{if $mode gt 1}>
-                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');"/>
+                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
                 <{else}>
                     &nbsp;
                 <{/if}>
@@ -138,7 +138,7 @@
             <div class="topic_folder floatleft <{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}> align_center"><{$topic.topic_folder}></div>
             <div class="topic_icon floatleft align_center">
                 <{if $mode gt 1}>
-                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"/>
+                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
                 <{else}>
                     <{$topic.topic_icon}>
                 <{/if}>
@@ -177,9 +177,9 @@
     <{strip}>
         <form method="get" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php">
             <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;<{$forum_selection_sort}>&nbsp;<{$forum_selection_order}>&nbsp;<{$forum_selection_since}>&nbsp;
-            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
-            <input type="hidden" name="status" value="<{$status}>"/>
-            <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
+            <input type="hidden" name="status" value="<{$status}>">
+            <input type="submit" value="<{$smarty.const._SUBMIT}>">
         </form>
     <{/strip}>
 </div>
@@ -207,13 +207,13 @@
     </div>
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-            <input name="term" id="term" type="text" size="15"/>
-            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
-            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
-            <input type="hidden" name="since" id="since" value="<{$forum_since}>"/>
-            <input type="hidden" name="action" id="action" value="yes"/>
-            <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/><br>
+            <input name="term" id="term" type="text" size="15">
+            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
+            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
+            <input type="hidden" name="since" id="since" value="<{$forum_since}>">
+            <input type="hidden" name="action" id="action" value="yes">
+            <input type="hidden" name="searchin" id="searchin" value="both">
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>

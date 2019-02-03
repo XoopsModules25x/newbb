@@ -9,6 +9,7 @@
 - fix: missing Tag check (aquaportail/mamba)
 - replace column # with column name  (aquaportail/mamba)
 - remove mt_srand() (mamba)
+- fixed _renderOptionTree signature  (aquaportail/mamba)
 
 
 WORK IN PROGRESS

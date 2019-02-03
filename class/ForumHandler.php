@@ -308,9 +308,9 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             } elseif ($myrow['topic_sticky']) {
                 $topic_icon = newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY);
             } elseif (!empty($myrow['icon'])) {
-                $topic_icon = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" />';
+                $topic_icon = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
             } else {
-                $topic_icon = '<img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" />';
+                $topic_icon = '<img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" >';
             }
 
             // ------------------------------------------------------
@@ -944,7 +944,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
         $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
-        require_once __DIR__ . '/Tree.php';
+//        require_once __DIR__ . '/Tree.php';
         $forums_structured = [];
         foreach (array_keys($forumsObject) as $key) {
             $forums_structured[$forumsObject[$key]->getVar('cat_id')][$key] = $forumsObject[$key];
@@ -980,7 +980,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
         $forumsObject = $this->getByPermission($cat_id, $perm_string, $tags);
 
-        require_once __DIR__ . '/Tree.php';
+//        require_once __DIR__ . '/Tree.php';
         $forums_structured = [];
         foreach (array_keys($forumsObject) as $key) {
             $forumObject                                             = &$forumsObject[$key];

@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></h2>
-        <hr class="align_left"/>
+        <hr class="align_left">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMINDEX}></a>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>

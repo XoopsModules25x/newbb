@@ -87,8 +87,8 @@ if (Request::getString('submit', '', 'POST')) {
         echo '<tr>';
         echo "<td align='left' nowrap='nowrap' class='head' >" . $categories[$c]->getVar('cat_title') . '</td>';
         echo "<td align='right' class='head'>";
-        echo "<input type='text' name='cat_orders[]' value='" . $categories[$c]->getVar('cat_order') . "' size='5' maxlength='5' />";
-        echo "<input type='hidden' name='cat[]' value='" . $c . "' />";
+        echo "<input type='text' name='cat_orders[]' value='" . $categories[$c]->getVar('cat_order') . "' size='5' maxlength='5' >";
+        echo "<input type='hidden' name='cat[]' value='" . $c . "' >";
         echo '</td>';
         echo '</tr>';
 
@@ -101,15 +101,15 @@ if (Request::getString('submit', '', 'POST')) {
             $class = ((++$i) % 2) ? 'odd' : 'even';
             echo "<td align='left' nowrap='nowrap' class='" . $class . "'>" . $forum['prefix'] . $forum['forum_name'] . '</td>';
             echo "<td align='left' class='" . $class . "'>";
-            echo $forum['prefix'] . "<input type='text' name='orders[]' value='" . $forum['forum_order'] . "' size='5' maxlength='5' />";
-            echo "<input type='hidden' name='forum[]' value='" . $key . "' />";
+            echo $forum['prefix'] . "<input type='text' name='orders[]' value='" . $forum['forum_order'] . "' size='5' maxlength='5' >";
+            echo "<input type='hidden' name='forum[]' value='" . $key . "' >";
             echo '</td>';
             echo '</tr>';
         }
     }
     echo "<tr><td class='even' align='center' colspan='6'>";
 
-    echo "<input type='submit' name='submit' value='" . _SUBMIT . "' />";
+    echo "<input type='submit' name='submit' value='" . _SUBMIT . "' >";
     echo '</td></tr>';
     echo '</table>';
     echo '</form>';

@@ -145,7 +145,7 @@ class IconHandler
         if (!isset($this->images[$image])) {
             $imageSource = $this->getImageSource($image);
             // irmtfan add id={$image}
-            $this->images[$image] = "<img src=\"{$imageSource}\" alt=\"{$alt}\" title=\"{$alt}\" align=\"middle\" {$extra} id={$image} />";
+            $this->images[$image] = "<img src=\"{$imageSource}\" alt=\"{$alt}\" title=\"{$alt}\" align=\"middle\" {$extra} id={$image} >";
         }
     }
 

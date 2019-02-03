@@ -366,14 +366,14 @@ if (Request::getString('submit', '', 'POST')) {
     }
     if ('merge' === $mode) {
         echo '<tr><td class="bg3">' . _MD_NEWBB_MERGETOPICTO . '</td><td class="bg1">';
-        echo _MD_NEWBB_TOPIC . "&nbsp;ID-$topic_id -> ID: <input name='newtopic' value='' />";
+        echo _MD_NEWBB_TOPIC . "&nbsp;ID-$topic_id -> ID: <input name='newtopic' value='' >";
         echo '</td></tr>';
     }
     echo '<tr class="bg3"><td colspan="2" align="center">';
-    echo "<input type='hidden' name='mode' value='" . $action[$mode]['name'] . "' />";
-    echo "<input type='hidden' name='topic_id' value='" . $topic_id . "' />";
-    echo "<input type='hidden' name='forum' value='" . $forum . "' />";
-    echo "<input type='submit' name='submit' value='" . $action[$mode]['submit'] . "' />";
+    echo "<input type='hidden' name='mode' value='" . $action[$mode]['name'] . "' >";
+    echo "<input type='hidden' name='topic_id' value='" . $topic_id . "' >";
+    echo "<input type='hidden' name='forum' value='" . $forum . "' >";
+    echo "<input type='submit' name='submit' value='" . $action[$mode]['submit'] . "' >";
     echo '</td></tr></form></table></td></tr></table>';
 }
 // irmtfan move to footer.php

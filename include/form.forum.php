@@ -16,6 +16,8 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use XoopsModules\Newbb;
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 if (!is_object($forumObject)) {
@@ -41,7 +43,7 @@ $form_forum->addElement(new \XoopsFormHidden('cat_id', $forumObject->getVar('cat
 
 // Parent forums
 ob_start();
-$mytree = new \XoopsTree($GLOBALS['xoopsDB']->prefix('newbb_forums'), 'forum_id', 'parent_forum');
+$mytree = new Newbb\Tree($GLOBALS['xoopsDB']->prefix('newbb_forums'), 'forum_id', 'parent_forum');
 $mytree->makeMySelBox('forum_name', 'parent_forum', $forumObject->getVar('parent_forum'), 1, 'parent_forum');
 $form_forum->addElement(new \XoopsFormLabel(_AM_NEWBB_MAKE_SUBFORUM_OF, ob_get_contents()));
 ob_end_clean();

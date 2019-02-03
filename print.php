@@ -113,7 +113,7 @@ if (empty($isPost)) {
     echo "</head><body style='background-color:#ffffff; color:#000000;' onload='window.print()'>
             <div style='width: 750px; border: 1px solid #000; padding: 20px;'>
             <div style='text-align: center; display: block; margin: 0 0 6px 0;'>
-            <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' />
+            <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' >
             <br><br> ";
 
     $postsArray = $topicHandler->getAllPosts($topicObject);

@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h2>
-        <hr class="align_left" width="50%" size="1"/>
+        <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
@@ -41,7 +41,7 @@
         <div class="right" style="padding: 5px;">
             <{if $mode gt 1}>
                 <{$smarty.const._ALL}>:
-                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                 <select name="op">
                     <option value="0"><{$smarty.const._SELECT}></option>
                     <option value="delete"><{$smarty.const._DELETE}></option>
@@ -54,8 +54,8 @@
                         <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
                     <{/if}>
                 </select>
-                <input type="hidden" name="forum_id" value="<{$forum_id}>"/>
-                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="hidden" name="forum_id" value="<{$forum_id}>">
+                <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
             <{else}>
@@ -97,7 +97,7 @@
             <td width="5%" colspan="3">
                 <{if $mode gt 1}>
                     <{$smarty.const._ALL}>:
-                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');"/>
+                    <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
                 <{else}>
                     &nbsp;
                 <{/if}>
@@ -146,7 +146,7 @@
 
             <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
                 <{if $mode gt 1}>
-                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"/>
+                    <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
                 <{else}>
                     <{$topic.topic_folder}>
                 <{/if}>
@@ -205,10 +205,10 @@
         <{strip}>
             <form method="get" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php">
                 <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;<{$forum_selection_sort}>&nbsp;<{$forum_selection_order}>&nbsp;<{$forum_selection_since}>&nbsp;
-                <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
-                <input type="hidden" name="status" value="<{$status}>"/>
+                <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
+                <input type="hidden" name="status" value="<{$status}>">
                 <!-- irmtfan remove name="submit" -->
-                <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
@@ -228,7 +228,7 @@
 </div>
 <div class="clear"></div>
 
-<br style="clear: both;"/>
+<br style="clear: both;">
 <br>
 <div>
     <!-- irmtfan hardcode style="float: left; text-align: left;" -->
@@ -243,13 +243,13 @@
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-            <input name="term" id="term" type="text" size="15"/>
-            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>"/>
-            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
-            <input type="hidden" name="since" id="since" value="<{$forum_since}>"/>
-            <input type="hidden" name="action" id="action" value="yes"/>
-            <input type="hidden" name="searchin" id="searchin" value="both"/>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/><br>
+            <input name="term" id="term" type="text" size="15">
+            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
+            <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
+            <input type="hidden" name="since" id="since" value="<{$forum_since}>">
+            <input type="hidden" name="action" id="action" value="yes">
+            <input type="hidden" name="searchin" id="searchin" value="both">
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>
@@ -259,14 +259,14 @@
                 <{$rss_button}>
             </a>
             <span style="font-size:0.7em;"><a href="https://xoops.org">NewBB Version <{$version/100}></a></span>
-            <br style="clear: both;"/>
+            <br style="clear: both;">
             <br>
         <{/if}>
         <{$forum_jumpbox}>
     </div>
 </div>
 <div class="clear"></div>
-<br style="clear: both;"/>
+<br style="clear: both;">
 <br>
 
 <div>

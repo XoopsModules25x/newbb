@@ -213,7 +213,7 @@ class Post extends \XoopsObject
             require_once dirname(__DIR__) . '/include/functions.image.php';
             $image_extensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp']; // need improve !!!
             $post_attachment  .= '<br><strong>' . _MD_NEWBB_ATTACHMENT . '</strong>:';
-            $post_attachment  .= '<br><hr size="1" noshade="noshade" /><br>';
+            $post_attachment  .= '<br><hr size="1" noshade="noshade" ><br>';
             foreach ($attachments as $key => $att) {
                 $file_extension = ltrim(mb_strrchr($att['name_saved'], '.'), '.');
                 $filetype       = $file_extension;
@@ -226,7 +226,7 @@ class Post extends \XoopsObject
                 $file_size = number_format($file_size / 1024, 2) . ' KB';
                 if (in_array(mb_strtolower($file_extension), $image_extensions, true)
                     && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
-                    $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" /><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
+                    $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
                 } else {
@@ -243,7 +243,7 @@ class Post extends \XoopsObject
                                             . $icon_filetype
                                             . '" alt="'
                                             . $filetype
-                                            . '" /> '
+                                            . '" > '
                                             . $att['nameDisplay']
                                             . '</a> '
                                             . _MD_NEWBB_FILESIZE
@@ -267,7 +267,7 @@ class Post extends \XoopsObject
                                             . $icon_filetype
                                             . '" alt="'
                                             . $filetype
-                                            . '" /> '
+                                            . '" > '
                                             . $att['nameDisplay']
                                             . '</a> '
                                             . _MD_NEWBB_FILESIZE
@@ -547,9 +547,9 @@ class Post extends \XoopsObject
         }
 
         if ($posticon = $this->getVar('icon')) {
-            $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/subject/' . $posticon . '" alt="" /></a>';
+            $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/subject/' . $posticon . '" alt="" ></a>';
         } else {
-            $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/icons/posticon.gif" alt="" /></a>';
+            $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/icons/posticon.gif" alt="" ></a>';
         }
 
         $thread_buttons = [];

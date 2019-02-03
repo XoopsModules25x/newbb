@@ -133,9 +133,9 @@ switch ($op) {
                          . '&amp;viewmode=thread" target="checkreport">'
                          . $myts->htmlSpecialChars($report['subject'])
                          . '</a>';
-            $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked />';
+            $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked >';
             if ('processed' !== $item) {
-                $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" />';
+                $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" >';
             } else {
                 $memo = $myts->htmlSpecialChars($report['report_memo']);
             }

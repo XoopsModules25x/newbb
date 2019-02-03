@@ -162,7 +162,7 @@ switch ($op) {
                                                        . $GLOBALS['xoopsModuleConfig']['poll_module']
                                                        . '/assets/images/colorbars/'
                                                        . $current_bar
-                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' /><br>");
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' width='30' align='bottom' height='15' alt='' ><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 if (!next($barcolor_array)) {
@@ -229,7 +229,7 @@ switch ($op) {
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[" . $i . "]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
                 $color_label = new \XoopsFormLabel('', "<img src='"
                                                        . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/" . $option->getVar('option_color', 'E'))
-                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' ><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label);
@@ -517,7 +517,7 @@ switch ($op) {
                 $color_select->setExtra("onchange='showImgSelected(\"option_color_image[{$i}]\", \"option_color[{$i}]\", \"modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars\", \"\", \"" . XOOPS_URL . "\")'");
                 $color_label = new \XoopsFormLabel('', "<img src='"
                                                        . $GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/assets/images/colorbars/{$current_bar}")
-                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' /><br>");
+                                                       . "' name='option_color_image[{$i}]' id='option_color_image[{$i}]' class='alignbottom' width='30' height='15' alt='' ><br>");
                 $option_tray->addElement($color_select);
                 $option_tray->addElement($color_label);
                 unset($color_select, $color_label, $option_text);

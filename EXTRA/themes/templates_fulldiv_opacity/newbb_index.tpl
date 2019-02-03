@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$index_title}></a></h2>
-        <hr class="align_left"/>
+        <hr class="align_left">
         <{$index_desc}>
     </div>
 </div>
@@ -54,7 +54,7 @@
             <{$category.cat_displayImage}>
         </div>
         <{if $category.cat_image}>
-            <div class="floatleft"><img src="<{$category.cat_image}>" alt="<{$category.cat_title}>"/></div>
+            <div class="floatleft"><img src="<{$category.cat_image}>" alt="<{$category.cat_title}>"></div>
         <{/if}>
         <div class="floatleft">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>"><{$category.cat_title}></a>
@@ -207,11 +207,11 @@
 </div>
 <div class="icon_right">
     <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="post" name="search" id="search">
-        <input name="term" id="term" type="text" size="20"/>
-        <input type="hidden" name="forum" id="forum" value="all"/>
-        <input type="hidden" name="sortby" id="sortby" value="p.post_time desc"/>
-        <input type="hidden" name="searchin" id="searchin" value="both"/>
-        <input type="submit" id="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>"/>
+        <input name="term" id="term" type="text" size="20">
+        <input type="hidden" name="forum" id="forum" value="all">
+        <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
+        <input type="hidden" name="searchin" id="searchin" value="both">
+        <input type="submit" id="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>">
         <br>
         [ <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a> ]
     </form>

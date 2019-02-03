@@ -103,7 +103,7 @@ switch ($op) {
         $digests = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";
-            echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' /></td>";
+            echo "<td align='center' ><input type='checkbox' name='digest_id[" . $digest['digest_id'] . "]' value='1' ></td>";
             echo '<td><strong>#' . $digest['digest_id'] . ' @ ' . formatTimestamp($digest['digest_time']) . '</strong><br>' . str_replace("\n", '<br>', $digest['digest_content']) . '</td>';
             echo '</tr>';
             echo "<tr colspan='2'><td height='2'></td></tr>";

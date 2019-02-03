@@ -130,7 +130,7 @@ switch ($op) {
                 }
                 $typeObject = $typesObject[$key];
                 echo "<tr class='even' align='left'>";
-                echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' /></td>";
+                echo "<td><input type='text' name='type_order[{$key}]' value='" . $order . "' size='10' ></td>";
                 echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
                 echo '<td>' . $typeObject->getVar('type_description') . '</td>';
                 echo '</tr>';
@@ -140,16 +140,16 @@ switch ($op) {
         }
         foreach ($typesObject as $key => $typeObject) {
             echo "<tr class='odd' align='left'>";
-            echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
+            echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' ></td>";
             echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
             echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
         }
 
         echo "<tr><td colspan='3' style='text-align:center;'>";
-        echo "<input type='hidden' name='op' value='save_template' />";
-        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
-        echo "<input type='reset' value='" . _CANCEL . "' />";
+        echo "<input type='hidden' name='op' value='save_template' >";
+        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' > ";
+        echo "<input type='reset' value='" . _CANCEL . "' >";
         echo '</td></tr></table>';
         echo '</form>';
         echo '</td></tr></table>';
@@ -313,7 +313,7 @@ switch ($op) {
             }
             $typeObject = $typesObject[$type['type_id']];
             echo "<tr class='even' align='left'>";
-            echo "<td><input type='text' name='type_order[" . $type['type_id'] . "]' value='" . $type['type_order'] . "' size='10' /></td>";
+            echo "<td><input type='text' name='type_order[" . $type['type_id'] . "]' value='" . $type['type_order'] . "' size='10' ></td>";
             echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
             echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
@@ -322,7 +322,7 @@ switch ($op) {
         echo "<tr><td colspan='3' height='5px'></td></tr>";
         foreach ($typesObject as $key => $typeObject) {
             echo "<tr class='odd' align='left'>";
-            echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' /></td>";
+            echo "<td><input type='text' name='type_order[{$key}]' value='0' size='10' ></td>";
             echo "<td><em style='color:" . $typeObject->getVar('type_color') . ";'>" . $typeObject->getVar('type_name') . '</em></td>';
             echo '<td>' . $typeObject->getVar('type_description') . '</td>';
             echo '</tr>';
@@ -330,10 +330,10 @@ switch ($op) {
 
         echo "<tr><td colspan='3' style='text-align:center;'>";
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_EDITFORUM_DESC . '</legend>';
-        echo "<input type='hidden' name='forum' value='" . Request::getInt('forum', 0, 'POST') . "' />";
-        echo "<input type='hidden' name='op' value='save_forum' />";
-        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
-        echo "<input type='reset' value='" . _CANCEL . "' />";
+        echo "<input type='hidden' name='forum' value='" . Request::getInt('forum', 0, 'POST') . "' >";
+        echo "<input type='hidden' name='op' value='save_forum' >";
+        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' > ";
+        echo "<input type='reset' value='" . _CANCEL . "' >";
         echo '</td></tr></table>';
         echo '</form>';
         echo '</td></tr></table>';
@@ -380,15 +380,15 @@ switch ($op) {
         if ('add' !== $op) {
             foreach ($typesObject as $key => $typeObject) {
                 echo "<tr class='odd' align='left'>";
-                echo "<td><input type='checkbox' name='type_del[{$key}]' /></td>";
-                echo "<td><input type='text' name='type_name[{$key}]' value='" . $typeObject->getVar('type_name') . "' size='10' /></td>";
+                echo "<td><input type='checkbox' name='type_del[{$key}]' ></td>";
+                echo "<td><input type='text' name='type_name[{$key}]' value='" . $typeObject->getVar('type_name') . "' size='10' ></td>";
                 if ($isColorpicker) {
                     $form_colorpicker = new \XoopsFormColorPicker('', "type_color[{$key}]", $typeObject->getVar('type_color'));
                     echo '<td>' . $form_colorpicker->render() . '</td>';
                 } else {
-                    echo "<td><input type='text' name='type_color[{$key}]' value='" . $typeObject->getVar('type_color') . "' size='10' /></td>";
+                    echo "<td><input type='text' name='type_color[{$key}]' value='" . $typeObject->getVar('type_color') . "' size='10' ></td>";
                 }
-                echo "<td><input type='text' name='type_description[{$key}]' value='" . $typeObject->getVar('type_description') . "' size='30' /></td>";
+                echo "<td><input type='text' name='type_description[{$key}]' value='" . $typeObject->getVar('type_description') . "' size='30' ></td>";
                 echo '</tr>';
             }
             echo "<tr><td colspan='4' style='text-align:center;'>";
@@ -398,22 +398,22 @@ switch ($op) {
             $adminObject->displayButton('left');
             for ($i = 0; $i < 10; ++$i) {
                 echo "<tr class='odd' align='left'>";
-                echo "<td><input type='text' name='type_name[{$i}]' value='' size='10' /></td>";
+                echo "<td><input type='text' name='type_name[{$i}]' value='' size='10' ></td>";
                 if ($isColorpicker) {
                     $form_colorpicker = new \XoopsFormColorPicker('', "type_color[{$i}]", '');
                     echo '<td>' . $form_colorpicker->render() . '</td>';
                 } else {
-                    echo "<td><input type='text' name='type_color[{$i}]' value='' size='10' /></td>";
+                    echo "<td><input type='text' name='type_color[{$i}]' value='' size='10' ></td>";
                 }
-                echo "<td><input type='text' name='type_description[{$i}]' value='' size='40' /></td>";
+                echo "<td><input type='text' name='type_description[{$i}]' value='' size='40' ></td>";
                 echo '</tr>';
             }
             echo "<tr><td colspan='3' style='text-align:center;'>";
-            echo "<input type='hidden' name='isnew' value='1' />";
+            echo "<input type='hidden' name='isnew' value='1' >";
         }
-        echo "<input type='hidden' name='op' value='save_type' />";
-        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' /> ";
-        echo "<input type='reset' value='" . _CANCEL . "' />";
+        echo "<input type='hidden' name='op' value='save_type' >";
+        echo "<input type='submit' name='submit' value='" . _SUBMIT . "' > ";
+        echo "<input type='reset' value='" . _CANCEL . "' >";
         echo '</td></tr></table>';
         echo '</form>';
         echo '</td></tr></table>';

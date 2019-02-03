@@ -297,17 +297,17 @@ $searchin_select .= '<label class="radio-inline"><input type="radio" name="searc
 if ('title' === $searchin) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _MD_NEWBB_SUBJECT . ' </label>';
+$searchin_select .= ' >' . _MD_NEWBB_SUBJECT . ' </label>';
 $searchin_select .= '<label class="radio-inline"><input type="radio" name="searchin" value="text"';
 if ('text' === $searchin) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _MD_NEWBB_BODY . ' </label>';
+$searchin_select .= ' >' . _MD_NEWBB_BODY . ' </label>';
 $searchin_select .= '<label class="radio-inline"><input type="radio" name="searchin" value="both"';
 if ('both' === $searchin || empty($searchin)) {
     $searchin_select .= ' checked';
 }
-$searchin_select .= ' />' . _MD_NEWBB_SUBJECT . ' & ' . _MD_NEWBB_BODY . ' </label>';
+$searchin_select .= ' >' . _MD_NEWBB_SUBJECT . ' & ' . _MD_NEWBB_BODY . ' </label>';
 $xoopsTpl->assign('searchin_radio', $searchin_select);
 
 /* show_search */
@@ -316,12 +316,12 @@ $show_search_select .= '<label class="radio-inline"><input type="radio" name="sh
 if ('post' === $show_search) {
     $show_search_select .= ' checked';
 }
-$show_search_select .= ' />' . _MD_NEWBB_POSTS . ' </label>';
+$show_search_select .= ' >' . _MD_NEWBB_POSTS . ' </label>';
 $show_search_select .= '<label class="radio-inline"><input type="radio" name="show_search" value="post_text"';
 if ('post_text' === $show_search || empty($show_search)) {
     $show_search_select .= ' checked';
 }
-$show_search_select .= ' />' . _MD_NEWBB_SEARCHPOSTTEXT . ' </label>';
+$show_search_select .= ' >' . _MD_NEWBB_SEARCHPOSTTEXT . ' </label>';
 $xoopsTpl->assign('show_search_radio', $show_search_select);
 
 /* author */

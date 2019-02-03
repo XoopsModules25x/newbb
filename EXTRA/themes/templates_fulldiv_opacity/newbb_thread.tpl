@@ -18,10 +18,10 @@
     <div class="thread_userinfo odd forum_cell">
         <{if $topic_post.poster.uid gt 0}>
             <div class="thread_poster comUserName"><{$topic_post.poster.link}></div>
-            <div class="thread_poster_rank comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" /><{/if}></div>
+            <div class="thread_poster_rank comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" ><{/if}></div>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                 <br>
-                <img class="thread_poster_img comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>"/>
+                <img class="thread_poster_img comUserImg" src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>">
             <{else}>
                 <br>
                 <{$anonym_avatar}>
@@ -121,7 +121,7 @@
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" target="_self" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>"><{$smarty.const._MD_NEWBB_SPLIT_ALL}></a>
                 |
-                <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>"/>
+                <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
             <{else}>
                 <{if $topic_post.thread_buttons}>
                     <{foreach item=btn from=$topic_post.thread_buttons}>

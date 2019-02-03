@@ -90,7 +90,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $box .= '<select class="select" name="forum" onchange="if (this.options[this.selectedIndex].value >0) { document.forms.forum_jumpbox.submit();}">';
         $box .= '<option value=0>-- ' . _MD_NEWBB_SELFORUM . ' --</option>';
         $box .= newbbForumSelectBox($forum_id);
-        $box .= "</select> <input type='submit' class='button' value='" . _GO . "' /></form>";
+        $box .= "</select> <input type='submit' class='button' value='" . _GO . "' ></form>";
         unset($forums, $categories);
 
         return $box;

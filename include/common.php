@@ -67,7 +67,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 
 // module information
 //$mod_copyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
-//                     <img src='" . NEWBB_AUTHOR_LOGOIMG . "' alt='XOOPS Project' /></a>";
+//                     <img src='" . NEWBB_AUTHOR_LOGOIMG . "' alt='XOOPS Project' ></a>";
 //
 
 //$debug     = false;

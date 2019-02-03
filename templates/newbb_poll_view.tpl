@@ -2,11 +2,11 @@
     <{$topic_pollform}>
 <{else}>
     <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/votepolls.php" method="post">
-        <input type="hidden" name="topic_id" value="<{$topic_id}>"/>
-        <input type="hidden" name="forum" value="<{$forum_id}>"/>
+        <input type="hidden" name="topic_id" value="<{$topic_id}>">
+        <input type="hidden" name="forum" value="<{$forum_id}>">
         <table class="outer width100" cellspacing="1">
             <tr>
-                <th class="center" colspan="2"><input type="hidden" name="poll_id" value="<{$poll.pollId}>"/>
+                <th class="center" colspan="2"><input type="hidden" name="poll_id" value="<{$poll.pollId}>">
                     <{$poll.question}></th>
             </tr>
             <{foreach item=option from=$poll.options}>
@@ -17,7 +17,7 @@
             </tr>
             <{/foreach}>
             <tr>
-                <td class="foot center" colspan="2"><input type="submit" value="<{$lang_vote}>"/></td>
+                <td class="foot center" colspan="2"><input type="submit" value="<{$lang_vote}>"></td>
             </tr>
         </table>
     </form>
