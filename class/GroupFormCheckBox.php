@@ -41,7 +41,7 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
              * @param string $prefix
              * @param array  $parentIds
              */
-    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
+    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = [])
     {
         if ($option['id'] > 0) {
             $tree .= $prefix . '<input type="checkbox" name="' . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" id="' . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" onclick="';

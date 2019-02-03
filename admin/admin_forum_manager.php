@@ -38,7 +38,9 @@ require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once dirname(__DIR__) . '/include/functions.forum.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
 
-$cacheHelper = Newbb\Utility::cleanCache();
+/** @var \Xmf\Module\Helper\Cache $cacheHelper */
+$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+\XoopsModules\Newbb\Utility::cleanCache();
 
 xoops_cp_header();
 

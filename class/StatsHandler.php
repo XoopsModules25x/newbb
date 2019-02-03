@@ -14,7 +14,7 @@ namespace XoopsModules\Newbb;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require_once __DIR__ . '/functions.ini.php';
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 
 define('NEWBB_STATS_TYPE_TOPIC', 1);
 define('NEWBB_STATS_TYPE_POST', 2);

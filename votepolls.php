@@ -71,7 +71,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 $mail_author = false;
 // new xoopspoll module
 if ($pollModuleHandler->getVar('version') >= 140) {
-    $classConstants = Xoopspoll\Constants();
+    $classConstants = \XoopsModules\Xoopspoll\Constants();
     if (is_object($pollObject)) {
         if ($pollObject->getVar('multiple')) {
             $optionId = Request::getInt('option_id', 0, 'POST');

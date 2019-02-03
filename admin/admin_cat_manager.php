@@ -184,6 +184,7 @@ switch ($op) {
         echo "<th class='bg3' width='10%'>" . _AM_NEWBB_DELETE . '</th>';
         echo '</tr>';
 
+        /** @var XoopsModules\Newbb\Category $onecat */
         foreach ($categories as $key => $onecat) {
             $cat_edit_link  = '<a href="admin_cat_manager.php?op=mod&cat_id=' . $onecat->getVar('cat_id') . '">' . newbbDisplayImage('admin_edit', _EDIT) . '</a>';
             $cat_del_link   = '<a href="admin_cat_manager.php?op=del&cat_id=' . $onecat->getVar('cat_id') . '">' . newbbDisplayImage('admin_delete', _DELETE) . '</a>';
