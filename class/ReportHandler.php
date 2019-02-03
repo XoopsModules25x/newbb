@@ -54,10 +54,10 @@ class ReportHandler extends \XoopsPersistableObjectHandler
      * @param  int       $perpage
      * @param            $start
      * @param  int       $report_result
-     * @param  int       $report_id
+     * @param  int       $reportId
      * @return array
      */
-    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $report_id = 0)
+    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $reportId = 0)
     {
         $forumCriteria = '';
         $row           = [];
@@ -85,8 +85,8 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         }
         $tables_criteria = ' FROM ' . $this->db->prefix('newbb_report') . ' r, ' . $this->db->prefix('newbb_posts') . ' p WHERE r.post_id= p.post_id';
 
-        if ($report_id) {
-            $result = $this->db->query('SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $report_id" . $order_criteria);
+        if ($reportId) {
+            $result = $this->db->query('SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $reportId" . $order_criteria);
             if ($result) {
                 $row = $this->db->fetchArray($result);
             }

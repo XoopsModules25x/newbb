@@ -48,14 +48,14 @@ xoops_cp_header();
 
 switch ($op) {
     case 'save':
-        $report_ids = Request::getArray('report_id', '', 'POST');
-        //        $report_ids = Request::getInt('report_id', 0, 'POST'); //$_POST['report_id'];
+        $reportArray = Request::getArray('report_id', '', 'POST');
+        //        $reportArray = Request::getInt('report_id', 0, 'POST'); //$_POST['report_id'];
         // irmtfan add error redirect header
-        if (0 === count($report_ids)) {
+        if (0 === count($reportArray)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
         }
         $report_memos = Request::getArray('report_memo', [], 'POST'); // isset($_POST['report_memo']) ? $_POST['report_memo'] : array();
-        foreach ($report_ids as $rid => $value) {
+        foreach ($reportArray as $rid => $value) {
             if (!$value) {
                 continue;
             }
@@ -68,12 +68,12 @@ switch ($op) {
         redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTSAVE);
         break;
     case 'delete':
-        $report_ids = Request::getArray('report_id', [], 'POST'); // $_POST['report_id'];
+        $reportArray = Request::getArray('report_id', [], 'POST'); // $_POST['report_id'];
         // irmtfan add error redirect header
-        if (0 === count($report_ids)) {
+        if (0 === count($reportArray)) {
             redirect_header("admin_report.php?item={$item}" . (empty($start) ? '' : "&start={$start}"), 1, _AM_NEWBB_REPORTNOTSELECT);
         }
-        foreach ($report_ids as $rid => $value) {
+        foreach ($reportArray as $rid => $value) {
             if (!$value) {
                 continue;
             }

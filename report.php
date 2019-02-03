@@ -82,7 +82,7 @@ if (Request::hasVar('submit', 'POST')) {
         $report->setVar('report_result', 0);
         $report->setVar('report_memo', '');
 
-        if ($report_id = $reportHandler->insert($report)) {
+        if ($reportId = $reportHandler->insert($report)) {
             //            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
             if (empty($forum)) {
             }
