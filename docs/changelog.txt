@@ -1,3 +1,6 @@
+<h5>5.00 Beta 2 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
+<hr>
+
 <h5>5.00 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
 <hr>
 - RGB to HEX (mamba)
