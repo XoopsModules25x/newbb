@@ -20,15 +20,6 @@
  */
 $moduleDirName = basename(dirname(__DIR__));
 
-/*
-$uploadFolders = [
-    //    NEWBB_UPLOAD_PATH,
-    //    NEWBB_UPLOAD_PATH . '/thumbs'
-    XOOPS_UPLOAD_URL . '/' . $moduleDirName,
-    XOOPS_UPLOAD_URL . '/' . $moduleDirName . '/thumbs',
-];
-*/
-
 /**
  * @return object
  */

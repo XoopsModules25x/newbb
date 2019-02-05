@@ -32,7 +32,7 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 /** @var Newbb\Helper $helper */
 /** @var Newbb\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Newbb\Helper::getInstance();
+$helper  = \XoopsModules\Newbb\Helper::getInstance();
 $utility = new Newbb\Utility();
 //$configurator = new Newbb\Common\Configurator();
 
@@ -70,9 +70,6 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 //                     <img src='" . NEWBB_AUTHOR_LOGOIMG . "' alt='XOOPS Project' ></a>";
 //
 
-//$debug     = false;
-//$helper = Newbb\Helper::getInstance($debug);
-
 //This is needed or it will not work in blocks.
 //global $newbbIsAdmin;
 
@@ -105,7 +102,7 @@ $postHandler = $helper->getHandler('Post');
 /** @var Newbb\RateHandler $rateHandler */
 $rateHandler = $helper->getHandler('Rate');
 /** @var Newbb\ReadHandler $readHandler */
-//$readHandler = $helper->getHandler('Read' . $type);
+$readHandler = $helper->getHandler('Read');
 /** @var Newbb\ReadforumHandler $ReadforumHandler */
 $ReadforumHandler = $helper->getHandler('Readforum');
 /** @var Newbb\ReadtopicHandler $readTopicHandler */

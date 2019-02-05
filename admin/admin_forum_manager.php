@@ -48,7 +48,7 @@ $op       = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); // 
 $forum_id = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET'); //(int)( !empty($_GET['forum'])? $_GET['forum'] : (!empty($_POST['forum'])?$_POST['forum']:0) );
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 switch ($op) {
     case 'moveforum':
         //if (!$newXoopsModuleGui) loadModuleAdminMenu(2, "");
@@ -175,7 +175,7 @@ switch ($op) {
             //$cacheHelper->delete('forum');
             if (Request::getInt('perm_template', 0, 'POST')) {
                 //                /** var Newbb\PermissionHandler $permHandler */
-                //                $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+                //                $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
                 $perm_template = $permHandler->getTemplate();
                 /** @var \XoopsMemberHandler $memberHandler */
                 $memberHandler = xoops_getHandler('member');
@@ -229,7 +229,7 @@ switch ($op) {
     default:
 
         //        /** @var Newbb\CategoryHandler $categoryHandler */
-        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -249,7 +249,7 @@ switch ($op) {
         $echo .= "<th class='bg3'>" . _AM_NEWBB_MERGE . '</th>';
         $echo .= '</tr>';
 
-        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);

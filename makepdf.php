@@ -40,7 +40,7 @@ if (empty($post_id)) {
     exit(_MD_NEWBB_ERRORTOPIC);
 }
 ///** @var Newbb\PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 $post = $postHandler->get($post_id);
 if (!$approved = $post->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
@@ -48,14 +48,14 @@ if (!$approved = $post->getVar('approved')) {
 $post_data = $postHandler->getPostForPDF($post);
 //$post_edit = $post->displayPostEdit();  //reserve for future versions to display edit records
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $forumtopic = $topicHandler->getByPost($post_id);
 $topic_id   = $forumtopic->getVar('topic_id');
 if (!$approved = $forumtopic->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler    = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler    = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forum           = $forum ?: $forumtopic->getVar('forum_id');
 $viewtopic_forum = $forumHandler->get($forum);
 $parent_forums   = [];
@@ -76,7 +76,7 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
 if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_status'), 'pdf')) {
     exit(_MD_NEWBB_NORIGHTTOPDF);
 }
-//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+//$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $cat                                 = $viewtopic_forum->getVar('cat_id');
 $viewtopic_cat                       = $categoryHandler->get($cat);
 $GLOBALS['xoopsOption']['pdf_cache'] = 0;

@@ -76,9 +76,9 @@ if (Request::getString('submit', '', 'POST')) {
     echo '</tr>';
 
     //    /** @var Newbb\ForumHandler $forumHandler */
-    //    $forumHandler     = Newbb\Helper::getInstance()->getHandler('Forum');
+    //    $forumHandler     = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     //    /** @var Newbb\CategoryHandler $categoryHandler */
-    //    $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+    //    $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
     $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
     $criteriaCategory->setSort('cat_order');
     $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);

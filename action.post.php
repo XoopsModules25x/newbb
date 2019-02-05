@@ -27,11 +27,11 @@ if (0 === count($post_id) || 0 === count($op)) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
 ///** @var PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 ///** @var TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 if (empty($topic_id)) {
     $forumObject = null;
 } else {

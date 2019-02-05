@@ -59,7 +59,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
     $moduleDirName = basename(dirname(__DIR__));
 
     /** @var Newbb\Helper $helper */
-    $helper       = Newbb\Helper::getInstance();
+    $helper       = \XoopsModules\Newbb\Helper::getInstance();
     $utility      = new Newbb\Utility();
     $configurator = new Newbb\Common\Configurator();
     // Load language files

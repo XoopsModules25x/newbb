@@ -18,14 +18,14 @@ if (!$forum = Request::getString('forum', '', 'GET')) {
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($forum);
 if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _NOPERM);
 }
 
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject = $topicHandler->create();
 $topicObject->setVar('forum_id', $forum);
 if (!$topicHandler->getPermission($forumObject, 0, 'post')) {
@@ -46,7 +46,7 @@ if (!$topicHandler->getPermission($forumObject, 0, 'post')) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 

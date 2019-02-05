@@ -46,11 +46,11 @@ if (!$topic_id && !$post_id) {
 }
 
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 ///** @var TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);
@@ -89,7 +89,7 @@ if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -104,7 +104,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar("cat_id"), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forumObject->getVar("cat_id"), "title" => $categoryObject->getVar('cat_title')));
 
@@ -170,7 +170,7 @@ $require_reply = 0;
 require_once __DIR__ . '/include/form.post.php';
 
 ///** @var Newbb\KarmaHandler $karmaHandler */
-//$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+//$karmaHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Karma');
 $user_karma = $karmaHandler->getUserKarma();
 
 $posts_context = [];

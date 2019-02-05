@@ -57,9 +57,9 @@ if (empty($topic_id)) {
 }
 
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 
 if (!$forum) {
     /** @var Newbb\Topic $topicObject */
@@ -75,7 +75,7 @@ if (!$forum) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forum);
 }
 // irmtfan add restore to viewtopic
@@ -128,7 +128,7 @@ if (Request::getString('submit', '', 'POST')) {
         // irmtfan full URL
         echo $action[$mode]['msg'] . "<p><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewforum.php?forum=$forum'>" . _MD_NEWBB_RETURNTOTHEFORUM . "</a></p><p><a href='index.php'>" . _MD_NEWBB_RETURNFORUMINDEX . '</a></p>';
     } elseif ('restore' === $mode) {
-        //$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         $forums       = [];
         $topicsObject = $topicHandler->getAll(new \Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN'));
         foreach (array_keys($topicsObject) as $id) {
@@ -167,9 +167,9 @@ if (Request::getString('submit', '', 'POST')) {
              . '</a></p>';
     } elseif ('merge' === $mode) {
         //        /** @var PostHandler $postHandler */
-        //        $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+        //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         //        /** @var Newbb\RateHandler $rateHandler */
-        //        $rateHandler = Newbb\Helper::getInstance()->getHandler('Rate');
+        //        $rateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Rate');
 
         foreach ($topic_id as $tid) {
             $topicObject    = $topicHandler->get($tid);
@@ -300,10 +300,10 @@ if (Request::getString('submit', '', 'POST')) {
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
             $topicObject = $topicHandler->get($topic_id);
             //            /** @var Newbb\StatsHandler $statsHandler */
-            //            $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+            //            $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
             $statsHandler->update($topicObject->getVar('forum_id'), 'digest');
             //            /** @var Newbb\UserstatsHandler $userstatsHandler */
-            //            $userstatsHandler = Newbb\Helper::getInstance()->getHandler('Userstats');
+            //            $userstatsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Userstats');
             if ($user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'))) {
                 $z = $user_stat->getVar('user_digests') + 1;
                 $user_stat->setVar('user_digests', (int)$z);
@@ -338,7 +338,7 @@ if (Request::getString('submit', '', 'POST')) {
         $box = '<select name="newforum" size="1">';
 
         //        /** @var Newbb\CategoryHandler $categoryHandler */
-        //        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+        //        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $categories = $categoryHandler->getByPermission('access');
         $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 

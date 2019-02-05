@@ -182,7 +182,7 @@ function newbb_list_topic_edit($options)
     $optionsForum = explode(',', $options[12]);
     require_once dirname(__DIR__) . '/include/functions.forum.php';
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));

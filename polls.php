@@ -51,7 +51,7 @@ $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'GET'), '
 
 // deal with permissions
 /** @var Newbb\TopicHandler $topicHandler */
-$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject  = $topicHandler->get($topic_id);
 // topic exist
 if (is_object($topicObject)) {
@@ -61,7 +61,7 @@ if (is_object($topicObject)) {
 }
 // forum access permission
 /** @var Newbb\ForumHandler $forumHandler */
-$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject  = $forumHandler->get($forum_id);
 if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_NORIGHTTOACCESS);
@@ -644,7 +644,7 @@ switch ($op) {
         }
         $poll_form   = new \XoopsThemeForm(_MD_NEWBB_POLL_RESTARTPOLL, 'poll_form', 'polls.php', 'post', true);
         $expire_text = new \XoopsFormText(_MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '<br>' . sprintf(_MD_NEWBB_POLL_EXPIREDAT,
-                                                                                                                                                                                                                      formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')) . '</small>',
+                                          formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s')) . '</small>',
                                           'end_time', 20, 19, formatTimestamp(time() + $default_poll_duration, 'Y-m-d H:i:s'));
         $poll_form->addElement($expire_text);
         $poll_form->addElement(new \XoopsFormRadioYN(_MD_NEWBB_POLL_NOTIFY, 'notify', 1));

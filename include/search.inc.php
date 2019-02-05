@@ -49,7 +49,7 @@ function newbb_search(
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new \CriteriaCompo();
@@ -65,7 +65,7 @@ function newbb_search(
     if (is_numeric($userid) && 0 !== $userid) {
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', $userid), 'OR');
-    } elseif (is_array($userid) && count($userid) > 0) {
+    } elseif ($userid && is_array($userid)) {
         $userid       = array_map('intval', $userid);
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
@@ -121,7 +121,7 @@ function newbb_search(
     $criteria->setOrder($order);
 
     /** @var Newbb\PostHandler $postHandler */
-    $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];

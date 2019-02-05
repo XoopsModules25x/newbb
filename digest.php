@@ -23,7 +23,7 @@ if (0 == $GLOBALS['xoopsModuleConfig']['email_digest']) {
     return false;
 }
 /** @var Newbb\DigestHandler $digestHandler */
-$digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
+$digestHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Digest');
 $msg           = $digestHandler->process();
 $msg           .= ob_get_contents();
 ob_end_clean();

@@ -41,11 +41,11 @@ if (empty($forum)) {
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var Newbb\PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
     /** @var Post $postObject */
@@ -63,7 +63,7 @@ if (!$forumHandler->getPermission($forumObject)) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -150,7 +150,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         }
 
         $delete_attach = Request::getArray('delete_attach', [], 'POST');
-        if (is_array($delete_attach) && count($delete_attach) > 0) {
+        if ($delete_attach && is_array($delete_attach)) {
             $postObject->deleteAttachment($delete_attach);
         }
     } else {

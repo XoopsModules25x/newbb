@@ -54,7 +54,7 @@ if (!$GLOBALS['xoopsDB']->queryF('
     exit('Can not create tmp table for `bb_type_forum_tmp`');
 }
 
-//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+//$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $subjectpres = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
 $types       = [];
 $order       = 1;
@@ -79,7 +79,7 @@ if (0 === count($types)) {
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 if ($forums_type = $forumHandler->getIds(new \Criteria('allow_subject_prefix', 1))) {
     foreach ($forums_type as $forum_id) {
         $type_query = [];

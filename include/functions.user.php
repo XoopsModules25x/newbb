@@ -108,7 +108,7 @@ function newbbIsModerator(&$forum, $user = -1)
         if (0 == $forum_id) {
             return false;
         }
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forum        = $forumHandler->get($forum_id);
     }
 
@@ -149,7 +149,7 @@ function newbbIsAdmin($forum = 0)
     $cache_id = is_object($forum) ? $forum->getVar('forum_id', 'n') : (int)$forum;
     if (!isset($_cachedModerators[$cache_id])) {
         if (!is_object($forum)) {
-            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forum        = $forumHandler->get((int)$forum);
         }
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');

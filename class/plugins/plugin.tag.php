@@ -47,7 +47,7 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     /** @var TopicHandler $itemHandler */
-    $itemHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsObject $itemsObject */
     $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
@@ -80,7 +80,7 @@ function newbb_tag_iteminfo(&$items)
 function newbb_tag_synchronization($mid)
 {
     /** @var TopicHandler $itemHandler */
-    $itemHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsPersistableObjectHandler $linkHandler */
     $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 

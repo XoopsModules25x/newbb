@@ -48,7 +48,7 @@ if (!in_array($op, $validOps, true)) {
 }
 
 ///** @var Newbb\TypeHandler $typeHandler */
-//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+//$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 
 switch ($op) {
@@ -164,11 +164,11 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
         }
 
-        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
-        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forums = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c] = '[' . $categories[$c] . ']';
@@ -234,14 +234,14 @@ switch ($op) {
         redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
         break;
     case 'forum':
-        //        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
-        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forums = $forumHandler->getTree(array_keys($categories));
         if (empty($forums)) {
             redirect_header('admin_forum_manager.php', 2, _AM_NEWBB_CREATENEWFORUM);
@@ -277,7 +277,7 @@ switch ($op) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
-        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
             redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }

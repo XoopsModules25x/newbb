@@ -76,7 +76,7 @@ $search_username = trim($uname);
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init(0);
 }
 

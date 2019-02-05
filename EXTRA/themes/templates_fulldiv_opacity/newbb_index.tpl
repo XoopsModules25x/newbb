@@ -39,7 +39,7 @@
   </fieldset>
 <{/if}>
 <div class="dropdown floatleft">
-    <{includeq file="db:newbb_index_menu.tpl"}>
+    <{include file="db:newbb_index_menu.tpl"}>
 </div>
 <div class="clear"></div>
 <br>
@@ -266,7 +266,7 @@
     <div class="clear"></div>
 <{/if}>
 <{if $online}>
-    <{includeq file="db:newbb_online.tpl"}>
+    <{include file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

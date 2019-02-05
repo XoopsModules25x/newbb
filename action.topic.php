@@ -27,9 +27,9 @@ if (0 === count($topic_id) || 0 === count($op)) {
 
 $topic_id = array_values($topic_id);
 ///** @var Newbb\TopicHandler|\XoopsPersistableObjectHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var Newbb\ForumHandler|\XoopsPersistableObjectHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 
 $isAdmin = newbbIsAdmin($forum_id);
 
@@ -127,7 +127,7 @@ switch ($op) {
             && $forumHandler->getPermission(Request::getInt('newforum', 0, 'POST'), 'post')) {
             $criteria = new \Criteria('topic_id', '(' . implode(',', $topic_id) . ')', 'IN');
             //            /** @var Newbb\PostHandler $postHandler */
-            //            $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+            //            $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
             $postHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
             $topicHandler->updateAll('forum_id', Request::getInt('newforum', 0, 'POST'), $criteria, true);
             $forumHandler->synchronization(Request::getInt('newforum', 0, 'POST'));
@@ -135,7 +135,7 @@ switch ($op) {
         } else {
             require_once $GLOBALS['xoops']->path('header.php');
             //            /** @var Newbb\CategoryHandler $categoryHandler */
-            //            $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+            //            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
             $categories = $categoryHandler->getByPermission('access');
             $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
@@ -182,7 +182,7 @@ switch ($op) {
         break;
 }
 ///** @var Newbb\StatsHandler $statsHandler */
-//$statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+//$statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
 $statsHandler->reset();
 if (empty($forum_id)) {
     redirect_header(XOOPS_URL . '/modules/newbb/list.topic.php', 2, _MD_NEWBB_DBUPDATED);

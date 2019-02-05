@@ -28,7 +28,7 @@
                     </div>
                 <{/if}>
 
-                <div class="<{if $viewer_level gt 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{includeq file="db:newbb_index_menu.tpl"}></div>
+                <div class="<{if $viewer_level gt 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
 
                 <{if $viewer_level gt 1}>
                     <div class="col-md-12">
@@ -319,7 +319,7 @@
         <{/if}>
 
         <{if $online}>
-            <{includeq file="db:newbb_online.tpl"}>
+            <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
         <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
@@ -331,6 +331,6 @@
             </div>
         <{/if}>
 
-        <{includeq file='db:newbb_notification_select.tpl'}>
+        <{include file='db:newbb_notification_select.tpl'}>
 
     </div><!-- .xoops-newbb -->

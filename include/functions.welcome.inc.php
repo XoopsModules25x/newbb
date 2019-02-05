@@ -19,7 +19,7 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBA
 }
 
 $forum_id    = $forumObject->getVar('forum_id');
-$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 $postObject  = $postHandler->create();
 $postObject->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
 $postObject->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
@@ -48,7 +48,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
         $mod->loadLanguage();
     }
     /** var Newbb\PermissionHandler $permHandler */
-    $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+    $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
     $show_ids    = $permHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
     $visible_ids = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
@@ -60,7 +60,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $catHandler = $helper->getHandler('Category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
     /** @var \ProfileFieldHandler $fieldcatHandler */
-    $fieldcatHandler = $helper->getHandler('Category', 'profile');
+    $fieldcatHandler = $helper->getHandler('Field', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
 
     // Add core fields

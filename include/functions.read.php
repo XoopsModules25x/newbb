@@ -29,7 +29,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetRead($type, $item_id, $post_id, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
+        $readHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->setRead($item_id, $post_id, $uid);
     }
@@ -43,7 +43,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbGetRead($type, $item_id, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
+        $readHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->getRead($item_id, $uid);
     }
@@ -56,7 +56,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetReadforum($status = 0, $uid = null)
     {
         /** @var Newbb\ReadforumHandler $readHandler */
-        $ReadforumHandler = Newbb\Helper::getInstance()->getHandler('Readforum');
+        $ReadforumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Readforum');
 
         return $ReadforumHandler->setReadItems($status, $uid);
     }
@@ -70,7 +70,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
     {
         /** @var Newbb\ReadtopicHandler $readHandler */
-        $readTopicHandler = Newbb\Helper::getInstance()->getHandler('Readtopic');
+        $readTopicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Readtopic');
 
         return $readTopicHandler->setReadItems($status, $forum_id, $uid);
     }
@@ -84,7 +84,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     function newbbIsRead($type, &$items, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
-        $readHandler = Newbb\Helper::getInstance()->getHandler('Read' . $type);
+        $readHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->isReadItems($items, $uid);
     }

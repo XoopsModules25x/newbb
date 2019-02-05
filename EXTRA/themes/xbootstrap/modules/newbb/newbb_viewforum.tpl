@@ -42,7 +42,7 @@
         </a>
 
         <{if $subforum}>
-            <{includeq file="db:newbb_viewforum_subforum.tpl"}>
+            <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>
     </div>
@@ -109,7 +109,7 @@
                 <{/if}>
             </div>
             <div class="col-md-4 col-xs-12 pull-right">
-                <{includeq file="db:newbb_viewforum_menu.tpl"}>
+                <{include file="db:newbb_viewforum_menu.tpl"}>
             </div>
         </div>
         <{if $mode gt 1}>
@@ -242,7 +242,7 @@
 </div>
 
 <{if $online}>
-    <{includeq file="db:newbb_online.tpl"}>
+    <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
 <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
@@ -251,5 +251,5 @@
         <{$rss_button}>
     </a>
 <{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>
 </div><!-- .newbb -->

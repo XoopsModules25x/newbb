@@ -34,8 +34,7 @@ class Migrate extends \Xmf\Database\Migrate
      */
     public function __construct(Newbb\Common\Configurator $configurator)
     {
-        require_once dirname(dirname(__DIR__)) . '/include/config.php';
-        //        $config = getConfig();
+
         $this->renameTables = $configurator->renameTables;
 
         $moduleDirName = basename(dirname(dirname(__DIR__)));

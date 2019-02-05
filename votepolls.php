@@ -34,7 +34,7 @@ $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'POST'), 
 $forum    = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET');
 
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'vote')) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _NOPERM);

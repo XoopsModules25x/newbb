@@ -24,11 +24,11 @@ if (!$topic_id && !$post_id) {
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var Newbb\PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 /** @var Newbb\Post $postObject */
 $postObject  = $postHandler->get($post_id);
@@ -40,7 +40,7 @@ if (!$forumHandler->getPermission($forumObject)) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 $isAdmin = newbbIsAdmin($forumObject);
@@ -73,7 +73,7 @@ if (null !== $error_msg) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
 
@@ -85,7 +85,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 /*
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), array("cat_title"));
 $xoopsTpl->assign('category', array("id" => $forumObject->getVar('cat_id'), "title" => $categoryObject->getVar('cat_title')));
 
@@ -119,7 +119,7 @@ $xoopsTpl->assign('error_message', _MD_NEWBB_EDITEDBY . ' ' . $GLOBALS['xoopsUse
 require_once __DIR__ . '/include/form.post.php';
 
 ///** @var Newbb\KarmaHandler $karmaHandler */
-//$karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+//$karmaHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Karma');
 $user_karma = $karmaHandler->getUserKarma();
 
 $posts_context       = [];

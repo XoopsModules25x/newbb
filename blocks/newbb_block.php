@@ -77,7 +77,7 @@ function b_newbb_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -153,7 +153,7 @@ function b_newbb_show($options)
 
     if (count($types) > 0) {
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -276,7 +276,7 @@ function b_newbb_topic_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -336,7 +336,7 @@ function b_newbb_topic_show($options)
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -438,7 +438,7 @@ function b_newbb_post_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -609,7 +609,7 @@ function b_newbb_author_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }

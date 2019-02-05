@@ -292,6 +292,6 @@
 <div class="clear"></div>
 <br>
 
-<{if $online}><{includeq file="db:newbb_online.tpl"}><{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
+<{include file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

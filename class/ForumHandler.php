@@ -68,7 +68,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'forum', $forum->getVar('forum_id'));
         // Get list of all topics in forum, to delete them too
         /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         $topicHandler->deleteAll(new \Criteria('forum_id', $forum->getVar('forum_id')), true, true);
         $this->updateAll('parent_forum', $forum->getVar('parent_forum'), new \Criteria('parent_forum', $forum->getVar('forum_id')));
         $this->deletePermission($forum);
@@ -83,7 +83,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function getIdsByPermission($perm = 'access')
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->getForums($perm);
     }
@@ -105,7 +105,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $criteria = new \CriteriaCompo(new \Criteria('forum_id', '(' . implode(', ', $valid_ids) . ')', 'IN'));
         if (is_numeric($cat) && $cat > 0) {
             $criteria->add(new \Criteria('cat_id', (int)$cat));
-        } elseif (is_array($cat) && count($cat) > 0) {
+        } elseif ($cat && is_array($cat)) {
             $criteria->add(new \Criteria('cat_id', '(' . implode(', ', $cat) . ')', 'IN'));
         }
         $criteria->setSort('forum_order');
@@ -187,7 +187,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $hot_threshold  = $forum->getVar('hot_threshold');
         } else {
             $hot_threshold = 10;
-            if (is_array($forum) && count($forum) > 0) {
+            if ($forum && is_array($forum)) {
                 $criteria_forum = ' AND t.forum_id IN (' . implode(',', array_keys($forum)) . ')';
             } elseif (!empty($forum)) {
                 $criteria_forum = ' AND t.forum_id =' . (int)$forum;
@@ -289,7 +289,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $types   = [];
 
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
         $typen       = $typeHandler->getByForum($forum->getVar('forum_id'));
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
@@ -533,7 +533,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         if (is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
         } else {
-            if (is_array($forum) && count($forum) > 0) {
+            if ($forum && is_array($forum)) {
                 $criteria_forum = ' AND t.forum_id IN (' . implode(',', array_keys($forum)) . ')';
             } elseif (!empty($forum)) {
                 $criteria_forum = ' AND t.forum_id =' . (int)$forum;
@@ -583,7 +583,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         if (!empty($checkCategory)) {
             /** @var Newbb\CategoryHandler $categoryHandler */
-            $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
             $categoryPerm    = $categoryHandler->getPermission($forum->getVar('cat_id'));
             if (!$categoryPerm) {
                 return false;
@@ -598,7 +598,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         //} else {
         $forum_id = $forum->getVar('forum_id');
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         $permission  = $permHandler->getPermission('forum', $type, $forum_id);
         //}
         // END irmtfan commented and removed
@@ -612,7 +612,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function deletePermission(&$forum)
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->deleteByForum($forum->getVar('forum_id'));
     }
@@ -624,7 +624,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function applyPermissionTemplate(&$forum)
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->applyTemplate($forum->getVar('forum_id'));
     }
@@ -674,7 +674,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $criteria->add(new \Criteria('parent_forum', '`forum_id`', '='), 'OR');
         $b1 = $this->updateAll('parent_forum', 0, $criteria, true);
         // check cat_id orphan forums
-        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $cat_ids         = $categoryHandler->getIds();
         if (empty($cat_ids)) {
             return false;
@@ -813,7 +813,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $posts[] = $forums[$id]['forum_last_post_id'];
         }
         if (!empty($posts)) {
-            $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+            $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
             $tags_post   = ['uid', 'topic_id', 'post_time', 'poster_name', 'icon'];
             if (!empty($length_title_index)) {
                 $tags_post[] = 'subject';

@@ -39,15 +39,14 @@ require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 //require_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
 //require_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 
-require_once dirname(__DIR__) . '/include/config.php';
 require_once dirname(__DIR__) . '/include/common.php';
 
 /** @var Newbb\Helper $helper */
-$helper = Newbb\Helper::getInstance();
+$helper = \XoopsModules\Newbb\Helper::getInstance();
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = Xmf\Module\Admin::getInstance();
 
-$newbb_config = getConfig();
+$configurator =  new Newbb\Common\Configurator();
 
 $myts = \MyTextSanitizer::getInstance();
 

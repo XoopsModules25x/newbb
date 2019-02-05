@@ -80,7 +80,7 @@
 <br>
 <br>
 <{foreach item=post from=$posts}>
-<{includeq file="db:newbb_thread.tpl" topic_post=$post}>
+<{include file="db:newbb_thread.tpl" topic_post=$post}>
 <div class="icon_right">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWTOPIC}></strong></a>
     <{if !$forum_name }>
@@ -127,6 +127,6 @@
 <br>
 <{if $online}>
     <br>
-    <{includeq file="db:newbb_online.tpl"}>
+    <{include file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>

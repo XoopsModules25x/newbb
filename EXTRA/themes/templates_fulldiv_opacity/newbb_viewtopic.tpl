@@ -21,7 +21,7 @@
 <br>
 <{if $tagbar}>
     <div class="taglist">
-        <{includeq file="db:tag_bar.tpl"}>
+        <{include file="db:tag_bar.tpl"}>
     </div>
     <br>
 <{/if}>
@@ -76,9 +76,9 @@
     <br>
     <{if $topic_poll}>
         <{if $topic_pollresult}>
-            <{includeq file="db:newbb_poll_results.tpl" poll=$poll}>
+            <{include file="db:newbb_poll_results.tpl" poll=$poll}>
         <{else}>
-            <{includeq file="db:newbb_poll_view.tpl" poll=$poll}>
+            <{include file="db:newbb_poll_view.tpl" poll=$poll}>
         <{/if}>
         <div class="clear"></div>
         <br>
@@ -159,7 +159,7 @@
     <br>
 <{/if}>
 <{foreach item=topic_post from=$topic_posts}>
-<{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
+<{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
 <br>
 <br>
 <{foreachelse}>
@@ -247,7 +247,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>
 <!-- Add scroll js function to scroll down to current post -->
 <script type="text/javascript">
     if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {

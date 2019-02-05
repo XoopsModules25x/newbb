@@ -36,7 +36,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     public function getIdsByPermission($perm = 'access')
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->getCategories($perm);
     }
@@ -92,7 +92,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
             return false;
         }
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forumHandler->deleteAll(new \Criteria('cat_id', $category->getVar('cat_id')), true, true);
         if ($result = parent::delete($category)) {
             // Delete group permissions
@@ -119,7 +119,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
         $cat_id = is_object($category) ? $category->getVar('cat_id') : (int)$category;
         /** @var PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->getPermission('category', $perm, $cat_id);
     }
@@ -131,7 +131,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     public function deletePermission(Category $category)
     {
         /** @var PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->deleteByCategory($category->getVar('cat_id'));
     }
@@ -143,7 +143,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     public function applyPermissionTemplate(Category $category)
     {
         /** @var PermissionHandler $permHandler */
-        $permHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->setCategoryPermission($category->getVar('cat_id'));
     }

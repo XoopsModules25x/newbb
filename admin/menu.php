@@ -32,8 +32,8 @@
 use XoopsModules\Newbb;
 
 //require_once  dirname(__DIR__) . '/include/common.php';
-/** @var Newbb\Helper $helper */
-$helper = Newbb\Helper::getInstance();
+/** @var \XoopsModules\Newbb\Helper $helper */
+$helper = \XoopsModules\Newbb\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 if (is_object($helper->getModule())) {

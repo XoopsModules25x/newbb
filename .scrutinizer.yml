@@ -18,4 +18,5 @@ filter:
   dependency_paths:
   - XoopsCore25/*
   - tag/*
+  - Xoopspoll
 

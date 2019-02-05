@@ -17,7 +17,7 @@ function b_sitemap_newbb()
     $sitemap = [];
 
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
 
@@ -67,7 +67,7 @@ function b_sitemap_newbb()
 
     if ($sitemap_configs['show_subcategoris']) {
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);
 

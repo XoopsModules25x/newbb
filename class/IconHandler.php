@@ -106,9 +106,9 @@ class IconHandler
             $path = is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}" : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}"));
         } else {
             $path = is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (is_dir($theme_path . "/{$rel_dir}/{$default}/") ? $theme_path . "/{$rel_dir}/{$default}" : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH
-                                                                                                                                                                                                                                                                  . "/default/{$rel_dir}/{$type}" : (is_dir(XOOPS_THEME_PATH
-                                                                                                                                                                                                                                                                                                            . "/default/{$rel_dir}/{$default}/") ? XOOPS_THEME_PATH
-                                                                                                                                                                                                                                                                                                                                                   . "/default/{$rel_dir}/{$default}" : (is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/")) ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}") : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$default}")) // XOOPS_ROOT_PATH
+            . "/default/{$rel_dir}/{$type}" : (is_dir(XOOPS_THEME_PATH
+           . "/default/{$rel_dir}/{$default}/") ? XOOPS_THEME_PATH
+           . "/default/{$rel_dir}/{$default}" : (is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/")) ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}") : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$default}")) // XOOPS_ROOT_PATH
             ) // XOOPS_THEME_PATH {$default}
             ) // XOOPS_THEME_PATH
             ); // $theme_path {$default}

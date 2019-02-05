@@ -82,7 +82,7 @@ class PermissionForumHandler extends PermissionHandler
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])
             && !newbbIsAdmin($id)) {
             /** @var Newbb\ModerateHandler $moderateHandler */
-            $moderateHandler = Newbb\Helper::getInstance()->getHandler('Moderate');
+            $moderateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Moderate');
             if (!$moderateHandler->verifyUser($uid, '', $id)) {
                 $suspension[$uid][$ip][$id] = 1;
             } else {

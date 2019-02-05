@@ -51,11 +51,11 @@ if ('' !== $forumSet) {
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $validForums = $forumHandler->getIdsByPermission(); // get all accessible forums
 
-if (is_array($forums) && count($forums) > 0) {
+if ($forums && is_array($forums)) {
     $validForums = array_intersect($forums, $validForums);
 } elseif ($category > 0) {
     $crit_top = new \CriteriaCompo(new \Criteria('cat_id', $category));
@@ -87,7 +87,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     require_once __DIR__ . '/include/functions.time.php';
 
     //    /** @var Newbb\XmlrssHandler $xmlrssHandler */
-    //    $xmlrssHandler = Newbb\Helper::getInstance()->getHandler('Xmlrss');
+    //    $xmlrssHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Xmlrss');
     $rss = $xmlrssHandler->create();
 
     $rss->setVarRss('channel_title', $GLOBALS['xoopsConfig']['sitename'] . ' :: ' . _MD_NEWBB_FORUM);
@@ -168,7 +168,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
         //        /** @var Newbb\TypeHandler $typeHandler */
-        //        $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+        //        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
         $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 

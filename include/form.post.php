@@ -25,7 +25,7 @@ require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject  = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 
 //check banning
@@ -34,7 +34,7 @@ $moderated_id    = (is_object($GLOBALS['xoopsUser'])
 $moderated_ip    = Request::getString('REMOTE_ADDR', '', 'SERVER');
 $moderated_forum = $forumObject->getVar('forum_id');
 /** @var Newbb\ModerateHandler $moderateHandler */
-$moderateHandler = Newbb\Helper::getInstance()->getHandler('Moderate');
+$moderateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Moderate');
 if (!$moderateHandler->verifyUser($moderated_id, '', $moderated_forum)) {
     $criteria = new \CriteriaCompo();
     $criteria->add(new \Criteria('uid', $moderated_id, '='));
@@ -96,7 +96,7 @@ foreach ([
 }
 
 /** @var Newbb\TopicHandler $topicHandler */
-$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
 //$filname = XOOPS_URL.$_SERVER['REQUEST_URI'];
@@ -115,7 +115,7 @@ if (newbbIsAdmin($forumObject)
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
     $type_id = $topicHandler->get(@$topic_id, 'type_id');
     /** @var Newbb\TypeHandler $typeHandler */
-    $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+    $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
     $types       = $typeHandler->getByForum($forumObject->getVar('forum_id'));
     if (!empty($types)) {
         $type_element = new \XoopsFormSelect(_MD_NEWBB_TYPE, 'type_id', $type_id);

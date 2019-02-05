@@ -32,7 +32,7 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
             return false;
         }
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forumObject  = $forumHandler->get($forumId);
         if (!$forumObject || !$forumHandler->getPermission($forumObject)) {
             unset($forumObject);

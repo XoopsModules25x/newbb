@@ -41,7 +41,7 @@ $op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!em
 $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
 /** @var Newbb\CategoryHandler $categoryHandler */
-//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+//$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 
 /**
  * newCategory()
@@ -60,7 +60,7 @@ function newCategory()
 function editCategory(\XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
-    $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
     if (null === $categoryObject) {
         $categoryObject = $categoryHandler->create();
     }

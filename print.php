@@ -56,7 +56,7 @@ if (!Request::getString('post_data', '', 'POST')) {
 
     if (0 !== $post_id) {
         //        /** @var Newbb\PostHandler $postHandler */
-        //        $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+        //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         /** @var Newbb\Post $post */
         $post = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
@@ -74,7 +74,7 @@ if (!Request::getString('post_data', '', 'POST')) {
     }
 
     //    /** @var Newbb\TopicHandler $topicHandler */
-    //    $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+    //    $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     $topicObject = $topicHandler->get($topic_id);
     $topic_id    = $topicObject->getVar('topic_id');
     $forum       = $topicObject->getVar('forum_id');
@@ -88,7 +88,7 @@ if (!Request::getString('post_data', '', 'POST')) {
     }
 
     //    /** @var Newbb\ForumHandler $forumHandler */
-    //    $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+    //    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     $forum       = $topicObject->getVar('forum_id');
     $forumObject = $forumHandler->get($forum);
     if (!$forumHandler->getPermission($forumObject)) {

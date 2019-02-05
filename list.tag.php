@@ -9,6 +9,8 @@
  * @package        module::newbb
  */
 require_once __DIR__ . '/header.php';
-if (class_exists('TagFormTag')){
-    @require $GLOBALS['xoops']->path('modules/tag/list.tag.php');
+
+if ((!class_exists('TagFormTag')) || (class_exists('TagFormTag') && !@require $GLOBALS['xoops']->path('modules/tag/list.tag.php'))) {
+    return null;
 }
+

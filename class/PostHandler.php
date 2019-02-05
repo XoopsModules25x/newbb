@@ -154,7 +154,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $this->insert($post, true);
 
         /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         $topicObject  = $topicHandler->get($post->getVar('topic_id'));
         if ($topicObject->getVar('topic_last_post_id') < $post->getVar('post_id')) {
             $topicObject->setVar('topic_last_post_id', $post->getVar('post_id'));
@@ -167,7 +167,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $topicHandler->insert($topicObject, true);
 
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forumObject  = $forumHandler->get($post->getVar('forum_id'));
         if ($forumObject->getVar('forum_last_post_id') < $post->getVar('post_id')) {
             $forumObject->setVar('forum_last_post_id', $post->getVar('post_id'));
@@ -192,7 +192,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
         // Update forum stats
         /** @var StatsHandler $statsHandler */
-        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
         $statsHandler->update($post->getVar('forum_id'), 'post');
         if ($post->isTopic()) {
             $statsHandler->update($post->getVar('forum_id'), 'topic');
@@ -216,7 +216,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
 
         /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
         if ($topic_id = $post->getVar('topic_id')) {
             $topicObject = $topicHandler->get($topic_id);
@@ -232,7 +232,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             $post->setNew();
             $topicObject = $topicHandler->create();
         }
-        $textHandler    = Newbb\Helper::getInstance()->getHandler('Text');
+        $textHandler    = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Text');
         $post_text_vars = ['post_text', 'post_edit', 'dohtml', 'doxcode', 'dosmiley', 'doimage', 'dobr'];
         if ($post->isNew()) {
             if (!$topic_id = $post->getVar('topic_id')) {
@@ -401,7 +401,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
 
         if ($post->isTopic()) {
-            $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+            $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
             /** @var Topic $topicObject */
             $topicObject = $topicHandler->get($post->getVar('topic_id'));
             if (is_object($topicObject) && $topicObject->getVar('approved') > 0 && empty($force)) {

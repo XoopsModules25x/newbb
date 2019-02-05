@@ -30,7 +30,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     {
         global $xoopsUser;
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
@@ -43,11 +43,11 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $groupKey = 'forumselect_' . $permission . '_' . md5(implode(',', $groups));
         $forums   = $cacheHelper->cacheRead($groupKey, function () use ($categories, $permission) {
             /** @var Newbb\CategoryHandler $categoryHandler */
-            $categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
             $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
             /** @var Newbb\ForumHandler $forumHandler */
-            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
             return $forums;
@@ -132,8 +132,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbCreateSubForumList()
     {
         /** @var Newbb\ForumHandler $forumHandler */
-        //        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $criteria     = new \CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
@@ -184,7 +184,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbCreateParentForumList()
     {
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $criteria     = new \Criteria('forum_id', 1);
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');

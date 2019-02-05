@@ -148,13 +148,13 @@ switch ($action) {
         $opform->display();
 
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c - 1000] = ' ';
@@ -194,7 +194,7 @@ switch ($action) {
     default:
         xoops_cp_header();
 
-        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -203,7 +203,7 @@ switch ($action) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
         if (0 === count($forums)) {
@@ -263,7 +263,7 @@ switch ($action) {
 
         $form = new Newbb\GroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
-        $categoryHandler  = Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -273,7 +273,7 @@ switch ($action) {
             }
             unset($categories);
         } else {
-            $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
             if (count($forums) > 0) {
                 foreach (array_keys($forums) as $c) {
@@ -294,7 +294,7 @@ switch ($action) {
         echo '</fieldset>';
         // Since we can not control the permission update, a trick is used here
         /** var Newbb\PermissionHandler $permissionHandler */
-        $permissionHandler = Newbb\Helper::getInstance()->getHandler('Permission');
+        $permissionHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
         $permissionHandler->createPermData();
         $cacheHelper = Newbb\Utility::cleanCache();
         //$cacheHelper->delete('permission');

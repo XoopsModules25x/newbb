@@ -106,7 +106,7 @@ $imageLibs = newbb_getImageLibs();
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 ///** @var Newbb\ReportHandler $reportHandler */
-//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
+//$reportHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Report');
 
 $isOK = false;
 // START irmtfan add a poll_module config
@@ -152,10 +152,10 @@ $adminObject->addInfoBox(_AM_NEWBB_REPORT);
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PENDING . ': %s', $reportHandler->getCount(new \Criteria('report_result', 0))));
 $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $reportHandler->getCount(new \Criteria('report_result', 1))));
 
-$_ufolders = $newbb_config->uploadFolders;
-foreach ($_ufolders as $wert) {
-    Newbb\Utility::prepareFolder($wert);
-    $adminObject->addConfigBoxLine($wert, 'folder');
+$uploadFolders = $configurator->uploadFolders;
+foreach ($uploadFolders as $value) {
+    Newbb\Utility::prepareFolder($value);
+    $adminObject->addConfigBoxLine($value, 'folder');
 }
 
 $adminObject->displayNavigation(basename(__FILE__));

@@ -25,7 +25,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function newbbGetStats()
     {
         /** @var Newbb\StatsHandler $statsHandler */
-        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
         $stats        = $statsHandler->getStats();
 
         return $stats;
@@ -40,7 +40,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function newbbUpdateStats($id, $type, $increment = 1)
     {
         /** @var Newbb\StatsHandler $statsHandler */
-        $statsHandler = Newbb\Helper::getInstance()->getHandler('Stats');
+        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
 
         return $statsHandler->update($id, $type, $increment);
     }
@@ -55,7 +55,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function getTotalTopics($forum_id = '')
     {
         /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         $criteria     = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         if ($forum_id) {
             $criteria->add(new \Criteria('forum_id', (int)$forum_id));
@@ -76,7 +76,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function getTotalPosts($id = 0, $type = 'all')
     {
         /** @var Newbb\PostHandler $postHandler */
-        $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         $criteria    = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':

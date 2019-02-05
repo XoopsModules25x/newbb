@@ -42,7 +42,7 @@ foreach (['topic_id', 'rate', 'forum'] as $var) {
 }
 
 ///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'post')
     && !$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'reply')) {
@@ -54,13 +54,13 @@ if (empty($rate)) {
     redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_NOVOTERATE);
 }
 ///** @var Newbb\RateHandler $rateHandler */
-//$rateHandler = Newbb\Helper::getInstance()->getHandler('Rate');
+//$rateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Rate');
 if (0 !== $ratinguser) {
     // Check if Topic POSTER is voting (UNLESS Anonymous users allowed to post)
     $crit_post = new \CriteriaCompo(new \Criteria('topic_id', $topic_id));
     $crit_post->add(new \Criteria('uid', $ratinguser));
     //    /** @var Newbb\PostHandler $postHandler */
-    //    $postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+    //    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
     if ($postHandler->getCount($crit_post)) {
         redirect_header('viewtopic.php?topic_id=' . $topic_id . '&amp;forum=' . $forum . '', 4, _MD_NEWBB_CANTVOTEOWN);
     }

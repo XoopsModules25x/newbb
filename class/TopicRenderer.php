@@ -76,7 +76,7 @@ class TopicRenderer
     //    public function TopicRenderer()
     public function __construct()
     {
-        $this->handler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $this->handler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     }
 
     /**
@@ -317,7 +317,7 @@ class TopicRenderer
         switch ($var) {
             case 'forum':
                 /** @var Newbb\ForumHandler $forumHandler */
-                $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+                $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
                 $accessForums = $forumHandler->getIdsByValues(array_map('intval', @explode('|', $val)));
@@ -709,7 +709,7 @@ class TopicRenderer
         static $types;
         if (!isset($types)) {
             /** @var Newbb\TypeHandler $typeHandler */
-            $typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+            $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 
             $types = $typeHandler->getByForum(explode('|', @$this->vars['forum']));
         }
@@ -1038,7 +1038,7 @@ class TopicRenderer
         */
         $type_list = $this->getTypes();
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 
         if (count($forums) > 0) {
             $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), ['forum_name', 'hot_threshold'], false);

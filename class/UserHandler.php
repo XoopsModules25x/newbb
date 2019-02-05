@@ -48,7 +48,7 @@ class UserHandler
     public function loadUserInfo()
     {
         /** @var Newbb\Helper $helper */
-        $helper = Newbb\Helper::getInstance();
+        $helper = \XoopsModules\Newbb\Helper::getInstance();
         $helper->loadLanguage('user');
         //        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
         if (class_exists('UserLanguage')) {
@@ -71,7 +71,7 @@ class UserHandler
         $image_offline = newbbDisplayImage('offline', _MD_NEWBB_OFFLINE);
 
         /** @var Newbb\OnlineHandler $onlineHandler */
-        $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+        $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
         $onlines       = $onlineHandler->checkStatus(array_keys($this->users));
 
         foreach (array_keys($this->users) as $uid) {

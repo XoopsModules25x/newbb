@@ -24,7 +24,7 @@ if (!$postId || !$attachId) {
 }
 
 ///** @var Newbb\PostHandler $postHandler */
-//$postHandler = Newbb\Helper::getInstance()->getHandler('Post');
+//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 /** @var Newbb\Post $forumpost */
 $forumpost = $postHandler->get($postId);
@@ -32,14 +32,14 @@ if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 ///** @var TopicHandler $topicHandler */
-//$topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject = $topicHandler->getByPost($postId);
 $topic_id    = $topicObject->getVar('topic_id');
 if (!$approved = $topicObject->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);
 }
 ///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($topicObject->getVar('forum_id'));
 if (!$forumHandler->getPermission($forumObject)) {
     exit(_MD_NEWBB_NORIGHTTOACCESS);

@@ -42,7 +42,7 @@ $op = Request::hasVar('submit', 'POST') ? 'save' : $op;
 $op = Request::hasVar('delete', 'POST') ? 'delete' : $op;
 
 ///** @var Newbb\ReportHandler $reportHandler */
-//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
+//$reportHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Report');
 
 xoops_cp_header();
 

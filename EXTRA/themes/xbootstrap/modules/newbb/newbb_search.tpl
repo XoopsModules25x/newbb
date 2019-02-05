@@ -3,7 +3,7 @@
     <li class="active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
 </ol>
 <{if $search_info}>
-    <{includeq file="db:newbb_searchresults.tpl" results=$results}>
+    <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 
 <form name="Search" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">

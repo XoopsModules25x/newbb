@@ -118,7 +118,7 @@ class Post extends \XoopsObject
     public function saveAttachment()
     {
         $attachmentSave = '';
-        if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
+        if ($this->attachmentArray && is_array($this->attachmentArray)) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
         }
         $this->setVar('attachment', $attachmentSave);
@@ -161,7 +161,7 @@ class Post extends \XoopsObject
             $this->attachmentArray[$key] = $attach;
         }
         $attachmentSave = '';
-        if (is_array($this->attachmentArray) && count($this->attachmentArray) > 0) {
+        if ($this->attachmentArray && is_array($this->attachmentArray)) {
             $attachmentSave = base64_encode(serialize($this->attachmentArray));
         }
         $this->setVar('attachment', $attachmentSave);
@@ -209,7 +209,7 @@ class Post extends \XoopsObject
 
         $post_attachment = '';
         $attachments     = $this->getAttachment();
-        if (is_array($attachments) && count($attachments) > 0) {
+        if ($attachments && is_array($attachments)) {
             $iconHandler = newbbGetIconHandler();
             $mime_path   = $iconHandler->getPath('mime');
             require_once dirname(__DIR__) . '/include/functions.image.php';
@@ -353,7 +353,7 @@ class Post extends \XoopsObject
         if (!isset($post_edits) || !is_array($post_edits)) {
             $post_edits = [];
         }
-        if (is_array($post_edits) && count($post_edits) > 0) {
+        if ($post_edits && is_array($post_edits)) {
             foreach ($post_edits as $postedit) {
                 $edit_time = (int)$postedit['edit_time'];
                 $edit_user = $postedit['edit_user'];
@@ -389,7 +389,7 @@ class Post extends \XoopsObject
 
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         /** @var KarmaHandler $karmaHandler */
-        $karmaHandler = Newbb\Helper::getInstance()->getHandler('Karma');
+        $karmaHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Karma');
         $user_karma   = $karmaHandler->getUserKarma();
 
         $post               = [];
@@ -483,7 +483,7 @@ class Post extends \XoopsObject
         static $post_NO = 0;
         static $name_anonymous;
         /** @var TopicHandler $topicHandler */
-        $topicHandler = Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
             $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
         }

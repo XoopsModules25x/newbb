@@ -38,14 +38,14 @@ $op   = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET'); 
 $item = Request::getString('op', Request::getInt('item', 'process', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['item'] : (!empty($_POST['item'])?$_POST['item']:"process");
 
 $start = Request::getInt('start', 0, 'GET');
-//$reportHandler = Newbb\Helper::getInstance()->getHandler('Report');
+//$reportHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Report');
 
 xoops_cp_header();
 switch ($op) {
     case 'delete':
         $digest_ids = Request::getArray('digest_id', [], 'POST');
         //        /** @var Newbb\DigestHandler $digestHandler */
-        //        $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
+        //        $digestHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Digest');
         foreach ($digest_ids as $did => $value) {
             $digest = $digestHandler->get($did);
             $digestHandler->delete($digest);
@@ -58,7 +58,7 @@ switch ($op) {
     case 'digestconfirmed':
         $message = '';
         if ('POST' === Request::getMethod()) {
-            //            $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
+            //            $digestHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Digest');
 
             switch ($digestHandler->process(true)) {
                 case 0:
@@ -99,7 +99,7 @@ switch ($op) {
 
         $digests = [];
         //        /** @var Newbb\DigestHandler $digestHandler */
-        //        $digestHandler = Newbb\Helper::getInstance()->getHandler('Digest');
+        //        $digestHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Digest');
         $digests = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {
             echo "<tr class='odd' align='left'>";

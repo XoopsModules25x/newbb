@@ -25,7 +25,7 @@
 <br>
 
 <{if $subforum}>
-    <{includeq file="db:newbb_viewforum_subforum.tpl"}>
+    <{include file="db:newbb_viewforum_subforum.tpl"}>
     <br>
 <{/if}>
 
@@ -77,7 +77,7 @@
 
     <div>
         <div class="dropdown floatleft">
-            <{includeq file="db:newbb_viewforum_menu.tpl"}>
+            <{include file="db:newbb_viewforum_menu.tpl"}>
         </div>
         <div class="pagenav">
             <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
@@ -242,7 +242,7 @@
 <br>
 <{if $online}>
     <br>
-    <{includeq file="db:newbb_online.tpl"}>
+    <{include file="db:newbb_online.tpl"}>
 <{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

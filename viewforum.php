@@ -63,7 +63,7 @@ $mode = (Request::getString('status', '', 'GET')
     ], true)) ? 2 : Request::getInt('mode', 0, 'GET');
 
 ///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($forum_id);
 
 if (!$forumObject) {
@@ -112,7 +112,7 @@ if ($isAdmin) {
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     //    /** @var Newbb\OnlineHandler $onlineHandler */
-    //    $onlineHandler = Newbb\Helper::getInstance()->getHandler('Online');
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
@@ -149,7 +149,7 @@ if ($forums = $forumHandler->getAll($criteria, null, false)) {
     $xoopsTpl->assign_by_ref('subforum', $subforum);
 }
 
-//$categoryHandler = Newbb\Helper::getInstance()->getHandler('Category');
+//$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 $xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' => $categoryObject->getVar('cat_title')]);
 
@@ -248,7 +248,7 @@ unset($query_type['type']);
 $page_query_type = implode('&amp;', array_values($query_type));
 unset($query_type);
 ///** @var Newbb\TypeHandler $typeHandler */
-//$typeHandler = Newbb\Helper::getInstance()->getHandler('Type');
+//$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $typeOptions = null;
 $types       = [];
 if ($types = $typeHandler->getByForum($forum_id)) {
@@ -328,7 +328,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
     //    /** var Newbb\PermissionHandler $permHandler */
-    //    $permHandler      = Newbb\Helper::getInstance()->getHandler('Permission');
+    //    $permHandler      = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
     $permission_table = $permHandler->getPermissionTable($forum_id, false, $isAdmin);
     $xoopsTpl->assign_by_ref('permission_table', $permission_table);
     unset($permission_table);
