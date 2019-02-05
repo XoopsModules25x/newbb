@@ -36,7 +36,7 @@ namespace XoopsModules\Newbb;
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
- * Class Newbbtree
+ * Class Tree
  */
 class Tree extends \XoopsTree
 {

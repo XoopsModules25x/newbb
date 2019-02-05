@@ -102,7 +102,7 @@ $postHandler = $helper->getHandler('Post');
 /** @var Newbb\RateHandler $rateHandler */
 $rateHandler = $helper->getHandler('Rate');
 /** @var Newbb\ReadHandler $readHandler */
-$readHandler = $helper->getHandler('Read');
+//$readHandler = $helper->getHandler('Read' . $type);
 /** @var Newbb\ReadforumHandler $ReadforumHandler */
 $ReadforumHandler = $helper->getHandler('Readforum');
 /** @var Newbb\ReadtopicHandler $readTopicHandler */

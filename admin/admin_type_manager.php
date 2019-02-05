@@ -374,8 +374,9 @@ switch ($op) {
         echo "<th align='left' class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        //        $isColorpicker = require_once $GLOBALS['xoops']->path('class/xoopsform/formcolorpicker.php');
-        xoops_load('XoopsFormColorPicker');
+        if (class_exists('XoopsFormColorPicker')) {
+            $isColorpicker = true;
+        }
 
         if ('add' !== $op) {
             foreach ($typesObject as $key => $typeObject) {
