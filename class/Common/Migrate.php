@@ -125,5 +125,7 @@ class Migrate extends \Xmf\Database\Migrate
         // Convert IP address columns from int to readable varchar(45) for IPv6
         $this->convertIPAddresses('newbb_posts', 'poster_ip');
         $this->convertIPAddresses('newbb_report', 'reporter_ip');
+        $this->convertIPAddresses('newbb_online', 'online_ip');
+        $this->convertIPAddresses('newbb_moderates', 'ip');
     }
 }
