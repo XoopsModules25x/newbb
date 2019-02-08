@@ -391,7 +391,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         $newbbConfig = newbbLoadConfig();
         /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-        if (!empty($newbbConfig['do_tag']) && $tagHandler = Tag\Helper::getInstance()->getHandler('Tag')) { //@xoops_getModuleHandler('tag', 'tag', true)) {
+        if (!empty($newbbConfig['do_tag']) &&  class_exists('TagFormTag') && $tagHandler = Tag\Helper::getInstance()->getHandler('Tag')) { //@xoops_getModuleHandler('tag', 'tag', true)) {
             $tagHandler->updateByItem([], $topic_id, 'newbb');
         }
 

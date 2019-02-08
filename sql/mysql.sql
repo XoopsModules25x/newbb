@@ -135,7 +135,6 @@ CREATE TABLE `newbb_posts_text` (
   `post_id`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `post_text` TEXT,
   `post_edit` TEXT,
-
   `dohtml`    TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `dosmiley`  TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
   `doxcode`   TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
