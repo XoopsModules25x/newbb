@@ -184,7 +184,7 @@ switch ($op) {
         }
 
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories   = $categoryHandler->getList($criteriaCategory);
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
@@ -274,7 +274,7 @@ switch ($op) {
 
     case 'forum':
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {

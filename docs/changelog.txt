@@ -1,4 +1,9 @@
-4.33 Final  (XOOPS 2.5.8)      2018-03-24
+4.34 RC1  (XOOPS 2.5.10)      2019-02-09
+===========================================
+- fix for Criteria('1', 1) (geekwright/mamba)
+
+
+4.33 Final  (XOOPS 2.5.8)      2016-11-27
 ===========================================
 - cosmetics (mamba)
 - array short syntax (mamba)

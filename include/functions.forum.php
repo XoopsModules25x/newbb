@@ -166,7 +166,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbb_createParentForumList()
     {
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        $criteria     = new Criteria('1', 1);
+        $criteria     = new Criteria('forum_id');
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forums_obj = $forumHandler->getObjects($criteria);

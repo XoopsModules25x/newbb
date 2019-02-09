@@ -75,7 +75,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 
     $forumHandler     = xoops_getModuleHandler('forum', 'newbb');
     $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-    $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+    $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
     $criteriaCategory->setSort('cat_order');
     $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
     $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');

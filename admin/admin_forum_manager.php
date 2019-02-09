@@ -233,7 +233,7 @@ switch ($op) {
     default:
 
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (0 === count($categories)) {
@@ -254,7 +254,7 @@ switch ($op) {
         $echo .= '</tr>';
 
         $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-        $criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+        $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all');
