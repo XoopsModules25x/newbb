@@ -61,16 +61,16 @@ if (!class_exists('NewbbObjectTree')) {
             if ($key > 0) {
                 if (count($tags) > 0) {
                     foreach ($tags as $tag) {
-                        $ret[$key][$tag] = $this->_tree[$key]['obj']->getVar($tag);
+                        $ret[$key][$tag] = $this->tree[$key]['obj']->getVar($tag);
                     }
                 } else {
-                    $ret[$key]['forum_name'] = $this->_tree[$key]['obj']->getVar('forum_name');
+                    $ret[$key]['forum_name'] = $this->tree[$key]['obj']->getVar('forum_name');
                 }
                 $ret[$key]['prefix'] = $prefix_curr;
                 $prefix_curr .= $prefix_orig;
             }
-            if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
-                foreach ($this->_tree[$key]['child'] as $childkey) {
+            if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
+                foreach ($this->tree[$key]['child'] as $childkey) {
                     $this->_makeTreeItems($childkey, $ret, $prefix_orig, $prefix_curr, $tags);
                 }
             }
@@ -148,10 +148,10 @@ if (!class_exists('NewbbObjectTree')) {
                 return;
             }
 
-            if (isset($this->_tree[$key]['child'])) {
-                foreach ($this->_tree[$key]['child'] as $childkey) {
-                    if (isset($this->_tree[$childkey]['obj'])) {
-                        $ret['child'][$childkey] = $this->_tree[$childkey]['obj'];
+            if (isset($this->tree[$key]['child'])) {
+                foreach ($this->tree[$key]['child'] as $childkey) {
+                    if (isset($this->tree[$childkey]['obj'])) {
+                        $ret['child'][$childkey] = $this->tree[$childkey]['obj'];
                     }
                     $this->getAllChild_object($childkey, $ret['child'][$childkey], $depth);
                 }
@@ -192,15 +192,15 @@ if (!class_exists('NewbbObjectTree')) {
                 return;
             }
 
-            if (isset($this->_tree[$key]['child'])) {
-                foreach ($this->_tree[$key]['child'] as $childkey) {
-                    if (isset($this->_tree[$childkey]['obj'])) {
+            if (isset($this->tree[$key]['child'])) {
+                foreach ($this->tree[$key]['child'] as $childkey) {
+                    if (isset($this->tree[$childkey]['obj'])) {
                         if (count($tags) > 0) {
                             foreach ($tags as $tag) {
-                                $ret['child'][$childkey][$tag] = $this->_tree[$childkey]['obj']->getVar($tag);
+                                $ret['child'][$childkey][$tag] = $this->tree[$childkey]['obj']->getVar($tag);
                             }
                         } else {
-                            $ret['child'][$childkey]['forum_name'] = $this->_tree[$childkey]['obj']->getVar('forum_name');
+                            $ret['child'][$childkey]['forum_name'] = $this->tree[$childkey]['obj']->getVar('forum_name');
                         }
                     }
 
@@ -238,11 +238,11 @@ if (!class_exists('NewbbObjectTree')) {
          */
         public function &_getParentForums($key, array $ret = array(), $uplevel = 0)
         {
-            if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
-                $ret[$uplevel] = $this->_tree[$this->_tree[$key]['parent']]['obj'];
-                if ($this->_tree[$key]['parent'] !== $key) {
-                    //$parents = $this->getParentForums($this->_tree[$key]['parent'], $ret, $uplevel+1);
-                    $parents = $this->getParentForums($this->_tree[$key]['parent']);
+            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+                $ret[$uplevel] = $this->tree[$this->tree[$key]['parent']]['obj'];
+                if ($this->tree[$key]['parent'] !== $key) {
+                    //$parents = $this->getParentForums($this->tree[$key]['parent'], $ret, $uplevel+1);
+                    $parents = $this->getParentForums($this->tree[$key]['parent']);
                     foreach (array_keys($parents) as $newkey) {
                         $ret[$newkey] = $parents[$newkey];
                     }
@@ -261,9 +261,9 @@ if (!class_exists('NewbbObjectTree')) {
         {
             $ret  = array();
             $pids = array();
-            if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
-                $pids[]  = $this->_tree[$this->_tree[$key]['parent']]['obj']->getVar($this->_myId);
-                $parents = $this->_getParentForums($this->_tree[$key]['parent'], $ret);
+            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+                $pids[]  = $this->tree[$this->tree[$key]['parent']]['obj']->getVar($this->_myId);
+                $parents = $this->_getParentForums($this->tree[$key]['parent'], $ret);
                 foreach (array_keys($parents) as $newkey) {
                     if (!is_object($newkey)) {
                         continue;

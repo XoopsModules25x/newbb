@@ -70,7 +70,7 @@ echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo "<br><br><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
 $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-$criteriaCategory = new CriteriaCompo(new criteria('1', 1));
+$criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
 $criteriaCategory->setSort('cat_order');
 $categories = $categoryHandler->getAll($criteriaCategory, array('cat_id', 'cat_order', 'cat_title'));
 $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');

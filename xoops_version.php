@@ -9,9 +9,9 @@
  * @package        module::newbb
  */
 
-$modversion['version']             = 4.33;
-$modversion['module_status']       = 'Final';
-$modversion['release_date']        = '2018/03/24';
+$modversion['version']             = 4.34;
+$modversion['module_status']       = 'RC1';
+$modversion['release_date']        = '2019/02/09';
 $modversion['name']                = _MI_NEWBB_NAME;
 $modversion['description']         = _MI_NEWBB_DESC;
 $modversion['credits']             = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
