@@ -23,7 +23,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = xoops_getModuleHandler('category');
-$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), array('cat_title'));
+$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), ['cat_title']);
 
 //check banning
 $moderated_id = (is_object($GLOBALS['xoopsUser'])
@@ -45,12 +45,12 @@ if ($moderateHandler->verifyUser($moderated_id, $moderated_ip, $moderated_forum)
     exit();
 }
 
-$xoopsTpl->assign('category', array('id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')));
+$xoopsTpl->assign('category', ['id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')]);
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forum_obj));
-$xoopsTpl->assign(array(
+$xoopsTpl->assign([
                       'forum_id'   => $forum_obj->getVar('forum_id'),
                       'forum_name' => $forum_obj->getVar('forum_name')
-                  ));
+                  ]);
 
 if (!is_object($topic_obj)) {
     $topic_obj = $topicHandler->create();
@@ -63,14 +63,14 @@ if ($topic_obj->isNew()) {
     if (empty($post_parent_obj)) {
         $post_parent_obj = $postHandler->get($pid);
     }
-    $form_title = _MD_REPLY . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar('subject') . '</a>';
+    $form_title = _MD_REPLY . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $post_parent_obj->getVar('subject') . '</a>';
 } else {
-    $form_title = _EDIT . ": <a href=\"" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id={$post_id}\" rel=\"external\">" . $post_obj->getVar('subject') . '</a>';
+    $form_title = _EDIT . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id={$post_id}\" rel=\"external\">" . $post_obj->getVar('subject') . '</a>';
     $editby     = true;
 }
 $xoopsTpl->assign('form_title', $form_title);
 
-foreach (array(
+foreach ([
              'start',
              'topic_id',
              'post_id',
@@ -78,18 +78,18 @@ foreach (array(
              'isreply',
              'isedit',
              'contents_preview'
-         ) as $getint) {
-    ${$getint} = XoopsRequest::getInt($getint, ((!empty(${$getint})) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
+         ] as $getint) {
+    ${$getint} = XoopsRequest::getInt($getint, (!empty(${$getint}) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
-foreach (array(
+foreach ([
              'order',
              'viewmode',
              'hidden',
              'newbb_form',
              'icon',
              'op'
-         ) as $getstr) {
-    ${$getstr} = XoopsRequest::getString($getstr, ((!empty(${$getstr})) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
+         ] as $getstr) {
+    ${$getstr} = XoopsRequest::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
 $topicHandler = xoops_getModuleHandler('topic', 'newbb');
@@ -107,7 +107,7 @@ if ($editby) {
 $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 if (newbb_isAdmin($forum_obj)
     || ($topicHandler->getPermission($forum_obj, $topic_status, 'type')
-        && ($topic_id == 0
+        && (0 == $topic_id
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))
 ) {
     $type_id     = $topicHandler->get(@$topic_id, 'type_id');
@@ -162,7 +162,7 @@ if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
 
 $forum_form->addElement(new XoopsFormSelectEditor($forum_form, 'editor', $editor, $nohtml, @$GLOBALS['xoopsModuleConfig']['editor_allowed'][0]));
 
-$editor_configs           = array();
+$editor_configs           = [];
 $editor_configs['name']   = 'message';
 $editor_configs['value']  = $message;
 $editor_configs['rows']   = empty($GLOBALS['xoopsModuleConfig']['editor_rows']) ? 10 : $GLOBALS['xoopsModuleConfig']['editor_rows'];
@@ -186,8 +186,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($post_obj) || $pos
 }
 
 $options_tray = new XoopsFormElementTray(_MD_OPTIONS, '<br>');
-if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsModuleConfig']['allow_user_anonymous'] == 1) {
-    $noname          = (!empty($isedit) && is_object($post_obj) && $post_obj->getVar('uid') == 0) ? 1 : 0;
+if (is_object($GLOBALS['xoopsUser']) && 1 == $GLOBALS['xoopsModuleConfig']['allow_user_anonymous']) {
+    $noname          = (!empty($isedit) && is_object($post_obj) && 0 == $post_obj->getVar('uid')) ? 1 : 0;
     $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
     $noname_checkbox->addOption(1, _MD_POSTANONLY);
     $options_tray->addElement($noname_checkbox);
@@ -249,7 +249,7 @@ if ($topicHandler->getPermission($forum_obj, $topic_status, 'attach')) {
     $upload_tray->addElement(new XoopsFormButton('', 'contents_upload', _MD_UPLOAD, 'submit'));
     $upload_tray->addElement(new XoopsFormLabel('<br><br>' . _MD_MAX_FILESIZE . ':', $forum_obj->getVar('attach_maxkb') . 'Kb; '));
     $extensions = trim(str_replace('|', ' ', $forum_obj->getVar('attach_ext')));
-    $extensions = (empty($extensions) || $extensions === '*') ? _ALL : $extensions;
+    $extensions = (empty($extensions) || '*' === $extensions) ? _ALL : $extensions;
     $upload_tray->addElement(new XoopsFormLabel(_MD_ALLOWED_EXTENSIONS . ':', $extensions));
     $upload_tray->addElement(new XoopsFormLabel('<br>' . sprintf(_MD_NEWBB_MAXPIC, $GLOBALS['xoopsModuleConfig']['max_img_height'], $GLOBALS['xoopsModuleConfig']['max_img_width'])));
     $forum_form->addElement($upload_tray);

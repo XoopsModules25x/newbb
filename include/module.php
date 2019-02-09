@@ -64,7 +64,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
     //$oldconfig = $module->getVar('hasconfig');
     // NewBB 1.0 -- no config
     //if (empty($oldconfig)) {
-    if ($oldversion == 100) {
+    if (100 == $oldversion) {
         include_once __DIR__ . '/module.v100.php';
         xoops_module_update_newbb_v100($module);
     }
@@ -119,7 +119,7 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         $sql    = 'SELECT post_id, poster_ip FROM ' . $GLOBALS['xoopsDB']->prefix('bb_posts');
         $result = $GLOBALS['xoopsDB']->query($sql);
         //        while (list($posterIpDB) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $newIpValue = '';
             if ($MyIpCheck->isValidIpAddress(long2ip((float)$row['poster_ip']))) {
                 $newIpValue = long2ip((float)$row['poster_ip']);
@@ -142,18 +142,18 @@ function xoops_module_update_newbb(XoopsModule $module, $oldversion = null)
         // create an array with all folders, and then run this once
 
         $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/');
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
                 @unlink($templateDirectory . $v);
             }
         }
         $templateDirectory = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname', 'n') . '/templates/blocks');
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+            if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
                 @unlink($templateDirectory . $v);
             }
         }
@@ -225,7 +225,7 @@ function xoops_module_install_newbb(XoopsModule $module)
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
-    $forum->setVar('forum_moderator', array());
+    $forum->setVar('forum_moderator', []);
     $forum->setVar('parent_forum', 0);
     $forum->setVar('cat_id', $cat_id);
     $forum->setVar('attach_maxkb', 100);
@@ -236,10 +236,10 @@ function xoops_module_install_newbb(XoopsModule $module)
     /* Set corresponding permissions for the category and the forum */
     $module_id    = $module->getVar('mid');
     $gpermHandler = xoops_getHandler('groupperm');
-    $groups_view  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-    $groups_post  = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS);
+    $groups_view  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
+    $groups_post  = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
-    $post_items = array(
+    $post_items = [
         'post',
         'reply',
         'edit',
@@ -253,7 +253,7 @@ function xoops_module_install_newbb(XoopsModule $module)
         'signature',
         'pdf',
         'print'
-    );
+    ];
     foreach ($groups_view as $group_id) {
         $gpermHandler->addRight('category_access', $cat_id, $group_id, $module_id);
         $gpermHandler->addRight('forum_access', $forum_id, $group_id, $module_id);

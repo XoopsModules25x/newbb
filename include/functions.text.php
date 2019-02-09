@@ -52,7 +52,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         while ($startpos < $endpos) {
             $pos = $endpos;
             foreach ($queryarray as $query) {
-                if (($thispos = strpos($text_i, $query, $startpos)) !== false) {
+                if (false !== ($thispos = strpos($text_i, $query, $startpos))) {
                     $pos = min($thispos, $pos);
                 }
             }
@@ -121,7 +121,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
             // split the phrase by any number of commas or space characters,
             // which include " ", \r, \t, \n and \f
             $temp_str = preg_split('/[\s,]+/', $str);
-            $strarray = array();
+            $strarray = [];
             foreach ($temp_str as $s) {
                 $strarray[] = addslashes($s);
             }

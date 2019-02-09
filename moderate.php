@@ -120,7 +120,7 @@ echo '<div class="forum_intro odd">
 echo '<div style="padding: 10px; margin-left:auto; margin-right:auto; text-align:center;"><a href="' . $url . '"><h2>' . _MD_SUSPEND_MANAGEMENT . '</h2></a></div>';
 
 if (!empty($moderate_count)) {
-    $_users = array();
+    $_users = [];
     foreach (array_keys($moderate_objs) as $id) {
         $_users[$moderate_objs[$id]->getVar('uid')] = 1;
     }
@@ -151,7 +151,7 @@ if (!empty($moderate_count)) {
     ';
     // START irmtfan add forum name in moderate.php
     $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-    $forum_list   = $forumHandler->getAll(null, array('forum_name'), false);
+    $forum_list   = $forumHandler->getAll(null, ['forum_name'], false);
     // END irmtfan add forum name in moderate.php
     foreach (array_keys($moderate_objs) as $id) {
         echo '
@@ -242,7 +242,7 @@ mod_loadFunctions('forum', 'newbb');
 if (newbb_isAdmin()) {
     $forumSel = '<select name=\'forum\'>';// if user dont select any it select "0"
     $forumSel .= '<option value=\'0\' ';
-    if ($forum_id == 0) {
+    if (0 == $forum_id) {
         $forumSel .= ' selected';
     }
     $forumSel .= '>' . _ALL . '</option>';

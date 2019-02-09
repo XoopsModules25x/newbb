@@ -11,7 +11,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 /* some static xoopsModuleConfig */
-$customConfig = array();
+$customConfig = [];
 
 // specification for custom time format
 // default manner will be used if not specified
@@ -35,7 +35,7 @@ $customConfig['download_direct'] = false;
 
 // Set allowed editors
 // Should set from module preferences?
-$customConfig['editor_allowed'] = array();
+$customConfig['editor_allowed'] = [];
 
 // Set the default editor
 $customConfig['editor_default'] = 'dhtmltextarea';
@@ -71,11 +71,11 @@ $customConfig['length_title_index'] = 40;
 
 // MENU handler
 /* You could remove anyone by commenting out in order to disable it */
-$customConfig['valid_menumodes'] = array(
+$customConfig['valid_menumodes'] = [
     0 => _MD_MENU_SELECT,    // for selectbox
     //1 => _MD_MENU_CLICK,    // for "click to expand"
     //2 => _MD_MENU_HOVER        // for "mouse hover to expand"
-);
+];
 
 // view latest edit
 // 1 - all / 0-latest

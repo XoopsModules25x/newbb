@@ -84,7 +84,7 @@ class NewbbUserstatsHandler extends XoopsPersistableObjectHandler //ArtObjectHan
         if (!$result = $this->db->query($sql)) {
             return $object;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
         */

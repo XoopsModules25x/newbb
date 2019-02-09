@@ -31,10 +31,10 @@ class NewbbStatsHandler
 {
     public $db;
     public $table;
-    public $param = array(
-        'type'   => array('topic', 'post', 'digest', 'view'),
-        'period' => array('total', 'day', 'week', 'month')
-    );
+    public $param = [
+        'type'   => ['topic', 'post', 'digest', 'view'],
+        'period' => ['total', 'day', 'week', 'month']
+    ];
 
     /**
      * @param XoopsDatabase|null $db
@@ -88,7 +88,7 @@ class NewbbStatsHandler
                   . "        AND stats_type='{$type}' ";
         $result = $this->db->queryF($sql);
         $rows   = $this->db->getAffectedRows();
-        if ($rows == 0) {
+        if (0 == $rows) {
             $sql    = "    INSERT INTO {$this->table}"
                       . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) '
                       . '    VALUES '
@@ -134,15 +134,15 @@ class NewbbStatsHandler
      * @param  array $periods time period: 1 - all time; 2 - today; 3 - this week; 4 - this month; empty - all
      * @return array
      */
-    public function getStats(array $ids, array $types = array(), array $periods = array())
+    public function getStats(array $ids, array $types = [], array $periods = [])
     {
-        $ret = array();
+        $ret = [];
 
-        $_types = array();
+        $_types = [];
         foreach ($types as $type) {
             $_types[] = array_search($type, $this->param['type']);
         }
-        $_periods = array();
+        $_periods = [];
         foreach ($periods as $period) {
             $_periods[] = array_search($period, $this->param['period']);
         }
@@ -158,7 +158,7 @@ class NewbbStatsHandler
                   . (empty($_periods) ? '' : 'AND stats_period IN (' . implode(', ', $_periods) . ')');
         $result = $this->db->query($sql);
 
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $ret[(string)$row['stats_id']][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
         }
 
@@ -169,12 +169,12 @@ class NewbbStatsHandler
     {
         $this->db->queryF('TRUNCATE TABLE ' . $this->table);
         $now        = time();
-        $time_start = array(
+        $time_start = [
             'day'   => '%Y%j',
             'week'  => '%Y%u',
             'month' => '%Y%m'
-        );
-        $counts     = array();
+        ];
+        $counts     = [];
 
         $sql = '    SELECT forum_id' . '    FROM ' . $this->db->prefix('bb_forums');
         $ret = $this->db->query($sql);

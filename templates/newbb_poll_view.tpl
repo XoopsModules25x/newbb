@@ -9,7 +9,7 @@
                 <th class="center" colspan="2"><input type="hidden" name="poll_id" value="<{$poll.pollId}>"/>
                     <{$poll.question}></th>
             </tr>
-            <{foreachq item=option from=$poll.options}>
+            <{foreach item=option from=$poll.options}>
             <tr>
                 <{*-- irmtfan hardcode removed align="left" --*}>
                 <td class="even align_left" width="2%"><{$option.input}></td>

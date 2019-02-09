@@ -222,7 +222,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         $ret  = null;
         $tags = $var;
         if (!empty($var) && is_string($var)) {
-            $tags = array($var);
+            $tags = [$var];
         }
         if (!$topic_obj = parent::get($id, $tags)) {
             return $ret;
@@ -437,7 +437,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
      */
     public function &getAllPosts(&$topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
     {
-        $ret     = array();
+        $ret     = [];
         $perpage = ((int)$perpage > 0) ? (int)$perpage : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
         $start   = (int)$start;
         switch ($type) {
@@ -453,7 +453,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         }
 
         if ($post_id) {
-            if ($order === 'DESC') {
+            if ('DESC' === $order) {
                 $operator_for_position = '>';
             } else {
                 $order                 = 'ASC';
@@ -490,7 +490,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             return $ret;
         }
         $postHandler = xoops_getModuleHandler('post', 'newbb');
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $postHandler->create(false);
             $post->assignVars($myrow);
             $ret[$myrow['post_id']] = $post;
@@ -547,7 +547,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         if (isset($viewtopic_users[$postArray['uid']]['name'])) {
             $postArray['poster'] = $viewtopic_users[$postArray['uid']]['name'];
             if ($postArray['uid'] > 0) {
-                $postArray['poster'] = "<a href=\"" . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . "\">" . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
+                $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
             $postArray['poster'] = empty($postArray['poster_name']) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
@@ -570,10 +570,10 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         $result = $this->db->query($sql);
         if (!$result) {
             //xoops_error($this->db->error());
-            return array();
+            return [];
         }
-        $ret = array();
-        while ($myrow = $this->db->fetchArray($result)) {
+        $ret = [];
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['uid'];
         }
 
@@ -597,7 +597,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
 
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) && $tag_handler = @xoops_getModuleHandler('tag', 'tag', true)) {
-            $tag_handler->updateByItem(array(), $topic_id, 'newbb');
+            $tag_handler->updateByItem([], $topic_id, 'newbb');
         }
 
         return true;
@@ -726,7 +726,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
      */
     public function getActivePolls()
     {
-        $pollDirs = array();
+        $pollDirs = [];
         $allDirs  = xoops_getActiveModules();
         foreach ($allDirs as $dirname) {
             // pollresults.php file is exist in all xoopspoll versions and umfrage versions
@@ -749,7 +749,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
      *                         false: errors (see below xoops_errors)
      */
-    public function findPollModule(array $pollDirs = array())
+    public function findPollModule(array $pollDirs = [])
     {
         if (empty($pollDirs)) {
             $pollDirs = $this->getActivePolls();
@@ -759,7 +759,7 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
         }
         // if only one active poll module still we need to check!!!
         //if(count($pollDirs) === 1) return end($pollDirs);
-        $topicPollObjs = $this->getAll(new Criteria('topic_haspoll', 1), array('topic_id', 'poll_id'));
+        $topicPollObjs = $this->getAll(new Criteria('topic_haspoll', 1), ['topic_id', 'poll_id']);
         if (empty($topicPollObjs)) {
             return true;
         } // no poll or no topic!!!
@@ -774,13 +774,13 @@ class NewbbTopicHandler extends XoopsPersistableObjectHandler
             }
             // Only one poll module should has this poll_id
             // if 0 there is an error
-            if ($poll_idInMod == 0) {
+            if (0 == $poll_idInMod) {
                 xoops_error("Error: Cannot find poll module for poll_id='{$tObj->getVar('poll_id')}'");
 
                 return false;
             }
             // if 1 => $dir_def is correct
-            if ($poll_idInMod == 1) {
+            if (1 == $poll_idInMod) {
                 return $dir_def;
             }
             // if more than 1 continue

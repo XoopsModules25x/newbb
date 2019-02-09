@@ -38,10 +38,10 @@ $forumHandler  = xoops_getModuleHandler('forum', 'newbb');
 if (XoopsRequest::getString('submit', '', 'POST')) {
     $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
     $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
-    $fuser   = array();
-    if ($fforum !== 0) {
-        if ($fgroups !== '') {
-            $gg = array();
+    $fuser   = [];
+    if (0 !== $fforum) {
+        if ('' !== $fgroups) {
+            $gg = [];
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
@@ -51,7 +51,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
                 }
             }
         }
-        if ($fforum == -1) { // alle Foren
+        if (-1 == $fforum) { // alle Foren
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
             $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
@@ -72,7 +72,7 @@ echo "<form name='reorder' method='post'>";
 $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
 $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
 $criteriaCategory->setSort('cat_order');
-$categories = $categoryHandler->getAll($criteriaCategory, array('cat_id', 'cat_order', 'cat_title'));
+$categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
 $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');
 echo '<select name="forenid">';
 echo '<option value="-1">-- ' . _AM_NEWBB_GROUPMOD_ALLFORUMS . ' --</option>';

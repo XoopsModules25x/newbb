@@ -35,7 +35,7 @@
  */
 function xoops_module_update_newbb_v220(XoopsModule $module)
 {
-    $perms = array('post', 'view', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove');
+    $perms = ['post', 'view', 'reply', 'edit', 'delete', 'addpoll', 'vote', 'attach', 'noapprove'];
     foreach ($perms as $perm) {
         $sql    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('group_permission') . " SET gperm_name='forum_" . $perm . "' WHERE gperm_name='forum_can_" . $perm . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -58,9 +58,9 @@ function xoops_module_update_newbb_v220(XoopsModule $module)
 
     $sql    = 'SELECT forum_id, forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
     $result = $GLOBALS['xoopsDB']->query($sql);
-    while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $mods       = explode(' ', $row['forum_moderator']);
-        $mods       = is_array($mods) ? serialize($mods) : serialize(array());
+        $mods       = is_array($mods) ? serialize($mods) : serialize([]);
         $sql_sub    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . $mods . "' WHERE forum_id=" . $row['forum_id'];
         $result_sub = $GLOBALS['xoopsDB']->queryF($sql_sub);
         if (!$result_sub) {

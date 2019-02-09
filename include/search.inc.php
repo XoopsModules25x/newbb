@@ -42,7 +42,7 @@ function newbb_search(
     }
     // irmtfan - in XOOPSCORE/search.php $xoopsModule is not set
     if (!is_object($GLOBALS['xoopsModule']) && is_object($GLOBALS['module'])
-        && $GLOBALS['module']->getVar('dirname') === 'newbb'
+        && 'newbb' === $GLOBALS['module']->getVar('dirname')
     ) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
@@ -52,14 +52,14 @@ function newbb_search(
     $criteriaPost = new CriteriaCompo();
     $criteriaPost->add(new Criteria('p.approved', 1), 'AND'); // only active posts
 
-    $forum_list = array();// get forum lists just for forum names
+    $forum_list = [];// get forum lists just for forum names
     if (count($validForums) > 0) {
         $criteriaPermissions = new CriteriaCompo();
         $criteriaPermissions->add(new Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');
         $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
     }
 
-    if (is_numeric($userid) && $userid !== 0) {
+    if (is_numeric($userid) && 0 !== $userid) {
         $criteriaUser = new CriteriaCompo();
         $criteriaUser->add(new Criteria('p.uid', $userid), 'OR');
     } elseif (is_array($userid) && count($userid) > 0) {
@@ -115,7 +115,7 @@ function newbb_search(
     }
     $criteria->setSort($sortby);
     $order = 'ASC';
-    if ($sortby === 'p.post_time') {
+    if ('p.post_time' === $sortby) {
         $order = 'DESC';
     }
     $criteria->setOrder($order);
@@ -123,7 +123,7 @@ function newbb_search(
     $postHandler = xoops_getModuleHandler('post', 'newbb');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
-    $ret = array();
+    $ret = [];
     $i   = 0;
     foreach (array_keys($posts) as $id) {
         $post                  =& $posts[$id];

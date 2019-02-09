@@ -35,13 +35,13 @@ $post_obj->setVar('icon', '');
 $post_obj->setVar('attachsig', 1);
 $post_obj->setVar('post_time', time());
 
-$categories = array();
+$categories = [];
 
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $gpermHandler = xoops_getHandler('groupperm');
-    $groups       = array(XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS);
+    $groups       = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 
     if (!defined('_PROFILE_MA_ALLABOUT')) {
         $mod->loadLanguage();
@@ -61,16 +61,16 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     // Add core fields
     $categories[0]['cat_title'] = sprintf(_PROFILE_MI_ABOUT, $GLOBALS['xoopsUser']->getVar('uname'));
     $avatar                     = trim($GLOBALS['xoopsUser']->getVar('user_avatar'));
-    if (!empty($avatar) && $avatar !== 'blank.gif') {
-        $categories[0]['fields'][] = array(
+    if (!empty($avatar) && 'blank.gif' !== $avatar) {
+        $categories[0]['fields'][] = [
             'title' => _AM_SYSTEM_AVATARS,
             'value' => "<img src='" . XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar') . "' alt='" . $GLOBALS['xoopsUser']->getVar('uname') . "' />"
-        );
+        ];
         $weights[0][]              = 0;
     }
-    if ($GLOBALS['xoopsUser']->getVar('user_viewemail') == 1) {
+    if (1 == $GLOBALS['xoopsUser']->getVar('user_viewemail')) {
         $email                     = $GLOBALS['xoopsUser']->getVar('email', 'E');
-        $categories[0]['fields'][] = array('title' => _PROFILE_AM_EMAIL, 'value' => $email);
+        $categories[0]['fields'][] = ['title' => _PROFILE_AM_EMAIL, 'value' => $email];
         $weights[0][]              = 0;
     }
 
@@ -86,7 +86,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
             if (empty($value)) {
                 continue;
             }
-            $categories[$catid]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
+            $categories[$catid]['fields'][] = ['title' => $fields[$i]->getVar('field_title'), 'value' => $value];
             $weights[$catid][]              = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? (int)$fieldcats[$fields[$i]->getVar('fieldid')]['field_weight'] : 1;
         }
     }
@@ -117,7 +117,7 @@ $post_obj->setVar('post_text', $message);
 $post_id = $postHandler->insert($post_obj);
 
 if (!empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
-    $tags                = array();
+    $tags                = [];
     $tags['THREAD_NAME'] = $subject;
     $tags['THREAD_URL']  = XOOPS_URL
                            . '/modules/'

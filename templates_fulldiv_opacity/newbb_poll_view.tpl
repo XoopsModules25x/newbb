@@ -10,7 +10,7 @@
         <{$poll.question}>
     </div>
     <div class="forum_table">
-        <{foreachq item=option from=$poll.options}>
+        <{foreach item=option from=$poll.options}>
             <div class="forum_row">
                 <div class="poll_input even"><{$option.input}></div>
                 <div class="poll_col2 odd"><{$option.text}></div>

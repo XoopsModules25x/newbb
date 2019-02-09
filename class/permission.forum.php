@@ -40,7 +40,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function getValidPerms($fullname = false)
     {
-        static $validPerms = array();
+        static $validPerms = [];
         if (isset($validPerms[(int)$fullname])) {
             return $validPerms[(int)$fullname];
         }
@@ -62,8 +62,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function getValidItems($mid, $id = 0)
     {
-        static $suspension = array();
-        $full_items = array();
+        static $suspension = [];
+        $full_items = [];
         if (empty($mid)) {
             return $full_items;
         }
@@ -108,7 +108,8 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function getPermissions($id = 0)
     {
-        if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+        $permissions = [];
+        if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
             $modid = $GLOBALS['xoopsModule']->getVar('mid');
         } else {
             /** @var XoopsModuleHandler $moduleHandler */
@@ -119,7 +120,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         // Get user's groups
-        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
         // Create string of groupid's separated by commas, inserted in a set of brackets
         if (count($groups) < 1) {
             return false;
@@ -160,7 +161,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
      */
     public function &permission_table($forum = 0, $topic_locked = false, $isadmin = false)
     {
-        $perm = array();
+        $perm = [];
 
         $forum_id = $forum;
         if (is_object($forum)) {
@@ -171,13 +172,13 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
 
         $perm_items = $this->getValidPerms();
         foreach ($perm_items as $item) {
-            if ($item === 'access') {
+            if ('access' === $item) {
                 continue;
             }
             if ($isadmin
                 || (isset($permission_set[$forum_id]['forum_' . $item])
                     && (!$topic_locked
-                        || $item === 'view'))
+                        || 'view' === $item))
             ) {
                 $perm[] = constant('_MD_CAN_' . strtoupper($item));
             } else {
@@ -219,7 +220,7 @@ class NewbbPermissionForumHandler extends NewbbPermissionHandler
         }
 
         if (empty($mid)) {
-            if (is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname') === 'newbb') {
+            if (is_object($GLOBALS['xoopsModule']) && 'newbb' === $GLOBALS['xoopsModule']->getVar('dirname')) {
                 $mid = $GLOBALS['xoopsModule']->getVar('mid');
             } else {
                 /** @var XoopsModuleHandler $moduleHandler */

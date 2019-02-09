@@ -43,7 +43,7 @@ switch ($op) {
     case 'delete':
         $digest_ids    = XoopsRequest::getArray('digest_id', '', 'POST');
         $digestHandler = xoops_getModuleHandler('digest', 'newbb');
-        if ($digest_ids !== '') {
+        if ('' !== $digest_ids) {
             foreach ($digest_ids as $did => $value) {
                 $digestHandler->delete($did);
             }
@@ -66,7 +66,7 @@ switch ($op) {
         echo "<td class='bg3' width='2%'>" . _DELETE . '</td>';
         echo '</tr>';
 
-        $digests       = array();
+        $digests       = [];
         $digestHandler = xoops_getModuleHandler('digest', 'newbb');
         $digests       = $digestHandler->getAllDigests($start, $limit);
         foreach ($digests as $digest) {

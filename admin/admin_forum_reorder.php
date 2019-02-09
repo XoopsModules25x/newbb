@@ -53,10 +53,10 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     redirect_header('admin_forum_reorder.php', 1, _AM_NEWBB_BOARDREORDER);
 } else {
     include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-    $orders     = array();
-    $cat_orders = array();
-    $forum      = array();
-    $cat        = array();
+    $orders     = [];
+    $cat_orders = [];
+    $forum      = [];
+    $cat        = [];
 
     xoops_cp_header();
     echo '<fieldset>';
@@ -77,7 +77,7 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
     $categoryHandler  = xoops_getModuleHandler('category', 'newbb');
     $criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
     $criteriaCategory->setSort('cat_order');
-    $categories = $categoryHandler->getAll($criteriaCategory, array('cat_id', 'cat_order', 'cat_title'));
+    $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
     $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');
     foreach (array_keys($categories) as $c) {
         echo '<tr>';
