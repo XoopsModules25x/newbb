@@ -230,7 +230,7 @@ switch ($op) {
 
         //        /** @var Newbb\CategoryHandler $categoryHandler */
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (0 === count($categories)) {
@@ -250,7 +250,7 @@ switch ($op) {
         $echo .= '</tr>';
 
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all');

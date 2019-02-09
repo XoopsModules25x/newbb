@@ -14,8 +14,8 @@ $moduleDirName = basename(__DIR__);
 
 $modversion = [
     'version'             => 5.00,
-    'module_status'       => 'Beta 2',
-    'release_date'        => '2019/02/03',
+    'module_status'       => 'RC1',
+    'release_date'        => '2019/02/09',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',

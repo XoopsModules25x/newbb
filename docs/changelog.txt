@@ -1,8 +1,14 @@
+<h5>5.00 RC1 (XOOPS 2.5.10) [2019-02-09]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
+<hr>
+- fix for Criteria('1', 1) (geekwright/mamba)
+
+
 <h5>5.00 Beta 2 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
 <hr>
 - remove old configs (alfredsx)
 - cosmetics (mamba)
 - fix $isColorpicker (mamba)
+
 
 <h5>5.00 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
 <hr>
@@ -16,9 +22,6 @@
 - replace column # with column name  (aquaportail/mamba)
 - remove mt_srand() (mamba)
 - fixed _renderOptionTree signature  (aquaportail/mamba)
-
-
-WORK IN PROGRESS
 
 
 <h5>5.00 Alpha (XOOPS 2.5.9)  (NOT RELEASED)</h5>

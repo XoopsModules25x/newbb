@@ -165,7 +165,7 @@ switch ($op) {
         }
 
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
@@ -235,7 +235,7 @@ switch ($op) {
         break;
     case 'forum':
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id', 1));
+        $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
         if (empty($categories)) {
