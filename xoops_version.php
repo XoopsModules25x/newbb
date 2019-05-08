@@ -10,8 +10,8 @@
  */
 
 $modversion['version']             = 4.34;
-$modversion['module_status']       = 'RC1';
-$modversion['release_date']        = '2019/02/09';
+$modversion['module_status']       = 'Final';
+$modversion['release_date']        = '2019/05/07';
 $modversion['name']                = _MI_NEWBB_NAME;
 $modversion['description']         = _MI_NEWBB_DESC;
 $modversion['credits']             = 'NewBB 2 developed by Marko Schmuck (predator) / D.J. (phppp) / Alfred(dhcst)';
@@ -26,9 +26,9 @@ $modversion['status_version']      = '4.33';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
+$modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
-$modversion['min_db']              = ['mysql' => '5.1'];
+$modversion['min_db']              = ['mysql' => '5.5'];
 $modversion['system_menu']         = 1;
 $modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses/moduleadmin';
 $modversion['sysicons16']          = 'Frameworks/moduleclasses/icons/16';
