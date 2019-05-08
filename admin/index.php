@@ -157,8 +157,8 @@ switch ($op) {
 
         echo '<fieldset>';
         $imageLibs     = newbb_getImageLibs();
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler = xoops_getHandler('module');
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
         $reportHandler = xoops_getModuleHandler('report', 'newbb');
 
         $isOK = false;
