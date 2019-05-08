@@ -1,0 +1,597 @@
+/* reset some styles */
+
+.even, .odd, .head {
+    padding: 5px;
+    border: 1px solid #000000;
+}
+
+/* div{
+    -moz-transition: all 1s ease-in-out 0s;
+        -moz-transition-property: all;
+        -moz-transition-duration: 1s;
+        -moz-transition-timing-function: ease-in-out;
+        -moz-transition-delay: 0s;
+    -webkit-transition: all 1s ease-in-out 0s;
+        -webkit-transition-property: all;
+        -webkit-transition-duration: 1s;
+        -webkit-transition-timing-function: ease-in-out;
+        -webkit-transition-delay: 0s;
+    -ms-transition: all 1s ease-in-out 0s;
+        -ms-transition-property: all;
+        -ms-transition-duration: 1s;
+        -ms-transition-timing-function: ease-in-out;
+        -ms-transition-delay: 0s;
+}
+
+.thread_body div:hover, .thread_title_bar div:hover, .thread_buttons div:hover {
+-webkit-transform: scale(1.1);
+-moz-transform: scale(1.1);
+-ms-transform:scale(1.1);
+}
+*/
+.toggle_block, .toggle_none {
+    -moz-transition-property: all;
+    -moz-transition-duration: 1s;
+    -moz-transition-timing-function: ease-in-out;
+    -moz-transition-delay: 0s;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 1s;
+    -webkit-transition-timing-function: ease-in-out;
+    -webkit-transition-delay: 0s;
+    -ms-transition-property: all;
+    -ms-transition-duration: 1s;
+    -ms-transition-timing-function: ease-in-out;
+    -ms-transition-delay: 0s;
+    -o-transition-property: all;
+    -o-transition-duration: 1s;
+    -o-transition-timing-function: ease-in-out;
+    -o-transition-delay: 0s;
+    transition: all 1s ease-in-out 0s;
+}
+
+.toggle_block {
+    visibility: visible;
+    opacity: 1;
+    top: auto;
+}
+
+.toggle_none {
+    visibility: hidden;
+    opacity: 0;
+    top: 0;
+    height: 0;
+}
+
+.pointer {
+    cursor: pointer;
+    padding: 2px;
+}
+
+.thread_title_bar {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.thread_title_bar > div {
+    vertical-align: middle;
+}
+
+.thread_title_bar_top {
+    border-width: thick;
+}
+
+.thread_poster, .thread_poster a {
+    font-size: x-large;
+}
+
+.thread_date {
+    width: 30%;
+}
+
+.thread_title {
+    width: 63%;
+}
+
+.thread_post_no, .thread_post_no a {
+    padding: 2px;
+}
+
+.thread_body {
+}
+
+.thread_userinfo {
+    width: 20%;
+    vertical-align: top;
+    padding: 5px;
+
+}
+
+.thread_body_text {
+    padding: 5px;
+}
+
+.thread_signature {
+    border: 0;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #000000;
+}
+
+.thread_edit {
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid #000;
+    font-size: x-small;
+}
+
+.thread_poster_ip {
+    padding: 5px;
+}
+
+.thread_buttons {
+    padding: 5px;
+    margin-top: 5px;
+}
+
+/* END newbb_thread.tpl */
+
+/* -- general css classes -- */
+.forum_header {
+    overflow: hidden;
+    border: 1px solid #aaaaaa;
+    margin: 5px;
+}
+
+.forum_title {
+    float: left;
+    text-align: left;
+    padding: 5px;
+    width: 100%;
+}
+
+.forum_title > hr {
+    width: 50%;
+    height: 1px;
+}
+
+.forum_title a {
+    font-weight: bold;
+}
+
+.forum_stats {
+    padding: 5px;
+}
+
+.forum_stats_col {
+    width: 45%;
+}
+
+.index_stat_foot {
+    padding: 5px;
+    line-height: 150%;
+}
+
+/* newbb_index.html */
+.index_category {
+    border: 0;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.index_category .desc, .index_category .desc a {
+    font-weight: normal !important;
+    padding-left: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.forum_table {
+    width: 100%;
+    display: table;
+}
+
+.forum_row {
+    width: 100%;
+    display: table-row;
+}
+
+/* the grand child div is display-cell */
+.forum_row > div {
+    vertical-align: middle;
+    display: table-cell;
+    padding: 5px;
+    border-width: 1px;
+}
+
+.forum_cell {
+    display: table-cell;
+}
+
+.forum_folder {
+    width: 5%;
+}
+
+.forum_name {
+    width: 37%;
+}
+
+.subforum_name {
+    width: 37%;
+}
+
+.forum_topics, .forum_posts {
+    width: 9%;
+}
+
+.forum_lastpost {
+}
+
+.index_forum a {
+    font-weight: bold;
+}
+
+.index_forum span.item {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.index_forum span.extra {
+    margin: 0;
+}
+
+/* END index_newbb.html */
+
+/*START newbb_poll* html */
+.poll {
+    text-align: center;
+    margin: 3px;
+}
+
+.poll_text {
+    width: 50%;
+}
+
+.poll_col2 {
+}
+
+.poll_input {
+    width: 5%;
+}
+
+/*START newbb_search* html */
+.search_col {
+    width: 15%;
+}
+
+span.newbb_highlight {
+    background-color: #FFFF80 !important;
+    font-weight: bold !important;
+}
+
+span.term0 {
+    background-color: #00FF00 !important;
+}
+
+span.term1 {
+    background-color: #FF0000 !important;
+}
+
+span.term2 {
+    background-color: #0000FF !important;
+}
+
+.newbb_select_text {
+}
+
+/* START newbb_viewll.html for list.topic.html newbb_searchresults.html */
+.topic_list {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.topic_folder, .topic_icon {
+    width: 4%;
+}
+
+.topic_name {
+    width: 35%;
+}
+
+.topic_forumname {
+    width: 15%;
+}
+
+.topic_reply, .topic_view, .topic_rate {
+    width: 5%;
+}
+
+.topic_poster, .topic_publish {
+    width: 10%;
+}
+
+.topic-read {
+}
+
+.topic-new {
+    box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.forum-read {
+}
+
+.forum-new {
+    box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* newbb_viewtopic.html */
+.topic_top {
+    padding: 5px;
+}
+
+.topic_error {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 5px;
+}
+
+/* newbb_edit_post.html */
+.edit_col1 {
+    width: 20%;
+}
+
+._col_end {
+    overflow: hidden;
+}
+
+/* newbb_block_post.html */
+
+/* min width for 0=full view, 1=compact view 2=light view */
+.forum_block_0 {
+    min-width: 300px;
+}
+
+.forum_block_1 {
+    min-width: 250px;
+}
+
+.forum_block_2 {
+    min-width: 100px;
+}
+
+.post_text {
+    padding: 5px 0 10px 0;
+}
+
+.block_full_forum {
+    width: 15%;
+}
+
+.block_full_topic {
+    width: 35%;
+}
+
+.block_full_reply, .block_full_view {
+    width: 10%;
+}
+
+.block_compact_topic {
+    width: 50%;
+}
+
+.block_compact_reply {
+    width: 10%;
+}
+
+/* end*/
+div.karma {
+    background-color: transparent;
+    text-align: left;
+    border: 1px solid #DDDDFF;
+    border-right-color: #AAAAAA;
+    border-bottom-color: #AAAAAA;
+    padding: 10px;
+}
+
+span.digest {
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.floatleft {
+    float: left;
+}
+
+.floatright {
+    float: right;
+}
+
+.icon_left {
+    float: left;
+    text-align: left;
+}
+
+.icon_right {
+    float: right;
+    text-align: right;
+}
+
+/* -- dropdown menu -- */
+
+div.dropdown .menu, div.dropdown .userbar {
+    font-weight: bold;
+    margin: 0 1px;
+    border: 0 !important;
+    padding: 0;
+}
+
+div.dropdown .item {
+    font-weight: bold;
+    padding: 2px 5px;
+    white-space: nowrap;
+    border: 0 !important;
+}
+
+div.dropdown ul, div.dropdown table {
+    width: 135px;
+}
+
+/* -- dropdown menu -- */
+
+/* -- user level -- */
+table.userlevel {
+    width: 90%;
+    border: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+}
+
+table.userlevel td {
+    height: 13px;
+    padding: 0;
+}
+
+table.userlevel td.end {
+    width: 3px;
+}
+
+table.userlevel td.end img {
+    width: 3px;
+    height: 13px;
+}
+
+table.userlevel td.center {
+    width: 100%;
+}
+
+table.userlevel td.center img {
+    height: 12px;
+}
+
+/* -- user level -- */
+.online_block {
+    padding: 5px;
+}
+
+span.online_admin {
+    color: #FFA34F;
+}
+
+span.online_moderator {
+    color: #006600;
+}
+
+.pagenav {
+    float: right;
+    text-align: right;
+    padding: 5px;
+}
+
+.align_left {
+    margin-left: 0;
+    text-align: left;
+}
+
+.align_right {
+    margin-right: 0;
+    text-align: right;
+}
+
+.align_center {
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.align_center div {
+    vertical-align: middle;
+}
+
+/*
+ * From http://www.positioniseverything.net/easyclearing.html
+ */
+.clear:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clear {
+    display: inline-table;
+}
+
+/* Hides from IE-mac \*/
+* html .clear {
+    height: 1%;
+}
+
+.clear {
+    display: block;
+}
+
+/* End hide from IE-mac */
+
+/* color -- dropdown menu for Forum */
+div.dropdown a, div.dropdown .menubar a {
+    /* irmtfan remove hardcode color color:#FFF; */
+}
+
+div.dropdown .menu, div.dropdown .menubar, div.dropdown .item, div.dropdown .separator {
+    /* irmtfan remove hardcode color background-color: #436792;*/
+    /* same color set as in your theme/style.ss .th{} is recommended */
+    /* irmtfan remove hardcode color color:#FFF; */
+}
+
+div.dropdown .menu a:hover, div.dropdown .userbar a:hover {
+    color: #333;
+}
+
+/* irmtfan source: http://jsfiddle.net/VTLmj/
+you can customize each button like this:
+span.forum_icon.forum_button#p_edit
+span.forum_icon.forum_button#p_edit:hover
+span.forum_icon.forum_button#p_edit:active
+find all image names in newbb/include/images.php
+*/
+span.forum_icon.forum_button {
+    background: #407DC7;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#407DC7), to(#4279B8));
+    background-image: -webkit-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -moz-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -ms-linear-gradient(top, #407DC7, #4279B8);
+    background-image: -o-linear-gradient(top, #407DC7, #4279B8);
+    border-width: 1px;
+    color: #ffffff;
+    padding: 4px 4px;
+    text-shadow: 0 1px 0 #808080;
+    border-color: #ffffff #A1C1E6 #2B4763 #A1C1E6;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 1px 7px #080808;
+    font-weight: bold;
+}
+
+span.forum_icon.forum_button:hover {
+    box-shadow: 0 1px 5px #222;
+}
+
+span.forum_icon.forum_button:active {
+    box-shadow: inset 0 1px 7px #565656;
+    border-color: #ffffff #a1c1e6 #000000 #a1c1e6;
+    font-weight: normal;
+}
+
+/* color - end */

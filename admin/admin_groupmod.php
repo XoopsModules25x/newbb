@@ -1,9 +1,9 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
-// <http://xoops.org/>                             //
+// <https://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -28,16 +28,20 @@
 // URL: http://www.mymyxoops.org/, http://simple-xoops.de/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
-include_once __DIR__ . '/admin_header.php';
+
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
-echo '<fieldset>';
-include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/class/xoopsformloader.php');
-echo $indexAdmin->addNavigation(basename(__FILE__));
+require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+$adminObject->displayNavigation(basename(__FILE__));
+/** @var \XoopsMemberHandler $memberHandler */
 $memberHandler = xoops_getHandler('member');
-$forumHandler  = xoops_getModuleHandler('forum', 'newbb');
-if (XoopsRequest::getString('submit', '', 'POST')) {
-    $fgroups = XoopsRequest::getArray('group', '', 'POST');// !empty($_POST['group']) ? $_POST['group'] : '';
-    $fforum  = XoopsRequest::getInt('forenid', 0, 'POST');// (int)($_POST['forenid']);
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+if (Request::getString('submit', '', 'POST')) {
+    $fgroups = Request::getArray('group', '', 'POST'); // !empty($_POST['group']) ? $_POST['group'] : '';
+    $fforum  = Request::getInt('forenid', 0, 'POST'); // (int)($_POST['forenid']);
     $fuser   = [];
     if (0 !== $fforum) {
         if ('' !== $fgroups) {
@@ -52,9 +56,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
             }
         }
         if (-1 == $fforum) { // alle Foren
-            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "'";
         } else {
-            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('bb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
+            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . " SET forum_moderator='" . serialize($fuser) . "' WHERE forum_id =" . $fforum;
         }
         if (is_array($fuser) && $GLOBALS['xoopsDB']->queryF($sql)) {
             $mess = _AM_NEWBB_GROUPMOD_ADDMOD;
@@ -69,8 +73,9 @@ if (XoopsRequest::getString('submit', '', 'POST')) {
 echo _AM_NEWBB_GROUPMOD_TITLEDESC;
 echo "<br><br><table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
 echo "<form name='reorder' method='post'>";
-$categoryHandler  = xoops_getModuleHandler('category', 'newbb');
-$criteriaCategory = new CriteriaCompo(new Criteria('cat_id'));
+///** @var Newbb\CategoryHandler $categoryHandler */
+//$categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+$criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
 $criteriaCategory->setSort('cat_order');
 $categories = $categoryHandler->getAll($criteriaCategory, ['cat_id', 'cat_order', 'cat_title']);
 $forums     = $forumHandler->getTree(array_keys($categories), 0, 'all', '&nbsp;&nbsp;&nbsp;&nbsp;');
@@ -90,12 +95,14 @@ echo "</td><tr><tr><td class='even'>";
 
 $groups = $memberHandler->getGroups();
 foreach ($groups as $value) {
-    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" /> ' . $value->getVar('name') . '<br>';
+    echo '<input type="checkbox" name="group[]" value="' . $value->getVar('groupid') . '" > ' . $value->getVar('name') . '<br>';
 }
-echo "</td><tr><tr><td class='odd'>";
-
-echo '<input type="submit" value="' . _SUBMIT . '" name="submit" />';
+echo "</td><tr><tr><td class='odd' style='text-align:center;'>";
+echo '<input type="submit" value="' . _SUBMIT . '" name="submit" >';
 echo '</td></tr></table>';
-echo '</form></fieldset>';
+echo '</form>';
+echo '<fieldset>';
+echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_GROUPMOD . '&nbsp;</legend>';
+echo _AM_NEWBB_HELP_GROUPMOD_TAB;
 echo '</fieldset>';
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

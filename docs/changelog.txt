@@ -1,46 +1,68 @@
-4.34 Final  (XOOPS 2.5.10)      2019-05-07
-===========================================
-- 4.34 Final release
+<h5>5.00 Final (XOOPS 2.5.10) [2019-04-30]</h5>  Dev: Xoops 2.5.10, PHP 7.3.4
+<hr>
+- reversed to while (list()) (mamba)
+- reversed strict in_array (mamba)
+-
 
-4.34 RC1  (XOOPS 2.5.10)      2019-02-09
-===========================================
+<h5>5.00 RC1 (XOOPS 2.5.10) [2019-02-09]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
+<hr>
 - fix for Criteria('1', 1) (geekwright/mamba)
 
 
-4.33 Final  (XOOPS 2.5.8)      2016-11-27
-===========================================
+<h5>5.00 Beta 2 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
+<hr>
+- remove old configs (alfredsx)
 - cosmetics (mamba)
-- array short syntax (mamba)
-- assignment in condition (mamba)
-- double quotes (mamba)
-- Yoda (mamba)
+- fix $isColorpicker (mamba)
 
 
-4.33 RC 13  (XOOPS 2.5.8)      2016-10-18
-===========================================
-- code cosmetics (mamba0
-- replaced "< br />" with "< br>" (mamba)
-- fixed issue with Functions not loaded when not current module #32 (djsherren/geekright)
-- HTML 5 adjustments with 'selected' and 'checked' (mamba)
-- removed parenthesis from include/require as they are not functions (mamba)
-- using $GLOBALS['xoopsOption'] instead of '$xoopsOption' (mamba)
-- renamed logo to 'logoModule.png' (mamba)
+<h5>5.00 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.1
+<hr>
+- RGB to HEX (mamba)
+- changed exit() to die() (mamba)
+- assignment in Condition (mamba)
+- cosmetics (mamba)
+- extracted classes GroupPermForm, GroupFormCheckBox (mamba)
+- added  ENT_QUOTES | ENT_HTML5 to htmlspecialchars() (mamba)
+- fix: missing Tag check (aquaportail/mamba)
+- replace column # with column name  (aquaportail/mamba)
+- remove mt_srand() (mamba)
+- fixed _renderOptionTree signature  (aquaportail/mamba)
 
-4.33 RC 12  (XOOPS 2.5.8)      (2016-04-03)
-===========================================
+
+<h5>5.00 Alpha (XOOPS 2.5.9)  (NOT RELEASED)</h5>
+<hr>
+- Remove use of Art framework (geekwright)
+- standardize names of classes, tables and constants to include "newbb" (geekwright)
+- Use XMF whenever practical (geekwright)
+- Simplify database migration strategy (geekwright)
+- lots of warning/error cleanup (geekwright)
+- extra code updates (mamba)
+- Short syntax in array literals (mamba)
+- added forumDescription to viewforum.php (aerograf/mamba)
+- namespaces, autoload (mamba)
+
+
+<h5>4.33 RC 13  (XOOPS 2.5.8)      (NOT RELEASED)</h5>
+<hr>
+- code cosmetics (mamba)
+- standardize br tags (mamba)
+
+<h5>4.33 RC 12  (XOOPS 2.5.8)      (2016-04-03)</h5>
+<hr>
 - removed @version (mamba)
 - added auto-creation of /upload folders (aitor/mamba)
 - added admin_footer.php (mamba)
 - removed code for manual admin tabs (mamba)
 
-4.33 RC 11  (XOOPS 2.5.8)      (2016-03-14)
-===========================================
+<h5>4.33 RC 11  (XOOPS 2.5.8)      (2016-03-14)</h5>
+<hr>
 - issue 14: SEO images (slider84/montuy337513)
 - issue 18: Array to string (cesagonchu/mamba)
 - PHP7 and XOOPS 2.5.8 updates (mamba)
 
-4.33 RC 10                   (2015-11-15)
-===========================================
+<h5>4.33 RC 10                   (2015-11-15)</h5>
+<hr>
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
 - removed closing php tags (mamba)
@@ -62,21 +84,21 @@
 - fix notices in Search (slider84/mamba)
 - fix in toggle_script (footer.php) (slider84)
 
-4.33         11/20/2012 (changes by Irmtfan)
-===========================================
+<h5>4.33         11/20/2012 (changes by Irmtfan)</h5>
+<hr>
 - fixed .htaccess (Trabis)
 - Changing TYPE to ENGINE (mamba)
 - bug fix: Prune function (mamba)
-- New topic list block using NewbbTopicRenderer class, fix topic type and prune system
+- New topic list block using TopicRenderer class, fix topic type and prune system
 - bug fix: undefined forumCookie in footer
 - bug fix: dont show topic title in list.topic.php
 - enhance the advance block add more sorts lastposttime, lastposter, lastpostmsgicon . add more display mode: attachment, read, pagenav
 - bug fix: read topics do not show for readmode = 1
 - improve: add multi topic poster and multi last poster
-- fix: multi status and multi display header in NewbbTopicRenderer class
+- fix: multi status and multi display header in TopicRenderer class
 - delete user.php from italian language
-- improve: add anon users to topic poster and last poster in NewbbTopicRenderer class (used in block and list.topic.php)
-- newbb/class/topic.renderer.php, newbb/xoops_version.php,
+- improve: add anon users to topic poster and last poster in TopicRenderer class (used in block and list.topic.php)
+- newbb/class/TopicRenderer.php, newbb/xoops_version.php,
 - newbb/list.topic.php, newbb/blocks/list_topic.php
 - bug fix: should not ban the user in forum who is moderator of that forum. in newbb/include/form.post.php and newbb/class/moderate.php
 - bug fix: uid=0 for anonymous users in newbb/class/moderate.php
@@ -113,8 +135,8 @@
 - fix: in topic merge: update vote data instead of deleting them in newbb/topicmanager.php
 - improve: add deletePoll function to 'Topic' class to use with ease in newbb/class/topic.php, newbb/class/post.php, newbb/topicmanager.php
 - add: better poll module display link and version in admin index. in newbb/admin/index.php
-- add: findPollModule function to 'NewbbTopicHandler' class to find poll module that is in used in the current newbb installtion. in newbb/class/topic.php
-- improve: add getActivePolls function to 'NewbbTopicHandler' class  to get all active poll modules in the current xoops installtion. in newbb/class/topic.php
+- add: findPollModule function to 'TopicHandler' class to find poll module that is in used in the current newbb installtion. in newbb/class/topic.php
+- improve: add getActivePolls function to 'TopicHandler' class  to get all active poll modules in the current xoops installtion. in newbb/class/topic.php
 - add: add getPoll function to 'Topic' class to get a poll object from a poll module. in newbb/class/topic.php
 - enhance: add a $pollModule dirname of the poll module to loadOldPoll function in 'Topic' class to Load functions needed for old poll module. in newbb/class/topic.php
 - add: special check to find and save the used poll module on the newbb update process. in newbb/xoops_version.pp
@@ -131,8 +153,8 @@
 - Notice: Undefined index: fct in file /modules/newbb/xoops_version.php line 767 (cesagonchu)
 - Updated the standard norms of the English folder (cesagonchu)
 
-4.3                         08/25/2012
-===========================================
+<h5>4.3                         08/25/2012</h5>
+<hr>
  1 Fix Cache Config for SEO
  2 Fix Typos in templates
  3 Fix Nav for SEO
@@ -162,8 +184,8 @@
 27 Fix error in newbb/polls.php when the strtotime is not defined in XoopsLocal class (irmtfan)
 28 Fix using header php command instead of redirect_header XOOPS function (deka87/irmtfan) in newbb/search.php
 
-4.2                         02/08/2012
-===========================================
+<h5>4.2                         02/08/2012</h5>
+<hr>
  1 Fix Smilies are not displayed
  2 Fix View Avatars
  3 Fix Page Numbers views
@@ -174,8 +196,8 @@
  8 New Display page numbers adjusted
 
 
-4.1                         11/26/2011
-===========================================
+<h5>4.1                         11/26/2011</h5>
+<hr>
  1 Remove fpdf and add tcpdf in Framworks
  2 Fix view avatar und rank
  3 New cat resize
@@ -194,8 +216,8 @@
 16 Fix many Icons
 17 Fix advanced search
 
-4.03 beta3                  08/08/2010
-===========================================
+<h5>4.03 beta3                  08/08/2010</h5>
+<hr>
  1 Fix error and change templates
  2 Fix BB-Code in description cat and forums
  3 enabe/disable Toolbar in threads
@@ -217,8 +239,8 @@
 19 fix cache permissions
 
 
-4.02 beta2                  02/01/2010
-===========================================
+<h5>4.02 beta2                  02/01/2010</h5>
+<hr>
 1 Bugfix width PHP5.3 is installed (dhcst)
 2 Bugfix width cache (dhcst)
 3 Bugfix add new categorie (dhcst)
@@ -229,16 +251,16 @@
 8 Added seo-tools
 9 Bugfix Block see no older Topic
 
-4.01 alpha              December 25th, 2009
-============================================
+<h5>4.01 alpha              December 25th, 2009</h5>
+<hr>
 1 Remove dependence Frameworks (dhcst)
 2 delete xoopslogger views (dhcst)
 3 Adding Groupmoderation (dhcst)
 4 Bugfix stats when user post new topic (dhcst)
 5 Code refactored, not finished yet (dhcst)
 
-4.00 alpha              November 18th, 2007
-==========================================
+<h5>4.00 alpha              November 18th, 2007</h5>
+<hr>
 1 Code refactored, not finished yet (phppp)
 2 Added forum-specific topic type (phppp)
 3 Implemented tag functionality (phppp)
@@ -250,28 +272,27 @@
 9 Implemented unlimited level of sub forums (phppp)
 
 
-3.08                    Jan 3rd, 2007
-==========================================
+<h5>3.08                    Jan 3rd, 2007</h5>
+<hr>
 1 Bugfix for user stats (jorff, agl)
 2 Bugfix for reading new posts
 
 
-3.07                October 29th, 2006
-==========================================
+<h5>3.07                October 29th, 2006</h5>
+<hr>
 1 Bugfix for permission template (js related)
 2 Added support for FCKeditor upload
 3 Added support for extended xcode which allows flash/wmplayer/...
 4 Fix for XSS reported by bubuche93
 
 
-3.06
-October 8th, 2006
-==========================================
+<h5>3.06   October 8th, 2006</h5>
+<hr>
 Bugfix version
 
 
-3.05                    July 22nd, 2006
-==========================================
+<h5>3.05                    July 22nd, 2006</h5>
+<hr>
 1 Bugfix for notifying new replies for a specific topic
 2 Bugfix for permission check when moving a post
 3 Removed inherition of view mode and post order from system-wide preference
@@ -281,36 +302,36 @@ Bugfix version
 7 Bugfix for category name display in permission admin
 8 Bugfix for view_level check in viewforum template (reported by topmuzik.com)
 
-3.04 Final              June 3rd, 2006
-==========================================
+<h5>3.04 Final              June 3rd, 2006</h5>
+<hr>
 1 MySQL syntax for data synchronization for different versions
 2 xhtml fixes
 3 bugfix for group permission check form (reported by Aries)
 
-3.04 RC4                    May 27th, 2006
-==========================================
+<h5>3.04 RC4                    May 27th, 2006</h5>
+<hr>
 1 Bugfix for topic title transfered from post subject
 2 Added topic check before storing post (reported by marco)
 3 Removed unnecessary forum option 'allow_attachments'
 4 Other minor fixes
 
-3.04 RC3                May 20th, 2006
-==========================================
+<h5>3.04 RC3                May 20th, 2006</h5>
+<hr>
 1 Fixed bugs in print.php (reported by ideiafacil)
 2 Code correction for performance and cleaning up
 3 Partial improvement on permission precision
 4 Improvement on category/forum structured display for permission admin and block edit pages
 5 Improvement on compliant xhtml
 
-3.04 RC2                May 9th, 2006
-==========================================
+<h5>3.04 RC2                May 9th, 2006</h5>
+<hr>
 1 Fixed bugs reported on xoops.org
 2 Created object handler for post_text
 3 Changed fields in TABLE bb_forums
 4 Changed testing post message in language file
 
-3.04 RC                 May 8th, 2006
-==========================================
+<h5>3.04 RC                 May 8th, 2006</h5>
+<hr>
 1 category, forum, topic, post, report, rate refactoring
 2 Added reading records options: cookie, database (inspired by Ajout Gizmhail)
 3 Added data synchronization
@@ -318,8 +339,8 @@ Bugfix version
 5 Modified database structure for query optimization
 6 Fixed bug in templates for file inclusion: for both update from file and from db modes
 
-3.03                    Apr 26th, 2006
-==========================================
+<h5>3.03                    Apr 26th, 2006</h5>
+<hr>
 1 Fixed rss+xml rel link (by CeBepuH)
 2 Fixed typo in "pm" path for "transfer" (by CeBepuH)
 3 Fixed clear property in newbb.css (by CeBepuH)
@@ -327,8 +348,8 @@ Bugfix version
 5 Split functions.php
 
 
-3.02                    Apr 23rd, 2006
-==========================================
+<h5>3.02                    Apr 23rd, 2006</h5>
+<hr>
 1 Fixed URL iteration for menumode (reported by genetailor)
 2 Skip cache for edit pages
 3 Charset completeness for PDF maker (reported by domecc)
@@ -338,34 +359,34 @@ Bugfix version
 7 Added time limit to "recent replied topic" block
 8 Bugfix for signature setting (removed unnecessary user setting check)
 
-3.01                Feb 22th, 2006
-==========================================
+<h5>3.01                Feb 22th, 2006</h5>
+<hr>
 Fixed bugs in permission management
 Fixed bugs in formloader
 
-3.0 RC2                 Feb 10th, 2006
-==========================================
+<h5>3.0 RC2                 Feb 10th, 2006</h5>
+<hr>
 Fixed bugs in user select
 Fixed bugs in permission management
 
-3.0 RC1                 Jan 29th, 2006
-==========================================
+<h5>3.0 RC1                 Jan 29th, 2006</h5>
+<hr>
 Compatible with XOOPS 2.0, 2.2, 2.3
 
 
-2.32
-==========================================
+<h5>2.32</h5>
+<hr>
 1 DB query optimization
 
 
-2.31
-==========================================
+<h5>2.31</h5>
+<hr>
 1 bugfixes
 2 speed improvement
 
 
-2.3
-==========================================
+<h5>2.3</h5>
+<hr>
 1 moderator accessible distributed batch threads/posts management (approval, edit, move, delete, merge, split)
 2 moderator accessible distributed user/IP suspension management
 3 trashcan implemented
@@ -373,8 +394,8 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 5 plugable module bridging handler implemented
 
 
-2.2
-==========================================
+<h5>2.2</h5>
+<hr>
 1 block/profile/css/adminmenu/encoding related content upgraded to XOOPS 2.2
 2 XOOPS editor framework implemented
 3 permission management separated from forum/category and default permission set and management added
@@ -387,21 +408,21 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 10 moderator management merged into forum admin form with xoopsuserselect form
 
 
-1.15
-==========================================
+<h5>1.15</h5>
+<hr>
 1 fix for aged security problem (XSS)
 
 
-1.14
-==========================================
+<h5>1.14</h5>
+<hr>
 1 bugfix for inactive user posting (Reported by Aries @ xoops.org.cn)
 2 bugfix for deleting topic with poll (Reported by gropius @ xoops.org.cn)
 3 change default value for displaying forum topic time duration (Reported by Zjerre @ xoops.org)
 4 change formselectuser.php for XOOPS 2.2
 
 
-1.13
-==========================================
+<h5>1.13</h5>
+<hr>
 1 bugfix for IP recording (Reported by alitan @ xoops.org)
 2 changing time display for "Today/yesterday ..." (Reported by alitan @ xoops.org)
 3 adding post link (Preliminary solution by ackbarr && Suggested by Peekay @ xoops.org)
@@ -418,8 +439,8 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 14 compatible with news 1.30+ for posttonews (reported by cosmodrum @ xoops.org)
 
 
-1.12
-==========================================
+<h5>1.12</h5>
+<hr>
 1 login on-fly in "quick reply" (requested by Rou4 @ XOOPS CHINA)
 2 sort order in viewpost.php (reported by kmac @ XOOPS CHINA)
 3 bugfix for time display (reported by kmac @ XOOPS CHINA)
@@ -430,8 +451,8 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 8 permission check for poll management (reported by karuna @ XOOPS CHINA)
 
 
-1.11
-==========================================
+<h5>1.11</h5>
+<hr>
 1 re-write user info renderer
 2 bugfix for poster display in thread mode (reported by iamtj @ XOOPS CHINA)
 3 correction of deleting post message (reported by iamtj @ XOOPS CHINA)
@@ -439,8 +460,8 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 5 correction of encoding problem in XOOPS function formatTimestamp($time, 'rss') (reported by chia @ XOOPS CHINA)
 
 
-1.10
-==========================================
+<h5>1.10</h5>
+<hr>
 1 bugfix and layout improvement (suggested by iamtj @ XOOPS CHINA, fast reply in thread mode, anonymous button, register to post ...)
 2 rolling back "RSS enable" (requested by Aries @ XOOPS CHINA, CeBepuH @ XOOPS)
 3 bugfix for template dir in rss.php (reported by jodn007 @ XOOPS CHINA)
@@ -456,8 +477,8 @@ Compatible with XOOPS 2.0, 2.2, 2.3
 13 backward/forward compatible with XOOPS 2.0*
 
 
-1.00
-==========================================
+<h5>1.00</h5>
+<hr>
 Changelog over NewBB 2.02:
 1 CBB uses the same DB stucture/data with NewBB 2, it is convenient to switch between current CBB and current NewBB 2.
 2 bugfixes for NewBB 2.02

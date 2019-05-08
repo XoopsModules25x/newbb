@@ -3,7 +3,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <http://xoops.org/>                             //
+//                       <https://xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoops.org                                                    //
+//  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
@@ -36,7 +36,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      * @param $source
      * @return string
      */
-    function newbb_attachmentImage($source)
+    function newbbAttachmentImage($source)
     {
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $img_url    = XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['dir_attachments'];
@@ -52,28 +52,24 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
-            && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
-        ) {
+            && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 //if (!file_exists($thumb_path.'/'.$source) && $imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_img_width']) {
                 if (!file_exists($thumb_path . '/' . $source)) {
-                    newbb_createThumbnail($source, $GLOBALS['xoopsModuleConfig']['max_image_width']);
+                    newbbCreateThumbnail($source, $GLOBALS['xoopsModuleConfig']['max_image_width']);
                 }
             }
 
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
                 $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height . "px'";
             }
             // irmtfan to fix Undefined variable: pseudo_height
             if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
-                && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']
-            ) {
+                && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
                 $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height . "px'";
@@ -82,14 +78,15 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (file_exists($thumb)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" />';
+            // $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" >';
+            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" >';
             $attachmentImage .= '</a>';
         } elseif (!empty($pseudo_size)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" />';
+            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" >';
             $attachmentImage .= '</a>';
         } elseif (file_exists($image)) {
-            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" />';
+            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" >';
         } else {
             $attachmentImage = '';
         }
@@ -102,8 +99,9 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
      * @param $thumb_width
      * @return bool
      */
-    function newbb_createThumbnail($source, $thumb_width)
+    function newbbCreateThumbnail($source, $thumb_width)
     {
+        $cmd        = '';
         $img_path   = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments']);
         $thumb_path = $img_path . '/thumbs';
         $src_file   = $img_path . '/' . $source;
@@ -131,7 +129,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $newHeight = (int)($imginfo[1] * $newWidth / $imginfo[0]);
 
         if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
-            if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
+            if (preg_match('#[A-Z]:|\\\\#Ai', __FILE__)) {
                 $cur_dir     = __DIR__;
                 $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $src_file) . '"';
                 $new_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $new_file) . '"';
@@ -150,11 +148,11 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (2 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
             $path = empty($GLOBALS['xoopsModuleConfig']['path_netpbm']) ? '' : $GLOBALS['xoopsModuleConfig']['path_netpbm'] . '/';
-            if (preg_match("/\.png/", $source)) {
+            if (preg_match("/\.png$/", $source)) {
                 $cmd = $path . "pngtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "pnmtopng > $new_file";
-            } elseif (preg_match("/\.(jpg|jpeg)/", $source)) {
+            } elseif (preg_match("/\.(jpg|jpeg)$/", $source)) {
                 $cmd = $path . "jpegtopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | " . $path . "ppmtojpeg -quality=90 > $new_file";
-            } elseif (preg_match("/\.gif/", $source)) {
+            } elseif (preg_match("/\.gif$/", $source)) {
                 $cmd = $path . "giftopnm $src_file | " . $path . "pnmscale -xysize $newWidth $newHeight | ppmquant 256 | " . $path . "ppmtogif > $new_file";
             }
 
@@ -216,8 +214,8 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         if (file_exists($new_file)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

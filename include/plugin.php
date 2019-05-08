@@ -1,15 +1,16 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright      XOOPS Project (https://xoops.org)
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
+xoops_loadLanguage('main', 'newbb');
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /* some static xoopsModuleConfig */
 $customConfig = [];
 
@@ -72,9 +73,9 @@ $customConfig['length_title_index'] = 40;
 // MENU handler
 /* You could remove anyone by commenting out in order to disable it */
 $customConfig['valid_menumodes'] = [
-    0 => _MD_MENU_SELECT,    // for selectbox
-    //1 => _MD_MENU_CLICK,    // for "click to expand"
-    //2 => _MD_MENU_HOVER        // for "mouse hover to expand"
+    0 => _MD_NEWBB_MENU_SELECT,    // for selectbox
+    //1 => _MD_NEWBB_MENU_CLICK,    // for "click to expand"
+    //2 => _MD_NEWBB_MENU_HOVER        // for "mouse hover to expand"
 ];
 
 // view latest edit
@@ -90,7 +91,7 @@ $customConfig['display_text_links'] = false;
 // This is for each link.
 // It means you can overwrite the above $customConfig["display_text_links"] overall value for each link one by one.
 // go to /modules/newbb/include/display.php to set for each link
-$customConfig['display_text_each_link'] = include $GLOBALS['xoops']->path('modules/newbb/include/display.php');
+$customConfig['display_text_each_link'] = require_once $GLOBALS['xoops']->path('modules/newbb/include/display.php');
 // jump to last post read in the topic
 $customConfig['jump_to_topic_last_post_read_enabled'] = true;
 // highlight keywords in search

@@ -11,23 +11,94 @@
 /**
  * animal module for xoops
  *
- * @copyright       XOOPS Project (http://xoops.org)
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GPL 2.0 or later
  * @package         Publisher
  * @subpackage      Config
  * @since           1.03
- * @author          XOOPS Development Team - ( http://xoops.org )
+ * @author          XOOPS Development Team - ( https://xoops.org )
  */
-
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-include_once __DIR__ . '/common.php';
-
 $moduleDirName = basename(dirname(__DIR__));
-$uploadFolders = [
-    NEWBB_UPLOAD_PATH,
-    NEWBB_UPLOAD_PATH . '/thumbs'
-];
 
-//$copyFiles = array(
-//    NEWBB_UPLOAD_PATH,
-//    NEWBB_UPLOAD_PATH . '/thumbs');
+/**
+ * @return object
+ */
+function getConfig()
+{
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
+    return (object)[
+        'name'           => mb_strtoupper($moduleDirName) . ' Module Configurator',
+        'paths'          => [
+            'dirname'    => $moduleDirName,
+            'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
+            'modPath'    => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName,
+            'modUrl'     => XOOPS_URL . '/modules/' . $moduleDirName,
+            'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
+        ],
+        'uploadFolders'  => [
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
+
+            //XOOPS_UPLOAD_PATH . '/flags'
+        ],
+        'copyBlankFiles' => [
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
+            //XOOPS_UPLOAD_PATH . '/flags'
+        ],
+
+        'copyTestFolders' => [
+            //[
+            //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
+            //    XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
+            //]
+        ],
+
+        'templateFolders' => [
+            '/templates/',
+            '/templates/blocks/',
+            '/templates/admin/',
+        ],
+        'oldFiles'        => [
+            '/class/request.php',
+            '/class/registry.php',
+            '/class/utilities.php',
+            '/class/util.php',
+            // '/include/constants.php',
+            // '/include/functions.php',
+            '/ajaxrating.txt',
+        ],
+        'oldFolders'      => [
+            '/images',
+            '/css',
+            '/js',
+            '/tcpdf',
+            '/images',
+        ],
+        'renameTables'    => [
+            'bb_archive'     => 'newbb_archive',
+            'bb_attachments' => 'newbb_attachments',
+            'bb_categories'  => 'newbb_categories',
+            'bb_digest'      => 'newbb_digest',
+            'bb_forums'      => 'newbb_forums',
+            'bb_moderates'   => 'newbb_moderates',
+            'bb_online'      => 'newbb_online',
+            'bb_posts'       => 'newbb_posts',
+            'bb_posts_text'  => 'newbb_posts_text',
+            'bb_reads_forum' => 'newbb_reads_forum',
+            'bb_reads_topic' => 'newbb_reads_topic',
+            'bb_report'      => 'newbb_report',
+            'bb_stats'       => 'newbb_stats',
+            'bb_topics'      => 'newbb_topics',
+            'bb_type'        => 'newbb_type',
+            'bb_type_forum'  => 'newbb_type_forum',
+            'bb_user_stats'  => 'newbb_user_stats',
+            'bb_votedata'    => 'newbb_votedata',
+        ],
+        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+                     <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' ></a>',
+    ];
+}

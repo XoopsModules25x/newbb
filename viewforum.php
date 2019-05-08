@@ -1,20 +1,22 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright      XOOPS Project (https://xoops.org)
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-include_once __DIR__ . '/header.php';
+use Xmf\Request;
 
-if (!XoopsRequest::getInt('forum', 0, 'GET')) {
-    redirect_header(XOOPS_URL . '/index.php', 2, _MD_ERRORFORUM);
+require_once __DIR__ . '/header.php';
+
+if (!Request::getInt('forum', 0, 'GET')) {
+    redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
-mod_loadFunctions('read');
+require_once __DIR__ . '/include/functions.read.php';
 
 /*
  * Build the page query
@@ -22,132 +24,122 @@ mod_loadFunctions('read');
 $query_vars  = ['forum', 'type', 'status', 'sort', 'order', 'start', 'since'];
 $query_array = [];
 foreach ($query_vars as $var) {
-    if (XoopsRequest::getString($var, '', 'GET')) {
-        $query_array[$var] = "{$var}=" . XoopsRequest::getString($var, '', 'GET');
+    if (Request::getString($var, '', 'GET')) {
+        $query_array[$var] = "{$var}=" . Request::getString($var, '', 'GET');
     }
 }
 $page_query = implode('&amp;', array_values($query_array));
 
-if (XoopsRequest::getInt('mark', 0, 'GET')) {
-    if (1 === XoopsRequest::getInt('mark', 0, 'GET')) { // marked as read
+if (Request::getInt('mark', 0, 'GET')) {
+    if (1 === Request::getInt('mark', 0, 'GET')) { // marked as read
         $markvalue  = 1;
-        $markresult = _MD_MARK_READ;
+        $markresult = _MD_NEWBB_MARK_READ;
     } else { // marked as unread
         $markvalue  = 0;
-        $markresult = _MD_MARK_UNREAD;
+        $markresult = _MD_NEWBB_MARK_UNREAD;
     }
-    newbb_setRead_topic($markvalue, XoopsRequest::getInt('forum', 0, 'GET'));
+    newbbSetReadTopic($markvalue, Request::getInt('forum', 0, 'GET'));
     $url = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?' . $page_query;
-    redirect_header($url, 2, _MD_ALL_TOPIC_MARKED . ' ' . $markresult);
+    redirect_header($url, 2, _MD_NEWBB_ALL_TOPIC_MARKED . ' ' . $markresult);
 }
 
-$forum_id = XoopsRequest::getInt('forum', 0, 'GET');
-$type     = XoopsRequest::getInt('type', 0, 'GET');
-$status   = (XoopsRequest::getString('status', '', 'GET')
-             && in_array(XoopsRequest::getString('status', '', 'GET'), [
+$forum_id = Request::getInt('forum', 0, 'GET');
+$type     = Request::getInt('type', 0, 'GET');
+$status   = (Request::getString('status', '', 'GET')
+             && in_array(Request::getString('status', '', 'GET'), [
         'active',
         'pending',
         'deleted',
         'digest',
         'unreplied',
-        'unread'
-    ], true)) ? XoopsRequest::getString('status', '',
-                                        'GET') : ''; // (!empty($_GET['status']) && in_array($_GET['status'], array("active", "pending", "deleted", "digest", "unreplied", "unread"))) ? $_GET['status'] : '';
+        'unread',
+    ], true)) ? Request::getString('status', '', 'GET') : '';
 
-// irmtfan add mode
-$mode = (XoopsRequest::getString('status', '', 'GET')
-         && in_array(XoopsRequest::getString('status', '', 'GET'), [
+$mode = (Request::getString('status', '', 'GET')
+         && in_array(Request::getString('status', '', 'GET'), [
         'active',
         'pending',
-        'deleted'
-    ], true)) ? 2 : XoopsRequest::getInt('mode', 0, 'GET'); // (!empty($status) && in_array($status, array("active", "pending", "deleted"))) ? 2 : (!empty($_GET['mode']) ? (int)($_GET['mode']) : 0);
+        'deleted',
+    ], true)) ? 2 : Request::getInt('mode', 0, 'GET');
 
-$forumHandler = xoops_getModuleHandler('forum', 'newbb');
-$forum_obj    = $forumHandler->get($forum_id);
+///** @var Newbb\ForumHandler $forumHandler */
+//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+$forumObject = $forumHandler->get($forum_id);
 
-if (!$forum_obj) {
-    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php', 2, _MD_ERRORFORUM);
+if (!$forumObject) {
+    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-if (!$forumHandler->getPermission($forum_obj)) {
+if (!$forumHandler->getPermission($forumObject)) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php', 2, _NOPERM);
 }
-newbb_setRead('forum', $forum_id, $forum_obj->getVar('forum_last_post_id'));
+newbbSetRead('forum', $forum_id, $forumObject->getVar('forum_last_post_id'));
 
-$xoops_pagetitle = $forum_obj->getVar('forum_name') . ' [' . $xoopsModule->getVar('name') . ']';
+$xoops_pagetitle = $forumObject->getVar('forum_name') . ' [' . $xoopsModule->getVar('name') . ']';
 
 $xoopsOption['template_main']   = 'newbb_viewforum.tpl';
 $xoopsOption['xoops_pagetitle'] = $xoops_pagetitle;
-// irmtfan remove and move to footer.php
-//$xoopsOption['xoops_module_header']= $xoops_module_header;
-// irmtfan include header.php after defining $xoopsOption['template_main']
-include_once $GLOBALS['xoops']->path('header.php');
-mod_loadFunctions('render', 'newbb');
-// irmtfan new method
+
+require_once $GLOBALS['xoops']->path('header.php');
+require_once __DIR__ . '/include/functions.render.php';
+
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
     $xoopsTpl->assign('xoops_module_header', '
-    <link rel="alternate" type="application/xml+rss" title="'
-                                             . $xoopsModule->getVar('name')
-                                             . '-'
-                                             . $forum_obj->getVar('forum_name')
-                                             . '" href="'
-                                             . XOOPS_URL
-                                             . '/modules/'
-                                             . $xoopsModule->getVar('dirname')
-                                             . '/rss.php?f='
-                                             . $forum_id
-                                             . '" />
-    '
-                                             . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" >
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
 }
+$forumDescription = $forumObject->getVar('forum_desc');
+$xoopsTpl->assign('forumDescription', $forumDescription);
+
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 $xoopsTpl->assign('forum_id', $forum_id);
 $xoopsTpl->assign('version', $xoopsModule->getVar('version'));
 
-$isadmin = newbb_isAdmin($forum_obj);
-$xoopsTpl->assign('viewer_level', $isadmin ? 2 : is_object($GLOBALS['xoopsUser']));
+$isAdmin = newbbIsAdmin($forumObject);
+$xoopsTpl->assign('viewer_level', $isAdmin ? 2 : 0);
 /* Only admin has access to admin mode */
-if (!$isadmin) {
-    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? '' : $status;
+if (!$isAdmin) {
+    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'])) ? '' : $status;
     // irmtfan add mode
     $mode = 0;
 }
 // irmtfan add mode
 $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
-if ($isadmin) {
-    $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_ADMINCP]);
+if ($isAdmin) {
+    $xoopsTpl->assign('forum_index_cpanel', ['link' => 'admin/index.php', 'name' => _MD_NEWBB_ADMINCP]);
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    $onlineHandler = xoops_getModuleHandler('online', 'newbb');
-    $onlineHandler->init($forum_obj);
-    $xoopsTpl->assign('online', $onlineHandler->show_online());
+    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
+    $onlineHandler->init($forumObject);
+    $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 
-if ($forumHandler->getPermission($forum_obj, 'post')) {
-    // irmtfan full URL
-    $xoopsTpl->assign('forum_post_or_register',
-                      '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/newtopic.php?forum={$forum_id}\">" . newbbDisplayImage('t_new', _MD_POSTNEW) . '</a>');
-    if ($pollmodules && $forumHandler->getPermission($forum_obj, 'addpoll')) {
-        $t_poll = newbbDisplayImage('t_poll', _MD_ADDPOLL);
+if ($forumHandler->getPermission($forumObject, 'post')) {
+    $xoopsTpl->assign('viewer_level', $isAdmin ? 2 : 1);
+    $xoopsTpl->assign('forum_post_or_register', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/newtopic.php?forum={$forum_id}\">" . newbbDisplayImage('t_new', _MD_NEWBB_POSTNEW) . '</a>');
+    if ($pollmodules && $forumHandler->getPermission($forumObject, 'addpoll')) {
+        $t_poll = newbbDisplayImage('t_poll', _MD_NEWBB_ADDPOLL);
         $xoopsTpl->assign('forum_addpoll', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=add&amp;forum={$forum_id}\">{$t_poll}</a>");
     }
 } else {
+    $xoopsTpl->assign('viewer_level', 0);
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $redirect = preg_replace("|(.*)\/modules\/newbb\/(.*)|", "\\1/modules/newbb/newtopic.php?forum=" . $forum_id, htmlspecialchars($xoopsRequestUri));
-        $xoopsTpl->assign('forum_post_or_register', "<a href='" . XOOPS_URL . "/user.php?xoops_redirect={$redirect}'>" . _MD_REGTOPOST . '</a>');
+        $redirect = preg_replace("|(.*)\/modules\/Newbb\/(.*)|", '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
+        $xoopsTpl->assign('forum_post_or_register', "<a href='" . XOOPS_URL . "/user.php?xoops_redirect={$redirect}'>" . _MD_NEWBB_REGTOPOST . '</a>');
         $xoopsTpl->assign('forum_addpoll', '');
     } else {
         $xoopsTpl->assign('forum_post_or_register', '');
         $xoopsTpl->assign('forum_addpoll', '');
     }
 }
-$parentforum = $forumHandler->getParents($forum_obj);
+$parentforum = $forumHandler->getParents($forumObject);
 $xoopsTpl->assign_by_ref('parentforum', $parentforum);
 
-$criteria = new CriteriaCompo(new Criteria('parent_forum', $forum_id));
-$criteria->add(new Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
+$criteria = new \CriteriaCompo(new \Criteria('parent_forum', $forum_id));
+$criteria->add(new \Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
 $criteria->setSort('forum_order');
 
 if ($forums = $forumHandler->getAll($criteria, null, false)) {
@@ -157,52 +149,50 @@ if ($forums = $forumHandler->getAll($criteria, null, false)) {
     $xoopsTpl->assign_by_ref('subforum', $subforum);
 }
 
-$categoryHandler = xoops_getModuleHandler('category');
-$category_obj    = $categoryHandler->get($forum_obj->getVar('cat_id'), ['cat_title']);
-$xoopsTpl->assign('category', ['id' => $forum_obj->getVar('cat_id'), 'title' => $category_obj->getVar('cat_title')]);
+//$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+$categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
+$xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' => $categoryObject->getVar('cat_title')]);
 
-$xoopsTpl->assign('forum_index_title', sprintf(_MD_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
-$xoopsTpl->assign('forum_name', $forum_obj->getVar('forum_name'));
-$xoopsTpl->assign('forum_moderators', $forum_obj->dispForumModerators());
+$xoopsTpl->assign('forum_index_title', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('forum_name', $forumObject->getVar('forum_name'));
+$xoopsTpl->assign('forum_moderators', $forumObject->dispForumModerators());
 
-// irmtfan - add and edit: u.uname => t.topic_poster | t.topic_time => t.topic_id | "t.rating"=>_MD_RATINGS, | p.post_time => t.topic_last_post_id
+// irmtfan - add and edit: u.uname => t.topic_poster | t.topic_time => t.topic_id | "t.rating"=>_MD_NEWBB_RATINGS, | p.post_time => t.topic_last_post_id
 $sel_sort_array = [
-    't.topic_title'        => _MD_TOPICTITLE,
-    't.topic_poster'       => _MD_TOPICPOSTER,
-    't.topic_id'           => _MD_TOPICTIME,
-    't.topic_replies'      => _MD_NUMBERREPLIES,
-    't.topic_views'        => _MD_VIEWS,
-    't.rating'             => _MD_RATINGS,
-    't.topic_last_post_id' => _MD_LASTPOSTTIME
+    't.topic_title'        => _MD_NEWBB_TOPICTITLE,
+    't.topic_poster'       => _MD_NEWBB_TOPICPOSTER,
+    't.topic_id'           => _MD_NEWBB_TOPICTIME,
+    't.topic_replies'      => _MD_NEWBB_NUMBERREPLIES,
+    't.topic_views'        => _MD_NEWBB_VIEWS,
+    't.rating'             => _MD_NEWBB_RATINGS,
+    't.topic_last_post_id' => _MD_NEWBB_LASTPOSTTIME,
 ];
-if (!XoopsRequest::getString('sort', '', 'GET')
-    || !array_key_exists(XoopsRequest::getString('sort', '', 'GET'), $sel_sort_array)
-) {
+if (!Request::getString('sort', '', 'GET') || !array_key_exists(Request::getString('sort', '', 'GET'), $sel_sort_array)) {
     $sort = 't.topic_last_post_id';
 } else {
-    $sort = XoopsRequest::getString('sort', '', 'GET');
+    $sort = Request::getString('sort', '', 'GET');
 }
 
 $forum_selection_sort = '<select name="sort">';
 foreach ($sel_sort_array as $sort_k => $sort_v) {
-    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort == $sort_k) ? ' selected' : '') . '>' . $sort_v . '</option>';
+    $forum_selection_sort .= '<option value="' . $sort_k . '"' . (($sort == $sort_k) ? ' selected="selected"' : '') . '>' . $sort_v . '</option>';
 }
 $forum_selection_sort .= '</select>';
 
 $xoopsTpl->assign_by_ref('forum_selection_sort', $forum_selection_sort);
 
-$order                 = (!XoopsRequest::getString('order', '', 'GET')
-                          || 'ASC' !== XoopsRequest::getString('order', '', 'GET')) ? 'DESC' : 'ASC';
+$order                 = (!Request::getString('order', '', 'GET')
+                          || 'ASC' !== Request::getString('order', '', 'GET')) ? 'DESC' : 'ASC';
 $forum_selection_order = '<select name="order">';
-$forum_selection_order .= '<option value="ASC"' . (('ASC' === $order) ? ' selected' : '') . '>' . _MD_ASCENDING . '</option>';
-$forum_selection_order .= '<option value="DESC"' . (('DESC' === $order) ? ' selected' : '') . '>' . _MD_DESCENDING . '</option>';
+$forum_selection_order .= '<option value="ASC"' . (('ASC' === $order) ? ' selected' : '') . '>' . _MD_NEWBB_ASCENDING . '</option>';
+$forum_selection_order .= '<option value="DESC"' . (('DESC' === $order) ? ' selected' : '') . '>' . _MD_NEWBB_DESCENDING . '</option>';
 $forum_selection_order .= '</select>';
 
 $xoopsTpl->assign_by_ref('forum_selection_order', $forum_selection_order);
 
-$since = XoopsRequest::getInt('since', $GLOBALS['xoopsModuleConfig']['since_default'], 'GET');
-mod_loadFunctions('time', 'newbb');
-$forum_selection_since = newbb_sinceSelectBox($since);
+$since = Request::getInt('since', $GLOBALS['xoopsModuleConfig']['since_default'], 'GET');
+require_once __DIR__ . '/include/functions.time.php';
+$forum_selection_since = newbbSinceSelectBox($since);
 $xoopsTpl->assign_by_ref('forum_selection_since', $forum_selection_since);
 
 $query_sort = $query_array;
@@ -210,27 +200,21 @@ unset($query_sort['sort'], $query_sort['order']);
 $page_query_sort = implode('&amp;', array_values($query_sort));
 unset($query_sort);
 // irmtfan - edit: u.uname => t.topic_poster | t.topic_time => t.topic_id | p.post_time => t.topic_last_post_id
-$xoopsTpl->assign('h_topic_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_title&amp;order=" . (('t.topic_title' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_reply_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_replies&amp;order=" . (('t.topic_replies' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_poster_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_poster&amp;order=" . (('t.topic_poster' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_views_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_views&amp;order=" . (('t.topic_views' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_topic_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_title&amp;order=" . (('t.topic_title' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_reply_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_replies&amp;order=" . (('t.topic_replies' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_poster_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_poster&amp;order=" . (('t.topic_poster' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign('h_views_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_views&amp;order=" . (('t.topic_views' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_rating_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.rating&amp;order=" . (('t.rating' === $sort
-                                                                                                                                  && 'DESC'
-                                                                                                                                     === $order) ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
-$xoopsTpl->assign('h_date_link',
-                  XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (('t.topic_last_post_id' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
+                                                                                                                                  && 'DESC' === $order) ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
+$xoopsTpl->assign('h_date_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (('t.topic_last_post_id' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (('t.topic_id' === $sort
                                                                                                                                      && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('forum_since', $since); // For $since in search.php
 
 // irmtfan - if no since it should be 0
-$since     = XoopsRequest::getInt('since', 0, 'GET');
-$startdate = empty($since) ? 0 : (time() - newbb_getSinceTime($since));
-$start     = XoopsRequest::getInt('start', 0, 'GET');
+$since     = Request::getInt('since', 0, 'GET');
+$startdate = empty($since) ? 0 : (time() - newbbGetSinceTime($since));
+$start     = Request::getInt('start', 0, 'GET');
 
 $criteria_vars = ['startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt'];
 foreach ($criteria_vars as $var) {
@@ -238,20 +222,20 @@ foreach ($criteria_vars as $var) {
 }
 $criteria_topic['excerpt'] = $GLOBALS['xoopsModuleConfig']['post_excerpt'];
 
-list($allTopics, $sticky) = $forumHandler->getAllTopics($forum_obj, $criteria_topic);
+list($allTopics, $sticky) = $forumHandler->getAllTopics($forumObject, $criteria_topic);
 
 $xoopsTpl->assign_by_ref('topics', $allTopics);
 $xoopsTpl->assign('sticky', $sticky);
 $xoopsTpl->assign('rating_enable', $GLOBALS['xoopsModuleConfig']['rating_enabled']);
-$xoopsTpl->assign('img_newposts', newbbDisplayImage('topic_new', _MD_NEWPOSTS));
-$xoopsTpl->assign('img_hotnewposts', newbbDisplayImage('topic_hot_new', _MD_MORETHAN));
-$xoopsTpl->assign('img_folder', newbbDisplayImage('topic', _MD_NONEWPOSTS));
-$xoopsTpl->assign('img_hotfolder', newbbDisplayImage('topic_hot', _MD_MORETHAN2));
-$xoopsTpl->assign('img_locked', newbbDisplayImage('topic_locked', _MD_TOPICLOCKED));
+$xoopsTpl->assign('img_newposts', newbbDisplayImage('topic_new', _MD_NEWBB_NEWPOSTS));
+$xoopsTpl->assign('img_hotnewposts', newbbDisplayImage('topic_hot_new', _MD_NEWBB_MORETHAN));
+$xoopsTpl->assign('img_folder', newbbDisplayImage('topic', _MD_NEWBB_NONEWPOSTS));
+$xoopsTpl->assign('img_hotfolder', newbbDisplayImage('topic_hot', _MD_NEWBB_MORETHAN2));
+$xoopsTpl->assign('img_locked', newbbDisplayImage('topic_locked', _MD_NEWBB_TOPICLOCKED));
 
-$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_TOPICSTICKY));
-$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_TOPICDIGEST));
-$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_TOPICHASPOLL));
+$xoopsTpl->assign('img_sticky', newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY));
+$xoopsTpl->assign('img_digest', newbbDisplayImage('topic_digest', _MD_NEWBB_TOPICDIGEST));
+$xoopsTpl->assign('img_poll', newbbDisplayImage('poll', _MD_NEWBB_TOPICHASPOLL));
 
 $xoopsTpl->assign('mark_read', XOOPS_URL . "/modules/newbb/viewforum.php?mark=1&amp;{$page_query}");
 $xoopsTpl->assign('mark_unread', XOOPS_URL . "/modules/newbb/viewforum.php?mark=2&amp;{$page_query}");
@@ -263,7 +247,8 @@ $query_type = $query_array;
 unset($query_type['type']);
 $page_query_type = implode('&amp;', array_values($query_type));
 unset($query_type);
-$typeHandler = xoops_getModuleHandler('type', 'newbb');
+///** @var Newbb\TypeHandler $typeHandler */
+//$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $typeOptions = null;
 $types       = [];
 if ($types = $typeHandler->getByForum($forum_id)) {
@@ -271,12 +256,12 @@ if ($types = $typeHandler->getByForum($forum_id)) {
     foreach ($types as $key => $item) {
         $typeOptions[] = [
             'title' => $item['type_name'],
-            'link'  => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}"
+            'link'  => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}&amp;type={$key}",
         ];
     }
 }
 if ($type > 0) {
-    mod_loadFunctions('topic', 'newbb');
+    require_once __DIR__ . '/include/functions.topic.php';
     $xoopsTpl->assign('forum_topictype', getTopicTitle('', $types[$type]['type_name'], $types[$type]['type_color']));
 }
 $xoopsTpl->assign_by_ref('typeOptions', $typeOptions);
@@ -285,29 +270,29 @@ $query_status = $query_array;
 unset($query_status['status']);
 $page_query_status = implode('&amp;', array_values($query_status));
 unset($query_status);
-$xoopsTpl->assign('newpost_link', XOOPS_URL . '/modules/newbb/viewpost.php?status=new&amp;forum=' . $forum_obj->getVar('forum_id'));
+$xoopsTpl->assign('newpost_link', XOOPS_URL . '/modules/newbb/viewpost.php?status=new&amp;forum=' . $forumObject->getVar('forum_id'));
 $xoopsTpl->assign('all_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_status}");
 $xoopsTpl->assign('digest_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_status}&amp;status=digest");
 $xoopsTpl->assign('unreplied_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_status}&amp;status=unreplied");
 $xoopsTpl->assign('unread_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_status}&amp;status=unread");
 switch ($status) {
     case 'digest':
-        $current_status = _MD_DIGEST;
+        $current_status = _MD_NEWBB_DIGEST;
         break;
     case 'unreplied':
-        $current_status = _MD_UNREPLIED;
+        $current_status = _MD_NEWBB_UNREPLIED;
         break;
     case 'unread':
-        $current_status = _MD_UNREAD;
+        $current_status = _MD_NEWBB_UNREAD;
         break;
     case 'active':
-        $current_status = _MD_TYPE_ADMIN;
+        $current_status = _MD_NEWBB_TYPE_ADMIN;
         break;
     case 'pending':
-        $current_status = _MD_TYPE_PENDING;
+        $current_status = _MD_NEWBB_TYPE_PENDING;
         break;
     case 'deleted':
-        $current_status = _MD_TYPE_DELETED;
+        $current_status = _MD_NEWBB_TYPE_DELETED;
         break;
     default:
         $current_status = '';
@@ -315,14 +300,14 @@ switch ($status) {
 }
 $xoopsTpl->assign('forum_topicstatus', $current_status);
 
-$all_topics = $forumHandler->getTopicCount($forum_obj, $startdate, $status);
+$all_topics = $forumHandler->getTopicCount($forumObject, $startdate, $status);
 if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
-    include_once $GLOBALS['xoops']->path('class/pagenav.php');
+    require_once $GLOBALS['xoops']->path('class/pagenav.php');
     $query_nav = $query_array;
     unset($query_nav['start']);
     $page_query_nav = implode('&amp;', array_values($query_nav));
     unset($query_nav);
-    $nav = new XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', $page_query_nav);
+    $nav = new \XoopsPageNav($all_topics, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start, 'start', $page_query_nav);
     if ('select' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
         $navi = $nav->renderSelect();
     } elseif ('image' === $GLOBALS['xoopsModuleConfig']['pagenav_display']) {
@@ -337,29 +322,21 @@ if ($all_topics > $GLOBALS['xoopsModuleConfig']['topics_per_page']) {
 }
 
 if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
-    mod_loadFunctions('forum', 'newbb');
-    $xoopsTpl->assign('forum_jumpbox', newbb_make_jumpbox($forum_id));
+    require_once __DIR__ . '/include/functions.forum.php';
+    $xoopsTpl->assign('forum_jumpbox', newbbMakeJumpbox($forum_id));
 }
 
 if ($GLOBALS['xoopsModuleConfig']['show_permissiontable']) {
-    $permHandler      = xoops_getModuleHandler('permission', 'newbb');
-    $permission_table = $permHandler->permission_table($forum_id, false, $isadmin);
+    //    /** var Newbb\PermissionHandler $permHandler */
+    //    $permHandler      = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+    $permission_table = $permHandler->getPermissionTable($forum_id, false, $isAdmin);
     $xoopsTpl->assign_by_ref('permission_table', $permission_table);
     unset($permission_table);
 }
 
 if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
-    $xoopsTpl->assign('rss_button',
-                      "<div align='right'><a href='"
-                      . XOOPS_URL
-                      . '/modules/'
-                      . $xoopsModule->dirname()
-                      . '/rss.php?f='
-                      . $forum_id
-                      . "' title='RSS feed' target='_blank'>"
-                      . newbbDisplayImage('rss', 'RSS feed')
-                      . '</a></div>');
+    $xoopsTpl->assign('rss_button', "<div align='right'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/rss.php?f=' . $forum_id . "' title='RSS feed' target='_blank'>" . newbbDisplayImage('rss', 'RSS feed') . '</a></div>');
 }
 // irmtfan move to footer.php
-include_once __DIR__ . '/footer.php';
-include $GLOBALS['xoops']->path('footer.php');
+require_once __DIR__ . '/footer.php';
+require_once $GLOBALS['xoops']->path('footer.php');

@@ -1,9 +1,9 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <http://xoops.org/>                             //
+//                       <https://xoops.org/>                             //
 // ------------------------------------------------------------------------- //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,9 +25,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoops.org                                                    //
+//  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
+
+use Xmf\Request;
+use XoopsModules\Newbb;
 
 /*
  * Print contents of a post or a topic
@@ -37,25 +40,27 @@
  *
  */
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if (!XoopsRequest::getString('post_data', '', 'POST')) {
-    $forum    = XoopsRequest::getInt('forum', 0, 'GET');
-    $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-    $post_id  = XoopsRequest::getInt('post_id', 0, 'GET');
+if (!Request::getString('post_data', '', 'POST')) {
+    $forum    = Request::getInt('forum', 0, 'GET');
+    $topic_id = Request::getInt('topic_id', 0, 'GET');
+    $post_id  = Request::getInt('post_id', 0, 'GET');
 
     if (0 === $post_id && 0 === $topic_id) {
-        exit(_MD_ERRORTOPIC);
+        exit(_MD_NEWBB_ERRORTOPIC);
     }
 
     if (0 !== $post_id) {
-        $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $post        = $postHandler->get($post_id);
+        //        /** @var Newbb\PostHandler $postHandler */
+        //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        /** @var Newbb\Post $post */
+        $post = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
-            exit(_MD_NORIGHTTOVIEW);
+            exit(_MD_NEWBB_NORIGHTTOVIEW);
         }
         $topic_id         = $post->getVar('topic_id');
         $post_data        = $postHandler->getPostForPrint($post);
@@ -68,35 +73,37 @@ if (!XoopsRequest::getString('post_data', '', 'POST')) {
         }
     }
 
-    $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-    $topic_obj    = $topicHandler->get($topic_id);
-    $topic_id     = $topic_obj->getVar('topic_id');
-    $forum        = $topic_obj->getVar('forum_id');
-    if (!$approved = $topic_obj->getVar('approved')) {
-        exit(_MD_NORIGHTTOVIEW);
+    //    /** @var Newbb\TopicHandler $topicHandler */
+    //    $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $topicObject = $topicHandler->get($topic_id);
+    $topic_id    = $topicObject->getVar('topic_id');
+    $forum       = $topicObject->getVar('forum_id');
+    if (!$approved = $topicObject->getVar('approved')) {
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    $isadmin = newbb_isAdmin($forum_obj);
-    if (!$isadmin && $topic_obj->getVar('approved') < 0) {
-        exit(_MD_NORIGHTTOVIEW);
+    $isAdmin = newbbIsAdmin($forumObject);
+    if (!$isAdmin && $topicObject->getVar('approved') < 0) {
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-    $forum        = $topic_obj->getVar('forum_id');
-    $forum_obj    = $forumHandler->get($forum);
-    if (!$forumHandler->getPermission($forum_obj)) {
-        exit(_MD_NORIGHTTOVIEW);
+    //    /** @var Newbb\ForumHandler $forumHandler */
+    //    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forum       = $topicObject->getVar('forum_id');
+    $forumObject = $forumHandler->get($forum);
+    if (!$forumHandler->getPermission($forumObject)) {
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'view')) {
-        exit(_MD_NORIGHTTOVIEW);
+    if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'view')) {
+        exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
     // irmtfan add print permission
-    if (!$topicHandler->getPermission($forum_obj, $topic_obj->getVar('topic_status'), 'print')) {
-        exit(_MD_NORIGHTTOPRINT);
+    if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'print')) {
+        exit(_MD_NEWBB_NORIGHTTOPRINT);
     }
 } else {
-    $post_data = unserialize(base64_decode(XoopsRequest::getString('post_data', '', 'POST')));
+    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST'), true));
     $isPost    = 1;
 }
 
@@ -106,10 +113,10 @@ if (empty($isPost)) {
     echo "</head><body style='background-color:#ffffff; color:#000000;' onload='window.print()'>
             <div style='width: 750px; border: 1px solid #000; padding: 20px;'>
             <div style='text-align: center; display: block; margin: 0 0 6px 0;'>
-            <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' />
+            <img src='" . XOOPS_URL . "/modules/newbb/assets/images/xoopsbb_slogo.png' border='0' alt='' >
             <br><br> ";
 
-    $postsArray = $topicHandler->getAllPosts($topic_obj);
+    $postsArray = $topicHandler->getAllPosts($topicObject);
     foreach ($postsArray as $post) {
         if (!$post->getVar('approved')) {
             continue;
@@ -121,7 +128,7 @@ if (empty($isPost)) {
                <div>" . $post_data['text'] . "</div>
               <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div><br>";
     }
-    echo '<p>' . _MD_COMEFROM . '&nbsp;' . XOOPS_URL . '/newbb/viewtopic.php?forum=' . $forum_id . '&amp;topic_id=' . $topic_id . '</p>';
+    echo '<p>' . _MD_NEWBB_COMEFROM . '&nbsp;' . XOOPS_URL . '/newbb/viewtopic.php?forum=' . $forum_id . '&amp;topic_id=' . $topic_id . '</p>';
     echo '</div></div>';
     echo '</body></html>';
 } else {
@@ -133,7 +140,7 @@ if (empty($isPost)) {
             <div style='text-align: center; display: block; padding-bottom: 12px; margin: 0 0 6px 0; border-bottom: 2px solid #ccc;'></div>
             <div>" . $post_data['text'] . "</div>
             <div style='padding-top: 12px; border-top: 2px solid #ccc;'></div>
-            <p>" . _MD_COMEFROM . '&nbsp;' . $post_data['url'] . '</p>
+            <p>" . _MD_NEWBB_COMEFROM . '&nbsp;' . $post_data['url'] . '</p>
             </div>
             <br><br></body></html>';
 }

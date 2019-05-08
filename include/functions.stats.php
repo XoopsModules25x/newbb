@@ -1,17 +1,19 @@
 <?php
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright      XOOPS Project (https://xoops.org)
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+use XoopsModules\Newbb;
 
-defined('NEWBB_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_STATS_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_STATS')) {
@@ -20,9 +22,10 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     /**
      * @return mixed
      */
-    function newbb_get_stats()
+    function newbbGetStats()
     {
-        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+        /** @var Newbb\StatsHandler $statsHandler */
+        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
         $stats        = $statsHandler->getStats();
 
         return $stats;
@@ -34,9 +37,10 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      * @param  int   $increment
      * @return mixed
      */
-    function newbb_update_stats($id, $type, $increment = 1)
+    function newbbUpdateStats($id, $type, $increment = 1)
     {
-        $statsHandler = xoops_getModuleHandler('stats', 'newbb');
+        /** @var Newbb\StatsHandler $statsHandler */
+        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
 
         return $statsHandler->update($id, $type, $increment);
     }
@@ -50,10 +54,11 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalTopics($forum_id = '')
     {
-        $topicHandler = xoops_getModuleHandler('topic', 'newbb');
-        $criteria     = new CriteriaCompo(new Criteria('approved', 0, '>'));
+        /** @var Newbb\TopicHandler $topicHandler */
+        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $criteria     = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         if ($forum_id) {
-            $criteria->add(new Criteria('forum_id', (int)$forum_id));
+            $criteria->add(new \Criteria('forum_id', (int)$forum_id));
         }
 
         return $topicHandler->getCount($criteria);
@@ -70,17 +75,18 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalPosts($id = 0, $type = 'all')
     {
-        $postHandler = xoops_getModuleHandler('post', 'newbb');
-        $criteria    = new CriteriaCompo(new Criteria('approved', 0, '>'));
+        /** @var Newbb\PostHandler $postHandler */
+        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $criteria    = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('forum_id', (int)$id));
+                    $criteria->add(new \Criteria('forum_id', (int)$id));
                 }
                 break;
             case 'topic':
                 if ($id > 0) {
-                    $criteria->add(new Criteria('topic_id', (int)$id));
+                    $criteria->add(new \Criteria('topic_id', (int)$id));
                 }
                 break;
             case 'all':
@@ -96,7 +102,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function getTotalViews()
     {
-        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . '';
+        $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' ';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }

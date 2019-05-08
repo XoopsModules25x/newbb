@@ -1,16 +1,17 @@
 <?php
+
+use Xmf\Request;
+
+require_once __DIR__ . '/header.php';
 /*
  *
  * Module: newbbss
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
  */
- 
-include_once __DIR__ . '/header.php';
- 
-$seoOp = XoopsRequest::getString('seoOp', '', 'GET');
-$seoArg = XoopsRequest::getInt('seoArg', 0, 'GET');
-$seoOther = XoopsRequest::getString('seoOther', '', 'GET');
+$seoOp    = Request::getString('seoOp', '', 'GET');
+$seoArg   = Request::getInt('seoArg', 0, 'GET');
+$seoOther = Request::getString('seoOther', '', 'GET');
 
 $seos = ['c', 'f', 't', 'p', 'rc', 'rf', 'v', 'pr', 'pdf'];
 
@@ -22,13 +23,13 @@ $seoMap = [
     'rc'  => 'rss.php',
     'rf'  => 'rss.php',
     'pr'  => 'print.php',
-    'pdf' => 'makepdf.php'
+    'pdf' => 'makepdf.php',
 ];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
-    $ori_self               = $_SERVER['PHP_SELF'];
+    $ori_self               = Request::getString('PHP_SELF', '', 'SERVER');
     $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
     $_ENV['PHP_SELF']       = $newUrl;
@@ -62,14 +63,13 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
             $_GET['topic_id']       = $seoArg;
             break;
     }
-    include $seoMap[$seoOp];
-
+    require_once $seoMap[$seoOp];
 } else {
     $last = $seoOp . '/' . $seoArg;
     if ('' !== $seoOther) {
         $last .= '/' . $seoOther;
     }
-    include $last;
+    require_once $last;
 }
 exit();
 
@@ -89,12 +89,12 @@ function checker(&$value)
     $value = trim($value);
 
     // pruefe auf javascript include
-    if (false !== strpos($value, '<script')) {
+    if (false !== mb_strpos($value, '<script')) {
         $value = '';
     }
 
     // pruefe auf Kommentare (SQL-Injections)
-    if (false !== strpos($value, '/*')) {
+    if (false !== mb_strpos($value, '/*')) {
         $value = '';
     }
 
@@ -104,18 +104,18 @@ function checker(&$value)
     }
 
     // Nullbyte Injection
-    if (false !== strpos($value, chr(0))) {
+    if (false !== mb_strpos($value, chr(0))) {
         $value = '';
     }
 
     //pruefe Verzeichnis
-    if (false !== strpos($value, '../')) {
+    if (false !== mb_strpos($value, '../')) {
         $value = '';
     }
 
     //pruefe auf externe
-    $str = strstr($value, '://');
-    if (false !== strpos($value, '://')) {
+    $str = mb_strstr($value, '://');
+    if (false !== mb_strpos($value, '://')) {
         $value = '';
     }
 

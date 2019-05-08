@@ -1,14 +1,21 @@
 <?php
+
+namespace XoopsModules\Newbb;
+
 /**
- * NewBB 4.3x, the forum module for XOOPS project
+ * NewBB 5.0x,  the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright      XOOPS Project (https://xoops.org)
+ * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+
+use XoopsModules\Newbb;
+use XoopsModules\Tag;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:
@@ -20,10 +27,9 @@
  * uname
  * tags
  *
- * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
+ * @param mixed $items
+ * @return bool
  */
 function newbb_tag_iteminfo(&$items)
 {
@@ -40,61 +46,54 @@ function newbb_tag_iteminfo(&$items)
             $items_id[] = (int)$item_id;
         }
     }
-    $itemHandler = xoops_getModuleHandler('topic', 'newbb');
-    $items_obj   = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    /** @var TopicHandler $itemHandler */
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    /** @var \XoopsObject $itemsObject */
+    $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
-            if (!$item_obj =& $items_obj[$item_id]) {
+            /** @var \XoopsObject $itemObject */
+            if (!$itemObject = $itemsObject[$item_id]) {
                 continue;
             }
             $items[$cat_id][$item_id] = [
-                'title'   => $item_obj->getVar('topic_title'),
-                'uid'     => $item_obj->getVar('topic_poster'),
+                'title'   => $itemObject->getVar('topic_title'),
+                'uid'     => $itemObject->getVar('topic_poster'),
                 'link'    => "viewtopic.php?topic_id={$item_id}",
-                'time'    => $item_obj->getVar('topic_time'),
-                'tags'    => tag_parse_tag($item_obj->getVar('topic_tags', 'n')),
-                'content' => ''
+                'time'    => $itemObject->getVar('topic_time'),
+                'tags'    => tag_parse_tag($itemObject->getVar('topic_tags', 'n')),
+                'content' => '',
             ];
         }
     }
-    unset($items_obj);
+    unset($itemsObject);
+
+    return true;
 }
 
 /**
  * Remove orphan tag-item links
  *
  * @param $mid
- * @return void
  */
 function newbb_tag_synchronization($mid)
 {
-    $itemHandler  = xoops_getModuleHandler('topic', 'newbb');
-    $link_handler = xoops_getModuleHandler('link', 'tag');
+    /** @var TopicHandler $itemHandler */
+    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    /** @var \XoopsPersistableObjectHandler $linkHandler */
+    $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 
     /* clear tag-item links */
-    if ($link_handler->mysql_major_version() >= 4) {
-        $sql = "    DELETE FROM {$link_handler->table}"
-               . '    WHERE '
-               . "        tag_modid = {$mid}"
-               . '        AND '
-               . '        ( tag_itemid NOT IN '
-               . "            ( SELECT DISTINCT {$itemHandler->keyName} "
-               . "                FROM {$itemHandler->table} "
-               . "                WHERE {$itemHandler->table}.approved > 0"
-               . '            ) '
-               . '        )';
-    } else {
-        $sql = "    DELETE {$link_handler->table} FROM {$link_handler->table}"
-               . "    LEFT JOIN {$itemHandler->table} AS aa ON {$link_handler->table}.tag_itemid = aa.{$itemHandler->keyName} "
-               . '    WHERE '
-               . "        tag_modid = {$mid}"
-               . '        AND '
-               . "        ( aa.{$itemHandler->keyName} IS NULL"
-               . '            OR aa.approved < 1'
-               . '        )';
-    }
-    if (!$result = $link_handler->db->queryF($sql)) {
-        //xoops_error($link_handler->db->error());
-    }
+    $sql = "    DELETE FROM {$linkHandler->table}"
+           . '    WHERE '
+           . "        tag_modid = {$mid}"
+           . '        AND '
+           . '        ( tag_itemid NOT IN '
+           . "            ( SELECT DISTINCT {$itemHandler->keyName} "
+           . "                FROM {$itemHandler->table} "
+           . "                WHERE {$itemHandler->table}.approved > 0"
+           . '            ) '
+           . '        )';
+    $linkHandler->db->queryF($sql);
 }

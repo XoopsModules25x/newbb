@@ -1,9 +1,9 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
-// <http://xoops.org/>                             //
+// <https://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,21 +25,24 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
+// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
-include_once __DIR__ . '/admin_header.php';
 
-$op = $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
+use Xmf\Request;
+
+require_once __DIR__ . '/admin_header.php';
+
+$op = $op = Request::getString('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 
 switch ($op) {
     case 'delvotes':
-        $rid      = XoopsRequest::getInt('rid', 0, 'GET');
-        $topic_id = XoopsRequest::getInt('topic_id', 0, 'GET');
-        $sql      = $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . " WHERE ratingid = $rid");
+        $rid      = Request::getInt('rid', 0, 'GET');
+        $topic_id = Request::getInt('topic_id', 0, 'GET');
+        $sql      = $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . " WHERE ratingid = $rid");
         $GLOBALS['xoopsDB']->query($sql);
 
-        $query       = 'select rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' WHERE topic_id = ' . $topic_id . '';
+        $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . ' ';
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
@@ -48,23 +51,22 @@ switch ($op) {
         }
         $finalrating = $totalrating / $votesDB;
         $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('bb_topics'), $finalrating, $votesDB, $topic_id);
+        $sql         = sprintf('UPDATE `%s` SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
         $GLOBALS['xoopsDB']->queryF($sql);
 
         redirect_header('admin_votedata.php', 1, _AM_NEWBB_VOTEDELETED);
         break;
-
     case 'main':
     default:
-        $start         = XoopsRequest::getInt('start', 0, 'POST');
+        $start         = Request::getInt('start', 0, 'POST');
         $useravgrating = '0';
         $uservotes     = '0';
 
-        $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . ' ORDER BY ratingtimestamp DESC';
+        $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' ORDER BY ratingtimestamp DESC';
         $results = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($results);
 
-        $sql           = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . '';
+        $sql           = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' ';
         $result2       = $GLOBALS['xoopsDB']->query($sql, 20, $start);
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
@@ -80,8 +82,7 @@ switch ($op) {
         }
 
         xoops_cp_header();
-        echo '<fieldset>';
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
 
         echo "<div style='padding: 8px;'>\n
         <div><strong>" . _AM_NEWBB_VOTE_USERAVG . ": </strong>$useravgrating</div>\n
@@ -89,9 +90,8 @@ switch ($op) {
         <div style='padding: 8px;'>\n
         <ul><li> " . _AM_NEWBB_VOTE_DELETEDSC . "</li></ul>
         <div>\n
-        </fieldset>\n
         <br>\n
-
+        <table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>
         <table width='100%' cellspacing='1' cellpadding='2' class='outer'>\n
         <tr>\n
         <th align='center'>" . _AM_NEWBB_VOTE_ID . "</th>\n
@@ -106,11 +106,11 @@ switch ($op) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
         while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
-            $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('bb_topics') . ' WHERE topic_id=' . $topic_id . '';
+            $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . ' ';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
             $formatted_date = formatTimestamp($ratingtimestamp, _DATESTRING);
-            $ratinguname    = newbb_getUnameFromId($ratinguser, $GLOBALS['xoopsModuleConfig']['show_realname']);
+            $ratinguname    = newbbGetUnameFromId($ratinguser, $GLOBALS['xoopsModuleConfig']['show_realname']);
             echo "
         <tr>\n
         <td class='head' align='center'>$ratingid</td>\n
@@ -123,11 +123,16 @@ switch ($op) {
         </tr>\n";
         }
         echo '</table>';
+        echo '</td></tr></table>';
         //Include page navigation
-        include_once $GLOBALS['xoops']->path('class/pagenav.php');
+        require_once $GLOBALS['xoops']->path('class/pagenav.php');
         $page    = ($votes > 10) ? _AM_NEWBB_INDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($page, 20, $start, 'start');
+        $pagenav = new \XoopsPageNav($page, 20, $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $page . '' . $pagenav->renderImageNav(4) . '</div>';
+        echo '<fieldset>';
+        echo '<legend>&nbsp;' . _MI_NEWBB_ADMENU_VOTE . '&nbsp;</legend>';
+        echo _AM_NEWBB_HELP_VOTE_TAB;
+        echo '</fieldset>';
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

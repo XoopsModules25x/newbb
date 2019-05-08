@@ -9,14 +9,16 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       XOOPS Project (http://xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright       XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+use XoopsModules\Newbb;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Function to a list of user names associated with their user IDs
@@ -25,10 +27,10 @@
  * @param  bool  $linked
  * @return array
  */
-function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
+function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
-    $ids = XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
+    $ids = \XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
 
     return $ids;
 }
@@ -39,34 +41,21 @@ function &newbb_getUnameFromIds($uid, $usereal = 0, $linked = false)
  * @param  bool   $linked
  * @return string
  */
-function newbb_getUnameFromId($uid, $usereal = 0, $linked = false)
+function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
 {
     xoops_load('xoopsuserutility');
 
-    return XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
-}
-
-// Adapted from PMA_getIp() [phpmyadmin project]
-/**
- * @param  bool $asString
- * @return mixed
- */
-function newbb_getIP($asString = false)
-{
-    xoops_load('xoopsuserutility');
-
-    return XoopsUserUtility::getIP($asString);
-    //    return '2001:cdba:0000:0000:0000:0000:3257:9652'; //for testing
+    return \XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
 }
 
 /**
  * Function to check if a user is an administrator of the module
  *
- * @param  int $user
- * @param  int $mid
+ * @param  int|string|array|\XoopsUser $user
+ * @param  int                         $mid
  * @return bool
  */
-function newbb_isAdministrator($user = -1, $mid = 0)
+function newbbIsAdministrator($user = -1, $mid = 0)
 {
     global $xoopsModule;
 
@@ -82,42 +71,44 @@ function newbb_isAdministrator($user = -1, $mid = 0)
         if (is_object($xoopsModule) && 'newbb' === $xoopsModule->getVar('dirname', 'n')) {
             $mid = $xoopsModule->getVar('mid', 'n');
         } else {
-            $modhandler   = xoops_getHandler('module');
-            $newbb_module = $modhandler->getByDirname('newbb');
-            $mid          = $newbb_module->getVar('mid', 'n');
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            $newbb_module  = $moduleHandler->getByDirname('newbb');
+            $mid           = $newbb_module->getVar('mid', 'n');
             unset($newbb_module);
         }
     }
 
     if (is_object($xoopsModule) && is_object($GLOBALS['xoopsUser']) && $mid == $xoopsModule->getVar('mid', 'n')
-        && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')
-    ) {
+        && $uid == $GLOBALS['xoopsUser']->getVar('uid', 'n')) {
         return $GLOBALS['xoopsUserIsAdmin'];
     }
 
+    /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $groups        = $memberHandler->getGroupsByUser($uid);
 
-    $modulepermHandler = xoops_getHandler('groupperm');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
-    return $modulepermHandler->checkRight('module_admin', $mid, $groups);
+    return $grouppermHandler->checkRight('module_admin', $mid, $groups);
 }
 
 /**
  * Function to check if a user is a moderator of a forum
  *
- * @param       $forum
- * @param  int  $user
+ * @param                               $forum
+ * @param  int|array |string|\XoopsUser $user
  * @return bool
  */
-function newbb_isModerator(&$forum, $user = -1)
+function newbbIsModerator(&$forum, $user = -1)
 {
     if (!is_object($forum)) {
         $forum_id = (int)$forum;
         if (0 == $forum_id) {
             return false;
         }
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forum        = $forumHandler->get($forum_id);
     }
 
@@ -129,16 +120,16 @@ function newbb_isModerator(&$forum, $user = -1)
     }
     $uid = is_object($user) ? $user->getVar('uid', 'n') : (int)$user;
 
-    return in_array($uid, $forum->getVar('forum_moderator'), true);
+    return in_array($uid, $forum->getVar('forum_moderator'));
 }
 
 /**
  * Function to check if a user has moderation permission over a forum
  *
- * @param  int $forum
+ * @param  Newbb\Forum|int $forum
  * @return bool
  */
-function newbb_isAdmin($forum = 0)
+function newbbIsAdmin($forum = 0)
 {
     global $xoopsModule;
     static $_cachedModerators;
@@ -158,7 +149,7 @@ function newbb_isAdmin($forum = 0)
     $cache_id = is_object($forum) ? $forum->getVar('forum_id', 'n') : (int)$forum;
     if (!isset($_cachedModerators[$cache_id])) {
         if (!is_object($forum)) {
-            $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forum        = $forumHandler->get((int)$forum);
         }
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');
@@ -172,10 +163,20 @@ function newbb_isAdmin($forum = 0)
  * @param  array $uid
  * @return array
  */
-function newbb_isModuleAdministrators(array $uid = [])
+function newbbIsModuleAdministrators(array $uid = [])
 {
     global $xoopsModule;
     $module_administrators = [];
+
+    //    $xoopsMembershipHandler = xoops_getHandler('membership');
+    //    $xoopsMembershipTable   = $xoopsMembershipHandler->table;
+
+    /** @var \XoopsMembershipHandler $xoopsMembershipHandler */
+    $xoopsMembershipHandler = xoops_getHandler('membership');
+    $xoopsMembershipTable   = $xoopsMembershipHandler->table;
+    /** @var \XoopsGroupPermHandler $xoopsGroupPermHandler */
+    $xoopsGroupPermHandler = xoops_getHandler('groupperm');
+    $xoopsGroupPermTable   = $xoopsGroupPermHandler->table;
 
     if (!(bool)$uid) {
         return $module_administrators;
@@ -183,10 +184,10 @@ function newbb_isModuleAdministrators(array $uid = [])
     $mid = $xoopsModule->getVar('mid');
 
     $sql = 'SELECT COUNT(l.groupid) AS count, l.uid FROM '
-           . $GLOBALS['xoopsDB']->prefix('groups_users_link')
+           . $xoopsMembershipTable
            . ' AS l'
            . ' LEFT JOIN '
-           . $GLOBALS['xoopsDB']->prefix('group_permission')
+           . $xoopsGroupPermTable
            . ' AS p ON p.gperm_groupid=l.groupid'
            . ' WHERE l.uid IN ('
            . implode(', ', array_map('intval', $uid))
@@ -195,6 +196,7 @@ function newbb_isModuleAdministrators(array $uid = [])
            . (int)$mid
            . "'"
            . ' GROUP BY l.uid';
+
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (!empty($myrow['count'])) {
@@ -212,7 +214,7 @@ function newbb_isModuleAdministrators(array $uid = [])
  * @param  int   $mid
  * @return array
  */
-function newbb_isForumModerators(array $uid = [], $mid = 0)
+function newbbIsForumModerators(array $uid = [], $mid = 0)
 {
     $forum_moderators = [];
 
@@ -220,7 +222,7 @@ function newbb_isForumModerators(array $uid = [], $mid = 0)
         return $forum_moderators;
     }
 
-    $sql = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
+    $sql = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
     if ($result = $GLOBALS['xoopsDB']->query($sql)) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['forum_moderator'])) {

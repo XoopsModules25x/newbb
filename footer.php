@@ -11,36 +11,37 @@
 
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         NEWBB
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
  * @author          The Persian Xoops Support Site<www.xoops.ir>
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 global $xoTheme;
 
-include_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
+require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
 $iconHandler = newbbGetIconHandler();
 //  get css rel path from setted language
 $css_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['language'], 'newbb', 'language/english', 'css');
 // add local stylesheet
+/** @var xos_opal_Theme $xoTheme */
 $xoTheme->addStylesheet($css_rel_path . '/style.css');
 
 //  get js rel path from setted language
 $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['language'], 'newbb', 'language/english', 'js');
 // add all local js files inside js directory
 xoops_load('XoopsLists');
-$allfiles = XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
+$allfiles = \XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
-    if ('js' === strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
+    if ('js' === mb_strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }
-global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include_once
+global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
-$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G' . '";';
+$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G";';
 $xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);
