@@ -66,10 +66,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
                     continue;
                 }
                 foreach ($forums[$key] as $f => $forum) {
-                    if ($see && in_array($f, $value, true)) {
+                    if ($see && in_array($f, $value)) {
                         continue;
                     }
-                    $box .= "<option value='{$f}' " . (in_array($f, $value, true) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
+                    $box .= "<option value='{$f}' " . (in_array($f, $value) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
                 }
             }
         } else {

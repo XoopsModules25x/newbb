@@ -64,7 +64,7 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $sql    = '    SELECT uid' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('users');
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
-        while (false !== (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);

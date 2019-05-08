@@ -139,7 +139,9 @@ $icons = [
     '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
 ];
 
+//when debugging, change to true
 $debug = false;
+//$debug = true;
 
 // MyTextSanitizer object
 $myts = \MyTextSanitizer::getInstance();

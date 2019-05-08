@@ -120,7 +120,7 @@ function newbbIsModerator(&$forum, $user = -1)
     }
     $uid = is_object($user) ? $user->getVar('uid', 'n') : (int)$user;
 
-    return in_array($uid, $forum->getVar('forum_moderator'), true);
+    return in_array($uid, $forum->getVar('forum_moderator'));
 }
 
 /**
@@ -155,7 +155,7 @@ function newbbIsAdmin($forum = 0)
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');
     }
 
-    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id], true);
+    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id]);
 }
 
 /* use hardcoded DB query to save queries */

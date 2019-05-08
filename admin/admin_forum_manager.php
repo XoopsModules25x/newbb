@@ -184,7 +184,7 @@ switch ($op) {
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
                         $ids = $permHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
-                        if (!in_array($forumObject->getVar('forum_id'), $ids, true)) {
+                        if (!in_array($forumObject->getVar('forum_id'), $ids)) {
                             if (empty($perm_template[$group][$perm])) {
                                 $permHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {

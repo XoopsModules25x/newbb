@@ -169,7 +169,7 @@ foreach (array_keys($categories) as $id) {
     $onecat = $categories[$id];
 
     $cat_element_id = 'cat_' . $onecat['cat_id'];
-    $expand         = (count($toggles) > 0) ? (in_array($cat_element_id, $toggles, true) ? false : true) : true;
+    $expand         = (count($toggles) > 0) ? (in_array($cat_element_id, $toggles) ? false : true) : true;
     // START irmtfan to improve newbbDisplayImage
     if ($expand) {
         $cat_display      = 'block';        //irmtfan move semicolon

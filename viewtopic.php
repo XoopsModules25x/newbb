@@ -59,10 +59,10 @@ $post_id  = Request::getInt('post_id', 0, 'GET'); // !empty($_GET['post_id']) ? 
 $move     = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
 $start    = Request::getInt('start', 0, 'GET'); // !empty($_GET['start']) ? (int)($_GET['start']) : 0;
 $status   = (Request::getString('status', '', 'GET')
-             && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted'], true)) ? Request::getString('status', '', 'GET') : '';
+             && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted'])) ? Request::getString('status', '', 'GET') : '';
 $mode     = Request::getInt('mode', (!empty($status) ? 2 : 0), 'GET'); // !empty($_GET['mode']) ? (int)($_GET['mode']) : (!empty($status) ? 2 : 0);
 $order    = (Request::getString('order', '', 'GET')
-             && in_array(Request::getString('order', '', 'GET'), ['ASC', 'DESC'], true)) ? Request::getString('order', '', 'GET') : '';
+             && in_array(Request::getString('order', '', 'GET'), ['ASC', 'DESC'])) ? Request::getString('order', '', 'GET') : '';
 
 if ('' === $order) {
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
@@ -802,7 +802,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
         'collapse' => $iconHandler->getImageSource($qr_collapse),
     ];
     $quickreply['show']   = 1; // = !empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']
-    $quickreply['expand'] = (count($toggles) > 0) ? (in_array('qr', $toggles, true) ? false : true) : true;
+    $quickreply['expand'] = (count($toggles) > 0) ? (in_array('qr', $toggles) ? false : true) : true;
     if ($quickreply['expand']) {
         $quickreply['style']     = 'block';        //irmtfan move semicolon
         $quickreply_icon_display = $qr_expand;

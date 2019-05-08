@@ -151,7 +151,7 @@ class Post extends \XoopsObject
         }
 
         foreach ($attachOld as $key => $attach) {
-            if (in_array($key, $attachArray, true)) {
+            if (in_array($key, $attachArray)) {
                 $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
                 @unlink($file);
                 $file = ($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
@@ -226,7 +226,7 @@ class Post extends \XoopsObject
                 }
                 $file_size = @filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = number_format($file_size / 1024, 2) . ' KB';
-                if (in_array(mb_strtolower($file_extension), $image_extensions, true)
+                if (in_array(mb_strtolower($file_extension), $image_extensions)
                     && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . newbbAttachmentImage($att['name_saved']);
@@ -521,7 +521,7 @@ class Post extends \XoopsObject
             $post_text       = "<div class='karma'>" . sprintf(_MD_NEWBB_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma')) . '</div>';
             $post_attachment = '';
         } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply')
-                  && (!$uid || !in_array($uid, $viewtopic_posters, true))) {
+                  && (!$uid || !in_array($uid, $viewtopic_posters))) {
             $post_text       = "<div class='karma'>" . _MD_NEWBB_REPLY_REQUIREMENT . '</div>';
             $post_attachment = '';
         } else {

@@ -43,7 +43,7 @@ $validOps = [
     'save_forum',
     'add',
 ];
-if (!in_array($op, $validOps, true)) {
+if (!in_array($op, $validOps)) {
     $op = '';
 }
 

@@ -18,7 +18,7 @@ $forum_id = Request::getInt('forum_id', 0, 'POST');
 $topic_id = Request::getArray('topic_id', null, 'POST');
 
 $op = Request::getString('op', '', 'POST');
-$op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
+$op = in_array($op, ['approve', 'delete', 'restore', 'move']) ? $op : '';
 
 if (0 === count($topic_id) || 0 === count($op)) {
     // irmtfan - issue with javascript:history.go(-1)

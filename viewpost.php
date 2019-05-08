@@ -41,9 +41,9 @@ $order    = Request::getString('order', 'DESC', 'GET');
 $uid = Request::getInt('uid', 0, 'GET');
 
 $status = (Request::getString('status', '', 'GET')
-           && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted', 'new', 'all', 'digest'], true)) ? Request::getString('status', '', 'GET') : '';
+           && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted', 'new', 'all', 'digest'])) ? Request::getString('status', '', 'GET') : '';
 $mode   = Request::getInt('mode', 0, 'GET');
-$mode   = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? 2 : $mode;
+$mode   = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'])) ? 2 : $mode;
 
 ///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
@@ -63,7 +63,7 @@ if (empty($forum_id)) {
 
 /* Only admin has access to admin mode */
 if (!$isAdmin && 2 === $mode) {
-    $status = in_array($status, ['active', 'pending', 'deleted'], true) ? '' : $status;
+    $status = in_array($status, ['active', 'pending', 'deleted']) ? '' : $status;
     $mode   = 0;
 }
 if ($mode) {
@@ -159,7 +159,7 @@ if ('compact' === Request::getString('viewmode', '', 'GET')) {
 }
 
 $viewmode = Request::getString('viewmode', (!empty($viewmode_cookie) ? $viewmode_cookie : (@$valid_modes[$GLOBALS['xoopsModuleConfig']['view_mode'] - 1])), 'GET');
-$viewmode = in_array($viewmode, $valid_modes, true) ? $viewmode : $valid_modes[0];
+$viewmode = in_array($viewmode, $valid_modes) ? $viewmode : $valid_modes[0];
 
 $postCount = $postHandler->getPostCount($criteria_count, $join); // irmtfan add join for read_mode = 2
 $posts     = $postHandler->getPostsByLimit($criteria_post, $post_perpage, $start, $join); // irmtfan add join for read_mode = 2

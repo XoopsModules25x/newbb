@@ -99,7 +99,7 @@ $isAdmin = newbbIsAdmin($forumObject);
 $xoopsTpl->assign('viewer_level', $isAdmin ? 2 : 0);
 /* Only admin has access to admin mode */
 if (!$isAdmin) {
-    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? '' : $status;
+    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'])) ? '' : $status;
     // irmtfan add mode
     $mode = 0;
 }

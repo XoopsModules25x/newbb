@@ -151,7 +151,7 @@ class TopicRenderer
         $this->init();
 
         foreach ($vars as $var => $val) {
-            if (!in_array($var, $this->args, true)) {
+            if (!in_array($var, $this->args)) {
                 continue;
             }
             $this->vars[$var] = $this->setVar($var, $val);
@@ -353,12 +353,12 @@ class TopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = time() - newbbGetSinceTime($val);
-                    if (in_array('unread', explode(',', $this->vars['status'], true), true) && 1 == $this->config['read_mode']
+                    if (in_array('unread', explode(',', $this->vars['status'])) && 1 == $this->config['read_mode']
                         && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
-                    if (in_array('digest', explode(',', $this->vars['status'], true), true)) {
+                    if (in_array('digest', explode(',', $this->vars['status']))) {
                         $this->query['where'][] = 't.digest_time > ' . $startdate;
                     }
                     // irmtfan - should be >= instead of =
@@ -1088,7 +1088,7 @@ class TopicRenderer
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
             if ($result = $this->handler->db->query($sql)) {
-                while (false !== (list($topic_id) = $this->handler->db->fetchRow($result))) {
+                while (list($topic_id) = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
             }

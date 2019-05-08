@@ -91,7 +91,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
                     setcookie($GLOBALS['xoopsConfig']['session_name'], session_id(), time() + (60 * $GLOBALS['xoopsConfig']['session_expire']), '/', '', 0);
                 }
                 $user_theme = $user->getVar('theme');
-                if (in_array($user_theme, $GLOBALS['xoopsConfig']['theme_set_allowed'], true)) {
+                if (in_array($user_theme, $GLOBALS['xoopsConfig']['theme_set_allowed'])) {
                     $_SESSION['xoopsUserTheme'] = $user_theme;
                 }
             }

@@ -199,9 +199,9 @@ class OnlineHandler
         }
 
         foreach ($users_online as $uid => $user) {
-            if (in_array($uid, $administrator_list, true)) {
+            if (in_array($uid, $administrator_list)) {
                 $user['level'] = 2;
-            } elseif (in_array($uid, $moderator_list, true)) {
+            } elseif (in_array($uid, $moderator_list)) {
                 $user['level'] = 1;
             } else {
                 $user['level'] = 0;
@@ -342,12 +342,12 @@ class OnlineHandler
             if (!$result) {
                 return $ret;
             }
-            while (false !== (list($uid) = $this->db->fetchRow($result))) {
+            while (list($uid) = $this->db->fetchRow($result)) {
                 $online_users[] = $uid;
             }
         }
         foreach ($uids as $uid) {
-            if (in_array($uid, $online_users, true)) {
+            if (in_array($uid, $online_users)) {
                 $ret[$uid] = 1;
             }
         }

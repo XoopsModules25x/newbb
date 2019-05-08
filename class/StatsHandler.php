@@ -182,7 +182,7 @@ class StatsHandler
 
         $sql = '    SELECT forum_id' . '    FROM ' . $this->db->prefix('newbb_forums');
         $ret = $this->db->query($sql);
-        while (false !== (list($forum_id) = $this->db->fetchRow($ret))) {
+        while (list($forum_id) = $this->db->fetchRow($ret)) {
             $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
             list($topics, $views) = $this->db->fetchRow($result);

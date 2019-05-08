@@ -49,7 +49,7 @@ if (Request::getString('submit', '', 'POST')) {
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
-                    if (!in_array($f, $fuser, true)) {
+                    if (!in_array($f, $fuser)) {
                         $fuser[] = $f;
                     }
                 }

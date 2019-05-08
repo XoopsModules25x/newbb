@@ -19,7 +19,7 @@ $post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'
 $uid      = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
-$op   = in_array($op, ['approve', 'delete', 'restore', 'split'], true) ? $op : '';
+$op   = in_array($op, ['approve', 'delete', 'restore', 'split']) ? $op : '';
 $mode = Request::getInt('mode', 1, 'GET');
 
 if (0 === count($post_id) || 0 === count($op)) {

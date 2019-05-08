@@ -241,7 +241,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
             unset($module);
         }
 
-        if (in_array($perm_name, ['forum_all', 'category_all'], true)) {
+        if (in_array($perm_name, ['forum_all', 'category_all'])) {
             /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $groups        = array_keys($memberHandler->getGroupList());

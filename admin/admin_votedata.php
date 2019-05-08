@@ -46,7 +46,7 @@ switch ($op) {
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
-        while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult))) {
+        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -71,7 +71,7 @@ switch ($op) {
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
 
-        while (false !== (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
+        while (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
             //            $useravgrating = $useravgrating + $rating2;
             $useravgrating += $rating2;
         }
@@ -105,7 +105,7 @@ switch ($op) {
         if (0 == $votes) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
-        while (false !== (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results))) {
+        while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
             $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . ' ';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 

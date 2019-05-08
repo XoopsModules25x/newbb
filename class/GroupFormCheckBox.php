@@ -57,7 +57,7 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
                 $tree      .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
             }
             $tree .= '" value="1"';
-            if (in_array($option['id'], $this->_value, true)) {
+            if (in_array($option['id'], $this->_value)) {
                 $tree .= ' checked';
             }
             $tree .= ' >'

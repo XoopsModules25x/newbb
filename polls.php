@@ -44,7 +44,7 @@ $goodOps = [
     'log',
 ];
 $op      = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'add';
-$op      = (!in_array($op, $goodOps, true)) ? 'add' : $op;
+$op      = (!in_array($op, $goodOps)) ? 'add' : $op;
 
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'GET'), 'POST');
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'GET'), 'POST');

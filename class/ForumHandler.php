@@ -455,7 +455,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
             if ($result = $this->db->query($sql)) {
-                while (false !== (list($topic_id) = $this->db->fetchRow($result))) {
+                while (list($topic_id) = $this->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
             }

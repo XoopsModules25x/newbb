@@ -33,7 +33,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         if (true === mb_strpos(getenv('REQUEST_URI'), 'mark_read=') || true === mb_strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
         } else {
-            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url, true)) {
+            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
                 //rewrite only for files
 
                 if ('' !== trim(getenv('SCRIPT_NAME'))) {

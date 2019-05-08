@@ -92,7 +92,7 @@ switch ($action) {
                 if (0 == $ii % 5) {
                     $ret_ele .= '</tr><tr>';
                 }
-                $checked      = in_array('forum_' . $perm, $selected, true) ? ' checked' : '';
+                $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
                 $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)) . '<br></td>';

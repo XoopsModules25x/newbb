@@ -180,7 +180,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         $imageCreateFunction = function_exists('imagecreatetruecolor') ? 'imagecreatetruecolor' : 'imagecreate';
 
-        if (in_array($type, $supported_types, true)) {
+        if (in_array($type, $supported_types)) {
             switch ($type) {
                 case 1:
                     if (!function_exists('imagecreatefromgif')) {

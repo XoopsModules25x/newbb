@@ -35,6 +35,8 @@ trait VersionChecks
             $module = \XoopsModule::getByDirname($moduleDirName);
         }
         xoops_loadLanguage('admin', $moduleDirName);
+        xoops_loadLanguage('common', $moduleDirName);
+
 
         //check for minimum XOOPS version
         $currentVer = mb_substr(XOOPS_VERSION, 6); // get the numeric part of string
@@ -66,6 +68,8 @@ trait VersionChecks
             $module = \XoopsModule::getByDirname($moduleDirName);
         }
         xoops_loadLanguage('admin', $moduleDirName);
+        xoops_loadLanguage('common', $moduleDirName);
+
         // check for minimum PHP version
         $success = true;
 
@@ -111,6 +115,8 @@ trait VersionChecks
                 $curlReturn = curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     trigger_error(curl_error($curlHandle));
+                } elseif (false !== strpos($curlReturn, 'Not Found')) {
+                    trigger_error('Repository Not Found: ' . $infoReleasesUrl);
                 } else {
                     $file              = json_decode($curlReturn, false);
                     $latestVersionLink = sprintf("https://github.com/$repository/archive/%s.zip", $file ? reset($file)->tag_name : $default);

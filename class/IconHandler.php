@@ -183,7 +183,7 @@ class IconHandler
         $this->setImage($image, $alt, $extra);
         // START hacked by irmtfan - improve function to CSS3 buttons - add alt and title attributes - use span instead of button to support IE7&8
         $tag = 'span';
-        if ("class='forum_icon'" === $extra && in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'], true)) {
+        if ("class='forum_icon'" === $extra && in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'])) {
             $extra = "class='forum_icon forum_button'";
         }
 

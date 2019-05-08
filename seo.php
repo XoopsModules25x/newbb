@@ -26,7 +26,7 @@ $seoMap = [
     'pdf' => 'makepdf.php',
 ];
 
-if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos, true)) {
+if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
     $ori_self               = Request::getString('PHP_SELF', '', 'SERVER');

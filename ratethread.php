@@ -93,7 +93,7 @@ $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_voteda
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
-while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult))) {
+while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
     $totalrating += $rating;
 }
 $finalrating = $totalrating / $votesDB;

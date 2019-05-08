@@ -81,7 +81,7 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
 
     // Add dynamic fields
     foreach (array_keys($fields) as $i) {
-        if (in_array($fields[$i]->getVar('fieldid'), $fieldids, true)) {
+        if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
             $catid = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? $fieldcats[$fields[$i]->getVar('fieldid')]['catid'] : 0;
             $value = $fields[$i]->getOutputValue($GLOBALS['xoopsUser']);
             if (is_array($value)) {

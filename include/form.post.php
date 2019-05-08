@@ -158,7 +158,7 @@ if (Request::getString('editor', '', 'POST')) {
     }
 }
 if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
-    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'], true)) {
+    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'])) {
         $editor = $GLOBALS['xoopsModuleConfig']['editor_allowed'][0];
         newbbSetCookie('editor', $editor);
     }
