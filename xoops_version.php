@@ -13,9 +13,9 @@ require_once __DIR__ . '/preloads/autoloader.php';
 $moduleDirName = basename(__DIR__);
 
 $modversion = [
-    'version'             => 5.00,
-    'module_status'       => 'Final',
-    'release_date'        => '2019/05/07',
+    'version'             => 5.01,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2019/06/30',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
@@ -30,7 +30,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org/',
     'module_website_name' => 'XOOPS',
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.9',
+    'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
     'modicons16'          => 'assets/images/icons/16',
@@ -729,6 +729,18 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];
+
+
+$modversion['config'][] = [
+    'name'        => 'facebookstyle',
+    'title'       => '_MI_NEWBB_FACEBOOK_STYLE_RATING',
+    'description' => '_MI_NEWBB_FACEBOOK_STYLE_RATING_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+
+
 
 // Notification
 $modversion['notification']                = [];

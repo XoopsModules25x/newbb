@@ -344,3 +344,7 @@ define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the m
 define('_MI_NEWBB_ADMENU_MIGRATE', 'Migrate');
 define('_MI_NEWBB_SHOW_DEV_TOOLS', 'Show Development Tools Button?');
 define('_MI_NEWBB_SHOW_DEV_TOOLS_DESC', 'If yes, the "Migrate" Tab and other Development tools will be visible to the Admin.');
+
+//5.01
+define('_MI_NEWBB_FACEBOOK_STYLE_RATING', 'Facebook UI Rating?');
+define('_MI_NEWBB_FACEBOOK_STYLE_RATING_DESC', 'Show Facebook UI Style Rating');

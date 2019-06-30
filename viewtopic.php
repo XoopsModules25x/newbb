@@ -734,6 +734,8 @@ $xoopsTpl->assign_by_ref('viewmode_options', $viewmode_options);
 unset($viewmode_options);
 $xoopsTpl->assign('menumode', $menumode);
 $xoopsTpl->assign('menumode_other', $menumode_other);
+$xoopsTpl->assign('facebookstyle', $helper->getConfig('facebookstyle'));
+
 
 // START irmtfan add verifyUser to quick reply
 //check banning

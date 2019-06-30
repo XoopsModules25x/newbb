@@ -727,7 +727,7 @@ class TopicRenderer
      */
     public function buildTypes(\Smarty $xoopsTpl)
     {
-        $status = '';
+        $status = [];
         if (!$types = $this->getTypes()) {
             return true;
         }
