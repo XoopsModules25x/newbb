@@ -1,7 +1,8 @@
-<h5>5.01 Final (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.7
+<h5>5.01 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.10, PHP 7.3.7
 <hr>
 - Facebook UI Style Rating (xd9527/mamba)
 - fix $status (goffy/zyspec)
+- fix split bug (bioskop/mamba)
 
 <h5>5.00 Final (XOOPS 2.5.10) [2019-04-30]</h5>  Dev: Xoops 2.5.10, PHP 7.3.4
 <hr>

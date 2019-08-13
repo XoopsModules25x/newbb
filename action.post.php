@@ -15,7 +15,8 @@ use XoopsModules\Newbb;
 require_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
-$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
+//$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
+$post_id  = Request::getInt('post_id', Request::getInt('post_id', [], 'POST'), 'GET');
 $uid      = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
