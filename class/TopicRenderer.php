@@ -977,9 +977,11 @@ class TopicRenderer
             }
             //added topic_html to show it in proper html e.g. in blocks
             $topic_html = $myts->displayTarea($myrow['post_text'], $myrow['dohtml']);
+            $topic_html = str_replace('[', '&#91;', $topic_html);
             if ($this->config['post_excerpt'] > 0) {
                 $utility = new \XoopsModules\Newbb\Utility();
-                $topic_html = $utility::truncateHtml($topic_html, $this->config['post_excerpt']);
+                //$exact must me "true" in order to display self closing tags like img properly
+                $topic_html = $utility::truncateHtml($topic_html, $this->config['post_excerpt'], '...', true);
             }
 
             $topics[$myrow['topic_id']] = [
