@@ -71,10 +71,14 @@ function newbb_list_topic_show($options)
 
     // set and parse values:
     // forum: parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
+    if ($options[1] > 0) {
+        $topicRenderer->setVars(['uid'       => $options[1]]);
+    }
+    if ($options[2] > 0) {
+        $topicRenderer->setVars(['lastposter' => $options[2]]);
+    }
     $topicRenderer->setVars([
                                 'status'     => $optionsStatus,
-                                'uid'        => $options[1],
-                                'lastposter' => $options[2],
                                 'type'       => $options[3],
                                 'sort'       => $options[4],
                                 'order'      => $options[5],

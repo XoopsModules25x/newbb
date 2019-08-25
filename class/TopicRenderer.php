@@ -871,7 +871,7 @@ class TopicRenderer
         $wheres[] = '1 = 1';
 
         if (!empty($this->config['post_excerpt'])) {
-            $selects[]             = 'p.post_karma, p.require_reply, pt.post_text';
+            $selects[]             = 'p.post_karma, p.require_reply, pt.*';
             $this->query['join'][] = 'LEFT JOIN ' . $this->handler->db->prefix('newbb_posts_text') . ' AS pt ON pt.post_id = t.topic_last_post_id';
         }
         //if (empty($this->query["sort"])) $this->query["sort"][] = 't.topic_last_post_id DESC'; // irmtfan commented no need
@@ -971,8 +971,15 @@ class TopicRenderer
             } elseif (($myrow['post_karma'] > 0 || $myrow['require_reply'] > 0) && !newbbIsAdmin($myrow['forum_id'])) {
                 $topic_excerpt = '';
             } else {
+                //topic_excerpt is needed in several files as blank text without html code
                 $topic_excerpt = xoops_substr(newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
                 $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
+            }
+            //added topic_html to show it in proper html e.g. in blocks
+            $topic_html = $myts->displayTarea($myrow['post_text'], $myrow['dohtml']);
+            if ($this->config['post_excerpt'] > 0) {
+                $utility = new \XoopsModules\Newbb\Utility();
+                $topic_html = $utility::truncateHtml($topic_html, $this->config['post_excerpt']);
             }
 
             $topics[$myrow['topic_id']] = [
@@ -1001,6 +1008,7 @@ class TopicRenderer
                 'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars($myrow['last_poster_name']) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
                 'topic_excerpt'          => $topic_excerpt,
+                'topic_html'             => $topic_html,
                 'sticky'                 => $myrow['topic_sticky'] ? newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY) : '',
                 // irmtfan bug fixed
                 'lock'                   => $myrow['topic_status'] ? newbbDisplayImage('topic_locked', _MD_NEWBB_TOPICLOCK) : '',
