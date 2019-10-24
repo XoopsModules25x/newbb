@@ -154,7 +154,30 @@ class TopicRenderer
             if (!in_array($var, $this->args)) {
                 continue;
             }
-            $this->vars[$var] = $this->setVar($var, $val);
+        }
+        $this->parseVars();
+    }
+
+    /**
+     * @param string $hash request hash, i.e. get, post
+     */
+    public function setVarsFromRequest($hash = 'get')
+    {
+        $this->init();
+
+        foreach ($this->args as $var) {
+            if (Request::hasVar($var, $hash)) {
+                continue;
+            }
+            switch ($var) {
+                case 'forum':
+                case 'status':
+                    $this->setVar($var, Request::getArray($var, [], $hash));
+                    break;
+                default:
+                    $this->setVar($var, Request::getString($var, '', $hash));
+                    break;
+            }
         }
         $this->parseVars();
     }
