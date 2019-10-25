@@ -40,7 +40,7 @@ if (defined('LIST_TOPIC_DEFINED')) {
 
 $topic_renderer->is_multiple = true;
 $topic_renderer->config      = $GLOBALS['xoopsModuleConfig'];
-$topic_renderer->setVars(@$_GET);
+$topic_renderer->setVarsFromRequest('get');
 
 $type   = Request::getInt('type', 0, 'GET');
 $status = explode(',', $topic_renderer->vars['status']); // irmtfan to accept multiple status
