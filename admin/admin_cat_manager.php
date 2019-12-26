@@ -68,9 +68,9 @@ function editCategory(\XoopsObject $categoryObject = null)
     require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
     if (!$categoryObject->isNew()) {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
+        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
     } else {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('SCRIPT_NAME'));
         $categoryObject->setVar('cat_title', '');
         $categoryObject->setVar('cat_image', '');
         $categoryObject->setVar('cat_description', '');

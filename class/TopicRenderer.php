@@ -224,7 +224,8 @@ class TopicRenderer
                 } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
-                    if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
+                    $lastvisit = max($GLOBALS['last_visit'], $startdate);
+                    if ($lastvisit) {
                         $readmode1query = '';
                         if ($lastvisit > $startdate) {
                             $readmode1query = 'p.post_time < ' . $lastvisit;
@@ -265,7 +266,8 @@ class TopicRenderer
                 } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
-                    if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
+                    $lastvisit = max($GLOBALS['last_visit'], $startdate);
+                    if ($lastvisit) {
                         if ($lastvisit > $startdate) {
                             $this->query['where'][] = 'p.post_time > ' . $lastvisit;
                         }
@@ -384,7 +386,8 @@ class TopicRenderer
                 // END irmtfan to accept multiple status
                 break;
             case 'sort':
-                if ($sort = $this->getSort($val, 'sort')) {
+                $sort = $this->getSort($val, 'sort');
+                if ($sort) {
                     $this->query['sort'][] = $sort . (empty($this->vars['order']) ? ' DESC' : ' ASC');
                 } else { // irmtfan if sort is not in the list
                     $this->query['sort'][] = 't.topic_last_post_id' . (empty($this->vars['order']) ? ' DESC' : ' ASC');
@@ -1087,7 +1090,8 @@ class TopicRenderer
 
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
-            if ($result = $this->handler->db->query($sql)) {
+            $result = $this->handler->db->query($sql);
+            if ($result) {
                 while (list($topic_id) = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }

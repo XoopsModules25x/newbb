@@ -94,7 +94,8 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         /** @var Newbb\ForumHandler $forumHandler */
         $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         $forumHandler->deleteAll(new \Criteria('cat_id', $category->getVar('cat_id')), true, true);
-        if ($result = parent::delete($category)) {
+        $result = parent::delete($category);
+        if ($result) {
             // Delete group permissions
             return $this->deletePermission($category);
         }

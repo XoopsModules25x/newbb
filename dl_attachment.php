@@ -57,7 +57,8 @@ $file_saved = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachm
 if (!file_exists($file_saved)) {
     exit(_MD_NEWBB_NO_SUCH_FILE);
 }
-if ($down = $forumpost->incrementDownload($attachId)) {
+$down = $forumpost->incrementDownload($attachId);
+if ($down) {
     $forumpost->saveAttachment();
 }
 unset($forumpost);

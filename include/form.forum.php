@@ -30,7 +30,7 @@ require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 // The forum instanciation
-$form_forum = new \XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . ' ' . $forumObject->getVar('forum_name'), 'form_forum', xoops_getenv('PHP_SELF'));
+$form_forum = new \XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . ' ' . $forumObject->getVar('forum_name'), 'form_forum', xoops_getenv('SCRIPT_NAME'));
 
 // Forum name
 $form_forum->addElement(new \XoopsFormText(_AM_NEWBB_FORUMNAME, 'forum_name', 50, 80, $forumObject->getVar('forum_name', 'E')), true);

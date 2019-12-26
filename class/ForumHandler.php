@@ -221,7 +221,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
                 } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-                    if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
+                    $time_criterion = max($GLOBALS['last_visit'], $startdate);
+                    if ($time_criterion) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
                         $topics         = [];
                         $topic_lastread = newbbGetCookie('LT', true);
@@ -454,7 +455,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         // END irmtfan move to a for loop
         if (count($topics) > 0) {
             $sql = ' SELECT DISTINCT topic_id FROM ' . $this->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
-            if ($result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if ($result) {
                 while (list($topic_id) = $this->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
@@ -499,7 +501,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     // END irmtfan use read_uid to find the unread posts when the user is logged in
                 } elseif (1 == $GLOBALS['xoopsModuleConfig']['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
-                    if ($time_criterion = max($GLOBALS['last_visit'], $startdate)) {
+                    $time_criterion = max($GLOBALS['last_visit'], $startdate);
+                    if ($time_criterion) {
                         $criteria_post  = ' p.post_time > ' . $time_criterion; // for all users
                         $topics         = [];
                         $topic_lastread = newbbGetCookie('LT', true);
@@ -716,10 +719,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
         $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM ' . $this->db->prefix('newbb_posts') . ' AS p LEFT JOIN  ' . $this->db->prefix('newbb_topics') . ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = ' . $object->getVar('forum_id');
 
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($result) {
             $last_post = 0;
             $posts     = 0;
-            if ($row = $this->db->fetchArray($result)) {
+            $row       = $this->db->fetchArray($result);
+            if ($row) {
                 $last_post = (int)$row['last_post'];
                 $posts     = (int)$row['total'];
             }
@@ -732,8 +737,10 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
 
         $sql = 'SELECT COUNT(*) AS total FROM ' . $this->db->prefix('newbb_topics') . ' WHERE approved=1 AND forum_id = ' . $object->getVar('forum_id');
-        if ($result = $this->db->query($sql)) {
-            if ($row = $this->db->fetchArray($result)) {
+        $result = $this->db->query($sql);
+        if ($result) {
+            $row = $this->db->fetchArray($result);
+            if ($row) {
                 if ($object->getVar('forum_topics') !== $row['total']) {
                     $object->setVar('forum_topics', $row['total']);
                 }
@@ -844,7 +851,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
 
             $users[] = $post['uid'];
-            if ($moderators[$id] = $forum['forum_moderator']) {
+            $moderators[$id] = $forum['forum_moderator'];
+            if ($moderators[$id]) {
                 $users = array_merge($users, $moderators[$id]);
             }
 
@@ -887,7 +895,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $_forum_data['forum_moderators'] = implode(', ', $forum_moderators);
 
             // irmtfan change if/endif to if{} method
-            if ($post_id = $forum['forum_last_post_id']) {
+            $post_id = $forum['forum_last_post_id'];
+            if ($post_id) {
                 $post                               = &$posts[$post_id];
                 $_forum_data['forum_lastpost_id']   = $post_id;
                 $_forum_data['forum_lastpost_time'] = newbbFormatTimestamp($post['post_time']);

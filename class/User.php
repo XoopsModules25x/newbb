@@ -134,31 +134,36 @@ class User
                 'name' => _MD_NEWBB_EMAIL,
             ];
         }
-        if ($url = $user->getVar('url')) {
+        $url = $user->getVar('url');
+        if ($url) {
             $userbar['url'] = [
                 'link' => "javascript:void window.open('" . $url . "', 'new');",
                 'name' => _MD_NEWBB_WWW,
             ];
         }
-        if ($icq = $user->getVar('user_icq')) {
+        $icq = $user->getVar('user_icq');
+        if ($icq) {
             $userbar['icq'] = [
                 'link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
                 'name' => _MD_NEWBB_ICQ,
             ];
         }
-        if ($aim = $user->getVar('user_aim')) {
+        $aim = $user->getVar('user_aim');
+        if ($aim) {
             $userbar['aim'] = [
                 'link' => "javascript:void window.open('aim:goim?screenname=" . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there?' . "', 'new');",
                 'name' => _MD_NEWBB_AIM,
             ];
         }
-        if ($yim = $user->getVar('user_yim')) {
+        $yim = $user->getVar('user_yim');
+        if ($yim) {
             $userbar['yim'] = [
                 'link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
                 'name' => _MD_NEWBB_YIM,
             ];
         }
-        if ($msn = $user->getVar('user_msnm')) {
+        $msn = $user->getVar('user_msnm');
+        if ($msn) {
             $userbar['msnm'] = [
                 'link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');",
                 'name' => _MD_NEWBB_MSNM,

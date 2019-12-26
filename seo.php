@@ -29,12 +29,12 @@ $seoMap = [
 if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
-    $ori_self               = Request::getString('PHP_SELF', '', 'SERVER');
+    $ori_self               = Request::getString('SCRIPT_NAME', '', 'SERVER');
     $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
-    $_ENV['PHP_SELF']       = $newUrl;
+    $_ENV['SCRIPT_NAME']       = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
-    $_SERVER['PHP_SELF']    = $newUrl;
+    $_SERVER['SCRIPT_NAME']    = $newUrl;
     switch ($seoOp) {
         case 'c':
             $_SERVER['REQUEST_URI'] = $newUrl . '?cat=' . $seoArg;

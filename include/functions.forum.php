@@ -41,7 +41,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         sort($groups);
         $groupKey = 'forumselect_' . $permission . '_' . md5(implode(',', $groups));
-        $forums   = $cacheHelper->cacheRead($groupKey, function () use ($categories, $permission) {
+        $forums   = $cacheHelper->cacheRead($groupKey, static function () use ($categories, $permission) {
             /** @var Newbb\CategoryHandler $categoryHandler */
             $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
             $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);

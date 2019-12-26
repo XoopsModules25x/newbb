@@ -197,7 +197,8 @@ function newbbIsModuleAdministrators(array $uid = [])
            . "'"
            . ' GROUP BY l.uid';
 
-    if ($result = $GLOBALS['xoopsDB']->query($sql)) {
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if ($result) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (!empty($myrow['count'])) {
                 $module_administrators[] = $myrow['uid'];
@@ -223,7 +224,8 @@ function newbbIsForumModerators(array $uid = [], $mid = 0)
     }
 
     $sql = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
-    if ($result = $GLOBALS['xoopsDB']->query($sql)) {
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if ($result) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['forum_moderator'])) {
                 continue;

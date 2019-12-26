@@ -90,7 +90,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         $highlight_text = $text;
         foreach ($queryarray as $key => $query) {
             // use preg_replace instead of str_replace to exclude all $queries inside html span tag
-            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query) . ')/si', newbb_highlighter($query, $key), $highlight_text);
+            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query, '/') . ')/si', newbb_highlighter($query, $key), $highlight_text);
         }
 
         return $highlight_text;

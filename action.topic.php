@@ -15,12 +15,12 @@ use XoopsModules\Newbb;
 require_once __DIR__ . '/header.php';
 
 $forum_id = Request::getInt('forum_id', 0, 'POST');
-$topic_id = Request::getArray('topic_id', null, 'POST');
+$topic_id = Request::getArray('topic_id', [], 'POST');
 
 $op = Request::getString('op', '', 'POST');
 $op = in_array($op, ['approve', 'delete', 'restore', 'move']) ? $op : '';
 
-if (0 === count($topic_id) || 0 === count($op)) {
+if (0 === count($topic_id) || '' === $op) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
@@ -160,7 +160,7 @@ switch ($op) {
             $box .= '</select>';
             unset($forums, $categories);
 
-            echo "<form action='" . Request::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
+            echo "<form action='" . Request::getString('SCRIPT_NAME', '', 'SERVER') . "' method='post'>";
             echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
             echo "<tr><td class='bg2'>";
             echo "<table border='0' cellpadding='1' cellspacing='1' width='100%'>";

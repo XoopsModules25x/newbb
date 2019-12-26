@@ -154,7 +154,7 @@ class Post extends \XoopsObject
             if (in_array($key, $attachArray)) {
                 $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
                 @unlink($file);
-                $file = ($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved'])); // delete thumbnails
+                $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved']); // delete thumbnails
                 @unlink($file);
                 continue;
             }
@@ -531,7 +531,8 @@ class Post extends \XoopsObject
 
         // Hightlight search words
         $post_title = $this->getVar('subject');
-        if ($keywords = Request::getString('keywords', '', 'GET')) {
+        $keywords   = Request::getString('keywords', '', 'GET');
+        if ($keywords) {
             //$keywords   = $myts->htmlSpecialChars(trim(urldecode(Request::getString('keywords', '', 'GET'))));
             $post_text  = Highlighter::apply($keywords, $post_text, '<mark>', '</mark>');
             $post_title = Highlighter::apply($keywords, $post_title, '<mark>', '</mark>');
@@ -548,7 +549,8 @@ class Post extends \XoopsObject
             ];
         }
 
-        if ($posticon = $this->getVar('icon')) {
+        $posticon = $this->getVar('icon');
+        if ($posticon) {
             $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/subject/' . $posticon . '" alt="" ></a>';
         } else {
             $post_image = '<a name="' . $post_id . '"><img src="' . XOOPS_URL . '/images/icons/posticon.gif" alt="" ></a>';

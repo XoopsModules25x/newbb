@@ -183,7 +183,8 @@ function forum_seo_cat($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_cat';
     $ret = false;
-    if ($ret = \XoopsCache::read($key)) {
+    $ret = \XoopsCache::read($key);
+    if ($ret) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;
@@ -211,7 +212,8 @@ function forum_seo_forum($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_forum';
     $ret = false;
-    if ($ret = \XoopsCache::read($key)) {
+    $ret = \XoopsCache::read($key);
+    if ($ret) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;

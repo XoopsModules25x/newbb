@@ -16,14 +16,21 @@ require_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
 //$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
-$post_id  = Request::getInt('post_id', Request::getInt('post_id', [], 'POST'), 'GET');
+$post_id = Request::getInt('post_id', 0, 'GET');
+if (Request::hasVar('post_id', 'POST')){
+    Request::getArray('post_id', $post_id, 'POST');
+    }
+
+//    !empty($_POST['post_id']) ? $_POST['post_id'] : $post_id;
+
+
 $uid      = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $op   = in_array($op, ['approve', 'delete', 'restore', 'split']) ? $op : '';
 $mode = Request::getInt('mode', 1, 'GET');
 
-if (0 === count($post_id) || 0 === count($op)) {
+if (0 === $post_id || '' === $op) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
 }
@@ -33,7 +40,7 @@ if (0 === count($post_id) || 0 === count($op)) {
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var NewbbForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-if (empty($topic_id)) {
+if (0 === $topic_id) {
     $forumObject = null;
 } else {
     $topicObject = $topicHandler->get($topic_id);
@@ -149,7 +156,7 @@ switch ($op) {
     case 'split':
         /** @var Newbb\Post $postObject */
         $postObject = $postHandler->get($post_id);
-        if (0 === count($post_id) || $postObject->isTopic()) {
+        if ((is_array($post_id) && 0 === count($post_id)) || $postObject->isTopic()) {
             break;
         }
         $topic_id = $postObject->getVar('topic_id');

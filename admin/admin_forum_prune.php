@@ -152,13 +152,13 @@ if (Request::hasVar('submit', 'POST')) {
         }
     }
 
-    $tform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, 'prune_results', xoops_getenv('PHP_SELF'));
+    $tform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_RESULTS_TITLE, 'prune_results', xoops_getenv('SCRIPT_NAME'));
     $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_FORUMS, $selected_forums));
     $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_TOPICS, $topics_number));
     $tform->addElement(new \XoopsFormLabel(_AM_NEWBB_PRUNE_RESULTS_POSTS, $posts_number));
     $tform->display();
 } else {
-    $sform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, 'prune', xoops_getenv('PHP_SELF'));
+    $sform = new \XoopsThemeForm(_AM_NEWBB_PRUNE_TITLE, 'prune', xoops_getenv('SCRIPT_NAME'));
     $sform->setExtra('enctype="multipart/form-data"');
 
     /* Let User select the number of days

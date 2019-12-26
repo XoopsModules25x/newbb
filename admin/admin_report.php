@@ -77,7 +77,8 @@ switch ($op) {
             if (!$value) {
                 continue;
             }
-            if ($reportObject = $reportHandler->get($rid)) {
+            $reportObject = $reportHandler->get($rid);
+            if ($reportObject) {
                 $reportHandler->delete($reportObject);
             }
         }
@@ -111,7 +112,7 @@ switch ($op) {
         $adminObject->displayButton('left');
         echo _AM_NEWBB_REPORTADMIN_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-        echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
+        echo '<form action="' . xoops_getenv('SCRIPT_NAME') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</th>';

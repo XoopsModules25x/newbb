@@ -134,7 +134,7 @@ switch ($op) {
             $box .= newbbForumSelectBox($forum_id, 'all');
             $box .= '</select>';
             echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-            echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post" name="forummove" id="forummove">';
+            echo '<form action="' . xoops_getenv('SCRIPT_NAME') . '" method="post" name="forummove" id="forummove">';
             echo '<input type="hidden" name="op" value="mergeforum" >';
             echo '<input type="hidden" name="forum" value=' . $forum_id . ' >';
             echo '<table border="0" cellpadding="1" cellspacing="0" align="center" valign="top" width="95%"><tr>';

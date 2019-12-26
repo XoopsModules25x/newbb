@@ -304,7 +304,8 @@ if (Request::getString('submit', '', 'POST')) {
             $statsHandler->update($topicObject->getVar('forum_id'), 'digest');
             //            /** @var Newbb\UserstatsHandler $userstatsHandler */
             //            $userstatsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Userstats');
-            if ($user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'))) {
+            $user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'));
+            if ($user_stat) {
                 $z = $user_stat->getVar('user_digests') + 1;
                 $user_stat->setVar('user_digests', (int)$z);
                 $userstatsHandler->insert($user_stat);
@@ -326,7 +327,7 @@ if (Request::getString('submit', '', 'POST')) {
     }
 } else {  // No submit
     $mode = Request::getString('mode', '', 'GET'); //$_GET['mode'];
-    echo "<form action='" . Request::getString('PHP_SELF', '', 'SERVER') . "' method='post'>";
+    echo "<form action='" . Request::getString('SCRIPT_NAME', '', 'SERVER') . "' method='post'>";
     echo "<table border='0' cellpadding='1' cellspacing='0' align='center' width='95%'>";
     echo "<tr><td class='bg2'>";
     echo "<table border='0' cellpadding='1' cellspacing='1' width='100%'>";

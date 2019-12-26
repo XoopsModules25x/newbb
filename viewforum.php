@@ -142,7 +142,8 @@ $criteria = new \CriteriaCompo(new \Criteria('parent_forum', $forum_id));
 $criteria->add(new \Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
 $criteria->setSort('forum_order');
 
-if ($forums = $forumHandler->getAll($criteria, null, false)) {
+$forums = $forumHandler->getAll($criteria, null, false);
+if ($forums) {
     $subforum_array = $forumHandler->display($forums, $GLOBALS['xoopsModuleConfig']['length_title_index'], $GLOBALS['xoopsModuleConfig']['count_subforum']);
     $subforum       = array_values($subforum_array[$forum_id]);
     unset($subforum_array);
@@ -251,7 +252,8 @@ unset($query_type);
 //$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $typeOptions = null;
 $types       = [];
-if ($types = $typeHandler->getByForum($forum_id)) {
+$types       = $typeHandler->getByForum($forum_id);
+if ($types) {
     $typeOptions[] = ['title' => _ALL, 'link' => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}"];
     foreach ($types as $key => $item) {
         $typeOptions[] = [

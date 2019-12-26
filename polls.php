@@ -116,7 +116,7 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_CREATNEWPOLL . "</h4>\n";
-            $pollObject->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
+            $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
@@ -185,7 +185,7 @@ switch ($op) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_EDITPOLL . "</h4>\n";
-            $pollObject->renderForm(Request::getString('PHP_SELF', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
+            $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
             // old xoopspoll or umfrage or any clone from them
         } else {
             $classOption  = $classPoll . 'Option';
@@ -253,7 +253,7 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') < 140) {
             // check security token
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+                redirect_header(Request::getString('SCRIPT_NAME', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             /*
              * The option check should be done before submitting
@@ -336,7 +336,7 @@ switch ($op) {
     case 'update':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('SCRIPT_NAME', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         /* make sure there's at least one option */
         $option_text   = Request::getString('option_text', '', 'POST');
@@ -538,7 +538,7 @@ switch ($op) {
     case 'savemore':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('SCRIPT_NAME', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
         $option_text   = Request::getString('option_text', '', 'POST');
@@ -586,7 +586,7 @@ switch ($op) {
     case 'delete_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('SCRIPT_NAME', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //try and delete the poll
         // new xoopspoll module
@@ -660,7 +660,7 @@ switch ($op) {
     case 'restart_ok':
         // check security token
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header(Request::getString('PHP_SELF', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header(Request::getString('SCRIPT_NAME', '', 'SERVER'), 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
         // new xoopspoll module

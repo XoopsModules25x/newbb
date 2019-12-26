@@ -130,7 +130,8 @@ class OnlineHandler
         $online['num_anonymous'] = $num_anonymous;
         $administrator_list      = newbbIsModuleAdministrators($users_id);
         $moderator_list          = [];
-        if ($member_list = array_diff(array_keys($administrator_list), $users_id)) {
+        $member_list             = array_diff(array_keys($administrator_list), $users_id);
+        if ($member_list) {
             if (is_object($this->forumObject)) {
                 $moderator_list = $this->forumObject->getVar('forum_moderator');
             } else {
@@ -190,7 +191,8 @@ class OnlineHandler
         $online['num_anonymous'] = $num_anonymous;
         $administrator_list      = newbbIsModuleAdministrators($users_id);
         $moderator_list          = [];
-        if ($member_list = array_diff($users_id, array_keys($administrator_list))) {
+        $member_list             = array_diff($users_id, array_keys($administrator_list));
+        if ($member_list) {
             if (is_object($this->forumObject)) {
                 $moderator_list = $this->forumObject->getVar('forum_moderator');
             } else {
@@ -266,7 +268,8 @@ class OnlineHandler
                . $xoopsModule->getVar('mid')
                . ' AND online_uid = 0 ) )';
 
-        if ($result = $this->db->queryF($sql)) {
+        $result = $this->db->queryF($sql);
+        if ($result) {
             return true;
         }
         //xoops_error($this->db->error());

@@ -82,7 +82,8 @@ if (Request::hasVar('submit', 'POST')) {
         $report->setVar('report_result', 0);
         $report->setVar('report_memo', '');
 
-        if ($reportId = $reportHandler->insert($report)) {
+        $reportId = $reportHandler->insert($report);
+        if ($reportId) {
             //            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             if (empty($forum)) {
             }

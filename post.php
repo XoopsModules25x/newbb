@@ -272,7 +272,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
             $uploader->setCheckMediaTypeByExt();
             $temp = Request::getArray('xoops_upload_file', [], 'POST');
             if ($uploader->fetchMedia($temp[0])) {
-                $prefix = is_object($GLOBALS['xoopsUser']) ? (string)$GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
+                $prefix = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();
@@ -443,7 +443,7 @@ if (Request::getString('contents_upload', null, 'POST')) {
             $uploader->setCheckMediaTypeByExt();
             $temp = Request::getArray('xoops_upload_file', [], 'POST');
             if ($uploader->fetchMedia($temp[0])) {
-                $prefix = is_object($GLOBALS['xoopsUser']) ? (string)$GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
+                $prefix = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() . '_' : 'newbb_';
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();

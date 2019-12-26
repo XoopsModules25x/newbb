@@ -80,7 +80,8 @@ if (0 === count($types)) {
 
 ///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-if ($forums_type = $forumHandler->getIds(new \Criteria('allow_subject_prefix', 1))) {
+$forums_type = $forumHandler->getIds(new \Criteria('allow_subject_prefix', 1));
+if ($forums_type) {
     foreach ($forums_type as $forum_id) {
         $type_query = [];
         foreach ($types as $key => $order) {

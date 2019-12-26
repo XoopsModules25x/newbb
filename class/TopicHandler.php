@@ -73,7 +73,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $newbbConfig = newbbLoadConfig();
         if (!empty($newbbConfig['do_tag']) &&  class_exists('TagFormTag')
             && @require $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
-            if ($tagHandler = tag_getTagHandler()) {
+            $tagHandler = tag_getTagHandler();
+            if ($tagHandler) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
         }
@@ -133,8 +134,10 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $topic = null;
         if (!empty($action)) {
             $sql = 'SELECT * FROM ' . $this->table . ' WHERE 1=1' . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') . ' AND topic_id ' . (($action > 0) ? '>' : '<') . (int)$topic_id . ' ORDER BY topic_id ' . (($action > 0) ? 'ASC' : 'DESC') . ' LIMIT 1';
-            if ($result = $this->db->query($sql)) {
-                if ($row = $this->db->fetchArray($result)) {
+            $result = $this->db->query($sql);
+            if ($result) {
+                $row = $this->db->fetchArray($result);
+                if ($row) {
                     $topic = $this->create(false);
                     $topic->assignVars($row);
 

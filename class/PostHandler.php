@@ -61,7 +61,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $id   = (int)$id;
         $post = null;
         $sql  = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
-        if ($array = $this->db->fetchArray($this->db->query($sql))) {
+        $array = $this->db->fetchArray($this->db->query($sql));
+        if ($array) {
             $post = $this->create(false);
             $post->assignVars($array);
         }
@@ -218,7 +219,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         /** @var Newbb\TopicHandler $topicHandler */
         $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
-        if ($topic_id = $post->getVar('topic_id')) {
+        $topic_id = $post->getVar('topic_id');
+        if ($topic_id) {
             $topicObject = $topicHandler->get($topic_id);
             // Invalid topic OR the topic is no approved and the post is not top post
             if (!$topicObject//    || (!$post->isTopic() && $topicObject->getVar("approved") < 1)

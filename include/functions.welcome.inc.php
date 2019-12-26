@@ -40,7 +40,9 @@ $categories = [];
 
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-if ($mod = @$moduleHandler->getByDirname('profile', true)) {
+
+$mod = @$moduleHandler->getByDirname('profile', true);
+if ($mod) {
     $grouppermHandler = xoops_getHandler('groupperm');
     $groups           = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 
@@ -53,14 +55,18 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
     $visible_ids = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
-    /** @var \ProfileProfileHandler $profileHandler */
-    $profileHandler = $helper->getHandler('Profile', 'profile');
+
+//    /** @var \ProfileProfileHandler $profileHandler */
+//    $profileHandler = $helper->getHandler('Profile', 'profile');
+    $profileHandler = xoops_getModuleHandler('profile', 'profile');
     $fields         = $profileHandler->loadFields();
-    /** @var \ProfileCategoryHandler $catHandler */
-    $catHandler = $helper->getHandler('Category', 'profile');
+//    /** @var \ProfileCategoryHandler $catHandler */
+//    $catHandler = $helper->getHandler('Category', 'profile');
+    $catHandler = xoops_getModuleHandler('category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
-    /** @var \ProfileFieldHandler $fieldcatHandler */
-    $fieldcatHandler = $helper->getHandler('Field', 'profile');
+//    /** @var \ProfileFieldHandler $fieldcatHandler */
+//    $fieldcatHandler = $helper->getHandler('Field', 'profile');
+    $fieldcatHandler = xoops_getModuleHandler('field', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
 
     // Add core fields
