@@ -99,7 +99,7 @@
 <br>
 <div>
     <div class="icon_left">
-        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_NEWBB_TOP}>" title="<{$smarty.const._MD_TOP}>"><{$p_up}> <{$smarty.const._MD_TOP}></a>
+        <a id="threadbottom"></a><a href="#threadtop" alt="<{$smarty.const._MD_NEWBB_TOP}>" title="<{$smarty.const._MD_NEWBB_TOP}>"><{$p_up}> <{$smarty.const._MD_NEWBB_TOP}></a>
     </div>
     <div class="pagenav">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
