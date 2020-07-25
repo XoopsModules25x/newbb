@@ -1,0 +1,271 @@
+h1.title{
+    font-family: georgia, times, serif;
+    font-size: 2.2em;
+    font-weight: normal;
+    color: #333;
+    margin: 0 0 3px 0;
+    border-bottom: 2px solid #D6DEE4;
+    padding: 0 0 5px 0;
+}
+h2.category_title{
+    margin: 0 0 10px 0;
+    color: #14655C;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+h1.title a{ color: #3f3f3f; }
+h1.title span{
+    display: block;
+    float: right;
+    font-size: 0.5em;
+    font-family: arial, helvetica, sans-serif;
+    padding: 14px 0 0 0;
+    color: #666;
+}
+span.wox_start{
+    display: block;
+    margin-bottom: 10px;
+    color: #3f3f3f;
+    padding: 3px 0 0 3px;
+}
+div.wox_cbb_options{
+    padding: 4px 0;
+}
+div.wox_cbb_options select{
+    background: #D6DEE4;
+    border: 1px solid #9BAEBD;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+div.wox_category_item{
+    margin-top: 20px;
+}
+
+/** OUTER **/
+.cbb_forums th{
+    background: #D6DEE4;
+    color: #333;
+    font-family: arial, helvetica, sans-serif;
+}
+.cbb_forums th:first-child{
+    -moz-border-radius: 5px 0 0 0;
+    -khtml-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-radius: 5px 0 0 0;
+}
+.cbb_forums th:last-child{
+    -moz-border-radius: 0 5px 0 0;
+    -khtml-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-radius: 0 5px 0 0;
+}
+.cbb_forums tr td{
+    padding: 8px 5px;
+    border-bottom: 1px solid #D6DEE4;
+}
+.cbb_forums tbody tr:first-child td{
+    border-top: 2px solid #D6DEE4;
+}
+.cbb_forums span.forum_desc{
+    display: block;
+    font-size: 0.9em;
+    line-height: 140%;
+}
+hr{
+    border: 0;
+    height: 2px;
+    background: #D6DEE4;
+    margin-bottom: 10px;
+}
+div#cbb_location{
+    text-transform: uppercase;
+    font-size: 0.85em;
+    border-bottom: 1px dotted #CCC;
+    overflow: hidden;
+}
+div#cbb_location img{
+    float: left;
+    margin-right: 5px;
+    padding-bottom: 3px;
+}
+span.topis_navigation{
+    display: block;
+    float: left;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    padding-top: 9px;
+}
+span.topis_navigation a{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 2px 0 0 3px;
+}
+span.topis_navigation img{
+    float: left;
+    display: block;
+    margin-right: 8px;
+}
+.border_bottom{
+    border-bottom: 1px dotted #CCC;
+}
+
+/** Topic Posts **/
+div.forum_post_item{
+    overflow: hidden;
+
+    border: 1px solid #A9BAC7;
+    padding: 1px;
+}
+div.post_title{
+    padding: 5px;
+    font-size: 1.1em;
+    color: #000;
+    font-weight: bold;
+    overflow: hidden;
+    background: #ebebeb;
+    border: 1px solid #CCC;
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #FFF;
+    font-family: georgia, times, serif;
+}
+div.post_title_top{
+    border-top: 1px solid #CCC;
+    -moz-border-radius: 5px 5px 0 0;
+    -khtml-border-radius-topleft: 5px;
+    -khtml-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-radius: 5px 5px 0 0;
+}
+div.post_title span{
+    float: right;
+}
+div.post_title small{
+    font-family: arial, helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 0.8em;
+    color: #333;
+    text-transform: uppercase;
+    float: right;
+    display: block;
+    margin-right: 10px;
+    padding-top: 3px;
+}
+div.forum_post_item div.post_bg{
+    background: #D6DEE4;
+    overflow: hidden;
+}
+div.forum_post_item img.avatar{
+    width: 50px;
+    margin: 0 auto;
+    padding: 1px;
+    border: 1px solid #666;
+    display: block;
+    margin-bottom: 5px;
+}
+div.forum_post_item div.post_text{
+    float: right;
+    width: 630px; /**mb  was 500 **/
+    padding: 10px 10px 10px 15px;
+    background: #FFF url(../images/bgtext.gif) no-repeat left;
+    height: 100%;
+    line-height: 150%;
+    min-height: 150px;
+}
+div.forum_post_item div.post_text img{
+    max-width: 625px; /**mb  was 495 **/
+}
+div.forum_post_item div.post_data{
+    width: 80px;
+    float: left;
+    margin: center;
+    padding: 10px;
+    text-align: center;
+    border-right: none;
+    background: transparent;
+}
+div.forum_post_item div.post_data a.show_more,
+div.forum_post_item div.post_data a.show_less{
+    font-size: 0.9em;
+}
+div.forum_post_item div.post_data a.show_less{
+    display: none;
+}
+div.forum_post_item div.post_data div.other_data{
+    font-size: 0.9em;
+    line-height: 140%;
+    border-top: 1px dotted #666;
+    border-bottom: 1px dotted #666;
+    margin: 10px 0;
+    text-align: left;
+    display: none;
+    padding: 5px 0;
+}
+#the_topic_posts div.forum_post_item:last-child{
+    -moz-border-radius: 0 0 5px 5px;
+    -khtml-border-radius-bottomleft: 5px;
+    -khtml-border-radius-bottomright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-radius: 0 0 5px 5px;
+}
+div.forum_post_item div.post_options{
+    border-top: 1px solid #CCC;
+    float: left;
+    margin-top: 20px;
+}
+div.forum_post_item div.post_ip{
+    text-align: right;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+div.forum_post_item div.post_signature{
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+div.forum_post_item div.post_signature hr{
+    background: transparent;
+    border: 0;
+    border-top: 1px dashed #B8C6CF;
+}
+/** Compact **/
+div.compact_container{
+    padding: 0 0 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #A9BAC7;
+}
+div.compact_container div.post_head{
+    padding: 5px;
+    border: 1px solid #A9BAC7;
+    background: #D6DEE4;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 150%;
+}
+div.compact_container div.post_head a.number{
+    display: block;
+    float: right;
+    font-weight: bold;
+}
+div.compact_container div.post_head strong{
+    color: #000;
+    display: block;
+}
+div.compact_container div.post_head span.data{
+    font-size: 0.75em;
+    text-transform: uppercase;
+    color: #333;
+}
+div.compact_container div.post_text{
+    padding: 8px;
+    line-height: 130%;
+}
+div.compact_container div.post_foot{
+    padding: 5px 0;
+    text-align: right;
+}
