@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -15,9 +15,9 @@ namespace XoopsModules\Newbb;
 use XoopsModules\Newbb;
 use XoopsModules\Tag;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class TopicHandler
@@ -33,8 +33,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  mixed      $id
-     * @param  null|array $fields
+     * @param mixed      $id
+     * @param null|array $fields
      * @return mixed|null
      */
     public function get($id = null, $fields = null) //get($id, $var = null)
@@ -42,14 +42,14 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $var  = $fields;
         $ret  = null;
         $tags = $var;
-        if (!empty($var) && is_string($var)) {
+        if (!empty($var) && \is_string($var)) {
             $tags = [$var];
         }
         if (!$topicObject = parent::get($id, $tags)) {
             return $ret;
         }
         $ret = $topicObject;
-        if (!empty($var) && is_string($var)) {
+        if (!empty($var) && \is_string($var)) {
             $ret = @$topicObject->getVar($var);
         }
 
@@ -58,22 +58,22 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $object
-     * @param  bool        $force
+     * @param bool         $force
      * @return mixed
      */
     public function insert(\XoopsObject $object, $force = true)
     {
         if (!$object->getVar('topic_time')) {
-            $object->setVar('topic_time', time());
+            $object->setVar('topic_time', \time());
         }
         if (!parent::insert($object, $force) || !$object->getVar('approved')) {
             return $object->getVar('topic_id');
         }
 
-        $newbbConfig = newbbLoadConfig();
-        if (!empty($newbbConfig['do_tag']) &&  class_exists('TagFormTag')
+        $newbbConfig = \newbbLoadConfig();
+        if (!empty($newbbConfig['do_tag']) && \class_exists('TagFormTag')
             && @require $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
-            $tagHandler = tag_getTagHandler();
+            $tagHandler = \tag_getTagHandler();
             if ($tagHandler) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
@@ -84,7 +84,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param       $object
-     * @param  bool $force
+     * @param bool  $force
      * @return bool
      */
     public function approve($object, $force = false)
@@ -101,7 +101,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
         $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         $postsObject = $postHandler->getAll(new \Criteria('topic_id', $topic_id));
-        foreach (array_keys($postsObject) as $post_id) {
+        foreach (\array_keys($postsObject) as $post_id) {
             $postHandler->approve($postsObject[$post_id]);
         }
         unset($postsObject);
@@ -133,7 +133,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     {
         $topic = null;
         if (!empty($action)) {
-            $sql = 'SELECT * FROM ' . $this->table . ' WHERE 1=1' . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') . ' AND topic_id ' . (($action > 0) ? '>' : '<') . (int)$topic_id . ' ORDER BY topic_id ' . (($action > 0) ? 'ASC' : 'DESC') . ' LIMIT 1';
+            $sql    = 'SELECT * FROM ' . $this->table . ' WHERE 1=1' . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') . ' AND topic_id ' . (($action > 0) ? '>' : '<') . (int)$topic_id . ' ORDER BY topic_id ' . (($action > 0) ? 'ASC' : 'DESC') . ' LIMIT 1';
             $result = $this->db->query($sql);
             if ($result) {
                 $row = $this->db->fetchArray($result);
@@ -172,11 +172,11 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  Topic  $topic
-     * @param  string $type
+     * @param Topic  $topic
+     * @param string $type
      * @return mixed
      */
-    public function getPostCount(&$topic, $type = '')
+    public function getPostCount($topic, $type = '')
     {
         switch ($type) {
             case 'pending':
@@ -238,21 +238,21 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return false;
         }
-        list($post_id) = $this->db->fetchRow($result);
+        [$post_id] = $this->db->fetchRow($result);
 
         return $post_id;
     }
 
     /**
      * @param         $topic
-     * @param  string $order
-     * @param  int    $perpage
+     * @param string  $order
+     * @param int     $perpage
      * @param         $start
-     * @param  int    $post_id
-     * @param  string $type
+     * @param int     $post_id
+     * @param string  $type
      * @return array
      */
-    public function &getAllPosts(&$topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
+    public function &getAllPosts($topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
     {
         $ret     = [];
         $perpage = ((int)$perpage > 0) ? (int)$perpage : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);
@@ -283,7 +283,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 //xoops_error($this->db->error());
                 return $ret;
             }
-            list($position) = $this->db->fetchRow($result);
+            [$position] = $this->db->fetchRow($result);
             $start = (int)($position / $perpage) * $perpage;
         }
 
@@ -306,10 +306,10 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param        $postArray
-     * @param  int   $pid
+     * @param int    $pid
      * @return mixed
      */
-    public function &getPostTree(&$postArray, $pid = 0)
+    public function &getPostTree($postArray, $pid = 0)
     {
         //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
         $NewBBTree = new Newbb\Tree('newbb_posts');
@@ -325,14 +325,14 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      * @param $postArray
      * @return mixed
      */
-    public function showTreeItem(&$topic, &$postArray)
+    public function showTreeItem($topic, &$postArray)
     {
         global $viewtopic_users, $myts;
 
-        $postArray['post_time'] = newbbFormatTimestamp($postArray['post_time']);
+        $postArray['post_time'] = \newbbFormatTimestamp($postArray['post_time']);
 
         if (!empty($postArray['icon'])) {
-            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($postArray['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
+            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars($postArray['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
         } else {
             $postArray['icon'] = '<a name="' . $postArray['post_id'] . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
         }
@@ -354,10 +354,10 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param        $topic
-     * @param  bool  $isApproved
+     * @param bool   $isApproved
      * @return array
      */
-    public function &getAllPosters(&$topic, $isApproved = true)
+    public function getAllPosters($topic, $isApproved = true)
     {
         $sql = 'SELECT DISTINCT uid FROM ' . $this->db->prefix('newbb_posts') . '  WHERE topic_id=' . $topic->getVar('topic_id') . ' AND uid>0';
         if ($isApproved) {
@@ -378,12 +378,12 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param Topic|\XoopsObject $topic
-     * @param  bool              $force
+     * @param bool               $force
      * @return bool
      */
     public function delete(\XoopsObject $topic, $force = true)
     {
-        $topic_id = is_object($topic) ? $topic->getVar('topic_id') : (int)$topic;
+        $topic_id = \is_object($topic) ? $topic->getVar('topic_id') : (int)$topic;
         if (empty($topic_id)) {
             return false;
         }
@@ -392,9 +392,9 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         $postHandler->delete($postObject, false, $force);
 
-        $newbbConfig = newbbLoadConfig();
+        $newbbConfig = \newbbLoadConfig();
         /** @var \XoopsModules\Tag\TagHandler $tagHandler */
-        if (!empty($newbbConfig['do_tag']) &&  class_exists('TagFormTag') && $tagHandler = Tag\Helper::getInstance()->getHandler('Tag')) { //@xoops_getModuleHandler('tag', 'tag', true)) {
+        if (!empty($newbbConfig['do_tag']) && \class_exists('TagFormTag') && $tagHandler = Tag\Helper::getInstance()->getHandler('Tag')) { //@xoops_getModuleHandler('tag', 'tag', true)) {
             $tagHandler->updateByItem([], $topic_id, 'newbb');
         }
 
@@ -406,20 +406,20 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     // $gperm_names = "'forum_can_post', 'forum_can_view', 'forum_can_reply', 'forum_can_edit', 'forum_can_delete', 'forum_can_addpoll', 'forum_can_vote', 'forum_can_attach', 'forum_can_noapprove'";
 
     /**
-     * @param   Newbb\Forum $forum
-     * @param  int          $topic_locked
-     * @param  string       $type
+     * @param Newbb\Forum $forum
+     * @param int         $topic_locked
+     * @param string      $type
      * @return bool
      */
     public function getPermission($forum, $topic_locked = 0, $type = 'view')
     {
         static $_cachedTopicPerms;
-        require_once dirname(__DIR__) . '/include/functions.user.php';
-        if (newbbIsAdmin($forum)) {
+        require_once \dirname(__DIR__) . '/include/functions.user.php';
+        if (\newbbIsAdmin($forum)) {
             return true;
         }
 
-        $forum_id = is_object($forum) ? $forum->getVar('forum_id') : (int)$forum;
+        $forum_id = \is_object($forum) ? $forum->getVar('forum_id') : (int)$forum;
         if ($forum_id < 1) {
             return false;
         }
@@ -438,9 +438,9 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param  string $table_link
-     * @param  string $field_link
-     * @param  string $field_object
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
@@ -455,14 +455,14 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * clean expired objects from database
      *
-     * @param  int $expire time limit for expiration
+     * @param int $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)
     {
         // irmtfan if 0 no cleanup look include/plugin.php
-        if (!func_num_args()) {
-            $newbbConfig = newbbLoadConfig();
+        if (!\func_num_args()) {
+            $newbbConfig = \newbbLoadConfig();
             $expire      = isset($newbbConfig['pending_expire']) ? (int)$newbbConfig['pending_expire'] : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
@@ -470,7 +470,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return false;
         }
         $crit_expire = new \CriteriaCompo(new \Criteria('approved', 0, '<='));
-        $crit_expire->add(new \Criteria('topic_time', time() - (int)$expire, '<'));
+        $crit_expire->add(new \Criteria('topic_time', \time() - (int)$expire, '<'));
 
         return $this->deleteAll($crit_expire, true/*, true*/);
     }
@@ -478,16 +478,16 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     // START irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
 
     /**
-     * @param  null $object
-     * @param  bool $force
+     * @param null $object
+     * @param bool $force
      * @return bool
      */
     public function synchronization($object = null, $force = true)
     {
-        if (!is_object($object)) {
+        if (!\is_object($object)) {
             $object = $this->get((int)$object);
         }
-        if (!is_object($object) || !$object->getVar('topic_id')) {
+        if (!\is_object($object) || !$object->getVar('topic_id')) {
             return false;
         }
 
@@ -500,9 +500,9 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         if (empty($post_ids)) {
             return false;
         }
-        $last_post     = max($post_ids);
-        $top_post      = min($post_ids);
-        $topic_replies = count($post_ids) - 1;
+        $last_post     = \max($post_ids);
+        $top_post      = \min($post_ids);
+        $topic_replies = \count($post_ids) - 1;
         if ($object->getVar('topic_last_post_id') != $last_post) {
             $object->setVar('topic_last_post_id', $last_post);
         }
@@ -511,7 +511,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
         $b1 = $this->insert($object, $force);
         $criteria->add(new \Criteria('post_id', $top_post, '<>'), 'AND');
-        $criteria->add(new \Criteria('pid', '(' . implode(', ', $post_ids) . ')', 'NOT IN'), 'AND');
+        $criteria->add(new \Criteria('pid', '(' . \implode(', ', $post_ids) . ')', 'NOT IN'), 'AND');
         $b2       = $postHandler->updateAll('pid', $top_post, $criteria, $force);
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('post_id', $top_post, '='), 'AND');
@@ -531,10 +531,10 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     public function getActivePolls()
     {
         $pollDirs = [];
-        $allDirs  = xoops_getActiveModules();
+        $allDirs  = \xoops_getActiveModules();
         foreach ($allDirs as $dirname) {
             // pollresults.php file is exist in all xoopspoll versions and umfrage versions
-            if (file_exists($GLOBALS['xoops']->path('modules/' . $dirname . '/pollresults.php'))) {
+            if (\file_exists($GLOBALS['xoops']->path('modules/' . $dirname . '/pollresults.php'))) {
                 $pollDirs[$dirname] = $dirname;
             }
         }
@@ -549,7 +549,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * find poll module that is in used in the current newbb installtion.
      * @access public
-     * @param  array $pollDirs dirnames of all active poll modules
+     * @param array $pollDirs  dirnames of all active poll modules
      * @return bool|string $dir_def | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
@@ -574,7 +574,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $poll_idInMod = 0;
             foreach ($pollDirs as $dirname) {
                 $pollObj = $tObj->getPoll($tObj->getVar('poll_id'), $dirname);
-                if (is_object($pollObj) && ($pollObj->getVar('poll_id') == $tObj->getVar('poll_id'))) {
+                if (\is_object($pollObj) && ($pollObj->getVar('poll_id') == $tObj->getVar('poll_id'))) {
                     ++$poll_idInMod;
                     $dir_def = $dirname;
                 }
@@ -582,7 +582,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             // Only one poll module should has this poll_id
             // if 0 there is an error
             if (0 == $poll_idInMod) {
-                xoops_error("Error: Cannot find poll module for poll_id='{$tObj->getVar('poll_id')}'");
+                \xoops_error("Error: Cannot find poll module for poll_id='{$tObj->getVar('poll_id')}'");
 
                 return false;
             }
@@ -593,7 +593,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             // if more than 1 continue
         }
         // if there is some topics but no module or more than one module have polls
-        xoops_error("Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.");
+        \xoops_error("Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.");
 
         return false;
     }

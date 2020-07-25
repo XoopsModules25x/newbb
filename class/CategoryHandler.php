@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -14,9 +14,7 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-/**
+ /**
  * Class CategoryHandler
  */
 class CategoryHandler extends \XoopsPersistableObjectHandler
@@ -30,7 +28,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  string $perm
+     * @param string $perm
      * @return mixed
      */
     public function getIdsByPermission($perm = 'access')
@@ -42,9 +40,9 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  string $permission
-     * @param  null   $tags
-     * @param  bool   $asObject
+     * @param string $permission
+     * @param null   $tags
+     * @param bool   $asObject
      * @return array
      */
     public function &getByPermission($permission = 'access', $tags = null, $asObject = true)
@@ -53,7 +51,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
         if (!$valid_ids = $this->getIdsByPermission($permission)) {
             return $categories;
         }
-        $criteria = new \Criteria('cat_id', '(' . implode(', ', $valid_ids) . ')', 'IN');
+        $criteria = new \Criteria('cat_id', '(' . \implode(', ', $valid_ids) . ')', 'IN');
         $criteria->setSort('cat_order');
         $categories = $this->getAll($criteria, $tags, $asObject);
 
@@ -62,7 +60,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $category
-     * @param  bool        $force
+     * @param bool         $force
      * @return mixed
      */
     public function insert(\XoopsObject $category, $force = true)
@@ -81,7 +79,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $category
-     * @param  bool        $force
+     * @param bool         $force
      * @return bool|mixed
      * @internal param Category $category
      */
@@ -107,8 +105,8 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     /**
      * Check permission for a category
      *
-     * @param  Category|int $category object or id
-     * @param  string       $perm     permission name
+     * @param Category|int $category object or id
+     * @param string       $perm     permission name
      *
      * @return bool
      */
@@ -118,7 +116,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
             return true;
         }
 
-        $cat_id = is_object($category) ? $category->getVar('cat_id') : (int)$category;
+        $cat_id = \is_object($category) ? $category->getVar('cat_id') : (int)$category;
         /** @var PermissionHandler $permHandler */
         $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
 
@@ -150,7 +148,7 @@ class CategoryHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  mixed $object
+     * @param mixed $object
      * @return bool
      */
     public function synchronization($object = null)

@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -84,7 +84,7 @@ function editCategory(\XoopsObject $categoryObject = null)
 
     $imgdir      = '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/category';
     $cat_image   = $categoryObject->getVar('cat_image');
-    $cat_image   = empty($cat_image) ? 'blank.gif' : $cat_image;
+    $cat_image   = empty($cat_image) ? 'assets/images/category/blank.gif' : $cat_image;
     $graph_array = \XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . $imgdir . '/');
     array_unshift($graph_array, _NONE);
     $cat_image_select = new \XoopsFormSelect('', 'cat_image', $categoryObject->getVar('cat_image'));

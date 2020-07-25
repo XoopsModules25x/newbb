@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -21,16 +21,18 @@ use XoopsModules\Newbb;
 
 require_once __DIR__ . '/header.php';
 
-foreach ([
-             'forum',
-             'topic_id',
-             'post_id',
-             'order',
-             'pid',
-             'start',
-             'isreply',
-             'isedit',
-         ] as $getint) {
+foreach (
+    [
+        'forum',
+        'topic_id',
+        'post_id',
+        'order',
+        'pid',
+        'start',
+        'isreply',
+        'isedit',
+    ] as $getint
+) {
     ${$getint} = Request::getInt($getint, 0, 'POST');
 }
 $token_valid = false;
@@ -228,7 +230,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $postObject->setPostEdit($poster_name, $editwhy);
     } // is reply
 
-    //    $attachments_tmp = array();
+    //    $attachments_tmp = [];
     //    if (!empty($_POST["attachments_tmp"])) {
     if (Request::getString('attachments_tmp', '', 'POST')) {
         $attachments_tmp = unserialize(base64_decode(Request::getString('attachments_tmp', '', 'POST'), true));

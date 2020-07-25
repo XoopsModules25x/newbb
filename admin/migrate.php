@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -59,7 +59,7 @@ $configurator = new Newbb\Common\Configurator();
 /** @var \XoopsModules\Newbb\Common\Migrate $migrator */
 $migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
 
-$op        = Request::getCmd('op', 'default');
+$op        = Request::getCmd('op', 'show');
 $opShow    = Request::getCmd('show', null, 'POST');
 $opMigrate = Request::getCmd('migrate', null, 'POST');
 $opSchema  = Request::getCmd('schema', null, 'POST');
@@ -71,6 +71,7 @@ $message = '';
 
 switch ($op) {
     case 'show':
+    default:
         $queue = $migrator->getSynchronizeDDL();
         if (!empty($queue)) {
             echo "<pre>\n";
@@ -82,15 +83,16 @@ switch ($op) {
         break;
     case 'migrate':
         $migrator->synchronizeSchema();
-        $message = 'Database migrated to current schema.';
+        $message = constant('CO_' . $moduleDirNameUpper . '_' . 'MIGRATE_OK');
         break;
     case 'schema':
-        xoops_confirm(['op' => 'confirmwrite'], 'migrate.php', 'Warning! This is intended for developers only. Confirm write schema file from current database.', 'Confirm');
+        xoops_confirm(['op' => 'confirmwrite'], 'migrate.php', constant('CO_' . $moduleDirNameUpper . '_' . 'MIGRATE_WARNING'), constant('CO_' . $moduleDirNameUpper . '_' . 'CONFIRM'));
         break;
     case 'confirmwrite':
         if ($GLOBALS['xoopsSecurity']->check()) {
             $migrator->saveCurrentSchema();
-            $message = 'Current schema file written';
+
+            $message = constant('CO_' . $moduleDirNameUpper . '_' . 'MIGRATE_SCHEMA_OK');
         }
         break;
 }

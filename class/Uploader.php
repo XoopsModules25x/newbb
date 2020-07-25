@@ -6,13 +6,13 @@ namespace XoopsModules\Newbb;
  * NewBB, XOOPS forum module
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 require_once $GLOBALS['xoops']->path('class/uploader.php');
 
@@ -43,11 +43,11 @@ class Uploader extends \XoopsMediaUploader
     {
         //        $this->XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);
 
-        if (!is_array($allowedMimeTypes)) {
+        if (!\is_array($allowedMimeTypes)) {
             if (empty($allowedMimeTypes) || '*' === $allowedMimeTypes) {
                 $allowedMimeTypes = [];
             } else {
-                $allowedMimeTypes = array_filter(array_map('trim', explode('|', mb_strtolower($allowedMimeTypes))));
+                $allowedMimeTypes = \array_filter(\array_map('\trim', \explode('|', mb_strtolower($allowedMimeTypes))));
             }
         }
         $_allowedMimeTypes = [];
@@ -99,7 +99,7 @@ class Uploader extends \XoopsMediaUploader
      */
     public function getExt()
     {
-        $this->ext = mb_strtolower(ltrim(mb_strrchr($this->getMediaName(), '.'), '.'));
+        $this->ext = mb_strtolower(\ltrim(mb_strrchr($this->getMediaName(), '.'), '.'));
 
         return $this->ext;
     }

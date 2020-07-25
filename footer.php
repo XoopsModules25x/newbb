@@ -11,14 +11,14 @@
 
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         NEWBB
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
  * @author          The Persian Xoops Support Site<www.xoops.ir>
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 global $xoTheme;
 

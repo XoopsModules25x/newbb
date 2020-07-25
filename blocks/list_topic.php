@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @author         The Persian Xoops Support Site <www.xoops.ir>
  * @since          4.3
@@ -12,7 +12,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
@@ -71,16 +71,18 @@ function newbb_list_topic_show($options)
 
     // set and parse values:
     // forum: parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
-    $topicRenderer->setVars([
-                                'status'     => $optionsStatus,
-                                'uid'        => $options[1],
-                                'lastposter' => $options[2],
-                                'type'       => $options[3],
-                                'sort'       => $options[4],
-                                'order'      => $options[5],
-                                'since'      => $options[7],
-                                'forum'      => $optionsForum,
-                            ]);
+    $topicRenderer->setVars(
+        [
+            'status'     => $optionsStatus,
+            'uid'        => $options[1],
+            'lastposter' => $options[2],
+            'type'       => $options[3],
+            'sort'       => $options[4],
+            'order'      => $options[5],
+            'since'      => $options[7],
+            'forum'      => $optionsForum,
+        ]
+    );
     $block = [];
     // headers to display in block
     $block['headers'] = $topicRenderer->getHeader($options[8]);
@@ -185,7 +187,7 @@ function newbb_list_topic_edit($options)
     $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
-    $accessForums = $forumHandler->getIdsByValues(array_map('intval', $optionsForum));
+    $accessForums = $forumHandler->getIdsByValues(array_map('\intval', $optionsForum));
     $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $forumSel     = "<select name=\"options[12][]\" multiple=\"multiple\" onchange = \"validate('options[12][]','select', true)\">"; // if user dont select any it select "0"
     $forumSel     .= '<option value="0" ';

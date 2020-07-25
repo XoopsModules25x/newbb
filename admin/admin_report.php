@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -121,19 +121,9 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = '<a href="'
-                         . XOOPS_URL
-                         . '/modules/'
-                         . $xoopsModule->getVar('dirname')
-                         . '/viewtopic.php?post_id='
-                         . $report['post_id']
-                         . '&amp;topic_id='
-                         . $report['topic_id']
-                         . '&amp;forum='
-                         . $report['forum_id']
-                         . '&amp;viewmode=thread" target="checkreport">'
-                         . $myts->htmlSpecialChars($report['subject'])
-                         . '</a>';
+            $post_link = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $report['post_id'] . '&amp;topic_id=' . $report['topic_id'] . '&amp;forum=' . $report['forum_id'] . '&amp;viewmode=thread" target="checkreport">' . $myts->htmlSpecialChars(
+                    $report['subject']
+                ) . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked >';
             if ('processed' !== $item) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" >';

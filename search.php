@@ -7,8 +7,8 @@ use Xmf\Request;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -94,7 +94,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum))) {
         $forum = [];
     } elseif (!is_array($forum)) {
-        $forum = array_map('intval', explode('|', $forum));
+        $forum = array_map('\intval', explode('|', $forum));
     }
     $next_search['forum'] = implode('|', $forum);
     // START irmtfan topic search
@@ -197,15 +197,18 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
                 ++$skipresults;
                 continue;
             }
-            $xoopsTpl->append('results', [
-                'forum_name' => $row['forum_name'],
-                'forum_link' => $row['forum_link'],
-                'link'       => $row['link'],
-                'title'      => $post_subject_select,
-                'poster'     => $row['poster'],
-                'post_time'  => formatTimestamp($row['time'], 'm'),
-                'post_text'  => $post_text_select,
-            ]);
+            $xoopsTpl->append(
+                'results',
+                [
+                    'forum_name' => $row['forum_name'],
+                    'forum_link' => $row['forum_link'],
+                    'link'       => $row['link'],
+                    'title'      => $post_subject_select,
+                    'poster'     => $row['poster'],
+                    'post_time'  => formatTimestamp($row['time'], 'm'),
+                    'post_text'  => $post_text_select,
+                ]
+            );
         }
         unset($results);
 

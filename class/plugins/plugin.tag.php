@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -15,7 +15,7 @@ namespace XoopsModules\Newbb;
 use XoopsModules\Newbb;
 use XoopsModules\Tag;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 /**
  * Get item fields:
@@ -33,15 +33,15 @@ use XoopsModules\Tag;
  */
 function newbb_tag_iteminfo(&$items)
 {
-    if (0 === count($items) || !is_array($items)) {
+    if (0 === \count($items) || !\is_array($items)) {
         return false;
     }
 
     $items_id = [];
-    foreach (array_keys($items) as $cat_id) {
+    foreach (\array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
         // catid is not used in newbb, so just skip it
-        foreach (array_keys($items[$cat_id]) as $item_id) {
+        foreach (\array_keys($items[$cat_id]) as $item_id) {
             // In newbb, the item_id is "topic_id"
             $items_id[] = (int)$item_id;
         }
@@ -49,10 +49,10 @@ function newbb_tag_iteminfo(&$items)
     /** @var TopicHandler $itemHandler */
     $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsObject $itemsObject */
-    $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . \implode(', ', $items_id) . ')', 'IN'), true);
 
-    foreach (array_keys($items) as $cat_id) {
-        foreach (array_keys($items[$cat_id]) as $item_id) {
+    foreach (\array_keys($items) as $cat_id) {
+        foreach (\array_keys($items[$cat_id]) as $item_id) {
             /** @var \XoopsObject $itemObject */
             if (!$itemObject = $itemsObject[$item_id]) {
                 continue;
@@ -62,7 +62,7 @@ function newbb_tag_iteminfo(&$items)
                 'uid'     => $itemObject->getVar('topic_poster'),
                 'link'    => "viewtopic.php?topic_id={$item_id}",
                 'time'    => $itemObject->getVar('topic_time'),
-                'tags'    => tag_parse_tag($itemObject->getVar('topic_tags', 'n')),
+                'tags'    => \tag_parse_tag($itemObject->getVar('topic_tags', 'n')),
                 'content' => '',
             ];
         }

@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -142,14 +142,18 @@ if ($ok) {
           </form>
           </div>';
     if ($isAdmin) {
-        xoops_confirm([
-                          'post_id'  => $post_id,
-                          'viewmode' => $viewmode,
-                          'order'    => $order,
-                          'forum'    => $forum,
-                          'topic_id' => $topic_id,
-                          'ok'       => 99,
-                      ], 'delete.php', _MD_NEWBB_DEL_RELATED);
+        xoops_confirm(
+            [
+                'post_id'  => $post_id,
+                'viewmode' => $viewmode,
+                'order'    => $order,
+                'forum'    => $forum,
+                'topic_id' => $topic_id,
+                'ok'       => 99,
+            ],
+            'delete.php',
+            _MD_NEWBB_DEL_RELATED
+        );
     }
     require_once $GLOBALS['xoops']->path('footer.php');
 }

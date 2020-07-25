@@ -21,7 +21,7 @@
                         <div class="odd">
                             <{counter assign=index}>
                                 <input type="hidden" name="not_list[<{$index}>][params]" value="<{$category.name}>,<{$category.itemid}>,<{$event.name}>" >
-                                <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked="checked"<{/if}> >
+                                <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked<{/if}> >
                         </div>
                         <div class="odd"><{$event.caption}></div>
                     </div>

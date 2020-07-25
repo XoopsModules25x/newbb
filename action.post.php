@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -17,14 +17,13 @@ require_once __DIR__ . '/header.php';
 $topic_id = Request::getInt('topic_id', 0, 'POST');
 //$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
 $post_id = Request::getInt('post_id', 0, 'GET');
-if (Request::hasVar('post_id', 'POST')){
+if (Request::hasVar('post_id', 'POST')) {
     Request::getArray('post_id', $post_id, 'POST');
-    }
+}
 
 //    !empty($_POST['post_id']) ? $_POST['post_id'] : $post_id;
 
-
-$uid      = Request::getInt('uid', 0, 'GET');
+$uid = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $op   = in_array($op, ['approve', 'delete', 'restore', 'split']) ? $op : '';

@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -15,9 +15,9 @@ namespace XoopsModules\Newbb;
 use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class Topic
@@ -27,26 +27,26 @@ class Topic extends \XoopsObject
     public function __construct()
     {
         parent::__construct();
-        $this->initVar('topic_id', XOBJ_DTYPE_INT);
-        $this->initVar('topic_title', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('topic_poster', XOBJ_DTYPE_INT);
-        $this->initVar('topic_time', XOBJ_DTYPE_INT);
-        $this->initVar('topic_views', XOBJ_DTYPE_INT);
-        $this->initVar('topic_replies', XOBJ_DTYPE_INT);
-        $this->initVar('topic_last_post_id', XOBJ_DTYPE_INT);
-        $this->initVar('forum_id', XOBJ_DTYPE_INT);
-        $this->initVar('topic_status', XOBJ_DTYPE_INT);
-        $this->initVar('type_id', XOBJ_DTYPE_INT);
-        $this->initVar('topic_sticky', XOBJ_DTYPE_INT);
-        $this->initVar('topic_digest', XOBJ_DTYPE_INT);
-        $this->initVar('digest_time', XOBJ_DTYPE_INT);
-        $this->initVar('approved', XOBJ_DTYPE_INT);
-        $this->initVar('poster_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('rating', XOBJ_DTYPE_OTHER);
-        $this->initVar('votes', XOBJ_DTYPE_INT);
-        $this->initVar('topic_haspoll', XOBJ_DTYPE_INT);
-        $this->initVar('poll_id', XOBJ_DTYPE_INT);
-        $this->initVar('topic_tags', XOBJ_DTYPE_SOURCE);
+        $this->initVar('topic_id', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_title', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('topic_poster', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_time', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_views', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_replies', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_last_post_id', \XOBJ_DTYPE_INT);
+        $this->initVar('forum_id', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_status', \XOBJ_DTYPE_INT);
+        $this->initVar('type_id', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_sticky', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_digest', \XOBJ_DTYPE_INT);
+        $this->initVar('digest_time', \XOBJ_DTYPE_INT);
+        $this->initVar('approved', \XOBJ_DTYPE_INT);
+        $this->initVar('poster_name', \XOBJ_DTYPE_TXTBOX);
+        $this->initVar('rating', \XOBJ_DTYPE_OTHER);
+        $this->initVar('votes', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_haspoll', \XOBJ_DTYPE_INT);
+        $this->initVar('poll_id', \XOBJ_DTYPE_INT);
+        $this->initVar('topic_tags', \XOBJ_DTYPE_SOURCE);
     }
 
     // irmtfan add LAST_INSERT_ID to enhance the mysql performances
@@ -72,9 +72,9 @@ class Topic extends \XoopsObject
             return $topic_title;
         }
 
-        require_once dirname(__DIR__) . '/include/functions.topic.php';
+        require_once \dirname(__DIR__) . '/include/functions.topic.php';
 
-        return getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
+        return \getTopicTitle($topic_title, $typeObject->getVar('type_name'), $typeObject->getVar('type_color'));
     }
 
     // START irmtfan loadOldPoll function
@@ -83,7 +83,7 @@ class Topic extends \XoopsObject
      * Load functions needed for old xoopspoll (older than version 1.4 by zyspec) and umfrage modules
      *
      * @access public
-     * @param  string $pollModule dirname of the poll module
+     * @param string $pollModule dirname of the poll module
      * @return string|false $classPoll = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
      */
     public function loadOldPoll($pollModule = null)
@@ -92,7 +92,7 @@ class Topic extends \XoopsObject
         if ($classPoll && null === $pollModule) {
             return $classPoll;
         }
-        $newbbConfig = newbbLoadConfig();
+        $newbbConfig = \newbbLoadConfig();
         if (null !== $pollModule) {
             $newbbConfig['poll_module'] = $pollModule;
         }
@@ -101,8 +101,8 @@ class Topic extends \XoopsObject
         //        require_once $relPath . 'option.php';
         //        require_once $relPath . 'log.php';
         //        require_once $relPath . 'renderer.php';
-        $classes = get_declared_classes();
-        foreach (array_reverse($classes) as $class) {
+        $classes = \get_declared_classes();
+        foreach (\array_reverse($classes) as $class) {
             if (mb_strtolower($class) == $newbbConfig['poll_module']) {
                 $classPoll = $class;
 
@@ -120,7 +120,7 @@ class Topic extends \XoopsObject
      * delete a poll in database
      *
      * @access public
-     * @param  int $poll_id
+     * @param int $poll_id
      * @return bool
      */
     public function deletePoll($poll_id)
@@ -129,10 +129,10 @@ class Topic extends \XoopsObject
             return false;
         }
         /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler     = xoops_getHandler('module');
-        $newbbConfig       = newbbLoadConfig();
+        $moduleHandler     = \xoops_getHandler('module');
+        $newbbConfig       = \newbbLoadConfig();
         $pollModuleHandler = $moduleHandler->getByDirname($newbbConfig['poll_module']);
-        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
+        if (!\is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
             return false;
         }
         // new xoopspoll module
@@ -146,7 +146,7 @@ class Topic extends \XoopsObject
                 /** @var \XoopsModules\XoopsPoll\LogHandler $logHandler */
                 $logHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Log');
                 $logHandler->deleteAll(new \Criteria('poll_id', $poll_id, '='));
-                xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
+                \xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll_id);
             }
             // old Xoopspoll or Umfrage or any clone from them
         } else {
@@ -158,7 +158,7 @@ class Topic extends \XoopsObject
                 $classOption::deleteByPollId($poll->getVar('poll_id'));
                 $classLog = $classPoll . 'Log';
                 $classLog::deleteByPollId($poll->getVar('poll_id'));
-                xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll->getVar('poll_id'));
+                \xoops_comment_delete($GLOBALS['xoopsModule']->getVar('mid'), $poll->getVar('poll_id'));
             }
         } // end poll_module new or old
 
@@ -173,8 +173,8 @@ class Topic extends \XoopsObject
      * get a poll object from a poll module.
      * note: can be used to find if a poll exist in a module
      * @access public
-     * @param  int    $poll_id
-     * @param  string $pollModule dirname of the poll module
+     * @param int    $poll_id
+     * @param string $pollModule dirname of the poll module
      * @return bool|\XoopsObject poll
      */
     public function getPoll($poll_id, $pollModule = null)
@@ -183,14 +183,14 @@ class Topic extends \XoopsObject
             return false;
         }
         /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
-        $newbbConfig   = newbbLoadConfig();
+        $moduleHandler = \xoops_getHandler('module');
+        $newbbConfig   = \newbbLoadConfig();
         if (null !== $pollModule) {
             $newbbConfig['poll_module'] = $pollModule;
         }
 
         $pollModuleHandler = $moduleHandler->getByDirname($newbbConfig['poll_module']);
-        if (!is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
+        if (!\is_object($pollModuleHandler) || !$pollModuleHandler->getVar('isactive')) {
             return false;
         }
         // new xoopspoll module

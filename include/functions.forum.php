@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -11,7 +11,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_FORUM_LOADED', true);
@@ -20,10 +20,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param  null|array $value             selected forum id
-     * @param  string     $permission        permission (access, all, etc.)
-     * @param  bool       $categoryDelimiter show delimiter between categories
-     * @param  bool       $see
+     * @param null|array $value             selected forum id
+     * @param string     $permission        permission (access, all, etc.)
+     * @param bool       $categoryDelimiter show delimiter between categories
+     * @param bool       $see
      * @return string
      */
     function newbbForumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
@@ -41,17 +41,21 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         sort($groups);
         $groupKey = 'forumselect_' . $permission . '_' . md5(implode(',', $groups));
-        $forums   = $cacheHelper->cacheRead($groupKey, static function () use ($categories, $permission) {
-            /** @var Newbb\CategoryHandler $categoryHandler */
-            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-            $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
+        $forums   = $cacheHelper->cacheRead(
+            $groupKey,
+            static function () use ($categories, $permission) {
+                /** @var Newbb\CategoryHandler $categoryHandler */
+                $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+                $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
-            /** @var Newbb\ForumHandler $forumHandler */
-            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-            $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
+                /** @var Newbb\ForumHandler $forumHandler */
+                $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+                $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
-            return $forums;
-        }, 300);
+                return $forums;
+            },
+            300
+        );
 
         $value = is_array($value) ? $value : [$value];
         //$see = is_array($see) ? $see : array($see);
@@ -81,7 +85,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param  int $forum_id
+     * @param int $forum_id
      * @return string
      */
     function newbbMakeJumpbox($forum_id = 0)
@@ -104,8 +108,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      *
      * @int integer    $pid    parent forum ID
      *
-     * @param  int  $pid
-     * @param  bool $refresh
+     * @param int  $pid
+     * @param bool $refresh
      * @return array
      */
     function newbbGetSubForum($pid = 0, $refresh = false)
@@ -156,8 +160,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param  int  $forum_id
-     * @param  bool $refresh
+     * @param int  $forum_id
+     * @param bool $refresh
      * @return array|mixed|null
      */
     function newbbGetParentForum($forum_id = 0, $refresh = false)

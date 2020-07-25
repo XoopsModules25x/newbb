@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -28,7 +28,7 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 use XoopsModules\Newbb;
 
@@ -40,8 +40,8 @@ define('XOOPS_MODULE_NEWBB_FUCTIONS', 1);
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
- * @param  XoopsModule $module
- * @param  null        $oldversion
+ * @param XoopsModule $module
+ * @param null        $oldversion
  * @return bool
  */
 function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
@@ -78,7 +78,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
     $folderHandler->delete($imagesDirectory);
 
     //remove old changelogs
-    array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
+    array_map('\unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt', GLOB_NOSORT));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
         require_once dirname(__DIR__) . '/include/functions.recon.php';
@@ -89,7 +89,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_update_newbb(\XoopsModule $module)
@@ -105,7 +105,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_newbb(\XoopsModule $module)
@@ -119,7 +119,7 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_install_newbb(\XoopsModule $module)

@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -56,16 +56,16 @@ if ($mod) {
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
 
-//    /** @var \ProfileProfileHandler $profileHandler */
-//    $profileHandler = $helper->getHandler('Profile', 'profile');
+    //    /** @var \ProfileProfileHandler $profileHandler */
+    //    $profileHandler = $helper->getHandler('Profile', 'profile');
     $profileHandler = xoops_getModuleHandler('profile', 'profile');
     $fields         = $profileHandler->loadFields();
-//    /** @var \ProfileCategoryHandler $catHandler */
-//    $catHandler = $helper->getHandler('Category', 'profile');
+    //    /** @var \ProfileCategoryHandler $catHandler */
+    //    $catHandler = $helper->getHandler('Category', 'profile');
     $catHandler = xoops_getModuleHandler('category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
-//    /** @var \ProfileFieldHandler $fieldcatHandler */
-//    $fieldcatHandler = $helper->getHandler('Field', 'profile');
+    //    /** @var \ProfileFieldHandler $fieldcatHandler */
+    //    $fieldcatHandler = $helper->getHandler('Field', 'profile');
     $fieldcatHandler = xoops_getModuleHandler('field', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
 

@@ -6,13 +6,13 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 /**
  * Set forum image
@@ -86,9 +86,9 @@ class IconHandler
     /**
      * TODO: get compatible with new theme engine
      * @param         $type
-     * @param  string $dirname
-     * @param  string $default
-     * @param  string $endDir
+     * @param string  $dirname
+     * @param string  $default
+     * @param string  $endDir
      * @return mixed
      */
     // START irmtfan - improve to get other "end dirnames" like "css" and "js" - change images with $endDir
@@ -103,18 +103,20 @@ class IconHandler
         $rel_dir    = "modules/{$dirname}/{$endDir}";
         // START irmtfan add default for all pathes
         if (empty($default)) {
-            $path = is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}" : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}"));
+            $path = \is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (\is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}" : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}"));
         } else {
-            $path = is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (is_dir($theme_path . "/{$rel_dir}/{$default}/") ? $theme_path . "/{$rel_dir}/{$default}" : (is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH
-            . "/default/{$rel_dir}/{$type}" : (is_dir(XOOPS_THEME_PATH
-           . "/default/{$rel_dir}/{$default}/") ? XOOPS_THEME_PATH
-           . "/default/{$rel_dir}/{$default}" : (is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/")) ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}") : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$default}")) // XOOPS_ROOT_PATH
+            $path = \is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (\is_dir($theme_path . "/{$rel_dir}/{$default}/") ? $theme_path . "/{$rel_dir}/{$default}" : (\is_dir(XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? XOOPS_THEME_PATH
+                                                                                                                                                                                                                                                                     . "/default/{$rel_dir}/{$type}" : (\is_dir(
+                XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}/"
+            ) ? XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}" : (\is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/")) ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}") : $GLOBALS['xoops']->path(
+                "modules/{$dirname}/templates/{$endDir}/{$default}"
+            )) // XOOPS_ROOT_PATH
             ) // XOOPS_THEME_PATH {$default}
             ) // XOOPS_THEME_PATH
             ); // $theme_path {$default}
         }
         // END irmtfan add default for all pathes
-        $paths[$endDir . '/' . $type] = str_replace(XOOPS_ROOT_PATH, '', str_replace('\\', '/', $path));
+        $paths[$endDir . '/' . $type] = \str_replace(XOOPS_ROOT_PATH, '', \str_replace('\\', '/', $path));
 
         return $paths[$endDir . '/' . $type];
     }
@@ -125,13 +127,12 @@ class IconHandler
      * @param string $language
      * @param string $dirname
      */
-    public function init(/*$set = "default", */
-        $language = 'english',
-        $dirname = 'newbb')
-    {
+    public function init(/*$set = "default", */ $language = 'english',
+        $dirname = 'newbb'
+    ) {
         $this->forumImage = require_once $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
-        $this->forumImage['icon']     = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
+        $this->forumImage['icon'] = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
         $this->forumImage['language'] = XOOPS_URL . $this->getPath("language/{$language}", $dirname, 'language/english') . '/';
     }
 
@@ -161,8 +162,8 @@ class IconHandler
 
     /**
      * @param         $image
-     * @param  string $alt
-     * @param  string $extra
+     * @param string  $alt
+     * @param string  $extra
      * @return mixed
      */
     public function getImage($image, $alt = '', $extra = '')
@@ -174,8 +175,8 @@ class IconHandler
 
     /**
      * @param         $image
-     * @param  string $alt
-     * @param  string $extra
+     * @param string  $alt
+     * @param string  $extra
      * @return string
      */
     public function assignImage($image, $alt = '', $extra = '')
@@ -183,7 +184,7 @@ class IconHandler
         $this->setImage($image, $alt, $extra);
         // START hacked by irmtfan - improve function to CSS3 buttons - add alt and title attributes - use span instead of button to support IE7&8
         $tag = 'span';
-        if ("class='forum_icon'" === $extra && in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'])) {
+        if ("class='forum_icon'" === $extra && \in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'])) {
             $extra = "class='forum_icon forum_button'";
         }
 
@@ -197,7 +198,7 @@ class IconHandler
     public function assignImages($images)
     {
         foreach ($images as $myImage) {
-            list($image, $alt, $extra) = $myImage;
+            [$image, $alt, $extra] = $myImage;
             $this->assignImage($image, $alt, $extra);
         }
     }
@@ -210,6 +211,6 @@ class IconHandler
         //$this->template->assign_by_ref("image", $this->images);
         $this->template->assign($this->images);
 
-        return count($this->images);
+        return \count($this->images);
     }
 }

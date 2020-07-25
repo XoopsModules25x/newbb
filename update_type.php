@@ -1,9 +1,10 @@
 <?php
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -25,7 +26,8 @@ if (empty($GLOBALS['xoopsModuleConfig']['subject_prefix'])) {
 $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp'));
 $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_forum_tmp'));
 
-if (!$GLOBALS['xoopsDB']->queryF('
+if (!$GLOBALS['xoopsDB']->queryF(
+    '
         CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp') . " (
           `type_id`             SMALLINT(4)         UNSIGNED NOT NULL AUTO_INCREMENT,
           `type_name`             VARCHAR(64)         NOT NULL DEFAULT '',
@@ -34,11 +36,13 @@ if (!$GLOBALS['xoopsDB']->queryF('
 
           PRIMARY KEY              (`type_id`)
         ) ENGINE=MyISAM;
-    ")) {
+    "
+)) {
     exit('Can not create tmp table for `bb_type_tmp`');
 }
 
-if (!$GLOBALS['xoopsDB']->queryF('
+if (!$GLOBALS['xoopsDB']->queryF(
+    '
         CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_forum_tmp') . " (
           `tf_id`                 MEDIUMINT(4)         UNSIGNED NOT NULL AUTO_INCREMENT,
           `type_id`             SMALLINT(4)         UNSIGNED NOT NULL DEFAULT '0',
@@ -49,23 +53,26 @@ if (!$GLOBALS['xoopsDB']->queryF('
           KEY `forum_id`        (`forum_id`),
           KEY `type_order`        (`type_order`)
         ) ENGINE=MyISAM;
-    ")) {
+    "
+)) {
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp'));
     exit('Can not create tmp table for `bb_type_forum_tmp`');
 }
 
 //$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
-$subjectpres = array_filter(array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
+$subjectpres = array_filter(array_map('\trim', explode(',', $GLOBALS['xoopsModuleConfig']['subject_prefix'])));
 $types       = [];
 $order       = 1;
 foreach ($subjectpres as $subjectpre) {
     if (preg_match("/<[^#]*color=[\"'](#[^'\"\s]*)[^>]>[\[]?([^<\]]*)[\]]?/is", $subjectpre, $matches)) {
-        if (!$GLOBALS['xoopsDB']->queryF('
+        if (!$GLOBALS['xoopsDB']->queryF(
+            '
                 INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_type_tmp') . '
                     (`type_name`, `type_color`)
                 VALUES
                     (' . $GLOBALS['xoopsDB']->quoteString($matches[2]) . ', ' . $GLOBALS['xoopsDB']->quoteString($matches[1]) . ')
-            ')) {
+            '
+        )) {
             xoops_error("Can not add type of `{$matches[2]}`");
             continue;
         }
@@ -99,4 +106,4 @@ if ($forums_type) {
     exit('No type item to update');
 }
 
-die('update succeeded');
+exit('update succeeded');

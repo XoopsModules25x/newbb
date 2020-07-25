@@ -464,7 +464,9 @@ define('_MD_NEWBB_GOTOLASTPOST', 'Go to last post');
 define('_MD_NEWBB_EDITEDMSG', 'Reason:');
 define('_MD_NEWBB_DELEDEDMSG', 'Reason for deleting<br><small>(If a reason is provided, the user will receive a message)</small>:');
 define('_MD_NEWBB_DELEDEDMSG_SUBJECT', 'Deletion of your article');
-define('_MD_NEWBB_DELEDEDMSG_BODY', 'Hello %s,
+define(
+    '_MD_NEWBB_DELEDEDMSG_BODY',
+    'Hello %s,
 your post in the forum
 
 %s
@@ -478,7 +480,8 @@ With best greetings
 -------------------------
 Please do not reply to this message!
 %s
-%s');
+%s'
+);
 define('_MD_NEWBB_FORUMHOME', 'Board index');
 define('_MD_NEWBB_SEEWAITREPORT', "There were <span style='color:#ff0000;'> <strong>%s</strong> Contributions reported </span>");
 define('_MD_NEWBB_PDF_SUBJECT', 'Title: ');
@@ -523,7 +526,7 @@ define('_MD_NEWBB_SEARCHTOPIC', 'Search Topic');
 define('_MD_NEWBB_SHOWSEARCH', 'Show results:');
 define('_MD_NEWBB_SEARCHPOSTTEXT', 'Posts text');
 define('_MD_NEWBB_SELECT_STARTLAG', 'Start lag of selected text');
-define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'Select text from X characters before the first keyword');
+define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'SELECT text FROM X characters BEFORE the FIRST keyword');
 define('_MD_NEWBB_SELECT_LENGTH', 'Length of selected text');
 define('_MD_NEWBB_SELECT_HTML', 'Strip all html from result?');
 define('_MD_NEWBB_SELECT_EXCLUDE', 'Exclude these tags:');
@@ -553,3 +556,4 @@ define('_MD_NEWBB_PDF_META_DIR', 'ltr');
 
 //Facebook UI Style Rating
 define('THEME_LIKE', 'Like');
+define('_AM_NEWBB_NOTOPIC', 'No Posts'); //TODO delete in next XOOPS release

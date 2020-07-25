@@ -3,28 +3,24 @@
 namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
+use XoopsModules\Newbb\Common;
+use XoopsModules\Newbb\Constants;
 
 /**
  * Class Utility
  */
-class Utility
+class Utility extends Common\SysUtility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
-
     //--------------- Custom module methods -----------------------------
 
     /**
      * Verify that a mysql table exists
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $tablename
      * @return bool
+     * @copyright (c) Hervé Thouzard
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
      */
     public function tableExists($tablename)
     {
@@ -38,12 +34,12 @@ class Utility
     /**
      * Verify that a field exists inside a mysql table
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $fieldname
      * @param $table
      * @return bool
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) Hervé Thouzard
      */
     public function fieldExists($fieldname, $table)
     {
@@ -56,12 +52,12 @@ class Utility
     /**
      * Add a field to a mysql table
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $field
      * @param $table
      * @return bool|\mysqli_result
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) Hervé Thouzard
      */
     public function addField($field, $table)
     {
@@ -79,12 +75,11 @@ class Utility
     public static function prepareFolder($folder)
     {
         try {
-            if (!@mkdir($folder) && !is_dir($folder)) {
-                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+            if (!@\mkdir($folder) && !\is_dir($folder)) {
+                throw new \RuntimeException(\sprintf('Unable to create the %s directory', $folder));
             }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -92,7 +87,7 @@ class Utility
     public static function cleanCache()
     {
         $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-        if (method_exists($cacheHelper, 'clear')) {
+        if (\method_exists($cacheHelper, 'clear')) {
             $cacheHelper->clear();
 
             return;
@@ -104,7 +99,7 @@ class Utility
             3, // xoops_cache
         ];
         $maintenance->CleanCache($cacheList);
-        xoops_setActiveModules();
+        \xoops_setActiveModules();
     }
 
     /**

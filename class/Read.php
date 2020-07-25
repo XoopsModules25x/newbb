@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -32,9 +32,9 @@ namespace XoopsModules\Newbb;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * A handler for read/unread handling
@@ -53,10 +53,10 @@ class Read extends \XoopsObject
     {
         // parent::__construct("newbb_reads_" . $type);
         parent::__construct();
-        $this->initVar('read_id', XOBJ_DTYPE_INT);
-        $this->initVar('uid', XOBJ_DTYPE_INT);
-        $this->initVar('read_item', XOBJ_DTYPE_INT);
-        $this->initVar('post_id', XOBJ_DTYPE_INT);
-        $this->initVar('read_time', XOBJ_DTYPE_INT);
+        $this->initVar('read_id', \XOBJ_DTYPE_INT);
+        $this->initVar('uid', \XOBJ_DTYPE_INT);
+        $this->initVar('read_item', \XOBJ_DTYPE_INT);
+        $this->initVar('post_id', \XOBJ_DTYPE_INT);
+        $this->initVar('read_time', \XOBJ_DTYPE_INT);
     }
 }

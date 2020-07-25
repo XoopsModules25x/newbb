@@ -22,7 +22,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName      = basename(dirname(__DIR__));

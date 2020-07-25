@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -67,12 +67,14 @@ switch ($action) {
         $opform    = new \XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP_TEMPLAT, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new \XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
-        $op_select->addOptionArray([
-                                       'no'       => _SELECT,
-                                       'template' => _AM_NEWBB_PERM_TEMPLATE,
-                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP,
-                                   ]);
+        $op_select->addOptionArray(
+            [
+                'no'       => _SELECT,
+                'template' => _AM_NEWBB_PERM_TEMPLATE,
+                'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
+                'default'  => _AM_NEWBB_PERM_SETBYGROUP,
+            ]
+        );
         $opform->addElement($op_select);
         $opform->display();
         /** @var \XoopsMemberHandler $memberHandler */
@@ -139,11 +141,13 @@ switch ($action) {
         $opform    = new \XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP_APPLY, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new \XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
-        $op_select->addOptionArray([
-                                       'no'       => _SELECT,
-                                       'template' => _AM_NEWBB_PERM_TEMPLATE,
-                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                   ]);
+        $op_select->addOptionArray(
+            [
+                'no'       => _SELECT,
+                'template' => _AM_NEWBB_PERM_TEMPLATE,
+                'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
+            ]
+        );
         $opform->addElement($op_select);
         $opform->display();
 
@@ -215,12 +219,14 @@ switch ($action) {
         $opform    = new \XoopsSimpleForm(_AM_NEWBB_PERM_ACTION_HELP, 'actionform', 'admin_permissions.php', 'get');
         $op_select = new \XoopsFormSelect('', 'action');
         $op_select->setExtra('onchange="document.forms.actionform.submit()"');
-        $op_select->addOptionArray([
-                                       'no'       => _SELECT,
-                                       'template' => _AM_NEWBB_PERM_TEMPLATE,
-                                       'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
-                                       'default'  => _AM_NEWBB_PERM_SETBYGROUP,
-                                   ]);
+        $op_select->addOptionArray(
+            [
+                'no'       => _SELECT,
+                'template' => _AM_NEWBB_PERM_TEMPLATE,
+                'apply'    => _AM_NEWBB_PERM_TEMPLATEAPP,
+                'default'  => _AM_NEWBB_PERM_SETBYGROUP,
+            ]
+        );
         $opform->addElement($op_select);
         $opform->display();
 

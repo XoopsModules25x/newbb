@@ -32,9 +32,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
     $ori_self               = Request::getString('SCRIPT_NAME', '', 'SERVER');
     $ori_self               = explode('modules/newbb', $ori_self);
     $newUrl                 = $ori_self[0] . 'modules/newbb/' . $seoMap[$seoOp];
-    $_ENV['SCRIPT_NAME']       = $newUrl;
+    $_ENV['SCRIPT_NAME']    = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
-    $_SERVER['SCRIPT_NAME']    = $newUrl;
+    $_SERVER['SCRIPT_NAME'] = $newUrl;
     switch ($seoOp) {
         case 'c':
             $_SERVER['REQUEST_URI'] = $newUrl . '?cat=' . $seoArg;

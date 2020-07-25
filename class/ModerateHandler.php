@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -14,9 +14,7 @@ namespace XoopsModules\Newbb;
 
 use Xmf\IPAddress;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-/**
+ /**
  * Class ModerateHandler
  */
 class ModerateHandler extends \XoopsPersistableObjectHandler
@@ -38,8 +36,8 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      */
     public function clearGarbage($expire = 0)
     {
-        $expire = time() - (int)$expire;
-        $sql    = sprintf('DELETE FROM `%s` WHERE mod_end < %u', $this->db->prefix('newbb_moderates'), $expire);
+        $expire = \time() - (int)$expire;
+        $sql    = \sprintf('DELETE FROM `%s` WHERE mod_end < %u', $this->db->prefix('newbb_moderates'), $expire);
         $this->db->queryF($sql);
     }
 
@@ -47,20 +45,20 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      * Check if a user is moderated, according to his uid and ip
      *
      *
-     * @param  int         $uid user id
-     * @param  string|bool $ip  user ip
-     * @param  int         $forum
+     * @param int         $uid user id
+     * @param string|bool $ip  user ip
+     * @param int         $forum
      * @return bool true if IP is banned
      */
     public function verifyUser($uid = -1, $ip = '', $forum = 0)
     {
-        error_reporting(E_ALL);
+        \error_reporting(\E_ALL);
         // if user is admin do not suspend
-        if (newbbIsAdmin($forum)) {
+        if (\newbbIsAdmin($forum)) {
             return true;
         }
 
-        $uid = ($uid < 0) ? (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0) : (int)$uid;
+        $uid = ($uid < 0) ? (\is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0) : (int)$uid;
 
         $criteria      = new \CriteriaCompo(new \Criteria('uid', (int)$uid));
         $forumCriteria = new \CriteriaCompo(new \Criteria('forum_id', 0), 'OR');
@@ -68,26 +66,26 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
             $forumCriteria->add(new \Criteria('forum_id', (int)$forum), 'OR');
         }
         $criteria->add($forumCriteria);
-        $criteria->add(new \Criteria('mod_end', time(), '>'));
+        $criteria->add(new \Criteria('mod_end', \time(), '>'));
 
         $matches = $this->getAll($criteria);
 
-        if (0 === count($matches)) {
+        if (0 === \count($matches)) {
             return true; // no matches
         }
 
-        if (count($matches) > 0 && $uid > 0) {
+        if (\count($matches) > 0 && $uid > 0) {
             return false; // user is banned
         }
         // verify possible matches against IP address
         $ip = empty($ip) ? IPAddress::fromRequest()->asReadable() : $ip;
 
         foreach ($matches as $modMatch) {
-            $rawModIp = trim($modMatch->getVar('ip', 'n'));
+            $rawModIp = \trim($modMatch->getVar('ip', 'n'));
             if (empty($rawModIp)) {
                 return false; // banned without IP
             }
-            $parts   = explode('/', $rawModIp);
+            $parts   = \explode('/', $rawModIp);
             $modIp   = $parts[0];
             $checkIp = new IPAddress($modIp);
             if (false !== $checkIp->asReadable()) {
@@ -106,8 +104,8 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      * Get latest expiration for a user moderation
      *
      *
-     * @param  mixed $item user id or ip
-     * @param  bool  $isUid
+     * @param mixed $item user id or ip
+     * @param bool  $isUid
      * @return int
      */
     public function getLatest($item, $isUid = true)
@@ -116,12 +114,12 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
         if ($isUid) {
             $criteria = 'uid =' . (int)$item;
         } else {
-            $ip_segs = explode('.', $item);
-            $segs    = min(count($ip_segs), 4);
+            $ip_segs = \explode('.', $item);
+            $segs    = \min(\count($ip_segs), 4);
             for ($i = 1; $i <= $segs; ++$i) {
-                $ips[] = $this->db->quoteString(implode('.', array_slice($ip_segs, 0, $i)));
+                $ips[] = $this->db->quoteString(\implode('.', \array_slice($ip_segs, 0, $i)));
             }
-            $criteria = 'ip IN(' . implode(',', $ips) . ')';
+            $criteria = 'ip IN(' . \implode(',', $ips) . ')';
         }
         $sql = 'SELECT MAX(mod_end) AS expire FROM ' . $this->db->prefix('newbb_moderates') . ' WHERE ' . $criteria;
         if (!$result = $this->db->query($sql)) {
@@ -135,9 +133,9 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param  string $table_link
-     * @param  string $field_link
-     * @param  string $field_object
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()

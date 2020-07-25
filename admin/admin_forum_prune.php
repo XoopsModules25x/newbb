@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -168,15 +168,17 @@ if (Request::hasVar('submit', 'POST')) {
     // $result = $GLOBALS['xoopsDB']->query();
     // Days selected by selbox (better error control :lol:)
     $days = new \XoopsFormSelect(_AM_NEWBB_PRUNE_DAYS, 'days', null, 1, false);
-    $days->addOptionArray([
-                              604800   => _AM_NEWBB_PRUNE_WEEK,
-                              1209600  => _AM_NEWBB_PRUNE_2WEEKS,
-                              2592000  => _AM_NEWBB_PRUNE_MONTH,
-                              5184000  => _AM_NEWBB_PRUNE_2MONTH,
-                              10368000 => _AM_NEWBB_PRUNE_4MONTH,
-                              31536000 => _AM_NEWBB_PRUNE_YEAR,
-                              63072000 => _AM_NEWBB_PRUNE_2YEARS,
-                          ]);
+    $days->addOptionArray(
+        [
+            604800   => _AM_NEWBB_PRUNE_WEEK,
+            1209600  => _AM_NEWBB_PRUNE_2WEEKS,
+            2592000  => _AM_NEWBB_PRUNE_MONTH,
+            5184000  => _AM_NEWBB_PRUNE_2MONTH,
+            10368000 => _AM_NEWBB_PRUNE_4MONTH,
+            31536000 => _AM_NEWBB_PRUNE_YEAR,
+            63072000 => _AM_NEWBB_PRUNE_2YEARS,
+        ]
+    );
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
@@ -208,8 +210,7 @@ if (Request::hasVar('submit', 'POST')) {
     */
     // END irmtfan remove hardcode db access
 
-    $sform->addElement(/*$checkbox*/
-        $forumEle); // irmtfan
+    $sform->addElement(/*$checkbox*/ $forumEle); // irmtfan
 
     $sticky_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_STICKY, 'sticky', 1);
     $sticky_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);
@@ -227,19 +228,20 @@ if (Request::hasVar('submit', 'POST')) {
     $sform->addElement($lock_confirmation);
 
     $hot_confirmation = new \XoopsFormSelect(_AM_NEWBB_PRUNE_HOT, 'hot', null, 1, false);
-    $hot_confirmation->addOptionArray([
-                                          '0'  => 0,
-                                          '5'  => 5,
-                                          '10' => 10,
-                                          '15' => 15,
-                                          '20' => 20,
-                                          '25' => 25,
-                                          '30' => 30,
-                                      ]);
+    $hot_confirmation->addOptionArray(
+        [
+            '0'  => 0,
+            '5'  => 5,
+            '10' => 10,
+            '15' => 15,
+            '20' => 20,
+            '25' => 25,
+            '30' => 30,
+        ]
+    );
     $sform->addElement($hot_confirmation);
 
-    $sform->addElement(/*$radiobox*/
-        $storeEle); // irmtfan
+    $sform->addElement(/*$radiobox*/ $storeEle); // irmtfan
 
     $archive_confirmation = new \XoopsFormRadio(_AM_NEWBB_PRUNE_ARCHIVE, 'archive', 1);
     $archive_confirmation->addOption(1, _AM_NEWBB_PRUNE_YES);

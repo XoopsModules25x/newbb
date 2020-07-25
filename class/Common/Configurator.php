@@ -17,11 +17,9 @@ namespace XoopsModules\Newbb\Common;
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      XOOPS Development Team
- * @package     Publisher
+ * @package
  * @since       1.05
  */
-
-
 
 /**
  * Class Configurator
@@ -44,10 +42,10 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = \basename(\dirname(\dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-$config = include dirname(dirname(__DIR__)) . '/config/config.php';
+        $config = require \dirname(\dirname(__DIR__)) . '/config/config.php';
 
         $this->name            = $config->name;
         $this->paths           = $config->paths;

@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -24,9 +24,9 @@ class Digest extends \XoopsObject
     public function __construct()
     {
         parent::__construct();
-        $this->initVar('digest_id', XOBJ_DTYPE_INT);
-        $this->initVar('digest_time', XOBJ_DTYPE_INT);
-        $this->initVar('digest_content', XOBJ_DTYPE_TXTAREA);
+        $this->initVar('digest_id', \XOBJ_DTYPE_INT);
+        $this->initVar('digest_time', \XOBJ_DTYPE_INT);
+        $this->initVar('digest_content', \XOBJ_DTYPE_TXTAREA);
         $this->items = [];
     }
 
@@ -64,22 +64,22 @@ class Digest extends \XoopsObject
     {
         global $myts;
 
-        $clean = stripslashes($text);
+        $clean = \stripslashes($text);
         $clean = &$myts->displayTarea($clean, 1, 0, 1);
-        $clean = strip_tags($clean);
-        $clean = htmlspecialchars($clean, ENT_QUOTES);
+        $clean = \strip_tags($clean);
+        $clean = \htmlspecialchars($clean, \ENT_QUOTES);
 
         return $clean;
     }
 
     /**
-     * @param  bool $isSummary
-     * @param  bool $isHtml
+     * @param bool $isSummary
+     * @param bool $isHtml
      * @return bool
      */
     public function buildContent($isSummary = true, $isHtml = false)
     {
-        $digest_count = count($this->items);
+        $digest_count = \count($this->items);
         $content      = '';
         if ($digest_count > 0) {
             $linebreak = $isHtml ? '<br>' : "\n";

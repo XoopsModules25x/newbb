@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
@@ -19,7 +19,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -50,10 +50,12 @@ if (!$moderateHandler->verifyUser($moderated_id, '', $moderated_forum)) {
 
 $xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' => $categoryObject->getVar('cat_title')]);
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forumObject));
-$xoopsTpl->assign([
-                      'forum_id'   => $forumObject->getVar('forum_id'),
-                      'forum_name' => $forumObject->getVar('forum_name'),
-                  ]);
+$xoopsTpl->assign(
+    [
+        'forum_id'   => $forumObject->getVar('forum_id'),
+        'forum_name' => $forumObject->getVar('forum_name'),
+    ]
+);
 
 if (!is_object($topicObject)) {
     $topicObject = $topicHandler->create();
@@ -73,25 +75,29 @@ if ($topicObject->isNew()) {
 }
 $xoopsTpl->assign('form_title', $form_title);
 
-foreach ([
-             'start',
-             'topic_id',
-             'post_id',
-             'pid',
-             'isreply',
-             'isedit',
-             'contents_preview',
-         ] as $getint) {
+foreach (
+    [
+        'start',
+        'topic_id',
+        'post_id',
+        'pid',
+        'isreply',
+        'isedit',
+        'contents_preview',
+    ] as $getint
+) {
     ${$getint} = Request::getInt($getint, (!empty(${$getint}) ? ${$getint} : 0), 'GET'); // isset($_GET[$getint]) ? (int)($_GET[$getint]) : ((!empty(${$getint})) ? ${$getint} : 0);
 }
-foreach ([
-             'order',
-             'viewmode',
-             'hidden',
-             'newbb_form',
-             'icon',
-             'op',
-         ] as $getstr) {
+foreach (
+    [
+        'order',
+        'viewmode',
+        'hidden',
+        'newbb_form',
+        'icon',
+        'op',
+    ] as $getstr
+) {
     ${$getstr} = Request::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
@@ -184,7 +190,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($postObject) || $p
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
-    if (!empty($newbbConfig['do_tag']) &&  class_exists('TagFormTag')) {
+    if (!empty($newbbConfig['do_tag']) && class_exists('TagFormTag')) {
         $forum_form->addElement(new \XoopsModules\Tag\FormTag('topic_tags', 60, 255, $topic_tags));
     }
 }
@@ -289,7 +295,7 @@ if ($GLOBALS['xoopsModuleConfig']['enable_karma'] || $GLOBALS['xoopsModuleConfig
         $radiobox->addOption('require_reply', _MD_NEWBB_REQUIRE_REPLY);
     }
     if ($GLOBALS['xoopsModuleConfig']['enable_karma']) {
-        $karmas = array_map('trim', explode(',', $GLOBALS['xoopsModuleConfig']['karma_options']));
+        $karmas = array_map('\trim', explode(',', $GLOBALS['xoopsModuleConfig']['karma_options']));
         if (count($karmas) > 1) {
             foreach ($karmas as $karma) {
                 $karma_array[(string)$karma] = (int)$karma;

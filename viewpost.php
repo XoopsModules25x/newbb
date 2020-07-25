@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -203,14 +203,20 @@ if (!empty($forum_id)) {
     $xoopsTpl->assign('forum_id', $forumObject->getVar('forum_id'));
     // irmtfan new method
     if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-        $xoopsTpl->assign('xoops_module_header', '
+        $xoopsTpl->assign(
+            'xoops_module_header',
+            '
             <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" >
-            ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+            ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+        );
     }
 } elseif (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
         <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 // irmtfan remove and move to footer.php
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
@@ -338,24 +344,27 @@ foreach (array_keys($posts) as $id) {
     }
     $thread_action = [];
 
-    $xoopsTpl->append('posts', [
-        'post_id'         => $post->getVar('post_id'),
-        'topic_id'        => $post->getVar('topic_id'),
-        'forum_id'        => $post->getVar('forum_id'),
-        'post_date'       => newbbFormatTimestamp($post->getVar('post_time')),
-        'post_image'      => $post_image,
-        'post_title'      => $post_title,
-        'post_text'       => $post_text,
-        'post_attachment' => $post_attachment,
-        'post_edit'       => $post->displayPostEdit(),
-        'post_no'         => $start + $pn,
-        'post_signature'  => $post->getVar('attachsig') ? @$poster['signature'] : '',
-        //                                 'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
-        'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
-        'thread_action'   => $thread_action,
-        'thread_buttons'  => $thread_buttons,
-        'poster'          => $poster,
-    ]);
+    $xoopsTpl->append(
+        'posts',
+        [
+            'post_id'         => $post->getVar('post_id'),
+            'topic_id'        => $post->getVar('topic_id'),
+            'forum_id'        => $post->getVar('forum_id'),
+            'post_date'       => newbbFormatTimestamp($post->getVar('post_time')),
+            'post_image'      => $post_image,
+            'post_title'      => $post_title,
+            'post_text'       => $post_text,
+            'post_attachment' => $post_attachment,
+            'post_edit'       => $post->displayPostEdit(),
+            'post_no'         => $start + $pn,
+            'post_signature'  => $post->getVar('attachsig') ? @$poster['signature'] : '',
+            //                                 'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
+            'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
+            'thread_action'   => $thread_action,
+            'thread_buttons'  => $thread_buttons,
+            'poster'          => $poster,
+        ]
+    );
 
     unset($thread_buttons, $poster);
 }

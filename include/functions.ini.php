@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -28,7 +28,7 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 if (defined('NEWBB_FUNCTIONS_INI')) {
     return;

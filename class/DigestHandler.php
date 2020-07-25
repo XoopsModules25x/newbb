@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -32,7 +32,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  bool $isForced
+     * @param bool $isForced
      * @return int
      */
     public function process($isForced = false)
@@ -69,7 +69,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         //$content                = $digest->getVar('digest_content');
         /** @var \XoopsNotificationHandler $notificationHandler */
-        $notificationHandler    = xoops_getHandler('notification');
+        $notificationHandler    = \xoops_getHandler('notification');
         $tags['DIGEST_ID']      = $digest->getVar('digest_id');
         $tags['DIGEST_CONTENT'] = $digest->getVar('digest_content', 'E');
         $notificationHandler->triggerEvent('global', 0, 'digest', $tags);
@@ -79,7 +79,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param        $start
-     * @param  int   $perpage
+     * @param int    $perpage
      * @return array
      */
     public function getAllDigests($start = 0, $perpage = 5)
@@ -136,19 +136,19 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             $this->getLastDigest();
         }
         $deadline  = (1 == $GLOBALS['xoopsModuleConfig']['email_digest']) ? 60 * 60 * 24 : 60 * 60 * 24 * 7;
-        $time_diff = time() - $this->last_digest;
+        $time_diff = \time() - $this->last_digest;
 
         return $time_diff - $deadline;
     }
 
     /**
-     * @param  \XoopsObject $digest
-     * @param  bool         $force flag to force the query execution despite security settings
+     * @param \XoopsObject $digest
+     * @param bool         $force flag to force the query execution despite security settings
      * @return mixed       object ID or false
      */
     public function insert(\XoopsObject $digest, $force = true)
     {
-        $digest->setVar('digest_time', time());
+        $digest->setVar('digest_time', \time());
 
         return parent::insert($digest, $force);
         /*
@@ -172,7 +172,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $digest
-     * @param  bool        $force (ignored)
+     * @param bool         $force (ignored)
      * @return bool        FALSE if failed.
      */
     public function delete(\XoopsObject $digest, $force = false)
@@ -197,8 +197,8 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         global $xoopsModule;
 
-        if (!defined('SUMMARY_LENGTH')) {
-            define('SUMMARY_LENGTH', 100);
+        if (!\defined('SUMMARY_LENGTH')) {
+            \define('SUMMARY_LENGTH', 100);
         }
 
         /** @var Newbb\ForumHandler $forumHandler */
@@ -208,7 +208,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $GLOBALS['xoopsUser'] = $thisUser;
 
         $accessForums    = $forumHandler->getIdsByPermission(); // get all accessible forums
-        $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $accessForums) . ')';
+        $forumCriteria   = ' AND t.forum_id IN (' . \implode(',', $accessForums) . ')';
         $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
         $time_criteria   = ' AND t.digest_time > ' . $this->last_digest;
 
@@ -238,14 +238,14 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             $users[$row['uid']] = 1;
             $rows[]             = $row;
         }
-        if (count($rows) < 1) {
+        if (\count($rows) < 1) {
             return false;
         }
-        $uids = array_keys($users);
-        if (count($uids) > 0) {
+        $uids = \array_keys($users);
+        if (\count($uids) > 0) {
             /** @var \XoopsMemberHandler $memberHandler */
-            $memberHandler = xoops_getHandler('member');
-            $user_criteria = new \Criteria('uid', '(' . implode(',', $uids) . ')', 'IN');
+            $memberHandler = \xoops_getHandler('member');
+            $user_criteria = new \Criteria('uid', '(' . \implode(',', $uids) . ')', 'IN');
             $users         = $memberHandler->getUsers($user_criteria, true);
         } else {
             $users = [];
@@ -253,7 +253,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
 
         foreach ($rows as $topic) {
             if ($topic['uid'] > 0) {
-                if (isset($users[$topic['uid']]) && is_object($users[$topic['uid']])
+                if (isset($users[$topic['uid']]) && \is_object($users[$topic['uid']])
                     && $users[$topic['uid']]->isActive()) {
                     $topic['uname'] = $users[$topic['uid']]->getVar('uname');
                 } else {
@@ -263,7 +263,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
                 $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
             $summary = \Xmf\Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
-            $author  = $topic['uname'] . ' (' . formatTimestamp($topic['topic_time']) . ')';
+            $author  = $topic['uname'] . ' (' . \formatTimestamp($topic['topic_time']) . ')';
             $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];
             $digest->addItem($title, $link, $author, $summary);

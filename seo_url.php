@@ -1,5 +1,5 @@
 <?php
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 use XoopsModules\Newbb;
 
@@ -268,8 +268,8 @@ function forum_seo_post($_cat_id)
 }
 
 /**
- * @param  string $title
- * @param  bool   $withExt
+ * @param string $title
+ * @param bool   $withExt
  * @return mixed|string
  */
 function forum_seo_title($title = '', $withExt = true)

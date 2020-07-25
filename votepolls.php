@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -27,6 +27,7 @@
 
 use Xmf\Request;
 use XoopsModules\Xoopspoll;
+use XoopsModules\Xoopspoll\Constants;
 
 require_once __DIR__ . '/header.php';
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'GET');
@@ -70,13 +71,13 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 
 $mail_author = false;
 // new xoopspoll module
-if ($pollModuleHandler->getVar('version') >= 140) {
-    $classConstants = \XoopsModules\Xoopspoll\Constants;
+if ($pollModuleHandler->getVar('version') >= 201) {
+//    $classConstants = \XoopsModules\Xoopspoll\Constants;
     if (is_object($pollObject)) {
         if ($pollObject->getVar('multiple')) {
             $optionId = Request::getInt('option_id', 0, 'POST');
             $optionId = (array)$optionId; // type cast to make sure it's an array
-            $optionId = array_map('intval', $optionId); // make sure values are integers
+            $optionId = array_map('\intval', $optionId); // make sure values are integers
         } else {
             $optionId = Request::getInt('option_id', 0, 'POST');
         }
@@ -98,7 +99,7 @@ if ($pollModuleHandler->getVar('version') >= 140) {
                         $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_THANKSFORVOTE');
                     } else {
                         /* there was a problem registering the vote */
-                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', ['poll_id' => $poll_id]), $classConstants::REDIRECT_DELAY_MEDIUM, constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE_ERROR'));
+                        redirect_header($GLOBALS['xoops']->buildUrl('index.php', ['poll_id' => $poll_id]), Constants::REDIRECT_DELAY_MEDIUM, constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE_ERROR'));
                     }
                 } else {
                     $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_ALREADYVOTED');
@@ -121,9 +122,9 @@ if ($pollModuleHandler->getVar('version') >= 140) {
         $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_ERROR_INVALID_POLLID');
     }
     if (null !== $url) {
-        redirect_header($url, $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
+        redirect_header($url, Constants::REDIRECT_DELAY_MEDIUM, $msg);
     } else {
-        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', ['topic_id' => $topic_id]), $classConstants::REDIRECT_DELAY_MEDIUM, $msg);
+        redirect_header($GLOBALS['xoops']->buildUrl('viewtopic.php', ['topic_id' => $topic_id]), Constants::REDIRECT_DELAY_MEDIUM, $msg);
     }
     // old xoopspoll or umfrage or any clone from them
 } else {

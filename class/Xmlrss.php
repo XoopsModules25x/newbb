@@ -6,21 +6,21 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 //load_functions('locale');
 
 /**
  * Description
  *
- * @param  type $var description
+ * @param type $var description
  * @return type description
  * @link
  */
@@ -75,14 +75,14 @@ class Xmlrss
     /**
      * @param             $title
      * @param             $link
-     * @param  string     $description
-     * @param  string     $label
-     * @param  int|string $pubdate
+     * @param string      $description
+     * @param string      $label
+     * @param int|string  $pubdate
      * @return bool
      */
     public function addItem($title, $link, $description = '', $label = '', $pubdate = 0)
     {
-        if (count($this->items) < $this->max_items) {
+        if (\count($this->items) < $this->max_items) {
             if (!empty($label)) {
                 $label = '[' . $this->cleanup($label) . ']';
             }
@@ -108,18 +108,18 @@ class Xmlrss
 
     /**
      * @param               $text
-     * @param  int          $trim
+     * @param int           $trim
      * @return mixed|string
      */
     public function cleanup($text, $trim = 0)
     {
-        if ('utf-8' === mb_strtolower($this->xml_encoding) && strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
+        if ('utf-8' === mb_strtolower($this->xml_encoding) && \strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
             $text = \XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {
-            $text = xoops_substr($text, 0, (int)$trim);
+            $text = \xoops_substr($text, 0, (int)$trim);
         }
-        $text = htmlspecialchars($text, ENT_QUOTES);
+        $text = \htmlspecialchars($text, \ENT_QUOTES);
 
         return $text;
     }

@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -11,7 +11,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_READ_LOADED', true);
@@ -23,7 +23,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      * @param        $type
      * @param        $item_id
      * @param        $post_id
-     * @param  null  $uid
+     * @param null   $uid
      * @return mixed
      */
     function newbbSetRead($type, $item_id, $post_id, $uid = null)
@@ -37,7 +37,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     /**
      * @param        $type
      * @param        $item_id
-     * @param  null  $uid
+     * @param null   $uid
      * @return mixed
      */
     function newbbGetRead($type, $item_id, $uid = null)
@@ -49,8 +49,8 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     }
 
     /**
-     * @param  int  $status
-     * @param  null $uid
+     * @param int  $status
+     * @param null $uid
      * @return mixed
      */
     function newbbSetReadforum($status = 0, $uid = null)
@@ -62,9 +62,9 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     }
 
     /**
-     * @param  int  $status
-     * @param  int  $forum_id
-     * @param  null $uid
+     * @param int  $status
+     * @param int  $forum_id
+     * @param null $uid
      * @return mixed
      */
     function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
@@ -78,10 +78,10 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
     /**
      * @param        $type
      * @param        $items
-     * @param  null  $uid
+     * @param null   $uid
      * @return mixed
      */
-    function newbbIsRead($type, &$items, $uid = null)
+    function newbbIsRead($type, $items, $uid = null)
     {
         /** @var Newbb\ReadHandler $readHandler */
         $readHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Read' . $type);

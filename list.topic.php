@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -20,9 +20,12 @@ $GLOBALS['xoopsOption']['template_main'] = 'newbb_viewall.tpl';
 require_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/rss.php" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 

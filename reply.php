@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -118,10 +118,12 @@ if ((2 == $GLOBALS['xoopsModuleConfig']['disc_show']) || (3 == $GLOBALS['xoopsMo
 
 $xoopsTpl->assign('parentforum', $forumHandler->getParents($forumObject));
 
-$xoopsTpl->assign([
-                      'forum_id'   => $forumObject->getVar('forum_id'),
-                      'forum_name' => $forumObject->getVar('forum_name'),
-                  ]);
+$xoopsTpl->assign(
+    [
+        'forum_id'   => $forumObject->getVar('forum_id'),
+        'forum_name' => $forumObject->getVar('forum_name'),
+    ]
+);
 
 if ($postParentObject->getVar('uid')) {
     $r_name = newbbGetUnameFromId($postParentObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);

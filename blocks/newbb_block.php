@@ -12,7 +12,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -20,7 +20,7 @@
 
 use XoopsModules\Newbb;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 // irmtfan use full path because block maybe used outside newbb
 
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
@@ -83,7 +83,7 @@ function b_newbb_show($options)
         }
     }
     if (!empty($options[6])) {
-        $myallowedForums = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+        $myallowedForums = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
         $allowedForums   = array_intersect($myallowedForums, $accessForums);
     } else {
         $allowedForums = $accessForums;
@@ -283,7 +283,7 @@ function b_newbb_topic_show($options)
     }
 
     if (!empty($options[6])) {
-        $myallowedForums = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+        $myallowedForums = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
         $allowedForums   = array_intersect($myallowedForums, $accessForums);
     } else {
         $allowedForums = $accessForums;
@@ -295,22 +295,9 @@ function b_newbb_topic_show($options)
     $forumCriteria   = ' AND t.forum_id IN (' . implode(',', $allowedForums) . ')';
     $approveCriteria = ' AND t.approved = 1';
 
-    $query = 'SELECT'
-             . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,'
-             . '    f.forum_name'
-             . '    FROM '
-             . $GLOBALS['xoopsDB']->prefix('newbb_topics')
-             . ' AS t '
-             . '    LEFT JOIN '
-             . $GLOBALS['xoopsDB']->prefix('newbb_forums')
-             . ' AS f ON f.forum_id=t.forum_id'
-             . '    WHERE 1=1 '
-             . $forumCriteria
-             . $approveCriteria
-             . $extraCriteria
-             . ' ORDER BY '
-             . $order
-             . ' DESC';
+    $query = 'SELECT' . '    t.topic_id, t.topic_replies, t.forum_id, t.topic_title, t.topic_views, t.type_id, t.topic_time, t.topic_poster, t.poster_name,' . '    f.forum_name' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' AS t ' . '    LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix(
+            'newbb_forums'
+        ) . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
 
@@ -454,7 +441,7 @@ function b_newbb_post_show($options)
     }
 
     if (!empty($options[6])) {
-        $myallowedForums = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+        $myallowedForums = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
         $allowedForums   = array_intersect($myallowedForums, $accessForums);
     } else {
         $allowedForums = $accessForums;
@@ -616,7 +603,7 @@ function b_newbb_author_show($options)
     }
 
     if (!empty($options[5])) {
-        $myallowedForums = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
+        $myallowedForums = array_filter(array_slice($options, 5), '\b_newbb_array_filter'); // get allowed forums
         $allowedForums   = array_intersect($myallowedForums, $accessForums);
     } else {
         $allowedForums = $accessForums;
@@ -709,7 +696,7 @@ function b_newbb_edit($options)
 
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
-    $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+    $optionsForum = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
     $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';
@@ -788,7 +775,7 @@ function b_newbb_topic_edit($options)
 
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
-    $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+    $optionsForum = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
 
     $isAll = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form  .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
@@ -853,7 +840,7 @@ function b_newbb_post_edit($options)
 
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
-    $optionsForum = array_filter(array_slice($options, 6), 'b_newbb_array_filter'); // get allowed forums
+    $optionsForum = array_filter(array_slice($options, 6), '\b_newbb_array_filter'); // get allowed forums
     $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';
@@ -921,7 +908,7 @@ function b_newbb_author_edit($options)
 
     $form .= '<br><br>' . _MB_NEWBB_FORUMLIST;
 
-    $optionsForum = array_filter(array_slice($options, 5), 'b_newbb_array_filter'); // get allowed forums
+    $optionsForum = array_filter(array_slice($options, 5), '\b_newbb_array_filter'); // get allowed forums
     $isAll        = (0 === count($optionsForum) || empty($optionsForum[0]));
     $form         .= '<br>&nbsp;&nbsp;<select name="options[]" multiple="multiple">';
     $form         .= '<option value="0" ';

@@ -350,6 +350,9 @@ newbb_online:
             name: online_forum
             attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
         -
+            name: online_topic
+            attributes: ' int(8) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
             name: online_uid
             attributes: ' int(10) '
         -

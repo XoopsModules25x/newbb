@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  * @package        module::newbb
@@ -12,7 +12,7 @@
 use XoopsModules\Newbb;
 
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -21,10 +21,10 @@ require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  * @param                $limit
  * @param                $offset
  * @param                $userid
- * @param  int           $forums
- * @param  int|string    $sortby
- * @param  string        $searchin
- * @param  \CriteriaCompo $criteriaExtra
+ * @param int            $forums
+ * @param int|string     $sortby
+ * @param string         $searchin
+ * @param \CriteriaCompo $criteriaExtra
  * @return array
  */
 function newbb_search(
@@ -36,8 +36,8 @@ function newbb_search(
     $forums = 0,
     $sortby = 0,
     $searchin = 'both',
-    \CriteriaCompo $criteriaExtra = null)
-{
+    \CriteriaCompo $criteriaExtra = null
+) {
     global $myts, $xoopsDB;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
@@ -66,7 +66,7 @@ function newbb_search(
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', $userid), 'OR');
     } elseif ($userid && is_array($userid)) {
-        $userid       = array_map('intval', $userid);
+        $userid       = array_map('\intval', $userid);
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
     }

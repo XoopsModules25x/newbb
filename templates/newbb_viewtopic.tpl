@@ -7,7 +7,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
                 <span class="delimiter">&raquo;</span>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
             <{/foreach}>
@@ -22,7 +22,7 @@
 <br>
 <{if $tagbar}>
     <div class="taglist" style="padding: 5px;">
-        <{includeq file="db:tag_bar.tpl"}>
+        <{include file="db:tag_bar.tpl"}>
     </div>
 <{/if}>
 
@@ -31,7 +31,7 @@
 <{if $online}>
     <div class="left" style="padding: 5px;">
         <{$smarty.const._MD_NEWBB_BROWSING}>&nbsp;
-        <{foreachq item=user from=$online.users}>
+        <{foreach item=user from=$online.users}>
             <a href="<{$user.link}>">
                 <{if $user.level eq 2}>
                     <span class="online_admin"><{$user.uname}></span>
@@ -118,9 +118,9 @@
 <{if $mode lte 1}>
     <{if $topic_poll}>
         <{if $topic_pollresult}>
-            <{includeq file="db:newbb_poll_results.tpl" poll=$poll}>
+            <{include file="db:newbb_poll_results.tpl" poll=$poll}>
         <{else}>
-            <{includeq file="db:newbb_poll_view.tpl" poll=$poll}>
+            <{include file="db:newbb_poll_view.tpl" poll=$poll}>
         <{/if}>
     <{/if}>
 <{/if}>
@@ -148,14 +148,14 @@
         <select name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
             <{if $viewer_level > 1}>
-                <{foreachq item=act from=$admin_actions}>
+                <{foreach item=act from=$admin_actions}>
                     <option value="<{$act.link}>"><{$act.name}></option>
                 <{/foreach}>
             <{/if}>
             <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
                 <option value="">--------</option>
                 <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
-                <{foreachq item=actpoll from=$adminpoll_actions}>
+                <{foreach item=actpoll from=$adminpoll_actions}>
                     <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
                 <{/foreach}>
             <{/if}>
@@ -178,7 +178,7 @@
                 name="viewmode" id="viewmode"
                 onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
             <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-            <{foreachq item=act from=$viewmode_options}>
+            <{foreach item=act from=$viewmode_options}>
                 <option value="<{$act.link}>"><{$act.title}></option>
             <{/foreach}>
         </select>
@@ -216,8 +216,8 @@
 <{* irmtfan remove here and move to the newbb_thread.tpl *}>
 <{*<{if $post_id == 0}><div id="aktuell"></div><{/if}> *}>
 
-<{foreachq item=topic_post from=$topic_posts}>
-    <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
+<{foreach item=topic_post from=$topic_posts}>
+    <{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <br>
     <br>
     <{foreachelse}>
@@ -235,7 +235,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
                 <span class="delimiter">&raquo;</span>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
             <{/foreach}>
@@ -290,7 +290,7 @@
 <div>
     <{* irmtfan hardcode removed style="float: left; text-align: left;" *}>
     <div class="icon_left">
-        <{foreachq item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table}>
             <div style="font-size:x-small;"><{$perm}></div>
         <{/foreach}>
     </div>
@@ -313,7 +313,7 @@
 <div class="clear"></div>
 <br>
 
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{include file='db:newbb_notification_select.tpl'}>
 <{* irmtfan remove
 <script type="text/javascript">
 xoopsGetElementById('aktuell').scrollIntoView(true);

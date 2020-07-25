@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -70,7 +70,7 @@ switch ($op) {
             $forumHandler->insert($forumObject);
             if ($forumHandler->insert($forumObject)) {
                 if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
-                    $forums = array_map('intval', array_values($subforums));
+                    $forums = array_map('\intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new \Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
@@ -114,7 +114,7 @@ switch ($op) {
                 $forumObject = $forumHandler->get($forum_id);
                 $forumHandler->updateAll('parent_forum', Request::getInt('dest_forum', 0, 'POST'), new \Criteria('parent_forum', $forum_id));
                 if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
-                    $forums = array_map('intval', array_values($subforums));
+                    $forums = array_map('\intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new \Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 

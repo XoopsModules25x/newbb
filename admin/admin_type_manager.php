@@ -4,7 +4,7 @@
  *
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
  * @package        module::newbb
@@ -77,7 +77,6 @@ switch ($op) {
                 if ($typeObject->getVar($var) != $temp[$key]) {
                     $typeObject->setVar($var, $temp[$key]);
                 }
-
                 //                    $typeObject->setVar($var, Request::getArray($var, '', 'POST')[$key]);
             }
             $typeHandler->insert($typeObject);

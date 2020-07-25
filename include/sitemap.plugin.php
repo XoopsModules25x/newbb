@@ -2,7 +2,7 @@
 //
 // FILE        ::    newbb.php
 // AUTHOR    ::    Ryuji AMANO <info@ryus.biz>
-// WEB        ::    Ryu's Planning <http://ryus.biz/>
+// WEB        ::    Ryu's Planning <http://ryus.biz>
 
 // NewBB plugin: D.J., https://xoops.org.cn
 
