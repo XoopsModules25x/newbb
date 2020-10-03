@@ -31,7 +31,7 @@ interface Constants
      * Constant definition
      */
 
-    const DISALLOW = 0;
+    public const DISALLOW = 0;
 
     /**#@-*/
 }
