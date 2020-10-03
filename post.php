@@ -278,13 +278,11 @@ if (Request::getString('contents_submit', '', 'POST')) {
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();
-                } else {
-                    if (is_file($uploader->getSavedDestination())) {
+                } elseif (is_file($uploader->getSavedDestination())) {
                         if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
                             $postObject->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
                         }
                     }
-                }
             } else {
                 $error_message[] = $error_upload = $uploader->getErrors();
             }
@@ -449,15 +447,14 @@ if (Request::getString('contents_upload', null, 'POST')) {
                 $uploader->setPrefix($prefix);
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();
-                } else {
-                    if (is_file($uploader->getSavedDestination())) {
+                } elseif (is_file($uploader->getSavedDestination())) {
                         $attachments_tmp[(string)time()] = [
                             $uploader->getSavedFileName(),
                             $uploader->getMediaName(),
                             $uploader->getMediaType(),
                         ];
                     }
-                }
+
             } else {
                 $error_message[] = $error_upload = $uploader->getErrors();
             }

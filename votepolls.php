@@ -140,8 +140,7 @@ if ($pollModuleHandler->getVar('version') >= 201) {
             $msg = _PL_THANKSFORVOTE;
             setcookie("newbb_polls[{$poll_id}]", 1);
         }
-    } else {
-        if ($classLog::hasVoted($poll_id, Request::getString('REMOTE_ADDR', '', 'SERVER'))) {
+    } elseif ($classLog::hasVoted($poll_id, Request::getString('REMOTE_ADDR', '', 'SERVER'))) {
             $msg = _PL_ALREADYVOTED;
             setcookie("newbb_polls[{$poll_id}]", 1);
         } else {
@@ -150,7 +149,7 @@ if ($pollModuleHandler->getVar('version') >= 201) {
             $msg = _PL_THANKSFORVOTE;
             setcookie("newbb_polls[{$poll_id}]", 1);
         }
-    }
+
 }
 // irmtfan - simple url
 redirect_header("viewtopic.php?topic_id={$topic_id}", 1, $msg);

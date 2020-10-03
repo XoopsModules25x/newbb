@@ -434,8 +434,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             if (1 == $topic_status) {
                 $topic_folder      = 'topic_locked';
                 $topic_folder_text = \_MD_NEWBB_TOPICLOCKED;
-            } else {
-                if ($topic_digest) {
+            } elseif ($topic_digest) {
                     $topic_folder      = 'topic_digest';
                     $topic_folder_text = \_MD_NEWBB_TOPICDIGEST;
                 } elseif ($topic_replies >= $hot_threshold) {
@@ -445,7 +444,6 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     $topic_folder      = empty($topic_isRead[$id]) ? 'topic_new' : 'topic';
                     $topic_folder_text = empty($topic_isRead[$id]) ? \_MD_NEWBB_NEWPOSTS : \_MD_NEWBB_NONEWPOSTS;
                 }
-            }
             $topics[$id]['topic_folder'] = \newbbDisplayImage($topic_folder, $topic_folder_text);
             unset($topics[$id]['topic_poster_name'], $topics[$id]['topic_last_poster_name'], $topics[$id]['stats']);
         } // irmtfan end for loop
@@ -531,13 +529,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $criteria_forum = '';
         if (\is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
-        } else {
-            if ($forum && \is_array($forum)) {
+        } elseif ($forum && \is_array($forum)) {
                 $criteria_forum = ' AND t.forum_id IN (' . \implode(',', \array_keys($forum)) . ')';
             } elseif (!empty($forum)) {
                 $criteria_forum = ' AND t.forum_id =' . (int)$forum;
             }
-        }
+
 
         $sql = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_topics') . ' t ' . $leftjoin;
         $sql .= ' WHERE ' . $criteria_post . $criteria_forum . $criteria_extra . $criteria_approve;

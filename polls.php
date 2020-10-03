@@ -517,11 +517,9 @@ switch ($op) {
                     $optionObject->setVar('option_text', $option_text[$i]);
                     $optionObject->setVar('option_color', $option_color[$i]);
                     $optionObject->store();
-                } else {
-                    if (false !== $optionObject->delete()) {
+                } elseif (false !== $optionObject->delete()) {
                         $classLog::deleteByOptionId($option->getVar('option_id'));
                     }
-                }
                 ++$i;
             }
             $pollObject->updateCount();

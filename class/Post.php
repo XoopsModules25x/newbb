@@ -231,8 +231,7 @@ class Post extends \XoopsObject
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . \newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
-                } else {
-                    if (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
+                } elseif (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
                         $post_attachment .= '<a href="'
                                             . XOOPS_URL
                                             . '/modules/'
@@ -282,7 +281,6 @@ class Post extends \XoopsObject
                     } else {
                         $post_attachment .= _MD_NEWBB_SEENOTGUEST;
                     }
-                }
                 $post_attachment .= '<br>';
             }
         }
