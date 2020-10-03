@@ -1,9 +1,10 @@
-<h5>5.01 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: Xoops 2.5.11, PHP 7.4.8
+<h5>5.01 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.11, PHP 8.0 RC-1
 <hr>
 - Facebook UI Style Rating (xd9527/mamba)
 - fix $status (goffy/zyspec)
 - fix split bug (bioskop/mamba)
 - update for XoopsPoll 2.01 (mamba)
+- renamed 'PHP_SELF' to 'SCRIPT_NAME' (mamba)
 
 <h5>5.00 Final (XOOPS 2.5.10) [2019-04-30]</h5>  Dev: Xoops 2.5.10, PHP 7.3.4
 <hr>
