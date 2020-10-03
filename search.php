@@ -37,7 +37,7 @@ use Xmf\Request;
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
 /** @var \XoopsConfigHandler $configHandler */
-$configHandler     = xoops_getHandler('config');
+$configHandler = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if (1 !== $xoopsConfigSearch['enable_search']) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);

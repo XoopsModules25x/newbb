@@ -152,8 +152,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Set corresponding permissions for the category and the forum */
     $module_id = $module->getVar('mid');
-    /** @var \XoopsGroupPermHandler $grouppermHandler */
-    $grouppermHandler = xoops_getHandler('groupperm');
+/** @var \XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
     $groups_view      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
     $groups_post      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions

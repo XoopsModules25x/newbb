@@ -52,12 +52,12 @@ class ReportHandler extends \XoopsPersistableObjectHandler
      * @param int|array  $forums
      * @param string     $order
      * @param int        $perpage
-     * @param            $start
+     * @param int        $start
      * @param int        $report_result
      * @param int        $reportId
      * @return array
      */
-    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start, $report_result = 0, $reportId = 0)
+    public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start = 0, $report_result = 0, $reportId = 0)
     {
         $forumCriteria = '';
         $row           = [];

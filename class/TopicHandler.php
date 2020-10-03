@@ -247,12 +247,12 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      * @param         $topic
      * @param string  $order
      * @param int     $perpage
-     * @param         $start
+     * @param int     $start
      * @param int     $post_id
      * @param string  $type
      * @return array
      */
-    public function &getAllPosts($topic, $order = 'ASC', $perpage = 10, &$start, $post_id = 0, $type = '')
+    public function &getAllPosts($topic, $order = 'ASC', $perpage = 10, &$start = 0, $post_id = 0, $type = '')
     {
         $ret     = [];
         $perpage = ((int)$perpage > 0) ? (int)$perpage : (empty($GLOBALS['xoopsModuleConfig']['posts_per_page']) ? 10 : $GLOBALS['xoopsModuleConfig']['posts_per_page']);

@@ -72,7 +72,7 @@ function newbbIsAdministrator($user = -1, $mid = 0)
             $mid = $xoopsModule->getVar('mid', 'n');
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
+$moduleHandler = xoops_getHandler('module');
             $newbb_module  = $moduleHandler->getByDirname('newbb');
             $mid           = $newbb_module->getVar('mid', 'n');
             unset($newbb_module);
@@ -88,8 +88,8 @@ function newbbIsAdministrator($user = -1, $mid = 0)
     $memberHandler = xoops_getHandler('member');
     $groups        = $memberHandler->getGroupsByUser($uid);
 
-    /** @var \XoopsGroupPermHandler $grouppermHandler */
-    $grouppermHandler = xoops_getHandler('groupperm');
+/** @var \XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 
     return $grouppermHandler->checkRight('module_admin', $mid, $groups);
 }

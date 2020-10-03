@@ -43,6 +43,7 @@ $moduleHandler = xoops_getHandler('module');
 
 $mod = @$moduleHandler->getByDirname('profile', true);
 if ($mod) {
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $groups           = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 

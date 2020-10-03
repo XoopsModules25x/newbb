@@ -505,8 +505,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
             $classPoll = new Xoopspoll\Poll();
-        }
-        elseif ($pollModuleHandler->getVar('version') >= 140) {
+        } elseif ($pollModuleHandler->getVar('version') >= 140) {
             //            xoops_load('renderer', $GLOBALS['xoopsModuleConfig']['poll_module']);
             xoops_loadLanguage('main', $GLOBALS['xoopsModuleConfig']['poll_module']);
             // old xoopspoll or umfrage or any clone from them
@@ -566,9 +565,9 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
             }
             // old xoopspoll or umfrage or any clone from them
         } else {
-            $pollObject    = new $classPoll($poll_id);
-//            $classRenderer = $classPoll . 'Renderer';
-            $renderer      = new Xoopspoll\Renderer($pollObject);
+            $pollObject = new $classPoll($poll_id);
+            //            $classRenderer = $classPoll . 'Renderer';
+            $renderer = new Xoopspoll\Renderer($pollObject);
             $xoopsTpl->assign('lang_alreadyvoted2', _PL_ALREADYVOTED2);
             $xoopsTpl->assign('has_ended', $pollObject->getVar('end_time') < time() ? 1 : 0);
             // umfrage has polltype
@@ -757,8 +756,9 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     // END irmtfan add verifyUser to quick reply
     $forum_form = new \XoopsThemeForm(_MD_NEWBB_POSTREPLY, 'quick_reply', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/post.php', 'post', true);
     if (!is_object($GLOBALS['xoopsUser'])) {
-        //$configHandler = xoops_getHandler('config');
-        $user_tray = new \XoopsFormElementTray(_MD_NEWBB_ACCOUNT);
+        ///** @var \XoopsConfigHandler $configHandler */
+        $configHandler = xoops_getHandler('config');
+        $user_tray     = new \XoopsFormElementTray(_MD_NEWBB_ACCOUNT);
         $user_tray->addElement(new \XoopsFormText(_MD_NEWBB_NAME, 'uname', 26, 255));
         $user_tray->addElement(new \XoopsFormPassword(_MD_NEWBB_PASSWORD, 'pass', 10, 32));
         $login_checkbox = new \XoopsFormCheckBox('', 'login', 1);
