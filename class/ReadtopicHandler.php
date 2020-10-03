@@ -54,7 +54,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
      * maximum records per forum for one user.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_items"]
      *
-     * @var integer
+     * @var int
      */
     private $items_per_forum;
 

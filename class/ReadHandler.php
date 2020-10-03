@@ -70,7 +70,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      *  <li>-1 or any negative days = never records // irmtfan change comment</li>
      * </ul>
      *
-     * @var integer
+     * @var int
      */
     public $lifetime;
 
@@ -83,7 +83,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      *  <li>2 = stores in database</li>
      * </ul>
      *
-     * @var integer
+     * @var int
      */
     public $mode;
 
