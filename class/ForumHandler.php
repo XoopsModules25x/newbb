@@ -371,6 +371,21 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
             }
             // START irmtfan move here
+            
+            //BigKev73 > Adding this code to support jumping directly to the last read post if that value exists for a user, block also would need to change to support same functionality
+            $topicLink ='viewtopic.php?topic_id=' . $myrow['topic_id'];
+						
+			if (isXoopsUser){
+				$lastRead = newbbGetRead('topic', $myrow['topic_id']);
+				if (isset($lastRead)){
+					if (!empty($lastRead)){
+				        if ($lastRead<$myrow['topic_last_post_id']){
+					       $topicLink = 'viewtopic.php?post_id=' . $lastRead . '#forumpost'.$lastRead;
+			            }
+				     }
+				}
+			}
+                        
             $topics[$myrow['topic_id']] = [
                 'topic_id'             => $myrow['topic_id'],
                 'topic_icon'           => $topic_icon,
@@ -378,7 +393,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 //'type_text'                 => $topic_prefix,/*irmtfan remove here and move to for loop*/
                 'topic_title'          => $topic_title,
                 //'topic_link'                => XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'],
-                'topic_link'           => 'viewtopic.php?topic_id=' . $myrow['topic_id'],
+                //'topic_link'           => 'viewtopic.php?topic_id=' . $myrow['topic_id'],
+                'topic_link'           => $topicLink,
                 'rating_img'           => $rating_img,
                 'topic_page_jump'      => $topic_page_jump,
                 'topic_page_jump_icon' => $topic_page_jump_icon,
