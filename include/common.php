@@ -20,12 +20,14 @@
  * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Newbb\{Helper,
     Utility
 };
 
 /** @var Helper $helper */
 /** @var Utility $utility */
+/** @var Admin $adminObject */
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -124,8 +126,8 @@ $userstatsHandler = $helper->getHandler('Userstats');
 /** @var Newbb\XmlrssHandler $xmlrssHandler */
 $xmlrssHandler = $helper->getHandler('Xmlrss');
 
-$pathIcon16 = Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32 = Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = Admin::iconUrl('', 16);
+$pathIcon32 = Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
