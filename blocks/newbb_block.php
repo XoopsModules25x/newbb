@@ -186,7 +186,9 @@ function b_newbb_show($options)
         $topic['topic_poster']    = $topic_poster;
         $topic['topic_page_jump'] = $topic_page_jump;
         // START irmtfan remove hardcoded html in URLs - add $seo_topic_url
-        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
+        //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
+         //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
+        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id']."#forumpost" . $topic['post_id'];
         $seo_topic_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];
         if (!empty($newbbConfig['do_rewrite'])) {
@@ -513,7 +515,9 @@ function b_newbb_post_show($options)
             $topic['post_text'] = $post_text;
         }
         // START irmtfan remove hardcoded html in URLs
-        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
+        //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
+        //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
+        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id']."#forumpost" . $topic['post_id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];
         // END irmtfan remove hardcoded html in URLs
         if (!empty($newbbConfig['do_rewrite'])) {
