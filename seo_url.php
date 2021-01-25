@@ -1,7 +1,9 @@
 <?php
 
+use XoopsModules\Newbb\{Helper
+};
 
-use XoopsModules\Newbb;
+/** @var Helper $helper */
 
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
@@ -245,7 +247,7 @@ function forum_seo_topic($_cat_id)
 
     $moduleDirName = basename(__DIR__);
     /** @var Newbb\TopicHandler $topicsHandler */
-    $topicsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $topicsHandler = Helper::getInstance()->getHandler('Topic');
     $criteria      = new \CriteriaCompo(new \Criteria('topic_id', $_cat_id, '='));
     $fields        = ['topic_title'];
     $ret0          = $topicsHandler->getAll($criteria, $fields, false);

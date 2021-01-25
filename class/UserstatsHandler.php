@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -91,7 +89,6 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
 
         return $row;
     }
-
     /*
         function insert(\XoopsObject $object, $force = true)
         {

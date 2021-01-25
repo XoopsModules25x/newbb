@@ -10,9 +10,10 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 
-
+/** @var Helper $helper */
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
@@ -88,7 +89,7 @@ function newbb_list_topic_show($options)
     $block['headers'] = $topicRenderer->getHeader($options[8]);
 
     // render a list of topics using all above criterias
-    list($block['topics'], $block['sticky']) = $topicRenderer->renderTopics();
+    [$block['topics'], $block['sticky']] = $topicRenderer->renderTopics();
 
     // show index navigation
     $block['indexNav'] = !empty($options[9]);
@@ -184,7 +185,7 @@ function newbb_list_topic_edit($options)
     $optionsForum = explode(',', $options[12]);
     require_once dirname(__DIR__) . '/include/functions.forum.php';
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums
     $accessForums = $forumHandler->getIdsByValues(array_map('\intval', $optionsForum));

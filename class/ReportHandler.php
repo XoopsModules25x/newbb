@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -49,12 +47,12 @@ class ReportHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int|array  $forums
-     * @param string     $order
-     * @param int        $perpage
-     * @param int        $start
-     * @param int        $report_result
-     * @param int        $reportId
+     * @param int|array $forums
+     * @param string    $order
+     * @param int       $perpage
+     * @param int       $start
+     * @param int       $report_result
+     * @param int       $reportId
      * @return array
      */
     public function getAllReports($forums = 0, $order = 'ASC', $perpage = 0, &$start = 0, $report_result = 0, $reportId = 0)
@@ -98,10 +96,11 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //$reportHandler =  Newbb\Helper::getInstance()->getHandler('Report');
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $ret[] = $myrow; // return as array
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $ret[] = $myrow; // return as array
+            }
         }
-
         return $ret;
     }
 

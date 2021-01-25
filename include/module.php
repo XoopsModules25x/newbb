@@ -29,8 +29,12 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-
-use XoopsModules\Newbb;
+use Xmf\IPAddress;
+use Xmf\Module\Helper\Cache;
+use XoopsModules\Newbb\{Common\Configurator,
+    Common\Migrate,
+    Helper
+};
 
 if (defined('XOOPS_MODULE_NEWBB_FUCTIONS')) {
     exit();
@@ -46,7 +50,7 @@ require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
  */
 function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
 {
-    $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+    $cacheHelper = new Cache('newbb');
     $cacheHelper->delete('config');
 
     $newbbConfig = newbbLoadConfig();
@@ -96,9 +100,9 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     //    XoopsLoad::load('migrate', 'newbb');
     /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
-    $configurator = new \XoopsModules\Newbb\Common\Configurator();
+    $configurator = new Configurator();
 
-    $migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
+    $migrator = new Migrate($configurator);
     $migrator->synchronizeSchema();
 
     return true;
@@ -126,7 +130,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
 {
     /* Create a test category */
     /** @var Newbb\CategoryHandler $categoryHandler */
-    $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
@@ -138,7 +142,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Create a forum for test */
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
@@ -152,8 +156,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Set corresponding permissions for the category and the forum */
     $module_id = $module->getVar('mid');
-/** @var \XoopsGroupPermHandler $grouppermHandler */
-$grouppermHandler = xoops_getHandler('groupperm');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
     $groups_view      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
     $groups_post      = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
     // irmtfan bug fix: html and signature permissions, add: pdf and print permissions
@@ -186,10 +190,10 @@ $grouppermHandler = xoops_getHandler('groupperm');
     /* Create a test post */
     require_once __DIR__ . '/functions.user.php';
     /** @var Newbb\PostHandler $postHandler */
-    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+    $postHandler = Helper::getInstance()->getHandler('Post');
     /** @var $forumpost */
     $forumpost = $postHandler->create();
-    $forumpost->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
+    $forumpost->setVar('poster_ip', IPAddress::fromRequest()->asReadable());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
     $forumpost->setVar('approved', 1);
     $forumpost->setVar('forum_id', $forum_id);

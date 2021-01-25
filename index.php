@@ -10,7 +10,11 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper,
+    ObjectTree
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/header.php';
 
@@ -80,7 +84,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 /** @var Newbb\ForumHandler $forumHandler */
-$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+$forumHandler = Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
@@ -194,7 +198,7 @@ foreach (array_keys($categories) as $id) {
     if ('' === $title) {
         $title = $url;
     }
-    $title = $myts->htmlSpecialChars($title);
+    $title = htmlspecialchars($title);
     if ('' !== $url) {
         $cat_sponsor = ['title' => $title, 'link' => formatURL($url)];
     }

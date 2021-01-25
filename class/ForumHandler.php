@@ -21,7 +21,7 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
- /**
+/**
  * Class ForumHandler
  */
 class ForumHandler extends \XoopsPersistableObjectHandler
@@ -351,7 +351,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $forum_link = '<a href="' . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $myrow['forum_id'] . '">' . $viewAllForums[$myrow['forum_id']]['forum_name'] . '</a>';
             }
 
-            $topic_title = $myts->htmlSpecialChars($myrow['topic_title']);
+            $topic_title = htmlspecialchars($myrow['topic_title']);
             // irmtfan remove here and move to for loop
             //if ($myrow['type_id'] > 0) {
             //$topic_title = '<span style="color:'.$typen[$myrow["type_id"]]["type_color"].'">['.$typen[$myrow["type_id"]]["type_name"].']</span> '.$topic_title.'';
@@ -366,7 +366,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = \xoops_substr(\newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $excerpt);
-                $topic_excerpt = \str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
+                $topic_excerpt = \str_replace('[', '&#91;', htmlspecialchars($topic_excerpt));
             }
             // START irmtfan move here
             $topics[$myrow['topic_id']] = [
@@ -386,12 +386,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 //mb
 
                 'topic_poster_uid'       => $myrow['topic_poster'],
-                'topic_poster_name'      => $myts->htmlSpecialChars($myrow['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
+                'topic_poster_name'      => htmlspecialchars($myrow['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_views'            => $myrow['topic_views'],
                 'topic_time'             => \newbbFormatTimestamp($myrow['topic_time']),
                 'topic_last_posttime'    => \newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
-                'topic_last_poster_name' => $myts->htmlSpecialChars($myrow['last_poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
+                'topic_last_poster_name' => htmlspecialchars($myrow['last_poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']),
                 'topic_forum_link'       => $forum_link,
                 'topic_excerpt'          => $topic_excerpt,
                 'stick'                  => empty($myrow['topic_sticky']),
@@ -435,15 +435,15 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $topic_folder      = 'topic_locked';
                 $topic_folder_text = \_MD_NEWBB_TOPICLOCKED;
             } elseif ($topic_digest) {
-                    $topic_folder      = 'topic_digest';
-                    $topic_folder_text = \_MD_NEWBB_TOPICDIGEST;
-                } elseif ($topic_replies >= $hot_threshold) {
-                    $topic_folder      = empty($topic_isRead[$id]) ? 'topic_hot_new' : 'topic_hot';
-                    $topic_folder_text = empty($topic_isRead[$id]) ? \_MD_NEWBB_MORETHAN : \_MD_NEWBB_MORETHAN2;
-                } else {
-                    $topic_folder      = empty($topic_isRead[$id]) ? 'topic_new' : 'topic';
-                    $topic_folder_text = empty($topic_isRead[$id]) ? \_MD_NEWBB_NEWPOSTS : \_MD_NEWBB_NONEWPOSTS;
-                }
+                $topic_folder      = 'topic_digest';
+                $topic_folder_text = \_MD_NEWBB_TOPICDIGEST;
+            } elseif ($topic_replies >= $hot_threshold) {
+                $topic_folder      = empty($topic_isRead[$id]) ? 'topic_hot_new' : 'topic_hot';
+                $topic_folder_text = empty($topic_isRead[$id]) ? \_MD_NEWBB_MORETHAN : \_MD_NEWBB_MORETHAN2;
+            } else {
+                $topic_folder      = empty($topic_isRead[$id]) ? 'topic_new' : 'topic';
+                $topic_folder_text = empty($topic_isRead[$id]) ? \_MD_NEWBB_NEWPOSTS : \_MD_NEWBB_NONEWPOSTS;
+            }
             $topics[$id]['topic_folder'] = \newbbDisplayImage($topic_folder, $topic_folder_text);
             unset($topics[$id]['topic_poster_name'], $topics[$id]['topic_last_poster_name'], $topics[$id]['stats']);
         } // irmtfan end for loop
@@ -530,11 +530,10 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         if (\is_object($forum)) {
             $criteria_forum = ' AND t.forum_id = ' . $forum->getVar('forum_id');
         } elseif ($forum && \is_array($forum)) {
-                $criteria_forum = ' AND t.forum_id IN (' . \implode(',', \array_keys($forum)) . ')';
-            } elseif (!empty($forum)) {
-                $criteria_forum = ' AND t.forum_id =' . (int)$forum;
-            }
-
+            $criteria_forum = ' AND t.forum_id IN (' . \implode(',', \array_keys($forum)) . ')';
+        } elseif (!empty($forum)) {
+            $criteria_forum = ' AND t.forum_id =' . (int)$forum;
+        }
 
         $sql = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_topics') . ' t ' . $leftjoin;
         $sql .= ' WHERE ' . $criteria_post . $criteria_forum . $criteria_extra . $criteria_approve;
@@ -863,7 +862,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $users_linked = \newbbGetUnameFromIds(\array_unique($users), !empty($GLOBALS['xoopsModuleConfig']['show_realname']), true);
 
         $forums_array   = [];
-        $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+        $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
 
         foreach (\array_keys($forums) as $id) {
             $forum = &$forums[$id];
@@ -1063,6 +1062,5 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         return \array_intersect($validForums, $forums);
     }
-
     // END irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
 }

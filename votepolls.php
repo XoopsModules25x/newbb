@@ -28,6 +28,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopspoll;
 use XoopsModules\Xoopspoll\Constants;
+use XoopsModules\Xoopspoll\Utility;
 
 require_once __DIR__ . '/header.php';
 $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'GET');
@@ -72,7 +73,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
 $mail_author = false;
 // new xoopspoll module
 if ($pollModuleHandler->getVar('version') >= 201) {
-//    $classConstants = \XoopsModules\Xoopspoll\Constants;
+    //    $classConstants = \XoopsModules\Xoopspoll\Constants;
     if (is_object($pollObject)) {
         if ($pollObject->getVar('multiple')) {
             $optionId = Request::getInt('option_id', 0, 'POST');
@@ -108,7 +109,7 @@ if ($pollModuleHandler->getVar('version') >= 201) {
                 if (!is_object($GLOBALS['xoopsUser'])) {
                     xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
                     /** @var \XoopsModules\Xoopspoll\Utility $classPollUtility */
-                    $classPollUtility = new \XoopsModules\Xoopspoll\Utility();
+                    $classPollUtility = new Utility();
                     $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
                 }
             } else {
@@ -141,15 +142,14 @@ if ($pollModuleHandler->getVar('version') >= 201) {
             setcookie("newbb_polls[{$poll_id}]", 1);
         }
     } elseif ($classLog::hasVoted($poll_id, Request::getString('REMOTE_ADDR', '', 'SERVER'))) {
-            $msg = _PL_ALREADYVOTED;
-            setcookie("newbb_polls[{$poll_id}]", 1);
-        } else {
-            $pollObject->vote(Request::getInt('option_id', 0, 'POST'), Request::getString('REMOTE_ADDR', '', 'SERVER'));
-            $pollObject->updateCount();
-            $msg = _PL_THANKSFORVOTE;
-            setcookie("newbb_polls[{$poll_id}]", 1);
-        }
-
+        $msg = _PL_ALREADYVOTED;
+        setcookie("newbb_polls[{$poll_id}]", 1);
+    } else {
+        $pollObject->vote(Request::getInt('option_id', 0, 'POST'), Request::getString('REMOTE_ADDR', '', 'SERVER'));
+        $pollObject->updateCount();
+        $msg = _PL_THANKSFORVOTE;
+        setcookie("newbb_polls[{$poll_id}]", 1);
+    }
 }
 // irmtfan - simple url
 redirect_header("viewtopic.php?topic_id={$topic_id}", 1, $msg);

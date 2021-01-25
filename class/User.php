@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -224,7 +222,7 @@ class User
 
         if (!\is_object($user) || !$user->isActive()) {
             if (null === $name_anonymous) {
-                $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+                $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
             }
 
             return ['name' => $name_anonymous, 'link' => $name_anonymous];

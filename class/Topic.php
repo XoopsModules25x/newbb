@@ -15,8 +15,6 @@ namespace XoopsModules\Newbb;
 use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -205,6 +203,5 @@ class Topic extends \XoopsObject
 
         return $pollObject;
     }
-
     // END irmtfan add getPoll function
 }

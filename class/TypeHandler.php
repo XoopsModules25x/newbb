@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 /**
  * Type object handler class.
  * @package   module::newbb
@@ -52,20 +50,18 @@ class TypeHandler extends \XoopsPersistableObjectHandler
                . '        l.forum_id '
                . (empty($forums) ? 'IS NOT NULL' : 'IN (' . \implode(', ', $forums) . ')')
                . '         ORDER BY l.type_order ASC';
-        if (false === ($result = $this->db->query($sql))) {
-            //xoops_error($this->db->error());
-            return $ret;
-        }
 
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $ret[$myrow[$this->keyName]] = [
-                'type_id'    => $myrow[$this->keyName],
-                'type_order' => $myrow['type_order'],
-                'type_name'  => \htmlspecialchars($myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
-                'type_color' => \htmlspecialchars($myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
-            ];
+        $result = $this->db->query($sql);
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $ret[$myrow[$this->keyName]] = [
+                    'type_id'    => $myrow[$this->keyName],
+                    'type_order' => $myrow['type_order'],
+                    'type_name'  => \htmlspecialchars($myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
+                    'type_color' => \htmlspecialchars($myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
+                ];
+            }
         }
-
         return $ret;
     }
 

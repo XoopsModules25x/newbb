@@ -16,9 +16,10 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 
-
+/** @var Helper $helper */
 
 /**
  * Function to a list of user names associated with their user IDs
@@ -72,7 +73,7 @@ function newbbIsAdministrator($user = -1, $mid = 0)
             $mid = $xoopsModule->getVar('mid', 'n');
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
+            $moduleHandler = xoops_getHandler('module');
             $newbb_module  = $moduleHandler->getByDirname('newbb');
             $mid           = $newbb_module->getVar('mid', 'n');
             unset($newbb_module);
@@ -88,8 +89,8 @@ $moduleHandler = xoops_getHandler('module');
     $memberHandler = xoops_getHandler('member');
     $groups        = $memberHandler->getGroupsByUser($uid);
 
-/** @var \XoopsGroupPermHandler $grouppermHandler */
-$grouppermHandler = xoops_getHandler('groupperm');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     return $grouppermHandler->checkRight('module_admin', $mid, $groups);
 }
@@ -108,7 +109,7 @@ function newbbIsModerator(&$forum, $user = -1)
         if (0 == $forum_id) {
             return false;
         }
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forum        = $forumHandler->get($forum_id);
     }
 
@@ -149,7 +150,7 @@ function newbbIsAdmin($forum = 0)
     $cache_id = is_object($forum) ? $forum->getVar('forum_id', 'n') : (int)$forum;
     if (!isset($_cachedModerators[$cache_id])) {
         if (!is_object($forum)) {
-            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+            $forumHandler = Helper::getInstance()->getHandler('Forum');
             $forum        = $forumHandler->get((int)$forum);
         }
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');

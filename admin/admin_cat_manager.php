@@ -29,8 +29,12 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
@@ -60,7 +64,7 @@ function newCategory()
 function editCategory(\XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
-    $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     if (null === $categoryObject) {
         $categoryObject = $categoryHandler->create();
     }
@@ -138,7 +142,7 @@ switch ($op) {
 
         break;
     case 'save':
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper = new Cache('newbb');
         $cacheHelper->delete('permission_category');
         if ($cat_id) {
             $categoryObject = $categoryHandler->get($cat_id);

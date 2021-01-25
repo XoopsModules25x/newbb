@@ -240,7 +240,7 @@ foreach ($criteria_vars as $var) {
 }
 $criteria_topic['excerpt'] = $GLOBALS['xoopsModuleConfig']['post_excerpt'];
 
-list($allTopics, $sticky) = $forumHandler->getAllTopics($forumObject, $criteria_topic);
+[$allTopics, $sticky] = $forumHandler->getAllTopics($forumObject, $criteria_topic);
 
 $xoopsTpl->assign_by_ref('topics', $allTopics);
 $xoopsTpl->assign('sticky', $sticky);

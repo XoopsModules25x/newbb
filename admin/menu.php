@@ -29,15 +29,18 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use Xmf\Module\Admin;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 //require_once  dirname(__DIR__) . '/include/common.php';
-/** @var \XoopsModules\Newbb\Helper $helper */
-$helper = \XoopsModules\Newbb\Helper::getInstance();
+$helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }

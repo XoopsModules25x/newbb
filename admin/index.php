@@ -29,7 +29,11 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use  Xmf\Module\Admin;
+use XoopsModules\Newbb\{Utility
+};
+
+/** @var Admin $adminObject */
 
 require_once __DIR__ . '/admin_header.php';
 //require_once  dirname(__DIR__) . '/class/Utility.php';
@@ -39,8 +43,7 @@ $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attach
 $thumb_path  = $attach_path . 'thumbs/';
 $folder      = [$attach_path, $thumb_path];
 
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
 /**
  * @param       $target
@@ -154,7 +157,7 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $repor
 
 $uploadFolders = $configurator->uploadFolders;
 foreach ($uploadFolders as $value) {
-    Newbb\Utility::prepareFolder($value);
+    Utility::prepareFolder($value);
     $adminObject->addConfigBoxLine($value, 'folder');
 }
 
@@ -163,7 +166,7 @@ $adminObject->displayIndex();
 
 require_once __DIR__ . '/admin_footer.php';
 
-$cacheHelper = Newbb\Utility::cleanCache();
+$cacheHelper = Utility::cleanCache();
 //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 //$cacheHelper->delete('config');
 //$cacheHelper->delete('permission');

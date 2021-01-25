@@ -8,7 +8,9 @@
  * @link            https://xoops.org XOOPS
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper, Utility};
+
+/** @var Helper $helper */
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -35,10 +37,10 @@ function xoops_module_uninstall_newbb(\XoopsModule $module)
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
     /** @var \XoopsModules\Newbb\Helper $helper */
-    $helper = \XoopsModules\Newbb\Helper::getInstance();
+    $helper = Helper::getInstance();
 
     /** @var Newbb\Utility $utility */
-    $utility = new \XoopsModules\Newbb\Utility();
+    $utility = new Utility();
 
     $success = true;
     $helper->loadLanguage('admin');

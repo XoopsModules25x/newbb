@@ -32,20 +32,21 @@ namespace XoopsModules\Newbb;
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
+use XoopsTree;
+
+
 
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
  * Class Tree
  */
-class Tree extends \XoopsTree
+class Tree extends XoopsTree
 {
     /** @var string */
     private $prefix = '&nbsp;&nbsp;';
-
     /** @var string */
     private $increment = '&nbsp;&nbsp;';
-
     /** @var array */
     private $postArray = [];
 
@@ -95,7 +96,7 @@ class Tree extends \XoopsTree
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
     {
-        if (!\is_array($postTree_array)) {
+        if (!is_array($postTree_array)) {
             $postTree_array = [];
         }
 

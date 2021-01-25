@@ -10,18 +10,19 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 
 $moduleDirName = basename(__DIR__);
 
-/** @var \XoopsModules\Newbb\Helper $helper */
-$helper = \XoopsModules\Newbb\Helper::getInstance();
+$helper = Helper::getInstance();
 // Load language files
 $helper->loadLanguage('main');
-
 
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
@@ -40,16 +41,14 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         $redir = false;
         if (true === mb_strpos(getenv('REQUEST_URI'), 'mark_read=') || true === mb_strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
-        } else {
-            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
-                //rewrite only for files
+        } elseif (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
+            //rewrite only for files
 
-                if ('' !== trim(getenv('SCRIPT_NAME'))) {
-                    if (false === mb_strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
-                        $redir = true;
-                    } elseif (getenv('QUERY_STRING')) {
-                        $redir = true;
-                    }
+            if ('' !== trim(getenv('SCRIPT_NAME'))) {
+                if (false === mb_strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
+                    $redir = true;
+                } elseif (getenv('QUERY_STRING')) {
+                    $redir = true;
                 }
             }
         }

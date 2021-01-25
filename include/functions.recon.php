@@ -9,9 +9,10 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 
-
+/** @var Helper $helper */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RECON_LOADED', true);
@@ -40,7 +41,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
         $type     = [];
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
-            $handler = \XoopsModules\Newbb\Helper::getInstance()->getHandler($item);
+            $handler = Helper::getInstance()->getHandler($item);
             if ('stats' !== $item) {
                 $handler->synchronization();
             } else {

@@ -273,8 +273,8 @@ foreach (array_keys($posts) as $id) {
     }
     $poster = [
         'uid'  => 0,
-        'name' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
-        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
+        'name' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
+        'link' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
     ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];

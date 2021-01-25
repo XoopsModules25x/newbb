@@ -14,7 +14,7 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
- /**
+/**
  * Class CategoryHandler
  */
 class CategoryHandler extends \XoopsPersistableObjectHandler

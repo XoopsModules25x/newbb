@@ -30,10 +30,14 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use XoopsModules\Newbb;
-
 use Xmf\Module\Admin;
+use XoopsModules\Newbb\{Common\Configurator,
+    Common\Migrate,
+    Helper
+};
+
 /** @var Admin $adminObject */
+/** @var Helper $helper */
 
 require __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -57,10 +61,10 @@ EOF;
 //XoopsLoad::load('migrate', 'newbb');
 
 /** @var Newbb\Common\Configurator $configurator */
-$configurator = new Newbb\Common\Configurator();
+$configurator = new Configurator();
 
 /** @var \XoopsModules\Newbb\Common\Migrate $migrator */
-$migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
+$migrator = new Migrate($configurator);
 
 $op        = Request::getCmd('op', 'show');
 $opShow    = Request::getCmd('show', null, 'POST');

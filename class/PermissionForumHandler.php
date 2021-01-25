@@ -12,9 +12,9 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
+use Xmf\IPAddress;
+use Xmf\Yaml;
 use XoopsModules\Newbb;
-
-
 
 //defined("NEWBB_HANDLER_PERMISSION") || require_once __DIR__  .'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_FORUM", 1);
@@ -78,7 +78,7 @@ class PermissionForumHandler extends PermissionHandler
 
         require_once \dirname(__DIR__) . '/include/functions.user.php';
         $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-        $ip  = \Xmf\IPAddress::fromRequest()->asReadable();
+        $ip  = IPAddress::fromRequest()->asReadable();
         if (!empty($GLOBALS['xoopsModuleConfig']['enable_usermoderate']) && !isset($suspension[$uid][$id])
             && !\newbbIsAdmin($id)) {
             /** @var Newbb\ModerateHandler $moderateHandler */
@@ -261,7 +261,7 @@ class PermissionForumHandler extends PermissionHandler
      */
     public function getTemplate()
     {
-        $perms = \Xmf\Yaml::readWrapped($this->templateFilename);
+        $perms = Yaml::readWrapped($this->templateFilename);
 
         return $perms;
     }
@@ -272,6 +272,6 @@ class PermissionForumHandler extends PermissionHandler
      */
     public function setTemplate($perms)
     {
-        return \Xmf\Yaml::saveWrapped($perms, $this->templateFilename);
+        return Yaml::saveWrapped($perms, $this->templateFilename);
     }
 }

@@ -18,8 +18,10 @@
  * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 
+/** @var Helper $helper */
 
 // irmtfan use full path because block maybe used outside newbb
 
@@ -77,7 +79,7 @@ function b_newbb_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -98,10 +100,8 @@ function b_newbb_show($options)
     $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         require_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
-    } else {
-        if (!defined('SEO_MODULE_NAME')) {
-            define('SEO_MODULE_NAME', 'modules/newbb');
-        }
+    } elseif (!defined('SEO_MODULE_NAME')) {
+        define('SEO_MODULE_NAME', 'modules/newbb');
     }
 
     $query = 'SELECT'
@@ -153,7 +153,7 @@ function b_newbb_show($options)
 
     if (count($types) > 0) {
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -167,10 +167,10 @@ function b_newbb_show($options)
         $topic['post_id']      = $arr['post_id'];
         $topic['topic_status'] = $arr['topic_status'];
         $topic['forum_id']     = $arr['forum_id'];
-        $topic['forum_name']   = $myts->htmlSpecialChars($arr['forum_name']);
+        $topic['forum_name']   = htmlspecialchars($arr['forum_name']);
         $topic['id']           = $arr['topic_id'];
 
-        $title = $myts->htmlSpecialChars($arr['topic_title']);
+        $title = htmlspecialchars($arr['topic_title']);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -181,7 +181,7 @@ function b_newbb_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster']    = $topic_poster;
         $topic['topic_page_jump'] = $topic_page_jump;
@@ -268,15 +268,13 @@ function b_newbb_topic_show($options)
     $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         require_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
-    } else {
-        if (!defined('SEO_MODULE_NAME')) {
-            define('SEO_MODULE_NAME', 'modules/newbb');
-        }
+    } elseif (!defined('SEO_MODULE_NAME')) {
+        define('SEO_MODULE_NAME', 'modules/newbb');
     }
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -323,7 +321,7 @@ function b_newbb_topic_show($options)
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
 
@@ -333,10 +331,10 @@ function b_newbb_topic_show($options)
         $topic                  = [];
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . '] ';
         $topic['forum_id']      = $arr['forum_id'];
-        $topic['forum_name']    = $myts->htmlSpecialChars($arr['forum_name']);
+        $topic['forum_name']    = htmlspecialchars($arr['forum_name']);
         $topic['id']            = $arr['topic_id'];
 
-        $title = $myts->htmlSpecialChars($arr['topic_title']);
+        $title = htmlspecialchars($arr['topic_title']);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -347,7 +345,7 @@ function b_newbb_topic_show($options)
         if (!empty($author_name[$arr['topic_poster']])) {
             $topic_poster = $author_name[$arr['topic_poster']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster'] = $topic_poster;
         // irmtfan remove $topic_page_jump because there is no last post
@@ -425,7 +423,7 @@ function b_newbb_post_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -434,10 +432,8 @@ function b_newbb_post_show($options)
     $newbbConfig = newbbLoadConfig();
     if (!empty($newbbConfig['do_rewrite'])) {
         require_once $GLOBALS['xoops']->path('modules/newbb/seo_url.php');
-    } else {
-        if (!defined('SEO_MODULE_NAME')) {
-            define('SEO_MODULE_NAME', 'modules/newbb');
-        }
+    } elseif (!defined('SEO_MODULE_NAME')) {
+        define('SEO_MODULE_NAME', 'modules/newbb');
     }
 
     if (!empty($options[6])) {
@@ -492,10 +488,10 @@ function b_newbb_post_show($options)
         //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
         $topic               = [];
         $topic['forum_id']   = $arr['forum_id'];
-        $topic['forum_name'] = $myts->htmlSpecialChars($arr['forum_name']);
+        $topic['forum_name'] = htmlspecialchars($arr['forum_name']);
         //$topic['id'] = $arr['topic_id'];
 
-        $title = $myts->htmlSpecialChars($arr['subject']);
+        $title = htmlspecialchars($arr['subject']);
         if ('text' !== $options[0] && !empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -505,7 +501,7 @@ function b_newbb_post_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = $myts->htmlSpecialChars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
         }
         $topic['topic_poster'] = $topic_poster;
 
@@ -596,7 +592,7 @@ function b_newbb_author_show($options)
 
     if (!isset($accessForums)) {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
         if (!$accessForums = $permHandler->getForums()) {
             return $block;
         }
@@ -641,7 +637,7 @@ function b_newbb_author_show($options)
     require_once dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
     foreach (array_keys($author) as $uid) {
-        $author[$uid]['name'] = $myts->htmlSpecialChars($author_name[$uid]);
+        $author[$uid]['name'] = htmlspecialchars($author_name[$uid]);
     }
     $block['authors']   = &$author;
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - lite view;
@@ -953,7 +949,7 @@ function b_newbb_custom($options)
 function b_newbb_custom_topic($options)
 {
     /** @var \XoopsModules\Newbb\Helper $helper */
-    $helper = \XoopsModules\Newbb\Helper::getInstance();
+    $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');
 
@@ -975,7 +971,7 @@ function b_newbb_custom_topic($options)
 function b_newbb_custom_post($options)
 {
     /** @var \XoopsModules\Newbb\Helper $helper */
-    $helper = \XoopsModules\Newbb\Helper::getInstance();
+    $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');
 
@@ -997,7 +993,7 @@ function b_newbb_custom_post($options)
 function b_newbb_custom_author($options)
 {
     /** @var \XoopsModules\Newbb\Helper $helper */
-    $helper = \XoopsModules\Newbb\Helper::getInstance();
+    $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');
 

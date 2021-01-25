@@ -29,7 +29,10 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 //require_once $GLOBALS['xoops']->path('include/cp_header.php');
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
@@ -41,8 +44,7 @@ require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 
 require_once dirname(__DIR__) . '/include/common.php';
 
-/** @var Newbb\Helper $helper */
-$helper = \XoopsModules\Newbb\Helper::getInstance();
+$helper = Helper::getInstance();
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = Xmf\Module\Admin::getInstance();
 

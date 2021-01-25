@@ -16,7 +16,6 @@ class Digest extends \XoopsObject
     public $digest_id;
     public $digest_time;
     public $digest_content;
-
     public $items;
     public $isHtml    = false;
     public $isSummary = true;

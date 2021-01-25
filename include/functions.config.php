@@ -9,9 +9,10 @@
  * @package        module::newbb
  */
 
+use XoopsModules\Newbb\{Helper
+};
 
-
-use XoopsModules\Newbb;
+/** @var Helper $helper */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_CONFIG_LOADED', true);
@@ -31,7 +32,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
         //$helper = NewBB::getInstance();
 
         /** @var \XoopsModules\Newbb\Helper $helper */
-        $helper = \XoopsModules\Newbb\Helper::getInstance();
+        $helper = Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {

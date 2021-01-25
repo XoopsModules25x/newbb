@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 require_once $GLOBALS['xoops']->path('class/uploader.php');
 
 /**

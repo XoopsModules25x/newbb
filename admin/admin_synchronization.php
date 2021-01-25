@@ -68,15 +68,15 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$topics] = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$digests] = $GLOBALS['xoopsDB']->fetchRow($ret);
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . "    WHERE uid = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($ret);
 
             $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }

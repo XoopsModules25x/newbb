@@ -17,7 +17,9 @@
  * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper, Utility};
+
+/** @var Helper $helper */
 
 //require_once __DIR__ . '/setup.php';
 
@@ -31,7 +33,7 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Newbb\Utility $utility */
-    $utility      = new \XoopsModules\Newbb\Utility();
+    $utility      = new Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -58,7 +60,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
     $moduleDirName = basename(dirname(__DIR__));
 
     /** @var Newbb\Helper $helper */
-    $helper       = \XoopsModules\Newbb\Helper::getInstance();
+    $helper       = Helper::getInstance();
     $utility      = new Newbb\Utility();
     $configurator = new Newbb\Common\Configurator();
     // Load language files

@@ -18,8 +18,6 @@ namespace XoopsModules\Newbb;
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
-
 class Forum extends \XoopsObject
 {
     public function __construct()

@@ -2,9 +2,14 @@
 
 namespace XoopsModules\Newbb;
 
-use XoopsModules\Newbb;
-use XoopsModules\Newbb\Common;
-use XoopsModules\Newbb\Constants;
+use XoopsModules\Newbb\{Common,
+    Constants
+};
+use Exception;
+use RuntimeException;
+use SystemMaintenance;
+use Xmf\Module\Helper\Cache;
+
 
 /**
  * Class Utility
@@ -12,7 +17,6 @@ use XoopsModules\Newbb\Constants;
 class Utility extends Common\SysUtility
 {
     //--------------- Custom module methods -----------------------------
-
     /**
      * Verify that a mysql table exists
      *
@@ -75,31 +79,31 @@ class Utility extends Common\SysUtility
     public static function prepareFolder($folder)
     {
         try {
-            if (!@\mkdir($folder) && !\is_dir($folder)) {
-                throw new \RuntimeException(\sprintf('Unable to create the %s directory', $folder));
+            if (!@mkdir($folder) && !is_dir($folder)) {
+                throw new RuntimeException(sprintf('Unable to create the %s directory', $folder));
             }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
     public static function cleanCache()
     {
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-        if (\method_exists($cacheHelper, 'clear')) {
+        $cacheHelper = new Cache('newbb');
+        if (method_exists($cacheHelper, 'clear')) {
             $cacheHelper->clear();
 
             return;
         }
         // for 2.5 systems, clear everything
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
-        $maintenance = new \SystemMaintenance();
+        $maintenance = new SystemMaintenance();
         $cacheList   = [
             3, // xoops_cache
         ];
         $maintenance->CleanCache($cacheList);
-        \xoops_setActiveModules();
+        xoops_setActiveModules();
     }
 
     /**

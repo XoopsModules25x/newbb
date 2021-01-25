@@ -9,8 +9,6 @@
  * @package        module::newbb
  */
 
-
-
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RPC_LOADED', true);
 

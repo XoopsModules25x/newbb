@@ -13,7 +13,6 @@
  */
 xoops_loadLanguage('main', 'newbb');
 
-
 /* some static xoopsModuleConfig */
 $customConfig = [];
 

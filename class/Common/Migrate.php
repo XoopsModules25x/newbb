@@ -14,6 +14,9 @@ namespace XoopsModules\Newbb\Common;
 
 use XoopsModules\Newbb;
 
+
+
+
 /**
  * Class Migrate synchronize existing tables with target schema
  *
@@ -36,7 +39,7 @@ class Migrate extends \Xmf\Database\Migrate
     {
         $this->renameTables = $configurator->renameTables;
 
-        $moduleDirName = \basename(\dirname(\dirname(__DIR__)));
+        $moduleDirName = basename(dirname(dirname(__DIR__)));
         parent::__construct($moduleDirName);
     }
 
@@ -64,7 +67,7 @@ class Migrate extends \Xmf\Database\Migrate
                     . '</span>'
                 );
 
-                \trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
+                trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
             }
         }
     }

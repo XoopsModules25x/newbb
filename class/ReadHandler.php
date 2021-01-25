@@ -32,8 +32,6 @@ namespace XoopsModules\Newbb;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -60,7 +58,6 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @var string
      */
     public $type;
-
     /**
      * seconds records will persist.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_expire"]
@@ -73,7 +70,6 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @var int
      */
     public $lifetime;
-
     /**
      * storage mode for records.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_mode"]
@@ -385,6 +381,5 @@ class ReadHandler extends \XoopsPersistableObjectHandler
 
         return true;
     }
-
     // END irmtfan add clear duplicated rows function
 }

@@ -15,8 +15,6 @@ namespace XoopsModules\Newbb;
 use XoopsModules\Newbb;
 use XoopsModules\Tag;
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -346,7 +344,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
-            $postArray['poster'] = empty($postArray['poster_name']) ? $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
+            $postArray['poster'] = empty($postArray['poster_name']) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
         }
 
         return $postArray;
@@ -359,20 +357,17 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      */
     public function getAllPosters($topic, $isApproved = true)
     {
+        $ret = [];
         $sql = 'SELECT DISTINCT uid FROM ' . $this->db->prefix('newbb_posts') . '  WHERE topic_id=' . $topic->getVar('topic_id') . ' AND uid>0';
         if ($isApproved) {
             $sql .= ' AND approved = 1';
         }
         $result = $this->db->query($sql);
-        if (!$result) {
-            //xoops_error($this->db->error());
-            return [];
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $ret[] = $myrow['uid'];
+            }
         }
-        $ret = [];
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $ret[] = $myrow['uid'];
-        }
-
         return $ret;
     }
 
@@ -597,6 +592,5 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return false;
     }
-
     // END irmtfan findPollModule
 }

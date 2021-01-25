@@ -74,7 +74,7 @@ if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_stat
 }
 // poll module
 /** @var \XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
+$moduleHandler     = xoops_getHandler('module');
 $pollModuleHandler = $moduleHandler->getByDirname($GLOBALS['xoopsModuleConfig']['poll_module']);
 if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
     // new xoopspoll module
@@ -83,13 +83,6 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $xpPollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
         /** @var \XoopsModules\XoopsPoll $pollObject */
         $pollObject = $xpPollHandler->get($poll_id); // will create poll if poll_id = 0 exist
-
-
-
-
-
-
-
 
     } elseif ($pollModuleHandler->getVar('version') >= 140) {
         xoops_load('constants', $GLOBALS['xoopsModuleConfig']['poll_module']);
@@ -132,13 +125,6 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 201) {
             echo '<h4>' . _MD_NEWBB_POLL_CREATNEWPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
-
-
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_CREATNEWPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
@@ -208,13 +194,8 @@ switch ($op) {
     case 'edit':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
             echo '<h4>' . _MD_NEWBB_POLL_EDITPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             echo '<h4>' . _MD_NEWBB_POLL_EDITPOLL . "</h4>\n";
             $pollObject->renderForm(Request::getString('SCRIPT_NAME', '', 'SERVER'), 'post', ['topic_id' => $topic_id]);
@@ -388,13 +369,7 @@ switch ($op) {
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
             /** @var \XoopsModules\Xoopspoll\LogHandler $xpLogHandler */
             $xpLogHandler = Xoopspoll\Helper::getInstance()->getHandler('Log');
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
-
             $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
             $xpLogHandler = xoops_getModuleHandler('log', $GLOBALS['xoopsModuleConfig']['poll_module']);
             //            $classRequest = ucfirst($GLOBALS['xoopsModuleConfig']["poll_module"]) . "Request";
@@ -518,8 +493,8 @@ switch ($op) {
                     $optionObject->setVar('option_color', $option_color[$i]);
                     $optionObject->store();
                 } elseif (false !== $optionObject->delete()) {
-                        $classLog::deleteByOptionId($option->getVar('option_id'));
-                    }
+                    $classLog::deleteByOptionId($option->getVar('option_id'));
+                }
                 ++$i;
             }
             $pollObject->updateCount();
@@ -548,10 +523,6 @@ switch ($op) {
         if ($pollModuleHandler->getVar('version') >= 201) {
             $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
             $option_tray  = $xpOptHandler->renderOptionFormTray($poll_id);
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
             $option_tray  = $xpOptHandler->renderOptionFormTray($poll_id);
@@ -606,20 +577,12 @@ switch ($op) {
             if ('' !== $optxt) {
                 // new xoopspoll module
                 if ($pollModuleHandler->getVar('version') >= 201) {
-
                     $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
                     $optionObject = $xpOptHandler->create();
                     $optionObject->setVar('option_text', $optxt);
                     $optionObject->setVar('poll_id', $poll_id);
                     $optionObject->setVar('option_color', $option_color[$i]);
                     $xpOptHandler->insert($optionObject);
-
-
-
-
-
-
-
                 } elseif ($pollModuleHandler->getVar('version') >= 140) {
                     $xpOptHandler = xoops_getModuleHandler('option', $GLOBALS['xoopsModuleConfig']['poll_module']);
                     $optionObject = $xpOptHandler->create();
@@ -657,7 +620,6 @@ switch ($op) {
         //try and delete the poll
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
             $status = $xpPollHandler->delete($pollObject);
             if (false !== $status) {
                 $xpOptHandler = Xoopspoll\Helper::getInstance()->getHandler('Option');
@@ -667,11 +629,6 @@ switch ($op) {
             } else {
                 $msg = $xpPollHandler->getHtmlErrors();
             }
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             $status = $xpPollHandler->delete($poll_obj);
             if (false !== $status) {
@@ -718,14 +675,7 @@ switch ($op) {
     case 'restart':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
             $default_poll_duration = Constants::DEFAULT_POLL_DURATION;
-
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             $classConstants        = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
@@ -759,17 +709,10 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
-
-//            $classConstants        = new XoopsModules\Xoopspoll\Constants();
+            //            $classConstants        = new XoopsModules\Xoopspoll\Constants();
             $default_poll_duration = Constants::DEFAULT_POLL_DURATION;
             $poll_not_mailed       = Constants::POLL_NOT_MAILED;
             $poll_mailed           = Constants::POLL_MAILED;
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             $classConstants        = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Constants';
             $default_poll_duration = $classConstants::DEFAULT_POLL_DURATION;
@@ -801,7 +744,6 @@ switch ($op) {
 
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
             if (!$xpPollHandler->insert($pollObject)) {  // update the poll
                 xoops_error($pollObject->getHtmlErrors());
                 exit();
@@ -815,11 +757,6 @@ switch ($op) {
                 $xpOptHandler->resetCountByPollId($poll_id);
                 $xpPollHandler->updateCount($pollObject);
             }
-
-
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             if (!$xpPollHandler->insert($poll_obj)) {  // update the poll
                 xoops_error($poll_obj->getHtmlErrors());
@@ -832,8 +769,6 @@ switch ($op) {
                 $xpOptHandler->resetCountByPollId($poll_id);
                 $xpPollHandler->updateCount($poll_obj);
             }
-
-
             // old xoopspoll or umfrage or any clone from them
         } else {
             if (!$pollObject->store()) { // update the poll
@@ -856,11 +791,7 @@ switch ($op) {
     case 'log':
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-
             Helper::getInstance()->redirect('admin/main.php?op=log&amp;poll_id={$poll_id}', 2, _MD_NEWBB_POLL_VIEWLOG);
-
-
-
         } elseif ($pollModuleHandler->getVar('version') >= 140) {
             redirect_header($GLOBALS['xoops']->url("modules/{$GLOBALS['xoopsModuleConfig']['poll_module']}/admin/main.php?op=log&amp;poll_id={$poll_id}"), 2, _MD_NEWBB_POLL_VIEWLOG);
             // old xoopspoll or umfrage or any clone from them

@@ -49,7 +49,9 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $image_url = $img_url . '/' . $source;
 
         $imginfo  = @getimagesize($image);
-        $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        if (is_array($image)) {
+            $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        }
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
             && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {

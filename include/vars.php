@@ -9,6 +9,7 @@
  * @package        module::newbb
  */
 
+use Xmf\IPAddress;
 
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 require_once __DIR__ . '/functions.session.php';
@@ -33,7 +34,7 @@ $forumCookie['domain'] = '';
 $forumCookie['path']   = '/';
 $forumCookie['secure'] = false;
 $forumCookie['expire'] = time() + 3600 * 24 * 30; // one month
-$forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . \Xmf\IPAddress::fromRequest()->asReadable()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
+$forumCookie['prefix'] = 'newbb_' . (is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : '0IP' . IPAddress::fromRequest()->asReadable()); // irmtfan IP for anons - use $GLOBALS["xoopsUser"]
 
 // set LastVisitTemp cookie, which only gets the time from the LastVisit cookie if it does not exist yet
 // otherwise, it gets the time from the LastVisitTemp cookie

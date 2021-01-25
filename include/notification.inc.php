@@ -41,7 +41,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
     function newbb_notify_iteminfo($category, $item_id)
     {
         /** @var \XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('newbb');
 
         if ('global' === $category) {

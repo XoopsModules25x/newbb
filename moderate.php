@@ -9,6 +9,7 @@
  * @package        module::newbb
  */
 
+use Xmf\IPAddress;
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
@@ -33,7 +34,7 @@ if (Request::hasVar('submit', 'POST') && Request::getInt('expire', 0, 'POST')) {
         $ipWithMask = Request::getString('ip', null, 'POST');
         $mask       = '';
         $ipParts    = explode('/', $ipWithMask);
-        $ip         = new \Xmf\IPAddress($ipParts[0]);
+        $ip         = new IPAddress($ipParts[0]);
         if (false === $ip->asReadable()) {
             $ipWithMask = '';
         } else {

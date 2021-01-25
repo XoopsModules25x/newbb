@@ -9,7 +9,10 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
 
@@ -49,7 +52,7 @@ function newbb_search(
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new \CriteriaCompo();
@@ -121,7 +124,7 @@ function newbb_search(
     $criteria->setOrder($order);
 
     /** @var Newbb\PostHandler $postHandler */
-    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+    $postHandler = Helper::getInstance()->getHandler('Post');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];
@@ -134,7 +137,7 @@ function newbb_search(
         $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $highlightKey; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = $myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);
+        $ret[$i]['forum_name'] = htmlspecialchars($forum_list[$post->getVar('forum_id')]['forum_name']);
         $ret[$i]['forum_link'] = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

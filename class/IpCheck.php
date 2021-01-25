@@ -11,13 +11,10 @@ class IpCheck
 {
     /** @var string */
     private $ipin;
-
     /** @var string */
     private $ipout;
-
     /** @var int */
     private $ipver;
-
     // Return IP type.  4 for IPv4, 6 for IPv6, 0 for bad IP.
 
     /**

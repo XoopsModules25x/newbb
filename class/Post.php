@@ -33,10 +33,9 @@ namespace XoopsModules\Newbb;
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Highlighter;
+use Xmf\IPAddress;
 use Xmf\Request;
 use XoopsModules\Newbb;
-
-
 
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
@@ -232,55 +231,55 @@ class Post extends \XoopsObject
                     $post_attachment .= '<br>' . \newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
                 } elseif (empty($GLOBALS['xoopsModuleConfig']['show_userattach'])) {
-                        $post_attachment .= '<a href="'
-                                            . XOOPS_URL
-                                            . '/modules/'
-                                            . $xoopsModule->getVar('dirname', 'n')
-                                            . '/dl_attachment.php?attachid='
-                                            . $key
-                                            . '&amp;post_id='
-                                            . $this->getVar('post_id')
-                                            . '"> <img src="'
-                                            . $icon_filetype
-                                            . '" alt="'
-                                            . $filetype
-                                            . '" > '
-                                            . $att['nameDisplay']
-                                            . '</a> '
-                                            . \_MD_NEWBB_FILESIZE
-                                            . ': '
-                                            . $file_size
-                                            . '; '
-                                            . \_MD_NEWBB_HITS
-                                            . ': '
-                                            . $att['numDownload'];
-                    } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0
-                              && $GLOBALS['xoopsUser']->isactive()) {
-                        $post_attachment .= '<a href="'
-                                            . XOOPS_URL
-                                            . '/modules/'
-                                            . $xoopsModule->getVar('dirname', 'n')
-                                            . '/dl_attachment.php?attachid='
-                                            . $key
-                                            . '&amp;post_id='
-                                            . $this->getVar('post_id')
-                                            . '"> <img src="'
-                                            . $icon_filetype
-                                            . '" alt="'
-                                            . $filetype
-                                            . '" > '
-                                            . $att['nameDisplay']
-                                            . '</a> '
-                                            . \_MD_NEWBB_FILESIZE
-                                            . ': '
-                                            . $file_size
-                                            . '; '
-                                            . \_MD_NEWBB_HITS
-                                            . ': '
-                                            . $att['numDownload'];
-                    } else {
-                        $post_attachment .= _MD_NEWBB_SEENOTGUEST;
-                    }
+                    $post_attachment .= '<a href="'
+                                        . XOOPS_URL
+                                        . '/modules/'
+                                        . $xoopsModule->getVar('dirname', 'n')
+                                        . '/dl_attachment.php?attachid='
+                                        . $key
+                                        . '&amp;post_id='
+                                        . $this->getVar('post_id')
+                                        . '"> <img src="'
+                                        . $icon_filetype
+                                        . '" alt="'
+                                        . $filetype
+                                        . '" > '
+                                        . $att['nameDisplay']
+                                        . '</a> '
+                                        . \_MD_NEWBB_FILESIZE
+                                        . ': '
+                                        . $file_size
+                                        . '; '
+                                        . \_MD_NEWBB_HITS
+                                        . ': '
+                                        . $att['numDownload'];
+                } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->uid() > 0
+                          && $GLOBALS['xoopsUser']->isactive()) {
+                    $post_attachment .= '<a href="'
+                                        . XOOPS_URL
+                                        . '/modules/'
+                                        . $xoopsModule->getVar('dirname', 'n')
+                                        . '/dl_attachment.php?attachid='
+                                        . $key
+                                        . '&amp;post_id='
+                                        . $this->getVar('post_id')
+                                        . '"> <img src="'
+                                        . $icon_filetype
+                                        . '" alt="'
+                                        . $filetype
+                                        . '" > '
+                                        . $att['nameDisplay']
+                                        . '</a> '
+                                        . \_MD_NEWBB_FILESIZE
+                                        . ': '
+                                        . $file_size
+                                        . '; '
+                                        . \_MD_NEWBB_HITS
+                                        . ': '
+                                        . $att['numDownload'];
+                } else {
+                    $post_attachment .= _MD_NEWBB_SEENOTGUEST;
+                }
                 $post_attachment .= '<br>';
             }
         }
@@ -458,7 +457,7 @@ class Post extends \XoopsObject
         } else {
             static $user_ip;
             if (!isset($user_ip)) {
-                $user_ip = \Xmf\IPAddress::fromRequest()->asReadable();
+                $user_ip = IPAddress::fromRequest()->asReadable();
             }
             $user_ok = ($user_ip == $this->getVar('poster_ip'));
         }
@@ -483,7 +482,7 @@ class Post extends \XoopsObject
         /** @var TopicHandler $topicHandler */
         $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
-            $name_anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+            $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
         }
 
         require_once \dirname(__DIR__) . '/include/functions.time.php';
@@ -531,7 +530,7 @@ class Post extends \XoopsObject
         $post_title = $this->getVar('subject');
         $keywords   = Request::getString('keywords', '', 'GET');
         if ($keywords) {
-            //$keywords   = $myts->htmlSpecialChars(trim(urldecode(Request::getString('keywords', '', 'GET'))));
+            //$keywords   = htmlspecialchars(trim(urldecode(Request::getString('keywords', '', 'GET'))));
             $post_text  = Highlighter::apply($keywords, $post_text, '<mark>', '</mark>');
             $post_title = Highlighter::apply($keywords, $post_title, '<mark>', '</mark>');
         }

@@ -11,8 +11,6 @@
 
 use Xmf\Request;
 
-
-
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_SESSION_LOADED', true);
 

@@ -14,7 +14,7 @@ namespace XoopsModules\Newbb;
 
 use Xmf\IPAddress;
 
- /**
+/**
  * Class ModerateHandler
  */
 class ModerateHandler extends \XoopsPersistableObjectHandler

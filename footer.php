@@ -18,8 +18,6 @@
  * @author          The Persian Xoops Support Site<www.xoops.ir>
  */
 
-
-
 global $xoTheme;
 
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');

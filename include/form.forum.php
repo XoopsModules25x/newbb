@@ -18,8 +18,6 @@
 
 use XoopsModules\Newbb;
 
-
-
 if (!is_object($forumObject)) {
     xoops_error('forum object IS null');
 

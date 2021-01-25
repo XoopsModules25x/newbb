@@ -11,8 +11,6 @@ namespace XoopsModules\Newbb;
  * @since          4.00
  * @package        module::newbb
  */
-
-
 class Category extends \XoopsObject
 {
     public function __construct()

@@ -37,7 +37,7 @@ use Xmf\Request;
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
 /** @var \XoopsConfigHandler $configHandler */
-$configHandler = xoops_getHandler('config');
+$configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if (1 !== $xoopsConfigSearch['enable_search']) {
     redirect_header(XOOPS_URL . '/modules/newbb/index.php', 2, _MD_NEWBB_SEARCHDISABLED);
@@ -179,7 +179,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra);
     } // irmtfan $criteriaExtra
 
-    $search_info_keywords = Highlighter::apply($myts->htmlSpecialChars($term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
+    $search_info_keywords = Highlighter::apply(htmlspecialchars($term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
     $num_results          = count($results);
     if ($num_results < 1) {
         $xoopsTpl->assign('lang_nomatch', _SR_NOMATCH);
@@ -258,7 +258,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($search_info) {
             $search_info .= '<br>';
         }
-        $search_info .= _MD_NEWBB_USERNAME . ': ' . $myts->htmlSpecialChars($search_username);
+        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars($search_username);
     }
     // add num_results
     $search_info .= '<br>' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);

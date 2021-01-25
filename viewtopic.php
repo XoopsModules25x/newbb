@@ -33,6 +33,7 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
+use XoopsModules\Xoopspoll\Helper;
 
 require_once __DIR__ . '/header.php';
 $xoopsLogger->startTime('newBB_viewtopic');
@@ -519,7 +520,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-            $xpollHandler = Xoopspoll\Helper::getInstance()->getHandler('Poll');
+            $xpollHandler = Helper::getInstance()->getHandler('Poll');
             /** @var Xoopspoll\Poll $pollObject */
             $pollObject = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
@@ -549,7 +550,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                 // check to see if user has voted, show form if not, otherwise get results for form
 
                 /** @var \XoopsModules\Xoopspoll\LogHandler $logHandler */
-                $logHandler = \XoopsModules\Xoopspoll\Helper::getInstance()->getHandler('Log');
+                $logHandler = Helper::getInstance()->getHandler('Log');
                 if ($pollObject->isAllowedToVote()
                     && (!$logHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $uid))) {
                     $myTpl = new \XoopsTpl();

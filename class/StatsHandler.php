@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 
 \define('NEWBB_STATS_TYPE_TOPIC', 1);

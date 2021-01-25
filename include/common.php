@@ -20,8 +20,12 @@
  * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper,
+    Utility
+};
 
+/** @var Helper $helper */
+/** @var Utility $utility */
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -29,11 +33,9 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var Newbb\Helper $helper */
-/** @var Newbb\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = \XoopsModules\Newbb\Helper::getInstance();
-$utility = new Newbb\Utility();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 //$configurator = new Newbb\Common\Configurator();
 
 $helper->loadLanguage('common');

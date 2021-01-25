@@ -9,8 +9,6 @@
  * @package        module::newbb
  */
 
-
-
 define('NEWBB_FUNCTIONS_TEXT_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_TEXT')) {

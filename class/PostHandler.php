@@ -34,8 +34,6 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -103,14 +101,15 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $post = $this->create(false);
-            $post->assignVars($myrow);
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $post = $this->create(false);
+                $post->assignVars($myrow);
 
-            $ret[$myrow['post_id']] = $post;
-            unset($post);
+                $ret[$myrow['post_id']] = $post;
+                unset($post);
+            }
         }
-
         return $ret;
     }
 
@@ -525,17 +524,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
         }
         $result = $this->db->query($sql, (int)$limit, (int)$start);
-        if (!$result) {
-            //xoops_error($this->db->error());
-            return $ret;
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $post = $this->create(false);
+                $post->assignVars($myrow);
+                $ret[$myrow['post_id']] = $post;
+                unset($post);
+            }
         }
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $post = $this->create(false);
-            $post->assignVars($myrow);
-            $ret[$myrow['post_id']] = $post;
-            unset($post);
-        }
-
         return $ret;
     }
 

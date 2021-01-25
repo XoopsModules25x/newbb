@@ -14,8 +14,6 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 //load_functions('locale');
 

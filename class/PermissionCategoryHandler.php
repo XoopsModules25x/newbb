@@ -14,8 +14,6 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
-
-
 //defined("NEWBB_HANDLER_PERMISSION") || require_once __DIR__  .'/permission.php';
 //define("NEWBB_HANDLER_PERMISSION_CATEGORY", 1);
 

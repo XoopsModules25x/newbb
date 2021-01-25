@@ -29,6 +29,7 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\IPAddress;
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
@@ -78,7 +79,7 @@ if (Request::hasVar('submit', 'POST')) {
         $report->setVar('post_id', Request::getInt('post_id', 0, 'POST'));
         $report->setVar('report_time', time());
         $report->setVar('reporter_uid', is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0);
-        $report->setVar('reporter_ip', \Xmf\IPAddress::fromRequest()->asReadable());
+        $report->setVar('reporter_ip', IPAddress::fromRequest()->asReadable());
         $report->setVar('report_result', 0);
         $report->setVar('report_memo', '');
 
@@ -160,7 +161,7 @@ if ($postObject->getVar('uid')) {
     $r_name = newbbGetUnameFromId($postObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $postObject->getVar('poster_name');
-    $r_name      = empty($poster_name) ? $GLOBALS['xoopsConfig']['anonymous'] : $myts->htmlSpecialChars($poster_name);
+    $r_name      = empty($poster_name) ? $GLOBALS['xoopsConfig']['anonymous'] : htmlspecialchars($poster_name);
 }
 $r_content = _MD_NEWBB_SUBJECTC . ' ' . $r_subject . '<br>';
 $r_content .= _MD_NEWBB_BY . ' ' . $r_name . ' ' . _MD_NEWBB_ON . ' ' . $r_date . '<br><br>';

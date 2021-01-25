@@ -10,6 +10,7 @@
  * @package        module::newbb
  */
 
+use Xmf\Module\Helper\Cache;
 use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
@@ -49,7 +50,7 @@ if (!in_array($op, $validOps)) {
 
 ///** @var Newbb\TypeHandler $typeHandler */
 //$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper = new Cache('newbb');
 
 switch ($op) {
     case 'save_type':

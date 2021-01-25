@@ -30,7 +30,10 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -56,7 +59,7 @@ if (!class_exists('XoopsGroupPermForm')) {
 $action    = mb_strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
 /** var \XoopsModules\Newbb\PermissionHandler $newbbpermHandler */
-$newbbpermHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+$newbbpermHandler = Helper::getInstance()->getHandler('Permission');
 $perms            = $newbbpermHandler->getValidForumPerms();
 
 switch ($action) {
@@ -152,13 +155,13 @@ switch ($action) {
         $opform->display();
 
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {
             $fm_options[-1 * $c - 1000] = ' ';
@@ -198,7 +201,7 @@ switch ($action) {
     default:
         xoops_cp_header();
 
-        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -207,7 +210,7 @@ switch ($action) {
             redirect_header('admin_cat_manager.php', 2, _AM_NEWBB_CREATENEWCATEGORY);
         }
 
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
         if (0 === count($forums)) {
@@ -269,7 +272,7 @@ switch ($action) {
 
         $form = new Newbb\GroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
-        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler  = Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
@@ -279,7 +282,7 @@ switch ($action) {
             }
             unset($categories);
         } else {
-            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+            $forumHandler = Helper::getInstance()->getHandler('Forum');
             $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
             if (count($forums) > 0) {
                 foreach (array_keys($forums) as $c) {
@@ -300,7 +303,7 @@ switch ($action) {
         echo '</fieldset>';
         // Since we can not control the permission update, a trick is used here
         /** var Newbb\PermissionHandler $permissionHandler */
-        $permissionHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permissionHandler = Helper::getInstance()->getHandler('Permission');
         $permissionHandler->createPermData();
         $cacheHelper = Newbb\Utility::cleanCache();
         //$cacheHelper->delete('permission');

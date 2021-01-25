@@ -29,7 +29,6 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-
 if (defined('NEWBB_FUNCTIONS_INI')) {
     return;
 }

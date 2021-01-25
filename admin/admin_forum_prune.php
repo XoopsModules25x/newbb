@@ -249,7 +249,7 @@ if (Request::hasVar('submit', 'POST')) {
     $sform->addElement($archive_confirmation);
 
     $buttonTray = new \XoopsFormElementTray('', '');
-    $buttonTray->addElement(new \XoopsFormButton('', 'submit', _AM_NEWBB_PRUNE_SUBMIT, 'submit'));
+    $buttonTray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $buttonTray->addElement(new \XoopsFormButton('', 'reset', _AM_NEWBB_PRUNE_RESET, 'reset'));
     $sform->addElement($buttonTray);
 

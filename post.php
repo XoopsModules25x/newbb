@@ -279,10 +279,10 @@ if (Request::getString('contents_submit', '', 'POST')) {
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();
                 } elseif (is_file($uploader->getSavedDestination())) {
-                        if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
-                            $postObject->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
-                        }
+                    if (rename(XOOPS_CACHE_PATH . '/' . $uploader->getSavedFileName(), $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $uploader->getSavedFileName()))) {
+                        $postObject->setAttachment($uploader->getSavedFileName(), $uploader->getMediaName(), $uploader->getMediaType());
                     }
+                }
             } else {
                 $error_message[] = $error_upload = $uploader->getErrors();
             }
@@ -373,15 +373,15 @@ if (Request::getString('contents_submit', '', 'POST')) {
         if ($uid > 0) {
             $sql = 'SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '    WHERE approved=1 AND topic_poster =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($topics) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$topics] = $GLOBALS['xoopsDB']->fetchRow($ret);
 
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '    WHERE approved=1 AND topic_digest > 0 AND topic_poster =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($digests) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$digests] = $GLOBALS['xoopsDB']->fetchRow($ret);
 
             $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . '    WHERE approved=1 AND uid =' . $uid;
             $ret = $GLOBALS['xoopsDB']->query($sql);
-            list($posts, $lastpost) = $GLOBALS['xoopsDB']->fetchRow($ret);
+            [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($ret);
 
             $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
@@ -448,13 +448,12 @@ if (Request::getString('contents_upload', null, 'POST')) {
                 if (!$uploader->upload()) {
                     $error_message[] = $error_upload = $uploader->getErrors();
                 } elseif (is_file($uploader->getSavedDestination())) {
-                        $attachments_tmp[(string)time()] = [
-                            $uploader->getSavedFileName(),
-                            $uploader->getMediaName(),
-                            $uploader->getMediaType(),
-                        ];
-                    }
-
+                    $attachments_tmp[(string)time()] = [
+                        $uploader->getSavedFileName(),
+                        $uploader->getMediaName(),
+                        $uploader->getMediaType(),
+                    ];
+                }
             } else {
                 $error_message[] = $error_upload = $uploader->getErrors();
             }
@@ -467,7 +466,7 @@ if (Request::getString('contents_preview', Request::getString('contents_preview'
         $attachments_tmp = unserialize(base64_decode(Request::getString('attachments_tmp', '', 'POST'), true));
     }
 
-    $p_subject = $myts->htmlSpecialChars(Request::getString('subject', '', 'POST'));
+    $p_subject = htmlspecialchars(Request::getString('subject', '', 'POST'));
     $dosmiley  = Request::getInt('dosmiley', 0, 'POST');
     $dohtml    = Request::getInt('dohtml', 0, 'POST');
     $doxcode   = Request::getInt('doxcode', 0, 'POST');

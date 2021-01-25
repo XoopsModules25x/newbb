@@ -11,8 +11,6 @@
 
 use XoopsModules\Newbb;
 
-
-
 /**#@+
  * Function to display tag cloud
  * @param $options

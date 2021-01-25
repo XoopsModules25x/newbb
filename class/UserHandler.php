@@ -14,8 +14,6 @@ namespace XoopsModules\Newbb;
 
 use XoopsModules\Newbb;
 
-
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -25,13 +23,10 @@ class UserHandler
 {
     /** @var array */
     public $users = [];
-
     /** @var bool */
     private $enableGroup;
-
     /** @var bool */
     private $enableOnline;
-
     /** @var array */
     private $userlist = [];
 

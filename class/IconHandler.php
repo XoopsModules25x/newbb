@@ -12,8 +12,6 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-
-
 /**
  * Set forum image
  *
@@ -41,22 +39,18 @@ class IconHandler
      * reference to XOOPS template
      */
     public $template;
-
     /**
      * image set
      */
     private $forumImage = [];
-
     /**
      * prefix
      */
     private $prefix = '';
-
     /**
      * postfix, including extension
      */
     private $postfix = '.png';
-
     /**
      * images to be assigned to template
      */
@@ -132,7 +126,7 @@ class IconHandler
     ) {
         $this->forumImage = require_once $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
-        $this->forumImage['icon'] = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
+        $this->forumImage['icon']     = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
         $this->forumImage['language'] = XOOPS_URL . $this->getPath("language/{$language}", $dirname, 'language/english') . '/';
     }
 

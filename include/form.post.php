@@ -17,15 +17,19 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper,
+    ModerateHandler
+};
+use XoopsModules\Tag\FormTag;
 
-
+/** @var Helper $helper */
+/** @var ModerateHandler $moderateHandler */
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 $xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
-$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+$categoryHandler = Helper::getInstance()->getHandler('Category');
 $categoryObject  = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 
 //check banning
@@ -33,8 +37,7 @@ $moderated_id    = (is_object($GLOBALS['xoopsUser'])
                     && $GLOBALS['xoopsUser']->uid() > 0) ? $GLOBALS['xoopsUser']->uid() : 0;
 $moderated_ip    = Request::getString('REMOTE_ADDR', '', 'SERVER');
 $moderated_forum = $forumObject->getVar('forum_id');
-/** @var Newbb\ModerateHandler $moderateHandler */
-$moderateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Moderate');
+$moderateHandler = Helper::getInstance()->getHandler('Moderate');
 if (!$moderateHandler->verifyUser($moderated_id, '', $moderated_forum)) {
     $criteria = new \CriteriaCompo();
     $criteria->add(new \Criteria('uid', $moderated_id, '='));
@@ -102,7 +105,7 @@ foreach (
 }
 
 /** @var Newbb\TopicHandler $topicHandler */
-$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+$topicHandler = Helper::getInstance()->getHandler('Topic');
 $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
 //$filname = XOOPS_URL.$_SERVER['REQUEST_URI'];
@@ -121,7 +124,7 @@ if (newbbIsAdmin($forumObject)
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
     $type_id = $topicHandler->get(@$topic_id, 'type_id');
     /** @var Newbb\TypeHandler $typeHandler */
-    $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+    $typeHandler = Helper::getInstance()->getHandler('Type');
     $types       = $typeHandler->getByForum($forumObject->getVar('forum_id'));
     if (!empty($types)) {
         $type_element = new \XoopsFormSelect(_MD_NEWBB_TYPE, 'type_id', $type_id);
@@ -186,12 +189,12 @@ $forum_form->addElement($_editor, true);
 if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($postObject) || $postObject->isTopic())) {
     $topic_tags = '';
     if (Request::getString('topic_tags', '', 'POST')) {
-        $topic_tags = $myts->htmlSpecialChars(Request::getString('topic_tags', '', 'POST'));
+        $topic_tags = htmlspecialchars(Request::getString('topic_tags', '', 'POST'));
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
     if (!empty($newbbConfig['do_tag']) && class_exists('TagFormTag')) {
-        $forum_form->addElement(new \XoopsModules\Tag\FormTag('topic_tags', 60, 255, $topic_tags));
+        $forum_form->addElement(new FormTag('topic_tags', 60, 255, $topic_tags));
     }
 }
 

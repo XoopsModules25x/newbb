@@ -28,7 +28,6 @@ namespace XoopsModules\Newbb;
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-
 require_once $GLOBALS['xoops']->path('class/tree.php');
 
 if (!\class_exists('ObjectTree')) {
@@ -282,7 +281,6 @@ if (!\class_exists('ObjectTree')) {
 
             return $pids;
         }
-
         /**#@-*/
     }
 }

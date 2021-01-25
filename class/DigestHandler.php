@@ -12,6 +12,7 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
+use Xmf\Metagen;
 use XoopsModules\Newbb;
 
 /**
@@ -92,10 +93,11 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //        $reportHandler =  Newbb\Helper::getInstance()->getHandler('Report');
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $ret[] = $myrow; // return as array
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $ret[] = $myrow; // return as array
+            }
         }
-
         return $ret;
     }
 
@@ -262,7 +264,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             } else {
                 $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
-            $summary = \Xmf\Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
+            $summary = Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
             $author  = $topic['uname'] . ' (' . \formatTimestamp($topic['topic_time']) . ')';
             $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];

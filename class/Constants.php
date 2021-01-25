@@ -20,8 +20,6 @@ namespace XoopsModules\Newbb;
  * @author       XOOPS Development Team
  */
 
-
-
 /**
  * interface Constants
  */
@@ -32,6 +30,5 @@ interface Constants
      */
 
     public const DISALLOW = 0;
-
     /**#@-*/
 }
