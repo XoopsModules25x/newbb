@@ -391,7 +391,7 @@ class Post extends \XoopsObject
 
         $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         /** @var KarmaHandler $karmaHandler */
-        $karmaHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Karma');
+        $karmaHandler = Helper::getInstance()->getHandler('Karma');
         $user_karma   = $karmaHandler->getUserKarma();
 
         $post               = [];
@@ -485,7 +485,7 @@ class Post extends \XoopsObject
         static $post_NO = 0;
         static $name_anonymous;
         /** @var TopicHandler $topicHandler */
-        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
             $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
         }

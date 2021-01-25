@@ -66,7 +66,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         \xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'forum', $forum->getVar('forum_id'));
         // Get list of all topics in forum, to delete them too
         /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
         $topicHandler->deleteAll(new \Criteria('forum_id', $forum->getVar('forum_id')), true, true);
         $this->updateAll('parent_forum', $forum->getVar('parent_forum'), new \Criteria('parent_forum', $forum->getVar('forum_id')));
         $this->deletePermission($forum);
@@ -81,7 +81,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function getIdsByPermission($perm = 'access')
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->getForums($perm);
     }
@@ -287,7 +287,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $types   = [];
 
         /** @var Newbb\TypeHandler $typeHandler */
-        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = Helper::getInstance()->getHandler('Type');
         $typen       = $typeHandler->getByForum($forum->getVar('forum_id'));
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
@@ -594,7 +594,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         if (!empty($checkCategory)) {
             /** @var Newbb\CategoryHandler $categoryHandler */
-            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+            $categoryHandler = Helper::getInstance()->getHandler('Category');
             $categoryPerm    = $categoryHandler->getPermission($forum->getVar('cat_id'));
             if (!$categoryPerm) {
                 return false;
@@ -609,7 +609,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         //} else {
         $forum_id = $forum->getVar('forum_id');
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
         $permission  = $permHandler->getPermission('forum', $type, $forum_id);
         //}
         // END irmtfan commented and removed
@@ -623,7 +623,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function deletePermission($forum)
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->deleteByForum($forum->getVar('forum_id'));
     }
@@ -635,7 +635,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     public function applyPermissionTemplate($forum)
     {
         /** var Newbb\PermissionHandler $permHandler */
-        $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+        $permHandler = Helper::getInstance()->getHandler('Permission');
 
         return $permHandler->applyTemplate($forum->getVar('forum_id'));
     }
@@ -685,7 +685,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $criteria->add(new \Criteria('parent_forum', '`forum_id`', '='), 'OR');
         $b1 = $this->updateAll('parent_forum', 0, $criteria, true);
         // check cat_id orphan forums
-        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = Helper::getInstance()->getHandler('Category');
         $cat_ids         = $categoryHandler->getIds();
         if (empty($cat_ids)) {
             return false;
@@ -828,7 +828,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $posts[] = $forums[$id]['forum_last_post_id'];
         }
         if (!empty($posts)) {
-            $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+            $postHandler = Helper::getInstance()->getHandler('Post');
             $tags_post   = ['uid', 'topic_id', 'post_time', 'poster_name', 'icon'];
             if (!empty($length_title_index)) {
                 $tags_post[] = 'subject';

@@ -80,7 +80,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 // Load only if module is installed
 //if (is_object($helper->getModule())) {
 //    // Find if the user is admin of the module
-//    $publisherIsAdmin = Newbb\Utility::userIsAdmin();
+//    $publisherIsAdmin = Utility::userIsAdmin();
 //}
 
 //$db = \XoopsDatabaseFactory::getDatabaseConnection();

@@ -204,7 +204,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         }
 
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler         = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler         = Helper::getInstance()->getHandler('Forum');
         $thisUser             = $GLOBALS['xoopsUser'];
         $GLOBALS['xoopsUser'] = null; // To get posts accessible by anonymous
         $GLOBALS['xoopsUser'] = $thisUser;

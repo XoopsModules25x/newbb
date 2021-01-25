@@ -30,7 +30,9 @@
 // ------------------------------------------------------------------------- //
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    Utility,
+    GroupPermForm
 };
 
 /** @var Helper $helper */
@@ -194,7 +196,7 @@ switch ($action) {
             }
             $newbbpermHandler->applyTemplate($forum, $module_id);
         }
-        $cacheHelper = Newbb\Utility::cleanCache();
+        $cacheHelper = Utility::cleanCache();
         //$cacheHelper->delete('permission');
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
         break;
@@ -270,7 +272,7 @@ switch ($action) {
 
         $perm_desc = '';
 
-        $form = new Newbb\GroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
+        $form = new GroupPermForm($fm_options[$op]['title'], $module_id, $fm_options[$op]['item'], $fm_options[$op]['desc'], 'admin/admin_permissions.php', $fm_options[$op]['anonymous']);
 
         $categoryHandler  = Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
@@ -305,7 +307,7 @@ switch ($action) {
         /** var Newbb\PermissionHandler $permissionHandler */
         $permissionHandler = Helper::getInstance()->getHandler('Permission');
         $permissionHandler->createPermData();
-        $cacheHelper = Newbb\Utility::cleanCache();
+        $cacheHelper = Utility::cleanCache();
         //$cacheHelper->delete('permission');
         require_once __DIR__ . '/admin_footer.php';
         break;

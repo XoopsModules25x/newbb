@@ -97,13 +97,13 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return false;
         }
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $postsObject = $postHandler->getAll(new \Criteria('topic_id', $topic_id));
         foreach (\array_keys($postsObject) as $post_id) {
             $postHandler->approve($postsObject[$post_id]);
         }
         unset($postsObject);
-        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
+        $statsHandler = Helper::getInstance()->getHandler('Stats');
         $statsHandler->update($object->getVar('forum_id'), 'topic');
 
         return true;
@@ -190,7 +190,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $criteria = new \CriteriaCompo(new \Criteria('topic_id', $topic->getVar('topic_id')));
         $criteria->add(new \Criteria('approved', $approved));
         /** @var Newbb\PostHandler $postHandler */
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $count       = $postHandler->getCount($criteria);
 
         return $count;
@@ -215,7 +215,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             return $post;
         }
         /** @var Newbb\PostHandler $postHandler */
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $myrow       = $this->db->fetchArray($result);
         /** @var Newbb\Post $post */
         $post = $postHandler->create(false);
@@ -291,7 +291,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             //xoops_error($this->db->error());
             return $ret;
         }
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $post = $postHandler->create(false);
             $post->assignVars($myrow);
@@ -384,7 +384,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
         $postObject = $this->getTopPost($topic_id);
         /** @var Newbb\PostHandler $postHandler */
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $postHandler->delete($postObject, false, $force);
 
         $newbbConfig = \newbbLoadConfig();
@@ -423,7 +423,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $permission = false;
         } else {
             /** var Newbb\PermissionHandler $permHandler */
-            $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+            $permHandler = Helper::getInstance()->getHandler('Permission');
             $permission  = $permHandler->getPermission('forum', $type, $forum_id);
         }
 
@@ -487,7 +487,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
 
         /** @var Newbb\PostHandler $postHandler */
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $criteria    = new \CriteriaCompo();
         $criteria->add(new \Criteria('topic_id', $object->getVar('topic_id')), 'AND');
         $criteria->add(new \Criteria('approved', 1), 'AND');

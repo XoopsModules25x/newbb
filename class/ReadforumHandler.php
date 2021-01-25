@@ -102,7 +102,7 @@ class ReadforumHandler extends Newbb\ReadHandler
         $items       = [];
         if (!empty($status)) {
             /** @var Newbb\ForumHandler $itemHandler */
-            $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+            $itemHandler = Helper::getInstance()->getHandler('Forum');
             $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
                 $items[$key] = \time();
@@ -134,7 +134,7 @@ class ReadforumHandler extends Newbb\ReadHandler
         }
 
         /** @var Newbb\ForumHandler $itemHandler */
-        $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $itemHandler = Helper::getInstance()->getHandler('Forum');
         $itemsObject = $itemHandler->getAll(null, ['forum_last_post_id']);
         foreach (\array_keys($itemsObject) as $key) {
             $this->setReadDb($key, $itemsObject[$key]->getVar('forum_last_post_id'), $uid);

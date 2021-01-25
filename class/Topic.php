@@ -65,7 +65,7 @@ class Topic extends \XoopsObject
         if (!$this->getVar('type_id')) {
             return $topic_title;
         }
-        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+        $typeHandler = Helper::getInstance()->getHandler('Type');
         if (!$typeObject = $typeHandler->get($this->getVar('type_id'))) {
             return $topic_title;
         }

@@ -151,7 +151,7 @@ class TopicRenderer
     //    public function TopicRenderer()
     public function __construct()
     {
-        $this->handler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $this->handler = Helper::getInstance()->getHandler('Topic');
     }
 
     /**
@@ -812,7 +812,7 @@ class TopicRenderer
         static $types;
         if (!isset($types)) {
             /** @var Newbb\TypeHandler $typeHandler */
-            $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+            $typeHandler = Helper::getInstance()->getHandler('Type');
 
             $types = $typeHandler->getByForum(explode('|', @$this->vars['forum']));
         }
@@ -1141,7 +1141,7 @@ class TopicRenderer
         */
         $type_list = $this->getTypes();
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
 
         if (count($forums) > 0) {
             $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), ['forum_name', 'hot_threshold'], false);

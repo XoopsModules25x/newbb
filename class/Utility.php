@@ -2,13 +2,12 @@
 
 namespace XoopsModules\Newbb;
 
-use XoopsModules\Newbb\{Common,
-    Constants
-};
 use Exception;
 use RuntimeException;
 use SystemMaintenance;
 use Xmf\Module\Helper\Cache;
+
+/** @var Helper $helper */
 
 
 /**
@@ -113,8 +112,7 @@ class Utility extends Common\SysUtility
      */
     public static function userIsAdmin()
     {
-        /** @var Newbb\Helper $helper */
-        $helper = \XoopsModules\Newbb\Helper::getInstance();
+        $helper = Helper::getInstance();
 
         static $newbbIsAdmin;
 

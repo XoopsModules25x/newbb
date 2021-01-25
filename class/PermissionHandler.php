@@ -245,7 +245,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
             $groups        = \array_keys($memberHandler->getGroupList());
 
             $type          = ('category_all' === $perm_name) ? 'category' : 'forum';
-            $objectHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler($type);
+            $objectHandler = Helper::getInstance()->getHandler($type);
             $object_ids    = $objectHandler->getIds();
             foreach ($object_ids as $item_id) {
                 $perms[$perm_name][$item_id] = $groups;

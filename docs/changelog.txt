@@ -5,6 +5,11 @@
 - fix split bug (bioskop/mamba)
 - update for XoopsPoll 2.01 (mamba)
 - renamed 'PHP_SELF' to 'SCRIPT_NAME' (mamba)
+- fix SetAttachment in Post.php PR#80 (BigKev73)
+- fix multi-file attachment in post.php PR#81 (BigKev73)
+- fix user jumping directly to the last post in ForumHandler.php PR#82 (BigKev73)
+- update newbb_block.php  PR#83 (BigKev73)
+- PSR-12 Else if (mamba)
 
 <h5>5.00 Final (XOOPS 2.5.10) [2019-04-30]</h5>  Dev: Xoops 2.5.10, PHP 7.3.4
 <hr>

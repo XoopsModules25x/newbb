@@ -31,7 +31,8 @@
 
 use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    Utility
 };
 
 /** @var Helper $helper */
@@ -211,7 +212,7 @@ switch ($op) {
         break;
 }
 
-$cacheHelper = Newbb\Utility::cleanCache();
+$cacheHelper = Utility::cleanCache();
 //$cacheHelper->delete('permission_category');
 
 require_once __DIR__ . '/admin_footer.php';
