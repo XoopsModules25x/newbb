@@ -409,9 +409,16 @@ require_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 if (Request::getString('contents_upload', null, 'POST')) {
-    $attachments_tmp = [];
-    if (Request::getArray('attachments_tmp', null, 'POST')) {
-        $attachments_tmp = unserialize(base64_decode(Request::getArray('attachments_tmp', [], 'POST'), true));
+  // BigKev73 > This line needs to be removed as it will cause any attachement already added in this editing session to be throw away. This is one of the reasons why multi-file attachment
+  // was not working like it used to in CBB.
+  //  $attachments_tmp = [];
+    
+  // This shoue be Request::getString, not Request::getArray, otherwise this will always return a null value. This is one of the reasons why multi-file attachment
+  // was not working like it used to in CBB.
+  //  if (Request::getArray('attachments_tmp', null, 'POST')) {
+  //      $attachments_tmp = unserialize(base64_decode(Request::getArray('attachments_tmp', [], 'POST'), true));
+   if (Request::getString('attachments_tmp', '', 'POST')) {
+        $attachments_tmp = unserialize(base64_decode(Request::getString('attachments_tmp', [], 'POST'), true));
         if (Request::getArray('delete_tmp', null, 'POST') && count(Request::getArray('delete_tmp', null, 'POST'))) {
             foreach (Request::getArray('delete_tmp', '', 'POST') as $key) {
                 unlink($uploaddir = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]));
