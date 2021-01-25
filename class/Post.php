@@ -184,9 +184,14 @@ class Post extends \XoopsObject
             $key                         = (string)(time() + $counter++);
             $this->attachmentArray[$key] = [
                 'name_saved'  => $name_saved,
-                'nameDisplay' => empty($nameDisplay) ? $nameDisplay : $name_saved,
+                 // BigKev73 >  without this change the nameDisplay will always get set to the $name_Saved, so in the forum it will show the on-disk filename instead of the name of the orginal file
+                //'nameDisplay' => empty($nameDisplay) ? $nameDisplay : $name_saved,
+                'nameDisplay' => !empty($nameDisplay) ? $nameDisplay : $name_saved,
                 'mimetype'    => $mimetype,
-                'numDownload' => empty($numDownload) ? (int)$numDownload : 0,
+                // BigKev73 >  without this change the numDownload will always be set to 0
+                //'numDownload' => empty($numDownload) ? (int)$numDownload : 0,
+                'numDownload' => !empty($numDownload) ? (int)$numDownload : 0,
+                 
             ];
         }
         $attachmentSave = null;
