@@ -2,7 +2,9 @@
 <hr>
 - reversed to while (list()) (mamba)
 - reversed strict in_array (mamba)
--
+- fixed wrong display of html in block list_topic (goffy)
+- fixed problem with uid/lastposter in block list_topic, if no user is selected (goffy)
+- added truncateHtml (goffy)
 
 <h5>5.00 RC1 (XOOPS 2.5.10) [2019-02-09]</h5>  Dev: Xoops 2.5.10, PHP 7.3.2
 <hr>
