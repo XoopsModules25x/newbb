@@ -69,13 +69,13 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int              $limit
-     * @param int              $start
-     * @param \CriteriaElement $criteria
-     * @param null             $fields
-     * @param bool             $asObject
-     * @param int              $topic_id
-     * @param int              $approved
+     * @param int                   $limit
+     * @param int                   $start
+     * @param \CriteriaElement|null $criteria
+     * @param null                  $fields
+     * @param bool                  $asObject
+     * @param int                   $topic_id
+     * @param int                   $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -478,7 +478,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     {
         // if not join get the count from XOOPS/class/model/stats as before
         if (empty($join)) {
-            return parent::getCount($criteria);
+            return $this->getCount($criteria);
         }
 
         $sql = 'SELECT COUNT(*) as count' . ' FROM ' . $this->db->prefix('newbb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' AS t ON t.post_id = p.post_id';

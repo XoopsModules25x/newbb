@@ -19,23 +19,6 @@ use Xmf\IPAddress;
 use XoopsDatabase;
 use XoopsModules\Newbb;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 require_once dirname(__DIR__) . '/include/functions.config.php';
 
 /**
@@ -315,7 +298,7 @@ class OnlineHandler
     /**
      * Get an array of online information
      *
-     * @param \CriteriaElement $criteria {@link \CriteriaElement}
+     * @param \CriteriaElement|null $criteria {@link \CriteriaElement}
      * @return array           Array of associative arrays of online information
      */
     public function getAll(CriteriaElement $criteria = null)
@@ -378,7 +361,7 @@ class OnlineHandler
     /**
      * Count the number of online users
      *
-     * @param \CriteriaElement $criteria {@link CriteriaElement}
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement}
      * @return bool
      */
     public function getCount(CriteriaElement $criteria = null)

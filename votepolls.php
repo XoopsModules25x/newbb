@@ -108,7 +108,6 @@ if ($pollModuleHandler->getVar('version') >= 201) {
                 /* set anon user vote (and the time they voted) */
                 if (!is_object($GLOBALS['xoopsUser'])) {
                     xoops_load('pollUtility', $GLOBALS['xoopsModuleConfig']['poll_module']);
-                    /** @var \XoopsModules\Xoopspoll\Utility $classPollUtility */
                     $classPollUtility = new Utility();
                     $classPollUtility::setVoteCookie($poll_id, $voteTime, 0);
                 }

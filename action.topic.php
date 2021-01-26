@@ -10,7 +10,15 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Tree,
+    TopicHandler,
+    ForumHandler,
+    PostHandler
+};
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -22,7 +30,7 @@ $op = in_array($op, ['approve', 'delete', 'restore', 'move']) ? $op : '';
 
 if (0 === count($topic_id) || '' === $op) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, \_MD_NEWBB_NO_SELECTION);
 }
 
 $topic_id = array_values($topic_id);

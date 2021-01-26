@@ -47,6 +47,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $image     = $img_path . '/' . $source;
         $thumb_url = $thumb_url . '/' . $source;
         $image_url = $img_url . '/' . $source;
+        $img_info = '';
 
         $imginfo  = @getimagesize($image);
         if (is_array($image)) {

@@ -244,7 +244,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         $object->setVar('uid', $uid);
         $object->setVar('read_time', \time());
 
-        return parent::insert($object);
+        return $this->insert($object);
     }
 
     /**

@@ -63,7 +63,6 @@ EOF;
 /** @var Newbb\Common\Configurator $configurator */
 $configurator = new Configurator();
 
-/** @var \XoopsModules\Newbb\Common\Migrate $migrator */
 $migrator = new Migrate($configurator);
 
 $op        = Request::getCmd('op', 'show');

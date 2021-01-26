@@ -31,8 +31,17 @@
 
 use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb;
-use XoopsModules\Newbb\Utility;
+use XoopsModules\Newbb\{
+    Helper,
+    Utility,
+    ForumHandler,
+    PermissionHandler,
+    CategoryHandler
+};
+
+/** @var PermissionHandler $permHandler */
+/** @var ForumHandler $forumHandler */
+/** @var CategoryHandler $categoryHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
@@ -40,7 +49,6 @@ require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once dirname(__DIR__) . '/include/functions.forum.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
 
-/** @var \Xmf\Module\Helper\Cache $cacheHelper */
 $cacheHelper = new Cache('newbb');
 Utility::cleanCache();
 

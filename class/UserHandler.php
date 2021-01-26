@@ -42,7 +42,6 @@ class UserHandler
 
     public function loadUserInfo()
     {
-        /** @var Newbb\Helper $helper */
         $helper = Helper::getInstance();
         $helper->loadLanguage('user');
         //        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');

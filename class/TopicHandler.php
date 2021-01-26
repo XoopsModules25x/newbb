@@ -473,7 +473,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     // START irmtfan - rewrite topic synchronization function. add pid sync and remove hard-code db access
 
     /**
-     * @param null $object
+     * @param \XoopsObject|int|string|null $object
      * @param bool $force
      * @return bool
      */
@@ -588,7 +588,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             // if more than 1 continue
         }
         // if there is some topics but no module or more than one module have polls
-        \xoops_error("Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.");
+        \xoops_error(\_MD_NEWBB_ERROR_POLL_MODULE_NOT_FOUND);
 
         return false;
     }

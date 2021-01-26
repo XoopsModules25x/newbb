@@ -99,7 +99,6 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     //    XoopsLoad::load('migrate', 'newbb');
-    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
     $configurator = new Configurator();
 
     $migrator = new Migrate($configurator);

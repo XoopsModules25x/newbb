@@ -547,7 +547,6 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                     ]
                 );
                 $classRenderer = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Renderer';
-                /** @var Xoopspoll\Renderer $renderer */
                 $renderer = new Xoopspoll\Renderer($pollObject);
                 // check to see if user has voted, show form if not, otherwise get results for form
 

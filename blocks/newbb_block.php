@@ -952,7 +952,6 @@ function b_newbb_custom($options)
  */
 function b_newbb_custom_topic($options)
 {
-    /** @var \XoopsModules\Newbb\Helper $helper */
     $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');
@@ -974,7 +973,6 @@ function b_newbb_custom_topic($options)
  */
 function b_newbb_custom_post($options)
 {
-    /** @var \XoopsModules\Newbb\Helper $helper */
     $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');
@@ -996,7 +994,6 @@ function b_newbb_custom_post($options)
  */
 function b_newbb_custom_author($options)
 {
-    /** @var \XoopsModules\Newbb\Helper $helper */
     $helper = Helper::getInstance();
     // if no newbb module block set, we have to include the language file
     $helper->loadLanguage('blocks');

@@ -31,11 +31,14 @@
 
 use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper,
-    Utility
+use XoopsModules\Newbb\{
+    Helper,
+    Utility,
+    CategoryHandler
 };
 
 /** @var Helper $helper */
+/** @var CategoryHandler $categoryHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
@@ -45,7 +48,6 @@ xoops_cp_header();
 $op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
-/** @var Newbb\CategoryHandler $categoryHandler */
 //$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 
 /**

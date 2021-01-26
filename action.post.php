@@ -11,8 +11,14 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    Tree
+    Tree,
+    TopicHandler,
+    ForumHandler,
+    PostHandler
 };
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -33,7 +39,7 @@ $mode = Request::getInt('mode', 1, 'GET');
 
 if (0 === $post_id || '' === $op) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, \_MD_NEWBB_NO_SELECTION);
 }
 ///** @var PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
@@ -107,7 +113,7 @@ switch ($op) {
         }
 
         $criteria_topic = new \Criteria('topic_id', '(' . implode(',', array_keys($topics)) . ')', 'IN');
-        $topic_list     = $topicHandler->getList($criteria_topic, true);
+        $topic_list     = $topicHandler->getList($criteria_topic);
 
         $criteria_forum = new \Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
         $forum_list     = $forumHandler->getList($criteria_forum);

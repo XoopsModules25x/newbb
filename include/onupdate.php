@@ -50,9 +50,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
 
-    /** @var \XoopsModules\Newbb\Utility $utility */
     $utility = new Utility();
-    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
     $configurator = new Configurator();
 
     $xoopsSuccess = $utility::checkVerXoops($module);

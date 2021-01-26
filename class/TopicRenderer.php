@@ -852,7 +852,7 @@ class TopicRenderer
     }
 
     /**
-     * @param \Smarty $xoopsTpl
+     * @param \Smarty|null $xoopsTpl
      * @return array|void
      */
     public function renderTopics(\Smarty $xoopsTpl = null)
