@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></h2>
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
         <{if $parent_forum}>
@@ -21,7 +21,7 @@
 <{if $viewer_level gt 1}>
     <div class="right" id="admin">
         <{if $mode gt 1}>
-        <!-- irmtfan mistype forum_posts_admin => form_posts_admin  -->
+        <{* irmtfan mistype forum_posts_admin => form_posts_admin  *}>
         <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1) { return false; }">
             <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
             <select name="op">
@@ -47,7 +47,7 @@
 <br>
 
 <div style="padding: 5px;">
-    <!-- irmtfan remove prev and next icons -->
+    <{* irmtfan remove prev and next icons *}>
     <a id="threadtop"></a><{$down}><a href="#threadbottom"><{$smarty.const._MD_NEWBB_BOTTOM}></a>
 </div>
 
@@ -62,11 +62,11 @@
             <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
             <option value="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
             <option value="<{$all_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_ALL}></option>
-            <!--
+            <{*
             <option value="<{$digest_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_DIGEST}></option>
             <option value="<{$unreplied_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></option>
             <option value="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></option>
-            //-->
+            // *}>
         </select>
 
         <select
@@ -80,9 +80,9 @@
             <{/foreach}>
         </select>
     </div>
-    <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
+    <{* irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" *}>
     <div class="pagenav">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}>
     </div>
 </div>
 <div class="clear"></div>
@@ -91,7 +91,7 @@
 
 <{foreach item=post from=$posts}>
 <{include file="db:newbb_thread.tpl" topic_post=$post}>
-<!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
+<{* irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" *}>
 <div class="pagenav">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWTOPIC}></strong></a>
     <{if !$forum_name }>
@@ -110,14 +110,14 @@
 
 <br>
 <div>
-    <!-- irmtfan hardcode removed style="float: left; text-align:left;" -->
+    <{* irmtfan hardcode removed style="float: left; text-align:left;" *}>
     <div class="icon_left">
-        <!-- irmtfan add up button -->
+        <{* irmtfan add up button *}>
         <a id="threadbottom"></a><{$p_up}><a href="#threadtop"><{$smarty.const._MD_NEWBB_TOP}></a>
     </div>
-    <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
+    <{* irmtfan hardcode removed style="float: right; text-align:right;" *}>
     <div class="icon_right">
-        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}>
     </div>
 </div>
 <div class="clear"></div>
@@ -125,7 +125,7 @@
 <br>
 <br>
 <div>
-    <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
+    <{* irmtfan hardcode removed style="float: left; text-align: left;" *}>
     <div class="icon_left">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
@@ -136,7 +136,7 @@
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
     </div>
-    <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
+    <{* irmtfan hardcode removed style="float: right; text-align: right;" *}>
     <div class="icon_right">
         <{$forum_jumpbox}>
     </div>
@@ -148,4 +148,4 @@
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 <{include file='db:newbb_notification_select.tpl'}>
-<!-- end module contents -->
+<{* end module contents *}>

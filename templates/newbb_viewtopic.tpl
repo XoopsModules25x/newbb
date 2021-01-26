@@ -49,10 +49,10 @@
     </div>
     <br>
 <{/if}>
-<!-- only for login user //-->
+<{* only for login user // *}>
 <{if $viewer_level gt 0}>
 
-    <!-- modal for rate //-->
+    <{* modal for rate // *}>
     <div class="modal fade bs-example-modal-sm container" id="replyrate" tabindex="-1" role="dialog" aria-labelledby="replyrate">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content btn-group" role="group">
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <!-- modal for quickreply //-->
+    <{* modal for quickreply // *}>
     <div class="modal fade bs-example-modal-sm container" id="replyquick" tabindex="-1" role="dialog" aria-labelledby="replyquick">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content modal-body"><button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -74,23 +74,23 @@
         </div>
     </div>
 
-    <!-- fix bottom navbar //-->
+    <{* fix bottom navbar // *}>
     <div class="navbar-fixed-bottom container" id="postnav" style="bottom:12px;">
 
-        <!-- rate button //-->
+        <{* rate button // *}>
         <{if $rating_enable}>
             <a class="btn btn-default btn-lg" style="box-shadow: 0 0 15px 0 #808080" data-toggle="modal" data-target="#replyrate"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><{$smarty.const.THEME_LIKE}></a>&nbsp;
         <{/if}>
 
-        <!-- reply button //-->
+        <{* reply button // *}>
         <{if $quickreply.show}>
             <a class="btn btn-default btn-lg" style="box-shadow: 0 0 15px 0 #808080" data-toggle="modal" data-target="#replyquick"><i class="fa fa-comment-o" aria-hidden="true"></i><{$smarty.const.THEME_FORUM_REPLY}></a>&nbsp;
         <{/if}>
 
-        <!-- modal-dialog move to bottom //-->
+        <{* modal-dialog move to bottom // *}>
         <style>.btn-bottom {position: absolute;bottom:48px;z-index:9999;} </style>
 
-        <!-- scroll hide bottom navbar //-->
+        <{* scroll hide bottom navbar // *}>
         <script>
             $(window).scroll(function(){
                 const scrollBottom = $("body").height() - $(window).height() - 60;

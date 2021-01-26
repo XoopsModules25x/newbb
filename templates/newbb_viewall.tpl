@@ -1,15 +1,15 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></h2>
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
-        <{if $parent_forum}>
+        <{if $parent_forum|default:''}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
-        <{elseif $forum_name}>
+        <{elseif $forum_name|default:''}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
         <{/if}>
@@ -26,7 +26,7 @@
     <{/if}>
 
     <{if $viewer_level gt 1}>
-        <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
+        <{* irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" *}>
         <div class="pagenav" id="admin">
             <{if $mode gt 1}>
                 <{$smarty.const._ALL}>:
@@ -47,7 +47,7 @@
                 <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
-                <!-- irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading -->
+                <{* irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading *}>
             <{else}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a>
                 |
@@ -56,10 +56,10 @@
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
                 |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a>
-                <!-- irmtfan remove < { else } > no need for mode=1
+                <{* irmtfan remove < { else } > no need for mode=1
 < { else } >
-<!--<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?mode=1#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
--->
+<{* <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?mode=1#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
+ *}>
             <{/if}>
         </div>
         <br>
@@ -79,13 +79,13 @@
                     <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
                     <option value="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_ALLPOSTS}></option>
                     <option value="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
-                    <!-- irmtfan add a separator -->
+                    <{* irmtfan add a separator *}>
                     <option value="">--------</option>
                     <{foreach item=filter from=$filters}>
                         <option value="<{$filter.link}>"><{$filter.title}></option>
                     <{/foreach}>
                     <option value="">--------</option>
-                    <{foreach item=filter from=$types}>
+                    <{foreach item=filter from=$types|default:null}>
                         <option value="<{$filter.link}>"><{$filter.title}></option>
                     <{/foreach}>
                 </select>
@@ -134,9 +134,9 @@
                 </div>
             <{/if}>
         </div>
-        <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
+        <{* irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" *}>
         <div class="pagenav">
-            <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+            <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}>
         </div>
     </div>
     <div class="clear"></div>
@@ -144,7 +144,7 @@
     <br>
 
     <table class="outer" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <tr class="head" class="align_left">
             <td width="5%" colspan="2">
                 <{if $mode gt 1}>
@@ -162,28 +162,28 @@
             <td width="15%" align="center" nowrap="nowrap"><strong><a href="<{$headers.lastpost.link}>"><{$headers.lastpost.title}></a></strong></td>
         </tr>
 
-        <!-- start forum topic -->
+        <{* start forum topic *}>
         <{foreach name=loop item=topic from=$topics}>
         <tr class="<{cycle values="even,odd"}>">
-            <!-- irmtfan add topic-read/topic-new smarty variable  -->
+            <{* irmtfan add topic-read/topic-new smarty variable  *}>
             <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
                 <{if $mode gt 1}>
                     <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
                 <{else}>
-                    <!-- irmtfan add lock -->
+                    <{* irmtfan add lock *}>
                     <{$topic.topic_folder}><{$topic.lock}>
                 <{/if}>
             </td>
-            <!-- irmtfan add sticky, digest, poll -->
+            <{* irmtfan add sticky, digest, poll *}>
             <td width="4%" align="center"><{$topic.topic_icon}><{$topic.sticky}><br><{$topic.digest}><{$topic.poll}></td>
-            <!-- irmtfan remove topic_link hardcode and add topic_excerpt -->
+            <{* irmtfan remove topic_link hardcode and add topic_excerpt *}>
             <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-                    <!-- irmtfan remove
-        <{if $topic.allow_prefix AND $topic.topic_subject}>
+                    <{* irmtfan remove
+        <{if $topic.allow_prefix|default:false AND $topic.topic_subject}>
         <{$topic.topic_subject}>
-        <{/if}> -->
-                    <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
-                <!-- irmtfan add topic publish time and rating -->
+        <{/if}> *}>
+                    <{$topic.topic_title}></a><{$topic.attachment|default:''}> <{$topic.topic_page_jump}>
+                <{* irmtfan add topic publish time and rating *}>
                 <br>
         <span>
             <{$headers.publish.title}>: <{$topic.topic_time}>
@@ -195,18 +195,18 @@
             </span>
                 <{/if}>
             </td>
-            <!-- irmtfan hardcode removed align="left" -->
+            <{* irmtfan hardcode removed align="left" *}>
             <td class="align_left" valign="middle"><{$topic.topic_forum_link}></td>
             <td align="center" valign="middle"><{$topic.topic_replies}></td>
             <td align="center" valign="middle"><{$topic.topic_poster}></td>
             <td align="center" valign="middle"><{$topic.topic_views}></td>
-            <!-- irmtfan hardcode removed align="right" -->
+            <{* irmtfan hardcode removed align="right" *}>
             <td class="align_right" valign="middle"><{$topic.topic_last_posttime}><br>
                 <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
             </td>
         </tr>
         <{/foreach}>
-        <!-- end forum topic -->
+        <{* end forum topic *}>
 
         <{if $mode gt 1}>
 </form>
@@ -222,22 +222,22 @@
                 <{$selection.since}>&nbsp;
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
-                        <!-- irmtfan correct name="$hidvar" -->
+                        <{* irmtfan correct name="$hidvar" *}>
                         <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
                 <{/foreach}>
-                <!-- irmtfan remove name="refresh" -->
+                <{* irmtfan remove name="refresh" *}>
                 <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
 </tr>
 </table>
-<!-- end forum main table -->
+<{* end forum main table *}>
 
 <{if $pagenav}>
-    <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
-    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
+    <{* irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" *}>
+    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}></div>
     <br>
 <{/if}>
 <div class="clear"></div>
@@ -251,13 +251,13 @@
         <{$img_digest}> = <{$smarty.const._MD_NEWBB_TOPICDIGEST}> <br>
         <{$img_poll}> = <{$smarty.const._MD_NEWBB_TOPICHASPOLL}>
     </div>
-    <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
+    <{* irmtfan hardcode removed style="float: right; text-align: right;" *}>
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
             <{foreach item=hidval key=hidvar from=$search}>
                 <{if $hidval }>
-                    <!-- irmtfan correct name="$hidvar" -->
+                    <{* irmtfan correct name="$hidvar" *}>
                     <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                 <{/if}>
             <{/foreach}>
@@ -265,7 +265,7 @@
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>
-        <!-- START irmtfan add forum selection box -->
+        <{* START irmtfan add forum selection box *}>
         <{if $forum_jumpbox }>
             <form method="get" action="<{$selection.action}>">
                 <{$selection.forum}>&nbsp;
@@ -279,7 +279,7 @@
             <br>
             <{$forum_jumpbox}>
         <{/if}>
-        <!-- END irmtfan add forum selection box -->
+        <{* END irmtfan add forum selection box *}>
     </div>
 </div>
 <div class="clear"></div>
@@ -287,4 +287,4 @@
 
 <{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
 <{include file='db:newbb_notification_select.tpl'}>
-<!-- end module contents -->
+<{* end module contents *}>

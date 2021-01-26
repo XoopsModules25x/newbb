@@ -1,12 +1,12 @@
 <table cellspacing="1" class="outer" width="100%">
     <tr class="head" align="center">
         <td width="5%">&nbsp;</td>
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <td nowrap="nowrap" class="align_left"><{$smarty.const._MD_NEWBB_SUBFORUMS}></td>
         <td nowrap="nowrap">&nbsp;</td>
         <td nowrap="nowrap"><{$smarty.const._MD_NEWBB_LASTPOST}></td>
     </tr>
-    <!-- start subforums -->
+    <{* start subforums *}>
     <{foreach item=sforum from=$subforum}>
     <tr>
         <td class="even" align="center" valign="middle"><{$sforum.forum_folder}></td>
@@ -25,14 +25,14 @@
             <br>
             <{$sforum.forum_posts}> <{$smarty.const._MD_NEWBB_POSTS}>
         </td>
-        <!-- irmtfan hardcode removed align="right" -->
+        <{* irmtfan hardcode removed align="right" *}>
         <td class="odd" id="align_right" valign="middle">
             <{if $sforum.forum_lastpost_subject}>
                 <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$sforum.forum_lastpost_user}>
                 <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
                     <{$sforum.forum_lastpost_subject}>&nbsp;&nbsp;
-                    <!-- irmtfan removed icon_path -->
+                    <{* irmtfan removed icon_path *}>
                     <{$sforum.forum_lastpost_icon}>
                 </a>
             <{else}>
@@ -41,5 +41,5 @@
         </td>
     </tr>
     <{/foreach}>
-    <!-- end subforums -->
+    <{* end subforums *}>
 </table>
