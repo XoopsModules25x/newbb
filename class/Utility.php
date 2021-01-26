@@ -2,9 +2,6 @@
 
 namespace XoopsModules\Newbb;
 
-use Exception;
-use RuntimeException;
-use SystemMaintenance;
 use Xmf\Module\Helper\Cache;
 
 /** @var Helper $helper */
@@ -79,10 +76,10 @@ class Utility extends Common\SysUtility
     {
         try {
             if (!@mkdir($folder) && !is_dir($folder)) {
-                throw new RuntimeException(sprintf('Unable to create the %s directory', $folder));
+                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
             }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
@@ -97,7 +94,7 @@ class Utility extends Common\SysUtility
         }
         // for 2.5 systems, clear everything
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
-        $maintenance = new SystemMaintenance();
+        $maintenance = new \SystemMaintenance();
         $cacheList   = [
             3, // xoops_cache
         ];

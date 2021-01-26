@@ -27,7 +27,7 @@ class XmlrssHandler
      */
     public function create()
     {
-        $xmlrss = new Newbb\Xmlrss();
+        $xmlrss = new Xmlrss();
 
         return $xmlrss;
     }

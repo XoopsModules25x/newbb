@@ -310,7 +310,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     public function &getPostTree($postArray, $pid = 0)
     {
         //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
-        $NewBBTree = new Newbb\Tree('newbb_posts');
+        $NewBBTree = new Tree('newbb_posts');
         $NewBBTree->setPrefix('&nbsp;&nbsp;');
         $NewBBTree->setPostArray($postArray);
         $NewBBTree->getPostTree($postsArray, $pid);

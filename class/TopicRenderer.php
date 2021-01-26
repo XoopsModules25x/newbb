@@ -12,95 +12,8 @@ namespace XoopsModules\Newbb;
  * @package        module::newbb
  */
 
-use Criteria;
-use MyTextSanitizer;
-use RuntimeException;
-use Smarty;
 use Xmf\Request;
 use XoopsModules\Newbb;
-use XoopsPageNav;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-use function newbbHtml2text;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-use const _MD_NEWBB_MORETHAN2;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-use const ENT_HTML5;
-
 
 /**
  * Topic Renderer
@@ -132,7 +45,7 @@ class TopicRenderer
      * Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
      */
     public $userlevel = 0;
-    public $query = [];
+    public $query     = [];
     /**
      * reference to an object handler
      */
@@ -162,7 +75,7 @@ class TopicRenderer
     {
         static $instance;
         if (null === $instance) {
-            $instance = new static();
+            $instance = new self();
         }
 
         return $instance;
@@ -704,7 +617,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildSelection(Smarty $xoopsTpl)
+    public function buildSelection(\Smarty $xoopsTpl)
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
@@ -719,7 +632,7 @@ class TopicRenderer
         $sorts             = $this->getSort('', 'title');
         $selection['sort'] = "<select name='sort'>";
         if (!is_array($sorts)) {
-            throw new RuntimeException('$sorts must be an array.');
+            throw new \RuntimeException('$sorts must be an array.');
         }
         foreach ($sorts as $sort => $title) {
             $selection['sort'] .= "<option value='" . $sort . "' " . (($sort == $sort_selected) ? " selected='selected'" : '') . '>' . $title . '</option>';
@@ -740,7 +653,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildSearch(Smarty $xoopsTpl)
+    public function buildSearch(\Smarty $xoopsTpl)
     {
         $search             = [];
         $search['forum']    = @$this->vars['forum'];
@@ -754,7 +667,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildHeaders(Smarty $xoopsTpl)
+    public function buildHeaders(\Smarty $xoopsTpl)
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -766,7 +679,7 @@ class TopicRenderer
 
         $headers = $this->getSort('', 'title');
         if (!is_array($headers)) {
-            throw new RuntimeException('$headers must be an array.');
+            throw new \RuntimeException('$headers must be an array.');
         }
         foreach ($headers as $header => $title) {
             $_args = ["sort={$header}"];
@@ -782,7 +695,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildFilters(Smarty $xoopsTpl)
+    public function buildFilters(\Smarty $xoopsTpl)
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -828,7 +741,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @return bool
      */
-    public function buildTypes(Smarty $xoopsTpl)
+    public function buildTypes(\Smarty $xoopsTpl)
     {
         $status = [];
         if (!$types = $this->getTypes()) {
@@ -855,7 +768,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @return bool
      */
-    public function buildCurrent(Smarty $xoopsTpl)
+    public function buildCurrent(\Smarty $xoopsTpl)
     {
         if (empty($this->vars['status']) && !$this->is_multiple) {
             return true;
@@ -877,7 +790,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildPagenav(Smarty $xoopsTpl)
+    public function buildPagenav(\Smarty $xoopsTpl)
     {
         $count_topic = $this->getCount();
         if ($count_topic > $this->config['topics_per_page']) {
@@ -889,7 +802,7 @@ class TopicRenderer
                 $args[] = "{$var}={$val}";
             }
             require_once $GLOBALS['xoops']->path('class/pagenav.php');
-            $nav = new XoopsPageNav($count_topic, $this->config['topics_per_page'], @$this->vars['start'], 'start', implode('&amp;', $args));
+            $nav = new \XoopsPageNav($count_topic, $this->config['topics_per_page'], @$this->vars['start'], 'start', implode('&amp;', $args));
             if (isset($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
                 $nav->url = formatURL(Request::getString('SERVER_NAME', '', 'SERVER')) . ' /' . $nav->url;
             }
@@ -942,9 +855,9 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @return array|void
      */
-    public function renderTopics(Smarty $xoopsTpl = null)
+    public function renderTopics(\Smarty $xoopsTpl = null)
     {
-        $myts = MyTextSanitizer::getInstance(); // irmtfan Instanciate
+        $myts = \MyTextSanitizer::getInstance(); // irmtfan Instanciate
 
         $ret = [];
         //$this->parseVars();
@@ -1015,7 +928,7 @@ class TopicRenderer
             // START irmtfan remove topic_icon hardcode smarty
             // topic_icon: just regular topic_icon
             if (!empty($myrow['icon'])) {
-                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
+                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
             } else {
                 $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" >';
             }
@@ -1144,7 +1057,7 @@ class TopicRenderer
         $forumHandler = Helper::getInstance()->getHandler('Forum');
 
         if (count($forums) > 0) {
-            $forum_list = $forumHandler->getAll(new Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), ['forum_name', 'hot_threshold'], false);
+            $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), ['forum_name', 'hot_threshold'], false);
         } else {
             $forum_list = $forumHandler->getAll();
         }
@@ -1175,7 +1088,7 @@ class TopicRenderer
             //    $topic_folder_text = _MD_NEWBB_TOPICDIGEST;
             if ($topics[$id]['topic_replies'] >= $forum_list[$topics[$id]['topic_forum']]['hot_threshold']) {
                 $topic_folder      = empty($topic_isRead[$id]) ? 'topic_hot_new' : 'topic_hot';
-                $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_MORETHAN : _MD_NEWBB_MORETHAN2;
+                $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_MORETHAN : \_MD_NEWBB_MORETHAN2;
             } else {
                 $topic_folder      = empty($topic_isRead[$id]) ? 'topic_new' : 'topic';
                 $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_NEWPOSTS : _MD_NEWBB_NONEWPOSTS;

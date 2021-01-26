@@ -47,7 +47,7 @@ class UserHandler
         $helper->loadLanguage('user');
         //        @require_once $GLOBALS['xoops']->path('modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/user.php');
         if (\class_exists('UserLanguage')) {
-            $handler = new Newbb\UserLanguage();
+            $handler = new UserLanguage();
         } else {
             $handler = new User();
         }

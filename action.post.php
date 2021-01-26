@@ -10,7 +10,9 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Tree
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -184,7 +186,7 @@ switch ($op) {
             /* split a post and its children posts */
         } elseif (2 === $mode) {
             require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-            $mytree = new Newbb\Tree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
+            $mytree = new Tree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
             $posts  = $mytree->getAllChildId($post_id);
             if (count($posts) > 0) {
                 $criteria = new \Criteria('post_id', '(' . implode(',', $posts) . ')', 'IN');

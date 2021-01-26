@@ -145,7 +145,7 @@ switch ($op) {
             $poll_form->addElement($author_label);
             $question_text = new \XoopsFormText(_MD_NEWBB_POLL_POLLQUESTION, 'question', 50, 255);
             $poll_form->addElement($question_text);
-            $desc_tarea = new \XoopsFormTextarea(_MD_NEWBB_POLL_POLLDESC, 'description');
+            $desc_tarea = new \XoopsFormTextArea(_MD_NEWBB_POLL_POLLDESC, 'description');
             $poll_form->addElement($desc_tarea);
             $currenttime = formatTimestamp(time(), 'Y-m-d H:i:s');
             $endtime     = formatTimestamp(time() + 604800, 'Y-m-d H:i:s');
@@ -207,7 +207,7 @@ switch ($op) {
             $poll_form->addElement($author_label);
             $question_text = new \XoopsFormText(_MD_NEWBB_POLL_POLLQUESTION, 'question', 50, 255, $pollObject->getVar('question', 'E'));
             $poll_form->addElement($question_text);
-            $desc_tarea = new \XoopsFormTextarea(_MD_NEWBB_POLL_POLLDESC, 'description', $pollObject->getVar('description', 'E'));
+            $desc_tarea = new \XoopsFormTextArea(_MD_NEWBB_POLL_POLLDESC, 'description', $pollObject->getVar('description', 'E'));
             $poll_form->addElement($desc_tarea);
             $date = formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s'); // important "Y-m-d H:i:s" use in jdf function
             if (!$pollObject->hasExpired()) {
@@ -296,7 +296,7 @@ switch ($op) {
             $end_time = Request::getString('end_time', '', 'POST'); // (empty($_POST['end_time'])) ? "" : $_POST['end_time'];
             if ('' !== $end_time) {
                 $timezone = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('timezone') : null;
-                $pollObject->setVar('end_time', userTimeToServerTime(method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time), $timezone));
+                $pollObject->setVar('end_time', userTimeToServerTime(strtotime($end_time), $timezone));
             } else {
                 // if expiration date is not set, set it to 10 days from now
                 $pollObject->setVar('end_time', time() + (86400 * 10));
@@ -462,7 +462,7 @@ switch ($op) {
             $end_time = Request::getString('end_time', '', 'POST');
             if ('' !== $end_time) {
                 $timezone = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('timezone') : null;
-                $pollObject->setVar('end_time', userTimeToServerTime(method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time), $timezone));
+                $pollObject->setVar('end_time', userTimeToServerTime(strtotime($end_time), $timezone));
             }
             $pollObject->setVar('display', 0);
             $pollObject->setVar('weight', Request::getInt('weight', 0, 'POST'));
@@ -728,7 +728,7 @@ switch ($op) {
         $end_time = !Request::getInt('end_time', 0, 'POST');
         if (0 !== $end_time) {
             $timezone = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('timezone') : null;
-            $pollObject->setVar('end_time', userTimeToServerTime(method_exists('XoopsLocal', 'strtotime') ? XoopsLocal::strtotime($end_time) : strtotime($end_time), $timezone));
+            $pollObject->setVar('end_time', userTimeToServerTime(strtotime($end_time), $timezone));
         } else {
             $pollObject->setVar('end_time', time() + $default_poll_duration);
         }

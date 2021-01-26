@@ -100,6 +100,36 @@ if (!\class_exists('ObjectTree')) {
         }
 
         /**
+         * Make options for a select box from
+         *
+         * @param string $fieldName     Name of the member variable from the
+         *                              node objects that should be used as the title for the options.
+         * @param string $selected      Value to display as selected
+         * @param int    $key           ID of the object to display as the root of select options
+         * @param string $ret           (reference to a string when called from outside) Result from previous recursions
+         * @param string $prefix_orig   String to indent items at deeper levels
+         * @param string $prefix_curr   String to indent the current item
+         * @access    private
+         */
+        public function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
+        {
+            if ($key > 0) {
+                $value = $this->_tree[$key]['obj']->getVar($this->_myId);
+                $ret   .= '<option value=\'' . $value . '\'';
+                if ($value == $selected) {
+                    $ret .= ' selected="selected"';
+                }
+                $ret         .= '>' . $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName) . '</option>';
+                $prefix_curr .= $prefix_orig;
+            }
+            if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
+                foreach ($this->_tree[$key]['child'] as $childkey) {
+                    $this->_makeSelBoxOptions($fieldName, $selected, $childkey, $ret, $prefix_orig, $prefix_curr);
+                }
+            }
+        }
+
+        /**
          * Make a select box with options from the tree
          *
          * @param string $name             Name of the select box
@@ -156,7 +186,7 @@ if (!\class_exists('ObjectTree')) {
                     if (isset($this->tree[$childkey]['obj'])) {
                         $ret['child'][$childkey] = $this->tree[$childkey]['obj'];
                     }
-                    $this->getAllChild_object($childkey, $ret['child'][$childkey], $depth);
+                    $this->getAllChildObject($childkey, $ret['child'][$childkey], $depth);
                 }
             }
         }
@@ -175,7 +205,7 @@ if (!\class_exists('ObjectTree')) {
             if ($depth > 0) {
                 ++$depth;
             }
-            $this->getAllChild_object($key, $ret, $depth);
+            $this->getAllChildObject($key, $ret, $depth);
 
             return $ret;
         }

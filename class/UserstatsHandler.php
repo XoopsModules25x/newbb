@@ -35,7 +35,7 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
     {
         static $instance;
         if (null === $instance) {
-            $instance = new static($db);
+            $instance = new self($db);
         }
 
         return $instance;

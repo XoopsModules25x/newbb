@@ -92,11 +92,11 @@ class ReadforumHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @param $status
-     * @param $items
+     * @param int $status
+     * @param array|null $items
      * @return bool
      */
-    public function setReadItemsCookie($status, $items)
+    public function setReadItemsCookie($status, $items=null)
     {
         $cookie_name = 'LF';
         $items       = [];

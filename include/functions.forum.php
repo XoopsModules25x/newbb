@@ -98,7 +98,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $box .= '<option value=0>-- ' . _MD_NEWBB_SELFORUM . ' --</option>';
         $box .= newbbForumSelectBox($forum_id);
         $box .= "</select> <input type='submit' class='button' value='" . _GO . "' ></form>";
-        unset($forums, $categories);
+//        unset($forums, $categories);
 
         return $box;
     }

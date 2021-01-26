@@ -31,7 +31,9 @@
 // irmtfan enhance include
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    UserHandler
+};
 use XoopsModules\Xoopspoll;
 use XoopsModules\Xoopspoll\Helper;
 
@@ -280,7 +282,7 @@ if ($poster_array && is_array($poster_array)) {
 $viewtopic_users = [];
 if ($userid_array && is_array($userid_array)) {
     //    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
-    $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
+    $userHandler         = new UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
     $viewtopic_users     = $userHandler->getUsers();

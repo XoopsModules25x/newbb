@@ -76,7 +76,7 @@ function newbb_admin_chmod($target, $mode = 0777)
 function newbb_getImageLibs()
 {
     $imageLibs = [];
-    unset($output, $status);
+//    unset($output, $status);
     if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);

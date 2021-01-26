@@ -714,7 +714,7 @@ class Post extends \XoopsObject
             'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>',
         ];
 
-        unset($thread_buttons, $mod_buttons, $eachposter);
+        unset($thread_buttons, $mod_buttons);
 
         return $post;
     }

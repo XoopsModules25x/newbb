@@ -38,7 +38,6 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper  = Helper::getInstance();
 $utility = new Utility();
-//$configurator = new Newbb\Common\Configurator();
 
 $helper->loadLanguage('common');
 

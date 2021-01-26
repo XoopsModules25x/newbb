@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Xlanguage\Utility as XlanguageUtility;
 
 //use tecnickcom\TCPDF;
 
@@ -101,8 +102,8 @@ if (function_exists('easiestml')) {
     $pdf_data = easiestml($pdf_data);
     // END irmtfan to implement EMLH by GIJ
     // START irmtfan to implement Xlanguage by phppp(DJ)
-} elseif (function_exists('xlanguage_ml')) {
-    $pdf_data = xlanguage_ml($pdf_data);
+} elseif (class_exists('XlanguageUtility')) {
+    $pdf_data = XlanguageUtility::cleanMultiLang($pdf_data);
 }
 // END irmtfan to implement Xlanguage by phppp(DJ)
 

@@ -17,7 +17,10 @@
  * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb\{Helper, Utility};
+use XoopsModules\Newbb\{
+    Common\Configurator,
+    Helper,
+    Utility};
 
 /** @var Helper $helper */
 
@@ -61,8 +64,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /** @var Newbb\Helper $helper */
     $helper       = Helper::getInstance();
-    $utility      = new Newbb\Utility();
-    $configurator = new Newbb\Common\Configurator();
+    $utility      = new Utility();
+    $configurator = new Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');

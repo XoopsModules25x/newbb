@@ -166,6 +166,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     {
         global $myts, $viewAllForums, $xoopsUser;
         $startdate = '';
+        $type = '';
+        $status = '';
+        $excerpt = '';
+        $sort = '';
+        $order = '';
+        $start = '';
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.session.php');

@@ -71,7 +71,7 @@ class IconHandler
     {
         static $instance;
         if (null === $instance) {
-            $instance = new static();
+            $instance = new self();
         }
 
         return $instance;

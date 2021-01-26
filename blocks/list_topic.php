@@ -10,7 +10,8 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    TopicRenderer
 };
 
 /** @var Helper $helper */
@@ -54,7 +55,7 @@ function newbb_list_topic_show($options)
 {
     $newbbConfig = newbbLoadConfig(); // load all newbb configs
 
-    $topicRenderer            = new Newbb\TopicRenderer();
+    $topicRenderer            = new TopicRenderer();
     $topicRenderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']); // Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
 
     $topicRenderer->force = true; // force against static vars for parse
@@ -108,7 +109,7 @@ function newbb_list_topic_edit($options)
     // $form = new \XoopsBlockForm(); //reserve for 2.6
     $form = new \XoopsThemeForm(_MB_NEWBB_DISPLAYMODE_DESC, 'list_topic', '');
 
-    $topicRenderer            = new Newbb\TopicRenderer();
+    $topicRenderer            = new TopicRenderer();
     $topicRenderer->userlevel = 2; // 2 - moderator or admin
 
     // status element
