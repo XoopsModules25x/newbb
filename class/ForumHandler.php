@@ -164,7 +164,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      */
     public function getAllTopics($forum, $criteria = null)
     {
-        global $myts, $viewAllForums;
+        global $myts, $viewAllForums, $xoopsUser;
         $startdate = '';
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
@@ -373,7 +373,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             //BigKev73 > Adding this code to support jumping directly to the last read post if that value exists for a user, block also would need to change to support same functionality
             $topicLink ='viewtopic.php?topic_id=' . $myrow['topic_id'];
 						
-			if (isXoopsUser){
+			if ($xoopsUser){
 				$lastRead = newbbGetRead('topic', $myrow['topic_id']);
 				if (isset($lastRead)){
 					if (!empty($lastRead)){
