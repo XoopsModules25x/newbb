@@ -82,16 +82,16 @@ class Digest extends \XoopsObject
         $content      = '';
         if ($digest_count > 0) {
             $linebreak = $isHtml ? '<br>' : "\n";
-            for ($i = 0; $i < $digest_count; ++$i) {
+            foreach ($this->items as $i => $iValue) {
                 if ($isHtml) {
-                    $content .= ($i + 1) . '. <a href=' . $this->items[$i]['link'] . '>' . $this->items[$i]['title'] . '</a>';
+                    $content .= ($i + 1) . '. <a href=' . $iValue['link'] . '>' . $iValue['title'] . '</a>';
                 } else {
-                    $content .= ($i + 1) . '. ' . $this->items[$i]['title'] . $linebreak . $this->items[$i]['link'];
+                    $content .= ($i + 1) . '. ' . $iValue['title'] . $linebreak . $iValue['link'];
                 }
 
-                $content .= $linebreak . $this->items[$i]['author'];
+                $content .= $linebreak . $iValue['author'];
                 if ($isSummary) {
-                    $content .= $linebreak . $this->items[$i]['summary'];
+                    $content .= $linebreak . $iValue['summary'];
                 }
                 $content .= $linebreak . $linebreak;
             }

@@ -113,14 +113,14 @@ class OnlineHandler
         $num_user     = 0;
         $users_id     = [];
         $users_online = [];
-        for ($i = 0; $i < $num_total; ++$i) {
-            if (empty($users[$i]['online_uid'])) {
+        foreach ($users as $i => $iValue) {
+            if (empty($iValue['online_uid'])) {
                 continue;
             }
             $users_id[]                             = $users[$i]['online_uid'];
-            $users_online[$users[$i]['online_uid']] = [
-                'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname'],
+            $users_online[$iValue['online_uid']] = [
+                'link'  => XOOPS_URL . '/userinfo.php?uid=' . $iValue['online_uid'],
+                'uname' => $iValue['online_uname'],
             ];
             ++$num_user;
         }
@@ -173,14 +173,14 @@ class OnlineHandler
         $num_user     = 0;
         $users_id     = [];
         $users_online = [];
-        for ($i = 0; $i < $num_total; ++$i) {
-            if (empty($users[$i]['online_uid'])) {
+        foreach ($users as $i => $iValue) {
+            if (empty($iValue['online_uid'])) {
                 continue;
             }
             $users_id[]                             = $users[$i]['online_uid'];
-            $users_online[$users[$i]['online_uid']] = [
-                'link'  => XOOPS_URL . '/userinfo.php?uid=' . $users[$i]['online_uid'],
-                'uname' => $users[$i]['online_uname'],
+            $users_online[$iValue['online_uid']] = [
+                'link'  => XOOPS_URL . '/userinfo.php?uid=' . $iValue['online_uid'],
+                'uname' => $iValue['online_uname'],
             ];
             ++$num_user;
         }
