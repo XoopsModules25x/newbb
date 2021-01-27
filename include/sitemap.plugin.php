@@ -2,11 +2,14 @@
 //
 // FILE        ::    newbb.php
 // AUTHOR    ::    Ryuji AMANO <info@ryus.biz>
-// WEB        ::    Ryu's Planning <http://ryus.biz/>
+// WEB        ::    Ryu's Planning <http://ryus.biz>
 
 // NewBB plugin: D.J., https://xoops.org.cn
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 /**
  * @return array
@@ -17,7 +20,7 @@ function b_sitemap_newbb()
     $sitemap = [];
 
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
 
@@ -67,7 +70,7 @@ function b_sitemap_newbb()
 
     if ($sitemap_configs['show_subcategoris']) {
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = Helper::getInstance()->getHandler('Category');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);
 

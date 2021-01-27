@@ -41,8 +41,10 @@ define('_MI_NEWBB_DO_REWRITE_DESC', 'rewrites the URL, you need mod_rewrite and 
 //define('_MI_NEWBB_THEMESET', 'Theme set');
 //define('_MI_NEWBB_THEMESET_DESC', "Module-wide, select '' . _NONE . '' will use site-wide theme");
 define('_MI_NEWBB_DIR_ATTACHMENT', 'Attachments physical path.');
-define('_MI_NEWBB_DIR_ATTACHMENT_DESC',
-       "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'");
+define(
+    '_MI_NEWBB_DIR_ATTACHMENT_DESC',
+    "Physical path only needs to be set from your xoops root and not before, for example you may have attachments uploaded to www.yoururl.com/uploads/newbb the path entered would then be '/uploads/newbb' never include a trailing slash '/' the thumbnails path becomes '/uploads/newbb/thumbs'"
+);
 define('_MI_NEWBB_PATH_MAGICK', 'Path for ImageMagick');
 define('_MI_NEWBB_PATH_MAGICK_DESC', "Usually it is '/usr/bin/X11'. Leave it BLANK if you do not have ImageMagicK installed or for autodetecting.");
 define('_MI_NEWBB_SUBFORUM_DISPLAY', 'Display Mode of subforums on index page');
@@ -78,8 +80,10 @@ define('_MI_NEWBB_NULL', 'disable');
 define('_MI_NEWBB_TEXT', 'text');
 define('_MI_NEWBB_GRAPHIC', 'graphic');
 define('_MI_NEWBB_USERLEVEL', 'HP/MP/EXP Level Mode');
-define('_MI_NEWBB_USERLEVEL_DESC',
-       '<strong>HP</strong>  is determined by your average posts per day.<br><strong>MP</strong>  is determined by your join date related to your post count.<br><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.');
+define(
+    '_MI_NEWBB_USERLEVEL_DESC',
+    '<strong>HP</strong>  is determined by your average posts per day.<br><strong>MP</strong>  is determined by your join date related to your post count.<br><strong>EXP</strong> goes up each time you post, and when you get to 100%, you gain a level and the EXP drops to 0 again.'
+);
 define('_MI_NEWBB_RSS_ENABLE', 'Enable RSS Feed');
 define('_MI_NEWBB_RSS_ENABLE_DESC', 'Enable RSS Feed, edit options below for maximum Items and Description length');
 define('_MI_NEWBB_RSS_MAX_ITEMS', 'RSS Max. Items');
@@ -211,7 +215,9 @@ define('_MI_NEWBB_INSTALL_CAT_DESC', 'Category for test.');
 define('_MI_NEWBB_INSTALL_FORUM_NAME', 'Forum Test');
 define('_MI_NEWBB_INSTALL_FORUM_DESC', 'Forum for test.');
 define('_MI_NEWBB_INSTALL_POST_SUBJECT', 'Congratulations! The forum is working.');
-define('_MI_NEWBB_INSTALL_POST_TEXT', '
+define(
+    '_MI_NEWBB_INSTALL_POST_TEXT',
+    '
     Welcome to ' . htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
     Feel free to register and login to start your topics.
 
@@ -279,7 +285,8 @@ define('_MI_NEWBB_INSTALL_POST_TEXT', '
     The forum automatically uses cookies to store information on your computer. These cookies do not contain any information from your input and serve only to improve the quality of the forums. Your e-mail address is used only to confirm your registration, inform you of new messages and password (and to send a new password if you forget the current one).
 
     The use of the Forum is evidence of your consent to these Rules.
-    ');
+    '
+);
 define('_MI_NEWBB_ADMENU_GROUPMOD', 'Group moderate');
 //define('_MI_NEWBB_SUBJECT_PREFIX', 'Add a prefix to the topic subject');
 //define('_MI_NEWBB_SUBJECT_PREFIX_DESC', 'Sets a prefix, such as [SOLVED] at the beginning of the subject. For more options please use one ', ' as the separator. NONE is no prefix.');
@@ -335,12 +342,19 @@ define('_MI_NEWBB_SUPPORT', 'Support');
 // Message when you first log in to the forum
 define('_MI_NEWBB_WELCOMEFORUM_MESSAGE', 'Enter a message for the first time you logged in');
 define('_MI_NEWBB_WELCOMEFORUM_MESSAGE_DESC', 'The message will be published in the first user message when the user first logs on to the Forum');
-define('_MI_NEWBB_WELCOMEFORUM_DESC_MESSAGE', '
+define(
+    '_MI_NEWBB_WELCOMEFORUM_DESC_MESSAGE',
+    '
 Since the forum works in real time, it is impossible to verify or confirm the accuracy of the information placed here. Remember that the forum administration does not actively monitor and is not responsible for the messages sent. Administration does not guarantee the accuracy, completeness and correctness of the content of any message. Any communication reflects the author\'s point of view, which does not necessarily coincide with the point of view of the administration of the forum or organization associated with this forum. Any user who finds a provocative message can inform the forum administration about this. In this case, the message will be reviewed and, if the administration deems it necessary, deleted. However, do not forget that this process takes time and treat it with understanding.
-');
+'
+);
 define('_MI_NEWBB_FORUM_DESC_LENGTH', 'Forum Description Length');
 define('_MI_NEWBB_FORUM_DESC_LENGTH_DESC', 'The Forum description shown on the main page will be truncated to # of characters you set here. A full description will be shown on the forum page.');
 
 define('_MI_NEWBB_ADMENU_MIGRATE', 'Migrate');
 define('_MI_NEWBB_SHOW_DEV_TOOLS', 'Show Development Tools Button?');
 define('_MI_NEWBB_SHOW_DEV_TOOLS_DESC', 'If yes, the "Migrate" Tab and other Development tools will be visible to the Admin.');
+
+//5.01
+define('_MI_NEWBB_FACEBOOK_STYLE_RATING', 'Facebook UI Rating?');
+define('_MI_NEWBB_FACEBOOK_STYLE_RATING_DESC', 'Show Facebook UI Style Rating');

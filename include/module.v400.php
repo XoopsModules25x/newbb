@@ -2,12 +2,12 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 
@@ -77,19 +77,13 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
            . '        t.dobr = p.dobr'
            . '    WHERE p.post_id =t.post_id ';
     if ($GLOBALS['xoopsDB']->queryF($sql)) {
-        $sql = '    ALTER TABLE '
-               . $GLOBALS['xoopsDB']->prefix('bb_posts')
-               . '        DROP `dohtml`,'
-               . '        DROP `dosmiley`,'
-               . '        DROP `doxcode`,'
-               . '        DROP `doimage`,'
-               . '        DROP `dobr`';
+        $sql = '    ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_posts') . '        DROP `dohtml`,' . '        DROP `dosmiley`,' . '        DROP `doxcode`,' . '        DROP `doimage`,' . '        DROP `dobr`';
         $GLOBALS['xoopsDB']->queryF($sql);
     } else {
         xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
     }
 
-    @include_once $GLOBALS['xoops']->path('modules/tag/include/functions.php');
+    @require_once $GLOBALS['xoops']->path('modules/tag/include/functions.php');
     if (function_exists('tag_getTagHandler') && $tag_handler = tag_getTagHandler()) {
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
@@ -105,12 +99,13 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         }
     }
 
-    if (!$GLOBALS['xoopsDB']->query('
+    if (!$GLOBALS['xoopsDB']->query(
+        '
             SELECT COUNT(*)
             FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp') . ' AS a, ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp') . ' AS b
             WHERE a.type_id = b.type_id AND a.type_id >0;
-        ')
-    ) {
+        '
+    )) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
         $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));
@@ -118,18 +113,12 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         return true;
     }
 
-    $GLOBALS['xoopsDB']->queryF('    INSERT INTO '
-                                . $GLOBALS['xoopsDB']->prefix('bb_type')
-                                . '        (`type_id`, `type_name`, `type_color`)'
-                                . '    SELECT `type_id`, `type_name`, `type_color`'
-                                . '         FROM '
-                                . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
-    $GLOBALS['xoopsDB']->queryF('    INSERT INTO '
-                                . $GLOBALS['xoopsDB']->prefix('bb_type_forum')
-                                . '        (`type_id`, `forum_id`, `type_order`)'
-                                . '    SELECT `type_id`, `forum_id`, `type_order`'
-                                . '         FROM '
-                                . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));
+    $GLOBALS['xoopsDB']->queryF(
+        '    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type') . '        (`type_id`, `type_name`, `type_color`)' . '    SELECT `type_id`, `type_name`, `type_color`' . '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp')
+    );
+    $GLOBALS['xoopsDB']->queryF(
+        '    INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum') . '        (`type_id`, `forum_id`, `type_order`)' . '    SELECT `type_id`, `forum_id`, `type_order`' . '         FROM ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp')
+    );
 
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_tmp'));
     $GLOBALS['xoopsDB']->queryF('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_type_forum_tmp'));

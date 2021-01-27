@@ -3,15 +3,16 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+use XoopsModules\Newbb\{Helper
+};
 
-use XoopsModules\Newbb;
+/** @var Helper $helper */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_CONFIG_LOADED', true);
@@ -30,8 +31,7 @@ if (!defined('NEWBB_FUNCTIONS_CONFIG')) {
         //        require_once dirname(__DIR__) . '/class/Helper.php';
         //$helper = NewBB::getInstance();
 
-        /** @var \XoopsModules\Newbb\Helper $helper */
-        $helper = \XoopsModules\Newbb\Helper::getInstance();
+        $helper = Helper::getInstance();
         static $configs = null;
 
         if (null !== $configs) {

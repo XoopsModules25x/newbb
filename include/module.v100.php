@@ -2,8 +2,8 @@
 // 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <http://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: http://xoops.org                                                    //
+//  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
@@ -35,16 +35,19 @@
  */
 function xoops_module_update_newbb_v100(XoopsObject $module)
 {
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_archive') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_archive') . "(
         `topic_id` tinyint(8) NOT NULL default '0',
         `post_id` tinyint(8) NOT NULL default '0',
         `post_text` text NOT NULL
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_archive');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_attachments') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_attachments') . "(
         `attach_id` int(8) unsigned NOT NULL auto_increment,
         `post_id` int(10) default NULL,
         `name_saved` varchar(255) default NULL,
@@ -55,35 +58,41 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         `download` int(10) NOT NULL default '0',
         PRIMARY KEY  (`attach_id`),
         KEY `post_id` (`post_id`)
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_attachments');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_digest') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_digest') . "(
         `digest_id` int(8) unsigned NOT NULL auto_increment,
         `digest_time` int(10) NOT NULL default '0',
         `digest_content` text,
         PRIMARY KEY  (`digest_id`),
         KEY `digest_time` (`digest_time`)
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_digest');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_online') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_online') . "(
         `online_forum` int(10) NOT NULL default '0',
         `online_topic` int(10) NOT NULL default '0',
         `online_uid` int(10) default NULL,
         `online_uname` varchar(255) default NULL,
         `online_ip` varchar(32) default NULL,
         `online_updated` int(14) default NULL
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_online');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_report') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_report') . "(
         `report_id` int(8) unsigned NOT NULL auto_increment,
         `post_id` int(10) default NULL,
         `reporter_uid` int(10) default NULL,
@@ -94,12 +103,14 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         `report_memo` varchar(255) default NULL,
         PRIMARY KEY  (`report_id`),
         KEY `post_id` (`post_id`)
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_report');
     }
 
-    $result = $GLOBALS['xoopsDB']->queryF('CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . "(
+    $result = $GLOBALS['xoopsDB']->queryF(
+        'CREATE TABLE ' . $GLOBALS['xoopsDB']->prefix('bb_votedata') . "(
         `ratingid` int(11) unsigned NOT NULL auto_increment,
         `topic_id` int(11) unsigned NOT NULL default '0',
         `ratinguser` int(11) NOT NULL default '0',
@@ -110,7 +121,8 @@ function xoops_module_update_newbb_v100(XoopsObject $module)
         KEY ratinguser (ratinguser),
         KEY ratinghostname (ratinghostname),
         KEY topic_id (topic_id)
-        ) TYPE=MyISAM");
+        ) ENGINE=MyISAM"
+    );
     if (!$result) {
         $module->setErrors('Could not create bb_votedata');
     }

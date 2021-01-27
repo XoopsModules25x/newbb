@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -29,13 +29,16 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use Xmf\Module\Admin;
+use XoopsModules\Newbb\{Helper
+};
 
 //require_once  dirname(__DIR__) . '/include/common.php';
-/** @var \XoopsModules\Newbb\Helper $helper */
-$helper = \XoopsModules\Newbb\Helper::getInstance();
+$helper = Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
@@ -111,7 +114,7 @@ $adminmenu[] = [
     'link'  => 'admin/admin_synchronization.php',
     'icon'  => $pathIcon32 . 'synchronized.png',
 ];
-if ($helper->getConfig('displayDeveloperTools')) {
+if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
     $adminmenu[] = [
         'title' => _MI_NEWBB_ADMENU_MIGRATE,
         'link'  => 'admin/migrate.php',

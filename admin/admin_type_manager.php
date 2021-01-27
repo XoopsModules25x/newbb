@@ -4,12 +4,13 @@
  *
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
  * @package        module::newbb
  */
 
+use Xmf\Module\Helper\Cache;
 use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
@@ -49,7 +50,7 @@ if (!in_array($op, $validOps)) {
 
 ///** @var Newbb\TypeHandler $typeHandler */
 //$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+$cacheHelper = new Cache('newbb');
 
 switch ($op) {
     case 'save_type':
@@ -77,7 +78,6 @@ switch ($op) {
                 if ($typeObject->getVar($var) != $temp[$key]) {
                     $typeObject->setVar($var, $temp[$key]);
                 }
-
                 //                    $typeObject->setVar($var, Request::getArray($var, '', 'POST')[$key]);
             }
             $typeHandler->insert($typeObject);
@@ -85,9 +85,9 @@ switch ($op) {
         }
         if (count($type_del) > 0) {
             $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', $type_del) . ')', 'IN'));
-            xoops_confirm(['op' => 'delete', 'type_del' => serialize($type_del)], xoops_getenv('PHP_SELF'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
+            xoops_confirm(['op' => 'delete', 'type_del' => serialize($type_del)], xoops_getenv('SCRIPT_NAME'), sprintf(_AM_NEWBB_TODEL_TYPE, implode(', ', array_values($type_list))), '', false);
         } else {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
+            redirect_header(xoops_getenv('SCRIPT_NAME'), 2, _MD_NEWBB_DBUPDATED);
         }
         break;
     case 'delete':
@@ -99,12 +99,12 @@ switch ($op) {
             $typeHandler->delete($typeObject);
             unset($typeObject);
         }
-        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
+        redirect_header(xoops_getenv('SCRIPT_NAME'), 2, _MD_NEWBB_DBUPDATED);
         break;
     case 'template':
         $typesObject = $typeHandler->getAll();
         if (0 === count($typesObject)) {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD_ERR);
+            redirect_header(xoops_getenv('SCRIPT_NAME'), 2, _AM_NEWBB_TYPE_ADD_ERR);
         }
 
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
@@ -114,7 +114,7 @@ switch ($op) {
         $adminObject->displayButton('left');
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-        echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
+        echo "<form name='template' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</th>';
@@ -122,7 +122,8 @@ switch ($op) {
         echo "<th class='bg3'>" . _AM_NEWBB_TYPE_DESCRIPTION . '</th>';
         echo '</tr>';
 
-        if ($templates = $cacheHelper->read('type_template')) {
+        $templates = $cacheHelper->read('type_template');
+        if ($templates) {
             arsort($templates);
             foreach ($templates as $order => $key) {
                 if (!isset($typesObject[$key])) {
@@ -157,11 +158,11 @@ switch ($op) {
     case 'save_template':
         $templates = array_flip(array_filter(Request::getArray('type_order', [], 'POST')));
         $cacheHelper->write('type_template', $templates);
-        redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _MD_NEWBB_DBUPDATED);
+        redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=template', 2, _MD_NEWBB_DBUPDATED);
         break;
     case 'apply':
         if (!$templates = $cacheHelper->read('type_template')) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
+            redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE_ERR);
         }
 
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
@@ -177,7 +178,7 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
+        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_TEMPLATE_APPLY, 'fmform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $fm_select = new \XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forums', null, 10, true);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
@@ -223,7 +224,7 @@ switch ($op) {
         break;
     case 'save_apply':
         if (!$templates = $cacheHelper->read('type_template')) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
+            redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=template', 2, _AM_NEWBB_TYPE_TEMPLATE);
         }
         foreach (Request::getArray('forums', [], 'POST') as $forum) {
             if ($forum < 1) {
@@ -231,7 +232,7 @@ switch ($op) {
             }
             $typeHandler->updateByForum($forum, array_flip($templates));
         }
-        redirect_header(xoops_getenv('PHP_SELF'), 2, _MD_NEWBB_DBUPDATED);
+        redirect_header(xoops_getenv('SCRIPT_NAME'), 2, _MD_NEWBB_DBUPDATED);
         break;
     case 'forum':
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
@@ -254,7 +255,7 @@ switch ($op) {
             }
         }
         unset($forums, $categories);
-        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('PHP_SELF'), 'post', true);
+        $fmform    = new \XoopsThemeForm(_AM_NEWBB_TYPE_FORUM, 'fmform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $fm_select = new \XoopsFormSelect(_AM_NEWBB_PERM_FORUMS, 'forum', null, 5, false);
         $fm_select->addOptionArray($fm_options);
         $fmform->addElement($fm_select);
@@ -274,17 +275,17 @@ switch ($op) {
         break;
     case 'edit_forum':
         if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
+            redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
         //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
         if (!$forumObject = $forumHandler->get(Request::getInt('forum', 0, 'POST'))) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
+            redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM_ERR);
         }
 
         $typesObject = $typeHandler->getAll();
         if (0 === count($typesObject)) {
-            redirect_header(xoops_getenv('PHP_SELF'), 2, _AM_NEWBB_TYPE_ADD_ERR);
+            redirect_header(xoops_getenv('SCRIPT_NAME'), 2, _AM_NEWBB_TYPE_ADD_ERR);
         }
 
         $adminObject->addItemButton(_AM_NEWBB_TYPE_ADD, 'admin_type_manager.php?op=add', $icon = 'add');
@@ -293,7 +294,7 @@ switch ($op) {
         $adminObject->displayButton('left');
         echo '<legend style="font-weight: bold; color: #900;">' . _AM_NEWBB_TYPE_ORDER_DESC . '</legend>';
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-        echo "<form name='template' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
+        echo "<form name='template' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th class='bg3' width='20%'>" . _AM_NEWBB_TYPE_ORDER . '</th>';
@@ -340,10 +341,10 @@ switch ($op) {
         break;
     case 'save_forum':
         if (!Request::getInt('forum', 0, 'POST') || Request::getInt('forum', 0, 'POST') < 1) {
-            redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
+            redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=forum', 2, _AM_NEWBB_TYPE_FORUM);
         }
         $typeHandler->updateByForum(Request::getInt('forum', 0, 'POST'), Request::getArray('type_order', null, 'POST'));
-        redirect_header(xoops_getenv('PHP_SELF') . '?op=forum', 2, _MD_NEWBB_DBUPDATED);
+        redirect_header(xoops_getenv('SCRIPT_NAME') . '?op=forum', 2, _MD_NEWBB_DBUPDATED);
         break;
     case 'add':
     default:
@@ -363,7 +364,7 @@ switch ($op) {
         }
         echo _AM_NEWBB_TYPE_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-        echo "<form name='list' method='post' action='" . xoops_getenv('PHP_SELF') . "'>";
+        echo "<form name='list' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>";
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         if ('add' !== $op) {

@@ -6,16 +6,17 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use Criteria;
+use XoopsModules\Newbb\{
+    Helper
+};
 use XoopsModules\Tag;
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:
@@ -47,9 +48,9 @@ function newbb_tag_iteminfo(&$items)
         }
     }
     /** @var TopicHandler $itemHandler */
-    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $itemHandler = Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsObject $itemsObject */
-    $itemsObject = $itemHandler->getObjects(new \Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
+    $itemsObject = $itemHandler->getObjects(new Criteria('topic_id', '(' . implode(', ', $items_id) . ')', 'IN'), true);
 
     foreach (array_keys($items) as $cat_id) {
         foreach (array_keys($items[$cat_id]) as $item_id) {
@@ -80,7 +81,7 @@ function newbb_tag_iteminfo(&$items)
 function newbb_tag_synchronization($mid)
 {
     /** @var TopicHandler $itemHandler */
-    $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $itemHandler = Helper::getInstance()->getHandler('Topic');
     /** @var \XoopsPersistableObjectHandler $linkHandler */
     $linkHandler = Tag\Helper::getInstance()->getHandler('Link');
 

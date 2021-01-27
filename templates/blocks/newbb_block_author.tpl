@@ -24,7 +24,7 @@
 
 </table>
 <{if $block.indexNav}>
-    <!-- irmtfan hardcode removed style="text-align:right; padding: 5px;" -->
+    <{* irmtfan hardcode removed style="text-align:right; padding: 5px;" *}>
     <div class="pagenav">
         <a href="<{$xoops_url}>/modules/newbb/"><{$smarty.const._MB_NEWBB_VSTFRMS}></a>
     </div>

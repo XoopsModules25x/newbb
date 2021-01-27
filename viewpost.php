@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -30,7 +30,9 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    UserHandler
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -203,14 +205,20 @@ if (!empty($forum_id)) {
     $xoopsTpl->assign('forum_id', $forumObject->getVar('forum_id'));
     // irmtfan new method
     if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-        $xoopsTpl->assign('xoops_module_header', '
+        $xoopsTpl->assign(
+            'xoops_module_header',
+            '
             <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" >
-            ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+            ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+        );
     }
 } elseif (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
         <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 // irmtfan remove and move to footer.php
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
@@ -219,7 +227,7 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('anonym_avatar', newbbDisplayImage('anonym'));
 $userid_array = [];
 if (count($poster_array) > 0) {
-    /** @var \XoopsMembershipHandler $memberHandler */
+    /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
     $user_criteria = '(' . implode(',', $userid_array) . ')';
@@ -233,7 +241,7 @@ $online = [];
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-        //        /** @var Newbb\OnlineHandler $onlineHandler */
+        /** @var Newbb\OnlineHandler $onlineHandler */
         //        $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
         $onlineHandler->init($forum_id);
     }
@@ -243,7 +251,8 @@ $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
     //    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
-    $userHandler         = new Newbb\UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
+    /** @var UserHandler $userHandler */
+    $userHandler         = new UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;
     $viewtopic_users     = $userHandler->getUsers();
@@ -259,15 +268,16 @@ foreach (array_keys($posts) as $id) {
     $post       = $posts[$id];
     $post_title = $post->getVar('subject');
 
-    if ($posticon = $post->getVar('icon')) {
+    $posticon = $post->getVar('icon');
+    if ($posticon) {
         $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" ></a>';
     } else {
         $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
     }
     $poster = [
         'uid'  => 0,
-        'name' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
-        'link' => $post->getVar('poster_name') ?: $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']),
+        'name' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
+        'link' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
     ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
@@ -337,24 +347,27 @@ foreach (array_keys($posts) as $id) {
     }
     $thread_action = [];
 
-    $xoopsTpl->append('posts', [
-        'post_id'         => $post->getVar('post_id'),
-        'topic_id'        => $post->getVar('topic_id'),
-        'forum_id'        => $post->getVar('forum_id'),
-        'post_date'       => newbbFormatTimestamp($post->getVar('post_time')),
-        'post_image'      => $post_image,
-        'post_title'      => $post_title,
-        'post_text'       => $post_text,
-        'post_attachment' => $post_attachment,
-        'post_edit'       => $post->displayPostEdit(),
-        'post_no'         => $start + $pn,
-        'post_signature'  => $post->getVar('attachsig') ? @$poster['signature'] : '',
-        //                                 'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
-        'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
-        'thread_action'   => $thread_action,
-        'thread_buttons'  => $thread_buttons,
-        'poster'          => $poster,
-    ]);
+    $xoopsTpl->append(
+        'posts',
+        [
+            'post_id'         => $post->getVar('post_id'),
+            'topic_id'        => $post->getVar('topic_id'),
+            'forum_id'        => $post->getVar('forum_id'),
+            'post_date'       => newbbFormatTimestamp($post->getVar('post_time')),
+            'post_image'      => $post_image,
+            'post_title'      => $post_title,
+            'post_text'       => $post_text,
+            'post_attachment' => $post_attachment,
+            'post_edit'       => $post->displayPostEdit(),
+            'post_no'         => $start + $pn,
+            'post_signature'  => $post->getVar('attachsig') ? @$poster['signature'] : '',
+            //                                 'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? long2ip($post->getVar('poster_ip')) : '',
+            'poster_ip'       => ($isAdmin && $GLOBALS['xoopsModuleConfig']['show_ip']) ? $post->getVar('poster_ip') : '',
+            'thread_action'   => $thread_action,
+            'thread_buttons'  => $thread_buttons,
+            'poster'          => $poster,
+        ]
+    );
 
     unset($thread_buttons, $poster);
 }

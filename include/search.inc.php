@@ -3,28 +3,31 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
- * @param                $queryarray
- * @param                $andor
- * @param                $limit
- * @param                $offset
- * @param                $userid
- * @param  int           $forums
- * @param  int|string    $sortby
- * @param  string        $searchin
- * @param  \CriteriaCompo $criteriaExtra
+ * @param                     $queryarray
+ * @param                     $andor
+ * @param                     $limit
+ * @param                     $offset
+ * @param                     $userid
+ * @param int                 $forums
+ * @param int|string          $sortby
+ * @param string              $searchin
+ * @param \CriteriaCompo|null $criteriaExtra
  * @return array
  */
 function newbb_search(
@@ -36,8 +39,8 @@ function newbb_search(
     $forums = 0,
     $sortby = 0,
     $searchin = 'both',
-    \CriteriaCompo $criteriaExtra = null)
-{
+    \CriteriaCompo $criteriaExtra = null
+) {
     global $myts, $xoopsDB;
     // irmtfan - in XOOPSCORE/search.php $GLOBALS['xoopsModuleConfig'] is not set
     if (!isset($GLOBALS['xoopsModuleConfig'])) {
@@ -49,7 +52,7 @@ function newbb_search(
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
     $criteriaPost = new \CriteriaCompo();
@@ -66,7 +69,7 @@ function newbb_search(
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', $userid), 'OR');
     } elseif ($userid && is_array($userid)) {
-        $userid       = array_map('intval', $userid);
+        $userid       = array_map('\intval', $userid);
         $criteriaUser = new \CriteriaCompo();
         $criteriaUser->add(new \Criteria('p.uid', '(' . implode(',', $userid) . ')', 'IN'), 'OR');
     }
@@ -121,7 +124,7 @@ function newbb_search(
     $criteria->setOrder($order);
 
     /** @var Newbb\PostHandler $postHandler */
-    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+    $postHandler = Helper::getInstance()->getHandler('Post');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];
@@ -134,7 +137,7 @@ function newbb_search(
         $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $highlightKey; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = $myts->htmlSpecialChars($forum_list[$post->getVar('forum_id')]['forum_name']);
+        $ret[$i]['forum_name'] = htmlspecialchars($forum_list[$post->getVar('forum_id')]['forum_name']);
         $ret[$i]['forum_link'] = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

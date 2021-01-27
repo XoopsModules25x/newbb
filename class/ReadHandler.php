@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -32,9 +32,7 @@ namespace XoopsModules\Newbb;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * A handler for read/unread handling
@@ -60,7 +58,6 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @var string
      */
     public $type;
-
     /**
      * seconds records will persist.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_expire"]
@@ -70,10 +67,9 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      *  <li>-1 or any negative days = never records // irmtfan change comment</li>
      * </ul>
      *
-     * @var integer
+     * @var int
      */
     public $lifetime;
-
     /**
      * storage mode for records.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_mode"]
@@ -83,7 +79,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      *  <li>2 = stores in database</li>
      * </ul>
      *
-     * @var integer
+     * @var int
      */
     public $mode;
 
@@ -96,7 +92,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         $type = ('forum' === $type) ? 'forum' : 'topic';
         parent::__construct($db, 'newbb_reads_' . $type, Read::class . $type, 'read_id', 'post_id');
         $this->type  = $type;
-        $newbbConfig = newbbLoadConfig();
+        $newbbConfig = \newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
         $this->lifetime = isset($newbbConfig['read_expire']) ? (int)$newbbConfig['read_expire'] * 24 * 3600 : 30 * 24 * 3600;
         $this->mode     = isset($newbbConfig['read_mode']) ? $newbbConfig['read_mode'] : 2;
@@ -125,7 +121,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
             return true;
         }
         // irmtfan move here and rephrase
-        $expire = time() - (int)$this->lifetime;
+        $expire = \time() - (int)$this->lifetime;
         $sql    = 'DELETE FROM ' . $this->table . ' WHERE read_time < ' . $expire;
         if (!$result = $this->db->queryF($sql)) {
             //xoops_error($this->db->error());
@@ -139,7 +135,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param                  $read_item
-     * @param  null            $uid
+     * @param null             $uid
      * @return bool|mixed|null
      */
     public function getRead($read_item, $uid = null)
@@ -163,7 +159,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         $cookie_name = ('forum' === $this->type) ? 'LF' : 'LT';
         $cookie_var  = $item_id;
         // irmtfan set true to return array
-        $lastview = newbbGetCookie($cookie_name, true);
+        $lastview = \newbbGetCookie($cookie_name, true);
 
         return @$lastview[$cookie_var];
     }
@@ -176,7 +172,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
     public function getReadDb($read_item, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS['xoopsUser'])) {
+            if (\is_object($GLOBALS['xoopsUser'])) {
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
@@ -186,7 +182,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         if (!$result = $this->db->queryF($sql, 1)) {
             return null;
         }
-        list($post_id) = $this->db->fetchRow($result);
+        [$post_id] = $this->db->fetchRow($result);
 
         return $post_id;
     }
@@ -194,7 +190,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
     /**
      * @param                  $read_item
      * @param                  $post_id
-     * @param  null            $uid
+     * @param null             $uid
      * @return bool|mixed|void
      */
     public function setRead($read_item, $post_id, $uid = null)
@@ -217,9 +213,9 @@ class ReadHandler extends \XoopsPersistableObjectHandler
     public function setReadCookie($read_item, $post_id)
     {
         $cookie_name          = ('forum' === $this->type) ? 'LF' : 'LT';
-        $lastview             = newbbGetCookie($cookie_name, true);
-        $lastview[$read_item] = time();
-        newbbSetCookie($cookie_name, $lastview);
+        $lastview             = \newbbGetCookie($cookie_name, true);
+        $lastview[$read_item] = \time();
+        \newbbSetCookie($cookie_name, $lastview);
     }
 
     /**
@@ -231,14 +227,14 @@ class ReadHandler extends \XoopsPersistableObjectHandler
     public function setReadDb($read_item, $post_id, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS['xoopsUser'])) {
+            if (\is_object($GLOBALS['xoopsUser'])) {
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
             }
         }
 
-        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)$post_id . ',' . '     read_time =' . time() . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
+        $sql = 'UPDATE ' . $this->table . ' SET post_id = ' . (int)$post_id . ',' . '     read_time =' . \time() . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
         if ($this->db->queryF($sql) && $this->db->getAffectedRows()) {
             return true;
         }
@@ -246,17 +242,17 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         $object->setVar('read_item', $read_item);
         $object->setVar('post_id', $post_id);
         $object->setVar('uid', $uid);
-        $object->setVar('read_time', time());
+        $object->setVar('read_time', \time());
 
-        return parent::insert($object);
+        return $this->insert($object);
     }
 
     /**
      * @param             $items
-     * @param  null       $uid
+     * @param null        $uid
      * @return array|null
      */
-    public function isReadItems(&$items, $uid = null)
+    public function isReadItems($items, $uid = null)
     {
         $ret = null;
         if (empty($this->mode)) {
@@ -276,14 +272,14 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @param $items
      * @return array
      */
-    public function isReadItemsCookie(&$items)
+    public function isReadItemsCookie($items)
     {
         $cookie_name = ('forum' === $this->type) ? 'LF' : 'LT';
-        $cookie_vars = newbbGetCookie($cookie_name, true);
+        $cookie_vars = \newbbGetCookie($cookie_name, true);
 
         $ret = [];
         foreach ($items as $key => $last_update) {
-            $ret[$key] = (max(@$GLOBALS['last_visit'], @$cookie_vars[$key]) >= $last_update);
+            $ret[$key] = (\max(@$GLOBALS['last_visit'], @$cookie_vars[$key]) >= $last_update);
         }
 
         return $ret;
@@ -294,7 +290,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @param $uid
      * @return array
      */
-    public function isReadItemsDb(&$items, $uid)
+    public function isReadItemsDb($items, $uid)
     {
         $ret = [];
         if (empty($items)) {
@@ -302,7 +298,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         }
 
         if (empty($uid)) {
-            if (is_object($GLOBALS['xoopsUser'])) {
+            if (\is_object($GLOBALS['xoopsUser'])) {
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return $ret;
@@ -310,11 +306,11 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         }
 
         $criteria = new \CriteriaCompo(new \Criteria('uid', $uid));
-        $criteria->add(new \Criteria('read_item', '(' . implode(', ', array_map('intval', array_keys($items))) . ')', 'IN'));
+        $criteria->add(new \Criteria('read_item', '(' . \implode(', ', \array_map('\intval', \array_keys($items))) . ')', 'IN'));
         $itemsObject = $this->getAll($criteria, ['read_item', 'post_id']);
 
         $items_list = [];
-        foreach (array_keys($itemsObject) as $key) {
+        foreach (\array_keys($itemsObject) as $key) {
             $items_list[$itemsObject[$key]->getVar('read_item')] = $itemsObject[$key]->getVar('post_id');
         }
         unset($itemsObject);
@@ -344,25 +340,25 @@ class ReadHandler extends \XoopsPersistableObjectHandler
 
         $sql = 'CREATE TABLE ' . $this->table . '_duplicate LIKE ' . $this->table . '; ';
         if (!$result = $this->db->queryF($sql)) {
-            xoops_error($this->db->error() . '<br>' . $sql);
+            \xoops_error($this->db->error() . '<br>' . $sql);
 
             return false;
         }
         $sql = 'INSERT ' . $this->table . '_duplicate SELECT * FROM ' . $this->table . ' GROUP BY read_item, uid; ';
         if (!$result = $this->db->queryF($sql)) {
-            xoops_error($this->db->error() . '<br>' . $sql);
+            \xoops_error($this->db->error() . '<br>' . $sql);
 
             return false;
         }
         $sql = 'RENAME TABLE ' . $this->table . ' TO ' . $this->table . '_with_duplicate; ';
         if (!$result = $this->db->queryF($sql)) {
-            xoops_error($this->db->error() . '<br>' . $sql);
+            \xoops_error($this->db->error() . '<br>' . $sql);
 
             return false;
         }
         $sql = 'RENAME TABLE ' . $this->table . '_duplicate TO ' . $this->table . '; ';
         if (!$result = $this->db->queryF($sql)) {
-            xoops_error($this->db->error() . '<br>' . $sql);
+            \xoops_error($this->db->error() . '<br>' . $sql);
 
             return false;
         }
@@ -371,20 +367,19 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         if (empty($result)) {
             $sql .= 'ALTER TABLE ' . $this->table . ' ADD INDEX read_item_uid ( read_item, uid ); ';
             if (!$result = $this->db->queryF($sql)) {
-                xoops_error($this->db->error() . '<br>' . $sql);
+                \xoops_error($this->db->error() . '<br>' . $sql);
 
                 return false;
             }
         }
         $sql = 'DROP TABLE ' . $this->table . '_with_duplicate; ';
         if (!$result = $this->db->queryF($sql)) {
-            xoops_error($this->db->error() . '<br>' . $sql);
+            \xoops_error($this->db->error() . '<br>' . $sql);
 
             return false;
         }
 
         return true;
     }
-
     // END irmtfan add clear duplicated rows function
 }

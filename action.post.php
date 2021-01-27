@@ -3,28 +3,43 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Tree,
+    TopicHandler,
+    ForumHandler,
+    PostHandler
+};
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
-$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
-$uid      = Request::getInt('uid', 0, 'GET');
+//$post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'), 'GET');
+$post_id = Request::getInt('post_id', 0, 'GET');
+if (Request::hasVar('post_id', 'POST')) {
+    Request::getArray('post_id', $post_id, 'POST');
+}
+
+//    !empty($_POST['post_id']) ? $_POST['post_id'] : $post_id;
+
+$uid = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $op   = in_array($op, ['approve', 'delete', 'restore', 'split']) ? $op : '';
 $mode = Request::getInt('mode', 1, 'GET');
 
-if (0 === count($post_id) || 0 === count($op)) {
+if (0 === $post_id || '' === $op) {
     // irmtfan - issue with javascript:history.go(-1)
-    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, _MD_NEWBB_NO_SELECTION);
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, \_MD_NEWBB_NO_SELECTION);
 }
 ///** @var PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
@@ -32,7 +47,7 @@ if (0 === count($post_id) || 0 === count($op)) {
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var NewbbForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-if (empty($topic_id)) {
+if (0 === $topic_id) {
     $forumObject = null;
 } else {
     $topicObject = $topicHandler->get($topic_id);
@@ -98,7 +113,7 @@ switch ($op) {
         }
 
         $criteria_topic = new \Criteria('topic_id', '(' . implode(',', array_keys($topics)) . ')', 'IN');
-        $topic_list     = $topicHandler->getList($criteria_topic, true);
+        $topic_list     = $topicHandler->getList($criteria_topic);
 
         $criteria_forum = new \Criteria('forum_id', '(' . implode(',', array_keys($forums)) . ')', 'IN');
         $forum_list     = $forumHandler->getList($criteria_forum);
@@ -148,7 +163,7 @@ switch ($op) {
     case 'split':
         /** @var Newbb\Post $postObject */
         $postObject = $postHandler->get($post_id);
-        if (0 === count($post_id) || $postObject->isTopic()) {
+        if ((is_array($post_id) && 0 === count($post_id)) || $postObject->isTopic()) {
             break;
         }
         $topic_id = $postObject->getVar('topic_id');
@@ -177,7 +192,7 @@ switch ($op) {
             /* split a post and its children posts */
         } elseif (2 === $mode) {
             require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-            $mytree = new Newbb\Tree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
+            $mytree = new Tree($GLOBALS['xoopsDB']->prefix('newbb_posts'), 'post_id', 'pid');
             $posts  = $mytree->getAllChildId($post_id);
             if (count($posts) > 0) {
                 $criteria = new \Criteria('post_id', '(' . implode(',', $posts) . ')', 'IN');

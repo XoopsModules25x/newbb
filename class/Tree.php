@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -32,20 +32,21 @@ namespace XoopsModules\Newbb;
 // Project: Article Project                                                 //
 // ------------------------------------------------------------------------ //
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+use XoopsTree;
+
+
+
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
 /**
  * Class Tree
  */
-class Tree extends \XoopsTree
+class Tree extends XoopsTree
 {
     /** @var string */
     private $prefix = '&nbsp;&nbsp;';
-
     /** @var string */
     private $increment = '&nbsp;&nbsp;';
-
     /** @var array */
     private $postArray = [];
 
@@ -89,8 +90,8 @@ class Tree extends \XoopsTree
 
     /**
      * @param         $postTree_array
-     * @param  int    $pid
-     * @param  string $prefix
+     * @param int     $pid
+     * @param string  $prefix
      * @return bool
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')

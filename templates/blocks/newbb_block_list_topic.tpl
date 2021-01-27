@@ -1,8 +1,8 @@
-<!-- a new block template for newbb -->
-<!-- all classes can be found in xoops.css -->
-<!-- define your desired width here -->
-<{assign var=minwidth value=200}> <!-- minimum block minwidth property -->
-<{assign var=topicwidth value=100}> <!-- maximum topic width property -->
+<{* a new block template for newbb *}>
+<{* all classes can be found in xoops.css *}>
+<{* define your desired width here *}>
+<{assign var=minwidth value=200}> <{* minimum block minwidth property *}>
+<{assign var=topicwidth value=100}> <{* maximum topic width property *}>
 
 <{if $block.headers.forum}>
     <{assign var=minwidth value=$minwidth+50}>
@@ -23,7 +23,7 @@
     <{assign var=minwidth value=$minwidth+100}>
     <{assign var=topicwidth value=$topicwidth-20}>
 <{/if}>
-<{assign var=block_topic value=$topicwidth}> <!-- block topic width after reduction above -->
+<{assign var=block_topic value=$topicwidth}> <{* block topic width after reduction above *}>
 <div class="outer" style="min-width: <{$minwidth}>px;">
     <div class="head border x-small">
         <div class="<{$block_topic}> floatleft center"><{$block.headers.topic}></div>
@@ -39,7 +39,7 @@
         <div style="overflow: hidden;" class="center"><{$block.headers.lastpost}></div>
         <div class="clear"></div>
     </div>
-    <!-- start forum topic -->
+    <{* start forum topic *}>
     <{foreach name=loop item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}> border">
         <div class="<{$block_topic}> floatleft left">
@@ -102,11 +102,11 @@
         <div class="clear"></div>
     </div>
     <{/foreach}>
-    <!-- end forum topic -->
+    <{* end forum topic *}>
 </div>
 <div class="clear"></div>
 <{if $block.indexNav}>
-    <!-- a sample of pagenav. you can create your own! -->
+    <{* a sample of pagenav. you can create your own! *}>
     <div class="floatright right">
         <a href="<{$xoops_url}>/modules/newbb/viewpost.php"><{$smarty.const._MB_NEWBB_ALLPOSTS}></a> |
         <a href="<{$xoops_url}>/modules/newbb/list.topic.php"><{$smarty.const._MB_NEWBB_ALLTOPICS}></a> |

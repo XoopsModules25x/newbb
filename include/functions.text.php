@@ -2,14 +2,12 @@
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
- * @copyright      XOOPS Project (http://xoops.org)
+ * @copyright      XOOPS Project (https://xoops.org)
  * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  * @package        module::newbb
  */
-
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 define('NEWBB_FUNCTIONS_TEXT_LOADED', true);
 
@@ -18,15 +16,15 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for select from a text where it have some keywords
      *
-     * @param  text   $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
-     * @param         $queryarray
-     * @param  int    $selectstartlag
-     * @param  int    $selectlength
-     * @param  bool   $striptags
-     * @param  string $excludetags
-     * @param  string $start_trimmarker
-     * @param  string $end_trimmarker
-     * @return text   $select_text
+     * @param string       $text
+     * @param array|string $queryarray
+     * @param int          $selectstartlag
+     * @param int          $selectlength
+     * @param bool         $striptags
+     * @param string       $excludetags
+     * @param string       $start_trimmarker
+     * @param string       $end_trimmarker
+     * @return string $select_text
      */
 
     function newbb_selectText(
@@ -42,8 +40,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         $sanitized_text       = $striptags ? strip_tags($text, $excludetags) : $text;
         $queryarray           = newbb_str2array($queryarray);
         $text_i               = strtolower($sanitized_text);
-        $queryarray           = array_map('strtolower', $queryarray);
-        $lengtharray          = array_map('strlen', $queryarray);
+        $queryarray           = array_map('\strtolower', $queryarray);
+        $lengtharray          = array_map('\strlen', $queryarray);
         $maxlengthquery       = max($lengtharray);
         $lengthend_trimmarker = strlen($end_trimmarker);
         $select_text          = '';
@@ -59,12 +57,12 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
             if ($pos == $endpos) {
                 break;
             }
-            $start  = max($pos - $selectstartlag, $startpos - $maxlengthquery, 0); // $startpos is the last position in the previous select text
-            $length = $maxlengthquery + $selectlength; //xoops_local("strlen", $query) + 200;
+            $start       = max($pos - $selectstartlag, $startpos - $maxlengthquery, 0); // $startpos is the last position in the previous select text
+            $length      = $maxlengthquery + $selectlength; //xoops_local("strlen", $query) + 200;
             $select_text .= '<p>';
             $select_text .= ($start > 0) ? $start_trimmarker . ' ' : ' ';
             $select_text .= xoops_substr($sanitized_text, $start, $length + $lengthend_trimmarker + 1, ' ' . $end_trimmarker) . '</p>';
-            $startpos = $start + $length + 1; // start searching from next position.
+            $startpos    = $start + $length + 1; // start searching from next position.
         }
         if (empty($select_text)) {
             return '';
@@ -75,9 +73,9 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlight a text when it have some keywords
      *
-     * @param  text $text , array text $queryarray
-     * @param       $queryarray
-     * @return text $highlight_text
+     * @param string       $text
+     * @param array|string $queryarray
+     * @return string $highlight_text
      */
 
     function newbb_highlightText($text, $queryarray)
@@ -90,7 +88,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         $highlight_text = $text;
         foreach ($queryarray as $key => $query) {
             // use preg_replace instead of str_replace to exclude all $queries inside html span tag
-            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query) . ')/si', newbb_highlighter($query, $key), $highlight_text);
+            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query, '/') . ')/si', newbb_highlighter($query, $key), $highlight_text);
         }
 
         return $highlight_text;
@@ -99,8 +97,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlighting search results
      *
-     * @param  text    $query , int $i
-     * @param          $i
+     * @param string $query
+     * @param int    $i
      * @return mixed
      */
     function newbb_highlighter($query, $i)
@@ -111,7 +109,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for convert string to array
      *
-     * @param  text /array $str
+     * @param string|array $str
      * @return mixed
      */
 

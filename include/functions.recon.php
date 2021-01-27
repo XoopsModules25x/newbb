@@ -3,15 +3,16 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+/** @var Helper $helper */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RECON_LOADED', true);
@@ -20,7 +21,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
     define('NEWBB_FUNCTIONS_RECON', 1);
 
     /**
-     * @param  null $type
+     * @param null $type
      * @return bool
      */
     function newbbSynchronization($type = null)
@@ -40,7 +41,8 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
         $type     = [];
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
-            $handler = \XoopsModules\Newbb\Helper::getInstance()->getHandler($item);
+            /** @var \XoopsPersistableObjectHandler $handler */
+            $handler = Helper::getInstance()->getHandler($item);
             if ('stats' !== $item) {
                 $handler->synchronization();
             } else {

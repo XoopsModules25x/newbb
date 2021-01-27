@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -54,7 +54,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
      * maximum records per forum for one user.
      * assigned from $GLOBALS['xoopsModuleConfig']["read_items"]
      *
-     * @var integer
+     * @var int
      */
     private $items_per_forum;
 
@@ -64,16 +64,16 @@ class ReadtopicHandler extends Newbb\ReadHandler
     public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'topic');
-        $newbbConfig           = newbbLoadConfig();
+        $newbbConfig           = \newbbLoadConfig();
         $this->items_per_forum = isset($newbbConfig['read_items']) ? (int)$newbbConfig['read_items'] : 100;
     }
 
     /**
      * clean orphan items from database
      *
-     * @param  string $table_link
-     * @param  string $field_link
-     * @param  string $field_object
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
@@ -97,9 +97,9 @@ class ReadtopicHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @param  int  $status
-     * @param  int  $forum_id
-     * @param  null $uid
+     * @param int  $status
+     * @param int  $forum_id
+     * @param null $uid
      * @return bool
      */
     public function setReadItems($status = 0, $forum_id = 0, $uid = null)
@@ -123,10 +123,10 @@ class ReadtopicHandler extends Newbb\ReadHandler
     public function setReadItemsCookie($status, $forum_id)
     {
         $cookie_name = 'LT';
-        $cookie_vars = newbbGetCookie($cookie_name, true);
+        $cookie_vars = \newbbGetCookie($cookie_name, true);
 
         /** @var Newbb\TopicHandler $itemHandler */
-        $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $itemHandler = Helper::getInstance()->getHandler('Topic');
         $criteria    = new \CriteriaCompo(new \Criteria('forum_id', $forum_id));
         $criteria->setSort('topic_last_post_id');
         $criteria->setOrder('DESC');
@@ -139,11 +139,11 @@ class ReadtopicHandler extends Newbb\ReadHandler
                     unset($cookie_vars[$var]);
                 }
             } else {
-                $cookie_vars[$var] = time() /*$items[$var]*/
+                $cookie_vars[$var] = \time() /*$items[$var]*/
                 ;
             }
         }
-        newbbSetCookie($cookie_name, $cookie_vars);
+        \newbbSetCookie($cookie_name, $cookie_vars);
 
         return true;
     }
@@ -157,7 +157,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
     public function setReadItemsDb($status, $forum_id, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS['xoopsUser'])) {
+            if (\is_object($GLOBALS['xoopsUser'])) {
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
@@ -165,7 +165,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
         }
 
         /** @var Newbb\TopicHandler $itemHandler */
-        $itemHandler    = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $itemHandler    = Helper::getInstance()->getHandler('Topic');
         $criteria_topic = new \CriteriaCompo(new \Criteria('forum_id', $forum_id));
         $criteria_topic->setSort('topic_last_post_id');
         $criteria_topic->setOrder('DESC');
@@ -178,7 +178,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
             $sticky_id = $itemHandler->getIds($criteria_sticky);
             $items     = $items_id + $sticky_id;
             $criteria  = new \CriteriaCompo(new \Criteria('uid', $uid));
-            $criteria->add(new \Criteria('read_item', '(' . implode(', ', $items) . ')', 'IN'));
+            $criteria->add(new \Criteria('read_item', '(' . \implode(', ', $items) . ')', 'IN'));
             $this->deleteAll($criteria, true);
 
             return true;
@@ -188,12 +188,12 @@ class ReadtopicHandler extends Newbb\ReadHandler
         $stickyObject = $itemHandler->getAll($criteria_sticky, ['topic_last_post_id']);
         $itemsObject  += $stickyObject;
         $items        = [];
-        foreach (array_keys($itemsObject) as $key) {
+        foreach (\array_keys($itemsObject) as $key) {
             $items[$key] = $itemsObject[$key]->getVar('topic_last_post_id');
         }
         unset($itemsObject, $stickyObject);
 
-        foreach (array_keys($items) as $key) {
+        foreach (\array_keys($items) as $key) {
             $this->setReadDb($key, $items[$key], $uid);
         }
 

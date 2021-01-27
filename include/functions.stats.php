@@ -3,15 +3,21 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper,
+    PostHandler,
+    StatsHandler,
+    TopicHandler
+};
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+/** @var Helper $helper */
+/** @var TopicHandler $topicHandler */
+/** @var PostHandler $postHandler */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_STATS_LOADED', true);
@@ -24,8 +30,8 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbbGetStats()
     {
-        /** @var Newbb\StatsHandler $statsHandler */
-        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
+        /** @var StatsHandler $statsHandler */
+        $statsHandler = Helper::getInstance()->getHandler('Stats');
         $stats        = $statsHandler->getStats();
 
         return $stats;
@@ -34,13 +40,13 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     /**
      * @param        $id
      * @param        $type
-     * @param  int   $increment
+     * @param int    $increment
      * @return mixed
      */
     function newbbUpdateStats($id, $type, $increment = 1)
     {
-        /** @var Newbb\StatsHandler $statsHandler */
-        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
+        /** @var StatsHandler $statsHandler */
+        $statsHandler = Helper::getInstance()->getHandler('Stats');
 
         return $statsHandler->update($id, $type, $increment);
     }
@@ -49,13 +55,12 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     * Gets the total number of topics in a form
     */
     /**
-     * @param  string $forum_id
+     * @param string $forum_id
      * @return mixed
      */
     function getTotalTopics($forum_id = '')
     {
-        /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
         $criteria     = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         if ($forum_id) {
             $criteria->add(new \Criteria('forum_id', (int)$forum_id));
@@ -69,14 +74,13 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     * Also can return the number of users on the system.
     */
     /**
-     * @param  int    $id
-     * @param  string $type
+     * @param int    $id
+     * @param string $type
      * @return mixed
      */
     function getTotalPosts($id = 0, $type = 'all')
     {
-        /** @var Newbb\PostHandler $postHandler */
-        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+        $postHandler = Helper::getInstance()->getHandler('Post');
         $criteria    = new \CriteriaCompo(new \Criteria('approved', 0, '>'));
         switch ($type) {
             case 'forum':
@@ -106,7 +110,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return null;
         }
-        list($total) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$total] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return $total;
     }

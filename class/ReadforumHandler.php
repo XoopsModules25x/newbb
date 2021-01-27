@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -61,9 +61,9 @@ class ReadforumHandler extends Newbb\ReadHandler
     /**
      * clean orphan items from database
      *
-     * @param  string $table_link
-     * @param  string $field_link
-     * @param  string $field_object
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
@@ -74,8 +74,8 @@ class ReadforumHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @param  int  $status
-     * @param  null $uid
+     * @param int  $status
+     * @param null $uid
      * @return bool
      */
     public function setReadItems($status = 0, $uid = null)
@@ -92,23 +92,23 @@ class ReadforumHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @param $status
-     * @param $items
+     * @param int $status
+     * @param array|null $items
      * @return bool
      */
-    public function setReadItemsCookie($status, $items)
+    public function setReadItemsCookie($status, $items=null)
     {
         $cookie_name = 'LF';
         $items       = [];
         if (!empty($status)) {
             /** @var Newbb\ForumHandler $itemHandler */
-            $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+            $itemHandler = Helper::getInstance()->getHandler('Forum');
             $items_id    = $itemHandler->getIds();
             foreach ($items_id as $key) {
-                $items[$key] = time();
+                $items[$key] = \time();
             }
         }
-        newbbSetCookie($cookie_name, $items);
+        \newbbSetCookie($cookie_name, $items);
 
         return true;
     }
@@ -121,7 +121,7 @@ class ReadforumHandler extends Newbb\ReadHandler
     public function setReadItemsDb($status, $uid)
     {
         if (empty($uid)) {
-            if (is_object($GLOBALS['xoopsUser'])) {
+            if (\is_object($GLOBALS['xoopsUser'])) {
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
             } else {
                 return false;
@@ -134,9 +134,9 @@ class ReadforumHandler extends Newbb\ReadHandler
         }
 
         /** @var Newbb\ForumHandler $itemHandler */
-        $itemHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $itemHandler = Helper::getInstance()->getHandler('Forum');
         $itemsObject = $itemHandler->getAll(null, ['forum_last_post_id']);
-        foreach (array_keys($itemsObject) as $key) {
+        foreach (\array_keys($itemsObject) as $key) {
             $this->setReadDb($key, $itemsObject[$key]->getVar('forum_last_post_id'), $uid);
         }
         unset($itemsObject);

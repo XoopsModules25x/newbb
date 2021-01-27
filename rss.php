@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -47,7 +47,7 @@ $forums   = [];
 $category = Request::getInt('c', 0, 'GET');
 $forumSet = Request::getString('f', '', 'GET');
 if ('' !== $forumSet) {
-    $forums = array_map('intval', array_map('trim', explode('|', $forumSet)));
+    $forums = array_map('\intval', array_map('\trim', explode('|', $forumSet)));
 }
 
 ///** @var Newbb\ForumHandler $forumHandler */
@@ -182,7 +182,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = $topic['poster_name'] ? $myts->htmlSpecialChars($topic['poster_name']) : $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+            $topic['uname'] = $topic['poster_name'] ? htmlspecialchars($topic['poster_name']) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';

@@ -3,13 +3,16 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 // Why the skip-DB-security check defined only for XMLRPC? We also need it!!! ~_*
 if (!defined('XOOPS_XMLRPC')) {
@@ -23,7 +26,7 @@ if (0 == $GLOBALS['xoopsModuleConfig']['email_digest']) {
     return false;
 }
 /** @var Newbb\DigestHandler $digestHandler */
-$digestHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Digest');
+$digestHandler = Helper::getInstance()->getHandler('Digest');
 $msg           = $digestHandler->process();
 $msg           .= ob_get_contents();
 ob_end_clean();

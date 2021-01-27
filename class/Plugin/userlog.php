@@ -13,21 +13,22 @@ namespace XoopsModules\Newbb\Plugin;
 */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
 use XoopsModules\Userlog;
+
+/** @var Helper $helper */
 
 /**
  *  userlog module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         newbb class plugin
  * @since           4.31
  * @author          irmtfan (irmtfan@yahoo.com)
  * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\PluginInterface
 {
     /**
@@ -66,11 +67,10 @@ class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\Plu
 
         switch ($subscribe_from) {
             case 'viewtopic.php':
-                /** @var Newbb\TopicHandler $topicHandler */
-                $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-                $post_id      = Request::getInt('post_id', 0); // !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
-                $move         = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
-                $topic_id     = Request::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;
+                /** @var Newbb\TopicHandler $topicHandler */ $topicHandler = Helper::getInstance()->getHandler('Topic');
+                $post_id                                                   = Request::getInt('post_id', 0); // !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
+                $move                                                      = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
+                $topic_id                                                  = Request::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;
                 if (!empty($post_id)) {
                     $topicObject = $topicHandler->getByPost($post_id);
                     $topic_id    = $topicObject->getVar('topic_id');

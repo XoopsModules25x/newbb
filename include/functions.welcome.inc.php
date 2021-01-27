@@ -3,13 +3,17 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use Xmf\IPAddress;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 global $xoopsModule, $myts, $xoopsUser, $forumObject;
 
@@ -19,9 +23,9 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBA
 }
 
 $forum_id    = $forumObject->getVar('forum_id');
-$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+$postHandler = Helper::getInstance()->getHandler('Post');
 $postObject  = $postHandler->create();
-$postObject->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
+$postObject->setVar('poster_ip', IPAddress::fromRequest()->asReadable());
 $postObject->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
 $postObject->setVar('approved', 1);
 $postObject->setVar('forum_id', $forum_id);
@@ -40,7 +44,10 @@ $categories = [];
 
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
-if ($mod = @$moduleHandler->getByDirname('profile', true)) {
+
+$mod = @$moduleHandler->getByDirname('profile', true);
+if ($mod) {
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $groups           = [XOOPS_GROUP_ANONYMOUS, XOOPS_GROUP_USERS];
 
@@ -48,19 +55,23 @@ if ($mod = @$moduleHandler->getByDirname('profile', true)) {
         $mod->loadLanguage();
     }
     /** var Newbb\PermissionHandler $permHandler */
-    $permHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Permission');
+    $permHandler = Helper::getInstance()->getHandler('Permission');
     $show_ids    = $permHandler->getItemIds('profile_show', $groups, $mod->getVar('mid'));
     $visible_ids = $permHandler->getItemIds('profile_visible', $groups, $mod->getVar('mid'));
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
+
     /** @var \ProfileProfileHandler $profileHandler */
-    $profileHandler = $helper->getHandler('Profile', 'profile');
+    //    $profileHandler = $helper->getHandler('Profile', 'profile');
+    $profileHandler = xoops_getModuleHandler('profile', 'profile');
     $fields         = $profileHandler->loadFields();
     /** @var \ProfileCategoryHandler $catHandler */
-    $catHandler = $helper->getHandler('Category', 'profile');
+    //    $catHandler = $helper->getHandler('Category', 'profile');
+    $catHandler = xoops_getModuleHandler('category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
     /** @var \ProfileFieldHandler $fieldcatHandler */
-    $fieldcatHandler = $helper->getHandler('Field', 'profile');
+    //    $fieldcatHandler = $helper->getHandler('Field', 'profile');
+    $fieldcatHandler = xoops_getModuleHandler('field', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);
 
     // Add core fields

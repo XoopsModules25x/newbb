@@ -409,7 +409,7 @@ define('_MD_NEWBB_POLL_RUSUREDEL', 'Are you sure you want to delete this poll an
 define('_MD_NEWBB_POLL_RESTARTPOLL', 'Restart poll');
 define('_MD_NEWBB_POLL_RESET', 'Reset all logs for this poll?');
 define('_MD_NEWBB_POLL_ADDPOLL', 'Add Poll');
-define('_MD_NEWBB_POLLMODULE_ERROR', 'xoopspoll module not available for use');
+define('_MD_NEWBB_POLLMODULE_ERROR', 'XoopsPoll module is not available for use');
 //report.php
 define('_MD_NEWBB_REPORTED', 'Thank you for reporting this post/thread! A moderator will look into your report shortly.');
 define('_MD_NEWBB_REPORT_ERROR', 'Error occurred while sending the report.');
@@ -464,7 +464,9 @@ define('_MD_NEWBB_GOTOLASTPOST', 'Go to last post');
 define('_MD_NEWBB_EDITEDMSG', 'Reason:');
 define('_MD_NEWBB_DELEDEDMSG', 'Reason for deleting<br><small>(If a reason is provided, the user will receive a message)</small>:');
 define('_MD_NEWBB_DELEDEDMSG_SUBJECT', 'Deletion of your article');
-define('_MD_NEWBB_DELEDEDMSG_BODY', 'Hello %s,
+define(
+    '_MD_NEWBB_DELEDEDMSG_BODY',
+    'Hello %s,
 your post in the forum
 
 %s
@@ -478,7 +480,8 @@ With best greetings
 -------------------------
 Please do not reply to this message!
 %s
-%s');
+%s'
+);
 define('_MD_NEWBB_FORUMHOME', 'Board index');
 define('_MD_NEWBB_SEEWAITREPORT', "There were <span style='color:#ff0000;'> <strong>%s</strong> Contributions reported </span>");
 define('_MD_NEWBB_PDF_SUBJECT', 'Title: ');
@@ -550,3 +553,9 @@ define('_MD_NEWBB_FORUMDESCRIPTION', 'Forum Description:');
 
 define('_MD_NEWBB_PDF_PAGE2', 'page');
 define('_MD_NEWBB_PDF_META_DIR', 'ltr');
+
+//Facebook UI Style Rating
+define('THEME_LIKE', 'Like');
+define('_AM_NEWBB_NOTOPIC', 'No Posts'); //TODO delete in next XOOPS release
+
+define('_MD_NEWBB_ERROR_POLL_MODULE_NOT_FOUND', "Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.");

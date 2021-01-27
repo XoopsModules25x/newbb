@@ -1,7 +1,9 @@
 <?php
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
@@ -183,7 +185,8 @@ function forum_seo_cat($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_cat';
     $ret = false;
-    if ($ret = \XoopsCache::read($key)) {
+    $ret = \XoopsCache::read($key);
+    if ($ret) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;
@@ -211,7 +214,8 @@ function forum_seo_forum($_cat_id)
     xoops_load('XoopsCache');
     $key = 'newbb_seo_forum';
     $ret = false;
-    if ($ret = \XoopsCache::read($key)) {
+    $ret = \XoopsCache::read($key);
+    if ($ret) {
         $ret = @$ret[$_cat_id];
         if ($ret) {
             return $ret;
@@ -243,7 +247,7 @@ function forum_seo_topic($_cat_id)
 
     $moduleDirName = basename(__DIR__);
     /** @var Newbb\TopicHandler $topicsHandler */
-    $topicsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+    $topicsHandler = Helper::getInstance()->getHandler('Topic');
     $criteria      = new \CriteriaCompo(new \Criteria('topic_id', $_cat_id, '='));
     $fields        = ['topic_title'];
     $ret0          = $topicsHandler->getAll($criteria, $fields, false);
@@ -266,8 +270,8 @@ function forum_seo_post($_cat_id)
 }
 
 /**
- * @param  string $title
- * @param  bool   $withExt
+ * @param string $title
+ * @param bool   $withExt
  * @return mixed|string
  */
 function forum_seo_title($title = '', $withExt = true)

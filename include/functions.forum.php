@@ -3,15 +3,18 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb;
+use Xmf\Module\Helper\Cache;
+use XoopsModules\Newbb\{Helper,
+    ObjectTree
+};
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+/** @var Helper $helper */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_FORUM_LOADED', true);
@@ -20,20 +23,20 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     define('NEWBB_FUNCTIONS_FORUM', 1);
 
     /**
-     * @param  null|array $value             selected forum id
-     * @param  string     $permission        permission (access, all, etc.)
-     * @param  bool       $categoryDelimiter show delimiter between categories
-     * @param  bool       $see
+     * @param null|array $value             selected forum id
+     * @param string     $permission        permission (access, all, etc.)
+     * @param bool       $categoryDelimiter show delimiter between categories
+     * @param bool       $see
      * @return string
      */
     function newbbForumSelectBox($value = null, $permission = 'access', $categoryDelimiter = true, $see = false)
     {
         global $xoopsUser;
         /** @var Newbb\CategoryHandler $categoryHandler */
-        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+        $categoryHandler = Helper::getInstance()->getHandler('Category');
         $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper = new Cache('newbb');
 
         $groups = [XOOPS_GROUP_ANONYMOUS];
         if (is_object($xoopsUser)) {
@@ -41,17 +44,21 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         sort($groups);
         $groupKey = 'forumselect_' . $permission . '_' . md5(implode(',', $groups));
-        $forums   = $cacheHelper->cacheRead($groupKey, function () use ($categories, $permission) {
-            /** @var Newbb\CategoryHandler $categoryHandler */
-            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
-            $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
+        $forums   = $cacheHelper->cacheRead(
+            $groupKey,
+            static function () use ($categories, $permission) {
+                /** @var Newbb\CategoryHandler $categoryHandler */
+                $categoryHandler = Helper::getInstance()->getHandler('Category');
+                $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
 
-            /** @var Newbb\ForumHandler $forumHandler */
-            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-            $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
+                /** @var Newbb\ForumHandler $forumHandler */
+                $forumHandler = Helper::getInstance()->getHandler('Forum');
+                $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
-            return $forums;
-        }, 300);
+                return $forums;
+            },
+            300
+        );
 
         $value = is_array($value) ? $value : [$value];
         //$see = is_array($see) ? $see : array($see);
@@ -81,7 +88,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     }
 
     /**
-     * @param  int $forum_id
+     * @param int $forum_id
      * @return string
      */
     function newbbMakeJumpbox($forum_id = 0)
@@ -91,7 +98,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $box .= '<option value=0>-- ' . _MD_NEWBB_SELFORUM . ' --</option>';
         $box .= newbbForumSelectBox($forum_id);
         $box .= "</select> <input type='submit' class='button' value='" . _GO . "' ></form>";
-        unset($forums, $categories);
+//        unset($forums, $categories);
 
         return $box;
     }
@@ -104,15 +111,15 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
      *
      * @int integer    $pid    parent forum ID
      *
-     * @param  int  $pid
-     * @param  bool $refresh
+     * @param int  $pid
+     * @param bool $refresh
      * @return array
      */
     function newbbGetSubForum($pid = 0, $refresh = false)
     {
         static $list;
         if (null === $list) {
-            $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+            $cacheHelper = new Cache('newbb');
             $list        = $cacheHelper->read('forum_sub');
         }
 
@@ -133,13 +140,13 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     {
         /** @var Newbb\ForumHandler $forumHandler */
         //        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $criteria     = new \CriteriaCompo(null, 1);
         $criteria->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
         //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
-        $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
+        $tree        = new ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {
             if (!$child = array_keys($tree->getAllChild($forumsObject[$key]->getVar('forum_id')))) {
@@ -149,15 +156,15 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         unset($forumsObject, $tree, $criteria);
 
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper = new Cache('newbb');
         $cacheHelper->write('forum_sub', $forum_array);
 
         return $forum_array;
     }
 
     /**
-     * @param  int  $forum_id
-     * @param  bool $refresh
+     * @param int  $forum_id
+     * @param bool $refresh
      * @return array|mixed|null
      */
     function newbbGetParentForum($forum_id = 0, $refresh = false)
@@ -165,7 +172,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         static $list = null;
 
         if (null === $list) {
-            $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+            $cacheHelper = new Cache('newbb');
             $list        = $cacheHelper->read('forum_parent');
         }
         if (!is_array($list) || $refresh) {
@@ -184,13 +191,13 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
     function newbbCreateParentForumList()
     {
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $criteria     = new \Criteria('forum_id');
         $criteria->setSort('parent_forum');
         $criteria->setOrder('ASC');
         $forumsObject = $forumHandler->getObjects($criteria);
         //        require_once $GLOBALS['xoops']->path('modules/newbb/class/Tree.php');
-        $tree        = new Newbb\ObjectTree($forumsObject, 'forum_id', 'parent_forum');
+        $tree        = new ObjectTree($forumsObject, 'forum_id', 'parent_forum');
         $forum_array = [];
         foreach (array_keys($forumsObject) as $key) {
             $parent_forum = $forumsObject[$key]->getVar('parent_forum');
@@ -206,7 +213,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         }
         unset($forumsObject, $tree, $criteria);
 
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper = new Cache('newbb');
         $cacheHelper->write('forum_parent', $forum_array);
 
         return $forum_array;

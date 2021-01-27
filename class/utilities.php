@@ -8,11 +8,11 @@ class NewbbUtilities
     /**
      * Verify that a mysql table exists
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $tablename
      * @return bool
+     * @copyright (c) Hervé Thouzard
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
      */
     public function tableExists($tablename)
     {
@@ -25,12 +25,12 @@ class NewbbUtilities
     /**
      * Verify that a field exists inside a mysql table
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $fieldname
      * @param $table
      * @return bool
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) Hervé Thouzard
      */
     public function fieldExists($fieldname, $table)
     {
@@ -43,12 +43,12 @@ class NewbbUtilities
     /**
      * Add a field to a mysql table
      *
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
-     * @copyright (c) Hervé Thouzard
      * @param $field
      * @param $table
      * @return bool|\mysqli_result
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) Hervé Thouzard
      */
     public function addField($field, $table)
     {
@@ -73,8 +73,7 @@ class NewbbUtilities
             } else {
                 file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }

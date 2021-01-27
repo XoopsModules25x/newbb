@@ -33,14 +33,14 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
         parent::__construct($caption, $name, $groupId, $values);
     }
 
-            /**
-             * Renders checkbox options for an item tree
-             *
-             * @param string $tree
-             * @param array  $option
-             * @param string $prefix
-             * @param array  $parentIds
-             */
+    /**
+     * Renders checkbox options for an item tree
+     *
+     * @param string $tree
+     * @param array  $option
+     * @param string $prefix
+     * @param array  $parentIds
+     */
     public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = [])
     {
         if ($option['id'] > 0) {
@@ -57,24 +57,13 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
                 $tree      .= "var ele = xoopsGetElementById('" . $child_ele . "'); if (this.checked !== true) {ele.checked = false;}";
             }
             $tree .= '" value="1"';
-            if (in_array($option['id'], $this->_value)) {
+            if (\in_array($option['id'], $this->_value)) {
                 $tree .= ' checked';
             }
-            $tree .= ' >'
-                     . $option['name']
-                     . '<input type="hidden" name="'
-                     . $this->getName()
-                     . '[parents]['
-                     . $option['id']
-                     . ']" value="'
-                     . implode(':', $parentIds)
-                     . '" ><input type="hidden" name="'
-                     . $this->getName()
-                     . '[itemname]['
-                     . $option['id']
-                     . ']" value="'
-                     . htmlspecialchars($option['name'], ENT_QUOTES | ENT_HTML5)
-                     . "\" ><br>\n";
+            $tree .= ' >' . $option['name'] . '<input type="hidden" name="' . $this->getName() . '[parents][' . $option['id'] . ']" value="' . \implode(':', $parentIds) . '" ><input type="hidden" name="' . $this->getName() . '[itemname][' . $option['id'] . ']" value="' . \htmlspecialchars(
+                    $option['name'],
+                    \ENT_QUOTES | \ENT_HTML5
+                ) . "\" ><br>\n";
         } else {
             $tree .= $prefix . $option['name'] . '<input type="hidden" id="' . $this->getName() . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" ><br>\n";
         }

@@ -14,6 +14,9 @@ namespace XoopsModules\Newbb\Common;
 
 use XoopsModules\Newbb;
 
+
+
+
 /**
  * Class Migrate synchronize existing tables with target schema
  *
@@ -21,7 +24,7 @@ use XoopsModules\Newbb;
  * @package   Newbb
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Migrate extends \Xmf\Database\Migrate
@@ -34,7 +37,6 @@ class Migrate extends \Xmf\Database\Migrate
      */
     public function __construct(Newbb\Common\Configurator $configurator)
     {
-
         $this->renameTables = $configurator->renameTables;
 
         $moduleDirName = basename(dirname(dirname(__DIR__)));
@@ -51,17 +53,19 @@ class Migrate extends \Xmf\Database\Migrate
                 $this->tableHandler->renameTable($oldName, $newName);
             } else {
                 //                Newbb\Helper::getInstance()->getModule()->setErrors('Could not migrate table: '. $oldName . '! The table ' .$newName . ' already exist!');
-                Newbb\Helper::getInstance()->getModule()->setErrors('<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . 'Could not migrate table: '
-                                                                    . '</span>'
-                                                                    . $oldName
-                                                                    . '<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . ' The table '
-                                                                    . '</span>'
-                                                                    . $newName
-                                                                    . '<span style="font-weight: bold; color: #ff0000;">'
-                                                                    . ' already exist!'
-                                                                    . '</span>');
+                Newbb\Helper::getInstance()->getModule()->setErrors(
+                    '<span style="font-weight: bold; color: #ff0000;">'
+                    . 'Could not migrate table: '
+                    . '</span>'
+                    . $oldName
+                    . '<span style="font-weight: bold; color: #ff0000;">'
+                    . ' The table '
+                    . '</span>'
+                    . $newName
+                    . '<span style="font-weight: bold; color: #ff0000;">'
+                    . ' already exist!'
+                    . '</span>'
+                );
 
                 trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
             }
@@ -96,8 +100,8 @@ class Migrate extends \Xmf\Database\Migrate
     {
         $tableName    = 'newbb_posts_text';
         $srcTableName = 'newbb_posts';
-        if (false !== $this->tableHandler->useTable($tableName)
-            && false !== $this->tableHandler->useTable($srcTableName)) {
+        if ($this->tableHandler->useTable($tableName)
+            && $this->tableHandler->useTable($srcTableName)) {
             $attributes = $this->tableHandler->getColumnAttributes($tableName, 'dohtml');
             if (false === $attributes) {
                 $this->synchronizeTable($tableName);

@@ -1,18 +1,18 @@
 <?php
+
 /**
  * newbb plugin configurations
  *
  * To enable the plugin preferences, you must rename the file or copy it to 'plugin.php'
  *
  * @copyright      XOOPS Project (https://xoops.org)/
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
  * @package        module::newbb
  */
 xoops_loadLanguage('main', 'newbb');
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /* some static xoopsModuleConfig */
 $customConfig = [];
 

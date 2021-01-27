@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -77,7 +77,8 @@ switch ($op) {
             if (!$value) {
                 continue;
             }
-            if ($reportObject = $reportHandler->get($rid)) {
+            $reportObject = $reportHandler->get($rid);
+            if ($reportObject) {
                 $reportHandler->delete($reportObject);
             }
         }
@@ -111,7 +112,7 @@ switch ($op) {
         $adminObject->displayButton('left');
         echo _AM_NEWBB_REPORTADMIN_HELP;
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-        echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post">';
+        echo '<form action="' . xoops_getenv('SCRIPT_NAME') . '" method="post">';
         echo "<table border='0' cellpadding='4' cellspacing='1' width='100%' class='outer'>";
         echo "<tr align='center'>";
         echo "<th class='bg3' width='80%'>" . _AM_NEWBB_REPORTTITLE . '</th>';
@@ -120,31 +121,21 @@ switch ($op) {
 
         $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
-            $post_link = '<a href="'
-                         . XOOPS_URL
-                         . '/modules/'
-                         . $xoopsModule->getVar('dirname')
-                         . '/viewtopic.php?post_id='
-                         . $report['post_id']
-                         . '&amp;topic_id='
-                         . $report['topic_id']
-                         . '&amp;forum='
-                         . $report['forum_id']
-                         . '&amp;viewmode=thread" target="checkreport">'
-                         . $myts->htmlSpecialChars($report['subject'])
-                         . '</a>';
+            $post_link = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $report['post_id'] . '&amp;topic_id=' . $report['topic_id'] . '&amp;forum=' . $report['forum_id'] . '&amp;viewmode=thread" target="checkreport">' . htmlspecialchars(
+                    $report['subject']
+                ) . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked >';
             if ('processed' !== $item) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" >';
             } else {
-                $memo = $myts->htmlSpecialChars($report['report_memo']);
+                $memo = htmlspecialchars($report['report_memo']);
             }
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTPOST . ': ' . $post_link . '</td>';
             echo "<td align='center'>" . $report['report_id'] . '</td>';
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
-            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . $myts->htmlSpecialChars($report['report_text']) . '</td>';
+            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . htmlspecialchars($report['report_text']) . '</td>';
             $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbbGetUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = !empty($uid) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';

@@ -1,7 +1,7 @@
 <div class="forum_header">
     <div class="forum_title">
         <h2><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></h2>
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMINDEX}></a>
         <span class="delimiter">&raquo;</span>
@@ -52,7 +52,7 @@
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>" method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$form_post.elements}>
-        <{if $element.hidden != true}>
+        <{if $element.hidden !== true}>
             <tr valign="top">
                 <td class="head">
                     <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
@@ -66,7 +66,7 @@
         <{/foreach}>
     </table>
     <{foreach item=element from=$form_post.elements}>
-    <{if $element.hidden == true}>
+    <{if $element.hidden === true}>
         <{$element.body}>
     <{/if}>
     <{/foreach}>

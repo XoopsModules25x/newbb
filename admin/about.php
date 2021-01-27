@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -29,11 +29,15 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-require_once __DIR__ . '/admin_header.php';
+use Xmf\Module\Admin;
+
+/** @var Admin $adminObject */
+
+require __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $adminObject->displayNavigation(basename(__FILE__));
-\Xmf\Module\Admin::setPaypal('PBQZ7D6LT6UBC');
+Admin::setPaypal('PBQZ7D6LT6UBC');
 $adminObject->displayAbout(false);
 
 require_once __DIR__ . '/admin_footer.php';

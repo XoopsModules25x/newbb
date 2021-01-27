@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         newbb
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-use XoopsModules\Newbb;
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+use XoopsModules\Newbb\{
+    Tree
+};
 
 if (!is_object($forumObject)) {
     xoops_error('forum object IS null');
@@ -30,7 +30,7 @@ require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 // The forum instanciation
-$form_forum = new \XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . ' ' . $forumObject->getVar('forum_name'), 'form_forum', xoops_getenv('PHP_SELF'));
+$form_forum = new \XoopsThemeForm(_AM_NEWBB_EDITTHISFORUM . ' ' . $forumObject->getVar('forum_name'), 'form_forum', xoops_getenv('SCRIPT_NAME'));
 
 // Forum name
 $form_forum->addElement(new \XoopsFormText(_AM_NEWBB_FORUMNAME, 'forum_name', 50, 80, $forumObject->getVar('forum_name', 'E')), true);
@@ -43,7 +43,7 @@ $form_forum->addElement(new \XoopsFormHidden('cat_id', $forumObject->getVar('cat
 
 // Parent forums
 ob_start();
-$mytree = new Newbb\Tree($GLOBALS['xoopsDB']->prefix('newbb_forums'), 'forum_id', 'parent_forum');
+$mytree = new Tree($GLOBALS['xoopsDB']->prefix('newbb_forums'), 'forum_id', 'parent_forum');
 $mytree->makeMySelBox('forum_name', 'parent_forum', $forumObject->getVar('parent_forum'), 1, 'parent_forum');
 $form_forum->addElement(new \XoopsFormLabel(_AM_NEWBB_MAKE_SUBFORUM_OF, ob_get_contents()));
 ob_end_clean();

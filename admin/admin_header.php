@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -29,7 +29,14 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use Xmf\Module\Admin;
+use XoopsModules\Newbb\{
+    Common\Configurator,
+    Helper
+};
+
+/** @var Helper $helper */
+/** @var Admin $adminObject */
 
 //require_once $GLOBALS['xoops']->path('include/cp_header.php');
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
@@ -41,22 +48,21 @@ require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname'
 
 require_once dirname(__DIR__) . '/include/common.php';
 
-/** @var Newbb\Helper $helper */
-$helper = \XoopsModules\Newbb\Helper::getInstance();
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = Xmf\Module\Admin::getInstance();
+$helper = Helper::getInstance();
 
-$configurator =  new Newbb\Common\Configurator();
+$adminObject = Admin::getInstance();
+
+$configurator = new Configurator();
 
 $myts = \MyTextSanitizer::getInstance();
 
-if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new \XoopsTpl();
 }
 
-$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = Admin::iconUrl('', 16);
+$pathIcon32    = Admin::iconUrl('', 32);
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Local icons path

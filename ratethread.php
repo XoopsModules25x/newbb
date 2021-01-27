@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -29,13 +29,14 @@
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\IPAddress;
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
 
 $ratinguser   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 $anonwaitdays = 1;
-$ip           = \Xmf\IPAddress::fromRequest()->asReadable();
+$ip           = IPAddress::fromRequest()->asReadable();
 foreach (['topic_id', 'rate', 'forum'] as $var) {
     //    ${$var} = isset($_POST[$var]) ? (int)($_POST[$var]) : (isset($_GET[$var])?(int)($_GET[$var]):0);
     ${$var} = Request::getInt($var, Request::getInt($var, 0, 'POST'), 'GET');

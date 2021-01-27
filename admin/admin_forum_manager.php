@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -29,8 +29,19 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Helper,
+    Utility,
+    ForumHandler,
+    PermissionHandler,
+    CategoryHandler
+};
+
+/** @var PermissionHandler $permHandler */
+/** @var ForumHandler $forumHandler */
+/** @var CategoryHandler $categoryHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
@@ -38,9 +49,8 @@ require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once dirname(__DIR__) . '/include/functions.forum.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
 
-/** @var \Xmf\Module\Helper\Cache $cacheHelper */
-$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
-\XoopsModules\Newbb\Utility::cleanCache();
+$cacheHelper = new Cache('newbb');
+Utility::cleanCache();
 
 xoops_cp_header();
 
@@ -70,7 +80,7 @@ switch ($op) {
             $forumHandler->insert($forumObject);
             if ($forumHandler->insert($forumObject)) {
                 if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
-                    $forums = array_map('intval', array_values($subforums));
+                    $forums = array_map('\intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new \Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
@@ -114,7 +124,7 @@ switch ($op) {
                 $forumObject = $forumHandler->get($forum_id);
                 $forumHandler->updateAll('parent_forum', Request::getInt('dest_forum', 0, 'POST'), new \Criteria('parent_forum', $forum_id));
                 if ($cid !== $forumObject->getVar('cat_id') && $subforums = newbbGetSubForum($forum_id)) {
-                    $forums = array_map('intval', array_values($subforums));
+                    $forums = array_map('\intval', array_values($subforums));
                     $forumHandler->updateAll('cat_id', $cid, new \Criteria('forum_id', '(' . implode(', ', $forums) . ')', 'IN'));
                 }
 
@@ -134,7 +144,7 @@ switch ($op) {
             $box .= newbbForumSelectBox($forum_id, 'all');
             $box .= '</select>';
             echo "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr><td class='odd'>";
-            echo '<form action="' . xoops_getenv('PHP_SELF') . '" method="post" name="forummove" id="forummove">';
+            echo '<form action="' . xoops_getenv('SCRIPT_NAME') . '" method="post" name="forummove" id="forummove">';
             echo '<input type="hidden" name="op" value="mergeforum" >';
             echo '<input type="hidden" name="forum" value=' . $forum_id . ' >';
             echo '<table border="0" cellpadding="1" cellspacing="0" align="center" valign="top" width="95%"><tr>';

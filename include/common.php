@@ -20,21 +20,23 @@
  * @author          XOOPS Development Team - Email:<name@site.com> - Website:<https://xoops.org>
  */
 
-use XoopsModules\Newbb;
+use Xmf\Module\Admin;
+use XoopsModules\Newbb\{Helper,
+    Utility
+};
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+/** @var Helper $helper */
+/** @var Utility $utility */
+/** @var Admin $adminObject */
+
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
-/** @var \XoopsDatabase $db */
-/** @var Newbb\Helper $helper */
-/** @var Newbb\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = \XoopsModules\Newbb\Helper::getInstance();
-$utility = new Newbb\Utility();
-//$configurator = new Newbb\Common\Configurator();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 
 $helper->loadLanguage('common');
 
@@ -76,7 +78,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 // Load only if module is installed
 //if (is_object($helper->getModule())) {
 //    // Find if the user is admin of the module
-//    $publisherIsAdmin = Newbb\Utility::userIsAdmin();
+//    $publisherIsAdmin = Utility::userIsAdmin();
 //}
 
 //$db = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -122,8 +124,8 @@ $userstatsHandler = $helper->getHandler('Userstats');
 /** @var Newbb\XmlrssHandler $xmlrssHandler */
 $xmlrssHandler = $helper->getHandler('Xmlrss');
 
-$pathIcon16 = Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32 = Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = Admin::iconUrl('', 16);
+$pathIcon32 = Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 

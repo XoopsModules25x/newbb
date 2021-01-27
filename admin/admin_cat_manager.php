@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -29,8 +29,16 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Module\Helper\Cache;
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Helper,
+    Utility,
+    CategoryHandler
+};
+
+/** @var Helper $helper */
+/** @var CategoryHandler $categoryHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/functions.render.php';
@@ -40,7 +48,6 @@ xoops_cp_header();
 $op     = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //!empty($_GET['op'])? $_GET['op'] : (!empty($_POST['op'])?$_POST['op']:"");
 $cat_id = Request::getInt('cat_id', Request::getInt('cat_id', 0, 'POST'), 'GET'); // (int)( !empty($_GET['cat_id']) ? $_GET['cat_id'] : @$_POST['cat_id'] );
 
-/** @var Newbb\CategoryHandler $categoryHandler */
 //$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 
 /**
@@ -60,7 +67,7 @@ function newCategory()
 function editCategory(\XoopsObject $categoryObject = null)
 {
     global $xoopsModule;
-    $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     if (null === $categoryObject) {
         $categoryObject = $categoryHandler->create();
     }
@@ -68,9 +75,9 @@ function editCategory(\XoopsObject $categoryObject = null)
     require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
     if (!$categoryObject->isNew()) {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('PHP_SELF'));
+        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
     } else {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('SCRIPT_NAME'));
         $categoryObject->setVar('cat_title', '');
         $categoryObject->setVar('cat_image', '');
         $categoryObject->setVar('cat_description', '');
@@ -84,7 +91,7 @@ function editCategory(\XoopsObject $categoryObject = null)
 
     $imgdir      = '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/category';
     $cat_image   = $categoryObject->getVar('cat_image');
-    $cat_image   = empty($cat_image) ? 'blank.gif' : $cat_image;
+    $cat_image   = empty($cat_image) ? 'assets/images/category/blank.gif' : $cat_image;
     $graph_array = \XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH . $imgdir . '/');
     array_unshift($graph_array, _NONE);
     $cat_image_select = new \XoopsFormSelect('', 'cat_image', $categoryObject->getVar('cat_image'));
@@ -138,7 +145,7 @@ switch ($op) {
 
         break;
     case 'save':
-        $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+        $cacheHelper = new Cache('newbb');
         $cacheHelper->delete('permission_category');
         if ($cat_id) {
             $categoryObject = $categoryHandler->get($cat_id);
@@ -207,7 +214,7 @@ switch ($op) {
         break;
 }
 
-$cacheHelper = Newbb\Utility::cleanCache();
+$cacheHelper = Utility::cleanCache();
 //$cacheHelper->delete('permission_category');
 
 require_once __DIR__ . '/admin_footer.php';

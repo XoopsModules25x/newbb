@@ -11,13 +11,18 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Common\Configurator,
+    Helper,
+    Utility};
+
+/** @var Helper $helper */
 
 //require_once __DIR__ . '/setup.php';
 
@@ -31,7 +36,7 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
     /** @var Newbb\Utility $utility */
-    $utility      = new \XoopsModules\Newbb\Utility();
+    $utility      = new Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -54,22 +59,22 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 function xoops_module_install_newbb(\XoopsModule $module)
 {
     require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    require_once dirname(__DIR__) . '/include/config.php';
 
     $moduleDirName = basename(dirname(__DIR__));
 
     /** @var Newbb\Helper $helper */
-    $helper       = \XoopsModules\Newbb\Helper::getInstance();
-    $utility      = new Newbb\Utility();
-    $configurator = new Newbb\Common\Configurator();
+    $helper       = Helper::getInstance();
+    $utility      = new Utility();
+    $configurator = new Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
     // default Permission Settings ----------------------
     global $xoopsModule, $xoopsDB;
-    $moduleId         = $xoopsModule->getVar('mid');
+    $moduleId = $xoopsModule->getVar('mid');
     // $moduleId2        = $helper->getModule()->mid();
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);

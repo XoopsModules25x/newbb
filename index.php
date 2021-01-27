@@ -3,14 +3,18 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{Helper,
+    ObjectTree
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/header.php';
 
@@ -61,9 +65,12 @@ require_once __DIR__ . '/include/functions.render.php';
 /* rss feed */
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/rss.php" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 // irmtfan remove and move to footer.php
@@ -77,7 +84,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
 /** @var Newbb\ForumHandler $forumHandler */
-$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+$forumHandler = Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
@@ -187,18 +194,18 @@ foreach (array_keys($categories) as $id) {
     }
 
     $cat_sponsor = [];
-    @list($url, $title) = array_map('trim', explode(' ', $onecat['cat_url'], 2));
+    @list($url, $title) = array_map('\trim', explode(' ', $onecat['cat_url'], 2));
     if ('' === $title) {
         $title = $url;
     }
-    $title = $myts->htmlSpecialChars($title);
+    $title = htmlspecialchars($title);
     if ('' !== $url) {
         $cat_sponsor = ['title' => $title, 'link' => formatURL($url)];
     }
     //$cat_image = $onecat['cat_image'];
     $cat_image = '';
     $cat_image = $onecat['cat_image'];
-    if ('' !== $cat_image && 'blank.gif' !== $cat_image && $cat_image) {
+    if ('' !== $cat_image  && $cat_image) {
         $cat_image = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/assets/images/category/' . $cat_image;
     }
     $category_array[] = [
@@ -219,10 +226,12 @@ $xoopsTpl->assign_by_ref('category_icon', $category_icon);
 $xoopsTpl->assign_by_ref('categories', $category_array);
 $xoopsTpl->assign('notifyicon', $category_icon);
 
-$xoopsTpl->assign([
-                      'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
-                      'index_desc'  => _MD_NEWBB_TOSTART,
-                  ]);
+$xoopsTpl->assign(
+    [
+        'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
+        'index_desc'  => _MD_NEWBB_TOSTART,
+    ]
+);
 
 /* display user stats */
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
@@ -279,11 +288,13 @@ if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
     $xoopsTpl->assign('rss_enable', 1);
     $xoopsTpl->assign('rss_button', newbbDisplayImage('rss', 'RSS feed'));
 }
-$xoopsTpl->assign([
-                      'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWBB_NEWPOSTS),
-                      'img_forum'     => newbbDisplayImage('forum', _MD_NEWBB_NONEWPOSTS),
-                      'img_subforum'  => newbbDisplayImage('subforum'),
-                  ]);
+$xoopsTpl->assign(
+    [
+        'img_forum_new' => newbbDisplayImage('forum_new', _MD_NEWBB_NEWPOSTS),
+        'img_forum'     => newbbDisplayImage('forum', _MD_NEWBB_NONEWPOSTS),
+        'img_subforum'  => newbbDisplayImage('subforum'),
+    ]
+);
 
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';

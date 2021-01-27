@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -57,7 +57,8 @@ $file_saved = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachm
 if (!file_exists($file_saved)) {
     exit(_MD_NEWBB_NO_SUCH_FILE);
 }
-if ($down = $forumpost->incrementDownload($attachId)) {
+$down = $forumpost->incrementDownload($attachId);
+if ($down) {
     $forumpost->saveAttachment();
 }
 unset($forumpost);
@@ -80,7 +81,6 @@ if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
         if (false === @ini_set('zlib.output_compression', 'Off')) {
             throw new \RuntimeException('Setting of zlib.output_compression failed.');
         }
-
     }
 
     if (function_exists('mb_http_output')) {

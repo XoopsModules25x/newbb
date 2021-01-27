@@ -3,18 +3,27 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb\{Helper
+};
+
+/** @var Helper $helper */
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+$moduleDirName = basename(__DIR__);
+
+$helper = Helper::getInstance();
+// Load language files
+$helper->loadLanguage('main');
+
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
 // irmtfan assign newbb dirname then replace all. include xoops header.php (now commented and removed)
@@ -32,16 +41,14 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         $redir = false;
         if (true === mb_strpos(getenv('REQUEST_URI'), 'mark_read=') || true === mb_strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
-        } else {
-            if (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
-                //rewrite only for files
+        } elseif (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
+            //rewrite only for files
 
-                if ('' !== trim(getenv('SCRIPT_NAME'))) {
-                    if (false === mb_strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
-                        $redir = true;
-                    } elseif (getenv('QUERY_STRING')) {
-                        $redir = true;
-                    }
+            if ('' !== trim(getenv('SCRIPT_NAME'))) {
+                if (false === mb_strpos(getenv('REQUEST_URI'), '/' . SEO_MODULE_NAME . '/')) {
+                    $redir = true;
+                } elseif (getenv('QUERY_STRING')) {
+                    $redir = true;
                 }
             }
         }

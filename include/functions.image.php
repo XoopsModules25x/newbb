@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -47,9 +47,12 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $image     = $img_path . '/' . $source;
         $thumb_url = $thumb_url . '/' . $source;
         $image_url = $img_url . '/' . $source;
+        $img_info = '';
 
         $imginfo  = @getimagesize($image);
-        $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        if (is_array($image)) {
+            $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        }
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
             && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {

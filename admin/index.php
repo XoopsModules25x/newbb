@@ -2,8 +2,8 @@
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2016 XOOPS.org                           //
-// <https://xoops.org/>                             //
+// Copyright (c) 2000-2020 XOOPS.org                           //
+// <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -29,7 +29,11 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
-use XoopsModules\Newbb;
+use  Xmf\Module\Admin;
+use XoopsModules\Newbb\{Utility
+};
+
+/** @var Admin $adminObject */
 
 require_once __DIR__ . '/admin_header.php';
 //require_once  dirname(__DIR__) . '/class/Utility.php';
@@ -39,12 +43,11 @@ $attach_path = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attach
 $thumb_path  = $attach_path . 'thumbs/';
 $folder      = [$attach_path, $thumb_path];
 
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
 /**
  * @param       $target
- * @param  int  $mode
+ * @param int   $mode
  * @return bool
  */
 function newbb_admin_mkdir($target, $mode = 0777)
@@ -57,7 +60,7 @@ function newbb_admin_mkdir($target, $mode = 0777)
 
 /**
  * @param       $target
- * @param  int  $mode
+ * @param int   $mode
  * @return bool
  */
 function newbb_admin_chmod($target, $mode = 0777)
@@ -73,7 +76,7 @@ function newbb_admin_chmod($target, $mode = 0777)
 function newbb_getImageLibs()
 {
     $imageLibs = [];
-    unset($output, $status);
+//    unset($output, $status);
     if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
@@ -154,7 +157,7 @@ $adminObject->addInfoBoxLine(sprintf(_AM_NEWBB_REPORT_PROCESSED . ': %s', $repor
 
 $uploadFolders = $configurator->uploadFolders;
 foreach ($uploadFolders as $value) {
-    Newbb\Utility::prepareFolder($value);
+    Utility::prepareFolder($value);
     $adminObject->addConfigBoxLine($value, 'folder');
 }
 
@@ -163,14 +166,14 @@ $adminObject->displayIndex();
 
 require_once __DIR__ . '/admin_footer.php';
 
-$cacheHelper = Newbb\Utility::cleanCache();
+$cacheHelper = Utility::cleanCache();
 //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 //$cacheHelper->delete('config');
 //$cacheHelper->delete('permission');
 
 /**
  * @param             $sizeAsString
- * @param  bool       $b
+ * @param bool        $b
  * @return int|string
  */
 function return_bytes($sizeAsString, $b = false)

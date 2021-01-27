@@ -3,7 +3,7 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -46,21 +46,29 @@ if (Request::getInt('mark', 0, 'GET')) {
 $forum_id = Request::getInt('forum', 0, 'GET');
 $type     = Request::getInt('type', 0, 'GET');
 $status   = (Request::getString('status', '', 'GET')
-             && in_array(Request::getString('status', '', 'GET'), [
-        'active',
-        'pending',
-        'deleted',
-        'digest',
-        'unreplied',
-        'unread',
-    ], true)) ? Request::getString('status', '', 'GET') : '';
+             && in_array(
+                 Request::getString('status', '', 'GET'),
+                 [
+                     'active',
+                     'pending',
+                     'deleted',
+                     'digest',
+                     'unreplied',
+                     'unread',
+                 ],
+                 true
+             )) ? Request::getString('status', '', 'GET') : '';
 
 $mode = (Request::getString('status', '', 'GET')
-         && in_array(Request::getString('status', '', 'GET'), [
-        'active',
-        'pending',
-        'deleted',
-    ], true)) ? 2 : Request::getInt('mode', 0, 'GET');
+         && in_array(
+             Request::getString('status', '', 'GET'),
+             [
+                 'active',
+                 'pending',
+                 'deleted',
+             ],
+             true
+         )) ? 2 : Request::getInt('mode', 0, 'GET');
 
 ///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
@@ -84,9 +92,12 @@ require_once $GLOBALS['xoops']->path('header.php');
 require_once __DIR__ . '/include/functions.render.php';
 
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '-' . $forumObject->getVar('forum_name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/rss.php?f=' . $forum_id . '" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 $forumDescription = $forumObject->getVar('forum_desc');
 $xoopsTpl->assign('forumDescription', $forumDescription);
@@ -142,7 +153,8 @@ $criteria = new \CriteriaCompo(new \Criteria('parent_forum', $forum_id));
 $criteria->add(new \Criteria('forum_id', '(' . implode(', ', $forumHandler->getIdsByPermission('access')) . ')', 'IN'));
 $criteria->setSort('forum_order');
 
-if ($forums = $forumHandler->getAll($criteria, null, false)) {
+$forums = $forumHandler->getAll($criteria, null, false);
+if ($forums) {
     $subforum_array = $forumHandler->display($forums, $GLOBALS['xoopsModuleConfig']['length_title_index'], $GLOBALS['xoopsModuleConfig']['count_subforum']);
     $subforum       = array_values($subforum_array[$forum_id]);
     unset($subforum_array);
@@ -204,11 +216,17 @@ $xoopsTpl->assign('h_topic_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$pa
 $xoopsTpl->assign('h_reply_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_replies&amp;order=" . (('t.topic_replies' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_poster_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_poster&amp;order=" . (('t.topic_poster' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
 $xoopsTpl->assign('h_views_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_views&amp;order=" . (('t.topic_views' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_rating_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.rating&amp;order=" . (('t.rating' === $sort
-                                                                                                                                  && 'DESC' === $order) ? 'ASC' : 'DESC')); // irmtfan t.topic_ratings to t.rating
+$xoopsTpl->assign(
+    'h_rating_link',
+    XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.rating&amp;order=" . (('t.rating' === $sort
+                                                                                                   && 'DESC' === $order) ? 'ASC' : 'DESC')
+); // irmtfan t.topic_ratings to t.rating
 $xoopsTpl->assign('h_date_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_last_post_id&amp;order=" . (('t.topic_last_post_id' === $sort && 'DESC' === $order) ? 'ASC' : 'DESC'));
-$xoopsTpl->assign('h_publish_link', XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (('t.topic_id' === $sort
-                                                                                                                                     && 'DESC' === $order) ? 'ASC' : 'DESC'));
+$xoopsTpl->assign(
+    'h_publish_link',
+    XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_sort}&amp;sort=t.topic_id&amp;order=" . (('t.topic_id' === $sort
+                                                                                                     && 'DESC' === $order) ? 'ASC' : 'DESC')
+);
 $xoopsTpl->assign('forum_since', $since); // For $since in search.php
 
 // irmtfan - if no since it should be 0
@@ -222,7 +240,7 @@ foreach ($criteria_vars as $var) {
 }
 $criteria_topic['excerpt'] = $GLOBALS['xoopsModuleConfig']['post_excerpt'];
 
-list($allTopics, $sticky) = $forumHandler->getAllTopics($forumObject, $criteria_topic);
+[$allTopics, $sticky] = $forumHandler->getAllTopics($forumObject, $criteria_topic);
 
 $xoopsTpl->assign_by_ref('topics', $allTopics);
 $xoopsTpl->assign('sticky', $sticky);
@@ -251,7 +269,8 @@ unset($query_type);
 //$typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
 $typeOptions = null;
 $types       = [];
-if ($types = $typeHandler->getByForum($forum_id)) {
+$types       = $typeHandler->getByForum($forum_id);
+if ($types) {
     $typeOptions[] = ['title' => _ALL, 'link' => XOOPS_URL . "/modules/newbb/viewforum.php?{$page_query_type}"];
     foreach ($types as $key => $item) {
         $typeOptions[] = [

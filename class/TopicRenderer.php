@@ -6,7 +6,7 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
@@ -14,8 +14,6 @@ namespace XoopsModules\Newbb;
 
 use Xmf\Request;
 use XoopsModules\Newbb;
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Topic Renderer
@@ -27,56 +25,46 @@ use XoopsModules\Newbb;
 class TopicRenderer
 {
     public $vars = [];
-
     /**
      * reference to moduleConfig
      */
     public $config;
-
     /**
      * Current user has no access to current page
      */
     private $noperm = false;
-
     /**
      * For multiple forums
      */
     public $is_multiple = false;
-
     /**
      * force to parse vars (run against static vars) irmtfan
      */
     public $force = false;
-
     /**
      * Vistitor's level: 0 - anonymous; 1 - user; 2 - moderator or admin
      */
     public $userlevel = 0;
-
-    public $query = [];
-
+    public $query     = [];
     /**
      * reference to an object handler
      */
     private $handler;
-
     /**
      * Requested page
      */
     private $page = 'list.topic.php';
-
     /**
      * query variables
      */
     private $args = ['forum', 'uid', 'lastposter', 'type', 'status', 'mode', 'sort', 'order', 'start', 'since'];
-
     /**
      * Constructor
      */
     //    public function TopicRenderer()
     public function __construct()
     {
-        $this->handler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        $this->handler = Helper::getInstance()->getHandler('Topic');
     }
 
     /**
@@ -87,7 +75,7 @@ class TopicRenderer
     {
         static $instance;
         if (null === $instance) {
-            $instance = new static();
+            $instance = new self();
         }
 
         return $instance;
@@ -247,7 +235,8 @@ class TopicRenderer
                 } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
-                    if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
+                    $lastvisit = max($GLOBALS['last_visit'], $startdate);
+                    if ($lastvisit) {
                         $readmode1query = '';
                         if ($lastvisit > $startdate) {
                             $readmode1query = 'p.post_time < ' . $lastvisit;
@@ -288,7 +277,8 @@ class TopicRenderer
                 } elseif (1 == $this->config['read_mode']) {
                     // START irmtfan fix read_mode = 1 bugs - for all users (member and anon)
                     $startdate = !empty($this->vars['since']) ? (time() - newbbGetSinceTime($this->vars['since'])) : 0;
-                    if ($lastvisit = max($GLOBALS['last_visit'], $startdate)) {
+                    $lastvisit = max($GLOBALS['last_visit'], $startdate);
+                    if ($lastvisit) {
                         if ($lastvisit > $startdate) {
                             $this->query['where'][] = 'p.post_time > ' . $lastvisit;
                         }
@@ -339,11 +329,10 @@ class TopicRenderer
     {
         switch ($var) {
             case 'forum':
-                /** @var Newbb\ForumHandler $forumHandler */
-                $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+                /** @var Newbb\ForumHandler $forumHandler */ $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
-                $accessForums = $forumHandler->getIdsByValues(array_map('intval', @explode('|', $val)));
+                $accessForums = $forumHandler->getIdsByValues(array_map('\intval', @explode('|', $val)));
                 // Filter specified forums if any
                 //if (!empty($val) && $_forums = @explode('|', $val)) {
                 //$accessForums = array_intersect($accessForums, array_map('intval', $_forums));
@@ -362,13 +351,13 @@ class TopicRenderer
                 break;
             case 'uid': // irmtfan add multi topic poster
                 if (-1 !== $val) {
-                    $val                    = implode(',', array_map('intval', explode(',', $val)));
+                    $val                    = implode(',', array_map('\intval', explode(',', $val)));
                     $this->query['where'][] = 't.topic_poster IN ( ' . $val . ' )';
                 }
                 break;
             case 'lastposter': // irmtfan add multi lastposter
                 if (-1 !== $val) {
-                    $val                    = implode(',', array_map('intval', explode(',', $val)));
+                    $val                    = implode(',', array_map('\intval', explode(',', $val)));
                     $this->query['where'][] = 'p.uid IN ( ' . $val . ' )';
                 }
                 break;
@@ -407,7 +396,8 @@ class TopicRenderer
                 // END irmtfan to accept multiple status
                 break;
             case 'sort':
-                if ($sort = $this->getSort($val, 'sort')) {
+                $sort = $this->getSort($val, 'sort');
+                if ($sort) {
                     $this->query['sort'][] = $sort . (empty($this->vars['order']) ? ' DESC' : ' ASC');
                 } else { // irmtfan if sort is not in the list
                     $this->query['sort'][] = 't.topic_last_post_id' . (empty($this->vars['order']) ? ' DESC' : ' ASC');
@@ -453,8 +443,8 @@ class TopicRenderer
     }
 
     /**
-     * @param  null $header
-     * @param  null $var
+     * @param null $header
+     * @param null $var
      * @return array|null
      */
     public function getSort($header = null, $var = null)
@@ -561,18 +551,21 @@ class TopicRenderer
     // START irmtfan add Display topic headers function
 
     /**
-     * @param  null $header
+     * @param null $header
      * @return array
      */
     public function getHeader($header = null)
     {
         $headersSort = $this->getSort('', 'title');
         // additional headers - important: those cannot be in sort anyway
-        $headers = array_merge($headersSort, [
-            'attachment' => _MD_NEWBB_TOPICSHASATT, // show attachment smarty
-            'read'       => _MD_NEWBB_MARK_UNREAD . '|' . _MD_NEWBB_MARK_READ, // read/unread show topic_folder smarty
-            'pagenav'    => _MD_NEWBB_PAGENAV_DISPLAY, // show topic_page_jump smarty - sort by topic_replies?
-        ]);
+        $headers = array_merge(
+            $headersSort,
+            [
+                'attachment' => _MD_NEWBB_TOPICSHASATT, // show attachment smarty
+                'read'       => _MD_NEWBB_MARK_UNREAD . '|' . _MD_NEWBB_MARK_READ, // read/unread show topic_folder smarty
+                'pagenav'    => _MD_NEWBB_PAGENAV_DISPLAY, // show topic_page_jump smarty - sort by topic_replies?
+            ]
+        );
 
         return $this->getFromKeys($headers, $header);
     }
@@ -580,8 +573,8 @@ class TopicRenderer
     // END irmtfan add Display topic headers function
 
     /**
-     * @param  null $type
-     * @param  null $status
+     * @param null $type
+     * @param null $status
      * @return array
      */
     public function getStatus($type = null, $status = null)
@@ -724,7 +717,7 @@ class TopicRenderer
     }
 
     /**
-     * @param  null $type_id
+     * @param null $type_id
      * @return mixed
      */
     public function getTypes($type_id = null)
@@ -732,7 +725,7 @@ class TopicRenderer
         static $types;
         if (!isset($types)) {
             /** @var Newbb\TypeHandler $typeHandler */
-            $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
+            $typeHandler = Helper::getInstance()->getHandler('Type');
 
             $types = $typeHandler->getByForum(explode('|', @$this->vars['forum']));
         }
@@ -745,12 +738,12 @@ class TopicRenderer
     }
 
     /**
-     * @param  \Smarty $xoopsTpl
+     * @param \Smarty $xoopsTpl
      * @return bool
      */
     public function buildTypes(\Smarty $xoopsTpl)
     {
-        $status = '';
+        $status = [];
         if (!$types = $this->getTypes()) {
             return true;
         }
@@ -772,7 +765,7 @@ class TopicRenderer
     }
 
     /**
-     * @param  \Smarty $xoopsTpl
+     * @param \Smarty $xoopsTpl
      * @return bool
      */
     public function buildCurrent(\Smarty $xoopsTpl)
@@ -853,13 +846,13 @@ class TopicRenderer
         if (!$result = $this->handler->db->query($sql)) {
             return 0;
         }
-        list($count) = $this->handler->db->fetchRow($result);
+        [$count] = $this->handler->db->fetchRow($result);
 
         return $count;
     }
 
     /**
-     * @param  \Smarty $xoopsTpl
+     * @param \Smarty|null $xoopsTpl
      * @return array|void
      */
     public function renderTopics(\Smarty $xoopsTpl = null)
@@ -924,7 +917,7 @@ class TopicRenderer
         $reads     = [];
         $types     = [];
         $forums    = [];
-        $anonymous = $myts->htmlSpecialChars($GLOBALS['xoopsConfig']['anonymous']);
+        $anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
@@ -935,7 +928,7 @@ class TopicRenderer
             // START irmtfan remove topic_icon hardcode smarty
             // topic_icon: just regular topic_icon
             if (!empty($myrow['icon'])) {
-                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
+                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($myrow['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
             } else {
                 $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" >';
             }
@@ -978,7 +971,7 @@ class TopicRenderer
             // ------------------------------------------------------
             // => topic array
 
-            $topic_title = $myts->htmlSpecialChars($myrow['topic_title']);
+            $topic_title = htmlspecialchars($myrow['topic_title']);
             // irmtfan use topic_title_excerpt for block topic title length
             $topic_title_excerpt = $topic_title;
             if (!empty($this->config['topic_title_excerpt'])) {
@@ -995,7 +988,7 @@ class TopicRenderer
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = xoops_substr(newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
-                $topic_excerpt = str_replace('[', '&#91;', $myts->htmlSpecialChars($topic_excerpt));
+                $topic_excerpt = str_replace('[', '&#91;', htmlspecialchars($topic_excerpt));
             }
 
             $topics[$myrow['topic_id']] = [
@@ -1014,14 +1007,14 @@ class TopicRenderer
                 'topic_page_jump_icon'   => $topic_page_jump_icon,
                 'topic_replies'          => $myrow['topic_replies'],
                 'topic_poster_uid'       => $myrow['topic_poster'],
-                'topic_poster_name'      => !empty($myrow['poster_name']) ? $myts->htmlSpecialChars($myrow['poster_name']) : $anonymous,
+                'topic_poster_name'      => !empty($myrow['poster_name']) ? htmlspecialchars($myrow['poster_name']) : $anonymous,
                 'topic_views'            => $myrow['topic_views'],
                 'topic_time'             => newbbFormatTimestamp($myrow['topic_time']),
                 'topic_last_post_id'     => $myrow['topic_last_post_id'],
                 //irmtfan added
                 'topic_last_posttime'    => newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
-                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? $myts->htmlSpecialChars($myrow['last_poster_name']) : $anonymous,
+                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? htmlspecialchars($myrow['last_poster_name']) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
                 'topic_excerpt'          => $topic_excerpt,
                 'sticky'                 => $myrow['topic_sticky'] ? newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY) : '',
@@ -1053,7 +1046,7 @@ class TopicRenderer
         $posters_name = newbbGetUnameFromIds(array_keys($posters), $this->config['show_realname'], true);
         $topic_isRead = newbbIsRead('topic', $reads);
         /*
-        $type_list = array();
+        $type_list = [];
         if (count($types) > 0) {
             $typeHandler =  Newbb\Helper::getInstance()->getHandler('Type');
             $type_list = $typeHandler->getAll(new \Criteria("type_id", "(".implode(", ", array_keys($types)).")", "IN"), null, false);
@@ -1061,7 +1054,7 @@ class TopicRenderer
         */
         $type_list = $this->getTypes();
         /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
 
         if (count($forums) > 0) {
             $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', array_keys($forums)) . ')', 'IN'), ['forum_name', 'hot_threshold'], false);
@@ -1095,7 +1088,7 @@ class TopicRenderer
             //    $topic_folder_text = _MD_NEWBB_TOPICDIGEST;
             if ($topics[$id]['topic_replies'] >= $forum_list[$topics[$id]['topic_forum']]['hot_threshold']) {
                 $topic_folder      = empty($topic_isRead[$id]) ? 'topic_hot_new' : 'topic_hot';
-                $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_MORETHAN : _MD_NEWBB_MORETHAN2;
+                $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_MORETHAN : \_MD_NEWBB_MORETHAN2;
             } else {
                 $topic_folder      = empty($topic_isRead[$id]) ? 'topic_new' : 'topic';
                 $topic_folder_text = empty($topic_isRead[$id]) ? _MD_NEWBB_NEWPOSTS : _MD_NEWBB_NONEWPOSTS;
@@ -1109,8 +1102,9 @@ class TopicRenderer
         }
 
         if (count($topics) > 0) {
-            $sql = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
-            if ($result = $this->handler->db->query($sql)) {
+            $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . implode(',', array_keys($topics)) . ')';
+            $result = $this->handler->db->query($sql);
+            if ($result) {
                 while (list($topic_id) = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . newbbDisplayImage('attachment', _MD_NEWBB_TOPICSHASATT);
                 }
@@ -1131,7 +1125,7 @@ class TopicRenderer
 
     /**
      * @param        $array
-     * @param  null  $keys
+     * @param null   $keys
      * @return array
      */
     public function getFromKeys($array, $keys = null)
@@ -1148,6 +1142,5 @@ class TopicRenderer
 
         return $ret;
     }
-
     // END irmtfan to create an array from selected keys of an array
 }

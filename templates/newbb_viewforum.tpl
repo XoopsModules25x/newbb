@@ -83,16 +83,16 @@
         <div class="dropdown">
             <{include file="db:newbb_viewforum_menu.tpl"}>
         </div>
-        <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
+        <{* irmtfan hardcode removed style="float: right; text-align:right;" *}>
         <div class="icon_right">
-            <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+            <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}>
         </div>
     </div>
     <div class="clear"></div>
     <br>
 
     <table class="outer" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
-        <!-- irmtfan hardcode removed align="left" -->
+        <{* irmtfan hardcode removed align="left" *}>
         <tr class="head" class="align_left">
             <td width="5%" colspan="3">
                 <{if $mode gt 1}>
@@ -103,7 +103,7 @@
                 <{/if}>
             </td>
             <td>&nbsp;<strong><a href="<{$h_topic_link}>"><{$smarty.const._MD_NEWBB_TOPICS}></a></strong></td>
-            <!-- irmtfan _MD_NEWBB_POSTER to _MD_NEWBB_TOPICPOSTER -->
+            <{* irmtfan _MD_NEWBB_POSTER to _MD_NEWBB_TOPICPOSTER *}>
             <td width="10%" align="center" nowrap="nowrap"><strong><a href="<{$h_poster_link}>"><{$smarty.const._MD_NEWBB_TOPICPOSTER}></a></strong></td>
             <td width="10%" align="center" nowrap="nowrap"><strong><a href="<{$h_publish_link}>"><{$smarty.const._MD_NEWBB_TOPICTIME}></a></strong></td>
             <td width="5%" align="center" nowrap="nowrap"><strong><a href="<{$h_reply_link}>"><{$smarty.const._MD_NEWBB_REPLIES}></a></strong></td>
@@ -111,7 +111,7 @@
             <{if $rating_enable}>
                 <td width="5%" align="center" nowrap="nowrap"><strong><a href="<{$h_rating_link}>"><{$smarty.const._MD_NEWBB_RATINGS}></a></strong></td>
             <{/if}>
-            <!-- irmtfan _MD_NEWBB_DATE to _MD_NEWBB_LASTPOSTTIME -->
+            <{* irmtfan _MD_NEWBB_DATE to _MD_NEWBB_LASTPOSTTIME *}>
             <td width="15%" align="center" nowrap="nowrap"><strong><a href="<{$h_date_link}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></strong></td>
         </tr>
 
@@ -126,7 +126,7 @@
             </tr>
         <{/if}>
 
-        <!-- start forum topic -->
+        <{* start forum topic *}>
         <div><strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}></div>
 
         <{foreach name=loop item=topic from=$topics}>
@@ -142,7 +142,7 @@
             </tr>
         <{/if}>
         <tr class="<{cycle values="even,odd"}>">
-            <!-- irmtfan add topic-read/topic-new smarty variable  -->
+            <{* irmtfan add topic-read/topic-new smarty variable  *}>
 
             <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
                 <{if $mode gt 1}>
@@ -183,16 +183,16 @@
             <{if $rating_enable}>
                 <td align="center" valign="middle"><{$topic.rating_img}></td>
             <{/if}>
-            <!-- irmtfan hardcode removed align="right" -->
+            <{* irmtfan hardcode removed align="right" *}>
             <td class="align_right" valign="middle"><{$topic.topic_last_posttime}><br>
-                <!-- irmtfan add $smarty.const._MD_NEWBB_BY -->
+                <{* irmtfan add $smarty.const._MD_NEWBB_BY *}>
                 <{$smarty.const._MD_NEWBB_BY}>&nbsp;<{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
             </td>
         </tr>
 
         <{/foreach}>
 
-        <!-- end forum topic -->
+        <{* end forum topic *}>
 
         <{if $mode gt 1}>
 </form>
@@ -207,14 +207,14 @@
                 <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;<{$forum_selection_sort}>&nbsp;<{$forum_selection_order}>&nbsp;<{$forum_selection_since}>&nbsp;
                 <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
                 <input type="hidden" name="status" value="<{$status}>">
-                <!-- irmtfan remove name="submit" -->
+                <{* irmtfan remove name="submit" *}>
                 <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
 </tr>
 </table>
-<!-- end forum main table -->
+<{* end forum main table *}>
 
 <br>
 
@@ -223,7 +223,7 @@
         <{$forum_addpoll}> <{$forum_post_or_register}>
     </div>
     <div class="right">
-        <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
+        <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}> <{* irmtfan to solve nested forms and id="xo-pagenav" issue *}>
     </div>
 </div>
 <div class="clear"></div>
@@ -231,7 +231,7 @@
 <br style="clear: both;">
 <br>
 <div>
-    <!-- irmtfan hardcode style="float: left; text-align: left;" -->
+    <{* irmtfan hardcode style="float: left; text-align: left;" *}>
     <div class="icon_left">
         <{$img_newposts}> = <{$smarty.const._MD_NEWBB_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_NEWBB_MORETHAN}>) <br>
         <{$img_folder}> = <{$smarty.const._MD_NEWBB_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_NEWBB_MORETHAN2}>) <br>
@@ -240,7 +240,7 @@
         <{$img_digest}> = <{$smarty.const._MD_NEWBB_TOPICDIGEST}> <br>
         <{$img_poll}> = <{$smarty.const._MD_NEWBB_TOPICHASPOLL}>
     </div>
-    <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
+    <{* irmtfan hardcode removed style="float: right; text-align:right;" *}>
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
@@ -270,7 +270,7 @@
 <br>
 
 <div>
-    <!-- irmtfan hardcode removed  style="float: left; -->
+    <{* irmtfan hardcode removed  style="float: left; *}>
     <div class="floatleft">
         <{foreach item=perm from=$permission_table}>
         <div style="font-size:x-small;"><{$perm}></div>
@@ -285,4 +285,4 @@
 <{/if}>
 <{include file='db:newbb_notification_select.tpl'}>
 
-<!-- end module contents -->
+<{* end module contents *}>

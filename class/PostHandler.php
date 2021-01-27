@@ -5,8 +5,8 @@ namespace XoopsModules\Newbb;
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -32,11 +32,7 @@ namespace XoopsModules\Newbb;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-use XoopsModules\Newbb;
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
+\defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
  * Class PostHandler
@@ -52,16 +48,17 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  mixed $id
-     * @param  null  $var
+     * @param mixed $id
+     * @param null  $var
      * @return null|\XoopsObject
      */
     public function get($id = null, $var = null) //get($id)
     {
-        $id   = (int)$id;
-        $post = null;
-        $sql  = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
-        if ($array = $this->db->fetchArray($this->db->query($sql))) {
+        $id    = (int)$id;
+        $post  = null;
+        $sql   = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
+        $array = $this->db->fetchArray($this->db->query($sql));
+        if ($array) {
             $post = $this->create(false);
             $post->assignVars($array);
         }
@@ -70,13 +67,13 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  int              $limit
-     * @param  int              $start
-     * @param  \CriteriaElement $criteria
-     * @param  null             $fields
-     * @param  bool             $asObject
-     * @param  int              $topic_id
-     * @param  int              $approved
+     * @param int                   $limit
+     * @param int                   $start
+     * @param \CriteriaElement|null $criteria
+     * @param null                  $fields
+     * @param bool                  $asObject
+     * @param int                   $topic_id
+     * @param int                   $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -87,8 +84,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $fields = null,
         $asObject = true,
         $topic_id = 0,
-        $approved = 1)
-    {
+        $approved = 1
+    ) {
         $sql    = 'SELECT p.*, t.*, tp.topic_status FROM '
                   . $this->db->prefix('newbb_posts')
                   . ' p LEFT JOIN '
@@ -102,14 +99,15 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $post = $this->create(false);
-            $post->assignVars($myrow);
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $post = $this->create(false);
+                $post->assignVars($myrow);
 
-            $ret[$myrow['post_id']] = $post;
-            unset($post);
+                $ret[$myrow['post_id']] = $post;
+                unset($post);
+            }
         }
-
         return $ret;
     }
 
@@ -117,7 +115,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
      * @param Post $post
      * @return mixed
      */
-    public function getPostForPDF(&$post)
+    public function getPostForPDF($post)
     {
         return $post->getPostBody(true);
     }
@@ -126,14 +124,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
      * @param Post $post
      * @return mixed
      */
-    public function getPostForPrint(&$post)
+    public function getPostForPrint($post)
     {
         return $post->getPostBody();
     }
 
     /**
-     * @param  int|Post|\XoopsObject $post
-     * @param  bool                  $force
+     * @param int|Post $post
+     * @param bool                  $force
      * @return bool
      */
     public function approve(&$post, $force = false)
@@ -141,7 +139,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         if (empty($post)) {
             return false;
         }
-        if (is_numeric($post)) {
+        if (\is_numeric($post)) {
             $post = $this->get($post);
         }
 
@@ -153,8 +151,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $post->setVar('approved', 1);
         $this->insert($post, true);
 
-        /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        /** @var TopicHandler $topicHandler */
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
         $topicObject  = $topicHandler->get($post->getVar('topic_id'));
         if ($topicObject->getVar('topic_last_post_id') < $post->getVar('post_id')) {
             $topicObject->setVar('topic_last_post_id', $post->getVar('post_id'));
@@ -166,8 +164,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
         $topicHandler->insert($topicObject, true);
 
-        /** @var Newbb\ForumHandler $forumHandler */
-        $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+        /** @var ForumHandler $forumHandler */
+        $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forumObject  = $forumHandler->get($post->getVar('forum_id'));
         if ($forumObject->getVar('forum_last_post_id') < $post->getVar('post_id')) {
             $forumObject->setVar('forum_last_post_id', $post->getVar('post_id'));
@@ -181,9 +179,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
         // Update user stats
         if ($post->getVar('uid') > 0) {
             /** @var \XoopsMemberHandler $memberHandler */
-            $memberHandler = xoops_getHandler('member');
+            $memberHandler = \xoops_getHandler('member');
             $poster        = $memberHandler->getUser($post->getVar('uid'));
-            if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
+            if (\is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
                 $res = $memberHandler->insertUser($poster, true);
                 unset($poster);
@@ -192,7 +190,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
         // Update forum stats
         /** @var StatsHandler $statsHandler */
-        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
+        $statsHandler = Helper::getInstance()->getHandler('Stats');
         $statsHandler->update($post->getVar('forum_id'), 'post');
         if ($post->isTopic()) {
             $statsHandler->update($post->getVar('forum_id'), 'topic');
@@ -202,8 +200,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param \XoopsObject $post
-     * @param  bool        $force
+     * @param Post $post
+     * @param bool         $force
      * @return bool
      */
     public function insert(\XoopsObject $post, $force = true) //insert(&$post, $force = true)
@@ -212,13 +210,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
         // Set the post time
         // The time should be "publish" time. To be adjusted later
         if (!$post->getVar('post_time')) {
-            $post->setVar('post_time', time());
+            $post->setVar('post_time', \time());
         }
 
-        /** @var Newbb\TopicHandler $topicHandler */
-        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+        /** @var TopicHandler $topicHandler */
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
-        if ($topic_id = $post->getVar('topic_id')) {
+        $topic_id = $post->getVar('topic_id');
+        if ($topic_id) {
             $topicObject = $topicHandler->get($topic_id);
             // Invalid topic OR the topic is no approved and the post is not top post
             if (!$topicObject//    || (!$post->isTopic() && $topicObject->getVar("approved") < 1)
@@ -232,7 +231,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             $post->setNew();
             $topicObject = $topicHandler->create();
         }
-        $textHandler    = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Text');
+        $textHandler    = Helper::getInstance()->getHandler('Text');
         $post_text_vars = ['post_text', 'post_edit', 'dohtml', 'doxcode', 'dosmiley', 'doimage', 'dobr'];
         if ($post->isNew()) {
             if (!$topic_id = $post->getVar('topic_id')) {
@@ -327,13 +326,13 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject|Post $post
-     * @param  bool             $isDeleteOne
-     * @param  bool             $force
+     * @param bool              $isDeleteOne
+     * @param bool              $force
      * @return bool
      */
     public function delete(\XoopsObject $post, $isDeleteOne = true, $force = false)
     {
-        if (!is_object($post) || 0 == $post->getVar('post_id')) {
+        if (!\is_object($post) || 0 == $post->getVar('post_id')) {
             return false;
         }
 
@@ -350,10 +349,10 @@ class PostHandler extends \XoopsPersistableObjectHandler
             return $this->myDelete($post, $force);
         }
         require_once $GLOBALS['xoops']->path('class/xoopstree.php');
-        $mytree = new Newbb\Tree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
+        $mytree = new Tree($this->db->prefix('newbb_posts'), 'post_id', 'pid');
         $arr    = $mytree->getAllChild($post->getVar('post_id'));
         // irmtfan - delete childs in a reverse order
-        for ($i = count($arr) - 1; $i >= 0; $i--) {
+        for ($i = \count($arr) - 1; $i >= 0; $i--) {
             $childpost = $this->create(false);
             $childpost->assignVars($arr[$i]);
             $this->myDelete($childpost, $force);
@@ -365,15 +364,15 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  Post|\XoopsObject $post
-     * @param  bool              $force
+     * @param Post|\XoopsObject $post
+     * @param bool              $force
      * @return bool
      */
     public function myDelete(Post $post, $force = false)
     {
         global $xoopsModule;
 
-        if (!is_object($post) || 0 == $post->getVar('post_id')) {
+        if (!\is_object($post) || 0 == $post->getVar('post_id')) {
             return false;
         }
 
@@ -384,7 +383,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
             /* delete pending post directly */
         } else {
-            $sql = sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts'), $post->getVar('post_id'));
+            $sql = \sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('delete post error: ' . $sql);
 
@@ -392,7 +391,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
             $post->deleteAttachment();
 
-            $sql = sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts_text'), $post->getVar('post_id'));
+            $sql = \sprintf('DELETE FROM `%s` WHERE post_id = %u', $this->db->prefix('newbb_posts_text'), $post->getVar('post_id'));
             if (!$result = $this->db->queryF($sql)) {
                 $post->setErrors('Could not remove post text: ' . $sql);
 
@@ -401,18 +400,18 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
 
         if ($post->isTopic()) {
-            $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
+            $topicHandler = Helper::getInstance()->getHandler('Topic');
             /** @var Topic $topicObject */
             $topicObject = $topicHandler->get($post->getVar('topic_id'));
-            if (is_object($topicObject) && $topicObject->getVar('approved') > 0 && empty($force)) {
+            if (\is_object($topicObject) && $topicObject->getVar('approved') > 0 && empty($force)) {
                 $topiccount_toupdate = 1;
                 $topicObject->setVar('approved', -1);
                 $topicHandler->insert($topicObject);
-                xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'thread', $post->getVar('topic_id'));
+                \xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'thread', $post->getVar('topic_id'));
             } else {
-                if (is_object($topicObject)) {
+                if (\is_object($topicObject)) {
                     if ($topicObject->getVar('approved') > 0) {
-                        xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'thread', $post->getVar('topic_id'));
+                        \xoops_notification_deletebyitem($xoopsModule->getVar('mid'), 'thread', $post->getVar('topic_id'));
                     }
 
                     $poll_id = $topicObject->getVar('poll_id');
@@ -421,11 +420,11 @@ class PostHandler extends \XoopsPersistableObjectHandler
                     // END irmtfan poll_module
                 }
 
-                $sql = sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_topics'), $post->getVar('topic_id'));
+                $sql = \sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_topics'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
-                $sql = sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_votedata'), $post->getVar('topic_id'));
+                $sql = \sprintf('DELETE FROM `%s` WHERE topic_id = %u', $this->db->prefix('newbb_votedata'), $post->getVar('topic_id'));
                 if (!$result = $this->db->queryF($sql)) {
                     //xoops_error($this->db->error());
                 }
@@ -446,9 +445,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
             // Update user stats
             if ($post->getVar('uid') > 0) {
                 /** @var \XoopsMemberHandler $memberHandler */
-                $memberHandler = xoops_getHandler('member');
+                $memberHandler = \xoops_getHandler('member');
                 $poster        = $memberHandler->getUser($post->getVar('uid'));
-                if (is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
+                if (\is_object($poster) && $post->getVar('uid') == $poster->getVar('uid')) {
                     $poster->setVar('posts', $poster->getVar('posts') - 1);
                     $res = $memberHandler->insertUser($poster, true);
                     unset($poster);
@@ -469,15 +468,15 @@ class PostHandler extends \XoopsPersistableObjectHandler
     // START irmtfan enhance getPostCount when there is join (read_mode = 2)
 
     /**
-     * @param  null $criteria
-     * @param  null $join
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria
+     * @param null $join
      * @return int|null
      */
     public function getPostCount($criteria = null, $join = null)
     {
         // if not join get the count from XOOPS/class/model/stats as before
         if (empty($join)) {
-            return parent::getCount($criteria);
+            return $this->getCount($criteria);
         }
 
         $sql = 'SELECT COUNT(*) as count' . ' FROM ' . $this->db->prefix('newbb_posts') . ' AS p' . ' LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' AS t ON t.post_id = p.post_id';
@@ -503,10 +502,10 @@ class PostHandler extends \XoopsPersistableObjectHandler
      */
 
     /**
-     * @param  null $criteria
-     * @param  int  $limit
-     * @param  int  $start
-     * @param  null $join
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria
+     * @param int  $limit
+     * @param int  $start
+     * @param null $join
      * @return array
      */
     public function getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
@@ -523,17 +522,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
         }
         $result = $this->db->query($sql, (int)$limit, (int)$start);
-        if (!$result) {
-            //xoops_error($this->db->error());
-            return $ret;
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $post = $this->create(false);
+                $post->assignVars($myrow);
+                $ret[$myrow['post_id']] = $post;
+                unset($post);
+            }
         }
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $post = $this->create(false);
-            $post->assignVars($myrow);
-            $ret[$myrow['post_id']] = $post;
-            unset($post);
-        }
-
         return $ret;
     }
 
@@ -549,9 +545,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
     /**
      * clean orphan items from database
      *
-     * @param  string $table_link
-     * @param  string $field_link
-     * @param  string $field_object
+     * @param string $table_link
+     * @param string $field_link
+     * @param string $field_object
      * @return bool   true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '') //cleanOrphan()
@@ -572,14 +568,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
     /**
      * clean expired objects from database
      *
-     * @param  int $expire time limit for expiration
+     * @param int $expire time limit for expiration
      * @return bool true on success
      */
     public function cleanExpires($expire = 0)
     {
         // irmtfan if 0 no cleanup look include/plugin.php
-        if (!func_num_args()) {
-            $newbbConfig = newbbLoadConfig();
+        if (!\func_num_args()) {
+            $newbbConfig = \newbbLoadConfig();
             $expire      = isset($newbbConfig['pending_expire']) ? (int)$newbbConfig['pending_expire'] : 7;
             $expire      = $expire * 24 * 3600; // days to seconds
         }
@@ -588,7 +584,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
         $crit_expire = new \CriteriaCompo(new \Criteria('approved', 0, '<='));
         //if (!empty($expire)) {
-        $crit_expire->add(new \Criteria('post_time', time() - (int)$expire, '<'));
+        $crit_expire->add(new \Criteria('post_time', \time() - (int)$expire, '<'));
 
         //}
         return $this->deleteAll($crit_expire, true/*, true*/);

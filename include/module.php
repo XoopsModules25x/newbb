@@ -2,8 +2,8 @@
 //
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
+//                  Copyright (c) 2000-2020 XOOPS.org                        //
+//                       <https://xoops.org>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -28,9 +28,13 @@
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-use XoopsModules\Newbb;
+use Xmf\IPAddress;
+use Xmf\Module\Helper\Cache;
+use XoopsModules\Newbb\{Common\Configurator,
+    Common\Migrate,
+    Helper
+};
 
 if (defined('XOOPS_MODULE_NEWBB_FUCTIONS')) {
     exit();
@@ -40,13 +44,13 @@ define('XOOPS_MODULE_NEWBB_FUCTIONS', 1);
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
- * @param  XoopsModule $module
- * @param  null        $oldversion
+ * @param XoopsModule $module
+ * @param null        $oldversion
  * @return bool
  */
 function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
 {
-    $cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
+    $cacheHelper = new Cache('newbb');
     $cacheHelper->delete('config');
 
     $newbbConfig = newbbLoadConfig();
@@ -78,7 +82,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
     $folderHandler->delete($imagesDirectory);
 
     //remove old changelogs
-    array_map('unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt'));
+    array_map('\unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt', GLOB_NOSORT));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
         require_once dirname(__DIR__) . '/include/functions.recon.php';
@@ -89,23 +93,22 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     //    XoopsLoad::load('migrate', 'newbb');
-    /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
-    $configurator = new \XoopsModules\Newbb\Common\Configurator();
+    $configurator = new Configurator();
 
-    $migrator = new \XoopsModules\Newbb\Common\Migrate($configurator);
+    $migrator = new Migrate($configurator);
     $migrator->synchronizeSchema();
 
     return true;
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_pre_install_newbb(\XoopsModule $module)
@@ -119,14 +122,14 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 }
 
 /**
- * @param  XoopsModule $module
+ * @param XoopsModule $module
  * @return bool
  */
 function xoops_module_install_newbb(\XoopsModule $module)
 {
     /* Create a test category */
     /** @var Newbb\CategoryHandler $categoryHandler */
-    $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
     $category->setVar('cat_image', '', true);
@@ -138,7 +141,7 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Create a forum for test */
     /** @var Newbb\ForumHandler $forumHandler */
-    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
+    $forumHandler = Helper::getInstance()->getHandler('Forum');
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
     $forum->setVar('forum_desc', _MI_NEWBB_INSTALL_FORUM_DESC, true);
@@ -186,10 +189,10 @@ function xoops_module_install_newbb(\XoopsModule $module)
     /* Create a test post */
     require_once __DIR__ . '/functions.user.php';
     /** @var Newbb\PostHandler $postHandler */
-    $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+    $postHandler = Helper::getInstance()->getHandler('Post');
     /** @var $forumpost */
     $forumpost = $postHandler->create();
-    $forumpost->setVar('poster_ip', \Xmf\IPAddress::fromRequest()->asReadable());
+    $forumpost->setVar('poster_ip', IPAddress::fromRequest()->asReadable());
     $forumpost->setVar('uid', $GLOBALS['xoopsUser']->getVar('uid'));
     $forumpost->setVar('approved', 1);
     $forumpost->setVar('forum_id', $forum_id);

@@ -3,14 +3,16 @@
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @package        module::newbb
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    TopicRenderer
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -20,9 +22,12 @@ $GLOBALS['xoopsOption']['template_main'] = 'newbb_viewall.tpl';
 require_once $GLOBALS['xoops']->path('header.php');
 // irmtfan new method
 if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
-    $xoopsTpl->assign('xoops_module_header', '
+    $xoopsTpl->assign(
+        'xoops_module_header',
+        '
     <link rel="alternate" type="application/xml+rss" title="' . $xoopsModule->getVar('name') . '" href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/rss.php" >
-    ' . @$xoopsTpl->get_template_vars('xoops_module_header'));
+    ' . @$xoopsTpl->get_template_vars('xoops_module_header')
+    );
 }
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
@@ -31,7 +36,7 @@ require_once __DIR__ . '/include/functions.render.php';
 
 // irmtfan use require_once because it will redeclared in newbb/blocks/list_topic.php
 //require_once __DIR__ . '/./class/TopicRenderer.php';
-$topic_renderer            = Newbb\TopicRenderer::getInstance();
+$topic_renderer            = TopicRenderer::getInstance();
 $topic_renderer->userlevel = $GLOBALS['xoopsUserIsAdmin'] ? 2 : is_object($GLOBALS['xoopsUser']);
 // irmtfan if list topic block is in the page then force to parse
 if (defined('LIST_TOPIC_DEFINED')) {

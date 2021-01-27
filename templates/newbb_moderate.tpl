@@ -59,7 +59,7 @@
 <form name="<{$suspend_form.name}>" id="<{$suspend_form.name}>" action="<{$suspend_form.action}>" method="<{$suspend_form.method}>" <{$suspend_form.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$suspend_form.elements}>
-        <{if $element.hidden != true}>
+        <{if $element.hidden !== true}>
             <tr valign="top">
                 <td class="head">
                     <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
@@ -73,7 +73,7 @@
         <{/foreach}>
     </table>
     <{foreach item=element from=$suspend_form.elements}>
-    <{if $element.hidden == true}>
+    <{if $element.hidden === true}>
         <{$element.body}>
     <{/if}>
     <{/foreach}>
