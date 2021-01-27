@@ -1,9 +1,9 @@
 <ol class="breadcrumb">
     <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
-    <{if $parent_forum}>
+    <{if $parent_forum|default:''}>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-    <{elseif $forum_name}>
+    <{elseif $forum_name|default:''}>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
     <{if $current}>
@@ -81,7 +81,7 @@
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                         <option value="">--------</option>
-                        <{foreach item=filter from=$types}>
+                        <{foreach item=filter from=$types|default:null}>
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                     </select>
@@ -146,7 +146,7 @@
             </div>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
             <div class="pagenav">
-                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
                 <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
             </div>
         </div>
@@ -196,7 +196,7 @@
         <td width="4%" align="center"><{$topic.topic_icon}><{$topic.sticky}><br><{$topic.digest}><{$topic.poll}></td>
         <!-- irmtfan remove topic_link hardcode and add topic_excerpt -->
         <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-            <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
+            <{$topic.topic_title}></a><{$topic.attachment|default:''}> <{$topic.topic_page_jump}>
             <!-- irmtfan add topic publish time and rating -->
             <br>
             <span><{$headers.publish.title}>: <{$topic.topic_time}></span>
@@ -243,7 +243,7 @@
 
 <{if $pagenav}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
-    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
     <br>
 <{/if}>

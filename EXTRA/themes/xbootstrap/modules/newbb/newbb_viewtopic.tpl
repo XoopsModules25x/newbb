@@ -14,7 +14,7 @@
         <li class="active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
     </ol>
 
-    <{if $tagbar}>
+    <{if $tagbar|default:false}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
         </div><!-- .newbb-tagbar -->
@@ -44,73 +44,6 @@
     <{/if}>
 
     <div class="row mb10">
-        <{if $viewer_level gt 0}>
-            <{* //hack by xd9527*}>
-            <{if $facebookstyle == 1 }>
-
-                <!-- modal for rate //-->
-                <div class="modal fade bs-example-modal-sm container" id="replyrate" tabindex="-1" role="dialog" aria-labelledby="replyrate">
-                    <div class="modal-dialog btn-bottom" role="document">
-                        <div class="modal-content btn-group" role="group">
-                            <button type="button" class="btn btn-default" onclick="location.href='<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5';"><i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true"></i><br><{$smarty.const._MD_NEWBB_RATE5}></button>
-                            <button type="button" class="btn btn-default" onclick="location.href='<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4';"><i class="fa fa-smile-o fa-2x" aria-hidden="true"></i><br><{$smarty.const._MD_NEWBB_RATE4}></button>
-                            <button type="button" class="btn btn-default" onclick="location.href='<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=3';"><i class="fa fa-meh-o fa-2x" aria-hidden="true"></i><br><{$smarty.const._MD_NEWBB_RATE3}></button>
-                            <button type="button" class="btn btn-default" onclick="location.href='<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=2';"><i class="fa fa-frown-o fa-2x" aria-hidden="true"></i><br><{$smarty.const._MD_NEWBB_RATE2}></button>
-                            <button type="button" class="btn btn-default" onclick="location.href='<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1';"><i class="fa fa-thumbs-o-down fa-2x" aria-hidden="true"></i><br><{$smarty.const._MD_NEWBB_RATE1}></button>
-                        </div>
-                    </div>
-                </div>
-                <!-- modal for quickreply //-->
-                <div class="modal fade bs-example-modal-sm container" id="replyquick" tabindex="-1" role="dialog" aria-labelledby="replyquick">
-                    <div class="modal-dialog btn-bottom" role="document">
-                        <div class="modal-content modal-body">
-                            <button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <{$quickreply.form}>
-                        </div>
-                    </div>
-                </div>
-                <!-- fix bottom navbar //-->
-                <div class="navbar-fixed-bottom container" id="postnav" style="bottom:12px;">
-
-                    <!-- rate button //-->
-                    <{if $rating_enable}>
-                        <a class="btn btn-default btn-lg" style="box-shadow: 0 0 15px 0 grey" data-toggle="modal" data-target="#replyrate"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><{$smarty.const.THEME_LIKE}></a>
-                        &nbsp;
-                    <{/if}>
-
-                    <!-- reply button //-->
-                    <{if $quickreply.show}>
-                        <a class="btn btn-default btn-lg" style="box-shadow: 0 0 15px 0 grey" data-toggle="modal" data-target="#replyquick"><i class="fa fa-comment-o" aria-hidden="true"></i><{$smarty.const.THEME_FORUM_REPLY}></a>
-                        &nbsp;
-                    <{/if}>
-
-                    <!-- modal-dialog move to bottom //-->
-                    <style>.btn-bottom {
-                            position: absolute;
-                            bottom: 48px;
-                            z-index: 9999;
-                        } </style>
-
-                    <!-- scroll hide bottom navbar //-->
-                    <script>
-                        $(window).scroll(function () {
-                            var scrollBottom = $("body").height() - $(window).height() - 60;
-                            if (scrollBottom > 120) {
-                                if ($(this).scrollTop() > 60 && $(this).scrollTop() < scrollBottom) {
-                                    $('#postnav').fadeIn();
-                                } else {
-                                    $('#postnav').fadeOut();
-                                }
-                            } else {
-                                $('#postnav').fadeIn();
-                            }
-                        });
-                    </script>
-                </div>
-
-            <{else}>
-                <{*//end of hack by xd9527*}>
-
                 <{if $viewer_level gt 1}>
                     <div class="col-sm-8 col-md-8">
                         <{if $mode gt 1}>
@@ -120,9 +53,9 @@
                                 <option value="0"><{$smarty.const._SELECT}></option>
                                 <option value="delete"><{$smarty.const._DELETE}></option>
                                 <{if $status eq "pending"}>
-                                    <option value="approve"><{$smarty.const._MD_APPROVE}></option>
+                            <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
                                 <{elseif $status eq "deleted"}>
-                                    <option value="restore"><{$smarty.const._MD_RESTORE}></option>
+                            <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                                 <{/if}>
                             </select>
                             <input type="hidden" name="topic_id" value="<{$topic_id}>">
@@ -134,8 +67,6 @@
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
                             <{/if}>
                     </div>
-                <{/if}>
-            <{/if}>
         <{/if}>
         <div class="<{if $viewer_level gt 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
             <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
@@ -143,7 +74,7 @@
     </div>
 
     <{if $mode lte 1}>
-        <{if $topic_poll}>
+        <{if $topic_poll|default:''}>
             <{if $topic_pollresult}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll}>
             <{else}>
@@ -212,7 +143,7 @@
                         <option value="<{$act.link}>"><{$act.name}></option>
                     <{/foreach}>
                 <{/if}>
-                <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
+                <{if $adminpoll_actions|default:null|is_array && count($adminpoll_actions) > 0 }>
                     <option value="">--------</option>
                     <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
                     <{foreach item=actpoll from=$adminpoll_actions}>
@@ -302,22 +233,22 @@
 
 <{include file='db:newbb_notification_select.tpl'}>
 
-<!--
-    <script type="text/javascript">
-    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1){
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
-        if (el){
-            el.scrollIntoView(true);
-        }
-    }
-    </script>
--->
+
+<{*    <script type="text/javascript">*}>
+<{*    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1){*}>
+<{*        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');*}>
+<{*        if (el){*}>
+<{*            el.scrollIntoView(true);*}>
+<{*        }*}>
+<{*    }*}>
+<{*    </script>*}>
+
 </div><!-- .newbb-viewforum -->
 
 <!-- START irmtfan add scroll js function to scroll down to current post or top of the topic -->
 <script type="text/javascript">
     if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
+        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');
         if (el) {
             banner.destroy();
             header.destroy();
