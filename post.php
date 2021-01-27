@@ -44,11 +44,11 @@ if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-///** @var Newbb\ForumHandler $forumHandler */
+/** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-///** @var Newbb\TopicHandler $topicHandler */
+/** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-///** @var Newbb\PostHandler $postHandler */
+/** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
@@ -66,7 +66,7 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
+    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
@@ -358,6 +358,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     // If user checked notification box, subscribe them to the
     // appropriate event; if unchecked, then unsubscribe
     if (!empty($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         if (!Request::getInt('notify', 0, 'POST')) {
             $notificationHandler->unsubscribe('thread', $postObject->getVar('topic_id'), 'new_post');

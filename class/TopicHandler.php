@@ -103,6 +103,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $postHandler->approve($postsObject[$post_id]);
         }
         unset($postsObject);
+        /** @var \XoopsModules\Newbb\StatsHandler $statsHandler */
         $statsHandler = Helper::getInstance()->getHandler('Stats');
         $statsHandler->update($object->getVar('forum_id'), 'topic');
 
@@ -489,7 +490,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         /** @var Newbb\PostHandler $postHandler */
         $postHandler = Helper::getInstance()->getHandler('Post');
         $criteria    = new \CriteriaCompo();
-        $criteria->add(new \Criteria('topic_id', $object->getVar('topic_id')), 'AND');
+        $criteria->add(new \Criteria('topic_id', (string)$object->getVar('topic_id')), 'AND');
         $criteria->add(new \Criteria('approved', 1), 'AND');
         $post_ids = $postHandler->getIds($criteria);
         if (empty($post_ids)) {

@@ -207,6 +207,7 @@ class PermissionForumHandler extends PermissionHandler
         if (empty($forum_id)) {
             return false;
         }
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = \xoops_getHandler('groupperm');
         $criteria         = new \CriteriaCompo(new \Criteria('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid')));
         $items            = $this->getValidPerms(true);
@@ -268,7 +269,7 @@ class PermissionForumHandler extends PermissionHandler
 
     /**
      * @param array $perms
-     * @return bool
+     * @return bool|int
      */
     public function setTemplate($perms)
     {

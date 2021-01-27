@@ -61,15 +61,15 @@ if ($mod) {
     unset($mod);
     $fieldids = array_intersect($show_ids, $visible_ids);
 
-    //    /** @var \ProfileProfileHandler $profileHandler */
+    /** @var \ProfileProfileHandler $profileHandler */
     //    $profileHandler = $helper->getHandler('Profile', 'profile');
     $profileHandler = xoops_getModuleHandler('profile', 'profile');
     $fields         = $profileHandler->loadFields();
-    //    /** @var \ProfileCategoryHandler $catHandler */
+    /** @var \ProfileCategoryHandler $catHandler */
     //    $catHandler = $helper->getHandler('Category', 'profile');
     $catHandler = xoops_getModuleHandler('category', 'profile');
     $categories = $catHandler->getObjects(null, true, false);
-    //    /** @var \ProfileFieldHandler $fieldcatHandler */
+    /** @var \ProfileFieldHandler $fieldcatHandler */
     //    $fieldcatHandler = $helper->getHandler('Field', 'profile');
     $fieldcatHandler = xoops_getModuleHandler('field', 'profile');
     $fieldcats       = $fieldcatHandler->getObjects(null, true, false);

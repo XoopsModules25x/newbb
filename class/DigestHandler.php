@@ -192,10 +192,10 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param \XoopsObject $digest
+     * @param Digest $digest
      * @return bool
      */
-    public function buildDigest(\XoopsObject $digest)
+    public function buildDigest(Digest $digest)
     {
         global $xoopsModule;
 

@@ -16,15 +16,15 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for select from a text where it have some keywords
      *
-     * @param text    $text , array text $queryarray, int $selectlength = 200, int $selectstartlag = 100, int $highlight = true
-     * @param         $queryarray
+     * @param string  $text
+     * @param array   $queryarray
      * @param int     $selectstartlag
      * @param int     $selectlength
      * @param bool    $striptags
      * @param string  $excludetags
      * @param string  $start_trimmarker
      * @param string  $end_trimmarker
-     * @return text   $select_text
+     * @return string $select_text
      */
 
     function newbb_selectText(
@@ -73,9 +73,9 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlight a text when it have some keywords
      *
-     * @param text  $text , array text $queryarray
-     * @param       $queryarray
-     * @return text $highlight_text
+     * @param string  $text
+     * @param array      $queryarray
+     * @return string $highlight_text
      */
 
     function newbb_highlightText($text, $queryarray)
@@ -97,8 +97,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlighting search results
      *
-     * @param text     $query , int $i
-     * @param          $i
+     * @param string     $query
+     * @param int         $i
      * @return mixed
      */
     function newbb_highlighter($query, $i)
@@ -109,7 +109,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for convert string to array
      *
-     * @param text /array $str
+     * @param string $str
      * @return mixed
      */
 

@@ -14,7 +14,7 @@ use XoopsModules\Newbb;
 /**#@+
  * Function to display tag cloud
  * @param $options
- * @return array|null
+ * @return array|null|bool
  */
 function newbb_tag_block_cloud_show($options)
 {
@@ -43,7 +43,7 @@ function newbb_tag_block_cloud_edit($options)
 /**#@+
  * Function to display top tag list
  * @param $options
- * @return array|null
+ * @return array|null|bool
  */
 function newbb_tag_block_top_show($options)
 {

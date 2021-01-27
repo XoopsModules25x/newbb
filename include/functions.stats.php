@@ -16,7 +16,6 @@ use XoopsModules\Newbb\{Helper,
 };
 
 /** @var Helper $helper */
-/** @var StatsHandler $statsHandler */
 /** @var TopicHandler $topicHandler */
 /** @var PostHandler $postHandler */
 
@@ -31,6 +30,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbbGetStats()
     {
+        /** @var StatsHandler $statsHandler */
         $statsHandler = Helper::getInstance()->getHandler('Stats');
         $stats        = $statsHandler->getStats();
 
@@ -45,6 +45,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      */
     function newbbUpdateStats($id, $type, $increment = 1)
     {
+        /** @var StatsHandler $statsHandler */
         $statsHandler = Helper::getInstance()->getHandler('Stats');
 
         return $statsHandler->update($id, $type, $increment);

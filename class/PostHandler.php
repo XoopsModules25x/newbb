@@ -132,7 +132,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int|Post|\XoopsObject $post
+     * @param int|Post $post
      * @param bool                  $force
      * @return bool
      */
@@ -202,7 +202,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param \XoopsObject $post
+     * @param Post $post
      * @param bool         $force
      * @return bool
      */
@@ -470,7 +470,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     // START irmtfan enhance getPostCount when there is join (read_mode = 2)
 
     /**
-     * @param null $criteria
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria
      * @param null $join
      * @return int|null
      */
@@ -504,7 +504,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
      */
 
     /**
-     * @param null $criteria
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria
      * @param int  $limit
      * @param int  $start
      * @param null $join

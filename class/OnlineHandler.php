@@ -18,6 +18,7 @@ use Smarty;
 use Xmf\IPAddress;
 use XoopsDatabase;
 use XoopsModules\Newbb;
+/** @var \XoopsOnlineHandler $xoopsOnlineHandler */
 
 require_once dirname(__DIR__) . '/include/functions.config.php';
 
@@ -38,6 +39,9 @@ class OnlineHandler
      */
     public function __construct(XoopsDatabase $db = null)
     {
+        if (null === $db) {
+            $db = \XoopsDatabaseFactory::getDatabaseConnection();
+        }
         $this->db = $db;
     }
 
@@ -84,8 +88,9 @@ class OnlineHandler
             $name  = '';
         }
 
-        $xoops_onlineHandler = xoops_getHandler('online');
-        $xoopsupdate         = $xoops_onlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), \Xmf\IPAddress::fromRequest()->asReadable());
+        /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
+        $xoopsOnlineHandler = xoops_getHandler('online');
+        $xoopsupdate         = $xoopsOnlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), \Xmf\IPAddress::fromRequest()->asReadable());
         if (!$xoopsupdate) {
             //xoops_error("newbb online upate error");
         }
@@ -252,9 +257,8 @@ class OnlineHandler
             return false;
         }
 
-        /** @var \XoopsOnlineHandler $xoops_onlineHandler */
-        $xoops_onlineHandler = xoops_getHandler('online');
-        $xoopsOnlineTable    = $xoops_onlineHandler->table;
+        $xoopsOnlineHandler = xoops_getHandler('online');
+        $xoopsOnlineTable    = $xoopsOnlineHandler->table;
 
         $sql = 'DELETE FROM '
                . $this->db->prefix('newbb_online')
@@ -291,17 +295,17 @@ class OnlineHandler
         $sql = 'DELETE FROM ' . $this->db->prefix('newbb_online') . ' WHERE online_updated < ' . (time() - (int)$expire);
         $this->db->queryF($sql);
 
-        $xoops_onlineHandler = xoops_getHandler('online');
-        $xoops_onlineHandler->gc($expire);
+        $xoopsOnlineHandler = xoops_getHandler('online');
+        $xoopsOnlineHandler->gc($expire);
     }
 
     /**
      * Get an array of online information
      *
-     * @param \CriteriaElement|null $criteria {@link \CriteriaElement}
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria {@link \CriteriaElement}
      * @return array           Array of associative arrays of online information
      */
-    public function getAll(CriteriaElement $criteria = null)
+    public function getAll($criteria = null)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -361,10 +365,10 @@ class OnlineHandler
     /**
      * Count the number of online users
      *
-     * @param \CriteriaElement|null $criteria {@link CriteriaElement}
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria {@link CriteriaElement}
      * @return bool
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_online');
         if (is_object($criteria) && $criteria instanceof CriteriaElement) {

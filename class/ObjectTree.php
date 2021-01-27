@@ -114,16 +114,16 @@ if (!\class_exists('ObjectTree')) {
         public function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
         {
             if ($key > 0) {
-                $value = $this->_tree[$key]['obj']->getVar($this->_myId);
+                $value = $this->tree[$key]['obj']->getVar($this->myId);
                 $ret   .= '<option value=\'' . $value . '\'';
                 if ($value == $selected) {
                     $ret .= ' selected="selected"';
                 }
-                $ret         .= '>' . $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName) . '</option>';
+                $ret         .= '>' . $prefix_curr . $this->tree[$key]['obj']->getVar($fieldName) . '</option>';
                 $prefix_curr .= $prefix_orig;
             }
-            if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
-                foreach ($this->_tree[$key]['child'] as $childkey) {
+            if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
+                foreach ($this->tree[$key]['child'] as $childkey) {
                     $this->_makeSelBoxOptions($fieldName, $selected, $childkey, $ret, $prefix_orig, $prefix_curr);
                 }
             }

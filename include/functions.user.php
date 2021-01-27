@@ -16,14 +16,15 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    Forum
 };
 
 /** @var Helper $helper */
 
 /**
  * Function to a list of user names associated with their user IDs
- * @param        $uid
+ * @param int       $uid
  * @param int    $usereal
  * @param bool   $linked
  * @return array
@@ -37,7 +38,7 @@ function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
 }
 
 /**
- * @param         $uid
+ * @param int     $uid
  * @param int     $usereal
  * @param bool    $linked
  * @return string
@@ -127,7 +128,7 @@ function newbbIsModerator(&$forum, $user = -1)
 /**
  * Function to check if a user has moderation permission over a forum
  *
- * @param Newbb\Forum|int $forum
+ * @param Forum|int $forum
  * @return bool
  */
 function newbbIsAdmin($forum = 0)

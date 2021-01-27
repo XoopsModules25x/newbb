@@ -227,7 +227,7 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('anonym_avatar', newbbDisplayImage('anonym'));
 $userid_array = [];
 if (count($poster_array) > 0) {
-    /** @var \XoopsMembershipHandler $memberHandler */
+    /** @var \XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $userid_array  = array_keys($poster_array);
     $user_criteria = '(' . implode(',', $userid_array) . ')';
@@ -241,7 +241,7 @@ $online = [];
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     if (!empty($user_criteria)) {
-        //        /** @var Newbb\OnlineHandler $onlineHandler */
+        /** @var Newbb\OnlineHandler $onlineHandler */
         //        $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
         $onlineHandler->init($forum_id);
     }
@@ -251,6 +251,7 @@ $viewtopic_users = [];
 
 if (count($userid_array) > 0) {
     //    require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/class/user.php');
+    /** @var UserHandler $userHandler */
     $userHandler         = new UserHandler($GLOBALS['xoopsModuleConfig']['groupbar_enabled'], $GLOBALS['xoopsModuleConfig']['wol_enabled']);
     $userHandler->users  = $users;
     $userHandler->online = $online;

@@ -233,6 +233,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
         if (\is_object($xoopsModule) && 'newbb' === $xoopsModule->getVar('dirname')) {
             $modid = $xoopsModule->getVar('mid');
         } else {
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = \xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname('newbb');
             $modid         = $module->getVar('mid');
@@ -244,7 +245,8 @@ class PermissionHandler extends \XoopsGroupPermHandler
             $memberHandler = \xoops_getHandler('member');
             $groups        = \array_keys($memberHandler->getGroupList());
 
-            $type          = ('category_all' === $perm_name) ? 'category' : 'forum';
+            $type          = ('category_all' === $perm_name) ? 'Category' : 'Forum';
+            /** @var \XoopsPersistableObjectHandler $objectHandler */
             $objectHandler = Helper::getInstance()->getHandler($type);
             $object_ids    = $objectHandler->getIds();
             foreach ($object_ids as $item_id) {

@@ -41,6 +41,7 @@ if (!defined('NEWBB_FUNCTIONS_RECON')) {
         $type     = [];
         $type     = empty($type) ? $allTypes : (is_array($type) ? $type : [$type]);
         foreach ($type as $item) {
+            /** @var \XoopsPersistableObjectHandler $handler */
             $handler = Helper::getInstance()->getHandler($item);
             if ('stats' !== $item) {
                 $handler->synchronization();

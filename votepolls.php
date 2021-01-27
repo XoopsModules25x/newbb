@@ -35,7 +35,7 @@ $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'POST'), 'G
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'POST'), 'GET');
 $forum    = Request::getInt('forum', Request::getInt('forum', 0, 'POST'), 'GET');
 
-///** @var Newbb\TopicHandler $topicHandler */
+/** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject = $topicHandler->get($topic_id);
 if (!$topicHandler->getPermission($topicObject->getVar('forum_id'), $topicObject->getVar('topic_status'), 'vote')) {

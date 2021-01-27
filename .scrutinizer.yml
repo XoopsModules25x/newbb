@@ -9,6 +9,8 @@ build:
         # to install a specific release tag or branch instead.
         - git clone --depth=1 https://github.com/XOOPS/XoopsCore25
         - git clone --depth=1 https://github.com/mambax7/tag
+        - git clone --depth=1 https://github.com/mambax7/xoopspoll
+        - git clone --depth=1 https://github.com/mambax7/xlanguage
       project_setup:
         override: true
       tests:
@@ -21,4 +23,5 @@ filter:
   dependency_paths:
     - XoopsCore25/*
     - tag/*
-    - Xoopspoll
+    - xoopspoll
+    - xlanguage
