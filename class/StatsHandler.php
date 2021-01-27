@@ -134,7 +134,7 @@ class StatsHandler
      * @param array $periods time period: 1 - all time; 2 - today; 3 - this week; 4 - this month; empty - all
      * @return array
      */
-    public function getStats(array $ids, array $types = [], array $periods = [])
+    public function getStats(array $ids = [], array $types = [], array $periods = [])
     {
         $ret = [];
 

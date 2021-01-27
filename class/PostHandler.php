@@ -32,8 +32,6 @@ namespace XoopsModules\Newbb;
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
 
-use XoopsModules\Newbb;
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -153,7 +151,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $post->setVar('approved', 1);
         $this->insert($post, true);
 
-        /** @var Newbb\TopicHandler $topicHandler */
+        /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         $topicObject  = $topicHandler->get($post->getVar('topic_id'));
         if ($topicObject->getVar('topic_last_post_id') < $post->getVar('post_id')) {
@@ -166,7 +164,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
         }
         $topicHandler->insert($topicObject, true);
 
-        /** @var Newbb\ForumHandler $forumHandler */
+        /** @var ForumHandler $forumHandler */
         $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forumObject  = $forumHandler->get($post->getVar('forum_id'));
         if ($forumObject->getVar('forum_last_post_id') < $post->getVar('post_id')) {
@@ -215,7 +213,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             $post->setVar('post_time', \time());
         }
 
-        /** @var Newbb\TopicHandler $topicHandler */
+        /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
         $topic_id = $post->getVar('topic_id');

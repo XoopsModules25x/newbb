@@ -16,14 +16,14 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for select from a text where it have some keywords
      *
-     * @param string  $text
-     * @param array   $queryarray
-     * @param int     $selectstartlag
-     * @param int     $selectlength
-     * @param bool    $striptags
-     * @param string  $excludetags
-     * @param string  $start_trimmarker
-     * @param string  $end_trimmarker
+     * @param string       $text
+     * @param array|string $queryarray
+     * @param int          $selectstartlag
+     * @param int          $selectlength
+     * @param bool         $striptags
+     * @param string       $excludetags
+     * @param string       $start_trimmarker
+     * @param string       $end_trimmarker
      * @return string $select_text
      */
 
@@ -73,8 +73,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlight a text when it have some keywords
      *
-     * @param string  $text
-     * @param array      $queryarray
+     * @param string       $text
+     * @param array|string $queryarray
      * @return string $highlight_text
      */
 
@@ -97,8 +97,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for highlighting search results
      *
-     * @param string     $query
-     * @param int         $i
+     * @param string $query
+     * @param int    $i
      * @return mixed
      */
     function newbb_highlighter($query, $i)
@@ -109,7 +109,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     /**
      * function for convert string to array
      *
-     * @param string $str
+     * @param string|array $str
      * @return mixed
      */
 
