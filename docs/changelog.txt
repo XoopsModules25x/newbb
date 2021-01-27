@@ -1,4 +1,4 @@
-<h5>5.01 Beta 1 (XOOPS 2.5.10) [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.11, PHP 8.0 RC-1
+<h5>5.01 Beta 1 [2021-01-26]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.14, PHP 8.0.1
 <hr>
 - Facebook UI Style Rating (xd9527/mamba)
 - fix $status (goffy/zyspec)
@@ -11,6 +11,12 @@
 - update newbb_block.php  PR#83 (BigKev73)
 - PSR-12 Else if (mamba)
 - small fixes, cosmetics (mamba)
+- PHP8 template updates (mamba)
+- replace index.html with index.php (mamba)
+- fix blank.gif location (mamba)
+- fix missing isXoopsUser (mamba)
+- foreach (mamba)
+
 
 <h5>5.00 Final (XOOPS 2.5.10) [2019-04-30]</h5>  Dev: Xoops 2.5.10, PHP 7.3.4
 <hr>
