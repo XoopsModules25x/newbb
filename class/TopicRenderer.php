@@ -965,8 +965,11 @@ class TopicRenderer
                     }
                 }
             }
+            // BigKev73 - Added to make jump ICON, jump and scroll to the correct "last post"
+             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '#forumpost=' . $myrow['topic_last_post_id'] . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+            
             // irmtfan - move here for both topics with and without pages - change topic_id to post_id
-            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+           //$topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
