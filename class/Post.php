@@ -649,7 +649,9 @@ class Post extends \XoopsObject
         if ($GLOBALS['xoopsModuleConfig']['show_sociallinks']) {
             $full_title  = $this->getVar('subject');
             $clean_title = \preg_replace('/[^A-Za-z0-9-]+/', '+', $this->getVar('subject'));
-            $full_link   = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id;
+            // BigKev73 - added to make page scroll to the last post
+			  $full_link   = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id . '#forumpost='. $post_id;
+            //$full_link   = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id;
 
             $thread_action['social_twitter']['image']  = \newbbDisplayImage('twitter', \_MD_NEWBB_SHARE_TWITTER);
             $thread_action['social_twitter']['link']   = 'http://twitter.com/share?text=' . $clean_title . '&amp;url=' . $full_link;
@@ -711,7 +713,9 @@ class Post extends \XoopsObject
             'thread_buttons'  => $thread_buttons,
             'mod_buttons'     => $mod_buttons,
             'poster'          => $poster,
-            'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>',
+            //Modified by BigKev73
+			'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '#forumpost='. $post_id .'"></a>',
+            //'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>',
         ];
 
         unset($thread_buttons, $mod_buttons);
