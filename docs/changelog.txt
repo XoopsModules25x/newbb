@@ -1,4 +1,4 @@
-<h5>5.01 Beta 2 [2021-01-26]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.14, PHP 8.0.1
+<h5>5.01 Beta 2 [2021-01-28]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.14, PHP 8.0.1
 <hr>
 - Added to make jump ICON, jump and scroll to the correct "last post" (BigKev73)
 - Added addition modifications to make "last post" links scroll to correct location on page (BigKev73)
