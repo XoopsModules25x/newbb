@@ -50,9 +50,10 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $img_info = '';
 
         $imginfo  = @getimagesize($image);
-        if (is_array($image)) {
+        // Change by BigKev73 - Removed the is_array check, otherwise the img_info is never set
+        //if (is_array($image)) {
             $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
-        }
+        //}
 
         if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
             && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
@@ -63,7 +64,10 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                     newbbCreateThumbnail($source, $GLOBALS['xoopsModuleConfig']['max_image_width']);
                 }
             }
-
+        }
+        
+        // Change by BigKev73 - moved this outside the above logic, or this never get sets if thumbnails dont get created
+        
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
                 || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
@@ -77,12 +81,13 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
                 $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height . "px'";
             }
-        }
+        
 
         if (file_exists($thumb)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            // $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" >';
-            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" >';
+            // Change by BigKev73 - Changed this code back or thumbnails never get displayed, even if they got created ok
+              $attachmentImage .= '<img src="' . $thumb_url . '" alt="' . $source . ' ' . $img_info . '" >';
+           // $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" >';
             $attachmentImage .= '</a>';
         } elseif (!empty($pseudo_size)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
