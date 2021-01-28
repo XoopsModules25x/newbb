@@ -142,11 +142,11 @@
                             <div class="col-sm-6 col-md-6">
                                 <{if $forum.subforum|default:false}>
                                     <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folderforum_read|default:'' }>
+                                        <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
                                     <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folderforum_read|default:'' }>
+                                        <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>
 
