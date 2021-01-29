@@ -359,3 +359,13 @@ if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
 require_once $GLOBALS['xoops']->path('footer.php');
+//added missing php closing tag
+?> 
+<script>
+	//Added by BigKev73 to force the reloading of this page when the browser back button is used. Otherwise the unread envelope status wont update
+	if(!!window.performance && window.performance.navigation.type === 2)
+{
+    console.log('Reloading');
+    window.location.reload();
+}
+</script>
