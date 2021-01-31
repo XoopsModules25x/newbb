@@ -345,7 +345,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
-            $postArray['poster'] = empty($postArray['poster_name']) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $postArray['poster_name'];
+            $postArray['poster'] = empty($postArray['poster_name']) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $postArray['poster_name'];
         }
 
         return $postArray;

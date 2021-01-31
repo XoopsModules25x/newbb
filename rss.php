@@ -182,7 +182,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = $topic['poster_name'] ? htmlspecialchars($topic['poster_name']) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+            $topic['uname'] = $topic['poster_name'] ? htmlspecialchars($topic['poster_name'], ENT_QUOTES | ENT_HTML5) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';

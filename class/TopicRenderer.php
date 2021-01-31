@@ -917,7 +917,7 @@ class TopicRenderer
         $reads     = [];
         $types     = [];
         $forums    = [];
-        $anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+        $anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
@@ -974,7 +974,7 @@ class TopicRenderer
             // ------------------------------------------------------
             // => topic array
 
-            $topic_title = htmlspecialchars($myrow['topic_title']);
+            $topic_title = htmlspecialchars($myrow['topic_title'], ENT_QUOTES | ENT_HTML5);
             // irmtfan use topic_title_excerpt for block topic title length
             $topic_title_excerpt = $topic_title;
             if (!empty($this->config['topic_title_excerpt'])) {
@@ -991,7 +991,7 @@ class TopicRenderer
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = xoops_substr(newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
-                $topic_excerpt = str_replace('[', '&#91;', htmlspecialchars($topic_excerpt));
+                $topic_excerpt = str_replace('[', '&#91;', htmlspecialchars($topic_excerpt, ENT_QUOTES | ENT_HTML5));
             }
 
             $topics[$myrow['topic_id']] = [
@@ -1010,14 +1010,14 @@ class TopicRenderer
                 'topic_page_jump_icon'   => $topic_page_jump_icon,
                 'topic_replies'          => $myrow['topic_replies'],
                 'topic_poster_uid'       => $myrow['topic_poster'],
-                'topic_poster_name'      => !empty($myrow['poster_name']) ? htmlspecialchars($myrow['poster_name']) : $anonymous,
+                'topic_poster_name'      => !empty($myrow['poster_name']) ? htmlspecialchars($myrow['poster_name'], ENT_QUOTES | ENT_HTML5) : $anonymous,
                 'topic_views'            => $myrow['topic_views'],
                 'topic_time'             => newbbFormatTimestamp($myrow['topic_time']),
                 'topic_last_post_id'     => $myrow['topic_last_post_id'],
                 //irmtfan added
                 'topic_last_posttime'    => newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
-                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? htmlspecialchars($myrow['last_poster_name']) : $anonymous,
+                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? htmlspecialchars($myrow['last_poster_name'], ENT_QUOTES | ENT_HTML5) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
                 'topic_excerpt'          => $topic_excerpt,
                 'sticky'                 => $myrow['topic_sticky'] ? newbbDisplayImage('topic_sticky', _MD_NEWBB_TOPICSTICKY) : '',

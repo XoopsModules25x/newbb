@@ -275,8 +275,8 @@ foreach (array_keys($posts) as $id) {
     }
     $poster = [
         'uid'  => 0,
-        'name' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
-        'link' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']),
+        'name' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
+        'link' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
     ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];

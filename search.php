@@ -258,7 +258,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($search_info) {
             $search_info .= '<br>';
         }
-        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars($search_username);
+        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars($search_username, ENT_QUOTES | ENT_HTML5);
     }
     // add num_results
     $search_info .= '<br>' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);

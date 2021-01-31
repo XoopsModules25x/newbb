@@ -189,7 +189,7 @@ $forum_form->addElement($_editor, true);
 if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($postObject) || $postObject->isTopic())) {
     $topic_tags = '';
     if (Request::getString('topic_tags', '', 'POST')) {
-        $topic_tags = htmlspecialchars(Request::getString('topic_tags', '', 'POST'));
+        $topic_tags = htmlspecialchars(Request::getString('topic_tags', '', 'POST'), ENT_QUOTES | ENT_HTML5);
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
