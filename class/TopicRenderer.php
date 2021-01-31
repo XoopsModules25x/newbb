@@ -644,7 +644,7 @@ class TopicRenderer
         $selection['order'] .= "<option value='1' " . (!empty($this->vars['order']) ? " selected='selected'" : '') . '>' . _ASCENDING . '</option>';
         $selection['order'] .= '</select>';
 
-        $since              = isset($this->vars['since']) ? $this->vars['since'] : $this->config['since_default'];
+        $since              = $this->vars['since'] ?? $this->config['since_default'];
         $selection['since'] = newbbSinceSelectBox($since);
 
         $xoopsTpl->assign_by_ref('selection', $selection);

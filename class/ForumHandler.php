@@ -782,7 +782,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $sub_forums = $subForumTree;
         } else {
             foreach ($passedSubForums as $id) {
-                $sub_forums[$id] = isset($subForumTree[$id]) ? $subForumTree[$id] : null;
+                $sub_forums[$id] = $subForumTree[$id] ?? null;
             }
         }
 

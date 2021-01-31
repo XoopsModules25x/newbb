@@ -259,9 +259,9 @@ switch ($action) {
         $op      = mb_strtolower(Request::getCmd('op', Request::getCmd('op', '', 'COOKIE'), 'GET'));
         if (empty($op)) {
             $op = $op_keys[0];
-            setcookie('op', isset($op_keys[1]) ? $op_keys[1] : '');
+            setcookie('op', $op_keys[1] ?? '');
         } elseif (false !== ($key = array_search($op, $op_keys, true))) {
-            setcookie('op', isset($op_keys[$key + 1]) ? $op_keys[$key + 1] : '');
+            setcookie('op', $op_keys[$key + 1] ?? '');
         }
 
         $opform    = new \XoopsSimpleForm('', 'opform', 'admin_permissions.php', 'get');
