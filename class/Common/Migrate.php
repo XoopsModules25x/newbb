@@ -39,7 +39,7 @@ class Migrate extends \Xmf\Database\Migrate
     {
         $this->renameTables = $configurator->renameTables;
 
-        $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $moduleDirName = basename(dirname(__DIR__, 2));
         parent::__construct($moduleDirName);
     }
 
