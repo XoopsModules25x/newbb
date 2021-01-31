@@ -145,7 +145,7 @@ class ReadforumHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @return bool|void
+     * @return void
      */
     public function synchronization()
     {

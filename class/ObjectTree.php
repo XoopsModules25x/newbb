@@ -84,7 +84,7 @@ if (!\class_exists('ObjectTree')) {
          * @param string $prefix           String to indent deeper levels
          * @param int    $key              ID of the object to display as the root of select options
          * @param null   $tags
-         * @return array|string  HTML select box
+         * @return array  HTML select box
          * @internal param string $name Name of the select box
          * @internal param string $fieldName Name of the member variable from the
          *                                 node objects that should be used as the title for the options.

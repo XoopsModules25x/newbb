@@ -105,7 +105,7 @@ class ReportHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @return bool|void
+     * @return void
      */
     public function synchronization()
     {

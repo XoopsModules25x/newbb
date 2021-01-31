@@ -173,7 +173,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     /**
      * @param Topic  $topic
      * @param string $type
-     * @return mixed
+     * @return int
      */
     public function getPostCount($topic, $type = '')
     {

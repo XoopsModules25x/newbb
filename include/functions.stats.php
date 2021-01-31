@@ -26,7 +26,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     define('NEWBB_FUNCTIONS_STATS', 1);
 
     /**
-     * @return mixed
+     * @return array
      */
     function newbbGetStats()
     {
@@ -41,7 +41,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
      * @param        $id
      * @param        $type
      * @param int    $increment
-     * @return mixed
+     * @return bool
      */
     function newbbUpdateStats($id, $type, $increment = 1)
     {
@@ -56,7 +56,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     */
     /**
      * @param string $forum_id
-     * @return mixed
+     * @return int
      */
     function getTotalTopics($forum_id = '')
     {
@@ -76,7 +76,7 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     /**
      * @param int    $id
      * @param string $type
-     * @return mixed
+     * @return int
      */
     function getTotalPosts($id = 0, $type = 'all')
     {

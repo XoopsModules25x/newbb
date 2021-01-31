@@ -57,7 +57,7 @@ class Digest extends \XoopsObject
 
     /**
      * @param $text
-     * @return mixed|string
+     * @return string
      */
     public function cleanup($text)
     {

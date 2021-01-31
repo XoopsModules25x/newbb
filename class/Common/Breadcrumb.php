@@ -59,7 +59,7 @@ class Breadcrumb
     /**
      * Render BreadCrumb
      *
-     * @return string
+     * @return void
      */
     public function render()
     {

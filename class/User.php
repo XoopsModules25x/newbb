@@ -17,7 +17,7 @@ namespace XoopsModules\Newbb;
 /**
  * @param $RPG
  * @param $RPGDIFF
- * @return array|number
+ * @return array
  */
 function newbb_calculateLevel($RPG, $RPGDIFF)
 {
@@ -213,7 +213,7 @@ class User
 
     /**
      * @param \XoopsUser $user
-     * @return mixed
+     * @return array
      */
     public function getInfo($user)
     {
