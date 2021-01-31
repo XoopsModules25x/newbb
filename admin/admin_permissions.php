@@ -32,10 +32,12 @@
 use Xmf\Request;
 use XoopsModules\Newbb\{Helper,
     Utility,
-    GroupPermForm
+    GroupPermForm,
+    PermissionHandler
 };
 
 /** @var Helper $helper */
+/** var PermissionHandler $permissionHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -60,9 +62,8 @@ if (!class_exists('XoopsGroupPermForm')) {
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
 $action    = mb_strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
-/** var \XoopsModules\Newbb\PermissionHandler $newbbpermHandler */
-$newbbpermHandler = Helper::getInstance()->getHandler('Permission');
-$perms            = $newbbpermHandler->getValidForumPerms();
+$permissionHandler = Helper::getInstance()->getHandler('Permission');
+$perms            = $permissionHandler->getValidForumPerms();
 
 switch ($action) {
     case 'template':
@@ -86,7 +87,7 @@ switch ($action) {
         $memberHandler = xoops_getHandler('member');
         $glist         = $memberHandler->getGroupList();
         $elements      = [];
-        $perm_template = $newbbpermHandler->getTemplate();
+        $perm_template = $permissionHandler->getTemplate();
         foreach (array_keys($glist) as $i) {
             $selected   = !empty($perm_template[$i]) ? array_keys($perm_template[$i]) : [];
             $ret_ele    = '<tr align="left" valign="top"><td class="head">' . $glist[$i] . '</td>';
@@ -125,8 +126,8 @@ switch ($action) {
         require_once __DIR__ . '/admin_footer.php';
         break;
     case 'template_save':
-        //        $res = $newbbpermHandler->setTemplate($_POST['perms'], $groupid = 0);
-        $res = $newbbpermHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
+        //        $res = $permissionHandler->setTemplate($_POST['perms'], $groupid = 0);
+        $res = $permissionHandler->setTemplate(Request::getArray('perms', '', 'POST'), $groupid = 0);
         if ($res) {
             redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_CREATED);
         } else {
@@ -136,7 +137,7 @@ switch ($action) {
     //        exit();
 
     case 'apply':
-        $perm_template = $newbbpermHandler->getTemplate();
+        $perm_template = $permissionHandler->getTemplate();
         if (null === $perm_template) {
             redirect_header('admin_permissions.php?action=template', 2, _AM_NEWBB_PERM_TEMPLATE);
         }
@@ -194,7 +195,7 @@ switch ($action) {
             if ($forum < 1) {
                 continue;
             }
-            $newbbpermHandler->applyTemplate($forum, $module_id);
+            $permissionHandler->applyTemplate($forum, $module_id);
         }
         $cacheHelper = Utility::cleanCache();
         //$cacheHelper->delete('permission');
