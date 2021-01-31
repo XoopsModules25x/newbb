@@ -26,6 +26,7 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use XoopsModules\Newbb;
 use XoopsModules\Xoopspoll;
 use XoopsModules\Xoopspoll\Constants;
 use XoopsModules\Xoopspoll\Utility;
