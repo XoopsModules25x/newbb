@@ -253,7 +253,8 @@ if (Request::getString('submit', '', 'POST')) {
             $topicHandler->insert($topicObject, true);
             $topicObject->loadFilters('update');
 
-            $sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
+            //$sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
+             $sql = sprintf("UPDATE %s SET forum_id = %u WHERE topic_id = %u", $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
                 return false;
             }
