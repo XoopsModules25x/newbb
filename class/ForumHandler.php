@@ -178,6 +178,9 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.time.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.topic.php');
+	    
+	 //BigKev73 > Added this to suport the call into the Topic Handler
+	$topicHandler = Helper::getInstance()->getHandler('Topic');    
 
         $criteria_vars = ['startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt'];
         foreach ($criteria_vars as $var) {
@@ -387,7 +390,14 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 					if (!empty($lastRead)){
 				        if ($lastRead<$myrow['topic_last_post_id']){
 					       $topicLink = 'viewtopic.php?post_id=' . $lastRead . '#forumpost'.$lastRead;
-			            }
+						 //BigKev73 > Adding this code to support jumping to the next post after the LastReadPost, otherwise we could end up on the prior page
+						 // if the lastread post is not on the last page and the next new post. Added getNextPostId to topichandler to support this
+						 $nextPostID = $topicHandler->getNextPostId($myrow['topic_id'],$lastRead);
+						 if(!empty($nextPostID)){
+							$topicLink = 'viewtopic.php?post_id=' . $nextPostID . '#forumpost'.$nextPostID;
+							print ('LastRead='.$lastRead. ', NextPostID= ' . $nextPostID);
+						}
+			            	}
 				     }
 				}
 			}
