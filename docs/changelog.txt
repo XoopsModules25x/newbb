@@ -8,6 +8,10 @@
 - Assignment in condition (mamba)
 - Update functions.image.php: removes the forced height value from the image (BigKev73)
 - fix moving a Topic (BigKev73)
+- Force the reloading of viewforum page when the browser back button is used. PR #92 (BigKev73)
+- Force the reloading of index page when the browser back button is used. PR #93 (BigKev73)
+- get the next unread post ID based on the $lastreadpost_id PR #94 (BigKev73)
+- add support jumping to the next post after the LastReadPost PR #95 (BigKev73)
 
 <h5>5.01 Beta 2 [2021-01-28]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.14, PHP 8.0.1
 <hr>
