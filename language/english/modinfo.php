@@ -327,7 +327,7 @@ define('_MI_NEWBB_POLL_MODULE_DESC', 'XoopsPoll or clone. Leave blank to disable
 
 //Help
 define('_MI_NEWBB_HELP', 'Help');
-define('_MI_NEWBB_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_NEWBB_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_NEWBB_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_NEWBB_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_NEWBB_OVERVIEW', 'Overview');

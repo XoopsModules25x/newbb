@@ -95,7 +95,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
         $newbbConfig = \newbbLoadConfig();
         // irmtfan if read_expire = 0 dont clean
         $this->lifetime = isset($newbbConfig['read_expire']) ? (int)$newbbConfig['read_expire'] * 24 * 3600 : 30 * 24 * 3600;
-        $this->mode     = isset($newbbConfig['read_mode']) ? $newbbConfig['read_mode'] : 2;
+        $this->mode     = $newbbConfig['read_mode'] ?? 2;
     }
 
     /**

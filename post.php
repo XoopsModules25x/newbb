@@ -476,7 +476,7 @@ if (Request::getString('contents_preview', Request::getString('contents_preview'
         $attachments_tmp = unserialize(base64_decode(Request::getString('attachments_tmp', '', 'POST'), true));
     }
 
-    $p_subject = htmlspecialchars(Request::getString('subject', '', 'POST'));
+    $p_subject = htmlspecialchars(Request::getString('subject', '', 'POST'), ENT_QUOTES | ENT_HTML5);
     $dosmiley  = Request::getInt('dosmiley', 0, 'POST');
     $dohtml    = Request::getInt('dohtml', 0, 'POST');
     $doxcode   = Request::getInt('doxcode', 0, 'POST');

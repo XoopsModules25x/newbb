@@ -207,7 +207,7 @@ class SysUtility
      * @param int          $id_field
      * @param int          $id
      *
-     * @return mixed
+     * @return false
      */
     public static function cloneRecord($tableName, $id_field, $id)
     {

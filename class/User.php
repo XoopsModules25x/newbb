@@ -17,7 +17,7 @@ namespace XoopsModules\Newbb;
 /**
  * @param $RPG
  * @param $RPGDIFF
- * @return array|number
+ * @return array
  */
 function newbb_calculateLevel($RPG, $RPGDIFF)
 {
@@ -213,7 +213,7 @@ class User
 
     /**
      * @param \XoopsUser $user
-     * @return mixed
+     * @return array
      */
     public function getInfo($user)
     {
@@ -222,7 +222,7 @@ class User
 
         if (!\is_object($user) || !$user->isActive()) {
             if (null === $name_anonymous) {
-                $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+                $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
             }
 
             return ['name' => $name_anonymous, 'link' => $name_anonymous];

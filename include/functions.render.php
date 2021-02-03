@@ -25,7 +25,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      */
     /**
      * @param $text
-     * @return mixed
+     * @return array|string|string[]|null
      */
     function newbbHtmlspecialchars($text)
     {
@@ -92,7 +92,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param string   $alt     alt message
      * @param bool     $asImage true for image mode; false for text mode
      * @param string   $extra   extra attribute for the button
-     * @return mixed
+     * @return string
      * @internal param string $image image/button name, without extension
      */
     function newbbGetButton($link, $button, $alt = '', $asImage = true, $extra = "class='forum_button'")

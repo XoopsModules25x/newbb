@@ -167,10 +167,10 @@ function b_newbb_show($options)
         $topic['post_id']      = $arr['post_id'];
         $topic['topic_status'] = $arr['topic_status'];
         $topic['forum_id']     = $arr['forum_id'];
-        $topic['forum_name']   = htmlspecialchars($arr['forum_name']);
+        $topic['forum_name']   = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         $topic['id']           = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['topic_title']);
+        $title = htmlspecialchars($arr['topic_title'], ENT_QUOTES | ENT_HTML5);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -181,14 +181,14 @@ function b_newbb_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster']    = $topic_poster;
         $topic['topic_page_jump'] = $topic_page_jump;
         // START irmtfan remove hardcoded html in URLs - add $seo_topic_url
         //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
          //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
-        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id']."#forumpost" . $topic['post_id'];
+        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '#forumpost' . $topic['post_id'];
         $seo_topic_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];
         if (!empty($newbbConfig['do_rewrite'])) {
@@ -333,10 +333,10 @@ function b_newbb_topic_show($options)
         $topic                  = [];
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . '] ';
         $topic['forum_id']      = $arr['forum_id'];
-        $topic['forum_name']    = htmlspecialchars($arr['forum_name']);
+        $topic['forum_name']    = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         $topic['id']            = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['topic_title']);
+        $title = htmlspecialchars($arr['topic_title'], ENT_QUOTES | ENT_HTML5);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -347,7 +347,7 @@ function b_newbb_topic_show($options)
         if (!empty($author_name[$arr['topic_poster']])) {
             $topic_poster = $author_name[$arr['topic_poster']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster'] = $topic_poster;
         // irmtfan remove $topic_page_jump because there is no last post
@@ -490,10 +490,10 @@ function b_newbb_post_show($options)
         //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
         $topic               = [];
         $topic['forum_id']   = $arr['forum_id'];
-        $topic['forum_name'] = htmlspecialchars($arr['forum_name']);
+        $topic['forum_name'] = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         //$topic['id'] = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['subject']);
+        $title = htmlspecialchars($arr['subject'], ENT_QUOTES | ENT_HTML5);
         if ('text' !== $options[0] && !empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -503,7 +503,7 @@ function b_newbb_post_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous']);
+            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster'] = $topic_poster;
 
@@ -517,7 +517,7 @@ function b_newbb_post_show($options)
         // START irmtfan remove hardcoded html in URLs
         //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
         //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
-        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id']."#forumpost" . $topic['post_id'];
+        $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'] . '#forumpost' . $topic['post_id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];
         // END irmtfan remove hardcoded html in URLs
         if (!empty($newbbConfig['do_rewrite'])) {
@@ -641,7 +641,7 @@ function b_newbb_author_show($options)
     require_once dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
     foreach (array_keys($author) as $uid) {
-        $author[$uid]['name'] = htmlspecialchars($author_name[$uid]);
+        $author[$uid]['name'] = htmlspecialchars($author_name[$uid], ENT_QUOTES | ENT_HTML5);
     }
     $block['authors']   = &$author;
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - lite view;

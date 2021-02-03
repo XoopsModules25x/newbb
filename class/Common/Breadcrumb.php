@@ -39,7 +39,7 @@ class Breadcrumb
 
     public function __construct()
     {
-        $this->dirname = \basename(\dirname(\dirname(__DIR__)));
+        $this->dirname = \basename(dirname(__DIR__, 2));
     }
 
     /**
@@ -59,7 +59,7 @@ class Breadcrumb
     /**
      * Render BreadCrumb
      *
-     * @return string
+     * @return void
      */
     public function render()
     {

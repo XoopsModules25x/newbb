@@ -558,4 +558,4 @@ define('_MD_NEWBB_PDF_META_DIR', 'ltr');
 define('THEME_LIKE', 'Like');
 define('_AM_NEWBB_NOTOPIC', 'No Posts'); //TODO delete in next XOOPS release
 
-define('_MD_NEWBB_ERROR_POLL_MODULE_NOT_FOUND', "Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.");
+define('_MD_NEWBB_ERROR_POLL_MODULE_NOT_FOUND', 'Error: Cannot find poll module that is in used in newbb!!! <br\><br\>You should select the correct poll module yourself in newbb > preferences > poll module setting.');

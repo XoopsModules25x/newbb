@@ -12,7 +12,7 @@ define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 
 /**
  * @param $s
- * @return mixed
+ * @return array|string|string[]|null
  */
 function seo_urls($s)
 {
@@ -272,7 +272,7 @@ function forum_seo_post($_cat_id)
 /**
  * @param string $title
  * @param bool   $withExt
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function forum_seo_title($title = '', $withExt = true)
 {

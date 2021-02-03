@@ -487,7 +487,7 @@ class Post extends \XoopsObject
         /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
-            $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']);
+            $name_anonymous = htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
 
         require_once \dirname(__DIR__) . '/include/functions.time.php';

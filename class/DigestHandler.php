@@ -125,7 +125,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             // echo "<br>no data:".$query;
         } else {
             $array             = $this->db->fetchArray($result);
-            $this->last_digest = isset($array['last_digest']) ? $array['last_digest'] : 0;
+            $this->last_digest = $array['last_digest'] ?? 0;
         }
     }
 

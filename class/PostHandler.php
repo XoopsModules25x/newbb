@@ -113,7 +113,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param Post $post
-     * @return mixed
+     * @return array
      */
     public function getPostForPDF($post)
     {
@@ -122,7 +122,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param Post $post
-     * @return mixed
+     * @return array
      */
     public function getPostForPrint($post)
     {
@@ -200,7 +200,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param Post $post
+     * @param \XoopsObject $post
      * @param bool         $force
      * @return bool
      */

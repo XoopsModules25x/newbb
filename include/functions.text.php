@@ -88,7 +88,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         $highlight_text = $text;
         foreach ($queryarray as $key => $query) {
             // use preg_replace instead of str_replace to exclude all $queries inside html span tag
-            $highlight_text = preg_replace("/(?!(?:[^<]+>|[^>]+<\/a>))(" . preg_quote($query, '/') . ')/si', newbb_highlighter($query, $key), $highlight_text);
+            $highlight_text = preg_replace('/(?!(?:[^<]+>|[^>]+<\/a>))(' . preg_quote($query, '/') . ')/si', newbb_highlighter($query, $key), $highlight_text);
         }
 
         return $highlight_text;
@@ -99,7 +99,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      *
      * @param string $query
      * @param int    $i
-     * @return mixed
+     * @return string
      */
     function newbb_highlighter($query, $i)
     {
@@ -110,7 +110,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      * function for convert string to array
      *
      * @param string|array $str
-     * @return mixed
+     * @return array
      */
 
     function newbb_str2array($str)

@@ -104,7 +104,7 @@ class Xmlrss
     /**
      * @param               $text
      * @param int           $trim
-     * @return mixed|string
+     * @return string
      */
     public function cleanup($text, $trim = 0)
     {

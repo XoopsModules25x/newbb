@@ -129,7 +129,7 @@ if ($postParentObject->getVar('uid')) {
     $r_name = newbbGetUnameFromId($postParentObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $postParentObject->getVar('poster_name');
-    $r_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous']) : $poster_name;
+    $r_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
 }
 
 $r_subject = $postParentObject->getVar('subject', 'E');

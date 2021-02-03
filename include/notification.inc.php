@@ -36,7 +36,7 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
     /**
      * @param $category
      * @param $item_id
-     * @return mixed
+     * @return array
      */
     function newbb_notify_iteminfo($category, $item_id)
     {

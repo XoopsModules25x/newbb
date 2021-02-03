@@ -99,7 +99,8 @@ while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
 }
 $finalrating = $totalrating / $votesDB;
 $finalrating = number_format($finalrating, 4);
-$sql         = sprintf('UPDATE "%s" SET rating = "%u", votes = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
+//$sql         = sprintf('UPDATE "%s" SET rating = "%u", votes = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
+$sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
 $GLOBALS['xoopsDB']->queryF($sql);
 
 $ratemessage = _MD_NEWBB_VOTEAPPRE . '<br>' . sprintf(_MD_NEWBB_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
