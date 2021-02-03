@@ -232,7 +232,7 @@ switch ($op) {
         $topicHandler->synchronization($topic_id);
         $topicHandler->synchronization($new_topic_id);
 //        $sql    = sprintf('UPDATE "%s" SET forum_topics = forum_topics+1 WHERE forum_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
-        $sql    = sprintf("UPDATE %s SET forum_topics = forum_topics+1 WHERE forum_id = %u", $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
+        $sql    = sprintf('UPDATE %s SET forum_topics = forum_topics+1 WHERE forum_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
         $result = $GLOBALS['xoopsDB']->queryF($sql);
 
         break;

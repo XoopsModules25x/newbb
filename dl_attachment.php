@@ -89,7 +89,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
     header('Expires: 0');
     //header('Content-Type: '.$mimetype);
     header('Content-Type: application/octet-stream');
-    if (preg_match("/MSIE (\d\.\d{1,2})/", Request::getString('HTTP_USER_AGENT', '', 'SERVER'))) {
+    if (preg_match('/MSIE (\d\.\d{1,2})/', Request::getString('HTTP_USER_AGENT', '', 'SERVER'))) {
         header('Content-Disposition: attachment; filename="' . $file_display . '"');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');

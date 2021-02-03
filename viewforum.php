@@ -138,7 +138,7 @@ if ($forumHandler->getPermission($forumObject, 'post')) {
 } else {
     $xoopsTpl->assign('viewer_level', 0);
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $redirect = preg_replace("|(.*)\/modules\/Newbb\/(.*)|", '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
+        $redirect = preg_replace('|(.*)\/modules\/Newbb\/(.*)|', '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
         $xoopsTpl->assign('forum_post_or_register', "<a href='" . XOOPS_URL . "/user.php?xoops_redirect={$redirect}'>" . _MD_NEWBB_REGTOPOST . '</a>');
         $xoopsTpl->assign('forum_addpoll', '');
     } else {
