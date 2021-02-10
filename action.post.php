@@ -129,7 +129,7 @@ switch ($op) {
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $postsObject[$post]->getVar('topic_id') . '&amp;forum=' . $postsObject[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$postsObject[$post]->getVar('forum_id')];
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $postsObject[$post]->getVar('forum_id');
-            $tags['POST_URL']    = $tags['THREAD_URL'] . '#forumpost' . $post;
+             $tags['POST_URL']    = $tags['THREAD_URL'] . '&topic_id=' . $postsObject[$post]->getVar('topic_id') . '#forumpost' . $post;
             $notificationHandler->triggerEvent('thread', $postsObject[$post]->getVar('topic_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('forum', $postsObject[$post]->getVar('forum_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
