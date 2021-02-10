@@ -133,7 +133,7 @@
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <br>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$forum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
-                                        <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
+                                     <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
                                         <{* irmtfan remove icon_path  *}>
                                         <{$forum.forum_lastpost_icon}>
                                     </a>

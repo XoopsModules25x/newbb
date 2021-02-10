@@ -714,7 +714,9 @@ class Post extends \XoopsObject
             'mod_buttons'     => $mod_buttons,
             'poster'          => $poster,
             //Modified by BigKev73
-			'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '#forumpost='. $post_id .'"></a>',
+				'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id. '&amp;post_id=' . $post_id . '#forumpost='. $post_id .'"></a>',
+
+          
             //'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>',
         ];
 
