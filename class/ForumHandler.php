@@ -353,7 +353,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 }
             }
             // irmtfan - move here for both topics with and without pages
-            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['post_id'] . "'>" . \newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $myrow['post_id'] . '#forumpost'. $myrow['post_id'] ."'>" . \newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
@@ -389,12 +389,13 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 				if (isset($lastRead)){
 					if (!empty($lastRead)){
 				        if ($lastRead<$myrow['topic_last_post_id']){
-					       $topicLink = 'viewtopic.php?post_id=' . $lastRead . '#forumpost'.$lastRead;
+					        $topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $lastRead . '#forumpost'.$lastRead;
+						  
 						 //BigKev73 > Adding this code to support jumping to the next post after the LastReadPost, otherwise we could end up on the prior page
 						 // if the lastread post is not on the last page and the next new post. Added getNextPostId to topichandler to support this
 						 $nextPostID = $topicHandler->getNextPostId($myrow['topic_id'],$lastRead);
 						 if(!empty($nextPostID)){
-							$topicLink = 'viewtopic.php?post_id=' . $nextPostID . '#forumpost'.$nextPostID;
+							$topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $nextPostID . '#forumpost'.$nextPostID;
 							print ('LastRead='.$lastRead. ', NextPostID= ' . $nextPostID);
 						}
 			            	}
@@ -925,6 +926,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             if ($post_id) {
                 $post                               = &$posts[$post_id];
                 $_forum_data['forum_lastpost_id']   = $post_id;
+		$_forum_data['forum_lastpost_topicid']  = $post['topic_id'];
                 $_forum_data['forum_lastpost_time'] = \newbbFormatTimestamp($post['post_time']);
                 if (!empty($users_linked[$post['uid']])) {
                     $_forum_data['forum_lastpost_user'] = $users_linked[$post['uid']];
