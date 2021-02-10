@@ -187,7 +187,7 @@
                                         <{if $subforum.forum_lastpost_subject|default:''}>
                                             <{$subforum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$subforum.forum_lastpost_user}>
                                             <br>
-                                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$subforum.forum_lastpost_id}>">
+                                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$subforum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
                                                 <{$subforum.forum_lastpost_subject}>&nbsp;&nbsp;
                                                 <{* irmtfan remove icon_path  *}>
                                                 <{$subforum.forum_lastpost_icon}>
@@ -241,7 +241,7 @@
                                 <{if $forum.forum_lastpost_subject|default:''}>
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <br>
-                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
+                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$forum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
                                         <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
                                         <{* irmtfan remove icon_path  *}>
                                         <{$forum.forum_lastpost_icon}>
@@ -302,7 +302,7 @@
                                 <{if $forum.forum_lastpost_subject|default:''}>
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <br>
-                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
+                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$forum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
                                         <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
                                         <{* irmtfan remove icon_path  *}>
                                         <{$forum.forum_lastpost_icon}>
