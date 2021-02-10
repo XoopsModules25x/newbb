@@ -390,7 +390,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
             $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
-        $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $postid;
+        $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id') . '&amp;post_id=' . $postid . '#forumpost' . $postid ;
         $message  = _MD_NEWBB_THANKSSUBMIT . '<br>' . $error_upload;
     } else {
         $redirect = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $postObject->getVar('forum_id');
