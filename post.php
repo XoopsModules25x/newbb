@@ -328,8 +328,8 @@ if (Request::getString('contents_submit', '', 'POST')) {
     if (!empty($isnew) && $approved && !empty($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
         $tags                = [];
         $tags['THREAD_NAME'] = Request::getString('subject', '', 'POST');
-        $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid;
-        $tags['POST_URL']    = $tags['THREAD_URL']; // . '#forumpost' . $postid;
+        $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id');
+        $tags['POST_URL']    =  XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?post_id=' . $postid . '#forumpost' . $postid;
         require_once __DIR__ . '/include/notification.inc.php';
         $forum_info         = newbb_notify_iteminfo('forum', $forumObject->getVar('forum_id'));
         $tags['FORUM_NAME'] = $forum_info['name'];
