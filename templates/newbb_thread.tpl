@@ -25,7 +25,7 @@
             <div class="ThreadTitle">
                 <{if $topic_post.post_id > 0}>
                     <{* irmtfan add id for each post *}>
-                    <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>
+                    <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>
                 <{/if}>
             </div>
         </th>
