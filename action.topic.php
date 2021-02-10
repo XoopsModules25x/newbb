@@ -97,7 +97,7 @@ switch ($op) {
             $notificationHandler->triggerEvent('global', 0, 'new_thread', $tags);
             $notificationHandler->triggerEvent('forum', $topicObject->getVar('forum_id'), 'new_thread', $tags);
             $postObject       = $topicHandler->getTopPost($id);
-            $tags['POST_URL'] = $tags['THREAD_URL'] . '#forumpost' . $postObject->getVar('post_id');
+            $tags['POST_URL'] = $tags['THREAD_URL'] . '&topic_id=' . $id . '#forumpost' . $postObject->getVar('post_id');
             $notificationHandler->triggerEvent('thread', $id, 'new_post', $tags);
             $notificationHandler->triggerEvent('forum', $topicObject->getVar('forum_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
