@@ -9,9 +9,9 @@
     <{if $topic_post.poster.uid|default:'' gt -1}>
         <{if $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
-                    <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-responsive img-thumbnail">
+                    <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
                 <{else}>
-                   <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-responsive img-thumbnail">
+                   <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
             <{/if}>
 
             <{if $topic_post.poster.rank.title !=""}>
@@ -49,7 +49,7 @@
                             <{/if}>
                             </li>
 
-                            <{if $topic_post.poster.digests gt 0}>
+                            <{if $topic_post.poster.digests|default:'' gt 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
