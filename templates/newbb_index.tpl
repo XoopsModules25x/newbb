@@ -20,20 +20,21 @@
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{if $wait_new_topic|default:''}>(
                         <span style="color: #ff0000; "><b><{$wait_new_topic}></b></span>
                         ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{if $delete_topic}>(
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>">
+                    <{if $delete_topic|default:''}>(
                         <span style="color: #ff0000; "><b><{$delete_topic}></b></span>
                         ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a><br>
                 <{$smarty.const._MD_NEWBB_POST2}>:
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{if $wait_new_post}>(
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{if $wait_new_post|default:''}>(
                         <span style="color: #ff0000; "><b><{$wait_new_post}></b></span>
                         ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{if $delete_post}>(
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{if $delete_post|default:''}>(
                         <span style="color: #ff0000; "><b><{$delete_post}></b></span>
                         ) <{/if}><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
             </div>
             <div class="forum_stats_right">
-                <{if $report_post}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
+                <{if $report_post|default:''}><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php"><{$report_post}></a><{/if}>
                 <br><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a> |
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" target="_self" title="<{$smarty.const._MD_NEWBB_ADMINCP}>"><{$smarty.const._MD_NEWBB_ADMINCP}></a>
             </div>
@@ -133,7 +134,7 @@
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <br>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$forum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
-                                     <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
+                                        <{$forum.forum_lastpost_subject}>&nbsp;&nbsp;
                                         <{* irmtfan remove icon_path  *}>
                                         <{$forum.forum_lastpost_icon}>
                                     </a>
@@ -187,7 +188,7 @@
                                         <{if $subforum.forum_lastpost_subject|default:''}>
                                             <{$subforum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$subforum.forum_lastpost_user}>
                                             <br>
-                                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$subforum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
+                                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$forum.forum_lastpost_topicid}>&amp;post_id=<{$subforum.forum_lastpost_id}>#forumpost<{$forum.forum_lastpost_id}>">
                                                 <{$subforum.forum_lastpost_subject}>&nbsp;&nbsp;
                                                 <{* irmtfan remove icon_path  *}>
                                                 <{$subforum.forum_lastpost_icon}>
@@ -366,7 +367,7 @@
                 <{$smarty.const._MD_NEWBB_TOTALTOPICSC}>
                 <strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_NEWBB_ALL}>"><{$stats[0].topic.total}></a></strong>
                 | <{$smarty.const._MD_NEWBB_TOTALPOSTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>"><{$stats[0].post.total}></a></strong>
-                <{if $stats[0].digest.total}>
+                <{if $stats[0].digest.total|default:''}>
                     | <{$smarty.const._MD_NEWBB_TOTALDIGESTSC}><strong><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>"><{$stats[0].digest.total}></a></strong>
                 <{/if}>
                 <{if $userstats}>
