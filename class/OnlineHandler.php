@@ -295,6 +295,7 @@ class OnlineHandler
         $sql = 'DELETE FROM ' . $this->db->prefix('newbb_online') . ' WHERE online_updated < ' . (\time() - (int)$expire);
         $this->db->queryF($sql);
 
+        /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
         $xoopsOnlineHandler = \xoops_getHandler('online');
         $xoopsOnlineHandler->gc($expire);
     }
@@ -302,7 +303,7 @@ class OnlineHandler
     /**
      * Get an array of online information
      *
-     * @param \CriteriaElement|\CriteriaCompo|null $criteria {@link \CriteriaElement}
+     * @param \CriteriaElement|null $criteria {@link \CriteriaElement}
      * @return array           Array of associative arrays of online information
      */
     public function getAll($criteria = null)
@@ -310,7 +311,7 @@ class OnlineHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('newbb_online');
-        if (\is_object($criteria) && $criteria instanceof CriteriaElement) {
+        if (\is_object($criteria) && is_subclass_of($criteria,  \CriteriaElement::class)) {
             $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -371,7 +372,7 @@ class OnlineHandler
     public function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_online');
-        if (\is_object($criteria) && $criteria instanceof CriteriaElement) {
+        if (\is_object($criteria) && is_subclass_of($criteria,  \CriteriaElement::class)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

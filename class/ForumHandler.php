@@ -37,7 +37,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     /**
      * @param \XoopsObject $object
      * @param bool         $force
-     * @return bool
+     * @return bool|int
      * @internal param \XoopsObject $forum
      */
     public function insert(\XoopsObject $object, $force = true) //insert($forum)
