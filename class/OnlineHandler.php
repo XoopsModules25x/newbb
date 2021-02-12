@@ -75,7 +75,7 @@ class OnlineHandler
         global $xoopsModule;
 
         // set gc probabillity to 10% for now..
-        if (mt_rand(1, 100) < 60) {
+        if (random_int(1, 100) < 60) {
             $this->gc(150);
         }
         if (is_object($GLOBALS['xoopsUser'])) {
