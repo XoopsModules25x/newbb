@@ -257,6 +257,7 @@ class OnlineHandler
             return false;
         }
 
+        /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
         $xoopsOnlineHandler = \xoops_getHandler('online');
         $xoopsOnlineTable    = $xoopsOnlineHandler->table;
 
@@ -311,7 +312,7 @@ class OnlineHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('newbb_online');
-        if (\is_object($criteria) && is_subclass_of($criteria,  \CriteriaElement::class)) {
+        if (\is_object($criteria) && ($criteria instanceof \CriteriaCompo || $criteria instanceof \Criteria)) {
             $sql   .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
