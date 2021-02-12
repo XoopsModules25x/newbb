@@ -96,7 +96,7 @@ class Tree extends XoopsTree
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')
     {
-        if (!is_array($postTree_array)) {
+        if (!\is_array($postTree_array)) {
             $postTree_array = [];
         }
 

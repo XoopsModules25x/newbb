@@ -50,7 +50,7 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
     {
         $object = null;
         if (!$id = (int)$id) {
-            return $object;
+            return null;
         }
         $object = $this->create(false);
         $object->setVar($this->keyName, $id);

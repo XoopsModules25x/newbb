@@ -75,8 +75,8 @@ class Utility extends Common\SysUtility
     public static function prepareFolder($folder)
     {
         try {
-            if (!@mkdir($folder) && !is_dir($folder)) {
-                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+            if (!@\mkdir($folder) && !\is_dir($folder)) {
+                throw new \RuntimeException(\sprintf('Unable to create the %s directory', $folder));
             }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
         } catch (\Exception $e) {
@@ -87,7 +87,7 @@ class Utility extends Common\SysUtility
     public static function cleanCache()
     {
         $cacheHelper = new Cache('newbb');
-        if (method_exists($cacheHelper, 'clear')) {
+        if (\method_exists($cacheHelper, 'clear')) {
             $cacheHelper->clear();
 
             return;
@@ -99,7 +99,7 @@ class Utility extends Common\SysUtility
             3, // xoops_cache
         ];
         $maintenance->CleanCache($cacheList);
-        xoops_setActiveModules();
+        \xoops_setActiveModules();
     }
 
     /**

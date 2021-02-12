@@ -48,13 +48,13 @@ if (!\class_exists('ObjectTree')) {
         /**
          * Make options for a select box from
          *
-         * @param int        $key         ID of the object to display as the root of select options
-         * @param string     $ret         (reference to a string when called from outside) Result from previous recursions
-         * @param string     $prefix_orig String to indent items at deeper levels
-         * @param string     $prefix_curr String to indent the current item
+         * @param int        $key           ID of the object to display as the root of select options
+         * @param array      $ret           (reference to a string when called from outside) Result from previous recursions
+         * @param string     $prefix_orig   String to indent items at deeper levels
+         * @param string     $prefix_curr   String to indent the current item
          * @param null|array $tags
          * @internal  param string $fieldName Name of the member variable from the
-         *                                node objects that should be used as the title for the options.
+         *                                  node objects that should be used as the title for the options.
          * @internal  param string $selected Value to display as selected
          * @access    private
          */
@@ -270,7 +270,7 @@ if (!\class_exists('ObjectTree')) {
          */
         public function &myGetParentForums($key, array $ret = [], $uplevel = 0)
         {
-            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+            if (isset($this->tree[$key]['parent'], $this->tree[$this->tree[$key]['parent']]['obj'])) {
                 $ret[$uplevel] = $this->tree[$this->tree[$key]['parent']]['obj'];
                 if ($this->tree[$key]['parent'] !== $key) {
                     //$parents = $this->getParentForums($this->tree[$key]['parent'], $ret, $uplevel+1);
@@ -293,7 +293,7 @@ if (!\class_exists('ObjectTree')) {
         {
             $ret  = [];
             $pids = [];
-            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+            if (isset($this->tree[$key]['parent'], $this->tree[$this->tree[$key]['parent']]['obj'])) {
                 $pids[]  = $this->tree[$this->tree[$key]['parent']]['obj']->getVar($this->myId);
                 $parents = $this->myGetParentForums($this->tree[$key]['parent'], $ret);
                 foreach (\array_keys($parents) as $newkey) {

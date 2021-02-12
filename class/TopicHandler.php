@@ -44,7 +44,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $tags = [$var];
         }
         if (!$topicObject = parent::get($id, $tags)) {
-            return $ret;
+            return null;
         }
         $ret = $topicObject;
         if (!empty($var) && \is_string($var)) {
@@ -243,7 +243,13 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     }
 
     //Added by BigKev to get the next unread post ID based on the $lastreadpost_id
-	public function getNextPostId($topic_id, $lastreadpost_id)
+
+    /**
+     * @param $topic_id
+     * @param $lastreadpost_id
+     * @return false|mixed
+     */
+    public function getNextPostId($topic_id, $lastreadpost_id)
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND post_id > ' . $lastreadpost_id . ' ORDER BY post_id LIMIT 1';
         $result = $this->db->query($sql);
@@ -361,7 +367,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
-            $postArray['poster'] = empty($postArray['poster_name']) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $postArray['poster_name'];
+            $postArray['poster'] = empty($postArray['poster_name']) ? \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5) : $postArray['poster_name'];
         }
 
         return $postArray;

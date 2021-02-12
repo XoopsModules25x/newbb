@@ -256,7 +256,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
     {
         $ret = null;
         if (empty($this->mode)) {
-            return $ret;
+            return null;
         }
 
         if (1 == $this->mode) {
