@@ -308,7 +308,7 @@ if (Request::getString('submit', '', 'POST')) {
             $user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'));
             if ($user_stat) {
                 $z = $user_stat->getVar('user_digests') + 1;
-                $user_stat->setVar('user_digests', (int)$z);
+                $user_stat->setVar('user_digests', $z);
                 $userstatsHandler->insert($user_stat);
             }
         }
