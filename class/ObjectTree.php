@@ -48,13 +48,13 @@ if (!\class_exists('ObjectTree')) {
         /**
          * Make options for a select box from
          *
-         * @param int        $key         ID of the object to display as the root of select options
-         * @param string     $ret         (reference to a string when called from outside) Result from previous recursions
-         * @param string     $prefix_orig String to indent items at deeper levels
-         * @param string     $prefix_curr String to indent the current item
+         * @param int        $key           ID of the object to display as the root of select options
+         * @param array      $ret           (reference to a string when called from outside) Result from previous recursions
+         * @param string     $prefix_orig   String to indent items at deeper levels
+         * @param string     $prefix_curr   String to indent the current item
          * @param null|array $tags
          * @internal  param string $fieldName Name of the member variable from the
-         *                                node objects that should be used as the title for the options.
+         *                                  node objects that should be used as the title for the options.
          * @internal  param string $selected Value to display as selected
          * @access    private
          */
