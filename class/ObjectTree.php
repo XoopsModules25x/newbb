@@ -270,7 +270,7 @@ if (!\class_exists('ObjectTree')) {
          */
         public function &myGetParentForums($key, array $ret = [], $uplevel = 0)
         {
-            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+            if (isset($this->tree[$key]['parent'], $this->tree[$this->tree[$key]['parent']]['obj'])) {
                 $ret[$uplevel] = $this->tree[$this->tree[$key]['parent']]['obj'];
                 if ($this->tree[$key]['parent'] !== $key) {
                     //$parents = $this->getParentForums($this->tree[$key]['parent'], $ret, $uplevel+1);
@@ -293,7 +293,7 @@ if (!\class_exists('ObjectTree')) {
         {
             $ret  = [];
             $pids = [];
-            if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
+            if (isset($this->tree[$key]['parent'], $this->tree[$this->tree[$key]['parent']]['obj'])) {
                 $pids[]  = $this->tree[$this->tree[$key]['parent']]['obj']->getVar($this->myId);
                 $parents = $this->myGetParentForums($this->tree[$key]['parent'], $ret);
                 foreach (\array_keys($parents) as $newkey) {
