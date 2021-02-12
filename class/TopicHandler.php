@@ -44,7 +44,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $tags = [$var];
         }
         if (!$topicObject = parent::get($id, $tags)) {
-            return $ret;
+            return null;
         }
         $ret = $topicObject;
         if (!empty($var) && \is_string($var)) {
