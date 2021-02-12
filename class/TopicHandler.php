@@ -243,7 +243,13 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     }
 
     //Added by BigKev to get the next unread post ID based on the $lastreadpost_id
-	public function getNextPostId($topic_id, $lastreadpost_id)
+
+    /**
+     * @param $topic_id
+     * @param $lastreadpost_id
+     * @return false|mixed
+     */
+    public function getNextPostId($topic_id, $lastreadpost_id)
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND post_id > ' . $lastreadpost_id . ' ORDER BY post_id LIMIT 1';
         $result = $this->db->query($sql);

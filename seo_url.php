@@ -236,7 +236,7 @@ function forum_seo_forum($_cat_id)
 
 /**
  * @param $_cat_id
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function forum_seo_topic($_cat_id)
 {
@@ -257,7 +257,7 @@ function forum_seo_topic($_cat_id)
 
 /**
  * @param $_cat_id
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function forum_seo_post($_cat_id)
 {

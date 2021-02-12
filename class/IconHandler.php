@@ -198,7 +198,7 @@ class IconHandler
     }
 
     /**
-     * @return int|void
+     * @return int
      */
     public function render()
     {
