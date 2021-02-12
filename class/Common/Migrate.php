@@ -39,7 +39,7 @@ class Migrate extends \Xmf\Database\Migrate
     {
         $this->renameTables = $configurator->renameTables;
 
-        $moduleDirName = basename(dirname(__DIR__, 2));
+        $moduleDirName = \basename(\dirname(__DIR__, 2));
         parent::__construct($moduleDirName);
     }
 
@@ -67,7 +67,7 @@ class Migrate extends \Xmf\Database\Migrate
                     . '</span>'
                 );
 
-                trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
+                \trigger_error('Could not migrate table: ' . $oldName . '! The table ' . $newName . ' already exist!');
             }
         }
     }
