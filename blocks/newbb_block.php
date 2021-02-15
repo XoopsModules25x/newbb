@@ -929,11 +929,7 @@ function b_newbb_author_edit($options)
 function b_newbb_custom($options)
 {
     // if no newbb module block set, we have to include the language file
-    if (is_readable($GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php'))) {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php');
-    } else {
-        require_once $GLOBALS['xoops']->path('modules/newbb/language/english/blocks.php');
-    }
+    xoops_loadLanguage('blocks', 'newbb');
 
     $options = explode('|', $options);
     $block   = b_newbb_show($options);
