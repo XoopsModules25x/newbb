@@ -92,7 +92,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
             $attachmentImage .= '</a>';
         } elseif (file_exists($image)) {
-            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
+            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" width="' . $imginfo[0] . 'px" height="' . $imginfo[1] . 'px" style="max-width: 100%; height: auto;">';
         } else {
             $attachmentImage = '';
         }
