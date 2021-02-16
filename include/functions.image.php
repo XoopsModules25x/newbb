@@ -72,27 +72,27 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                 || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
-                $pseudo_size   = "width='" . $pseudo_width . "px'";
+                $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height ."px'";
             }
             // irmtfan to fix Undefined variable: pseudo_height
             if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
                 && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
-                $pseudo_size   = "width='" . $pseudo_width . "px'";
+                $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height ."px'";
             }
 
 		//BigKev73 Change to add max with property to properly scale photos
         if (file_exists($thumb)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            $attachmentImage .= '<img src="' . $thumb_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%" >';
+            $attachmentImage .= '<img src="' . $thumb_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
             $attachmentImage .= '</a>';
         } elseif (!empty($pseudo_size)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
-            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%" >';
+            $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
             $attachmentImage .= '</a>';
         } elseif (file_exists($image)) {
-            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" style="max-width: 100%" >';
+            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
         } else {
             $attachmentImage = '';
         }
