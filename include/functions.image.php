@@ -72,14 +72,14 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                 || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
-                $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height ."px'";
+                $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height ."'";
             }
             // irmtfan to fix Undefined variable: pseudo_height
             if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
                 && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
                 $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
                 $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
-                $pseudo_size   = "width='" . $pseudo_width . "px' height='" . $pseudo_height ."px'";
+                $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height ."'";
             }
 
 		//BigKev73 Change to add max with property to properly scale photos
@@ -92,7 +92,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             $attachmentImage .= '<img src="' . $image_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
             $attachmentImage .= '</a>';
         } elseif (file_exists($image)) {
-            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" width="' . $imginfo[0] . 'px" height="' . $imginfo[1] . 'px" style="max-width: 100%; height: auto;">';
+            $attachmentImage = '<img src="' . $image_url . '" alt="' . $source . ' ' . $img_info . '" width="' . $imginfo[0] . '" height="' . $imginfo[1] . '" style="max-width: 100%; height: auto;">';
         } else {
             $attachmentImage = '';
         }
