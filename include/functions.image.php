@@ -144,7 +144,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                 $new_file_im = @escapeshellarg($new_file);
             }
             $path           = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
-            $magick_command = $path . 'convert -quality 85 -antialias -sample ' . $newWidth . 'x' . $newHeight . ' ' . $src_file_im . ' +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
+            $magick_command = $path . 'convert -auto-orient -quality 85 -antialias -sample ' . $newWidth . 'x' . $newHeight . ' ' . $src_file_im . ' +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
 
             @passthru($magick_command);
             if (file_exists($new_file)) {
