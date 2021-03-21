@@ -1082,7 +1082,9 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             if (0 == $val) {
                 // value=0 => all valid forums
                 return $validForums;
-            } elseif ($val > 0) {
+            }
+
+            if ($val > 0) {
                 $forums[] = $val;
             } else {
                 $cats[] = \abs($val);

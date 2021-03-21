@@ -117,16 +117,16 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     {
         if (is_array($str)) {
             return $str;
-        } else {
-            // split the phrase by any number of commas or space characters,
-            // which include " ", \r, \t, \n and \f
-            $temp_str = preg_split('/[\s,]+/', $str);
-            $strarray = [];
-            foreach ($temp_str as $s) {
-                $strarray[] = addslashes($s);
-            }
-
-            return $strarray;
         }
+
+        // split the phrase by any number of commas or space characters,
+        // which include " ", \r, \t, \n and \f
+        $temp_str = preg_split('/[\s,]+/', $str);
+        $strarray = [];
+        foreach ($temp_str as $s) {
+            $strarray[] = addslashes($s);
+        }
+
+        return $strarray;
     }
 }
