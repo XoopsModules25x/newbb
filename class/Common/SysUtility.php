@@ -211,7 +211,7 @@ class SysUtility
     {
         $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
-        return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
+        return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
     }
 
     /**
