@@ -22,12 +22,14 @@ use XoopsModules\Newbb\{
     ForumHandler,
     TopicHandler,
     OnlineHandler,
+    Post,
     PostHandler
 };
 /** @var ForumHandler $forumHandler */
 /** @var TopicHandler $topicHandler */
 /** @var OnlineHandler $onlineHandler */
 /** @var PostHandler $postHandler */
+/** @var Post $postObject */
 
 require_once __DIR__ . '/header.php';
 
@@ -58,7 +60,6 @@ if (empty($forum)) {
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
-    /** @var Post $postObject */
     $postObject = $postHandler->get($post_id);
     $topic_id   = $postObject->getVar('topic_id');
 } else {

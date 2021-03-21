@@ -46,6 +46,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbGetRead($type, $item_id, $uid = null)
     {
+        /** @var ReadHandler $readHandler */
         $readHandler = Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->getRead($item_id, $uid);
@@ -58,9 +59,10 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbSetReadforum($status = 0, $uid = null)
     {
-        $ReadforumHandler = Helper::getInstance()->getHandler('Readforum');
+        /** @var ReadHandler $readforumHandler */
+        $readforumHandler = Helper::getInstance()->getHandler('Readforum');
 
-        return $ReadforumHandler->setReadItems($status, $uid);
+        return $readforumHandler->setReadItems($status, $uid);
     }
 
     /**
@@ -71,6 +73,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
     {
+        /** @var ReadHandler $readTopicHandler */
         $readTopicHandler = Helper::getInstance()->getHandler('Readtopic');
 
         return $readTopicHandler->setReadItems($status, $forum_id, $uid);
@@ -84,6 +87,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbIsRead($type, $items, $uid = null)
     {
+        /** @var ReadHandler $readHandler */
         $readHandler = Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->isReadItems($items, $uid);

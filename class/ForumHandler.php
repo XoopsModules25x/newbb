@@ -818,7 +818,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
 
 
-        if (!$forums_id) {
+        if (empty($forums_id)) {
             return $stats;
         }
         $sql = '    SELECT forum_posts AS posts, forum_topics AS topics, forum_id AS id' . '    FROM ' . $this->table . '    WHERE forum_id IN (' . \implode(', ', $forums_id) . ')';

@@ -38,6 +38,7 @@ use XoopsModules\Newbb\{
 /** @var Post $eachpost */
 
 use XoopsModules\Xoopspoll;
+use XoopsModules\Xoopspoll\Helper as PollHelper;
 /** @var Xoopspoll\Poll $pollObject */
 /** @var Xoopspoll\LogHandler $logHandler */
 
@@ -522,7 +523,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-            $xpollHandler = Helper::getInstance()->getHandler('Poll');
+            $xpollHandler = PollHelper::getInstance()->getHandler('Poll');
             $pollObject = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
                 /* check to see if user has rights to view the results */

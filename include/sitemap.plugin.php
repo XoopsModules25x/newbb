@@ -47,7 +47,7 @@ function b_sitemap_newbb()
     /* Fetch forum data */
     $forums_available = array_merge($forums_top_id, $forums_sub_id);
     $forums_array     = [];
-    if ($forums_available) {
+    if (!empty($forums_available)) {
         $crit_forum = new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
         $crit_forum->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $crit_forum->setOrder('ASC');

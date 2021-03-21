@@ -69,7 +69,7 @@ function newbb_search(
     if (count($validForums) > 0) {
         $criteriaPermissions = new \CriteriaCompo();
         $criteriaPermissions->add(new \Criteria('p.forum_id', '(' . implode(',', $validForums) . ')', 'IN'), 'AND');
-        $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), 'forum_name', false);
+        $forum_list = $forumHandler->getAll(new \Criteria('forum_id', '(' . implode(', ', $validForums) . ')', 'IN'), ['forum_name'], false);
     }
 
     if (is_numeric($userid) && 0 !== $userid) {
