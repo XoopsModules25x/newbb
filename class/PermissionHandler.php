@@ -13,11 +13,7 @@ namespace XoopsModules\Newbb;
  */
 
 use Xmf\Module\Helper\Cache;
-use XoopsModules\Newbb\{
-    Helper
-};
 /** @var \Xmf\Module\Helper\Cache */
-/** @var Helper $helper */
 
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 \define('NEWBB_HANDLER_PERMISSION', 1);
@@ -35,6 +31,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     protected $cacheHelper;
     /** @var array */
     private $_handler;
+    /** @var Helper $helper */
     private $helper;
 
     /**
@@ -44,6 +41,9 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function __construct(\XoopsDatabase $db = null, $helper = null)
     {
         $this->cacheHelper = new Cache('newbb');
+        if (null === $helper){
+            $helper = Helper::getInstance();
+        }
         $this->helper = $helper;
 
         $this->db = $db;
@@ -57,6 +57,8 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function loadHandler($name)
     {
         if (!isset($this->_handler[$name])) {
+//            $className             = '\\XoopsModules\\Newbb\\Permission' . \ucfirst($name) . 'Handler';
+//            $this->_handler[$name] = new $className($this->db);
             $this->_handler[$name] = $this->helper->getHandler('Permission'.ucfirst($name));
         }
 
