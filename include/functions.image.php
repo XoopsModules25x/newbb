@@ -218,10 +218,6 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
             }
         }
 
-        if (file_exists($new_file)) {
-            return true;
-        }
-
-        return false;
+        return file_exists($new_file);
     }
 }
