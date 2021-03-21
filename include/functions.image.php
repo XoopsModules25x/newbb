@@ -45,7 +45,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         $thumb     = $thumb_path . '/' . $source;
         $image     = $img_path . '/' . $source;
-        $thumb_url = $thumb_url . '/' . $source;
+        $thumb_url .= '/' . $source;
         $image_url = $img_url . '/' . $source;
         $img_info = '';
 
