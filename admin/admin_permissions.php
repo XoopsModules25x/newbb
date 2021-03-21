@@ -1,43 +1,34 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: XOOPS Foundation                                                  //
-// URL: https://xoops.org/                                                //
-// Project: XOOPS Project                                                    //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
+    CategoryHandler,
+    ForumHandler,
+    Helper,
     Utility,
     GroupPermForm,
     PermissionHandler
 };
 
 /** @var Helper $helper */
-/** var PermissionHandler $permissionHandler */
+/** @var CategoryHandler $categoryHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PermissionHandler $permissionHandler */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -157,13 +148,11 @@ switch ($action) {
         $opform->addElement($op_select);
         $opform->display();
 
-        /** @var Newbb\CategoryHandler $categoryHandler */
         $categoryHandler  = Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');
         $categories = $categoryHandler->getList($criteriaCategory);
 
-        /** @var Newbb\ForumHandler $forumHandler */
         $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
         foreach (array_keys($forums) as $c) {

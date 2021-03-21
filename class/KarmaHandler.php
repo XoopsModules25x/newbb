@@ -19,7 +19,7 @@ class KarmaHandler
      */
     public function getUserKarma($user = null)
     {
-        $user = (null === $user) ? $GLOBALS['xoopsUser'] : $user;
+        $user = $user ?? $GLOBALS['xoopsUser'];
 
         return $this->calculateUserKarma($user);
     }
@@ -31,10 +31,10 @@ class KarmaHandler
      */
     public function calculateUserKarma($user)
     {
-        if (!\is_object($user)) {
-            $user_karma = 0;
-        } else {
+        if (\is_object($user)) {
             $user_karma = $user->getVar('posts') * 50;
+        } else {
+            $user_karma = 0;
         }
 
         return $user_karma;

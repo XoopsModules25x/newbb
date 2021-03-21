@@ -482,7 +482,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         if (!\func_num_args()) {
             $newbbConfig = \newbbLoadConfig();
             $expire      = isset($newbbConfig['pending_expire']) ? (int)$newbbConfig['pending_expire'] : 7;
-            $expire      = $expire * 24 * 3600; // days to seconds
+            $expire      *= 24 * 3600; // days to seconds
         }
         if (empty($expire)) {
             return false;

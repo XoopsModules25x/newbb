@@ -1,28 +1,13 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
 //  URL: https://xoops.org                                                    //
@@ -30,7 +15,10 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Post
+};
+/** @var Post $post_contextObject */
 
 require_once __DIR__ . '/header.php';
 
@@ -178,7 +166,6 @@ $user_karma = $karmaHandler->getUserKarma();
 $posts_context = [];
 //$posts_contextObject = $postHandler->getByLimit($topic_id, 5); //mb
 $posts_contextObject = $postHandler->getByLimit(5, 0, null, null, true, $topic_id, 1);
-/** @var Newbb\Post $post_contextObject */
 foreach ($posts_contextObject as $post_contextObject) {
     // Sorry, in order to save queries, we have to hide the non-open post_text even if you have replied or have adequate karma, even an admin.
     if ($GLOBALS['xoopsModuleConfig']['enable_karma'] && $post_contextObject->getVar('post_karma') > 0) {

@@ -1,33 +1,20 @@
 <?php
-//
-// ------------------------------------------------------------------------ //
-// XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000-2020 XOOPS.org                           //
-// <https://xoops.org>                             //
-// ------------------------------------------------------------------------ //
-// This program is free software; you can redistribute it and/or modify     //
-// it under the terms of the GNU General Public License as published by     //
-// the Free Software Foundation; either version 2 of the License, or        //
-// (at your option) any later version.                                      //
-// //
-// You may not change or alter any portion of this comment or credits       //
-// of supporting developers from this source code or any supporting         //
-// source code which is considered copyrighted (c) material of the          //
-// original comment or credit authors.                                      //
-// //
-// This program is distributed in the hope that it will be useful,          //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-// GNU General Public License for more details.                             //
-// //
-// You should have received a copy of the GNU General Public License        //
-// along with this program; if not, write to the Free Software              //
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-// ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
-// Project: XOOPS Project                                                    //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
+ * @author       XOOPS Development Team
+ */
 
 use Xmf\Module\Helper\Cache;
 use Xmf\Request;
@@ -74,15 +61,15 @@ function editCategory(\XoopsObject $categoryObject = null)
     $groups_cat_access = null;
     require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-    if (!$categoryObject->isNew()) {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
-    } else {
+    if ($categoryObject->isNew()) {
         $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('SCRIPT_NAME'));
         $categoryObject->setVar('cat_title', '');
         $categoryObject->setVar('cat_image', '');
         $categoryObject->setVar('cat_description', '');
         $categoryObject->setVar('cat_order', 0);
         $categoryObject->setVar('cat_url', 'https://xoops.org/modules/newbb/ newBB Support');
+    } else {
+        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
     }
 
     $sform->addElement(new \XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $categoryObject->getVar('cat_order')), false);
@@ -165,7 +152,7 @@ switch ($op) {
         if (!$categoryHandler->insert($categoryObject)) {
             $message = _AM_NEWBB_DATABASEERROR;
         }
-        if (($cat_id == $categoryObject->getVar('cat_id')) && $cat_isNew) {
+        if ($cat_isNew && ($cat_id == $categoryObject->getVar('cat_id'))) {
             $categoryHandler->applyPermissionTemplate($categoryObject);
         }
         redirect_header('admin_cat_manager.php', 2, $message);

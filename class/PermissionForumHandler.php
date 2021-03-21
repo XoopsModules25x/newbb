@@ -52,7 +52,7 @@ class PermissionForumHandler extends PermissionHandler
         if (isset($validPerms[(int)$fullname])) {
             return $validPerms[(int)$fullname];
         }
-        $items = \array_filter(\array_map('\trim', \explode(',', FORUM_PERM_ITEMS)));
+        $items = \array_filter(\array_map('\trim', \explode(',', \FORUM_PERM_ITEMS)));
         if (!empty($fullname)) {
             foreach (\array_keys($items) as $key) {
                 $items[$key] = 'forum_' . $items[$key];
@@ -83,10 +83,10 @@ class PermissionForumHandler extends PermissionHandler
             && !\newbbIsAdmin($id)) {
             /** @var Newbb\ModerateHandler $moderateHandler */
             $moderateHandler = Helper::getInstance()->getHandler('Moderate');
-            if (!$moderateHandler->verifyUser($uid, '', $id)) {
-                $suspension[$uid][$ip][$id] = 1;
-            } else {
+            if ($moderateHandler->verifyUser($uid, '', $id)) {
                 $suspension[$uid][$ip][$id] = 0;
+            } else {
+                $suspension[$uid][$ip][$id] = 1;
             }
         }
 

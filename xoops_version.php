@@ -12,11 +12,12 @@
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 $modversion = [
     'version'             => 5.01,
-    'module_status'       => 'Beta 3',
-    'release_date'        => '2021/02/14',
+    'module_status'       => 'Beta 4',
+    'release_date'        => '2021/03/21',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
@@ -93,7 +94,7 @@ $modversion['helpsection'] = [
     //    array('name' => _MI_NEWBB_REQUIREMENTS, 'link' => 'page=__requirements'),
     //    array('name' => _MI_NEWBB_CREDITS, 'link' => 'page=__credits'),
 ];
-// Templates
+// ------------------- Templates ------------------- //
 $modversion['templates'] = [
     ['file' => 'newbb_index_menu.tpl', 'description' => ''],
     ['file' => 'newbb_index.tpl', 'description' => ''],
@@ -114,7 +115,7 @@ $modversion['templates'] = [
     ['file' => 'newbb_notification_select.tpl', 'description' => ''],
     ['file' => 'newbb_moderate.tpl', 'description' => ''],
 ];
-// Blocks
+// ------------------- Blocks ------------------- //
 // options[0] - Citeria valid: time(by default)
 // options[1] - NumberToDisplay: any positive integer
 // options[2] - TimeDuration: negative for hours, positive for days, for instance, -5 for 5 hours and 5 for 5 days
@@ -718,6 +719,17 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 440,
 ];
+/**
+ * Make Sample button visible?
+ */
+$modversion['config'][] = [
+    'name'        => 'displaySampleButton',
+    'title'       => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON',
+    'description' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1,
+];
 
 /**
  * Show Developer Tools?
@@ -740,7 +752,7 @@ $modversion['config'][] = [
     'default'     => 0,
 ];
 
-// Notification
+// ------------------- Notification ---------------------- //
 $modversion['notification']                = [];
 $modversion['hasNotification']             = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';

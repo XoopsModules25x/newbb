@@ -3,35 +3,44 @@
 use Xmf\Request;
 use XoopsModules\Newbb;
 
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
 //  URL: https://xoops.org                                                    //
 //  Project: Article Project                                                 //
 //  ------------------------------------------------------------------------ //
+
+use XoopsModules\Newbb\{
+    CategoryHandler,
+    ForumHandler,
+    OnlineHandler,
+    TopicHandler,
+    Category,
+    UserstatsHandler,
+    StatsHandler,
+    RateHandler,
+    PostHandler,
+    Post
+};
+/** @var CategoryHandler $categoryHandler */
+/** @var TopicHandler $topicHandler */
+/** @var OnlineHandler $onlineHandler */
+/** @var Category[] $categories */
+/** @var UserstatsHandler $userstatsHandler */
+/** @var StatsHandler $statsHandler */
+/** @var RateHandler $rateHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
+/** @var Post $post */
+
 require_once __DIR__ . '/header.php';
 
 if (Request::getString('submit', '', 'POST')) {
@@ -56,13 +65,11 @@ if (empty($topic_id)) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-///** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 ///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 
 if (!$forum) {
-    /** @var Newbb\Topic $topicObject */
     $topicObject = $topicHandler->get((int)$topic_id);
     if (is_object($topicObject)) {
         $forum = $topicObject->getVar('forum_id');
@@ -74,7 +81,6 @@ if (!$forum) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forum);
 }
@@ -166,9 +172,8 @@ if (Request::getString('submit', '', 'POST')) {
              . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     } elseif ('merge' === $mode) {
-        //        /** @var PostHandler $postHandler */
+
         //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
-        //        /** @var Newbb\RateHandler $rateHandler */
         //        $rateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Rate');
 
         foreach ($topic_id as $tid) {
@@ -300,10 +305,8 @@ if (Request::getString('submit', '', 'POST')) {
         }
         if ('digest' === $mode && $GLOBALS['xoopsDB']->getAffectedRows()) {
             $topicObject = $topicHandler->get($topic_id);
-            //            /** @var Newbb\StatsHandler $statsHandler */
             //            $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
             $statsHandler->update($topicObject->getVar('forum_id'), 'digest');
-            //            /** @var Newbb\UserstatsHandler $userstatsHandler */
             //            $userstatsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Userstats');
             $user_stat = $userstatsHandler->get($topicObject->getVar('topic_poster'));
             if ($user_stat) {
@@ -339,14 +342,12 @@ if (Request::getString('submit', '', 'POST')) {
         echo '<tr><td class="bg3">' . _MD_NEWBB_MOVETOPICTO . '</td><td class="bg1">';
         $box = '<select name="newforum" size="1">';
 
-        //        /** @var Newbb\CategoryHandler $categoryHandler */
         //        $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $categories = $categoryHandler->getByPermission('access');
         $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 
         if (count($categories) > 0 && count($forums) > 0) {
             foreach (array_keys($forums) as $key) {
-                /** @var Newbb\Category[] $categories */
                 $box .= "<option value='-1'>[" . $categories[$key]->getVar('cat_title') . ']</option>';
                 foreach ($forums[$key] as $forumid => $_forum) {
                     $box .= "<option value='" . $forumid . "'>-- " . $_forum['title'] . '</option>';

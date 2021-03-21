@@ -9,7 +9,13 @@
  * @package        module::newbb
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    TopicHandler
+};
+/** @var Admin $adminObject */
+/** @var TopicHandler $topicHandler */
 
 // irmtfan - TODO - should be changed completly with Newbb new function newbbSynchronization
 require_once __DIR__ . '/admin_header.php';

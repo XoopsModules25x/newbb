@@ -14,11 +14,13 @@ use XoopsModules\Newbb\{
     Tree,
     TopicHandler,
     ForumHandler,
+    Post,
     PostHandler
 };
 /** @var TopicHandler $topicHandler */
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
+/** @var Post $postObject */
 
 require_once __DIR__ . '/header.php';
 
@@ -93,7 +95,7 @@ switch ($op) {
         $criteria    = new \Criteria('post_id', '(' . implode(',', $post_id) . ')', 'IN');
         $postsObject = $postHandler->getObjects($criteria, true);
         foreach ($post_id as $post) {
-            /** @var Newbb\Post $postObject */
+            /** @var Post $postObject */
             $postObject = $postsObject[$post];
             if (!empty($topic_id) && $topic_id !== $postObject->getVar('topic_id')) {
                 continue;
@@ -124,7 +126,7 @@ switch ($op) {
         $notificationHandler = xoops_getHandler('notification');
         foreach ($post_id as $post) {
             $tags = [];
-            /** @var Newbb\Post[] $postsObject [$post] */
+            /** @var Post[] $postsObject [$post] */
             $tags['THREAD_NAME'] = $topic_list[$postsObject[$post]->getVar('topic_id')];
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $postsObject[$post]->getVar('topic_id') . '&amp;forum=' . $postsObject[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$postsObject[$post]->getVar('forum_id')];
@@ -162,7 +164,6 @@ switch ($op) {
         }
         break;
     case 'split':
-        /** @var Newbb\Post $postObject */
         $postObject = $postHandler->get($post_id);
         if ((is_array($post_id) && 0 === count($post_id)) || $postObject->isTopic()) {
             break;

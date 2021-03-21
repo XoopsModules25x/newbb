@@ -18,6 +18,7 @@ use Smarty;
 use Xmf\IPAddress;
 use XoopsDatabase;
 use XoopsModules\Newbb;
+
 /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
 
 require_once \dirname(__DIR__) . '/include/functions.config.php';
@@ -90,7 +91,7 @@ class OnlineHandler
 
         /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
         $xoopsOnlineHandler = \xoops_getHandler('online');
-        $xoopsupdate         = $xoopsOnlineHandler->write($uid, $uname, \time(), $xoopsModule->getVar('mid'), \Xmf\IPAddress::fromRequest()->asReadable());
+        $xoopsupdate        = $xoopsOnlineHandler->write($uid, $uname, \time(), $xoopsModule->getVar('mid'), \Xmf\IPAddress::fromRequest()->asReadable());
         if (!$xoopsupdate) {
             //xoops_error("newbb online upate error");
         }
@@ -122,7 +123,7 @@ class OnlineHandler
             if (empty($iValue['online_uid'])) {
                 continue;
             }
-            $users_id[]                             = $users[$i]['online_uid'];
+            $users_id[]                          = $iValue['online_uid'];
             $users_online[$iValue['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $iValue['online_uid'],
                 'uname' => $iValue['online_uname'],
@@ -182,7 +183,7 @@ class OnlineHandler
             if (empty($iValue['online_uid'])) {
                 continue;
             }
-            $users_id[]                             = $users[$i]['online_uid'];
+            $users_id[]                          = $iValue['online_uid'];
             $users_online[$iValue['online_uid']] = [
                 'link'  => XOOPS_URL . '/userinfo.php?uid=' . $iValue['online_uid'],
                 'uname' => $iValue['online_uname'],
@@ -259,7 +260,7 @@ class OnlineHandler
 
         /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
         $xoopsOnlineHandler = \xoops_getHandler('online');
-        $xoopsOnlineTable    = $xoopsOnlineHandler->table;
+        $xoopsOnlineTable   = $xoopsOnlineHandler->table;
 
         $sql = 'DELETE FROM '
                . $this->db->prefix('newbb_online')

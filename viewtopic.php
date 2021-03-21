@@ -1,28 +1,13 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
 //  URL: https://xoops.org                                                    //
@@ -32,10 +17,31 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    UserHandler
+    Helper,
+    UserHandler,
+    KarmaHandler,
+    OnlineHandler,
+    TopicHandler,
+    ForumHandler,
+    PostHandler,
+    CategoryHandler,
+    Post
 };
+/** @var Helper $helper */
+/** @var KarmaHandler $karmaHandler */
+/** @var OnlineHandler $onlineHandler */
+/** @var UserHandler $userHandler */
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
+/** @var CategoryHandler $categoryHandler */
+/** @var Post $eachpost */
+
 use XoopsModules\Xoopspoll;
-use XoopsModules\Xoopspoll\Helper;
+use XoopsModules\Xoopspoll\Helper as PollHelper;
+/** @var Xoopspoll\Poll $pollObject */
+/** @var Xoopspoll\LogHandler $logHandler */
+
 
 require_once __DIR__ . '/header.php';
 $xoopsLogger->startTime('newBB_viewtopic');
@@ -80,7 +86,6 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-///** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 if (!empty($post_id)) {
     $topicObject = $topicHandler->getByPost($post_id);
@@ -97,7 +102,6 @@ if (!is_object($topicObject) || !$topic_id = $topicObject->getVar('topic_id')) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 $forum_id = $topicObject->getVar('forum_id');
-///** @var Newbb\ForumHandler $forumHandler */
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($forum_id);
 
@@ -144,7 +148,6 @@ if (!$isAdmin) {
 }
 
 if (!empty($GLOBALS['xoopsModuleConfig']['enable_karma'])) {
-    //    /** @var Newbb\KarmaHandler $karmaHandler */
     //    $karmaHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Karma');
     $user_karma = $karmaHandler->getUserKarma();
 }
@@ -178,8 +181,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['rss_enable'])) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var Newbb\OnlineHandler $onlineHandler */
-    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
+    $onlineHandler = Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject, $topicObject);
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
@@ -257,7 +259,6 @@ if ($topicHandler->getPermission($forumObject, $topicObject->getVar('topic_statu
 
 $poster_array  = [];
 $require_reply = false;
-/** @var Post $eachpost */
 foreach ($postsArray as $eachpost) {
     if ($eachpost->getVar('uid') > 0) {
         $poster_array[$eachpost->getVar('uid')] = 1;
@@ -333,7 +334,7 @@ if ($GLOBALS['xoopsModuleConfig']['show_advertising']) {
 }
 
 $i = 0;
-/** @var Post $eachpost */
+
 foreach ($postsArray as $eachpost) {
     if ($GLOBALS['xoopsModuleConfig']['show_advertising']) {
         if (2 === $i) {
@@ -418,43 +419,43 @@ if ($topicObject->getVar('approved') > 0) {
         'name'  => _MD_NEWBB_DELETETOPIC,
         'image' => $ad_delete,
     ];
-    if (!$topicObject->getVar('topic_status')) {
-        $admin_actions['lock'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=lock&amp;topic_id=' . $topic_id,
-            'image' => $ad_lock,
-            'name'  => _MD_NEWBB_LOCKTOPIC,
-        ];
-    } else {
+    if ($topicObject->getVar('topic_status')) {
         $admin_actions['unlock'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=unlock&amp;topic_id=' . $topic_id,
             'image' => $ad_unlock,
             'name'  => _MD_NEWBB_UNLOCKTOPIC,
         ];
-    }
-    if (!$topicObject->getVar('topic_sticky')) {
-        $admin_actions['sticky'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=sticky&amp;topic_id=' . $topic_id,
-            'image' => $ad_sticky,
-            'name'  => _MD_NEWBB_STICKYTOPIC,
-        ];
     } else {
+        $admin_actions['lock'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=lock&amp;topic_id=' . $topic_id,
+            'image' => $ad_lock,
+            'name'  => _MD_NEWBB_LOCKTOPIC,
+        ];
+    }
+    if ($topicObject->getVar('topic_sticky')) {
         $admin_actions['unsticky'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=unsticky&amp;topic_id=' . $topic_id,
             'image' => $ad_unsticky,
             'name'  => _MD_NEWBB_UNSTICKYTOPIC,
         ];
-    }
-    if (!$topicObject->getVar('topic_digest')) {
-        $admin_actions['digest'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=digest&amp;topic_id=' . $topic_id,
-            'image' => $ad_digest,
-            'name'  => _MD_NEWBB_DIGESTTOPIC,
-        ];
     } else {
+        $admin_actions['sticky'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=sticky&amp;topic_id=' . $topic_id,
+            'image' => $ad_sticky,
+            'name'  => _MD_NEWBB_STICKYTOPIC,
+        ];
+    }
+    if ($topicObject->getVar('topic_digest')) {
         $admin_actions['undigest'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=undigest&amp;topic_id=' . $topic_id,
             'image' => $ad_undigest,
             'name'  => _MD_NEWBB_UNDIGESTTOPIC,
+        ];
+    } else {
+        $admin_actions['digest'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=digest&amp;topic_id=' . $topic_id,
+            'image' => $ad_digest,
+            'name'  => _MD_NEWBB_DIGESTTOPIC,
         ];
     }
     // if the topic is pending/deleted then restore/approve
@@ -522,8 +523,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         $uid = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
-            $xpollHandler = Helper::getInstance()->getHandler('Poll');
-            /** @var Xoopspoll\Poll $pollObject */
+            $xpollHandler = PollHelper::getInstance()->getHandler('Poll');
             $pollObject = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
                 /* check to see if user has rights to view the results */
@@ -550,7 +550,6 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                 $renderer = new Xoopspoll\Renderer($pollObject);
                 // check to see if user has voted, show form if not, otherwise get results for form
 
-                /** @var \XoopsModules\Xoopspoll\LogHandler $logHandler */
                 $logHandler = Helper::getInstance()->getHandler('Log');
                 if ($pollObject->isAllowedToVote()
                     && (!$logHandler->hasVoted($poll_id, xoops_getenv('REMOTE_ADDR'), $uid))) {
@@ -817,7 +816,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
         'collapse' => $iconHandler->getImageSource($qr_collapse),
     ];
     $quickreply['show']   = 1; // = !empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']
-    $quickreply['expand'] = (count($toggles) > 0) ? (in_array('qr', $toggles) ? false : true) : true;
+    $quickreply['expand'] = (count($toggles) > 0) ? (!in_array('qr', $toggles)) : true;
     if ($quickreply['expand']) {
         $quickreply['style']     = 'block';        //irmtfan move semicolon
         $quickreply_icon_display = $qr_expand;

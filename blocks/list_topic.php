@@ -11,10 +11,12 @@
  */
 
 use XoopsModules\Newbb\{Helper,
+    ForumHandler,
     TopicRenderer
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
 
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
@@ -185,7 +187,6 @@ function newbb_list_topic_edit($options)
     //  forum element
     $optionsForum = explode(',', $options[12]);
     require_once dirname(__DIR__) . '/include/functions.forum.php';
-    /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Helper::getInstance()->getHandler('Forum');
     //get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
     // Get accessible forums

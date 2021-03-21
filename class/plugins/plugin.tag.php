@@ -34,7 +34,7 @@ use XoopsModules\Tag;
  */
 function newbb_tag_iteminfo(&$items)
 {
-    if (0 === \count($items) || !\is_array($items)) {
+    if (!\is_array($items) || 0 === \count($items)) {
         return false;
     }
 

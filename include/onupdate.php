@@ -10,11 +10,9 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
- * @author       XOOPS Development Team
+ * @author      XOOPS Development Team
  */
 
 use XoopsModules\Newbb\{Common\Configurator, Common\Migrate, Helper, Utility};
@@ -29,18 +27,6 @@ if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUs
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 /**
- * @param string $tablename
- *
- * @return bool
- */
-function tableExists($tablename)
-{
-    $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
-
-    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
-}
-
-/**
  * Prepares system prior to attempting to install module
  * @param \XoopsModule $module {@link XoopsModule}
  *
@@ -48,7 +34,7 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
     $utility = new Utility();
     $configurator = new Configurator();
@@ -71,7 +57,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
  */
 function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName      = \basename(\dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var \XoopsModules\Newbb\Helper $helper */ /** @var \XoopsModules\Newbb\Utility $utility */

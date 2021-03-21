@@ -797,14 +797,28 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
         }
 
+//        $forums_id = [];
+//        foreach (\array_keys($sub_forums) as $id) {
+//            if (empty($sub_forums[$id])) {
+//                continue;
+//            }
+//            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
+//        }
+
+
         $forums_id = [];
         foreach (\array_keys($sub_forums) as $id) {
             if (empty($sub_forums[$id])) {
                 continue;
             }
-            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
+            $forums_id[] = $sub_forums[$id]; // <- yes, we'll use a little bit more memory
         }
-        if (!$forums_id) {
+        $forums_id = array_merge([], ...$forums_id); // the empty array covers cases when no loops were made
+
+
+
+
+        if (empty($forums_id)) {
             return $stats;
         }
         $sql = '    SELECT forum_posts AS posts, forum_topics AS topics, forum_id AS id' . '    FROM ' . $this->table . '    WHERE forum_id IN (' . \implode(', ', $forums_id) . ')';
@@ -1082,7 +1096,9 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             if (0 == $val) {
                 // value=0 => all valid forums
                 return $validForums;
-            } elseif ($val > 0) {
+            }
+
+            if ($val > 0) {
                 $forums[] = $val;
             } else {
                 $cats[] = \abs($val);

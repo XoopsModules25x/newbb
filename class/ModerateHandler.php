@@ -74,7 +74,7 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
             return true; // no matches
         }
 
-        if (\count($matches) > 0 && $uid > 0) {
+        if ($uid > 0 && \count($matches) > 0) {
             return false; // user is banned
         }
         // verify possible matches against IP address

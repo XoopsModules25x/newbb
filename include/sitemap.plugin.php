@@ -6,10 +6,15 @@
 
 // NewBB plugin: D.J., https://xoops.org.cn
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{
+    CategoryHandler,
+    Helper,
+    ForumHandler
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
+/** @var CategoryHandler $categoryHandler */
 
 /**
  * @return array
@@ -19,7 +24,6 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = [];
 
-    /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Helper::getInstance()->getHandler('Forum');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
@@ -34,7 +38,7 @@ function b_sitemap_newbb()
     }
 
     $forums_sub_id = [];
-    if ((bool)$forums_top_id && $sitemap_configs['show_subcategoris']) {
+    if ($forums_top_id && $sitemap_configs['show_subcategoris']) {
         $crit_sub = new \CriteriaCompo(new \Criteria('parent_forum', '(' . implode(', ', $forums_top_id) . ')', 'IN'));
         $crit_sub->add(new \Criteria('forum_id', '(' . implode(', ', $forums_allowed) . ')', 'IN'));
         $forums_sub_id = $forumHandler->getIds($crit_sub);
@@ -43,7 +47,7 @@ function b_sitemap_newbb()
     /* Fetch forum data */
     $forums_available = array_merge($forums_top_id, $forums_sub_id);
     $forums_array     = [];
-    if ((bool)$forums_available) {
+    if (!empty($forums_available)) {
         $crit_forum = new \Criteria('forum_id', '(' . implode(', ', $forums_available) . ')', 'IN');
         $crit_forum->setSort('cat_id ASC, parent_forum ASC, forum_order');
         $crit_forum->setOrder('ASC');
@@ -52,7 +56,7 @@ function b_sitemap_newbb()
 
     $forums = [];
     foreach ($forums_array as $forumid => $forum) {
-        if ((bool)$forum['parent_forum']) {
+        if ($forum['parent_forum']) {
             $forums[$forum['parent_forum']]['fchild'][$forumid] = [
                 'id'    => $forumid,
                 'url'   => 'viewforum.php?forum=' . $forumid,
@@ -69,7 +73,6 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs['show_subcategoris']) {
-        /** @var Newbb\CategoryHandler $categoryHandler */
         $categoryHandler = Helper::getInstance()->getHandler('Category');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);

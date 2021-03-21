@@ -10,11 +10,9 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
- * @author       XOOPS Development Team
+ * @author      XOOPS Development Team
  */
 
 use XoopsModules\Newbb\{
@@ -23,6 +21,7 @@ use XoopsModules\Newbb\{
     Utility};
 
 /** @var Helper $helper */
+/** @var Utility $utility */
 
 //require_once __DIR__ . '/setup.php';
 
@@ -35,7 +34,6 @@ use XoopsModules\Newbb\{
 function xoops_module_pre_install_newbb(\XoopsModule $module)
 {
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
-    /** @var Newbb\Utility $utility */
     $utility      = new Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -60,9 +58,8 @@ function xoops_module_install_newbb(\XoopsModule $module)
 {
     require_once dirname(__DIR__, 3) . '/mainfile.php';
 
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
-    /** @var Newbb\Helper $helper */
     $helper       = Helper::getInstance();
     $utility      = new Utility();
     $configurator = new Configurator();

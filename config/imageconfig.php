@@ -1,6 +1,6 @@
 <?php
 
-$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirName      = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 // extra module configs

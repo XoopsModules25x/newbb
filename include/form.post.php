@@ -17,13 +17,22 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper,
-    ModerateHandler
+use XoopsModules\Newbb\{
+    Forum,
+    Helper,
+    ModerateHandler,
+    Topic,
+    TopicHandler,
+    TypeHandler
 };
 use XoopsModules\Tag\FormTag;
 
+/** @var Forum $forumObject */
 /** @var Helper $helper */
 /** @var ModerateHandler $moderateHandler */
+/** @var TopicHandler $topicHandler */
+/** @var Topic $topicObject */
+/** @var TypeHandler $typeHandler */
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -104,7 +113,6 @@ foreach (
     ${$getstr} = Request::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
-/** @var Newbb\TopicHandler $topicHandler */
 $topicHandler = Helper::getInstance()->getHandler('Topic');
 $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
@@ -123,7 +131,6 @@ if (newbbIsAdmin($forumObject)
         && (0 == $topic_id
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
     $type_id = $topicHandler->get(@$topic_id, 'type_id');
-    /** @var Newbb\TypeHandler $typeHandler */
     $typeHandler = Helper::getInstance()->getHandler('Type');
     $types       = $typeHandler->getByForum($forumObject->getVar('forum_id'));
     if (!empty($types)) {
@@ -206,12 +213,12 @@ if (is_object($GLOBALS['xoopsUser']) && 1 == $GLOBALS['xoopsModuleConfig']['allo
     $options_tray->addElement($noname_checkbox);
 }
 
-if (!$nohtml) {
+if ($nohtml) {
+    $forum_form->addElement(new \XoopsFormHidden('dohtml', 0));
+} else {
     $html_checkbox = new \XoopsFormCheckBox('', 'dohtml', $dohtml);
     $html_checkbox->addOption(1, _MD_NEWBB_DOHTML);
     $options_tray->addElement($html_checkbox);
-} else {
-    $forum_form->addElement(new \XoopsFormHidden('dohtml', 0));
 }
 
 $smiley_checkbox = new \XoopsFormCheckBox('', 'dosmiley', $dosmiley);
@@ -222,12 +229,12 @@ $xcode_checkbox = new \XoopsFormCheckBox('', 'doxcode', $doxcode);
 $xcode_checkbox->addOption(1, _MD_NEWBB_DOXCODE);
 $options_tray->addElement($xcode_checkbox);
 
-if (!$nohtml) {
+if ($nohtml) {
+    $forum_form->addElement(new \XoopsFormHidden('dobr', 1));
+} else {
     $br_checkbox = new \XoopsFormCheckBox('', 'dobr', $dobr);
     $br_checkbox->addOption(1, _MD_NEWBB_DOBR);
     $options_tray->addElement($br_checkbox);
-} else {
-    $forum_form->addElement(new \XoopsFormHidden('dobr', 1));
 }
 
 if (is_object($GLOBALS['xoopsUser']) && $topicHandler->getPermission($forumObject, $topic_status, 'signature')) {

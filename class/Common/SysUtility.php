@@ -77,7 +77,7 @@ class SysUtility
                     if (\preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
                         // do nothing
                         // if tag is a closing tag
-                    } elseif (\preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
+                    } elseif (\preg_match('/^<\s*\/(\S+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
                         // delete tag from $open_tags list
                         $pos = \array_search($tag_matchings[1], $open_tags, true);
                         if (false !== $pos) {
@@ -92,13 +92,13 @@ class SysUtility
                     $truncate .= $line_matchings[1];
                 }
                 // calculate the length of the plain text part of the line; handle entities as one character
-                $content_length = mb_strlen(\preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
+                $content_length = mb_strlen(\preg_replace('/&[0-9a-z]{2,8};|&#\d{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
                 if ($total_length + $content_length > $length) {
                     // the number of characters which are left
                     $left            = $length - $total_length;
                     $entities_length = 0;
                     // search for html entities
-                    if (\preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, \PREG_OFFSET_CAPTURE)) {
+                    if (\preg_match_all('/&[0-9a-z]{2,8};|&#\d{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, \PREG_OFFSET_CAPTURE)) {
                         // calculate the real length of all entities in the legal range
                         foreach ($entities[0] as $entity) {
                             if ($left >= $entity[1] + 1 - $entities_length) {
@@ -194,12 +194,24 @@ class SysUtility
      *
      * @return bool
      */
-    public function fieldExists($fieldname, $table)
+    public static function fieldExists($fieldname, $table)
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM   $table LIKE '$fieldname'");
 
         return ($xoopsDB->getRowsNum($result) > 0);
+    }
+
+    /**
+     * @param string $tablename
+     *
+     * @return bool
+     */
+    public static function tableExists($tablename)
+    {
+        $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
+
+        return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
     }
 
     /**
@@ -225,5 +237,40 @@ class SysUtility
             $new_id = $GLOBALS['xoopsDB']->getInsertId();
         }
         return $new_id;
+    }
+
+    /**
+     * Add a field to a mysql table
+     *
+     * @param $field
+     * @param $table
+     * @return bool|\mysqli_result
+     * @package       News
+     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @copyright (c) Hervé Thouzard
+     */
+    public function addField($field, $table)
+    {
+        global $xoopsDB;
+        $result = $xoopsDB->queryF('ALTER TABLE ' . $table . " ADD $field");
+
+        return $result;
+    }
+
+    /**
+     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
+     *
+     * @param string $folder Le chemin complet du répertoire à vérifier
+     */
+    public static function prepareFolder($folder)
+    {
+        try {
+            if (!@\mkdir($folder) && !\is_dir($folder)) {
+                throw new \RuntimeException(\sprintf('Unable to create the %s directory', $folder));
+            }
+            file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+        } catch (\Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+        }
     }
 }

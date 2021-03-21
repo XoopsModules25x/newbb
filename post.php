@@ -18,8 +18,18 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    Uploader
+    Uploader,
+    ForumHandler,
+    TopicHandler,
+    OnlineHandler,
+    Post,
+    PostHandler
 };
+/** @var ForumHandler $forumHandler */
+/** @var TopicHandler $topicHandler */
+/** @var OnlineHandler $onlineHandler */
+/** @var PostHandler $postHandler */
+/** @var Post $postObject */
 
 require_once __DIR__ . '/header.php';
 
@@ -44,15 +54,12 @@ if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-/** @var Newbb\ForumHandler $forumHandler */
+
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-/** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-/** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
-    /** @var Post $postObject */
     $postObject = $postHandler->get($post_id);
     $topic_id   = $postObject->getVar('topic_id');
 } else {
@@ -66,7 +73,6 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
@@ -245,7 +251,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     }
     if (isset($attachments_tmp) && count($attachments_tmp)) {
         foreach ($attachments_tmp as $key => $attach) {
-            if (rename(XOOPS_CACHE_PATH . '/' . $attachments_tmp[$key][0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]))) {
+            if (rename(XOOPS_CACHE_PATH . '/' . $attach[0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach[0]))) {
                 $postObject->setAttachment($attach[0], $attach[1], $attach[2]);
             }
         }

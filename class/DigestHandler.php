@@ -120,12 +120,12 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MAX(digest_time) AS last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
-        if (!$result) {
-            $this->last_digest = 0;
-            // echo "<br>no data:".$query;
-        } else {
+        if ($result) {
             $array             = $this->db->fetchArray($result);
             $this->last_digest = $array['last_digest'] ?? 0;
+        } else {
+            $this->last_digest = 0;
+            // echo "<br>no data:".$query;
         }
     }
 
@@ -264,7 +264,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             } else {
                 $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
-            $summary = Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
+            $summary = Metagen::generateDescription($topic['post_text'], \SUMMARY_LENGTH);
             $author  = $topic['uname'] . ' (' . \formatTimestamp($topic['topic_time']) . ')';
             $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];

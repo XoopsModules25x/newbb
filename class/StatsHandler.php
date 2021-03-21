@@ -56,7 +56,7 @@ class StatsHandler
     {
         static $instance;
         if (null === $instance) {
-            $instance = new self($db);
+            $instance = new static($db);
         }
 
         return $instance;

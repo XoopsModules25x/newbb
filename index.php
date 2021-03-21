@@ -11,10 +11,16 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{Helper,
-    ObjectTree
+    ForumHandler,
+    ObjectTree,
+    OnlineHandler,
+    UserstatsHandler
 };
 
 /** @var Helper $helper */
+/** @var OnlineHandler $onlineHandler */
+/** @var ForumHandler $forumHandler */
+/** @var UserstatsHandler $userstatsHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -38,17 +44,17 @@ $viewcat = Request::getInt('cat', 0, 'GET'); //TODO mb check if this is GET or P
 //$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 
 $categories = [];
-if (!$viewcat) {
-    $categories        = $categoryHandler->getByPermission('access', null, false);
-    $forum_index_title = '';
-    $xoops_pagetitle   = $xoopsModule->getVar('name');
-} else {
+if ($viewcat) {
     $categoryObject = $categoryHandler->get($viewcat);
     if ($categoryHandler->getPermission($categoryObject)) {
         $categories[$viewcat] = $categoryObject->getValues();
     }
     $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
     $xoops_pagetitle   = $categoryObject->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
+} else {
+    $categories        = $categoryHandler->getByPermission('access', null, false);
+    $forum_index_title = '';
+    $xoops_pagetitle   = $xoopsModule->getVar('name');
 }
 
 if (0 === count($categories)) {
@@ -78,12 +84,10 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('forum_index_title', $forum_index_title);
 //if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init();
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
-/** @var Newbb\ForumHandler $forumHandler */
 $forumHandler = Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
@@ -176,7 +180,7 @@ foreach (array_keys($categories) as $id) {
     $onecat = $categories[$id];
 
     $cat_element_id = 'cat_' . $onecat['cat_id'];
-    $expand         = (count($toggles) > 0) ? (in_array($cat_element_id, $toggles) ? false : true) : true;
+    $expand         = (count($toggles) > 0) ? (!in_array($cat_element_id, $toggles)) : true;
     // START irmtfan to improve newbbDisplayImage
     if ($expand) {
         $cat_display      = 'block';        //irmtfan move semicolon
@@ -237,7 +241,6 @@ $xoopsTpl->assign(
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = [];
     if (is_object($GLOBALS['xoopsUser'])) {
-        //        /** @var Newbb\UserstatsHandler $userstatsHandler */
         //        $userstatsHandler         = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
         $userstats['topics']      = sprintf(_MD_NEWBB_USER_TOPICS, (int)(@$userstats_row['user_topics']));

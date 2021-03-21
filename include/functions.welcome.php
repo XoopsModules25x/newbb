@@ -9,10 +9,12 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    ForumHandler
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_WELCOME_LOADED', true);
@@ -32,7 +34,6 @@ if (!defined('NEWBB_FUNCTIONS_WELCOME')) {
         if (!$forumId) {
             return false;
         }
-        /** @var Newbb\ForumHandler $forumHandler */
         $forumHandler = Helper::getInstance()->getHandler('Forum');
         $forumObject  = $forumHandler->get($forumId);
         if (!$forumObject || !$forumHandler->getPermission($forumObject)) {

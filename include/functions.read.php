@@ -9,10 +9,14 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{
+    Helper,
+    ReadHandler,
+    ReadtopicHandler
 };
 
 /** @var Helper $helper */
+/** @var ReadHandler $readHandler */
 
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_READ_LOADED', true);
@@ -29,7 +33,6 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbSetRead($type, $item_id, $post_id, $uid = null)
     {
-        /** @var Newbb\ReadHandler $readHandler */
         $readHandler = Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->setRead($item_id, $post_id, $uid);
@@ -43,7 +46,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbGetRead($type, $item_id, $uid = null)
     {
-        /** @var Newbb\ReadHandler $readHandler */
+        /** @var ReadHandler $readHandler */
         $readHandler = Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->getRead($item_id, $uid);
@@ -56,10 +59,10 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbSetReadforum($status = 0, $uid = null)
     {
-        /** @var Newbb\ReadforumHandler $readHandler */
-        $ReadforumHandler = Helper::getInstance()->getHandler('Readforum');
+        /** @var ReadHandler $readforumHandler */
+        $readforumHandler = Helper::getInstance()->getHandler('Readforum');
 
-        return $ReadforumHandler->setReadItems($status, $uid);
+        return $readforumHandler->setReadItems($status, $uid);
     }
 
     /**
@@ -70,7 +73,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbSetReadTopic($status = 0, $forum_id = 0, $uid = null)
     {
-        /** @var Newbb\ReadtopicHandler $readHandler */
+        /** @var ReadHandler $readTopicHandler */
         $readTopicHandler = Helper::getInstance()->getHandler('Readtopic');
 
         return $readTopicHandler->setReadItems($status, $forum_id, $uid);
@@ -84,7 +87,7 @@ if (!defined('NEWBB_FUNCTIONS_READ')) {
      */
     function newbbIsRead($type, $items, $uid = null)
     {
-        /** @var Newbb\ReadHandler $readHandler */
+        /** @var ReadHandler $readHandler */
         $readHandler = Helper::getInstance()->getHandler('Read' . $type);
 
         return $readHandler->isReadItems($items, $uid);

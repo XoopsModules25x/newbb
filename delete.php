@@ -10,6 +10,12 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    OnlineHandler,
+    StatsHandler
+};
+/** @var StatsHandler $statsHandler */
+/** @var OnlineHandler $onlineHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -69,7 +75,6 @@ if (!$isAdmin && !$postObject->checkTimelimit('delete_timelimit')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }
@@ -113,7 +118,6 @@ if ($ok) {
         $postHandler->delete($postObject, $isDeleteOne);
         $forumHandler->synchronization($forum);
         $topicHandler->synchronization($topic_id);
-        //        /** @var Newbb\StatsHandler $statsHandler */
         //        $statsHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Stats');
         $statsHandler->reset();
     }

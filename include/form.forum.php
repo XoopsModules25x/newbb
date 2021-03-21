@@ -45,8 +45,7 @@ $form_forum->addElement(new \XoopsFormHidden('cat_id', $forumObject->getVar('cat
 ob_start();
 $mytree = new Tree($GLOBALS['xoopsDB']->prefix('newbb_forums'), 'forum_id', 'parent_forum');
 $mytree->makeMySelBox('forum_name', 'parent_forum', $forumObject->getVar('parent_forum'), 1, 'parent_forum');
-$form_forum->addElement(new \XoopsFormLabel(_AM_NEWBB_MAKE_SUBFORUM_OF, ob_get_contents()));
-ob_end_clean();
+$form_forum->addElement(new \XoopsFormLabel(_AM_NEWBB_MAKE_SUBFORUM_OF, ob_get_clean()));
 
 // Forum order
 $form_forum->addElement(new \XoopsFormText(_AM_NEWBB_SET_FORUMORDER, 'forum_order', 5, 10, $forumObject->getVar('forum_order')));
