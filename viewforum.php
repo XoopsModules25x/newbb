@@ -10,6 +10,12 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    OnlineHandler,
+    ForumHandler
+};
+/** @var OnlineHandler $onlineHandler */
+/** @var ForumHandler $forumHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -70,7 +76,7 @@ $mode = (Request::getString('status', '', 'GET')
              true
          )) ? 2 : Request::getInt('mode', 0, 'GET');
 
-///** @var Newbb\ForumHandler $forumHandler */
+
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($forum_id);
 
@@ -122,7 +128,6 @@ if ($isAdmin) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
     $xoopsTpl->assign('online', $onlineHandler->showOnline());

@@ -1,35 +1,30 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: phppp (D.J., infomax@gmail.com)                                  //
-//  URL: https://xoops.org                                                    //
-// Project: Article Project                                                 //
-// ------------------------------------------------------------------------ //
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       phppp (D.J., infomax@gmail.com)
+ * @author       XOOPS Development Team
+ */
 
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    TypeHandler,
+    XmlrssHandler
+};
+/** @var TypeHandler $typeHandler */
+/** @var XmlrssHandler $xmlrssHandler */
+
 
 require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('class/template.php');
@@ -86,7 +81,6 @@ $compile_id            = null;
 if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     require_once __DIR__ . '/include/functions.time.php';
 
-    //    /** @var Newbb\XmlrssHandler $xmlrssHandler */
     //    $xmlrssHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Xmlrss');
     $rss = $xmlrssHandler->create();
 
@@ -167,7 +161,6 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     }
     $users = newbbGetUnameFromIds(array_keys($users), $GLOBALS['xoopsModuleConfig']['show_realname']);
     if (count($types) > 0) {
-        //        /** @var Newbb\TypeHandler $typeHandler */
         //        $typeHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Type');
         $type_list = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }

@@ -1,28 +1,13 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
 //  URL: https://xoops.org                                                    //
@@ -33,8 +18,14 @@ use Xmf\IPAddress;
 use Xmf\Module\Helper\Cache;
 use XoopsModules\Newbb\{Common\Configurator,
     Common\Migrate,
-    Helper
+    CategoryHandler,
+    ForumHandler,
+    Helper,
+    PostHandler
 };
+/** @var PostHandler $postHandler */
+/** @var ForumHandler $forumHandler */
+/** @var CategoryHandler $categoryHandler */
 
 if (defined('XOOPS_MODULE_NEWBB_FUCTIONS')) {
     exit();
@@ -128,7 +119,6 @@ function xoops_module_pre_install_newbb(\XoopsModule $module)
 function xoops_module_install_newbb(\XoopsModule $module)
 {
     /* Create a test category */
-    /** @var Newbb\CategoryHandler $categoryHandler */
     $categoryHandler = Helper::getInstance()->getHandler('Category');
     $category        = $categoryHandler->create();
     $category->setVar('cat_title', _MI_NEWBB_INSTALL_CAT_TITLE, true);
@@ -140,7 +130,6 @@ function xoops_module_install_newbb(\XoopsModule $module)
     }
 
     /* Create a forum for test */
-    /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Helper::getInstance()->getHandler('Forum');
     $forum        = $forumHandler->create();
     $forum->setVar('forum_name', _MI_NEWBB_INSTALL_FORUM_NAME, true);
@@ -188,7 +177,6 @@ function xoops_module_install_newbb(\XoopsModule $module)
 
     /* Create a test post */
     require_once __DIR__ . '/functions.user.php';
-    /** @var Newbb\PostHandler $postHandler */
     $postHandler = Helper::getInstance()->getHandler('Post');
     /** @var $forumpost */
     $forumpost = $postHandler->create();

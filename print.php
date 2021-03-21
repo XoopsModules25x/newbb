@@ -1,28 +1,13 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2020 XOOPS.org                        //
-//                       <https://xoops.org>                             //
-// ------------------------------------------------------------------------- //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 //  ------------------------------------------------------------------------ //
 //  Author: phppp (D.J., infomax@gmail.com)                                  //
 //  URL: https://xoops.org                                                    //
@@ -30,7 +15,16 @@
 //  ------------------------------------------------------------------------ //
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Post,
+    PostHandler,
+    TopicHandler,
+    ForumHandler
+};
+/** @var Post $post */
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
 
 /*
  * Print contents of a post or a topic
@@ -55,9 +49,7 @@ if (!Request::getString('post_data', '', 'POST')) {
     }
 
     if (0 !== $post_id) {
-        //        /** @var Newbb\PostHandler $postHandler */
         //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
-        /** @var Newbb\Post $post */
         $post = $postHandler->get($post_id);
         if (!$approved = $post->getVar('approved')) {
             exit(_MD_NEWBB_NORIGHTTOVIEW);
@@ -73,7 +65,6 @@ if (!Request::getString('post_data', '', 'POST')) {
         }
     }
 
-    //    /** @var Newbb\TopicHandler $topicHandler */
     //    $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
     $topicObject = $topicHandler->get($topic_id);
     $topic_id    = $topicObject->getVar('topic_id');
@@ -87,7 +78,6 @@ if (!Request::getString('post_data', '', 'POST')) {
         exit(_MD_NEWBB_NORIGHTTOVIEW);
     }
 
-    //    /** @var Newbb\ForumHandler $forumHandler */
     //    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     $forum       = $topicObject->getVar('forum_id');
     $forumObject = $forumHandler->get($forum);

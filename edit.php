@@ -10,7 +10,30 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Category,
+    CategoryHandler,
+    Forum,
+    ForumHandler,
+    KarmaHandler,
+    OnlineHandler,
+    PostHandler,
+    StatsHandler,
+    Topic,
+    TopicHandler,
+    Tree
+};
+/** @var Category $categories */
+/** @var CategoryHandler $categoryHandler */
+/** @var Forum $forumsObject */
+/** @var ForumHandler $forumHandler */
+/** @var KarmaHandler $karmaHandler */
+/** @var OnlineHandler $onlineHandler */
+/** @var Post $postObject */
+/** @var PostHandler $postHandler */
+/** @var StatsHandler $statsHandler */
+/** @var Topic $topicObject */
+/** @var TopicHandler $topicHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -30,7 +53,6 @@ if (!$topic_id && !$post_id) {
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
-/** @var Newbb\Post $postObject */
 $postObject  = $postHandler->get($post_id);
 $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
 $forumObject = $forumHandler->get($postObject->getVar('forum_id'));
@@ -39,7 +61,6 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }

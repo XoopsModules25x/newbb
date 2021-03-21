@@ -17,10 +17,15 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    TopicHandler,
+    ForumHandler
+};
 use XoopsModules\Xoopspoll;
 use XoopsModules\Xoopspoll\Constants;
 use XoopsModules\Xoopspoll\Helper;
+/** @var TopicHandler $topicHandler */
+/** @var ForumHandler $forumHandler */
 
 // rewrite by irmtfan and zyspec to accept xoopspoll 1.4 and all old xoopspoll and umfrage versions and all clones
 
@@ -52,7 +57,7 @@ $poll_id  = Request::getInt('poll_id', Request::getInt('poll_id', 0, 'GET'), 'PO
 $topic_id = Request::getInt('topic_id', Request::getInt('topic_id', 0, 'GET'), 'POST');
 
 // deal with permissions
-/** @var Newbb\TopicHandler $topicHandler */
+
 $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
 $topicObject  = $topicHandler->get($topic_id);
 // topic exist
@@ -62,7 +67,6 @@ if (is_object($topicObject)) {
     redirect_header(XOOPS_URL . '/index.php', 2, _MD_NEWBB_POLLMODULE_ERROR . ': ' . _MD_NEWBB_FORUMNOEXIST);
 }
 // forum access permission
-/** @var Newbb\ForumHandler $forumHandler */
 $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject  = $forumHandler->get($forum_id);
 if (!$forumHandler->getPermission($forumObject)) {
@@ -108,7 +112,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 if (is_object($GLOBALS['xoopsUser']) && !newbbIsAdmin($forumObject)) {
     $perm = false;
     if ($topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'addpoll')) {
-        if (('add' === $op || 'save' === $op || 'update' === $op) && !$topicObject->getVar('topic_haspoll')
+        if (in_array($op, ['add', 'save', 'update']) && !$topicObject->getVar('topic_haspoll')
             && ($GLOBALS['xoopsUser']->getVar('uid') == $topicObject->getVar('topic_poster'))) {
             $perm = true;
         } elseif (!empty($poll_id) && ($GLOBALS['xoopsUser']->getVar('uid') == $pollObject->getVar('user_id'))) {

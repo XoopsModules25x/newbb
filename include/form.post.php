@@ -17,13 +17,22 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper,
-    ModerateHandler
+use XoopsModules\Newbb\{
+    Forum,
+    Helper,
+    ModerateHandler,
+    Topic,
+    TopicHandler,
+    TypeHandler
 };
 use XoopsModules\Tag\FormTag;
 
+/** @var Forum $forumObject */
 /** @var Helper $helper */
 /** @var ModerateHandler $moderateHandler */
+/** @var TopicHandler $topicHandler */
+/** @var Topic $topicObject */
+/** @var TypeHandler $typeHandler */
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -104,7 +113,6 @@ foreach (
     ${$getstr} = Request::getString($getstr, (!empty(${$getstr}) ? ${$getstr} : ''), 'GET'); //isset($_GET[$getstr]) ? $_GET[$getstr] : ((!empty(${$getstr})) ? ${$getstr} : '');
 }
 
-/** @var Newbb\TopicHandler $topicHandler */
 $topicHandler = Helper::getInstance()->getHandler('Topic');
 $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
@@ -123,7 +131,6 @@ if (newbbIsAdmin($forumObject)
         && (0 == $topic_id
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
     $type_id = $topicHandler->get(@$topic_id, 'type_id');
-    /** @var Newbb\TypeHandler $typeHandler */
     $typeHandler = Helper::getInstance()->getHandler('Type');
     $types       = $typeHandler->getByForum($forumObject->getVar('forum_id'));
     if (!empty($types)) {

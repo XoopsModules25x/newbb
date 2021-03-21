@@ -11,6 +11,17 @@
 
 use Xmf\IPAddress;
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    Helper,
+    ForumHandler,
+    Post,
+    PostHandler
+};
+
+/** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
+/** @var Post $post */
 
 require_once __DIR__ . '/header.php';
 
@@ -143,8 +154,6 @@ if (!empty($moderate_count)) {
         'title'  => _DELETE,
     ];
     $xoopsTpl->assign('columnHeaders', $columnHeaders);
-
-    //    /** @var Newbb\ForumHandler $forumHandler */
     //    $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
     $forum_list = $forumHandler->getAll(null, ['forum_name'], false);
 

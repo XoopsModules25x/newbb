@@ -9,10 +9,17 @@
  * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{
+    Helper,
+    ForumHandler,
+    Post,
+    PostHandler
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
+/** @var PostHandler $postHandler */
+/** @var Post $post */
 
 // completely rewrite by irmtfan - remove hardcode database access, solve order issues, add post_text & topic_id, add highlight and reduce queries
 
@@ -51,7 +58,7 @@ function newbb_search(
         && 'newbb' === $GLOBALS['module']->getVar('dirname')) {
         $GLOBALS['xoopsModule'] = $GLOBALS['module'];
     }
-    /** @var Newbb\ForumHandler $forumHandler */
+
     $forumHandler = Helper::getInstance()->getHandler('Forum');
     $validForums  = $forumHandler->getIdsByValues($forums); // can we use view permission? $forumHandler->getIdsByValues($forums, "view")
 
@@ -123,14 +130,12 @@ function newbb_search(
     }
     $criteria->setOrder($order);
 
-    /** @var Newbb\PostHandler $postHandler */
     $postHandler = Helper::getInstance()->getHandler('Post');
     $posts       = $postHandler->getPostsByLimit($criteria, $limit, $offset);
 
     $ret = [];
     $i   = 0;
     foreach (array_keys($posts) as $id) {
-        /** @var Newbb\Post $post */
         $post                  = $posts[$id];
         $post_data             = $post->getPostBody();
         $ret[$i]['topic_id']   = $post->getVar('topic_id');

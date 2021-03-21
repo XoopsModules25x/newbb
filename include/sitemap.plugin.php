@@ -6,10 +6,15 @@
 
 // NewBB plugin: D.J., https://xoops.org.cn
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{
+    CategoryHandler,
+    Helper,
+    ForumHandler
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
+/** @var CategoryHandler $categoryHandler */
 
 /**
  * @return array
@@ -19,7 +24,6 @@ function b_sitemap_newbb()
     global $sitemap_configs;
     $sitemap = [];
 
-    /** @var Newbb\ForumHandler $forumHandler */
     $forumHandler = Helper::getInstance()->getHandler('Forum');
     /* Allowed forums */
     $forums_allowed = $forumHandler->getIdsByPermission();
@@ -69,7 +73,6 @@ function b_sitemap_newbb()
     }
 
     if ($sitemap_configs['show_subcategoris']) {
-        /** @var Newbb\CategoryHandler $categoryHandler */
         $categoryHandler = Helper::getInstance()->getHandler('Category');
         $categories      = [];
         $categories      = $categoryHandler->getByPermission('access', ['cat_id', 'cat_title'], false);

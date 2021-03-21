@@ -10,7 +10,12 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb;
+use XoopsModules\Newbb\{
+    Post,
+    PostHandler
+};
+/** @var Post $forumpost */
+/** @var PostHandler $postHandler */
 
 ob_start();
 require_once __DIR__ . '/header.php';
@@ -26,7 +31,7 @@ if (!$postId || !$attachId) {
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
-/** @var Newbb\Post $forumpost */
+
 $forumpost = $postHandler->get($postId);
 if (!$approved = $forumpost->getVar('approved')) {
     exit(_MD_NEWBB_NORIGHTTOVIEW);

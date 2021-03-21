@@ -10,6 +10,13 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Newbb\{
+    Helper,
+    OnlineHandler
+};
+
+/** @var Helper $helper */
+/** @var OnlineHandler $onlineHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -45,7 +52,6 @@ if (!$topicHandler->getPermission($forumObject, 0, 'post')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }

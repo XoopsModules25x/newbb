@@ -18,8 +18,16 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    Uploader
+    Uploader,
+    ForumHandler,
+    TopicHandler,
+    OnlineHandler,
+    PostHandler
 };
+/** @var ForumHandler $forumHandler */
+/** @var TopicHandler $topicHandler */
+/** @var OnlineHandler $onlineHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -44,11 +52,9 @@ if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
 
-/** @var Newbb\ForumHandler $forumHandler */
+
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-/** @var Newbb\TopicHandler $topicHandler */
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-/** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
 
 if (!empty($isedit) && $post_id > 0) {
@@ -66,7 +72,6 @@ if (!$forumHandler->getPermission($forumObject)) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }

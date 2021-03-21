@@ -26,6 +26,8 @@
 // ------------------------------------------------------------------------ //
 
 use Xmf\Request;
+use Xmf\Module\Admin;
+/** @var Admin $adminObject */
 
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');

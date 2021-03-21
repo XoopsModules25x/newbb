@@ -11,8 +11,10 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
+    OnlineHandler,
     TopicRenderer
 };
+/** @var OnlineHandler $onlineHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -61,7 +63,6 @@ if ($topic_renderer->userlevel < 2) { // irmtfan use userlevel
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init();
     $onlineHandler->render($xoopsTpl);

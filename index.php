@@ -11,10 +11,16 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{Helper,
-    ObjectTree
+    ForumHandler,
+    ObjectTree,
+    OnlineHandler,
+    UserstatsHandler
 };
 
 /** @var Helper $helper */
+/** @var OnlineHandler $onlineHandler */
+/** @var ForumHandler $forumHandler */
+/** @var UserstatsHandler $userstatsHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -78,12 +84,10 @@ $xoopsTpl->assign('xoops_pagetitle', $xoops_pagetitle);
 $xoopsTpl->assign('forum_index_title', $forum_index_title);
 //if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
 if (!empty($GLOBALS['xoopsModuleConfig']['wol_enabled'])) {
-    //    /** @var Newbb\OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init();
     $xoopsTpl->assign('online', $onlineHandler->showOnline());
 }
-/** @var Newbb\ForumHandler $forumHandler */
 $forumHandler = Helper::getInstance()->getHandler('Forum');
 ///** @var Newbb\PostHandler $postHandler */
 //$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
@@ -237,7 +241,6 @@ $xoopsTpl->assign(
 if (!empty($GLOBALS['xoopsModuleConfig']['statistik_enabled'])) {
     $userstats = [];
     if (is_object($GLOBALS['xoopsUser'])) {
-        //        /** @var Newbb\UserstatsHandler $userstatsHandler */
         //        $userstatsHandler         = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Userstats');
         $userstats_row            = $userstatsHandler->getStats($GLOBALS['xoopsUser']->getVar('uid'));
         $userstats['topics']      = sprintf(_MD_NEWBB_USER_TOPICS, (int)(@$userstats_row['user_topics']));

@@ -16,10 +16,12 @@
  * @author      XOOPS Development Team
  */
 
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    TypeHandler
 };
 
 /** @var Helper $helper */
+/** @var TypeHandler $typeHandler */
 
 // irmtfan use full path because block maybe used outside newbb
 
@@ -150,7 +152,6 @@ function b_newbb_show($options)
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
-        /** @var Newbb\TypeHandler $typeHandler */
         $typeHandler = Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
@@ -320,7 +321,6 @@ function b_newbb_topic_show($options)
     require_once dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
-        /** @var Newbb\TypeHandler $typeHandler */
         $typeHandler = Helper::getInstance()->getHandler('Type');
         $type_list   = $typeHandler->getList(new \Criteria('type_id', '(' . implode(', ', array_keys($types)) . ')', 'IN'));
     }
