@@ -797,13 +797,27 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
         }
 
+//        $forums_id = [];
+//        foreach (\array_keys($sub_forums) as $id) {
+//            if (empty($sub_forums[$id])) {
+//                continue;
+//            }
+//            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
+//        }
+
+
         $forums_id = [];
         foreach (\array_keys($sub_forums) as $id) {
             if (empty($sub_forums[$id])) {
                 continue;
             }
-            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
+            $forums_id[] = $sub_forums[$id]; // <- yes, we'll use a little bit more memory
         }
+        $forums_id = array_merge([], ...$forums_id); // the empty array covers cases when no loops were made
+
+
+
+
         if (!$forums_id) {
             return $stats;
         }
