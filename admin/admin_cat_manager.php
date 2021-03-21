@@ -152,7 +152,7 @@ switch ($op) {
         if (!$categoryHandler->insert($categoryObject)) {
             $message = _AM_NEWBB_DATABASEERROR;
         }
-        if (($cat_id == $categoryObject->getVar('cat_id')) && $cat_isNew) {
+        if ($cat_isNew && ($cat_id == $categoryObject->getVar('cat_id'))) {
             $categoryHandler->applyPermissionTemplate($categoryObject);
         }
         redirect_header('admin_cat_manager.php', 2, $message);

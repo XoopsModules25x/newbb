@@ -38,7 +38,7 @@ $topic_id = Request::getArray('topic_id', [], 'POST');
 $op = Request::getString('op', '', 'POST');
 $op = in_array($op, ['approve', 'delete', 'restore', 'move']) ? $op : '';
 
-if (0 === count($topic_id) || '' === $op) {
+if ('' === $op || 0 === count($topic_id)) {
     // irmtfan - issue with javascript:history.go(-1)
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 2, \_MD_NEWBB_NO_SELECTION);
 }

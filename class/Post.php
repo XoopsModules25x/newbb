@@ -215,8 +215,8 @@ class Post extends \XoopsObject
                 }
                 $file_size = @\filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = \number_format($file_size / 1024, 2) . ' KB';
-                if (\in_array(mb_strtolower($file_extension), $image_extensions)
-                    && $GLOBALS['xoopsModuleConfig']['media_allowed']) {
+                if ($GLOBALS['xoopsModuleConfig']['media_allowed']
+                    && \in_array(mb_strtolower($file_extension), $image_extensions)) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . \newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
@@ -289,8 +289,9 @@ class Post extends \XoopsObject
     {
         $edit_user = '';
         if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit'])
+            || $this->getVar('approved') < 1
             || (\time() - $this->getVar('post_time')) < $GLOBALS['xoopsModuleConfig']['recordedit_timelimit'] * 60
-            || $this->getVar('approved') < 1) {
+            ) {
             return true;
         }
         if (\is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
@@ -382,7 +383,7 @@ class Post extends \XoopsObject
         $post               = [];
         $post['attachment'] = false;
         $post_text          = \newbbDisplayTarea($this->vars['post_text']['value'], $this->getVar('dohtml'), $this->getVar('dosmiley'), $this->getVar('doxcode'), $this->getVar('doimage'), $this->getVar('dobr'));
-        if (\newbbIsAdmin($this->getVar('forum_id')) || $this->checkIdentity()) {
+        if ($this->checkIdentity() || \newbbIsAdmin($this->getVar('forum_id'))) {
             $post['text'] = $post_text . '<br>' . $this->displayAttachment();
         } elseif ($newbbConfig['enable_karma'] && $this->getVar('post_karma') > $user_karma) {
             $post['text'] = \sprintf(\_MD_NEWBB_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma'));
@@ -546,8 +547,7 @@ class Post extends \XoopsObject
         $thread_buttons = [];
         $mod_buttons    = [];
 
-        if ($isAdmin && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') !== $this->getVar('uid'))
-            && $this->getVar('uid') > 0) {
+        if ($isAdmin && $this->getVar('uid') > 0 && ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->getVar('uid') !== $this->getVar('uid'))) {
             $mod_buttons['bann']['image']    = \newbbDisplayImage('p_bann', \_MD_NEWBB_SUSPEND_MANAGEMENT);
             $mod_buttons['bann']['link']     = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/moderate.php?forum=' . $forum_id . '&amp;uid=' . $this->getVar('uid');
             $mod_buttons['bann']['name']     = \_MD_NEWBB_SUSPEND_MANAGEMENT;
