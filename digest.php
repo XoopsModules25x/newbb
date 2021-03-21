@@ -28,6 +28,5 @@ if (0 == $GLOBALS['xoopsModuleConfig']['email_digest']) {
 /** @var Newbb\DigestHandler $digestHandler */
 $digestHandler = Helper::getInstance()->getHandler('Digest');
 $msg           = $digestHandler->process();
-$msg           .= ob_get_contents();
-ob_end_clean();
+$msg           .= ob_get_clean();
 echo '<br>' . $msg;

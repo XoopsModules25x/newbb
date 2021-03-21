@@ -62,8 +62,7 @@ if ($down) {
     $forumpost->saveAttachment();
 }
 unset($forumpost);
-$msg = ob_get_contents();
-ob_end_clean();
+$msg = ob_get_clean();
 
 $xoopsLogger->activated = false;
 if (!empty($GLOBALS['xoopsModuleConfig']['download_direct'])) {
