@@ -59,7 +59,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
         if (!isset($this->_handler[$name])) {
 //            $className             = '\\XoopsModules\\Newbb\\Permission' . \ucfirst($name) . 'Handler';
 //            $this->_handler[$name] = new $className($this->db);
-            $this->_handler[$name] = $this->helper->getHandler('Permission'.ucfirst($name));
+            $this->_handler[$name] = $this->helper->getHandler('Permission' . \ucfirst($name));
         }
 
         return $this->_handler[$name];

@@ -264,7 +264,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
             } else {
                 $topic['uname'] = $topic['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'];
             }
-            $summary = Metagen::generateDescription($topic['post_text'], SUMMARY_LENGTH);
+            $summary = Metagen::generateDescription($topic['post_text'], \SUMMARY_LENGTH);
             $author  = $topic['uname'] . ' (' . \formatTimestamp($topic['topic_time']) . ')';
             $link    = XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/viewtopic.php?topic_id=' . $topic['topic_id'] . '&amp;forum=' . $topic['forum_id'];
             $title   = $topic['topic_title'];
