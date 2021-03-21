@@ -245,7 +245,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
     }
     if (isset($attachments_tmp) && count($attachments_tmp)) {
         foreach ($attachments_tmp as $key => $attach) {
-            if (rename(XOOPS_CACHE_PATH . '/' . $attachments_tmp[$key][0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attachments_tmp[$key][0]))) {
+            if (rename(XOOPS_CACHE_PATH . '/' . $attach[0], $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach[0]))) {
                 $postObject->setAttachment($attach[0], $attach[1], $attach[2]);
             }
         }
