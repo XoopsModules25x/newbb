@@ -46,13 +46,13 @@ if (Request::hasVar('submit', 'POST') && Request::getInt('expire', 0, 'POST')) {
         $mask       = '';
         $ipParts    = explode('/', $ipWithMask);
         $ip         = new IPAddress($ipParts[0]);
-        if (false === $ip->asReadable()) {
-            $ipWithMask = '';
-        } else {
+        if (false !== $ip->asReadable()) {
             $ipWithMask = $ip->asReadable();
             $mask       = empty($ipParts[1]) ? 0 : (int)$ipParts[1];
             $mask       = ($mask > ((4 === $ip->ipVersion()) ? 32 : 128) || $mask < 8) ? '' : $mask;
             $ipWithMask .= empty($mask) ? '' : '/' . $mask;
+        } else {
+            $ipWithMask = '';
         }
     }
 

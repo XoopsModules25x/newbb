@@ -214,15 +214,15 @@ switch ($op) {
             $desc_tarea = new \XoopsFormTextArea(_MD_NEWBB_POLL_POLLDESC, 'description', $pollObject->getVar('description', 'E'));
             $poll_form->addElement($desc_tarea);
             $date = formatTimestamp($pollObject->getVar('end_time'), 'Y-m-d H:i:s'); // important "Y-m-d H:i:s" use in jdf function
-            if (!$pollObject->hasExpired()) {
-                $expire_text = new \XoopsFormText(_MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '</small>', 'end_time', 20, 19, $date);
-                $poll_form->addElement($expire_text);
-            } else {
+            if ($pollObject->hasExpired()) {
                 // irmtfan full URL - add topic_id
                 $restart_label = new \XoopsFormLabel(
                     _MD_NEWBB_POLL_EXPIRATION, sprintf(_MD_NEWBB_POLL_EXPIREDAT, $date) . "<br><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/polls.php?op=restart&amp;poll_id={$poll_id}&amp;topic_id={$topic_id}'>" . _MD_NEWBB_POLL_RESTART . '</a>'
                 );
                 $poll_form->addElement($restart_label);
+            } else {
+                $expire_text = new \XoopsFormText(_MD_NEWBB_POLL_EXPIRATION . '<br><small>' . _MD_NEWBB_POLL_FORMAT . '<br>' . sprintf(_MD_NEWBB_POLL_CURRENTTIME, formatTimestamp(time(), 'Y-m-d H:i:s')) . '</small>', 'end_time', 20, 19, $date);
+                $poll_form->addElement($expire_text);
             }
             $weight_text = new \XoopsFormText(_MD_NEWBB_POLL_DISPLAYORDER, 'weight', 6, 5, $pollObject->getVar('weight'));
             $poll_form->addElement($weight_text);
@@ -346,10 +346,10 @@ switch ($op) {
             $topicObject->setVar('topic_haspoll', 1);
             $topicObject->setVar('poll_id', $new_poll_id);
             $success = $topicHandler->insert($topicObject);
-            if (!$success) {
-                xoops_error($topicHandler->getHtmlErrors());
-            } else {
+            if ($success) {
                 redirect_header("viewtopic.php?topic_id={$topic_id}", 2, _MD_NEWBB_POLL_DBUPDATED);
+            } else {
+                xoops_error($topicHandler->getHtmlErrors());
             }
             break; // op: save
         }
@@ -512,10 +512,10 @@ switch ($op) {
         $topicObject->setVar('topic_haspoll', 1);
         $topicObject->setVar('poll_id', $pollObject->getVar('poll_id'));
         $success = $topicHandler->insert($topicObject);
-        if (!$success) {
-            xoops_error($topicHandler->getHtmlErrors());
-        } else {
+        if ($success) {
             redirect_header("viewtopic.php?topic_id={$topic_id}", 2, _MD_NEWBB_POLL_DBUPDATED);
+        } else {
+            xoops_error($topicHandler->getHtmlErrors());
         }
         break; // op: save | update
     case 'addmore':

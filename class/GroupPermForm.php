@@ -72,14 +72,14 @@ class GroupPermForm extends \XoopsGroupPermForm
         foreach (\array_keys($elements) as $i) {
             if (!\is_object($elements[$i])) {
                 $ret .= $elements[$i];
-            } elseif (!$elements[$i]->isHidden()) {
+            } elseif ($elements[$i]->isHidden()) {
+                $hidden .= $elements[$i]->render();
+            } else {
                 $ret .= "<tr valign='top' align='left'><td class='head'>" . $elements[$i]->getCaption();
                 if ('' !== $elements[$i]->getDescription()) {
                     $ret .= '<br><br><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= "</td>\n<td class='even' style='text-align:center;'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
-            } else {
-                $hidden .= $elements[$i]->render();
             }
         }
         $ret .= "</table>$hidden</form>";

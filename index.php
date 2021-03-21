@@ -44,17 +44,17 @@ $viewcat = Request::getInt('cat', 0, 'GET'); //TODO mb check if this is GET or P
 //$categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 
 $categories = [];
-if (!$viewcat) {
-    $categories        = $categoryHandler->getByPermission('access', null, false);
-    $forum_index_title = '';
-    $xoops_pagetitle   = $xoopsModule->getVar('name');
-} else {
+if ($viewcat) {
     $categoryObject = $categoryHandler->get($viewcat);
     if ($categoryHandler->getPermission($categoryObject)) {
         $categories[$viewcat] = $categoryObject->getValues();
     }
     $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
     $xoops_pagetitle   = $categoryObject->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
+} else {
+    $categories        = $categoryHandler->getByPermission('access', null, false);
+    $forum_index_title = '';
+    $xoops_pagetitle   = $xoopsModule->getVar('name');
 }
 
 if (0 === count($categories)) {

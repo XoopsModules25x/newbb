@@ -68,7 +68,10 @@ if ($pollModuleHandler->getVar('version') >= 201) {
         } else {
             $optionId = Request::getInt('option_id', 0, 'POST');
         }
-        if (!$pollObject->hasExpired()) {
+        if ($pollObject->hasExpired()) {
+            /* poll has expired so just show the results */
+            $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . 'SORRYEXPIRED');
+        } else {
             $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_MUSTLOGIN');
             //@todo:: add $url to all redirects
             //            $url = $GLOBALS['xoops']->buildUrl("index.php", array('poll_id' => $poll_id));
@@ -100,9 +103,6 @@ if ($pollModuleHandler->getVar('version') >= 201) {
             } else {
                 $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_CANNOTVOTE');
             }
-        } else {
-            /* poll has expired so just show the results */
-            $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . 'SORRYEXPIRED');
         }
     } else {
         $msg = constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_ERROR_INVALID_POLLID');

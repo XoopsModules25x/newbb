@@ -98,12 +98,12 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             if (count($_value) > 0) {
                 foreach ($_value as $string) {
                     $sep = mb_strpos($string, '|');
-                    if (false === $sep) {
-                        $value[] = $string;
-                    } else {
+                    if (false !== $sep) {
                         $key         = mb_substr($string, 0, $sep);
                         $val         = mb_substr($string, $sep + 1);
                         $value[$key] = $val;
+                    } else {
+                        $value[] = $string;
                     }
                 }
             }

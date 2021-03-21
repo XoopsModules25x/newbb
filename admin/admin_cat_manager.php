@@ -61,15 +61,15 @@ function editCategory(\XoopsObject $categoryObject = null)
     $groups_cat_access = null;
     require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-    if (!$categoryObject->isNew()) {
-        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
-    } else {
+    if ($categoryObject->isNew()) {
         $sform = new \XoopsThemeForm(_AM_NEWBB_CREATENEWCATEGORY, 'op', xoops_getenv('SCRIPT_NAME'));
         $categoryObject->setVar('cat_title', '');
         $categoryObject->setVar('cat_image', '');
         $categoryObject->setVar('cat_description', '');
         $categoryObject->setVar('cat_order', 0);
         $categoryObject->setVar('cat_url', 'https://xoops.org/modules/newbb/ newBB Support');
+    } else {
+        $sform = new \XoopsThemeForm(_AM_NEWBB_EDITCATEGORY . ' ' . $categoryObject->getVar('cat_title'), 'op', xoops_getenv('SCRIPT_NAME'));
     }
 
     $sform->addElement(new \XoopsFormText(_AM_NEWBB_SETCATEGORYORDER, 'cat_order', 5, 10, $categoryObject->getVar('cat_order')), false);

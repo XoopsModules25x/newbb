@@ -418,43 +418,43 @@ if ($topicObject->getVar('approved') > 0) {
         'name'  => _MD_NEWBB_DELETETOPIC,
         'image' => $ad_delete,
     ];
-    if (!$topicObject->getVar('topic_status')) {
-        $admin_actions['lock'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=lock&amp;topic_id=' . $topic_id,
-            'image' => $ad_lock,
-            'name'  => _MD_NEWBB_LOCKTOPIC,
-        ];
-    } else {
+    if ($topicObject->getVar('topic_status')) {
         $admin_actions['unlock'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=unlock&amp;topic_id=' . $topic_id,
             'image' => $ad_unlock,
             'name'  => _MD_NEWBB_UNLOCKTOPIC,
         ];
-    }
-    if (!$topicObject->getVar('topic_sticky')) {
-        $admin_actions['sticky'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=sticky&amp;topic_id=' . $topic_id,
-            'image' => $ad_sticky,
-            'name'  => _MD_NEWBB_STICKYTOPIC,
-        ];
     } else {
+        $admin_actions['lock'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=lock&amp;topic_id=' . $topic_id,
+            'image' => $ad_lock,
+            'name'  => _MD_NEWBB_LOCKTOPIC,
+        ];
+    }
+    if ($topicObject->getVar('topic_sticky')) {
         $admin_actions['unsticky'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=unsticky&amp;topic_id=' . $topic_id,
             'image' => $ad_unsticky,
             'name'  => _MD_NEWBB_UNSTICKYTOPIC,
         ];
-    }
-    if (!$topicObject->getVar('topic_digest')) {
-        $admin_actions['digest'] = [
-            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=digest&amp;topic_id=' . $topic_id,
-            'image' => $ad_digest,
-            'name'  => _MD_NEWBB_DIGESTTOPIC,
-        ];
     } else {
+        $admin_actions['sticky'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=sticky&amp;topic_id=' . $topic_id,
+            'image' => $ad_sticky,
+            'name'  => _MD_NEWBB_STICKYTOPIC,
+        ];
+    }
+    if ($topicObject->getVar('topic_digest')) {
         $admin_actions['undigest'] = [
             'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=undigest&amp;topic_id=' . $topic_id,
             'image' => $ad_undigest,
             'name'  => _MD_NEWBB_UNDIGESTTOPIC,
+        ];
+    } else {
+        $admin_actions['digest'] = [
+            'link'  => XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/topicmanager.php?mode=digest&amp;topic_id=' . $topic_id,
+            'image' => $ad_digest,
+            'name'  => _MD_NEWBB_DIGESTTOPIC,
         ];
     }
     // if the topic is pending/deleted then restore/approve

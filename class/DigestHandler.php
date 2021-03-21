@@ -120,12 +120,12 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MAX(digest_time) AS last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
-        if (!$result) {
-            $this->last_digest = 0;
-            // echo "<br>no data:".$query;
-        } else {
+        if ($result) {
             $array             = $this->db->fetchArray($result);
             $this->last_digest = $array['last_digest'] ?? 0;
+        } else {
+            $this->last_digest = 0;
+            // echo "<br>no data:".$query;
         }
     }
 

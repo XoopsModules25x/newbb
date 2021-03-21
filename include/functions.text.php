@@ -115,7 +115,9 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
 
     function newbb_str2array($str)
     {
-        if (!is_array($str)) {
+        if (is_array($str)) {
+            return $str;
+        } else {
             // split the phrase by any number of commas or space characters,
             // which include " ", \r, \t, \n and \f
             $temp_str = preg_split('/[\s,]+/', $str);
@@ -125,8 +127,6 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
             }
 
             return $strarray;
-        } else {
-            return $str;
         }
     }
 }

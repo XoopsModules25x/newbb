@@ -187,7 +187,12 @@ $cacheHelper = Utility::cleanCache();
  */
 function return_bytes($sizeAsString, $b = false)
 {
-    if (false === $b) {
+    if (false !== $b) {
+        $base   = log($sizeAsString) / log(1024);
+        $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
+
+        return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
+    } else {
         switch (mb_substr($sizeAsString, -1)) {
             case 'M':
             case 'm':
@@ -201,10 +206,5 @@ function return_bytes($sizeAsString, $b = false)
             default:
                 return $sizeAsString;
         }
-    } else {
-        $base   = log($sizeAsString) / log(1024);
-        $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
-
-        return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
     }
 }

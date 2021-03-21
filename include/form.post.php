@@ -213,12 +213,12 @@ if (is_object($GLOBALS['xoopsUser']) && 1 == $GLOBALS['xoopsModuleConfig']['allo
     $options_tray->addElement($noname_checkbox);
 }
 
-if (!$nohtml) {
+if ($nohtml) {
+    $forum_form->addElement(new \XoopsFormHidden('dohtml', 0));
+} else {
     $html_checkbox = new \XoopsFormCheckBox('', 'dohtml', $dohtml);
     $html_checkbox->addOption(1, _MD_NEWBB_DOHTML);
     $options_tray->addElement($html_checkbox);
-} else {
-    $forum_form->addElement(new \XoopsFormHidden('dohtml', 0));
 }
 
 $smiley_checkbox = new \XoopsFormCheckBox('', 'dosmiley', $dosmiley);
@@ -229,12 +229,12 @@ $xcode_checkbox = new \XoopsFormCheckBox('', 'doxcode', $doxcode);
 $xcode_checkbox->addOption(1, _MD_NEWBB_DOXCODE);
 $options_tray->addElement($xcode_checkbox);
 
-if (!$nohtml) {
+if ($nohtml) {
+    $forum_form->addElement(new \XoopsFormHidden('dobr', 1));
+} else {
     $br_checkbox = new \XoopsFormCheckBox('', 'dobr', $dobr);
     $br_checkbox->addOption(1, _MD_NEWBB_DOBR);
     $options_tray->addElement($br_checkbox);
-} else {
-    $forum_form->addElement(new \XoopsFormHidden('dobr', 1));
 }
 
 if (is_object($GLOBALS['xoopsUser']) && $topicHandler->getPermission($forumObject, $topic_status, 'signature')) {

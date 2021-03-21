@@ -83,10 +83,10 @@ class PermissionForumHandler extends PermissionHandler
             && !\newbbIsAdmin($id)) {
             /** @var Newbb\ModerateHandler $moderateHandler */
             $moderateHandler = Helper::getInstance()->getHandler('Moderate');
-            if (!$moderateHandler->verifyUser($uid, '', $id)) {
-                $suspension[$uid][$ip][$id] = 1;
-            } else {
+            if ($moderateHandler->verifyUser($uid, '', $id)) {
                 $suspension[$uid][$ip][$id] = 0;
+            } else {
+                $suspension[$uid][$ip][$id] = 1;
             }
         }
 

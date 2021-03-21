@@ -39,7 +39,10 @@ require_once __DIR__ . '/header.php';
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if (!Request::getString('post_data', '', 'POST')) {
+if (Request::getString('post_data', '', 'POST')) {
+    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST'), true));
+    $isPost    = 1;
+} else {
     $forum    = Request::getInt('forum', 0, 'GET');
     $topic_id = Request::getInt('topic_id', 0, 'GET');
     $post_id  = Request::getInt('post_id', 0, 'GET');
@@ -92,9 +95,6 @@ if (!Request::getString('post_data', '', 'POST')) {
     if (!$topicHandler->getPermission($forumObject, $topicObject->getVar('topic_status'), 'print')) {
         exit(_MD_NEWBB_NORIGHTTOPRINT);
     }
-} else {
-    $post_data = unserialize(base64_decode(Request::getString('post_data', '', 'POST'), true));
-    $isPost    = 1;
 }
 
 xoops_header(false);
