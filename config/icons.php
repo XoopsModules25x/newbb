@@ -3,7 +3,7 @@
 use Xmf\Module\Admin;
 
 $pathIcon16    = Admin::iconUrl('', 16);
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(\dirname(__DIR__));
 
 return (object)[
     'name'  => mb_strtoupper($moduleDirName) . ' IconConfigurator',

@@ -29,11 +29,16 @@
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 
+use Xmf\Request;
 use  Xmf\Module\Admin;
-use XoopsModules\Newbb\{Utility
+use XoopsModules\Newbb\{
+    Common\TestdataButtons,
+    Helper,
+    Utility
 };
-
 /** @var Admin $adminObject */
+/** @var Helper $helper */
+/** @var Utility $utility */
 
 require_once __DIR__ . '/admin_header.php';
 //require_once  dirname(__DIR__) . '/class/Utility.php';
@@ -162,6 +167,23 @@ foreach ($uploadFolders as $value) {
 }
 
 $adminObject->displayNavigation(basename(__FILE__));
+
+//------------- Test Data Buttons ----------------------------
+if ($helper->getConfig('displaySampleButton')) {
+    TestdataButtons::loadButtonConfig($adminObject);
+    $adminObject->displayButton('left', '');;
+}
+$op = Request::getString('op', 0, 'GET');
+switch ($op) {
+    case 'hide_buttons':
+        TestdataButtons::hideButtons();
+        break;
+    case 'show_buttons':
+        TestdataButtons::showButtons();
+        break;
+}
+//------------- End Test Data Buttons ----------------------------
+
 $adminObject->displayIndex();
 
 require_once __DIR__ . '/admin_footer.php';
