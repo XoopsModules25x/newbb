@@ -19,7 +19,7 @@ class KarmaHandler
      */
     public function getUserKarma($user = null)
     {
-        $user = (null === $user) ? $GLOBALS['xoopsUser'] : $user;
+        $user = $user ?? $GLOBALS['xoopsUser'];
 
         return $this->calculateUserKarma($user);
     }

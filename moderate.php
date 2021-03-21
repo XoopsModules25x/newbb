@@ -151,7 +151,7 @@ if (!empty($moderate_count)) {
     $columnRows = [];
     foreach (array_keys($moderateObjects) as $id) {
         // for anon, show ip instead
-        $row['uid']     = ($moderateObjects[$id]->getVar('uid') ? (isset($users[$moderateObjects[$id]->getVar('uid')]) ? $users[$moderateObjects[$id]->getVar('uid')] : $moderateObjects[$id]->getVar('uid')) : $moderateObjects[$id]->getVar('ip'));
+        $row['uid']     = ($moderateObjects[$id]->getVar('uid') ? ($users[$moderateObjects[$id]->getVar('uid')] ?? $moderateObjects[$id]->getVar('uid')) : $moderateObjects[$id]->getVar('ip'));
         $row['start']   = formatTimestamp($moderateObjects[$id]->getVar('mod_start'));
         $row['expire']  = formatTimestamp($moderateObjects[$id]->getVar('mod_end'));
         $row['forum']   = ($moderateObjects[$id]->getVar('forum_id') ? $forum_list[$moderateObjects[$id]->getVar('forum_id')]['forum_name'] : _ALL);
