@@ -20,7 +20,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{if $tagbar}>
+<{if $tagbar|default:''}>
     <div class="taglist" style="padding: 5px;">
         <{include file="db:tag_bar.tpl"}>
     </div>
@@ -68,8 +68,8 @@
     <{* modal for quickreply // *}>
     <div class="modal fade bs-example-modal-sm container" id="replyquick" tabindex="-1" role="dialog" aria-labelledby="replyquick">
         <div class="modal-dialog btn-bottom" role="document">
-            <div class="modal-content modal-body"><button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <{$quickreply.form}>
+            <div class="modal-content modal-body"><button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&amp;times;</span></button>
+                <{$quickreply.form|default:''}>
             </div>
         </div>
     </div>
@@ -116,11 +116,11 @@
 <br>
 <{* irmtfan add to not show polls in admin mode *}>
 <{if $mode lte 1}>
-    <{if $topic_poll}>
-        <{if $topic_pollresult}>
-            <{include file="db:newbb_poll_results.tpl" poll=$poll}>
+    <{if $topic_poll|default:''}>
+        <{if $topic_pollresult|default:''}>
+            <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
         <{else}>
-            <{include file="db:newbb_poll_view.tpl" poll=$poll}>
+            <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>
         <{/if}>
     <{/if}>
 <{/if}>
@@ -137,7 +137,7 @@
 </span>
     <{* irmtfan hardcode removed style="float: right; text-align:right;"" *}>
     <span class="icon_right">
-<{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
+<{$forum_reply}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
 </span>
 </div>
 <div class="clear"></div>
@@ -152,7 +152,7 @@
                     <option value="<{$act.link}>"><{$act.name}></option>
                 <{/foreach}>
             <{/if}>
-            <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
+            <{if $adminpoll_actions|default:''|is_array && count($adminpoll_actions) > 0 }>
                 <option value="">--------</option>
                 <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
                 <{foreach item=actpoll from=$adminpoll_actions}>
@@ -216,7 +216,7 @@
 <{* irmtfan remove here and move to the newbb_thread.tpl *}>
 <{*<{if $post_id == 0}><div id="aktuell"></div><{/if}> *}>
 
-<{foreach item=topic_post from=$topic_posts}>
+<{foreach item=topic_post from=$topic_posts|default:null}>
     <{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <br>
     <br>
@@ -265,7 +265,7 @@
 <br>
 
 <div class="left" style="padding: 5px;">
-    <{$forum_reply}>&nbsp;<{$forum_addpoll}>&nbsp;<{$forum_post_or_register}>
+    <{$forum_reply}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
 </div>
 <div class="clear"></div>
 <br>
@@ -290,7 +290,7 @@
 <div>
     <{* irmtfan hardcode removed style="float: left; text-align: left;" *}>
     <div class="icon_left">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:''}>
             <div style="font-size:x-small;"><{$perm}></div>
         <{/foreach}>
     </div>
@@ -300,7 +300,7 @@
             <input name="term" id="term" type="text" size="15">
             <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
             <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
-            <input type="hidden" name="since" id="since" value="<{$forum_since}>">
+            <input type="hidden" name="since" id="since" value="<{$forum_since|default:''}>">
             <input type="hidden" name="action" id="action" value="yes">
             <input type="hidden" name="searchin" id="searchin" value="both">
             <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
@@ -323,7 +323,7 @@ xoopsGetElementById('aktuell').scrollIntoView(true);
 <{* START irmtfan add scroll js function to scroll down to current post or top of the topic *}>
 <script type="text/javascript">
     if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
+        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');
         if (el) {
             el.scrollIntoView(true);
         }

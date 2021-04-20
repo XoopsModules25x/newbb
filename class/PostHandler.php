@@ -19,6 +19,8 @@ namespace XoopsModules\Newbb;
 
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
+/** @var TopicHandler $topicHandler */
+
 /**
  * Class PostHandler
  */
@@ -198,7 +200,6 @@ class PostHandler extends \XoopsPersistableObjectHandler
             $post->setVar('post_time', \time());
         }
 
-        /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
         $topic_id = $post->getVar('topic_id');

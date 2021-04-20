@@ -229,7 +229,7 @@ newbb_posts_text:
             attributes: ' text '
         -
             name: post_edit
-            attributes: ' text  NOT NULL '
+            attributes: ' text '
         -
             name: dohtml
             attributes: ' tinyint(1) unsigned  NOT NULL  DEFAULT ''0'' '
@@ -249,6 +249,9 @@ newbb_posts_text:
         PRIMARY:
             columns: post_id
             unique: true
+        search:
+            columns: post_text
+            unique: false
 newbb_topics:
     options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
     columns:
@@ -257,7 +260,7 @@ newbb_topics:
             attributes: ' int(8) unsigned  NOT NULL auto_increment'
         -
             name: topic_title
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: topic_poster
             attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
@@ -296,7 +299,7 @@ newbb_topics:
             attributes: ' tinyint(2)  NOT NULL  DEFAULT ''1'' '
         -
             name: poster_name
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: rating
             attributes: ' double(6,4)  NOT NULL  DEFAULT ''0.0000'' '
@@ -325,6 +328,9 @@ newbb_topics:
         PRIMARY:
             columns: topic_id
             unique: true
+        topic_digest:
+            columns: topic_digest
+            unique: false
         topic_forum:
             columns: 'topic_id, forum_id'
             unique: false
@@ -348,22 +354,32 @@ newbb_online:
     columns:
         -
             name: online_forum
-            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+            attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: online_topic
             attributes: ' int(8) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: online_uid
-            attributes: ' int(10) '
+            attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: online_uname
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: online_ip
-            attributes: ' varchar(32) '
+            attributes: ' varchar(45)  NOT NULL  DEFAULT '''' '
         -
             name: online_updated
-            attributes: ' int(14) '
+            attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
+    keys:
+        online_forum:
+            columns: online_forum
+            unique: false
+        online_topic:
+            columns: online_topic
+            unique: false
+        online_updated:
+            columns: online_updated
+            unique: false
 newbb_digest:
     options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
     columns:
@@ -403,13 +419,13 @@ newbb_report:
             attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: report_text
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: report_result
             attributes: ' tinyint(1) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: report_memo
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
     keys:
         post_id:
             columns: post_id
@@ -428,13 +444,13 @@ newbb_attachments:
             attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: name_saved
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: name_disp
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: mimetype
-            attributes: ' varchar(255) '
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
         -
             name: online
             attributes: ' tinyint(1) unsigned  NOT NULL  DEFAULT ''1'' '
@@ -471,7 +487,7 @@ newbb_moderates:
             attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: ip
-            attributes: ' varchar(32)  NOT NULL  DEFAULT '''' '
+            attributes: ' varchar(45)  NOT NULL  DEFAULT '''' '
         -
             name: forum_id
             attributes: ' smallint(4) unsigned  NOT NULL  DEFAULT ''0'' '
@@ -633,7 +649,7 @@ newbb_user_stats:
     columns:
         -
             name: uid
-            attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '
+            attributes: ' mediumint(8) unsigned  NOT NULL  DEFAULT ''0'' '
         -
             name: user_topics
             attributes: ' int(10) unsigned  NOT NULL  DEFAULT ''0'' '

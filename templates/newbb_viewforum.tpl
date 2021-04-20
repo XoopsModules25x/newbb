@@ -13,7 +13,7 @@
         <{/if}>
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
-        <{if $forum_topictype}> <{$forum_topictype}> <{/if}>
+        <{if $forum_topictype|default:''}> <{$forum_topictype}> <{/if}>
         <{if $forum_topicstatus}> [<{$forum_topicstatus}>]
         <{else}> [
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_NEWBB_DIGEST}>"><{$smarty.const._MD_NEWBB_DIGEST}></a>
@@ -25,7 +25,7 @@
 <div class="clear"></div>
 <br>
 
-<{if $subforum}>
+<{if $subforum|default:''}>
     <{include file="db:newbb_viewforum_subforum.tpl"}>
     <br>
 <{/if}>
@@ -172,7 +172,7 @@
 
 
             <td>&nbsp;<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-                    <{$topic.topic_title}></a><{$topic.attachment}> <{$topic.topic_page_jump}>
+                    <{$topic.topic_title}></a><{$topic.attachment|default:''}> <{$topic.topic_page_jump}>
             </td>
 
 
@@ -272,7 +272,7 @@
 <div>
     <{* irmtfan hardcode removed  style="float: left; *}>
     <div class="floatleft">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:''}>
         <div style="font-size:x-small;"><{$perm}></div>
         <{/foreach}>
     </div>

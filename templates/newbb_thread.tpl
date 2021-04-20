@@ -1,14 +1,14 @@
 <{* START irmtfan assign forum_post_prefix smarty *}>
-<{if $forum_post_prefix === null }>
+<{if $forum_post_prefix|default:'' === null }>
     <{* change the value to what you prefer. even value="" (no prefix) is acceptable *}>
     <{assign var=forum_post_prefix value="forumpost"}>
     <{* it is the first time then add id=0 for recognizoing top of the topic to scroll when $post_id=0 (just $topic_id in the URL) *}>
     <div id="<{$forum_post_prefix}>0"></div>
 <{/if}>
 <{* END irmtfan assign forum_post_prefix smarty *}>
-<{* irmtfan removed
+<{* irmtfan removed  *}>
 <{*<{if $post_id == $topic_post.post_id}><div id="aktuell"></div><{/if}>*}>
- *}>
+
 <table class="outer" cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="border-bottom-width: 0;">
     <tr>
         <{* irmtfan hardcode removed align="left" *}>
@@ -25,7 +25,7 @@
             <div class="ThreadTitle">
                 <{if $topic_post.post_id > 0}>
                     <{* irmtfan add id for each post *}>
-                    <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>
+                    <a id="<{$forum_post_prefix|default:''}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_id}>">#<{$topic_post.post_no}></a>
                 <{/if}>
             </div>
         </th>
@@ -73,13 +73,13 @@
                             <{else}>
                                 0
                             <{/if}>
-                            <{if $topic_post.poster.digests gt 0}>
+                            <{if $topic_post.poster.digests|default:0 gt 0}>
                                 |
                                 <span class="comUserStatCaption"><{$smarty.const._MD_NEWBB_DIGESTS}>:</span>
                                 <{$topic_post.poster.digests}>
                             <{/if}>
                         </div>
-                        <{if $topic_post.poster.level}>
+                        <{if $topic_post.poster.level|default:''}>
                             <div class="comUserStat"><{$topic_post.poster.level}></div>
                         <{/if}>
                         <{if $topic_post.poster.status}>
