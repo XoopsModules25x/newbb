@@ -353,7 +353,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 }
             }
             // irmtfan - move here for both topics with and without pages
-             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $myrow['post_id'] . '#forumpost'. $myrow['post_id'] ."'>" . \newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $myrow['post_id'] . '#forumpost'. $myrow['post_id'] ."'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
@@ -813,7 +813,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
             $forums_id[] = $sub_forums[$id]; // <- yes, we'll use a little bit more memory
         }
-        $forums_id = array_merge([], ...$forums_id); // the empty array covers cases when no loops were made
+        $forums_id = \array_merge([], ...$forums_id); // the empty array covers cases when no loops were made
 
 
 
@@ -957,7 +957,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                     $_forum_data['forum_lastpost_subject'] = $subject;
                 }
                 // irmtfan - remove icon_path and use newbbDisplayImage
-                $_forum_data['forum_lastpost_icon'] = \newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST);
+                $_forum_data['forum_lastpost_icon'] = \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST);
                 // START irmtfan change the method to add read smarty
                 if (empty($forum_isread[$id])) {
                     $_forum_data['forum_folder'] = \newbbDisplayImage('forum_new', \_MD_NEWBB_NEWPOSTS);

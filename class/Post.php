@@ -268,7 +268,7 @@ class Post extends \XoopsObject
                                         . ': '
                                         . $att['numDownload'];
                 } else {
-                    $post_attachment .= _MD_NEWBB_SEENOTGUEST;
+                    $post_attachment .= \_MD_NEWBB_SEENOTGUEST;
                 }
                 $post_attachment .= '<br>';
             }

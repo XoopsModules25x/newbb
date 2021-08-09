@@ -1,0 +1,420 @@
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: category_access
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: category_access
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: category_access
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_access
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_addpoll
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_addpoll
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_addpoll
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_attach
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_attach
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_attach
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_attach
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_delete
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_delete
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_delete
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_delete
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_edit
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_html
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_html
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_html
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_html
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_noapprove
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_pdf
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_pdf
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_pdf
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_pdf
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_post
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_print
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_reply
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_signature
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_type
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_view
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_vote
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '1804'
+    gperm_name: forum_vote
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_vote
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '1804'
+    gperm_name: forum_vote
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_vote
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '1804'
+    gperm_name: forum_vote

@@ -58,8 +58,8 @@ function b_newbb_show($options)
     global $accessForums;
     global $xoopsLogger;
 
-    require_once dirname(__DIR__) . '/include/functions.config.php';
-    require_once dirname(__DIR__) . '/include/functions.time.php';
+    require_once \dirname(__DIR__) . '/include/functions.config.php';
+    require_once \dirname(__DIR__) . '/include/functions.time.php';
 
     $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
@@ -67,7 +67,7 @@ function b_newbb_show($options)
     $order         = '';
     $extraCriteria = '';
     if (!empty($options[2])) {
-        //require_once  dirname(__DIR__) . '/include/functions.time.php';
+        //require_once  \dirname(__DIR__) . '/include/functions.time.php';
         $extraCriteria .= ' AND p.post_time>' . (time() - newbbGetSinceTime($options[2]));
     }
     switch ($options[0]) {
@@ -148,7 +148,7 @@ function b_newbb_show($options)
         return $block;
     }
 
-    require_once dirname(__DIR__) . '/include/functions.user.php';
+    require_once \dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     if (count($types) > 0) {
@@ -231,7 +231,7 @@ function b_newbb_show($options)
 function b_newbb_topic_show($options)
 {
     global $accessForums;
-    require_once dirname(__DIR__) . '/include/functions.time.php';
+    require_once \dirname(__DIR__) . '/include/functions.time.php';
     $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
     $i             = 0;
@@ -318,7 +318,7 @@ function b_newbb_topic_show($options)
     if (count($rows) < 1) {
         return $block;
     }
-    require_once dirname(__DIR__) . '/include/functions.user.php';
+    require_once \dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
     if (count($types) > 0) {
         $typeHandler = Helper::getInstance()->getHandler('Type');
@@ -395,7 +395,7 @@ function b_newbb_post_show($options)
     global $accessForums;
     global $newbbConfig;
 
-    require_once dirname(__DIR__) . '/include/functions.time.php';
+    require_once \dirname(__DIR__) . '/include/functions.time.php';
     $myts          = \MyTextSanitizer::getInstance();
     $block         = [];
     $i             = 0;
@@ -475,7 +475,7 @@ function b_newbb_post_show($options)
     if (count($rows) < 1) {
         return $block;
     }
-    require_once dirname(__DIR__) . '/include/functions.user.php';
+    require_once \dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname'], true);
 
     foreach ($rows as $arr) {
@@ -567,7 +567,7 @@ function b_newbb_author_show($options)
     $extraCriteria = '';
     $time_criteria = null;
     if (!empty($options[2])) {
-        require_once dirname(__DIR__) . '/include/functions.time.php';
+        require_once \dirname(__DIR__) . '/include/functions.time.php';
         $time_criteria = time() - newbbGetSinceTime($options[2]);
         $extraCriteria = ' AND topic_time > ' . $time_criteria;
     }
@@ -636,7 +636,7 @@ function b_newbb_author_show($options)
     if (count($author) < 1) {
         return $block;
     }
-    require_once dirname(__DIR__) . '/include/functions.user.php';
+    require_once \dirname(__DIR__) . '/include/functions.user.php';
     $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
     foreach (array_keys($author) as $uid) {
         $author[$uid]['name'] = htmlspecialchars($author_name[$uid], ENT_QUOTES | ENT_HTML5);
@@ -654,7 +654,7 @@ function b_newbb_author_show($options)
  */
 function b_newbb_edit($options)
 {
-    require_once dirname(__DIR__) . '/include/functions.forum.php';
+    require_once \dirname(__DIR__) . '/include/functions.forum.php';
 
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
@@ -714,7 +714,7 @@ function b_newbb_edit($options)
  */
 function b_newbb_topic_edit($options)
 {
-    require_once dirname(__DIR__) . '/include/functions.forum.php';
+    require_once \dirname(__DIR__) . '/include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='time'";
     if ('time' === $options[0]) {
@@ -794,7 +794,7 @@ function b_newbb_topic_edit($options)
  */
 function b_newbb_post_edit($options)
 {
-    require_once dirname(__DIR__) . '/include/functions.forum.php';
+    require_once \dirname(__DIR__) . '/include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='title'";
     if ('title' === $options[0]) {
@@ -858,7 +858,7 @@ function b_newbb_post_edit($options)
  */
 function b_newbb_author_edit($options)
 {
-    require_once dirname(__DIR__) . '/include/functions.forum.php';
+    require_once \dirname(__DIR__) . '/include/functions.forum.php';
     $form = _MB_NEWBB_CRITERIA . "<select name='options[0]'>";
     $form .= "<option value='post'";
     if ('post' === $options[0]) {

@@ -29,10 +29,10 @@ use XoopsModules\Newbb\{Helper,
 /** @var Utility $utility */
 /** @var Admin $adminObject */
 
-require_once dirname(__DIR__) . '/preloads/autoloader.php';
+require_once \dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName      = \basename(\dirname(__DIR__));
-$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper  = Helper::getInstance();

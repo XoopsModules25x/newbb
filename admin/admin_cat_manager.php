@@ -28,7 +28,7 @@ use XoopsModules\Newbb\{
 /** @var CategoryHandler $categoryHandler */
 
 require_once __DIR__ . '/admin_header.php';
-require_once dirname(__DIR__) . '/include/functions.render.php';
+require_once \dirname(__DIR__) . '/include/functions.render.php';
 
 xoops_cp_header();
 

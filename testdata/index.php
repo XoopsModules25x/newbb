@@ -25,8 +25,8 @@ use XoopsModules\Newbb\{
 /** @var Utility $utility */
 /** @var Configurator $configurator */
 
-require dirname(__DIR__, 3) . '/include/cp_header.php';
-require dirname(__DIR__) . '/preloads/autoloader.php';
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = Request::getCmd('op', '');
 
@@ -91,7 +91,7 @@ function loadSampleData()
 
     //  ---  COPY test folder files ---------------
     if (is_array($configurator->copyTestFolders) && count($configurator->copyTestFolders) > 0) {
-        //        $file =  dirname(__DIR__) . '/testdata/images/';
+        //        $file =  \dirname(__DIR__) . '/testdata/images/';
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];

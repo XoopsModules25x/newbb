@@ -52,7 +52,7 @@ class TypeHandler extends \XoopsPersistableObjectHandler
                . '         ORDER BY l.type_order ASC';
 
         $result = $this->db->query($sql);
-        if ($result) {
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'type_id'    => $myrow[$this->keyName],

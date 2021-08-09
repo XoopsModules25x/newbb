@@ -76,7 +76,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $oldversion = null)
     array_map('\unlink', glob(dirname(__DIR__) . '/docs/changelog-rev*.txt', GLOB_NOSORT));
 
     if (!empty($newbbConfig['syncOnUpdate'])) {
-        require_once dirname(__DIR__) . '/include/functions.recon.php';
+        require_once \dirname(__DIR__) . '/include/functions.recon.php';
         newbbSynchronization();
     }
 
