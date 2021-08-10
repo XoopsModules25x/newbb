@@ -1,9 +1,9 @@
 <?php
 
-if (defined('NEWBB_ADMIN_DEFINED')) {
-    return;
-}
-define('NEWBB_ADMIN_DEFINED', true);
+//if (defined('NEWBB_ADMIN_DEFINED')) {
+//    return;
+//}
+//define('NEWBB_ADMIN_DEFINED', true);
 
 //%%%%%%    File Name  index.php       %%%%%
 define('_AM_NEWBB_FORUMCONF', 'Forum Configuration');
