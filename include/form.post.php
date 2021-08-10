@@ -21,6 +21,8 @@ use XoopsModules\Newbb\{
     Forum,
     Helper,
     ModerateHandler,
+    Post,
+    PostHandler,
     Topic,
     TopicHandler,
     TypeHandler
@@ -33,6 +35,8 @@ use XoopsModules\Tag\FormTag;
 /** @var TopicHandler $topicHandler */
 /** @var Topic $topicObject */
 /** @var TypeHandler $typeHandler */
+/** @var Post $postObject */
+/** @var PostHandler $postHandler */
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -77,6 +81,7 @@ $editby = false;
 if ($topicObject->isNew()) {
     $form_title = _MD_NEWBB_POSTNEW;
 } elseif ($postObject->isNew()) {
+    /** @var Post $postParentObject */
     if (null === $postParentObject) {
         $postParentObject = $postHandler->get($pid);
     }
