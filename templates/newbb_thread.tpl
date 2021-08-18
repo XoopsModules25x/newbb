@@ -33,7 +33,7 @@
     <tr>
         <{if $topic_post.poster.uid gt -1}>
         <td width="20%" class="odd" rowspan="2" valign="top">
-            <{if $topic_post.poster.uid != 0}>
+            <{if $topic_post.poster.uid|default:0 != 0}>
                 <{* START hacked by irmtfan rank_title -> rank.title *}>
                 <div class="comUserRankText"><{if $topic_post.poster.rank.title !=""}> <{$topic_post.poster.rank.title}><br><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>" ><{/if}></div>
                 <{* END hacked by irmtfan *}>

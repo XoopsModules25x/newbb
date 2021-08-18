@@ -11,7 +11,7 @@
     <managingEditor><{$rss.channel_editor}></managingEditor>
     <webMaster><{$rss.channel_webmaster}></webMaster>
     <language><{$rss.channel_language}></language>
-    <{if $rss.image_url != ""}>
+    <{if $rss.image_url|default:'' != ''}>
     <image>
       <title><{$rss.image_title}></title>
       <url><{$rss.image_url}></url>
