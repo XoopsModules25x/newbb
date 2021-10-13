@@ -12,10 +12,15 @@
 use Xmf\Request;
 use XoopsModules\Newbb\{
     OnlineHandler,
-    StatsHandler
+    StatsHandler,
+    Post
 };
 /** @var StatsHandler $statsHandler */
 /** @var OnlineHandler $onlineHandler */
+/** @var Post $postObject */
+/** @var ForumHandler $forumHandler */
+/** @var TopicHandler $topicHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -62,7 +67,6 @@ if (!$forumHandler->getPermission($forumObject)) {
 $isAdmin = newbbIsAdmin($forumObject);
 $uid     = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
-/** @var Post $postObject */
 $postObject   = $postHandler->get($post_id);
 $topic_status = $topic->getVar('topic_status');
 if (($postObject->checkIdentity() || $isAdmin) && $topicHandler->getPermission($topic->getVar('forum_id'), $topic_status, 'delete')) {

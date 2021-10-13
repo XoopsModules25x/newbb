@@ -10,10 +10,16 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper
+use XoopsModules\Newbb\{Helper,
+    ForumHandler,
+    PostHandler,
+    TopicHandler
 };
 
 /** @var Helper $helper */
+/** @var ForumHandler $forumHandler */
+/** @var TopicHandler $topicHandler */
+/** @var PostHandler $postHandler */
 
 require_once \dirname(__DIR__, 2) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
@@ -23,6 +29,10 @@ $moduleDirName = basename(__DIR__);
 $helper = Helper::getInstance();
 // Load language files
 $helper->loadLanguage('main');
+
+$forumHandler = Helper::getInstance()->getHandler('Forum');
+$topicHandler = Helper::getInstance()->getHandler('Topic');
+$postHandler = Helper::getInstance()->getHandler('Post');
 
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');

@@ -1,0 +1,18 @@
+-
+    read_id: '1'
+    uid: '1'
+    read_time: '1616345652'
+    read_item: '1'
+    post_id: '2'
+-
+    read_id: '2'
+    uid: '1'
+    read_time: '1616345676'
+    read_item: '2'
+    post_id: '3'
+-
+    read_id: '3'
+    uid: '1'
+    read_time: '1616345694'
+    read_item: '3'
+    post_id: '4'

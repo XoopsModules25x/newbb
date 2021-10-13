@@ -151,7 +151,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
         }
 
         //        if (!class_exists('IconHandler')) {
-        //            require_once dirname(__DIR__) . '/class/icon.php';
+        //            require_once \dirname(__DIR__) . '/class/icon.php';
         //        }
 
         $iconHandler           = IconHandler::getInstance();

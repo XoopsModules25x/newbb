@@ -1,0 +1,45 @@
+-
+    forum_id: '1'
+    forum_name: 'Forum Test'
+    forum_desc: 'Forum for test.'
+    parent_forum: '0'
+    forum_moderator: 'a:0:{}'
+    forum_topics: '2'
+    forum_posts: '2'
+    forum_last_post_id: '2'
+    cat_id: '1'
+    hot_threshold: '20'
+    forum_order: '99'
+    attach_maxkb: '100'
+    attach_ext: zip|jpg|gif|png
+    allow_polls: '0'
+-
+    forum_id: '2'
+    forum_name: zzzz
+    forum_desc: tnhsnthsnthnt
+    parent_forum: '1'
+    forum_moderator: 'a:0:{}'
+    forum_topics: '1'
+    forum_posts: '1'
+    forum_last_post_id: '3'
+    cat_id: '1'
+    hot_threshold: '20'
+    forum_order: '99'
+    attach_maxkb: '500'
+    attach_ext: zip|jpg|gif|png
+    allow_polls: '0'
+-
+    forum_id: '3'
+    forum_name: sss
+    forum_desc: 'thdnthd nthdn'
+    parent_forum: '2'
+    forum_moderator: 'a:0:{}'
+    forum_topics: '1'
+    forum_posts: '1'
+    forum_last_post_id: '4'
+    cat_id: '1'
+    hot_threshold: '20'
+    forum_order: '99'
+    attach_maxkb: '500'
+    attach_ext: zip|jpg|gif|png
+    allow_polls: '0'

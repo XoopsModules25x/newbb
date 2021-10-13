@@ -19,6 +19,8 @@ namespace XoopsModules\Newbb;
 
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
+/** @var TopicHandler $topicHandler */
+
 /**
  * Class PostHandler
  */
@@ -84,7 +86,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        if ($result) {
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);
@@ -198,7 +200,6 @@ class PostHandler extends \XoopsPersistableObjectHandler
             $post->setVar('post_time', \time());
         }
 
-        /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         // Verify the topic ID
         $topic_id = $post->getVar('topic_id');
@@ -507,7 +508,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
         }
         $result = $this->db->query($sql, (int)$limit, (int)$start);
-        if ($result) {
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);

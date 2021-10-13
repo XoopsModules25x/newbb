@@ -114,7 +114,6 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['facebook'] =
     //$displayText['twitter'] =
     //$displayText['linkedin'] =
-    //$displayText['googleplus'] =
     //$displayText['stumbleupon'] =
     //$displayText['friendfeed'] =
     //$displayText['digg'] =
@@ -189,7 +188,6 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['facebook'] =
     //$displayText['twitter'] =
     //$displayText['linkedin'] =
-    //$displayText['googleplus'] =
     //$displayText['stumbleupon'] =
     //$displayText['friendfeed'] =
     //$displayText['digg'] =

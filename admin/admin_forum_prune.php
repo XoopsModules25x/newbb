@@ -184,7 +184,7 @@ if (Request::hasVar('submit', 'POST')) {
     $sform->addElement($days);
     // START irmtfan remove hardcode db access
     require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/footer.php'); // to include js files
-    require_once dirname(__DIR__) . '/include/functions.forum.php';
+    require_once \dirname(__DIR__) . '/include/functions.forum.php';
     $forumSelMulti  = "<select name=\"forums[]\" multiple=\"multiple\" onfocus = \"validate('forums[]','select', false,true)\">"; // disable all categories
     $forumSelSingle = "<select name=\"store\" onfocus = \"validate('store','select', false,true)\">"; // disable all categories
     $forumSelBox    = '<option value = 0 >-- ' . _AM_NEWBB_PERM_FORUMS . ' --</option>';

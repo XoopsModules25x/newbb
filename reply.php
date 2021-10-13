@@ -16,9 +16,17 @@
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    Post
+    Helper,
+    ForumHandler,
+    Post,
+    PostHandler,
+    TopicHandler
 };
 /** @var Post $post_contextObject */
+/** @var PostHandler $post_contextObject */
+/** @var ForumHandler $forumHandler */
+/** @var TopicHandler $topicHandler */
+/** @var PostHandler $postHandler */
 
 require_once __DIR__ . '/header.php';
 
@@ -33,12 +41,10 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-///** @var NewbbForumHandler $forumHandler */
-//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-///** @var TopicHandler $topicHandler */
-//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-///** @var PostHandler $postHandler */
-//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+
+$forumHandler = Helper::getInstance()->getHandler('Forum');
+$topicHandler = Helper::getInstance()->getHandler('Topic');
+$postHandler = Helper::getInstance()->getHandler('Post');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);

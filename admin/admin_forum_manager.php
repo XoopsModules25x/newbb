@@ -33,8 +33,8 @@ use XoopsModules\Newbb\{
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/pagenav.php');
-require_once dirname(__DIR__) . '/include/functions.forum.php';
-require_once dirname(__DIR__) . '/include/functions.render.php';
+require_once \dirname(__DIR__) . '/include/functions.forum.php';
+require_once \dirname(__DIR__) . '/include/functions.render.php';
 
 $cacheHelper = new Cache('newbb');
 Utility::cleanCache();

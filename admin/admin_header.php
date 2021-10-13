@@ -26,14 +26,14 @@ use XoopsModules\Newbb\{
 /** @var Admin $adminObject */
 
 //require_once $GLOBALS['xoops']->path('include/cp_header.php');
-require_once dirname(__DIR__, 3) . '/include/cp_header.php';
+require_once \dirname(__DIR__, 3) . '/include/cp_header.php';
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/vars.php');
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.user.php');
 require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/functions.render.php');
 //require_once $GLOBALS['xoops']->path('Frameworks/art/functions.php');
 //require_once $GLOBALS['xoops']->path('Frameworks/art/functions.admin.php');
 
-require_once dirname(__DIR__) . '/include/common.php';
+require_once \dirname(__DIR__) . '/include/common.php';
 
 $helper = Helper::getInstance();
 

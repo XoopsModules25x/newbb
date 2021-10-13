@@ -25,7 +25,7 @@
             <li><span class="label label-info"><{$smarty.const._MD_NEWBB_POSTS}>: <{$sforum.forum_posts}></span></li>
 
             <!-- If subforum description -->
-            <{if $sforum.forum_desc != ""}>
+            <{if $sforum.forum_desc|default:'' != ''}>
                 <li>
                     <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#subforum-<{$sforum.forum_id}>">
                         <span class="glyphicon glyphicon-info-sign"></span>
@@ -55,7 +55,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&amp;times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"><{$sforum.forum_name}></h4>
               </div>
               <div class="modal-body">

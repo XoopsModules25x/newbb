@@ -386,7 +386,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $sql .= ' AND approved = 1';
         }
         $result = $this->db->query($sql);
-        if ($result) {
+        if ($result instanceof \mysqli_result) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['uid'];
             }

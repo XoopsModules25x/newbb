@@ -50,7 +50,7 @@
         <{if $element.hidden !== true}>
             <div class="edit_col1 head floatleft">
                 <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span></div>
-                <{if $element.description != ''}>
+                <{if $element.description|default:'' != ''}>
                     <div class="xoops-form-element-help"><{$element.description}></div>
                 <{/if}>
             </div>

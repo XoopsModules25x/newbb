@@ -15,6 +15,7 @@ use XoopsModules\Newbb\{
     CategoryHandler,
     Forum,
     ForumHandler,
+    Helper,
     KarmaHandler,
     OnlineHandler,
     PostHandler,
@@ -27,6 +28,7 @@ use XoopsModules\Newbb\{
 /** @var CategoryHandler $categoryHandler */
 /** @var Forum $forumsObject */
 /** @var ForumHandler $forumHandler */
+/** @var Helper $helper */
 /** @var KarmaHandler $karmaHandler */
 /** @var OnlineHandler $onlineHandler */
 /** @var Post $postObject */
@@ -41,17 +43,14 @@ foreach (['forum', 'topic_id', 'post_id', 'order'] as $getint) {
     ${$getint} = Request::getInt($getint, 0, 'GET');
 }
 
-if (!$topic_id && !$post_id) {
+if (!$topic_id || !$post_id) {
     $redirect = empty($forum) ? 'index.php' : "viewforum.php?forum={$forum}";
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-///** @var Newbb\ForumHandler $forumHandler */
-//$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-///** @var Newbb\TopicHandler $topicHandler */
-//$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
-///** @var Newbb\PostHandler $postHandler */
-//$postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
+$forumHandler = Helper::getInstance()->getHandler('Forum');
+$topicHandler = Helper::getInstance()->getHandler('Topic');
+$postHandler = Helper::getInstance()->getHandler('Post');
 
 $postObject  = $postHandler->get($post_id);
 $topicObject = $topicHandler->get($postObject->getVar('topic_id'));

@@ -16,8 +16,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 $modversion = [
     'version'             => 5.01,
-    'module_status'       => 'Beta 4',
-    'release_date'        => '2021/03/21',
+    'module_status'       => 'Beta 5 NOT RELEASED',
+    'release_date'        => '2021/08/09',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
@@ -31,7 +31,7 @@ $modversion = [
     'author_email'        => '',
     'module_website_url'  => 'www.xoops.org/',
     'module_website_name' => 'XOOPS',
-    'min_php'             => '7.2',
+    'min_php'             => '7.3',
     'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],

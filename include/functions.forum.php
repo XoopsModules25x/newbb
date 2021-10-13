@@ -64,7 +64,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $value = is_array($value) ? $value : [$value];
         //$see = is_array($see) ? $see : array($see);
         $box = '';
-        if (count($forums) > 0) {
+        if (is_iterable($forums)) {
             foreach (array_keys($categories) as $key) {
                 if ($categoryDelimiter) {
                     $box .= "<option value=0>&nbsp;</option>\n";

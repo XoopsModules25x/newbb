@@ -21,6 +21,8 @@ use XoopsModules\Newbb\{
     Forum,
     Helper,
     ModerateHandler,
+    Post,
+    PostHandler,
     Topic,
     TopicHandler,
     TypeHandler
@@ -33,6 +35,8 @@ use XoopsModules\Tag\FormTag;
 /** @var TopicHandler $topicHandler */
 /** @var Topic $topicObject */
 /** @var TypeHandler $typeHandler */
+/** @var Post $postObject */
+/** @var PostHandler $postHandler */
 
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -77,7 +81,8 @@ $editby = false;
 if ($topicObject->isNew()) {
     $form_title = _MD_NEWBB_POSTNEW;
 } elseif ($postObject->isNew()) {
-    if (null === $postParentObject) {
+    /** @var Post $postParentObject */
+    if (empty($postParentObject)) {
         $postParentObject = $postHandler->get($pid);
     }
     $form_title = _MD_NEWBB_REPLY . ': <a href="' . XOOPS_URL . "/modules/newbb/viewtopic.php?topic_id={$topic_id}&amp;post_id={$pid}\" rel=\"external\">" . $postParentObject->getVar('subject') . '</a>';

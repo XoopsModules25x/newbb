@@ -268,7 +268,7 @@ class Post extends \XoopsObject
                                         . ': '
                                         . $att['numDownload'];
                 } else {
-                    $post_attachment .= _MD_NEWBB_SEENOTGUEST;
+                    $post_attachment .= \_MD_NEWBB_SEENOTGUEST;
                 }
                 $post_attachment .= '<br>';
             }
@@ -648,7 +648,6 @@ class Post extends \XoopsObject
             $thread_action['social_facebook']['name']   = \_MD_NEWBB_SHARE_FACEBOOK;
             $thread_action['social_facebook']['target'] = '_blank';
 
-            $thread_action['social_gplus']['image']  = \newbbDisplayImage('googleplus', \_MD_NEWBB_SHARE_GOOGLEPLUS);
             $thread_action['social_gplus']['link']   = 'https://plusone.google.com/_/+1/confirm?hl=en&url=' . $full_link;
             $thread_action['social_gplus']['name']   = \_MD_NEWBB_SHARE_GOOGLEPLUS;
             $thread_action['social_gplus']['target'] = '_blank';

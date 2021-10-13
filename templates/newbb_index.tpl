@@ -121,11 +121,11 @@
                                 </div>
                             </td>
                             <td class="even" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].topic.day}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].topic.day|default:''}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
                                 <{$forum.forum_topics}>
                             </td>
                             <td class="odd" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].post.day}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].post.day|default:''}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
                                 <{$forum.forum_posts}>
                             </td>
                             <{* irmtfan hardcode removed align="right"  *}>
@@ -230,11 +230,11 @@
                                 </div>
                             </td>
                             <td class="even" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].topic.day}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].topic.day|default:''}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
                                 <{$forum.forum_topics}>
                             </td>
                             <td class="odd" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].post.day}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].post.day|default:''}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
                                 <{$forum.forum_posts}>
                             </td>
                             <{* irmtfan hardcode removed align="right"  *}>
@@ -291,11 +291,11 @@
                                 </div>
                             </td>
                             <td class="even" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].topic.day}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].topic.day|default:''}><strong><{$stats[$forum.forum_id].topic.day}></strong>/<{/if}>
                                 <{$forum.forum_topics}>
                             </td>
                             <td class="odd" align="center" valign="middle">
-                                <{if $stats[$forum.forum_id].post.day}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
+                                <{if $stats[$forum.forum_id].post.day|default:''}><strong><{$stats[$forum.forum_id].post.day}></strong>/<{/if}>
                                 <{$forum.forum_posts}>
                             </td>
                             <{* irmtfan hardcode removed align="right"  *}>
