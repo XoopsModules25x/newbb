@@ -48,8 +48,8 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)
     $xoopsTpl = new \XoopsTpl();
 }
 
-$pathIcon16    = Admin::iconUrl('', 16);
-$pathIcon32    = Admin::iconUrl('', 32);
+$pathIcon16    = Admin::iconUrl('', '16');
+$pathIcon32    = Admin::iconUrl('', '32');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Local icons path

@@ -124,8 +124,8 @@ $userstatsHandler = $helper->getHandler('Userstats');
 /** @var Newbb\XmlrssHandler $xmlrssHandler */
 $xmlrssHandler = $helper->getHandler('Xmlrss');
 
-$pathIcon16 = Admin::iconUrl('', 16);
-$pathIcon32 = Admin::iconUrl('', 32);
+$pathIcon16 = Admin::iconUrl('', '16');
+$pathIcon32 = Admin::iconUrl('', '32');
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
