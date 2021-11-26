@@ -18,7 +18,7 @@
 use Xmf\Module\Admin;
 
 $moduleDirName      = \basename(\dirname(__DIR__));
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 return (object)[
     'name'           => $moduleDirNameUpper . ' Module Configurator',

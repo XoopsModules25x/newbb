@@ -108,7 +108,7 @@ class Xmlrss
      */
     public function cleanup($text, $trim = 0)
     {
-        if ('utf-8' === mb_strtolower($this->xml_encoding) && \strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
+        if ('utf-8' === \mb_strtolower($this->xml_encoding) && \strncasecmp(_CHARSET, $this->xml_encoding, 5)) {
             $text = \XoopsLocal::convert_encoding($text, 'utf-8');
         }
         if (!empty($trim)) {

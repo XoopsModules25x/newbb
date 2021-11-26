@@ -96,7 +96,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $addterms             = Request::getString('andor', 'AND');
     $next_search['andor'] = $addterms;
-    $andor                = mb_strtoupper($addterms);
+    $andor                = \mb_strtoupper($addterms);
     if (!in_array($addterms, ['OR', 'AND'])) {
         $andor = 'AND';
     }
@@ -237,7 +237,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         // irmtfan if all results skipped then redirect to the next/previous page
         if ($num_results == $skipresults) {
             $direction           = Request::getString('direction', 'next');
-            $search_url_redirect = ('next' === mb_strtolower($direction)) ? $search_url_next : $search_url_prev;
+            $search_url_redirect = ('next' === \mb_strtolower($direction)) ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(mb_strtoupper("_SR_{$direction}")));
         }
     }

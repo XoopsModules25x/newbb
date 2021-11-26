@@ -496,7 +496,7 @@ class Post extends \XoopsObject
         $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
         ++$post_NO;
-        if ('desc' === mb_strtolower($order)) {
+        if ('desc' === \mb_strtolower($order)) {
             $post_no = $total_posts - ($start + $post_NO) + 1;
         } else {
             $post_no = $start + $post_NO;

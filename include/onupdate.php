@@ -58,7 +58,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName      = \basename(\dirname(__DIR__));
-    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+    $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
     /** @var \XoopsModules\Newbb\Helper $helper */ /** @var \XoopsModules\Newbb\Utility $utility */
     /** @var \XoopsModules\Newbb\Common\Configurator $configurator */

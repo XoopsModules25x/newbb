@@ -12,10 +12,10 @@
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $modversion = [
-    'version'             => 5.01,
+    'version'             => '5.01.0',
     'module_status'       => 'Beta 5 NOT RELEASED',
     'release_date'        => '2021/08/09',
     'name'                => _MI_NEWBB_NAME,

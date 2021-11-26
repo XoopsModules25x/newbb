@@ -48,7 +48,7 @@ trait FilesManagement
      * @param $folder
      * @return bool
      */
-    public static function copyFile($file, $folder)
+    public static function copyFile(string $file, string $folder): bool
     {
         return \copy($file, $folder);
     }

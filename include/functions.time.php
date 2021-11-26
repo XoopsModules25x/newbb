@@ -27,7 +27,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
         xoops_loadLanguage('locale');
         $newbbConfig = newbbLoadConfig();
 
-        $format = mb_strtolower($format);
+        $format = \mb_strtolower($format);
         if ('reg' === $format || '' === $format) {
             $format = 'c';
         }

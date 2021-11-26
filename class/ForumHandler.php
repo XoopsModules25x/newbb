@@ -620,7 +620,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
         }
 
-        $type = mb_strtolower($type);
+        $type = \mb_strtolower($type);
         // START irmtfan commented and removed
         //if ('moderate' === $type) {
         //require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.user.php');

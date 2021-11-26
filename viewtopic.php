@@ -65,7 +65,7 @@ $read     = (Request::getString('read', '', 'GET')
              && 'new' === Request::getString('read', '', 'GET')) ? Request::getString('read', '', 'GET') : '';
 $topic_id = Request::getInt('topic_id', 0, 'GET'); // isset($_GET['topic_id']) ? (int)($_GET['topic_id']) : 0;
 $post_id  = Request::getInt('post_id', 0, 'GET'); // !empty($_GET['post_id']) ? (int)($_GET['post_id']) : 0;
-$move     = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
+$move     = \mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
 $start    = Request::getInt('start', 0, 'GET'); // !empty($_GET['start']) ? (int)($_GET['start']) : 0;
 $status   = (Request::getString('status', '', 'GET')
              && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted'])) ? Request::getString('status', '', 'GET') : '';
@@ -541,8 +541,8 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                         'is_visible'      => $isVisible,
                         'visible_message' => $visibleMsg,
                         'disp_votes'      => $xp_config['disp_vote_nums'],
-                        'lang_vote'       => constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE'),
-                        'lang_results'    => constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_RESULTS'),
+                        'lang_vote'       => constant('_MD_' . \mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE'),
+                        'lang_results'    => constant('_MD_' . \mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_RESULTS'),
                         'back_link'       => '',
                     ]
                 );

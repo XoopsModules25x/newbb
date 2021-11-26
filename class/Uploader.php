@@ -45,7 +45,7 @@ class Uploader extends \XoopsMediaUploader
             if (empty($allowedMimeTypes) || '*' === $allowedMimeTypes) {
                 $allowedMimeTypes = [];
             } else {
-                $allowedMimeTypes = \array_filter(\array_map('\trim', \explode('|', mb_strtolower($allowedMimeTypes))));
+                $allowedMimeTypes = \array_filter(\array_map('\trim', \explode('|', \mb_strtolower($allowedMimeTypes))));
             }
         }
         $_allowedMimeTypes = [];
@@ -97,7 +97,7 @@ class Uploader extends \XoopsMediaUploader
      */
     public function getExt()
     {
-        $this->ext = mb_strtolower(\ltrim(mb_strrchr($this->getMediaName(), '.'), '.'));
+        $this->ext = \mb_strtolower(\ltrim(mb_strrchr($this->getMediaName(), '.'), '.'));
 
         return $this->ext;
     }

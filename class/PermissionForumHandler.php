@@ -188,9 +188,9 @@ class PermissionForumHandler extends PermissionHandler
                 || (isset($permission_set[$forumId]['forum_' . $item])
                     && (!$topic_locked
                         || 'view' === $item))) {
-                $perm[] = \constant('_MD_NEWBB_CAN_' . mb_strtoupper($item));
+                $perm[] = \constant('_MD_NEWBB_CAN_' . \mb_strtoupper($item));
             } else {
-                $perm[] = \constant('_MD_NEWBB_CANNOT_' . mb_strtoupper($item));
+                $perm[] = \constant('_MD_NEWBB_CANNOT_' . \mb_strtoupper($item));
             }
         }
 

@@ -51,7 +51,7 @@ if (!class_exists('XoopsGroupPermForm')) {
  */
 
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
-$action    = mb_strtolower(Request::getCmd('action', ''));
+$action    = \mb_strtolower(Request::getCmd('action', ''));
 $module_id = $xoopsModule->getVar('mid');
 $permissionHandler = Helper::getInstance()->getHandler('Permission');
 $perms            = $permissionHandler->getValidForumPerms();
@@ -94,7 +94,7 @@ switch ($action) {
                 $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
-                $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)) . '<br></td>';
+                $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . \mb_strtoupper($perm)) . '<br></td>';
             }
             $ret_ele    .= '</tr></table></td><td class="even">';
             $ret_ele    .= _ALL . ' <input id="checkall[' . $i . ']" type="checkbox" value="" onclick="var optionids = new Array(' . implode(', ', $option_ids) . '); xoopsCheckAllElements(optionids, \'checkall[' . $i . ']\')" >';
@@ -235,9 +235,9 @@ switch ($action) {
             ],
         ];
         foreach ($perms as $perm) {
-            $op_options[$perm] = constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm));
+            $op_options[$perm] = constant('_AM_NEWBB_CAN_' . \mb_strtoupper($perm));
             $fm_options[$perm] = [
-                'title'     => constant('_AM_NEWBB_CAN_' . mb_strtoupper($perm)),
+                'title'     => constant('_AM_NEWBB_CAN_' . \mb_strtoupper($perm)),
                 'item'      => 'forum_' . $perm,
                 'desc'      => '',
                 'anonymous' => true,
@@ -245,7 +245,7 @@ switch ($action) {
         }
 
         $op_keys = array_keys($op_options);
-        $op      = mb_strtolower(Request::getCmd('op', Request::getCmd('op', '', 'COOKIE'), 'GET'));
+        $op      = \mb_strtolower(Request::getCmd('op', Request::getCmd('op', '', 'COOKIE'), 'GET'));
         if (empty($op)) {
             $op = $op_keys[0];
             setcookie('op', $op_keys[1] ?? '');
