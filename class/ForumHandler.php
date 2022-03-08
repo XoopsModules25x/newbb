@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -13,8 +13,7 @@ namespace XoopsModules\Newbb;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -36,7 +35,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $object
-     * @param bool         $force
+     * @param bool $force
      * @return bool|int
      * @internal param \XoopsObject $forum
      */
@@ -56,7 +55,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $forum
-     * @param bool         $force
+     * @param bool $force
      * @return bool
      */
     public function delete(\XoopsObject $forum, $force = false) //delete(&$forum)
@@ -166,21 +165,21 @@ class ForumHandler extends \XoopsPersistableObjectHandler
     {
         global $myts, $viewAllForums, $xoopsUser;
         $startdate = '';
-        $type = '';
-        $status = '';
-        $excerpt = '';
-        $sort = '';
-        $order = '';
-        $start = '';
+        $type      = '';
+        $status    = '';
+        $excerpt   = '';
+        $sort      = '';
+        $order     = '';
+        $start     = '';
 
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.session.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.time.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.read.php');
         require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.topic.php');
-	    
-	 //BigKev73 > Added this to suport the call into the Topic Handler
-	$topicHandler = Helper::getInstance()->getHandler('Topic');    
+
+        //BigKev73 > Added this to suport the call into the Topic Handler
+        $topicHandler = Helper::getInstance()->getHandler('Topic');
 
         $criteria_vars = ['startdate', 'start', 'sort', 'order', 'type', 'status', 'excerpt'];
         foreach ($criteria_vars as $var) {
@@ -344,16 +343,16 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                             $append          = true;
                         }
                     } else {
-			 //BigKev73 - Made change so link scroll directly to that post
-                        $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']). '#forumpost'. $myrow['post_id'] . '">' . $i . '</a>]';
-                       // $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '">' . $i . '</a>]';
+                        //BigKev73 - Made change so link scroll directly to that post
+                        $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '#forumpost' . $myrow['post_id'] . '">' . $i . '</a>]';
+                        // $topic_page_jump .= '[<a href="' . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;start=' . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . '">' . $i . '</a>]';
                         // irmtfan remove here and move
                         //$topic_page_jump_icon = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $myrow['post_id'] . "&amp;start=" . (($i - 1) * $GLOBALS['xoopsModuleConfig']['posts_per_page']) . "'>" . newbbDisplayImage('lastposticon',_MD_NEWBB_GOTOLASTPOST) . '</a>';
                     }
                 }
             }
             // irmtfan - move here for both topics with and without pages
-             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $myrow['post_id'] . '#forumpost'. $myrow['post_id'] ."'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $myrow['post_id'] . '#forumpost' . $myrow['post_id'] . "'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
@@ -380,29 +379,29 @@ class ForumHandler extends \XoopsPersistableObjectHandler
                 $topic_excerpt = \str_replace('[', '&#91;', \htmlspecialchars($topic_excerpt, \ENT_QUOTES | \ENT_HTML5));
             }
             // START irmtfan move here
-            
+
             //BigKev73 > Adding this code to support jumping directly to the last read post if that value exists for a user, block also would need to change to support same functionality
-            $topicLink ='viewtopic.php?topic_id=' . $myrow['topic_id'];
-						
-			if ($xoopsUser){
-				$lastRead = \newbbGetRead('topic', $myrow['topic_id']);
-				if (isset($lastRead)){
-					if (!empty($lastRead)){
-				        if ($lastRead<$myrow['topic_last_post_id']){
-					        $topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $lastRead . '#forumpost'.$lastRead;
-						  
-						 //BigKev73 > Adding this code to support jumping to the next post after the LastReadPost, otherwise we could end up on the prior page
-						 // if the lastread post is not on the last page and the next new post. Added getNextPostId to topichandler to support this
-						 $nextPostID = $topicHandler->getNextPostId($myrow['topic_id'],$lastRead);
-						 if(!empty($nextPostID)){
-							$topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] .'&amp;post_id=' . $nextPostID . '#forumpost'.$nextPostID;
-							print ('LastRead='.$lastRead. ', NextPostID= ' . $nextPostID);
-						}
-			            	}
-				     }
-				}
-			}
-                        
+            $topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'];
+
+            if ($xoopsUser) {
+                $lastRead = \newbbGetRead('topic', $myrow['topic_id']);
+                if (isset($lastRead)) {
+                    if (!empty($lastRead)) {
+                        if ($lastRead < $myrow['topic_last_post_id']) {
+                            $topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $lastRead . '#forumpost' . $lastRead;
+
+                            //BigKev73 > Adding this code to support jumping to the next post after the LastReadPost, otherwise we could end up on the prior page
+                            // if the lastread post is not on the last page and the next new post. Added getNextPostId to topichandler to support this
+                            $nextPostID = $topicHandler->getNextPostId($myrow['topic_id'], $lastRead);
+                            if (!empty($nextPostID)) {
+                                $topicLink = 'viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $nextPostID . '#forumpost' . $nextPostID;
+                                print('LastRead=' . $lastRead . ', NextPostID= ' . $nextPostID);
+                            }
+                        }
+                    }
+                }
+            }
+
             $topics[$myrow['topic_id']] = [
                 'topic_id'             => $myrow['topic_id'],
                 'topic_icon'           => $topic_icon,
@@ -487,7 +486,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->db->query($sql);
             if ($result) {
-                while (list($topic_id) = $this->db->fetchRow($result)) {
+                while ([$topic_id] = $this->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }
             }
@@ -797,14 +796,13 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             }
         }
 
-//        $forums_id = [];
-//        foreach (\array_keys($sub_forums) as $id) {
-//            if (empty($sub_forums[$id])) {
-//                continue;
-//            }
-//            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
-//        }
-
+        //        $forums_id = [];
+        //        foreach (\array_keys($sub_forums) as $id) {
+        //            if (empty($sub_forums[$id])) {
+        //                continue;
+        //            }
+        //            $forums_id = \array_merge($forums_id, $sub_forums[$id]);
+        //        }
 
         $forums_id = [];
         foreach (\array_keys($sub_forums) as $id) {
@@ -814,9 +812,6 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             $forums_id[] = $sub_forums[$id]; // <- yes, we'll use a little bit more memory
         }
         $forums_id = \array_merge([], ...$forums_id); // the empty array covers cases when no loops were made
-
-
-
 
         if (empty($forums_id)) {
             return $stats;
@@ -938,10 +933,10 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             // irmtfan change if/endif to if{} method
             $post_id = $forum['forum_last_post_id'];
             if ($post_id) {
-                $post                               = &$posts[$post_id];
-                $_forum_data['forum_lastpost_id']   = $post_id;
-		$_forum_data['forum_lastpost_topicid']  = $post['topic_id'];
-                $_forum_data['forum_lastpost_time'] = \newbbFormatTimestamp($post['post_time']);
+                $post                                  = &$posts[$post_id];
+                $_forum_data['forum_lastpost_id']      = $post_id;
+                $_forum_data['forum_lastpost_topicid'] = $post['topic_id'];
+                $_forum_data['forum_lastpost_time']    = \newbbFormatTimestamp($post['post_time']);
                 if (!empty($users_linked[$post['uid']])) {
                     $_forum_data['forum_lastpost_user'] = $users_linked[$post['uid']];
                 } elseif ($poster_name = $post['poster_name']) {
@@ -1078,7 +1073,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
      * @param int|text|array $values : positive values = forums | negative values = cats | $values=0 = all valid forums, $permission , true/false $parse_cats
      * @param string         $permission
      * @param bool           $parse_cats
-     * @return array|mixed $validForums
+     * @return array|mixed
      */
     public function getIdsByValues($values = 0, $permission = 'access', $parse_cats = true)
     {

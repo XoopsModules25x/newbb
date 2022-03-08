@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -35,7 +35,7 @@ class RateHandler extends \XoopsPersistableObjectHandler
     /**
      * @return void
      */
-    public function synchronization()
+    public function synchronization(): void
     {
         //        return;
     }

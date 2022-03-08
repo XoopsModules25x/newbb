@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -12,11 +12,12 @@
 
 /**
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author      XOOPS Development Team
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
+    Helper,
     TypeHandler
 };
 
@@ -186,7 +187,7 @@ function b_newbb_show($options)
         $topic['topic_page_jump'] = $topic_page_jump;
         // START irmtfan remove hardcoded html in URLs - add $seo_topic_url
         //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
-         //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
+        //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
         $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'] . '&amp;post_id=' . $topic['post_id'] . '#forumpost' . $topic['post_id'];
         $seo_topic_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];

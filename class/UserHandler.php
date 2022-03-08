@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb;
@@ -40,7 +39,7 @@ class UserHandler
         $this->enableOnline = $enableOnline;
     }
 
-    public function loadUserInfo()
+    public function loadUserInfo(): void
     {
         $helper = Helper::getInstance();
         $helper->loadLanguage('user');
@@ -55,7 +54,7 @@ class UserHandler
         }
     }
 
-    public function loadUserOnline()
+    public function loadUserOnline(): void
     {
         if (empty($this->users) || !$this->enableOnline) {
             return;
@@ -80,7 +79,7 @@ class UserHandler
     //    }
     // END irmtfan remove function - no deprecated is needed because just use in this file
 
-    public function loadUserDigest()
+    public function loadUserDigest(): void
     {
         if (empty($this->users)) {
             return;

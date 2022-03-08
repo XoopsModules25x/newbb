@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
@@ -25,10 +25,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 
-use Xmf\Request;
 use Xmf\Module\Admin;
-/** @var Admin $adminObject */
+use Xmf\Request;
 
+/** @var Admin $adminObject */
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -127,7 +127,7 @@ if (Request::hasVar('submit', 'POST')) {
             // ARCHIVING POSTS
             if (1 == $archive) {
                 $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
-                while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+                while ([$topic_id, $post_id, $post_text] = $GLOBALS['xoopsDB']->fetchRow($result)) {
                     $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
                 }
             }
@@ -147,7 +147,7 @@ if (Request::hasVar('submit', 'POST')) {
                 return _MD_NEWBB_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-            //            /** @var Newbb\ForumHandler $forumHandler */
+            // /** @var Newbb\ForumHandler $forumHandler */
             //            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:

@@ -1,17 +1,18 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
     ForumHandler,
+    Helper,
     PostHandler,
     TopicHandler
 };
@@ -20,7 +21,6 @@ use XoopsModules\Newbb\{Helper,
 /** @var ForumHandler $forumHandler */
 /** @var TopicHandler $topicHandler */
 /** @var PostHandler $postHandler */
-
 require_once \dirname(__DIR__, 2) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 
@@ -32,7 +32,7 @@ $helper->loadLanguage('main');
 
 $forumHandler = Helper::getInstance()->getHandler('Forum');
 $topicHandler = Helper::getInstance()->getHandler('Topic');
-$postHandler = Helper::getInstance()->getHandler('Post');
+$postHandler  = Helper::getInstance()->getHandler('Post');
 
 /** @var \XoopsLogger $xoopsLogger */
 $xoopsLogger->startTime('newBB_Header');
@@ -51,7 +51,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         $redir = false;
         if (true === mb_strpos(getenv('REQUEST_URI'), 'mark_read=') || true === mb_strpos(getenv('REQUEST_URI'), 'mark=')) {
             // Mark Forums
-        } elseif (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url)) {
+        } elseif (in_array(basename(getenv('SCRIPT_NAME')), $toseo_url, true)) {
             //rewrite only for files
 
             if ('' !== trim(getenv('SCRIPT_NAME'))) {
@@ -64,7 +64,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_rewrite'])) {
         }
 
         if (true === $redir) {
-            $s      = 'http://' . getenv('HTTP_HOST') . getenv('REQUEST_URI');
+            $s      = 'https://' . getenv('HTTP_HOST') . getenv('REQUEST_URI');
             $s      = str_replace('/' . REAL_MODULE_NAME . '/', '/' . SEO_MODULE_NAME . '/', $s);
             $newurl = seo_urls('<a href="' . $s . '"></a>');
             $newurl = str_replace('<a href="', '', $newurl);

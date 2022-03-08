@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,8 +11,8 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://xoops.org/, https://jp.xoops.org/
  * @author       XOOPS Development Team
  */
 
@@ -33,7 +33,7 @@ switch ($op) {
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
+        while ([$rating] = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -58,7 +58,7 @@ switch ($op) {
         $uservotes     = $GLOBALS['xoopsDB']->getRowsNum($result2);
         $useravgrating = 0;
 
-        while (list($rating2) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
+        while ([$rating2] = $GLOBALS['xoopsDB']->fetchRow($result2)) {
             //            $useravgrating = $useravgrating + $rating2;
             $useravgrating += $rating2;
         }
@@ -92,7 +92,7 @@ switch ($op) {
         if (0 == $votes) {
             echo "<tr><td align='center' colspan='7' class='head'>" . _AM_NEWBB_VOTE_NOVOTES . '</td></tr>';
         }
-        while (list($ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp) = $GLOBALS['xoopsDB']->fetchRow($results)) {
+        while ([$ratingid, $topic_id, $ratinguser, $rating, $ratinghostname, $ratingtimestamp] = $GLOBALS['xoopsDB']->fetchRow($results)) {
             $sql        = 'SELECT topic_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id=' . $topic_id . ' ';
             $down_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 

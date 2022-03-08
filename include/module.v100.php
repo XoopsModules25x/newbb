@@ -1,5 +1,5 @@
-<?php
-// 
+<?php declare(strict_types=1);
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                  Copyright (c) 2000-2020 XOOPS.org                        //

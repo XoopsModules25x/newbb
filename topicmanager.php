@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Xmf\Request;
 use XoopsModules\Newbb;
@@ -40,7 +40,6 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
 /** @var Post $post */
-
 require_once __DIR__ . '/header.php';
 
 if (Request::getString('submit', '', 'POST')) {
@@ -172,7 +171,6 @@ if (Request::getString('submit', '', 'POST')) {
              . _MD_NEWBB_RETURNFORUMINDEX
              . '</a></p>';
     } elseif ('merge' === $mode) {
-
         //        $postHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Post');
         //        $rateHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Rate');
 
@@ -259,7 +257,7 @@ if (Request::getString('submit', '', 'POST')) {
             $topicObject->loadFilters('update');
 
             //$sql = sprintf('UPDATE "%s" SET forum_id = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
-             $sql = sprintf('UPDATE %s SET forum_id = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
+            $sql = sprintf('UPDATE %s SET forum_id = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_posts'), $newforum, $topic_id);
             if (!$r = $GLOBALS['xoopsDB']->query($sql)) {
                 return false;
             }

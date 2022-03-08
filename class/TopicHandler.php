@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb;
@@ -56,7 +55,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $object
-     * @param bool         $force
+     * @param bool $force
      * @return mixed
      */
     public function insert(\XoopsObject $object, $force = true)
@@ -69,9 +68,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
 
         $newbbConfig = \newbbLoadConfig();
-        if (!empty($newbbConfig['do_tag']) && \class_exists('TagFormTag')
-            && @require $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
-            $tagHandler = \tag_getTagHandler();
+        if (!empty($newbbConfig['do_tag']) && \class_exists('XoopsModules\Tag\FormTag')) {
+            $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
             if ($tagHandler) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
@@ -125,7 +123,6 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      *                          <li> >0 : inside the forum </li>
      *                          <li> <= 0: global </li>
      *                          </ul>
-     * @access public
      * @return mixed|null|\XoopsObject
      */
     public function &getByMove($topic_id, $action, $forum_id = 0)
@@ -261,9 +258,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return $post_id;
     }
-    
-    
-    
+
     /**
      * @param         $topic
      * @param string  $order
@@ -391,6 +386,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $ret[] = $myrow['uid'];
             }
         }
+
         return $ret;
     }
 
@@ -497,7 +493,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject|int|string|null $object
-     * @param bool $force
+     * @param bool                         $force
      * @return bool
      */
     public function synchronization($object = null, $force = true)
@@ -543,7 +539,6 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * get all active poll modules in the current xoops installtion.
-     * @access public
      * @return array $pollDirs = array($dirname1=>$dirname1, $dirname2=>$dirname2, ...) dirnames of all active poll modules
      */
     public function getActivePolls()
@@ -566,9 +561,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * find poll module that is in used in the current newbb installtion.
-     * @access public
      * @param array $pollDirs  dirnames of all active poll modules
-     * @return bool|string $dir_def | true | false
+     * @return bool|string | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
      *                         false: errors (see below xoops_errors)

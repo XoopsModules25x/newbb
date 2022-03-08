@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
@@ -20,7 +19,6 @@ use XoopsModules\Newbb;
  *
  * @author    D.J. (phppp)
  * @copyright copyright &copy; Xoops Project
- * @package   module::newbb
  */
 class TopicRenderer
 {
@@ -81,7 +79,7 @@ class TopicRenderer
         return $instance;
     }
 
-    public function init()
+    public function init(): void
     {
         $this->noperm = false;
         $this->query  = [];
@@ -134,12 +132,12 @@ class TopicRenderer
     /**
      * @param array $vars
      */
-    public function setVars(array $vars = [])
+    public function setVars(array $vars = []): void
     {
         $this->init();
 
         foreach ($vars as $var => $val) {
-            if (!\in_array($var, $this->args)) {
+            if (!\in_array($var, $this->args, true)) {
                 continue;
             }
         }
@@ -149,7 +147,7 @@ class TopicRenderer
     /**
      * @param string $hash request hash, i.e. get, post
      */
-    public function setVarsFromRequest($hash = 'get')
+    public function setVarsFromRequest($hash = 'get'): void
     {
         $this->init();
 
@@ -173,7 +171,7 @@ class TopicRenderer
     /**
      * @param null $status
      */
-    public function myParseStatus($status = null)
+    public function myParseStatus($status = null): void
     {
         switch ($status) {
             case 'digest':
@@ -325,7 +323,7 @@ class TopicRenderer
      * @param $var
      * @param $val
      */
-    public function parseVar($var, $val)
+    public function parseVar($var, $val): void
     {
         switch ($var) {
             case 'forum':
@@ -365,12 +363,12 @@ class TopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = \time() - \newbbGetSinceTime($val);
-                    if (\in_array('unread', \explode(',', $this->vars['status'])) && 1 == $this->config['read_mode']
+                    if (\in_array('unread', \explode(',', $this->vars['status']), true) && 1 == $this->config['read_mode']
                         && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
-                    if (\in_array('digest', \explode(',', $this->vars['status']))) {
+                    if (\in_array('digest', \explode(',', $this->vars['status']), true)) {
                         $this->query['where'][] = 't.digest_time > ' . $startdate;
                     }
                     // irmtfan - should be >= instead of =
@@ -617,7 +615,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildSelection(\Smarty $xoopsTpl)
+    public function buildSelection(\Smarty $xoopsTpl): void
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
@@ -653,7 +651,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildSearch(\Smarty $xoopsTpl)
+    public function buildSearch(\Smarty $xoopsTpl): void
     {
         $search             = [];
         $search['forum']    = @$this->vars['forum'];
@@ -667,7 +665,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildHeaders(\Smarty $xoopsTpl)
+    public function buildHeaders(\Smarty $xoopsTpl): void
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -695,7 +693,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildFilters(\Smarty $xoopsTpl)
+    public function buildFilters(\Smarty $xoopsTpl): void
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -790,7 +788,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildPagenav(\Smarty $xoopsTpl)
+    public function buildPagenav(\Smarty $xoopsTpl): void
     {
         $count_topic = $this->getCount();
         if ($count_topic > $this->config['topics_per_page']) {
@@ -966,10 +964,10 @@ class TopicRenderer
                 }
             }
             // BigKev73 - Added to make jump ICON, jump and scroll to the correct "last post"
-             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $myrow['topic_last_post_id'] . '#forumpost=' . $myrow['topic_last_post_id'] . "'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
-			
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $myrow['topic_last_post_id'] . '#forumpost=' . $myrow['topic_last_post_id'] . "'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
+
             // irmtfan - move here for both topics with and without pages - change topic_id to post_id
-           //$topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+            //$topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
@@ -1108,7 +1106,7 @@ class TopicRenderer
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->handler->db->query($sql);
             if ($result) {
-                while (list($topic_id) = $this->handler->db->fetchRow($result)) {
+                while ([$topic_id] = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }
             }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -24,9 +24,8 @@ require_once __DIR__ . '/Read.php';
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 
@@ -77,11 +76,11 @@ class ReadforumHandler extends Newbb\ReadHandler
     }
 
     /**
-     * @param int $status
+     * @param int        $status
      * @param array|null $items
      * @return bool
      */
-    public function setReadItemsCookie($status, $items=null)
+    public function setReadItemsCookie($status, $items = null)
     {
         $cookie_name = 'LF';
         $items       = [];
@@ -132,7 +131,7 @@ class ReadforumHandler extends Newbb\ReadHandler
     /**
      * @return void
      */
-    public function synchronization()
+    public function synchronization(): void
     {
         //        return;
     }

@@ -10,8 +10,6 @@
 - cosmetics and PHP 8 adjustments (mamba)
 
 
-
-
 <h5>5.01 Beta 4 [2021-03-21]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.16, PHP 8.0.3
 <hr>
 - Update functions.image.php (BigKev73)

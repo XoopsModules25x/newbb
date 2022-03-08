@@ -1,19 +1,18 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * newbb
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-use XoopsModules\Newbb\{
-    TopicHandler
-};
+use XoopsModules\Newbb\TopicHandler;
+
 /** @var Admin $adminObject */
 /** @var TopicHandler $topicHandler */
 
@@ -38,7 +37,7 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
     // irmtfan rewrite topic sync
     case 'topic':
         $limit = Request::getInt('limit', 1000, 'POST'); //empty($_GET['limit']) ? 1000 : (int)($_GET['limit']);
-        //        /** @var Newbb\TopicHandler $topicHandler */
+        // /** @var Newbb\TopicHandler $topicHandler */
         //        $topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
         $criteria = new \Criteria('approved', 1);
         if ($start >= ($count = $topicHandler->getCount($criteria))) {
@@ -70,7 +69,7 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $sql    = '    SELECT uid' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('users');
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
-        while (list($uid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        while ([$uid] = $GLOBALS['xoopsDB']->fetchRow($result)) {
             // irmtfan approved=1 AND
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
             $ret = $GLOBALS['xoopsDB']->query($sql);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -24,9 +24,8 @@ require_once __DIR__ . '/Read.php';
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Readtopic extends Newbb\Read

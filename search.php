@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 use Xmf\Highlighter;
 use Xmf\Metagen;
 use Xmf\Request;
-use XoopsModules\Newbb\{
-    OnlineHandler
-};
+use XoopsModules\Newbb\OnlineHandler;
+
 /** @var OnlineHandler $onlineHandler */
 
 /*
@@ -79,7 +78,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $start = Request::getInt('start', 0);
     $forum = Request::getInt('forum', null);
-    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum))) {
+    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum, true))) {
         $forum = [];
     } elseif (!is_array($forum)) {
         $forum = array_map('\intval', explode('|', $forum));
@@ -97,7 +96,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $addterms             = Request::getString('andor', 'AND');
     $next_search['andor'] = $addterms;
     $andor                = \mb_strtoupper($addterms);
-    if (!in_array($addterms, ['OR', 'AND'])) {
+    if (!in_array($addterms, ['OR', 'AND'], true)) {
         $andor = 'AND';
     }
 
@@ -148,7 +147,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $sortby                = Request::getString('sortby', 'p.post_time');
     $next_search['sortby'] = $sortby;
     //$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  't.topic_last_post_id';
-    $sortby                  = in_array(mb_strtolower($sortby), $allowed) ? $sortby : 'p.post_time';
+    $sortby                  = in_array(mb_strtolower($sortby), $allowed, true) ? $sortby : 'p.post_time';
     $searchin                = Request::getString('searchin', 'both');
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search

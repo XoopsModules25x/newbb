@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 //
 // FILE        ::    newbb.php
 // AUTHOR    ::    Ryuji AMANO <info@ryus.biz>
-// WEB        ::    Ryu's Planning <http://ryus.biz>
+// WEB        ::    Ryu's Planning <https://ryus.biz>
 
 // NewBB plugin: D.J., https://xoops.org.cn
 

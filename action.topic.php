@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
@@ -29,14 +29,13 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
 /** @var StatsHandler $statsHandler */
-
 require_once __DIR__ . '/header.php';
 
 $forum_id = Request::getInt('forum_id', 0, 'POST');
 $topic_id = Request::getArray('topic_id', [], 'POST');
 
 $op = Request::getString('op', '', 'POST');
-$op = in_array($op, ['approve', 'delete', 'restore', 'move']) ? $op : '';
+$op = in_array($op, ['approve', 'delete', 'restore', 'move'], true) ? $op : '';
 
 if ('' === $op || 0 === count($topic_id)) {
     // irmtfan - issue with javascript:history.go(-1)
@@ -152,7 +151,7 @@ switch ($op) {
             $forumHandler->synchronization($forum_id);
         } else {
             require_once $GLOBALS['xoops']->path('header.php');
-             //            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
+            //            $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
             $categories = $categoryHandler->getByPermission('access');
             $forums     = $forumHandler->getForumsByCategory(array_keys($categories), 'post', false);
 

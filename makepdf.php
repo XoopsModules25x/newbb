@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -13,7 +13,7 @@
  * oledrion
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
- * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license     {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      phppp (D.J., infomax@gmail.com)
  */
 

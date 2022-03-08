@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,15 +6,14 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Module\Helper\Cache;
-/** @var \Xmf\Module\Helper\Cache */
 
+/** @var \Xmf\Module\Helper\Cache */
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 \define('NEWBB_HANDLER_PERMISSION', 1);
 
@@ -31,7 +30,8 @@ class PermissionHandler extends \XoopsGroupPermHandler
     protected $cacheHelper;
     /** @var array */
     private $_handler;
-    /** @var Helper $helper */
+    
+    /** @var Helper */
     private $helper;
 
     /**
@@ -41,7 +41,7 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function __construct(\XoopsDatabase $db = null, $helper = null)
     {
         $this->cacheHelper = new Cache('newbb');
-        if (null === $helper){
+        if (null === $helper) {
             $helper = Helper::getInstance();
         }
         $this->helper = $helper;
@@ -57,8 +57,8 @@ class PermissionHandler extends \XoopsGroupPermHandler
     public function loadHandler($name)
     {
         if (!isset($this->_handler[$name])) {
-//            $className             = '\\XoopsModules\\Newbb\\Permission' . \ucfirst($name) . 'Handler';
-//            $this->_handler[$name] = new $className($this->db);
+            //            $className             = '\\XoopsModules\\Newbb\\Permission' . \ucfirst($name) . 'Handler';
+            //            $this->_handler[$name] = new $className($this->db);
             $this->_handler[$name] = $this->helper->getHandler('Permission' . \ucfirst($name));
         }
 
@@ -246,12 +246,12 @@ class PermissionHandler extends \XoopsGroupPermHandler
             unset($module);
         }
 
-        if (\in_array($perm_name, ['forum_all', 'category_all'])) {
+        if (\in_array($perm_name, ['forum_all', 'category_all'], true)) {
             /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = \xoops_getHandler('member');
             $groups        = \array_keys($memberHandler->getGroupList());
 
-            $type          = ('category_all' === $perm_name) ? 'Category' : 'Forum';
+            $type = ('category_all' === $perm_name) ? 'Category' : 'Forum';
             /** @var \XoopsPersistableObjectHandler $objectHandler */
             $objectHandler = Helper::getInstance()->getHandler($type);
             $object_ids    = $objectHandler->getIds();

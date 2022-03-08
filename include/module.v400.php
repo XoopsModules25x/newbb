@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
- * @param XoopsModule $module
  * @return bool
  */
+
+use XoopsModules\Tag;
 
 function xoops_module_update_newbb_v400(XoopsModule $module)
 {
@@ -83,19 +83,21 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         xoops_error($GLOBALS['xoopsDB']->error() . '<br>' . $sql);
     }
 
-    @require_once $GLOBALS['xoops']->path('modules/tag/include/functions.php');
-    if (function_exists('tag_getTagHandler') && $tag_handler = tag_getTagHandler()) {
+    if (\class_exists(\XoopsModules\Tag\TagHandler::class) && xoops_isActiveModule('tag')) {
+        $tagHandler  = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag');
         $table_topic = $GLOBALS['xoopsDB']->prefix('bb_topics');
 
         $sql = '    SELECT topic_id, topic_tags' . "    FROM {$table_topic}";
         if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
-        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            if (empty($myrow['topic_tags'])) {
-                continue;
+        if ($result instanceof \mysqli_result) {
+            while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                if (empty($myrow['topic_tags'])) {
+                    continue;
+                }
+                $tagHandler->updateByItem($myrow['topic_tags'], $myrow['topic_id'], $module->getVar('mid'));
             }
-            $tag_handler->updateByItem($myrow['topic_tags'], $myrow['topic_id'], $module->getVar('mid'));
         }
     }
 

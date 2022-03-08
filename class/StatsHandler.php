@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,12 +6,10 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
-
 \defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 
 \define('NEWBB_STATS_TYPE_TOPIC', 1);
@@ -162,7 +160,7 @@ class StatsHandler
         return $ret;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->db->queryF('TRUNCATE TABLE ' . $this->table);
         $now        = \time();
@@ -175,7 +173,7 @@ class StatsHandler
 
         $sql = '    SELECT forum_id' . '    FROM ' . $this->db->prefix('newbb_forums');
         $ret = $this->db->query($sql);
-        while (list($forum_id) = $this->db->fetchRow($ret)) {
+        while ([$forum_id] = $this->db->fetchRow($ret)) {
             $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
             [$topics, $views] = $this->db->fetchRow($result);

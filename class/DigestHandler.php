@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Metagen;
@@ -98,6 +97,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
                 $ret[] = $myrow; // return as array
             }
         }
+
         return $ret;
     }
 
@@ -116,7 +116,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         return $array['count'];
     }
 
-    public function getLastDigest()
+    public function getLastDigest(): void
     {
         $sql    = 'SELECT MAX(digest_time) AS last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
@@ -145,7 +145,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $digest
-     * @param bool         $force flag to force the query execution despite security settings
+     * @param bool $force flag to force the query execution despite security settings
      * @return mixed       object ID or false
      */
     public function insert(\XoopsObject $digest, $force = true)
@@ -174,7 +174,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $digest
-     * @param bool         $force (ignored)
+     * @param bool $force (ignored)
      * @return bool        FALSE if failed.
      */
     public function delete(\XoopsObject $digest, $force = false)

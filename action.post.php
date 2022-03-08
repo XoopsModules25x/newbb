@@ -1,27 +1,26 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    Tree,
     TopicHandler,
     ForumHandler,
     Post,
-    PostHandler
+    PostHandler,
+    Tree
 };
 /** @var TopicHandler $topicHandler */
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
 /** @var Post $postObject */
-
 require_once __DIR__ . '/header.php';
 
 $topic_id = Request::getInt('topic_id', 0, 'POST');
@@ -37,7 +36,7 @@ $post_id  = Request::getArray('post_id', Request::getArray('post_id', [], 'POST'
 $uid = Request::getInt('uid', 0, 'GET');
 
 $op   = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
-$op   = in_array($op, ['approve', 'delete', 'restore', 'split']) ? $op : '';
+$op   = in_array($op, ['approve', 'delete', 'restore', 'split'], true) ? $op : '';
 $mode = Request::getInt('mode', 1, 'GET');
 
 if (0 === $post_id || '' === $op) {
@@ -131,7 +130,7 @@ switch ($op) {
             $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $postsObject[$post]->getVar('topic_id') . '&amp;forum=' . $postsObject[$post]->getVar('forum_id');
             $tags['FORUM_NAME']  = $forum_list[$postsObject[$post]->getVar('forum_id')];
             $tags['FORUM_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewforum.php?forum=' . $postsObject[$post]->getVar('forum_id');
-             $tags['POST_URL']    = $tags['THREAD_URL'] . '&topic_id=' . $postsObject[$post]->getVar('topic_id') . '#forumpost' . $post;
+            $tags['POST_URL']    = $tags['THREAD_URL'] . '&topic_id=' . $postsObject[$post]->getVar('topic_id') . '#forumpost' . $post;
             $notificationHandler->triggerEvent('thread', $postsObject[$post]->getVar('topic_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('forum', $postsObject[$post]->getVar('forum_id'), 'new_post', $tags);
             $notificationHandler->triggerEvent('global', 0, 'new_post', $tags);
@@ -232,7 +231,7 @@ switch ($op) {
         $forum_id = $postObject->getVar('forum_id');
         $topicHandler->synchronization($topic_id);
         $topicHandler->synchronization($new_topic_id);
-//        $sql    = sprintf('UPDATE "%s" SET forum_topics = forum_topics+1 WHERE forum_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
+        //        $sql    = sprintf('UPDATE "%s" SET forum_topics = forum_topics+1 WHERE forum_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
         $sql    = sprintf('UPDATE %s SET forum_topics = forum_topics+1 WHERE forum_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_forums'), $forum_id);
         $result = $GLOBALS['xoopsDB']->queryF($sql);
 

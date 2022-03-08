@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -27,7 +27,6 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var TopicHandler $topicHandler */
 /** @var PostHandler $postHandler */
-
 require_once __DIR__ . '/header.php';
 
 $forum    = Request::getInt('forum', 0, 'GET');
@@ -41,10 +40,9 @@ if (!$topic_id && !$post_id) {
     redirect_header($redirect, 2, _MD_NEWBB_ERRORTOPIC);
 }
 
-
 $forumHandler = Helper::getInstance()->getHandler('Forum');
 $topicHandler = Helper::getInstance()->getHandler('Topic');
-$postHandler = Helper::getInstance()->getHandler('Post');
+$postHandler  = Helper::getInstance()->getHandler('Post');
 
 if (!$pid = $post_id) {
     $pid = $topicHandler->getTopPostId($topic_id);
@@ -82,7 +80,7 @@ if (!$topicHandler->getPermission($forumObject, $topic_status, 'reply')) {
 }
 
 if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
-    //    /** @var OnlineHandler $onlineHandler */
+    // /** @var OnlineHandler $onlineHandler */
     //    $onlineHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Online');
     $onlineHandler->init($forumObject);
 }

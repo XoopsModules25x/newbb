@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -15,8 +15,7 @@ namespace XoopsModules\Newbb;
  * NewBB module for xoops
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GPL 2.0 or later
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           5.0.0
  * @author          XOOPS Development Team <https://xoops.org>
  */
@@ -43,7 +42,7 @@ class Helper extends \Xmf\Module\Helper
      *
      * @return \XoopsModules\Newbb\Helper
      */
-    public static function getInstance(bool $debug = false): Helper
+    public static function getInstance(bool $debug = false): self
     {
         static $instance;
         if (null === $instance) {
@@ -98,6 +97,7 @@ class Helper extends \Xmf\Module\Helper
         $helper = self::getInstance();
         $ret    = new $class($db, $helper);
         $this->addLog("Getting handler '{$name}'");
+
         return $ret;
     }
 }

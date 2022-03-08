@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,7 +6,6 @@ use XoopsModules\Newbb;
 
 /**
  * Class GroupPermForm
- * @package XoopsModules\Newbb
  */
 class GroupPermForm extends \XoopsGroupPermForm
 {

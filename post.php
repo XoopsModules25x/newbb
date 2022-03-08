@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Newbb module
  *
@@ -10,8 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -25,12 +25,12 @@ use XoopsModules\Newbb\{
     Post,
     PostHandler
 };
+
 /** @var ForumHandler $forumHandler */
 /** @var TopicHandler $topicHandler */
 /** @var OnlineHandler $onlineHandler */
 /** @var PostHandler $postHandler */
 /** @var Post $postObject */
-
 require_once __DIR__ . '/header.php';
 
 foreach (
@@ -53,7 +53,6 @@ $viewmode    = ('flat' !== Request::getString('viewmode', '', 'POST')) ? 'thread
 if (empty($forum)) {
     redirect_header('index.php', 2, _MD_NEWBB_ERRORFORUM);
 }
-
 
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 //$topicHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Topic');
@@ -101,7 +100,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
                     setcookie($GLOBALS['xoopsConfig']['session_name'], session_id(), time() + (60 * $GLOBALS['xoopsConfig']['session_expire']), '/', '', 0);
                 }
                 $user_theme = $user->getVar('theme');
-                if (in_array($user_theme, $GLOBALS['xoopsConfig']['theme_set_allowed'])) {
+                if (in_array($user_theme, $GLOBALS['xoopsConfig']['theme_set_allowed'], true)) {
                     $_SESSION['xoopsUserTheme'] = $user_theme;
                 }
             }
@@ -335,8 +334,8 @@ if (Request::getString('contents_submit', '', 'POST')) {
         $tags                = [];
         $tags['THREAD_NAME'] = Request::getString('subject', '', 'POST');
         $tags['THREAD_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id');
-		$tags['POST_URL']    =  XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id') . '&amp;post_id=' . $postid . '#forumpost' . $postid;
-		
+        $tags['POST_URL']    = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id') . '&amp;post_id=' . $postid . '#forumpost' . $postid;
+
         require_once __DIR__ . '/include/notification.inc.php';
         $forum_info         = newbb_notify_iteminfo('forum', $forumObject->getVar('forum_id'));
         $tags['FORUM_NAME'] = $forum_info['name'];
@@ -396,7 +395,7 @@ if (Request::getString('contents_submit', '', 'POST')) {
             $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }
 
-        $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id') . '&amp;post_id=' . $postid . '#forumpost' . $postid ;
+        $redirect = XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $topicObject->getVar('topic_id') . '&amp;post_id=' . $postid . '#forumpost' . $postid;
         $message  = _MD_NEWBB_THANKSSUBMIT . '<br>' . $error_upload;
     } else {
         $redirect = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $postObject->getVar('forum_id');
@@ -419,15 +418,15 @@ require_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 if (Request::getString('contents_upload', null, 'POST')) {
-  // BigKev73 > This line needs to be removed as it will cause any attachement already added in this editing session to be throw away. This is one of the reasons why multi-file attachment
-  // was not working like it used to in CBB.
-  //  $attachments_tmp = [];
-    
-  // This shoue be Request::getString, not Request::getArray, otherwise this will always return a null value. This is one of the reasons why multi-file attachment
-  // was not working like it used to in CBB.
-  //  if (Request::getArray('attachments_tmp', null, 'POST')) {
-  //      $attachments_tmp = unserialize(base64_decode(Request::getArray('attachments_tmp', [], 'POST'), true));
-   if (Request::getString('attachments_tmp', '', 'POST')) {
+    // BigKev73 > This line needs to be removed as it will cause any attachement already added in this editing session to be throw away. This is one of the reasons why multi-file attachment
+    // was not working like it used to in CBB.
+    //  $attachments_tmp = [];
+
+    // This shoue be Request::getString, not Request::getArray, otherwise this will always return a null value. This is one of the reasons why multi-file attachment
+    // was not working like it used to in CBB.
+    //  if (Request::getArray('attachments_tmp', null, 'POST')) {
+    //      $attachments_tmp = unserialize(base64_decode(Request::getArray('attachments_tmp', [], 'POST'), true));
+    if (Request::getString('attachments_tmp', '', 'POST')) {
         $attachments_tmp = unserialize(base64_decode(Request::getString('attachments_tmp', [], 'POST'), true));
         if (Request::getArray('delete_tmp', null, 'POST') && count(Request::getArray('delete_tmp', null, 'POST'))) {
             foreach (Request::getArray('delete_tmp', '', 'POST') as $key) {

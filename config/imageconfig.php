@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 $moduleDirName      = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -22,9 +22,8 @@ namespace XoopsModules\Newbb;
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 
@@ -195,7 +194,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @param $read_item
      * @param $post_id
      */
-    public function setReadCookie($read_item, $post_id)
+    public function setReadCookie($read_item, $post_id): void
     {
         $cookie_name          = ('forum' === $this->type) ? 'LF' : 'LT';
         $lastview             = \newbbGetCookie($cookie_name, true);

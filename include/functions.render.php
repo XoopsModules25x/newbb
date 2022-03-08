@@ -1,19 +1,17 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{IconHandler
-};
+use XoopsModules\Newbb\IconHandler;
 
 /** @var IconHandler $iconHandler */
-
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_RENDER_LOADED', true);
 
@@ -33,12 +31,12 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
     }
 
     /**
-     * @param        $text
-     * @param int    $html
-     * @param int    $smiley
-     * @param int    $xcode
-     * @param int    $image
-     * @param int    $br
+     * @param mixed $text
+     * @param int   $html
+     * @param int   $smiley
+     * @param int   $xcode
+     * @param int   $image
+     * @param int   $br
      * @return mixed
      */
     function &newbbDisplayTarea(&$text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)

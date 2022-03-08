@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
+    Helper,
     TopicHandler
 };
 
 /** @var Helper $helper */
 /** @var TopicHandler $topicsHandler */
-
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 

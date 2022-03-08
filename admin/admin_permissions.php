@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
 
@@ -29,7 +29,6 @@ use XoopsModules\Newbb\{
 /** @var CategoryHandler $categoryHandler */
 /** @var ForumHandler $forumHandler */
 /** @var PermissionHandler $permissionHandler */
-
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 if (!class_exists('XoopsGroupPermForm')) {
@@ -51,10 +50,10 @@ if (!class_exists('XoopsGroupPermForm')) {
  */
 
 //$action = isset($_REQUEST['action']) ? strtolower($_REQUEST['action']) : "";
-$action    = \mb_strtolower(Request::getCmd('action', ''));
-$module_id = $xoopsModule->getVar('mid');
+$action            = \mb_strtolower(Request::getCmd('action', ''));
+$module_id         = $xoopsModule->getVar('mid');
 $permissionHandler = Helper::getInstance()->getHandler('Permission');
-$perms            = $permissionHandler->getValidForumPerms();
+$perms             = $permissionHandler->getValidForumPerms();
 
 switch ($action) {
     case 'template':
@@ -91,7 +90,7 @@ switch ($action) {
                 if (0 == $ii % 5) {
                     $ret_ele .= '</tr><tr>';
                 }
-                $checked      = in_array('forum_' . $perm, $selected) ? ' checked' : '';
+                $checked      = in_array('forum_' . $perm, $selected, true) ? ' checked' : '';
                 $option_id    = $perm . '_' . $i;
                 $option_ids[] = $option_id;
                 $ret_ele      .= '<td><input name="perms[' . $i . '][' . 'forum_' . $perm . ']" id="' . $option_id . '" onclick="" value="1" type="checkbox"' . $checked . '>' . constant('_AM_NEWBB_CAN_' . \mb_strtoupper($perm)) . '<br></td>';

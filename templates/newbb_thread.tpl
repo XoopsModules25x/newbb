@@ -106,7 +106,7 @@
             <div class="post_ip">
                 <{if $topic_post.poster_ip}>
                     IP:
-                    <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
+                    <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
                     |
                 <{/if}>
                 <{if $topic_post.poster.uid gt 0}>

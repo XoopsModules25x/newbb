@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 //
-// Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
+// Thanks Tom (https://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) {
     return;
 }

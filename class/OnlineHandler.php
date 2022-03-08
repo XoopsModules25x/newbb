@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Criteria;
@@ -20,7 +19,6 @@ use XoopsDatabase;
 use XoopsModules\Newbb;
 
 /** @var \XoopsOnlineHandler $xoopsOnlineHandler */
-
 require_once \dirname(__DIR__) . '/include/functions.config.php';
 
 /**
@@ -36,7 +34,6 @@ class OnlineHandler
 
     /**
      * OnlineHandler constructor.
-     * @param \XoopsDatabase|null $db
      */
     public function __construct(XoopsDatabase $db = null)
     {
@@ -50,7 +47,7 @@ class OnlineHandler
      * @param null|Newbb\Forum $forum
      * @param null|Topic       $forumtopic
      */
-    public function init($forum = null, $forumtopic = null)
+    public function init($forum = null, $forumtopic = null): void
     {
         if (\is_object($forum)) {
             $this->forum_id    = $forum->getVar('forum_id');
@@ -71,7 +68,7 @@ class OnlineHandler
         $this->update();
     }
 
-    public function update()
+    public function update(): void
     {
         global $xoopsModule;
 
@@ -103,7 +100,7 @@ class OnlineHandler
     /**
      * @param $xoopsTpl
      */
-    public function render(Smarty $xoopsTpl)
+    public function render(Smarty $xoopsTpl): void
     {
         require_once \dirname(__DIR__) . '/include/functions.render.php';
         require_once \dirname(__DIR__) . '/include/functions.user.php';
@@ -209,9 +206,9 @@ class OnlineHandler
         }
 
         foreach ($users_online as $uid => $user) {
-            if (\in_array($uid, $administrator_list)) {
+            if (\in_array($uid, $administrator_list, true)) {
                 $user['level'] = 2;
-            } elseif (\in_array($uid, $moderator_list)) {
+            } elseif (\in_array($uid, $moderator_list, true)) {
                 $user['level'] = 1;
             } else {
                 $user['level'] = 0;
@@ -291,7 +288,7 @@ class OnlineHandler
      *
      * @param int $expire Expiration time in seconds
      */
-    public function gc($expire)
+    public function gc($expire): void
     {
         global $xoopsModule;
         $sql = 'DELETE FROM ' . $this->db->prefix('newbb_online') . ' WHERE online_updated < ' . (\time() - (int)$expire);
@@ -329,6 +326,7 @@ class OnlineHandler
             }
             $this->user_ids = \array_unique($this->user_ids);
         }
+
         return $ret;
     }
 
@@ -352,12 +350,12 @@ class OnlineHandler
             if (!$result) {
                 return $ret;
             }
-            while (list($uid) = $this->db->fetchRow($result)) {
+            while ([$uid] = $this->db->fetchRow($result)) {
                 $online_users[] = $uid;
             }
         }
         foreach ($uids as $uid) {
-            if (\in_array($uid, $online_users)) {
+            if (\in_array($uid, $online_users, true)) {
                 $ret[$uid] = 1;
             }
         }

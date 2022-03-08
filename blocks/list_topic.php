@@ -1,23 +1,24 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @author         The Persian Xoops Support Site <www.xoops.ir>
  * @since          4.3
- * @package        module::newbb
  */
 
-use XoopsModules\Newbb\{Helper,
+
+use XoopsModules\Newbb\{
     ForumHandler,
+    Helper,
     TopicRenderer
 };
 
 /** @var Helper $helper */
 /** @var ForumHandler $forumHandler */
-
 if (defined('LIST_TOPIC_DEFINED')) {
     return;
 }

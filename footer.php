@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,14 +10,12 @@
  */
 
 /**
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         NEWBB
+ * @copyright       XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
  * @author          The Persian Xoops Support Site<www.xoops.ir>
  */
-
 global $xoTheme;
 
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');

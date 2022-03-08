@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -54,13 +54,13 @@ class PostHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int                   $limit
-     * @param int                   $start
+     * @param int  $limit
+     * @param int  $start
      * @param \CriteriaElement|null $criteria
-     * @param null                  $fields
-     * @param bool                  $asObject
-     * @param int                   $topic_id
-     * @param int                   $approved
+     * @param null $fields
+     * @param bool $asObject
+     * @param int  $topic_id
+     * @param int  $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -95,6 +95,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                 unset($post);
             }
         }
+
         return $ret;
     }
 
@@ -118,7 +119,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param int|Post $post
-     * @param bool                  $force
+     * @param bool     $force
      * @return bool
      */
     public function approve(&$post, $force = false)
@@ -188,7 +189,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $post
-     * @param bool         $force
+     * @param bool $force
      * @return bool
      */
     public function insert(\XoopsObject $post, $force = true) //insert(&$post, $force = true)
@@ -455,7 +456,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \CriteriaElement|\CriteriaCompo|null $criteria
-     * @param null $join
+     * @param null                                 $join
      * @return int|null
      */
     public function getPostCount($criteria = null, $join = null)
@@ -489,9 +490,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \CriteriaElement|\CriteriaCompo|null $criteria
-     * @param int  $limit
-     * @param int  $start
-     * @param null $join
+     * @param int                                  $limit
+     * @param int                                  $start
+     * @param null                                 $join
      * @return array
      */
     public function getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
@@ -516,6 +517,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                 unset($post);
             }
         }
+
         return $ret;
     }
 

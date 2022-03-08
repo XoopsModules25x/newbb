@@ -1,24 +1,29 @@
 <?php
+
+declare(strict_types=1);
 /*
- * You may not change or alter any portion of this comment or credits
- * of supporting developers from this source code or any supporting source code
- * which is considered copyrighted (c) material of the original comment or credit authors.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- */
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
- * @author       XOOPS Development Team
+ * Migration for XOOPS modules
+ *
+ * @copyright      XOOPS Project  (https://xoops.org)
+ * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author         Richard Griffith <richard@geekwright.com>
+ * @author         Michael Beck <mambax7@gmail.com>
  */
 
-use Xmf\Request;
 use Xmf\Module\Admin;
-use XoopsModules\Newbb\{Common\Configurator,
+use Xmf\Request;
+use XoopsModules\Newbb\{
+    Common\Configurator,
     Common\Migrate,
     Helper
 };
@@ -26,25 +31,24 @@ use XoopsModules\Newbb\{Common\Configurator,
 /** @var Admin $adminObject */
 /** @var Helper $helper */
 /** @var Configurator $configurator */
-
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $adminObject->displayNavigation(basename(__FILE__));
 
 echo <<<EOF
-<form method="post" class="form-inline">
-<div class="form-group">
-<input name="show" class="btn btn-default" type="submit" value="Show SQL">
-</div>
-<div class="form-group">
-<input name="migrate" class="btn btn-default" type="submit" value="Do Migration">
-</div>
-<div class="form-group">
-<input name="schema" class="btn btn-default" type="submit" value="Write Schema">
-</div>
-</form>
-EOF;
+    <form method="post" class="form-inline">
+    <div class="form-group">
+    <input name="show" class="btn btn-default" type="submit" value="Show SQL">
+    </div>
+    <div class="form-group">
+    <input name="migrate" class="btn btn-default" type="submit" value="Do Migration">
+    </div>
+    <div class="form-group">
+    <input name="schema" class="btn btn-default" type="submit" value="Write Schema">
+    </div>
+    </form>
+    EOF;
 
 //XoopsLoad::load('migrate', 'newbb');
 

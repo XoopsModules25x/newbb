@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Module\Helper\Cache;
@@ -20,7 +20,6 @@ use XoopsModules\Newbb\{
 /** @var Helper $helper */
 /** @var CategoryHandler $categoryHandler */
 /** @var ForumHandler $forumHandler */
-
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_FORUM_LOADED', true);
 
@@ -53,8 +52,8 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
             static function () use ($categories, $permission) {
                 $categoryHandler = Helper::getInstance()->getHandler('Category');
                 $categories      = $categoryHandler->getByPermission($permission, ['cat_id', 'cat_order', 'cat_title'], false);
-                $forumHandler = Helper::getInstance()->getHandler('Forum');
-                $forums       = $forumHandler->getTree(array_keys($categories), 0, 'all');
+                $forumHandler    = Helper::getInstance()->getHandler('Forum');
+                $forums          = $forumHandler->getTree(array_keys($categories), 0, 'all');
 
                 return $forums;
             },
@@ -74,10 +73,10 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
                     continue;
                 }
                 foreach ($forums[$key] as $f => $forum) {
-                    if ($see && in_array($f, $value)) {
+                    if ($see && in_array($f, $value, true)) {
                         continue;
                     }
-                    $box .= "<option value='{$f}' " . (in_array($f, $value) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
+                    $box .= "<option value='{$f}' " . (in_array($f, $value, true) ? ' selected' : '') . '>' . $forum['prefix'] . $forum['forum_name'] . "</option>\n";
                 }
             }
         } else {
@@ -99,7 +98,7 @@ if (!defined('NEWBB_FUNCTIONS_FORUM')) {
         $box .= '<option value=0>-- ' . _MD_NEWBB_SELFORUM . ' --</option>';
         $box .= newbbForumSelectBox($forum_id);
         $box .= "</select> <input type='submit' class='button' value='" . _GO . "' ></form>";
-//        unset($forums, $categories);
+        //        unset($forums, $categories);
 
         return $box;
     }

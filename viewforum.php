@@ -1,22 +1,22 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
-    OnlineHandler,
-    ForumHandler
+    ForumHandler,
+    OnlineHandler
+
 };
 /** @var OnlineHandler $onlineHandler */
 /** @var ForumHandler $forumHandler */
-
 require_once __DIR__ . '/header.php';
 
 if (!Request::getInt('forum', 0, 'GET')) {
@@ -76,7 +76,6 @@ $mode = (Request::getString('status', '', 'GET')
              true
          )) ? 2 : Request::getInt('mode', 0, 'GET');
 
-
 //$forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
 $forumObject = $forumHandler->get($forum_id);
 
@@ -116,7 +115,7 @@ $isAdmin = newbbIsAdmin($forumObject);
 $xoopsTpl->assign('viewer_level', $isAdmin ? 2 : 0);
 /* Only admin has access to admin mode */
 if (!$isAdmin) {
-    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'])) ? '' : $status;
+    $status = (!empty($status) && in_array($status, ['active', 'pending', 'deleted'], true)) ? '' : $status;
     // irmtfan add mode
     $mode = 0;
 }
@@ -365,12 +364,11 @@ if (1 == $GLOBALS['xoopsModuleConfig']['rss_enable']) {
 require_once __DIR__ . '/footer.php';
 require_once $GLOBALS['xoops']->path('footer.php');
 //added missing php closing tag
-?> 
+?>
 <script>
-	//Added by BigKev73 to force the reloading of this page when the browser back button is used. Otherwise the unread envelope status wont update
-	if(!!window.performance && window.performance.navigation.type === 2)
-{
-    console.log('Reloading');
-    window.location.reload();
-}
+    //Added by BigKev73 to force the reloading of this page when the browser back button is used. Otherwise the unread envelope status wont update
+    if (!!window.performance && window.performance.navigation.type === 2) {
+        console.log('Reloading');
+        window.location.reload();
+    }
 </script>
