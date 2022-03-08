@@ -10,13 +10,13 @@
  */
 require_once __DIR__ . '/preloads/autoloader.php';
 
-$moduleDirName      = basename(__DIR__);
+$moduleDirName = basename(__DIR__);
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $modversion = [
-    'version'             => '5.01.0',
-    'module_status'       => 'Beta 5 NOT RELEASED',
-    'release_date'        => '2021/08/09',
+    'version'             => '5.1.0',
+    'module_status'       => 'Beta 5',
+    'release_date'        => '2022/02/20',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
