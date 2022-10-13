@@ -123,6 +123,7 @@ class TopicRenderer
                 //$val = (in_array($val, array_keys($this->getStatus( $this->userlevel ))) ) ? $val : "all"; //irmtfan no need to check if status is empty or not
                 //if ($val === "all" && !$this->is_multiple) $val = ""; irmtfan commented because it is done in sort
                 // END irmtfan to accept multiple status
+		$this->vars[$var] = $val;
                 break;
             default:
                 break;
@@ -160,7 +161,8 @@ class TopicRenderer
             switch ($var) {
                 case 'forum':
                 case 'status':
-                    $this->setVar($var, Request::getArray($var, [], $hash));
+                  //  $this->setVar($var, Request::getArray($var, [], $hash));
+			    $this->setVar('status', Request::getArray('status', [], $hash));
                     break;
                 default:
                     $this->setVar($var, Request::getString($var, '', $hash));
