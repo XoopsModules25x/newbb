@@ -16,7 +16,7 @@ use XoopsUser;
 
 /**
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author      mamba <mambax7@gmail.com>
  */
 trait FilesManagement

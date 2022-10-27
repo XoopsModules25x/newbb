@@ -3,7 +3,7 @@
  * NewBB 4.3x, the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        https://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
  */
