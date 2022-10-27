@@ -53,7 +53,7 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$form_post.elements}>
-        <{if $element.hidden|default:false !== true}>
+        <{if $element.hidden|default:false != true}>
             <tr valign="top">
                 <td class="head">
                     <div class="xoops-form-element-caption<{if $element.required|default:''}>-required<{/if}>"><span
@@ -69,7 +69,7 @@
         <{/foreach}>
     </table>
     <{foreach item=element from=$form_post.elements}>
-    <{if $element.hidden|default:false === true}>
+    <{if $element.hidden|default:false == true}>
         <{$element.body}>
     <{/if}>
     <{/foreach}>
