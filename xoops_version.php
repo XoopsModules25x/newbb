@@ -15,8 +15,8 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $modversion = [
     'version'             => '5.1.0',
-    'module_status'       => 'Beta 5',
-    'release_date'        => '2022/02/20',
+    'module_status'       => 'Beta 6',
+    'release_date'        => '2022/10/26',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,
     'help'                => 'page=help',
@@ -81,6 +81,7 @@ $modversion = [
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/module.php',
     'onUpdate'            => 'include/module.php',
+//    'onUpdate'            => 'include/onupdate.php',
     //  'onUninstall'         => 'include/onuninstall.php',
 ];
 // ------------------- Help files ------------------- //

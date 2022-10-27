@@ -56,7 +56,7 @@ return (object)[
 
     'templateFolders' => [
         '/templates/',
-        //            '/templates/blocks/',
+        '/templates/blocks/',
         //            '/templates/admin/'
     ],
     'oldFiles'        => [
@@ -72,7 +72,9 @@ return (object)[
         '/images',
         '/css',
         '/js',
+        '/fpdf',
         '/tcpdf',
+        '/images',
     ],
 
     'renameTables'  => [//         'XX_archive'     => 'ZZZZ_archive',

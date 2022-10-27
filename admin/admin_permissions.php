@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)/
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
@@ -185,8 +185,8 @@ switch ($action) {
             }
             $permissionHandler->applyTemplate($forum, $module_id);
         }
-        $cacheHelper = Utility::cleanCache();
         //$cacheHelper->delete('permission');
+        Utility::cleanCache();
         redirect_header('admin_permissions.php', 2, _AM_NEWBB_PERM_TEMPLATE_APPLIED);
         break;
     default:
@@ -296,8 +296,9 @@ switch ($action) {
         /** var Newbb\PermissionHandler $permissionHandler */
         $permissionHandler = Helper::getInstance()->getHandler('Permission');
         $permissionHandler->createPermData();
-        $cacheHelper = Utility::cleanCache();
         //$cacheHelper->delete('permission');
+        Utility::cleanCache();
+
         require_once __DIR__ . '/admin_footer.php';
         break;
 }

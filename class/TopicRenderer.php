@@ -330,7 +330,7 @@ class TopicRenderer
                 /** @var Newbb\ForumHandler $forumHandler */ $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
-                $accessForums = $forumHandler->getIdsByValues(\array_map('\intval', @\explode('|', $val)));
+                $accessForums = $forumHandler->getIdsByValues(\array_map('\intval', @\explode('|', (string)$val)));
                 // Filter specified forums if any
                 //if (!empty($val) && $_forums = @explode('|', $val)) {
                 //$accessForums = array_intersect($accessForums, array_map('intval', $_forums));
@@ -725,7 +725,7 @@ class TopicRenderer
             /** @var Newbb\TypeHandler $typeHandler */
             $typeHandler = Helper::getInstance()->getHandler('Type');
 
-            $types = $typeHandler->getByForum(\explode('|', @$this->vars['forum']));
+            $types = $typeHandler->getByForum(\explode('|', (string)@$this->vars['forum']));
         }
 
         if (empty($type_id)) {

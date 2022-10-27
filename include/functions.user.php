@@ -222,7 +222,7 @@ function newbbIsForumModerators(array $uid = [], $mid = 0)
 {
     $forum_moderators = [];
 
-    if (!(bool)$uid) {
+    if (empty($uid)) {
         return $forum_moderators;
     }
 
@@ -233,10 +233,10 @@ function newbbIsForumModerators(array $uid = [], $mid = 0)
             if (empty($myrow['forum_moderator'])) {
                 continue;
             }
-            $forum_moderators = array_merge($forum_moderators, unserialize($myrow['forum_moderator']));
+            $forum_moderators = array_merge($forum_moderators, (array)unserialize($myrow['forum_moderator']));
         }
     }
 
-    return array_unique($forum_moderators);
+    return array_unique($forum_moderators??[]);
 }
 //ENDIF;

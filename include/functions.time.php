@@ -85,7 +85,7 @@ if (!defined('NEWBB_FUNCTIONS_TIME')) {
                     if ($since > 0) {
                         $forum_selection_since .= sprintf(_MD_NEWBB_FROMLASTDAYS, $since);
                     } else {
-                        $forum_selection_since .= sprintf(_MD_NEWBB_FROMLASTHOURS, abs($since));
+                        $forum_selection_since .= sprintf(_MD_NEWBB_FROMLASTHOURS, abs((int)$since));
                     }
             }
             // END irmtfan functional since 0 and 365

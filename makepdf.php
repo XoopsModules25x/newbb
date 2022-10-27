@@ -13,12 +13,16 @@
  * oledrion
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
- * @license     {@link https://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license     {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2.0 or later}
  * @author      phppp (D.J., infomax@gmail.com)
  */
 
 use Xmf\Request;
 use XoopsModules\Xlanguage\Utility as XlanguageUtility;
+use XoopsModules\Newbb\Helper;
+
+$moduleDirName      = basename(__DIR__);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 //use tecnickcom\TCPDF;
 
@@ -26,6 +30,7 @@ use XoopsModules\Xlanguage\Utility as XlanguageUtility;
 error_reporting(0);
 require_once __DIR__ . '/header.php';
 
+$helper = Helper::getInstance();
 $attach_id = Request::getString('attachid', '', 'GET');
 $forum     = Request::getInt('forum', 0, 'GET');
 $topic_id  = Request::getInt('topic_id', 0, 'GET');
@@ -34,7 +39,7 @@ $post_id   = Request::getInt('post_id', 0, 'GET');
 if (is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')) {
     require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 } else {
-    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPDF for Xoops not installed');
+    redirect_header($helper->url('viewtopic.php?topic_id=' . $topic_id), 3, \constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_NO_PDF'));
 }
 
 if (empty($post_id)) {

@@ -35,12 +35,13 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $img_info  = '';
 
         $imginfo = @getimagesize($image);
+
         // Change by BigKev73 - Removed the is_array check, otherwise the img_info is never set
         //if (is_array($image)) {
-        $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        $img_info = (is_array($imginfo) && count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
         //}
 
-        if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
+        if (is_array($imginfo) && $GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
             && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
                 || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
@@ -53,8 +54,8 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         //BigKev73 Change to remove height value
 
-        if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-            || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
+        if (is_array($imginfo) && ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
+            || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height'])) {
             $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
             $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
             $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height . "'";

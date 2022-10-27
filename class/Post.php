@@ -214,6 +214,7 @@ class Post extends \XoopsObject
                 }
                 $file_size = @\filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = \number_format($file_size / 1024, 2) . ' KB';
+                $att['nameDisplay'] = $att['nameDisplay']??'';
                 if ($GLOBALS['xoopsModuleConfig']['media_allowed']
                     && \in_array(mb_strtolower($file_extension), $image_extensions, true)) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';

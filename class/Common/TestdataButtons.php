@@ -46,7 +46,8 @@ class TestdataButtons
         $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
         $helper              = Helper::getInstance();
         $yamlFile            = $helper->path('/config/admin.yml');
-        $config             = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
+        /** @var array $config */
+        $config              = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
         $displaySampleButton = $config['displaySampleButton'];
 
         if (self::SHOW_BUTTONS == $displaySampleButton) {

@@ -64,7 +64,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
     }
 
     /**
-     * @param              $name
+     * @param string       $name
      * @param string|array $string
      * @param int          $expire
      */
@@ -78,7 +78,7 @@ if (!defined('NEWBB_FUNCTIONS_SESSION')) {
             }
             $string = implode(',', $value);
         }
-        setcookie($forumCookie['prefix'] . $name, $string, (int)$expire, $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
+        setcookie($forumCookie['prefix'] . $name, (string)$string, (int)$expire, $forumCookie['path'], $forumCookie['domain'], $forumCookie['secure']);
     }
 
     /**
