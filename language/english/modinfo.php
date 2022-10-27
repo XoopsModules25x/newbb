@@ -334,7 +334,7 @@ define('_MI_NEWBB_OVERVIEW', 'Overview');
 
 //define('_MI_NEWBB_HELP_DIR', __DIR__);
 
-//help multi-page
+//help multipage
 define('_MI_NEWBB_HELP_DISCLAIMER', 'Disclaimer');
 define('_MI_NEWBB_LICENSE', 'License');
 define('_MI_NEWBB_SUPPORT', 'Support');

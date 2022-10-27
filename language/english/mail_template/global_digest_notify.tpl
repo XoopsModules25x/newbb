@@ -10,7 +10,7 @@ Follow these links to view the full topics in the forums:
 
 You are receiving this message because you selected to be notified of post digest.
 
-If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
+If this is an error, or if you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
 {X_UNSUBSCRIBE_URL}
 
 -----------
