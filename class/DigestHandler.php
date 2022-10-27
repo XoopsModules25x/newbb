@@ -92,7 +92,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //        $reportHandler =  Newbb\Helper::getInstance()->getHandler('Report');
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow; // return as array
             }

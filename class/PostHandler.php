@@ -86,7 +86,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);
@@ -509,7 +509,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
             }
         }
         $result = $this->db->query($sql, (int)$limit, (int)$start);
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);

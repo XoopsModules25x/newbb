@@ -316,7 +316,7 @@ class OnlineHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow;
                 if ($myrow['online_uid'] > 0) {
