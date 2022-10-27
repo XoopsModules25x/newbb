@@ -1,5 +1,5 @@
 ![alt XOOPS CMS](https://xoops.org/images/logoXoopsPhp81.png)
-## NewBB 5.0 Alpha 1 module for [XOOPS CMS 2.5.9+](https://xoops.org)
+## NewBB 5.x module for [XOOPS CMS 2.5.11+](https://xoops.org)
 [![XOOPS CMS Module](https://img.shields.io/badge/XOOPS%20CMS-Module-blue.svg)](https://xoops.org)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-2.0.html)
  
