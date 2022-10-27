@@ -3,7 +3,7 @@
  * NewBB 4.3x, the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        https://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
  * @return bool
@@ -91,7 +91,7 @@ function xoops_module_update_newbb_v400(XoopsModule $module)
         if (false === ($result = $GLOBALS['xoopsDB']->query($sql))) {
             xoops_error($GLOBALS['xoopsDB']->error());
         }
-        if ($result instanceof \mysqli_result) {
+        if ($GLOBALS['xoopsDB']->isResultSet($result)) {
             while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 if (empty($myrow['topic_tags'])) {
                     continue;
