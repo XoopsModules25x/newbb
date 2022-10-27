@@ -10,9 +10,9 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)/
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author       Kazumi Ono (AKA onokazu) https://www.myweb.ne.jp/, https://xoops.org/, https://jp.xoops.org/
+ * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
  * @author       XOOPS Development Team
  */
 
@@ -35,7 +35,7 @@ require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once \dirname(__DIR__) . '/include/functions.forum.php';
 require_once \dirname(__DIR__) . '/include/functions.render.php';
 
-$cacheHelper = new Cache('newbb');
+//$cacheHelper = new Cache('newbb');
 Utility::cleanCache();
 
 xoops_cp_header();

@@ -13,7 +13,7 @@ namespace XoopsModules\Newbb;
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)/
  * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       phppp (D.J., infomax@gmail.com)
  * @author       XOOPS Development Team
