@@ -161,3 +161,11 @@ if (is_object($helper->getModule())) {
     $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
     $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
 }
+
+xoops_loadLanguage('main', $moduleDirName);
+if (class_exists('D3LanguageManager')) {
+    require_once XOOPS_TRUST_PATH . "/libs/altsys/class/D3LanguageManager.class.php";
+    $langman = D3LanguageManager::getInstance();
+    $langman->read('main.php', $moduleDirName);
+}
+
