@@ -44,29 +44,29 @@
     <{/if}>
 
     <div class="row mb10">
-        <{if $viewer_level gt 1}>
-            <div class="col-sm-8 col-md-8">
-                <{if $mode gt 1}>
-                    <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-                    <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
-                    <select name="op">
-                        <option value="0"><{$smarty.const._SELECT}></option>
-                        <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status eq "pending"}>
+                <{if $viewer_level gt 1}>
+                    <div class="col-sm-8 col-md-8">
+                        <{if $mode gt 1}>
+                        <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+                            <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
+                            <select name="op">
+                                <option value="0"><{$smarty.const._SELECT}></option>
+                                <option value="delete"><{$smarty.const._DELETE}></option>
+                                <{if $status eq "pending"}>
                             <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                        <{elseif $status eq "deleted"}>
+                                <{elseif $status eq "deleted"}>
                             <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
-                        <{/if}>
-                    </select>
-                    <input type="hidden" name="topic_id" value="<{$topic_id}>">
-                    <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"> |
-                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
-                    <{else}>
-                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
-                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
-                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
-                <{/if}>
-            </div>
+                                <{/if}>
+                            </select>
+                            <input type="hidden" name="topic_id" value="<{$topic_id}>">
+                            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"> |
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
+                            <{else}>
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
+                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
+                            <{/if}>
+                    </div>
         <{/if}>
         <div class="<{if $viewer_level gt 1}>col-sm-4 col-md-4<{else}>col-sm-12 col-md-12<{/if}> generic-pagination text-right">
             <{$forum_page_nav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
