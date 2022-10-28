@@ -25,7 +25,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
      * @param $text
      * @return array|string|string[]|null
      */
-    function newbbhtmlspecialchars((string)$text)
+    function newbbhtmlspecialchars($text)
     {
         return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], htmlspecialchars((string)$text, ENT_QUOTES | ENT_HTML5));
     }
@@ -45,7 +45,7 @@ if (!defined('NEWBB_FUNCTIONS_RENDER')) {
 
         if (1 !== $html) {
             // html not allowed
-            $text = newbbhtmlspecialchars((string)$text);
+            $text = newbbhtmlspecialchars($text);
         }
         $text = $myts->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
         $text = $myts->makeClickable($text);

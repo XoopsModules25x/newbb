@@ -407,7 +407,7 @@ class Post extends \XoopsObject
             $post['author'] = $this->getVar('poster_name') ?: $GLOBALS['xoopsConfig']['anonymous'];
         }
 
-        $post['subject'] = \newbbhtmlspecialchars((string)$this->vars['subject']['value']);
+        $post['subject'] = \newbbhtmlspecialchars($this->vars['subject']['value']);
 
         $post['date'] = $this->getVar('post_time');
 
