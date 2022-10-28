@@ -103,6 +103,14 @@ $adminmenu[] = [
     'link'  => 'admin/admin_synchronization.php',
     'icon'  => $pathIcon32 . 'synchronized.png',
 ];
+
+// Blocks Admin
+$adminmenu[] = [
+    'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS'),
+    'link' => 'admin/blocksadmin.php',
+    'icon' => $pathIcon32 . '/block.png',
+];
+
 if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
     $adminmenu[] = [
         'title' => _MI_NEWBB_ADMENU_MIGRATE,
