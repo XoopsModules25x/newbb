@@ -55,8 +55,8 @@ class TypeHandler extends \XoopsPersistableObjectHandler
                 $ret[$myrow[$this->keyName]] = [
                     'type_id'    => $myrow[$this->keyName],
                     'type_order' => $myrow['type_order'],
-                    'type_name'  => \htmlspecialchars($myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
-                    'type_color' => \htmlspecialchars($myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
+                    'type_name'  => \htmlspecialchars((string)$myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
+                    'type_color' => \htmlspecialchars((string)$myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
                 ];
             }
         }

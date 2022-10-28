@@ -348,7 +348,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postArray['post_time'] = \newbbFormatTimestamp($postArray['post_time']);
 
         if (!empty($postArray['icon'])) {
-            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars($postArray['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
+            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars((string)$postArray['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
         } else {
             $postArray['icon'] = '<a name="' . $postArray['post_id'] . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
         }
@@ -362,7 +362,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
-            $postArray['poster'] = empty($postArray['poster_name']) ? \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5) : $postArray['poster_name'];
+            $postArray['poster'] = empty($postArray['poster_name']) ? \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5) : $postArray['poster_name'];
         }
 
         return $postArray;

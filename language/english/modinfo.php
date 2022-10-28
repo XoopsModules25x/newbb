@@ -218,7 +218,7 @@ define('_MI_NEWBB_INSTALL_POST_SUBJECT', 'Congratulations! The forum is working.
 define(
     '_MI_NEWBB_INSTALL_POST_TEXT',
     '
-    Welcome to ' . htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
+    Welcome to ' . htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
     Feel free to register and login to start your topics.
 
     If you have any question concerning NewBB usage, please visit your local support site or [url=https://xoops.org/modules/newbb/]XOOPS Support Site[/url].

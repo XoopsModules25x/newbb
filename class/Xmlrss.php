@@ -112,7 +112,7 @@ class Xmlrss
         if (!empty($trim)) {
             $text = \xoops_substr($text, 0, (int)$trim);
         }
-        $text = \htmlspecialchars($text, \ENT_QUOTES);
+        $text = \htmlspecialchars((string)$text, \ENT_QUOTES);
 
         return $text;
     }

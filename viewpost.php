@@ -258,14 +258,14 @@ foreach (array_keys($posts) as $id) {
 
     $posticon = $post->getVar('icon');
     if ($posticon) {
-        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" ></a>';
+        $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars((string)$posticon, ENT_QUOTES | ENT_HTML5) . '" alt="" ></a>';
     } else {
         $post_image = '<a name="' . $post->getVar('post_id') . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
     }
     $poster = [
         'uid'  => 0,
-        'name' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
-        'link' => $post->getVar('poster_name') ?: htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
+        'name' => $post->getVar('poster_name') ?: htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
+        'link' => $post->getVar('poster_name') ?: htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5),
     ];
     if ($post->getVar('uid') > 0 && isset($viewtopic_users[$post->getVar('uid')])) {
         $poster = $viewtopic_users[$post->getVar('uid')];
@@ -382,7 +382,7 @@ if ($postCount > $post_perpage) {
     $xoopsTpl->assign('pagenav', '');
 }
 
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 switch ($status) {
     case 'active':

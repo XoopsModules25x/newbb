@@ -86,13 +86,13 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
 $cat                                 = $viewtopic_forum->getVar('cat_id');
 $viewtopic_cat                       = $categoryHandler->get($cat);
 $GLOBALS['xoopsOption']['pdf_cache'] = 0;
-$pdf_data['author']                  = $myts->undoHtmlSpecialChars($post_data['author']);
-$pdf_data['title']                   = $myts->undoHtmlSpecialChars($post_data['subject']);
+$pdf_data['author']                  = $myts->undohtmlspecialchars((string)$post_data['author']);
+$pdf_data['title']                   = $myts->undohtmlspecialchars((string)$post_data['subject']);
 $content                             = '';
 $content                             .= '<b>' . $pdf_data['title'] . '</b><br><br>';
 $content                             .= _MD_NEWBB_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
 $content                             .= _MD_NEWBB_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
-$content                             .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
+$content                             .= $myts->undohtmlspecialchars((string)$post_data['text']) . '<br>';
 //$content .= $post_edit . '<br>'; //reserve for future versions to display edit records
 $pdf_data['content']        = str_replace('[pagebreak]', '<br>', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');

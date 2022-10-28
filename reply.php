@@ -94,7 +94,7 @@ require_once $GLOBALS['xoops']->path('header.php');
 //$xoopsTpl->assign('xoops_module_header', $xoops_module_header);
 
 /*
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar("cat_id"), array("cat_title"));
@@ -121,7 +121,7 @@ if ($postParentObject->getVar('uid')) {
     $r_name = newbbGetUnameFromId($postParentObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
 } else {
     $poster_name = $postParentObject->getVar('poster_name');
-    $r_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
+    $r_name      = empty($poster_name) ? htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
 }
 
 $r_subject = $postParentObject->getVar('subject', 'E');
@@ -184,7 +184,7 @@ foreach ($posts_contextObject as $post_contextObject) {
         $p_name = newbbGetUnameFromId($post_contextObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     } else {
         $poster_name = $post_contextObject->getVar('poster_name');
-        $p_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
+        $p_name      = empty($poster_name) ? htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
     }
     $p_date    = formatTimestamp($post_contextObject->getVar('post_time'));
     $p_subject = $post_contextObject->getVar('subject');

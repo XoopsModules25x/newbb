@@ -103,7 +103,7 @@ $xoopsTpl->assign('mode', $mode);
 $xoopsTpl->assign('status', $status);
 $xoopsTpl->assign('viewer_level', $topic_renderer->userlevel); // irmtfan use userlevel
 
-$pagetitle = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
+$pagetitle = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
 $xoopsTpl->assign('forum_index_title', $pagetitle);
 $xoopsTpl->assign('xoops_pagetitle', $pagetitle);
 

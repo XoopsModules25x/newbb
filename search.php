@@ -67,7 +67,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init(0);
 }
 
-$xoopsTpl->assign('forumindex', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('forumindex', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 //$xoopsTpl->assign("img_folder", newbbDisplayImage($forumImage['topic']));
 
 if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
@@ -116,7 +116,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $uid = 0;
     }
 
-    $next_search['term'] = htmlspecialchars($term, ENT_QUOTES);
+    $next_search['term'] = htmlspecialchars((string)$term, ENT_QUOTES);
     $query               = trim($term);
 
     if ('EXACT' !== $andor) {
@@ -166,7 +166,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra);
     } // irmtfan $criteriaExtra
 
-    $search_info_keywords = Highlighter::apply(htmlspecialchars($term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
+    $search_info_keywords = Highlighter::apply(htmlspecialchars((string)$term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
     $num_results          = count($results);
     if ($num_results < 1) {
         $xoopsTpl->assign('lang_nomatch', _SR_NOMATCH);
@@ -221,14 +221,14 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($num_results == $limit) {
             $next            = $start + $limit;
             $queries         = implode(',', $queries);
-            $search_url_next = htmlspecialchars($search_url . "&direction=next&start={$next}", ENT_QUOTES | ENT_HTML5);
+            $search_url_next = htmlspecialchars((string)$search_url . "&direction=next&start={$next}", ENT_QUOTES | ENT_HTML5);
             $search_next     = '<a href="' . $search_url_next . '">' . _SR_NEXT . '</a>';
             $xoopsTpl->assign('search_next', $search_next);
             $xoopsTpl->assign('search_next_url', $search_url_next);
         }
         if ($start > 0) {
             $prev            = $start - $limit;
-            $search_url_prev = htmlspecialchars($search_url . "&direction=previous&start={$prev}", ENT_QUOTES | ENT_HTML5);
+            $search_url_prev = htmlspecialchars((string)$search_url . "&direction=previous&start={$prev}", ENT_QUOTES | ENT_HTML5);
             $search_prev     = '<a href="' . $search_url_prev . '">' . _SR_PREVIOUS . '</a>';
             $xoopsTpl->assign('search_prev', $search_prev);
             $xoopsTpl->assign('search_prev_url', $search_url_prev);
@@ -245,7 +245,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($search_info) {
             $search_info .= '<br>';
         }
-        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars($search_username, ENT_QUOTES | ENT_HTML5);
+        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars((string)$search_username, ENT_QUOTES | ENT_HTML5);
     }
     // add num_results
     $search_info .= '<br>' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
@@ -257,7 +257,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 }
 // assign template vars for search
 /* term */
-$xoopsTpl->assign('search_term', htmlspecialchars($term, ENT_QUOTES));
+$xoopsTpl->assign('search_term', htmlspecialchars((string)$term, ENT_QUOTES));
 
 /* andor */
 $andor_select = '<select name="andor" id="andor" class="form-control">';

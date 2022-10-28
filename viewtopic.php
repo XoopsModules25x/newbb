@@ -247,7 +247,7 @@ if ($topicHandler->getPermission($forumObject, $topicObject->getVar('topic_statu
         $xoopsTpl->assign('topic_lock', _MD_NEWBB_TOPICLOCKED);
     }
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
+        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars((string)$xoopsRequestUri, ENT_QUOTES | ENT_HTML5) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
     }
 }
 // irmtfan for backward compatibility assign forum_post_or_register smarty again.
@@ -696,7 +696,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 
 $xoopsTpl->assign(
     [
-        'lang_forum_index' => sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
+        'lang_forum_index' => sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
         'lang_from'        => _MD_NEWBB_FROM,
         'lang_joined'      => _MD_NEWBB_JOINED,
         'lang_posts'       => _MD_NEWBB_POSTS,

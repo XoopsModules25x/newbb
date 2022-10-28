@@ -83,7 +83,7 @@ function checker(&$value)
     $value = strip_tags($value);
 
     // HTML-Tags maskieren
-    $value = htmlspecialchars($value, ENT_QUOTES);
+    $value = htmlspecialchars((string)$value, ENT_QUOTES);
 
     // Leerzeichen am Anfang und Ende beseitigen
     $value = trim($value);

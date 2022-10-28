@@ -48,7 +48,7 @@ if ($viewcat) {
     if ($categoryHandler->getPermission($categoryObject)) {
         $categories[$viewcat] = $categoryObject->getValues();
     }
-    $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
+    $forum_index_title = sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES));
     $xoops_pagetitle   = $categoryObject->getVar('cat_title') . ' [' . $xoopsModule->getVar('name') . ']';
 } else {
     $categories        = $categoryHandler->getByPermission('access', null, false);
@@ -201,7 +201,7 @@ foreach (array_keys($categories) as $id) {
     if ('' === $title) {
         $title = $url;
     }
-    $title = htmlspecialchars($title??'', ENT_QUOTES | ENT_HTML5);
+    $title = htmlspecialchars((string)$title, ENT_QUOTES | ENT_HTML5);
     if ('' !== $url) {
         $cat_sponsor = ['title' => $title, 'link' => formatURL($url)];
     }
@@ -231,7 +231,7 @@ $xoopsTpl->assign('notifyicon', $category_icon);
 
 $xoopsTpl->assign(
     [
-        'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
+        'index_title' => sprintf(_MD_NEWBB_WELCOME, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
         'index_desc'  => _MD_NEWBB_TOSTART,
     ]
 );

@@ -220,7 +220,7 @@ class User
 
         if (!\is_object($user) || !$user->isActive()) {
             if (null === $name_anonymous) {
-                $name_anonymous = \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
+                $name_anonymous = \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
             }
 
             return ['name' => $name_anonymous, 'link' => $name_anonymous];

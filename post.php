@@ -501,7 +501,7 @@ if (Request::getString('contents_preview', Request::getString('contents_preview'
         $p_name = newbbGetUnameFromId($postObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     }
     if (empty($p_name)) {
-        $p_name = Request::getString('poster_name', '', 'POST') ? htmlspecialchars(Request::getString('poster_name', '', 'POST'), ENT_QUOTES | ENT_HTML5) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
+        $p_name = Request::getString('poster_name', '', 'POST') ? htmlspecialchars(Request::getString('poster_name', '', 'POST'), ENT_QUOTES | ENT_HTML5) : htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
     }
 
     $post_preview = [

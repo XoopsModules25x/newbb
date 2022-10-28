@@ -407,7 +407,7 @@ class Post extends \XoopsObject
             $post['author'] = $this->getVar('poster_name') ?: $GLOBALS['xoopsConfig']['anonymous'];
         }
 
-        $post['subject'] = \newbbHtmlspecialchars($this->vars['subject']['value']);
+        $post['subject'] = \newbbhtmlspecialchars((string)$this->vars['subject']['value']);
 
         $post['date'] = $this->getVar('post_time');
 
@@ -473,7 +473,7 @@ class Post extends \XoopsObject
         /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
-            $name_anonymous = \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
+            $name_anonymous = \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
         }
 
         require_once \dirname(__DIR__) . '/include/functions.time.php';

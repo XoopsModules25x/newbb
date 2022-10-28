@@ -142,7 +142,7 @@ if ($forumHandler->getPermission($forumObject, 'post')) {
 } else {
     $xoopsTpl->assign('viewer_level', 0);
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $redirect = preg_replace('|(.*)\/modules\/Newbb\/(.*)|', '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
+        $redirect = preg_replace('|(.*)\/modules\/Newbb\/(.*)|', '\\1/modules/newbb/newtopic.php?forum=' . $forum_id, htmlspecialchars((string)$xoopsRequestUri, ENT_QUOTES | ENT_HTML5));
         $xoopsTpl->assign('forum_post_or_register', "<a href='" . XOOPS_URL . "/user.php?xoops_redirect={$redirect}'>" . _MD_NEWBB_REGTOPOST . '</a>');
         $xoopsTpl->assign('forum_addpoll', '');
     } else {
@@ -169,7 +169,7 @@ if ($forums) {
 $categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
 $xoopsTpl->assign('category', ['id' => $forumObject->getVar('cat_id'), 'title' => $categoryObject->getVar('cat_title')]);
 
-$xoopsTpl->assign('forum_index_title', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('forum_index_title', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 $xoopsTpl->assign('forum_name', $forumObject->getVar('forum_name'));
 $xoopsTpl->assign('forum_moderators', $forumObject->dispForumModerators());
 

@@ -138,10 +138,10 @@ if ($ok) {
           <form method="post" action="' . XOOPS_URL . '/modules/newbb/delete.php">';
     echo _MD_NEWBB_DELEDEDMSG . '<br>';
     echo '<textarea name="post_text" cols="50" rows="5"></textarea><br>';
-    echo '<input type="hidden" name="post_id" value="' . htmlspecialchars($post_id, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="order" value="' . htmlspecialchars($order, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="forum" value="' . htmlspecialchars($forum, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="topic_id" value="' . htmlspecialchars($topic_id, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="post_id" value="' . htmlspecialchars((string)$post_id, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="order" value="' . htmlspecialchars((string)$order, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="forum" value="' . htmlspecialchars((string)$forum, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="topic_id" value="' . htmlspecialchars((string)$topic_id, ENT_QUOTES | ENT_HTML5) . '" >';
     echo '<input type="hidden" name="ok" value="1" >';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     echo '<input type="submit" name="confirm_submit" value="' . _SUBMIT . '" title="' . _SUBMIT . '">

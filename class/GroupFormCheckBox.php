@@ -61,7 +61,7 @@ class GroupFormCheckBox extends \XoopsGroupFormCheckBox
                 $tree .= ' checked';
             }
             $tree .= ' >' . $option['name'] . '<input type="hidden" name="' . $this->getName() . '[parents][' . $option['id'] . ']" value="' . \implode(':', $parentIds) . '" ><input type="hidden" name="' . $this->getName() . '[itemname][' . $option['id'] . ']" value="' . \htmlspecialchars(
-                    $option['name'],
+                    (string)$option['name'],
                     \ENT_QUOTES | \ENT_HTML5
                 ) . "\" ><br>\n";
         } else {
