@@ -15,7 +15,7 @@ $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $modversion = [
     'version'             => '5.1.0',
-    'module_status'       => 'Beta 6',
+    'module_status'       => 'Beta 7',
     'release_date'        => '2022/10/26',
     'name'                => _MI_NEWBB_NAME,
     'description'         => _MI_NEWBB_DESC,

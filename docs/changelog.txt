@@ -1,4 +1,8 @@
-<h5>5.1.0 Beta 6 [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11-Beta2, PHP 7.4.32, PHP 8.2.0 RC5
+<h5>5.1.0 Beta 7 [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11-Beta2, PHP 7.4.32, PHP 8.2.0 RC5
+<hr>
+- string typecasting for htmlspecialchars() (mamba)
+
+<h5>5.1.0 Beta 6 [2022-10-27]</h5>  Dev: XOOPS 2.5.11-Beta2, PHP 7.4.32, PHP 8.2.0 RC5
 <hr>
 - PHP 8.2 updates (mamba)
 
