@@ -638,7 +638,7 @@ function b_newbb_author_show($options)
         return $block;
     }
     require_once \dirname(__DIR__) . '/include/functions.user.php';
-    $author_name = newbbGetUnameFromIds(array_keys($author), isset($newbbConfig['show_realname'])??0);
+    $author_name = newbbGetUnameFromIds(array_keys($author), (int)(isset($newbbConfig['show_realname'])??0));
     foreach (array_keys($author) as $uid) {
         $author[$uid]['name'] = htmlspecialchars((string)$author_name[$uid], ENT_QUOTES | ENT_HTML5);
     }
