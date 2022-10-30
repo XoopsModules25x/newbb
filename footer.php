@@ -39,5 +39,5 @@ foreach ($allfiles as $jsfile) {
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
-$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G";';
+$toggle_script = 'var toggle_cookie="' . (isset($forumCookie['prefix'])?:'') . 'G";';
 $xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);

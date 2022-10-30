@@ -7,7 +7,7 @@
             <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MB_NEWBB_VIEWS}></th>
             <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MB_NEWBB_LPOST}></th>
         </tr>
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr class="<{cycle values="even,odd"}>">
             <{* irmtfan remove hardcoded html in URLs  *}>
             <td><a href="<{$topic.seo_forum_url}>"><{$topic.forum_name}></a></td>
@@ -25,7 +25,7 @@
             <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MB_NEWBB_RPLS}></th>
             <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MB_NEWBB_LPOST}></th>
         </tr>
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr class="<{cycle values="even,odd"}>">
             <{* irmtfan remove hardcoded html in URLs  *}>
             <td><a href="<{$topic.seo_topic_url}>"><{$topic.title}></a></td>
@@ -37,7 +37,7 @@
 
     <{elseif $block.disp_mode == 2}>
 
-        <{foreach item=topic from=$block.topics}>
+        <{foreach item=topic from=$block.topics|default:null}>
         <tr class="<{cycle values="even,odd"}>">
             <{* irmtfan remove hardcoded html in URLs  *}>
             <td><a href="<{$topic.seo_url}>"><{$topic.title}></a></td>
@@ -48,7 +48,7 @@
 
 </table>
 
-<{if $block.indexNav}>
+<{if $block.indexNav|default:''}>
     <{* irmtfan hardcode removed style="text-align:right; padding: 5px;" *}>
     <div class="pagenav">
         <{* irmtfan remove hardcoded html in URLs  *}>

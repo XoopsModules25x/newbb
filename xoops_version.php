@@ -81,7 +81,7 @@ $modversion = [
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/module.php',
     'onUpdate'            => 'include/module.php',
-//    'onUpdate'            => 'include/onupdate.php',
+    //    'onUpdate'            => 'include/onupdate.php',
     //  'onUninstall'         => 'include/onuninstall.php',
 ];
 // ------------------- Help files ------------------- //
