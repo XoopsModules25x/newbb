@@ -2,6 +2,6 @@
     cat_id: '1'
     cat_image: ''
     cat_title: 'Category Test'
-    cat_description: 'Category for test.'
+    cat_description: 'Category for testing.'
     cat_order: '99'
     cat_url: 'https://xoops.org XOOPS Project'
