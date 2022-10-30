@@ -23,7 +23,7 @@
     uid: '1'
     poster_name: ''
     poster_ip: '::1'
-    subject: nhtdnthdnthd
+    subject: 'Another forum post'
     icon: ''
     attachsig: '0'
     approved: '1'
@@ -39,7 +39,7 @@
     uid: '1'
     poster_name: ''
     poster_ip: '::1'
-    subject: stnhsnthnt
+    subject: 'Another forum post again in subforum'
     icon: ''
     attachsig: '0'
     approved: '1'
@@ -55,7 +55,7 @@
     uid: '1'
     poster_name: ''
     poster_ip: '::1'
-    subject: nthsnthnth
+    subject: 'A Sub forum post one level down'
     icon: ''
     attachsig: '0'
     approved: '1'
