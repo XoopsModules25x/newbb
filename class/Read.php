@@ -28,6 +28,12 @@ namespace XoopsModules\Newbb;
  */
 class Read extends \XoopsObject
 {
+    public $read_id;
+    public $uid;
+    public $read_item;
+    public $post_id;
+    public $read_time;
+
     /**
      * @internal param $type
      */

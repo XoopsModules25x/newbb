@@ -17,6 +17,10 @@ namespace XoopsModules\Newbb;
  */
 class Text extends \XoopsObject
 {
+    public $post_id;
+    public $post_text;
+    public $post_edit;
+
     public function __construct()
     {
         parent::__construct();

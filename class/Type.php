@@ -19,6 +19,10 @@ namespace XoopsModules\Newbb;
  **/
 class Type extends \XoopsObject
 {
+    public $type_id;
+    public $type_name;
+    public $type_color;
+    public $type_description;
     public function __construct()
     {
         parent::__construct();

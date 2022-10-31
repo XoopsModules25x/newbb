@@ -20,6 +20,14 @@ namespace XoopsModules\Newbb;
  */
 class Moderate extends \XoopsObject
 {
+    public $mod_id;
+    public $mod_start;
+    public $mod_end;
+    public $mod_desc;
+    public $uid;
+    public $ip;
+    public $forum_id;
+
     public function __construct()
     {
         parent::__construct();

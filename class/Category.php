@@ -12,6 +12,13 @@ namespace XoopsModules\Newbb;
  */
 class Category extends \XoopsObject
 {
+    public $cat_id;
+    public $cat_title;
+    public $cat_image;
+    public $cat_description;
+    public $cat_order;
+    public $cat_url;
+
     public function __construct()
     {
         parent::__construct();

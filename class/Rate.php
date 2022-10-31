@@ -24,6 +24,13 @@ namespace XoopsModules\Newbb;
  */
 class Rate extends \XoopsObject
 {
+    public $ratingid;
+    public $topic_id;
+    public $ratinguser;
+    public $rating;
+    public $ratingtimestamp;
+    public $ratinghostname;
+
     public function __construct()
     {
         parent::__construct();

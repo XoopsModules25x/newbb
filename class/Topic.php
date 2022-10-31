@@ -21,6 +21,27 @@ use XoopsModules\Xoopspoll;
  */
 class Topic extends \XoopsObject
 {
+    public $topic_id;
+    public $topic_title;
+    public $topic_poster;
+    public $topic_time;
+    public $topic_views;
+    public $topic_replies;
+    public $topic_last_post_id;
+    public $forum_id;
+    public $topic_status;
+    public $type_id;
+    public $topic_sticky;
+    public $topic_digest;
+    public $digest_time;
+    public $approved;
+    public $poster_name;
+    public $rating;
+    public $votes;
+    public $topic_haspoll;
+    public $poll_id;
+    public $topic_tags;
+
     public function __construct()
     {
         parent::__construct();

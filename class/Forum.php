@@ -19,6 +19,21 @@ namespace XoopsModules\Newbb;
  */
 class Forum extends \XoopsObject
 {
+    public $forum_id;
+    public $forum_name;
+    public $forum_desc;
+    public $forum_moderator;
+    public $forum_topics;
+    public $forum_posts;
+    public $forum_last_post_id;
+    public $cat_id;
+    public $parent_forum;
+    public $hot_threshold;
+    public $attach_maxkb;
+    public $attach_ext;
+    public $forum_order;
+    public $dohtml;
+
     public function __construct()
     {
         parent::__construct();

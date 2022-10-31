@@ -17,6 +17,15 @@ namespace XoopsModules\Newbb;
  */
 class Report extends \XoopsObject
 {
+    public $report_id;
+    public $post_id;
+    public $reporter_uid;
+    public $reporter_ip;
+    public $report_time;
+    public $report_text;
+    public $report_result;
+    public $report_memo;
+
     public function __construct()
     {
         parent::__construct();
