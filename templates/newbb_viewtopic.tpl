@@ -53,6 +53,7 @@
 <{if $viewer_level gt 0}>
 
     <{* modal for rate // *}>
+    <{if $rating_enable}>
     <div class="modal fade bs-example-modal-sm container" id="replyrate" tabindex="-1" role="dialog" aria-labelledby="replyrate">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content btn-group" role="group">
@@ -64,8 +65,10 @@
             </div>
         </div>
     </div>
+    <{/if}>
 
     <{* modal for quickreply // *}>
+    <{if $quickreply.show}>
     <div class="modal fade bs-example-modal-sm container" id="replyquick" tabindex="-1" role="dialog" aria-labelledby="replyquick">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content modal-body"><button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&amp;times;</span></button>
@@ -73,6 +76,7 @@
             </div>
         </div>
     </div>
+    <{/if}>
 
     <{* fix bottom navbar // *}>
     <div class="navbar-fixed-bottom container" id="postnav" style="bottom:12px;">
@@ -330,3 +334,4 @@ xoopsGetElementById('aktuell').scrollIntoView(true);
     }
 </script>
 <{* END irmtfan add scroll js function to scroll down to current post or top of the topic *}>
+
