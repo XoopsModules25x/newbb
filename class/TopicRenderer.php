@@ -1108,7 +1108,7 @@ class TopicRenderer
         if (\count($topics) > 0) {
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->handler->db->query($sql);
-            if ($xoopsDB->isResultSet($result)) {
+            if ($this->handler->db->isResultSet($result)) {
                 while ([$topic_id] = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }
