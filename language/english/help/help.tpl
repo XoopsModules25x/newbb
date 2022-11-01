@@ -3,7 +3,7 @@
 
     <h4 class="odd">DESCRIPTION</h4> <br>
 
-    <p class="even">This module is ....<br> <br>
+    <p class="even">This module is a Bulletin Board or Discussion Forum for XOOPS CMS<br> <br>
     </p>
 
     <h4 class="odd">INSTALL/UNINSTALL</h4>
@@ -43,7 +43,7 @@
 
     <h4 class="odd">DEVELOPMENT</h4> <br>
     <p class="even">
-        This module is Open Source and we would love your help in making it better! You can fork this module on <a href="https://github.com/XoopsModulesArchive/ZZZZZZZZ" target="_blank">GitHub</a><br><br>
+        This module is Open Source and we would love your help in making it better! You can fork this module on <a href="https://github.com/XoopsModules25x/newbb" target="_blank">GitHub</a><br><br>
         But there is more happening on GitHub:<br><br>
         - <a href="https://github.com/xoops" target="_blank">XOOPS Core</a> <br>
         - <a href="https://github.com/XoopsModules25x" target="_blank">XOOPS Modules</a><br>
