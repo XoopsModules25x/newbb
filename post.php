@@ -381,16 +381,25 @@ if (Request::getString('contents_submit', '', 'POST')) {
         // Update user
         if ($uid > 0) {
             $sql = 'SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '    WHERE approved=1 AND topic_poster =' . $uid;
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$topics] = $GLOBALS['xoopsDB']->fetchRow($ret);
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            }
+            [$topics] = $GLOBALS['xoopsDB']->fetchRow($result);
 
             $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . '    WHERE approved=1 AND topic_digest > 0 AND topic_poster =' . $uid;
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$digests] = $GLOBALS['xoopsDB']->fetchRow($ret);
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            }
+            [$digests] = $GLOBALS['xoopsDB']->fetchRow($result);
 
             $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . '    WHERE approved=1 AND uid =' . $uid;
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($ret);
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            }
+            [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($result);
 
             $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "     SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
         }

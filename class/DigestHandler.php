@@ -108,7 +108,8 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
+//            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             return 0;
         }
         $array = $this->db->fetchArray($result);
@@ -120,12 +121,12 @@ class DigestHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MAX(digest_time) AS last_digest FROM ' . $this->db->prefix('newbb_digest');
         $result = $this->db->query($sql);
-        if ($result) {
+        if ($this->db->isResultSet($result)) {
             $array             = $this->db->fetchArray($result);
             $this->last_digest = $array['last_digest'] ?? 0;
         } else {
             $this->last_digest = 0;
-            // echo "<br>no data:".$query;
+            // echo "<br>no data:".$sql;
         }
     }
 
@@ -217,7 +218,7 @@ class DigestHandler extends \XoopsPersistableObjectHandler
         $karma_criteria = $GLOBALS['xoopsModuleConfig']['enable_karma'] ? ' AND p.post_karma=0' : '';
         $reply_criteria = $GLOBALS['xoopsModuleConfig']['allow_require_reply'] ? ' AND p.require_reply=0' : '';
 
-        $query = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM '
+        $sql = 'SELECT t.topic_id, t.forum_id, t.topic_title, t.topic_time, t.digest_time, p.uid, p.poster_name, pt.post_text FROM '
                  . $this->db->prefix('newbb_topics')
                  . ' t, '
                  . $this->db->prefix('newbb_posts_text')
@@ -230,8 +231,9 @@ class DigestHandler extends \XoopsPersistableObjectHandler
                  . $karma_criteria
                  . $reply_criteria
                  . ' AND pt.post_id=p.post_id ORDER BY t.digest_time DESC';
-        if (!$result = $this->db->query($query)) {
-            //echo "<br>No result:<br>$query";
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            //echo "<br>No result:<br>$sql";
             return false;
         }
         $rows  = [];

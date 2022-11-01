@@ -82,11 +82,12 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         $tables_criteria = ' FROM ' . $this->db->prefix('newbb_report') . ' r, ' . $this->db->prefix('newbb_posts') . ' p WHERE r.post_id= p.post_id';
 
         if ($reportId) {
-            $result = $this->db->query('SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $reportId" . $order_criteria);
-            if ($result) {
+            $sql = 'SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $reportId" . $order_criteria;
+            $result = $this->db->query($sql);
+            if ($this->db->isResultSet($result)) {
                 $row = $this->db->fetchArray($result);
             }
-            $position = $row['report_count'];
+            $position = isset($row['report_count']) ?? 0;
             $start    = (int)($position / $perpage) * $perpage;
         }
 

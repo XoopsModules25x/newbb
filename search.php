@@ -105,7 +105,11 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     if (!empty($search_username)) {
         $uname_required  = true;
         $search_username = $GLOBALS['xoopsDB']->escape($search_username);
-        if (!$result = $GLOBALS['xoopsDB']->query('SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
+        $sql = 'SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'";
+
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_NEWBB_ERROROCCURED);
         }
         $uid = [];

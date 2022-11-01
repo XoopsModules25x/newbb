@@ -131,7 +131,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         if (!empty($action)) {
             $sql    = 'SELECT * FROM ' . $this->table . ' WHERE 1=1' . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') . ' AND topic_id ' . (($action > 0) ? '>' : '<') . (int)$topic_id . ' ORDER BY topic_id ' . (($action > 0) ? 'ASC' : 'DESC') . ' LIMIT 1';
             $result = $this->db->query($sql);
-            if ($result) {
+            if ($this->db->isResultSet($result)) {
                 $row = $this->db->fetchArray($result);
                 if ($row) {
                     $topic = $this->create(false);
@@ -156,7 +156,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $sql    = 'SELECT t.* FROM ' . $this->db->prefix('newbb_topics') . ' t, ' . $this->db->prefix('newbb_posts') . ' p
                 WHERE t.topic_id = p.topic_id AND p.post_id = ' . (int)$post_id;
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $topic;
         }
@@ -208,7 +208,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             AND t.post_id = p.post_id';
 
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $post;
         }
@@ -230,7 +230,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND pid = 0';
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
+//            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             //xoops_error($this->db->error());
             return false;
         }
@@ -250,7 +251,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND post_id > ' . $lastreadpost_id . ' ORDER BY post_id LIMIT 1';
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             //xoops_error($this->db->error());
             return false;
         }
@@ -295,7 +297,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             //$approveCriteria = ' AND approved = 1'; // any others?
             $sql    = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_posts') . ' AS p WHERE p.topic_id=' . (int)$topic->getVar('topic_id') . $approveCriteria . " AND p.post_id $operator_for_position $post_id";
             $result = $this->db->query($sql);
-            if (!$result) {
+            if (!$this->db->isResultSet($result)) {
+                //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
                 //xoops_error($this->db->error());
                 return $ret;
             }
@@ -305,7 +308,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         $sql    = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p, ' . $this->db->prefix('newbb_posts_text') . ' t WHERE p.topic_id=' . $topic->getVar('topic_id') . ' AND p.post_id = t.post_id' . $approveCriteria . " ORDER BY p.post_id $order";
         $result = $this->db->query($sql, $perpage, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $ret;
         }

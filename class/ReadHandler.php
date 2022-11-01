@@ -163,9 +163,13 @@ class ReadHandler extends \XoopsPersistableObjectHandler
             }
         }
         $sql = 'SELECT post_id ' . ' FROM ' . $this->table . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
-        if (!$result = $this->db->queryF($sql, 1)) {
+
+        $result = $this->db->queryF($sql, 1);
+        if (!$this->db->isResultSet($result)) {
+            //                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             return null;
         }
+
         [$post_id] = $this->db->fetchRow($result);
 
         return $post_id;

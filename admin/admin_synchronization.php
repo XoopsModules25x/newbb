@@ -69,21 +69,32 @@ switch (Request::getString('type', '', 'GET')) {// @$_GET['type'])
         }
         $sql    = '    SELECT uid' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('users');
         $result = $GLOBALS['xoopsDB']->query($sql, $limit, $start);
-        while ([$uid] = $GLOBALS['xoopsDB']->fetchRow($result)) {
-            // irmtfan approved=1 AND
-            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$topics] = $GLOBALS['xoopsDB']->fetchRow($ret);
-            // irmtfan approved=1 AND
-            $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$digests] = $GLOBALS['xoopsDB']->fetchRow($ret);
-            // irmtfan approved=1 AND
-            $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . "    WHERE uid = {$uid}";
-            $ret = $GLOBALS['xoopsDB']->query($sql);
-            [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($ret);
+        if ($GLOBALS['xoopsDB']->isResultSet($result)) {
+            while ([$uid] = $GLOBALS['xoopsDB']->fetchRow($result)) {
+                // irmtfan approved=1 AND
+                $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_poster = {$uid}";
+                $ret = $GLOBALS['xoopsDB']->query($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($ret)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                }
+                [$topics] = $GLOBALS['xoopsDB']->fetchRow($ret);
+                // irmtfan approved=1 AND
+                $sql = '    SELECT count(*)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . "    WHERE topic_digest > 0 AND topic_poster = {$uid}";
+                $ret = $GLOBALS['xoopsDB']->query($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($ret)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                }
+                [$digests] = $GLOBALS['xoopsDB']->fetchRow($ret);
+                // irmtfan approved=1 AND
+                $sql = '    SELECT count(*), MAX(post_time)' . '    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . "    WHERE uid = {$uid}";
+                $ret = $GLOBALS['xoopsDB']->query($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($ret)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                }
+                [$posts, $lastpost] = $GLOBALS['xoopsDB']->fetchRow($ret);
 
-            $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+                $result2 = $GLOBALS['xoopsDB']->queryF('    REPLACE INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . "    SET uid = '{$uid}', user_topics = '{$topics}', user_posts = '{$posts}', user_digests = '{$digests}', user_lastpost = '{$lastpost}'");
+            }
         }
 
         redirect_header('admin_synchronization.php?type=user&amp;start=' . ($start + $limit) . "&amp;limit={$limit}", 2, _AM_NEWBB_SYNCHING . " {$count}: {$start} - " . ($start + $limit));

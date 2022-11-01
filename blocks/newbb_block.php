@@ -127,11 +127,11 @@ function b_newbb_show($options)
              . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-
-    if (!$result) {
-        //xoops_error($GLOBALS['xoopsDB']->error());
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //\trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
         return false;
     }
+
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
@@ -300,8 +300,7 @@ function b_newbb_topic_show($options)
         ) . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
@@ -462,10 +461,11 @@ function b_newbb_post_show($options)
     $query .= '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
+
     $block['disp_mode'] = ('text' === $options[0]) ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
@@ -626,7 +626,7 @@ function b_newbb_author_show($options)
     }
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }

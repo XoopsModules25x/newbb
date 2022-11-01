@@ -88,8 +88,10 @@ class UserHandler
 
         $sql    = 'SELECT user_digests, uid FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_user_stats') . ' WHERE uid IN( ' . \implode(', ', \array_keys($this->users)) . ')';
         $result = $GLOBALS['xoopsDB']->query($sql);
-        while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
+        if ($GLOBALS['xoopsDB']->isResultSet($result)) {
+            while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                $this->userlist[$myrow['uid']]['digests'] = (int)$myrow['user_digests'];
+            }
         }
     }
 

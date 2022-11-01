@@ -106,9 +106,12 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function getTotalViews()
     {
         $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' ';
-        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             return null;
         }
+        
         [$total] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return $total;

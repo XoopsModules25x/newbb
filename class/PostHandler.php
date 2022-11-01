@@ -44,12 +44,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $id    = (int)$id;
         $post  = null;
         $sql   = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
-        $array = $this->db->fetchArray($this->db->query($sql));
-        if ($array) {
-            $post = $this->create(false);
-            $post->assignVars($array);
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
+            $array = $this->db->fetchArray($result);
+            if ($array) {
+                $post = $this->create(false);
+                $post->assignVars($array);
+            }
         }
-
         return $post;
     }
 
@@ -473,7 +475,8 @@ class PostHandler extends \XoopsPersistableObjectHandler
         if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error().'<br>'.$sql);
             return null;
         }

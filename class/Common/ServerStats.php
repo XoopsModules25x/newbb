@@ -34,8 +34,11 @@ trait ServerStats
         //        $sql   = 'SELECT metavalue';
         //        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('wfdownloads_meta');
         //        $sql   .= " WHERE metakey='version' LIMIT 1";
-        //        $query = $GLOBALS['xoopsDB']->query($sql);
-        //        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+        //        $result = $GLOBALS['xoopsDB']->query($sql);
+        //        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+        //        }
+        //        list($meta) = $GLOBALS['xoopsDB']->fetchRow($result);
         $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . \constant('CO_' . $moduleDirNameUpper . '_IMAGEINFO') . "</legend>\n";
         $html .= "<div style='padding: 8px;'>\n";
         //        $html .= '<div>' . constant('CO_' . $moduleDirNameUpper . '_METAVERSION') . $meta . "</div>\n";

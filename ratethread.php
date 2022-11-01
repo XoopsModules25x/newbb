@@ -88,6 +88,9 @@ $ratingid = $rateHandler->insert($rateObject);
 
 $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . ' ';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
+if (!$GLOBALS['xoopsDB']->isResultSet($voteresult)) {
+    \trigger_error("Query Failed! SQL: $query- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+}
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
 while ([$rating] = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {

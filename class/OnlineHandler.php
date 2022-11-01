@@ -241,7 +241,11 @@ class OnlineHandler
         } else {
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_online') . ' WHERE online_uid=' . $uid . " AND online_ip='" . $ip . "'";
         }
-        [$count] = $this->db->fetchRow($this->db->queryF($sql));
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
+        [$count] = $this->db->fetchRow($result);
         if ($count > 0) {
             $sql = 'UPDATE ' . $this->db->prefix('newbb_online') . " SET online_updated= '" . $time . "', online_forum = '" . $forum_id . "', online_topic = '" . $topic_id . "' WHERE online_uid = " . $uid;
             if (0 == $uid) {
@@ -347,7 +351,8 @@ class OnlineHandler
             }
 
             $result = $this->db->query($sql);
-            if (!$result) {
+            if (!$this->db->isResultSet($result)) {
+//                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
                 return $ret;
             }
             while ([$uid] = $this->db->fetchRow($result)) {
@@ -375,7 +380,9 @@ class OnlineHandler
         if (\is_object($criteria) && ($criteria instanceof \CriteriaCompo || $criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            //                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             return false;
         }
         [$ret] = $this->db->fetchRow($result);

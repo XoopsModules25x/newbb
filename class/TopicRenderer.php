@@ -841,7 +841,9 @@ class TopicRenderer
         $sql = '    SELECT ' . \implode(', ', $selects) . '     FROM ' . \implode(', ', $froms) . '        ' . \implode(' ', $joins) . (!empty($this->query['join']) ? '        ' . \implode(' ', $this->query['join']) : '') . // irmtfan bug fix: Undefined index: join when post_excerpt = 0
                '     WHERE ' . \implode(' AND ', $wheres) . '        AND ' . @\implode(' AND ', @$this->query['where']);
 
-        if (!$result = $this->handler->db->query($sql)) {
+        $result = $this->handler->db->query($sql);
+        if (!$this->handler->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
             return 0;
         }
         [$count] = $this->handler->db->fetchRow($result);
@@ -893,7 +895,8 @@ class TopicRenderer
         $sql = '    SELECT ' . \implode(', ', $selects) . '     FROM ' . \implode(', ', $froms) . '        ' . \implode(' ', $joins) . (!empty($this->query['join']) ? '        ' . \implode(' ', $this->query['join']) : '') . // irmtfan bug fix: Undefined index join when post_excerpt = 0
                '     WHERE ' . \implode(' AND ', $wheres) . '        AND ' . @\implode(' AND ', @$this->query['where']) . '     ORDER BY ' . \implode(', ', $this->query['sort']);
 
-        if (!$result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars['start'])) {
+        $result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars['start']);
+        if (!$this->handler->db->isResultSet($result)) {
             if (\is_object($xoopsTpl)) {
                 $xoopsTpl->assign_by_ref('topics', $ret);
 
@@ -1105,7 +1108,7 @@ class TopicRenderer
         if (\count($topics) > 0) {
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->handler->db->query($sql);
-            if ($result) {
+            if ($xoopsDB->isResultSet($result)) {
                 while ([$topic_id] = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }

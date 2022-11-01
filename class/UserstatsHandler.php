@@ -80,9 +80,11 @@ class UserstatsHandler extends \XoopsPersistableObjectHandler
             return null;
         }
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->keyName . ' = ' . (int)$id;
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return null;
         }
+
         $row = $this->db->fetchArray($result);
 
         return $row;

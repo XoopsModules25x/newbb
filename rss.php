@@ -115,7 +115,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     unset($validForums);
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
-    $query = 'SELECT'
+    $sql = 'SELECT'
              . '    f.forum_id, f.forum_name,'
              . '    t.topic_id, t.topic_title, t.type_id,'
              . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, '
@@ -138,7 +138,9 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
              . $approveCriteria
              . ' ORDER BY p.post_id DESC';
     $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
-    if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
+    $result = $GLOBALS['xoopsDB']->query($sql, $limit);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
         newbbTrackbackResponse(1, _MD_NEWBB_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
         //return $xmlrssHandler->get($rss);

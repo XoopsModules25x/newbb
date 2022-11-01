@@ -283,8 +283,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         }
 
         $sql = 'SELECT ' . $select . ' FROM ' . $from . ' WHERE ' . $where . ' ORDER BY ' . $sortby;
-
-        if (!$result = $this->db->query($sql, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start)) {
+        $result = $this->db->query($sql, $GLOBALS['xoopsModuleConfig']['topics_per_page'], $start);
+        if (!$this->db->isResultSet($result)) {
             \redirect_header('index.php', 2, \_MD_NEWBB_ERROROCCURED);
         }
 
@@ -485,7 +485,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         if (\count($topics) > 0) {
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->db->query($sql);
-            if ($result) {
+            if ($this->db->isResultSet($result)) {
                 while ([$topic_id] = $this->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }
@@ -571,10 +571,12 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         $sql = 'SELECT COUNT(*) AS count FROM ' . $this->db->prefix('newbb_topics') . ' t ' . $leftjoin;
         $sql .= ' WHERE ' . $criteria_post . $criteria_forum . $criteria_extra . $criteria_approve;
-        if (!$result = $this->db->query($sql)) {
-            //xoops_error($this->db->error().'<br>'.$sql);
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            // \trigger_error("Query Failed! SQL: $sql Error: " . $this->db->error(), \E_USER_ERROR);
             return null;
         }
+
         $myrow = $this->db->fetchArray($result);
         $count = $myrow['count'];
 
@@ -664,7 +666,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $count = false;
         $sql = 'SELECT COUNT(*) as count FROM ' . $this->db->prefix("newbb_forums");
         $sql .= ' WHERE forum_id=' . $forum ;
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
             $myrow = $this->db->fetchArray($result);
             $count = $myrow['count'];
         }
@@ -746,7 +749,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
         $sql = 'SELECT MAX(post_id) AS last_post, COUNT(*) AS total FROM ' . $this->db->prefix('newbb_posts') . ' AS p LEFT JOIN  ' . $this->db->prefix('newbb_topics') . ' AS t ON p.topic_id=t.topic_id WHERE p.approved=1 AND t.approved=1 AND p.forum_id = ' . $object->getVar('forum_id');
 
         $result = $this->db->query($sql);
-        if ($result) {
+        if ($this->db->isResultSet($result)) {
             $last_post = 0;
             $posts     = 0;
             $row       = $this->db->fetchArray($result);
@@ -764,7 +767,7 @@ class ForumHandler extends \XoopsPersistableObjectHandler
 
         $sql    = 'SELECT COUNT(*) AS total FROM ' . $this->db->prefix('newbb_topics') . ' WHERE approved=1 AND forum_id = ' . $object->getVar('forum_id');
         $result = $this->db->query($sql);
-        if ($result) {
+        if ($this->db->isResultSet($result)) {
             $row = $this->db->fetchArray($result);
             if ($row) {
                 if ($object->getVar('forum_topics') !== $row['total']) {
@@ -817,7 +820,8 @@ class ForumHandler extends \XoopsPersistableObjectHandler
             return $stats;
         }
         $sql = '    SELECT forum_posts AS posts, forum_topics AS topics, forum_id AS id' . '    FROM ' . $this->table . '    WHERE forum_id IN (' . \implode(', ', $forums_id) . ')';
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return $stats;
         }
 

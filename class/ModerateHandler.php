@@ -121,7 +121,8 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
             $criteria = 'ip IN(' . \implode(',', $ips) . ')';
         }
         $sql = 'SELECT MAX(mod_end) AS expire FROM ' . $this->db->prefix('newbb_moderates') . ' WHERE ' . $criteria;
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return -1;
         }
         $row = $this->db->fetchArray($result);

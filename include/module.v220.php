@@ -58,6 +58,9 @@ function xoops_module_update_newbb_v220(XoopsModule $module)
 
     $sql    = 'SELECT forum_id, forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('bb_forums');
     $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $mods       = explode(' ', $row['forum_moderator']);
         $mods       = is_array($mods) ? serialize($mods) : serialize([]);
