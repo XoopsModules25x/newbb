@@ -685,20 +685,10 @@ class Post extends \XoopsObject
             $thread_action['social_delicious']['name']   = \_MD_NEWBB_SHARE_DELICIOUS;
             $thread_action['social_delicious']['target'] = '_blank';
 
-            $thread_action['social_digg']['image']  = \newbbDisplayImage('digg', \_MD_NEWBB_SHARE_DIGG);
-            $thread_action['social_digg']['link']   = 'https://digg.com/submit?phase=2&amp;title=' . $full_title . '&amp;url=' . $full_link;
-            $thread_action['social_digg']['name']   = \_MD_NEWBB_SHARE_DIGG;
-            $thread_action['social_digg']['target'] = '_blank';
-
             $thread_action['social_reddit']['image']  = \newbbDisplayImage('reddit', \_MD_NEWBB_SHARE_REDDIT);
             $thread_action['social_reddit']['link']   = 'https://reddit.com/submit?title=' . $full_title . '&amp;url=' . $full_link;
             $thread_action['social_reddit']['name']   = \_MD_NEWBB_SHARE_REDDIT;
             $thread_action['social_reddit']['target'] = '_blank';
-
-            $thread_action['social_wong']['image']  = \newbbDisplayImage('wong', \_MD_NEWBB_SHARE_MRWONG);
-            $thread_action['social_wong']['link']   = 'https://www.mister-wong.de/index.php?action=addurl&bm_url=' . $full_link;
-            $thread_action['social_wong']['name']   = \_MD_NEWBB_SHARE_MRWONG;
-            $thread_action['social_wong']['target'] = '_blank';
         }
 
         $post = [

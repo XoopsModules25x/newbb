@@ -44,7 +44,7 @@ $forumImage['document'] =
 
 $forumImage['previous'] = $forumImage['next'] = $forumImage['right'] = $forumImage['down'] = $forumImage['up'] = $forumImage['printer'] = $forumImage['new_forum'] =
 
-$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['digg'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['wong'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
+$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
 
 for ($i = 1; $i <= 5; ++$i) {
     $forumImage['rate' . $i] = 'icon';

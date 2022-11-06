@@ -115,11 +115,9 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['linkedin'] =
     //$displayText['stumbleupon'] =
     //$displayText['friendfeed'] =
-    //$displayText['digg'] =
     //$displayText['reddit'] =
     //$displayText['delicious'] =
     //$displayText['technorati'] =
-    //$displayText['wong'] =
     //$displayText['anonym'] =
     //$displayText['more'] =
     //$displayText['less'] =
@@ -189,11 +187,9 @@ $displayText[''] = //$displayText['blank'] =
     //$displayText['linkedin'] =
     //$displayText['stumbleupon'] =
     //$displayText['friendfeed'] =
-    //$displayText['digg'] =
     //$displayText['reddit'] =
     //$displayText['delicious'] =
     //$displayText['technorati'] =
-    //$displayText['wong'] =
     //$displayText['anonym'] =
     //$displayText['more'] =
     //$displayText['less'] =

@@ -505,9 +505,7 @@ define('_MD_NEWBB_SHARE_STUMBLEUPON', 'Stumbleupon');
 define('_MD_NEWBB_SHARE_FRIENDFEED', 'FriendFeed');
 define('_MD_NEWBB_SHARE_REDDIT', 'Reddit');
 define('_MD_NEWBB_SHARE_DELICIOUS', 'Del.icio.us');
-define('_MD_NEWBB_SHARE_DIGG', 'Digg');
 define('_MD_NEWBB_SHARE_TECHNORATI', 'Technorati');
-define('_MD_NEWBB_SHARE_MRWONG', 'Mr. Wong');
 //4.3
 define('_MD_NEWBB_GO', 'Go');
 define('_MD_NEWBB_SEEUSERDATA', 'See User information');
