@@ -373,7 +373,7 @@ span.forum_icon.forum_button {
     border-style: solid;
     border-radius: 5px;
     box-shadow: 0 1px 7px #080808;
-    font-weight: bold;
+    font-weight: initial;
 }
 
 span.forum_icon.forum_button:hover {

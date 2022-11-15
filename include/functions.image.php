@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -32,15 +32,16 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
         $image     = $img_path . '/' . $source;
         $thumb_url .= '/' . $source;
         $image_url = $img_url . '/' . $source;
-        $img_info = '';
+        $img_info  = '';
 
-        $imginfo  = @getimagesize($image);
+        $imginfo = @getimagesize($image);
+
         // Change by BigKev73 - Removed the is_array check, otherwise the img_info is never set
         //if (is_array($image)) {
-            $img_info = (count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
+        $img_info = (is_array($imginfo) && count($imginfo) > 0) ? $imginfo[0] . 'X' . $imginfo[1] . ' px' : '';
         //}
 
-        if ($GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
+        if (is_array($imginfo) && $GLOBALS['xoopsModuleConfig']['max_image_width'] > 0
             && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0) {
             if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
                 || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
@@ -50,24 +51,24 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
                 }
             }
         }
-        
-        //BigKev73 Change to remove height value
-		
-		  if ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
-                || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
-                $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
-                $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
-                $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height ."'";
-            }
-            // irmtfan to fix Undefined variable: pseudo_height
-            if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
-                && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
-                $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
-                $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
-                $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height ."'";
-            }
 
-		//BigKev73 Change to add max with property to properly scale photos
+        //BigKev73 Change to remove height value
+
+        if (is_array($imginfo) && ($imginfo[0] > $GLOBALS['xoopsModuleConfig']['max_image_width']
+            || $imginfo[1] > $GLOBALS['xoopsModuleConfig']['max_image_height'])) {
+            $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_width'];
+            $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_width'] * ($imginfo[1] / $imginfo[0]);
+            $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height . "'";
+        }
+        // irmtfan to fix Undefined variable: pseudo_height
+        if (!empty($pseudo_height) && $GLOBALS['xoopsModuleConfig']['max_image_height'] > 0
+            && $pseudo_height > $GLOBALS['xoopsModuleConfig']['max_image_height']) {
+            $pseudo_height = $GLOBALS['xoopsModuleConfig']['max_image_height'];
+            $pseudo_width  = $GLOBALS['xoopsModuleConfig']['max_image_height'] * ($imginfo[0] / $imginfo[1]);
+            $pseudo_size   = "width='" . $pseudo_width . "' height='" . $pseudo_height . "'";
+        }
+
+        //BigKev73 Change to add max with property to properly scale photos
         if (file_exists($thumb)) {
             $attachmentImage = '<a href="' . $image_url . '" title="' . $source . ' ' . $img_info . '" target="_blank">';
             $attachmentImage .= '<img src="' . $thumb_url . '" ' . $pseudo_size . ' alt="' . $source . ' ' . $img_info . '" style="max-width: 100%; height: auto;">';
@@ -171,7 +172,7 @@ if (!defined('NEWBB_FUNCTIONS_IMAGE')) {
 
         $imageCreateFunction = function_exists('imagecreatetruecolor') ? 'imagecreatetruecolor' : 'imagecreate';
 
-        if (in_array($type, $supported_types)) {
+        if (in_array($type, $supported_types, true)) {
             switch ($type) {
                 case 1:
                     if (!function_exists('imagecreatefromgif')) {

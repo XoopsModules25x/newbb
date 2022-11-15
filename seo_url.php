@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
+    Helper,
     TopicHandler
 };
 
 /** @var Helper $helper */
 /** @var TopicHandler $topicsHandler */
-
 define('REAL_MODULE_NAME', 'modules/newbb');  //this is the Real Module directory
 define('SEO_MODULE_NAME', 'modules/newbb');  //this is SEO Name for rewrite Hack
 
@@ -194,8 +194,11 @@ function forum_seo_cat($_cat_id)
             return $ret;
         }
     }
-    $query  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_categories');
-    $result = $GLOBALS['xoopsDB']->query($query);
+    $sql  = 'SELECT cat_id, cat_title FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_categories');
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+       \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     $_ret   = [];
     while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['cat_id']] = forum_seo_title($res['cat_title']);
@@ -223,8 +226,11 @@ function forum_seo_forum($_cat_id)
             return $ret;
         }
     }
-    $query  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
-    $result = $GLOBALS['xoopsDB']->query($query);
+    $sql  = 'SELECT forum_id, forum_name    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     $_ret   = [];
     while (false !== ($res = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $_ret[$res['forum_id']] = forum_seo_title($res['forum_name']);
@@ -242,8 +248,11 @@ function forum_seo_forum($_cat_id)
  */
 function forum_seo_topic($_cat_id)
 {
-    $query  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id = ' . $_cat_id;
-    $result = $GLOBALS['xoopsDB']->query($query);
+    $sql  = 'SELECT    topic_title    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' WHERE topic_id = ' . $_cat_id;
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['topic_title']);
 
@@ -262,8 +271,11 @@ function forum_seo_topic($_cat_id)
  */
 function forum_seo_post($_cat_id)
 {
-    $query  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' WHERE post_id = ' . $_cat_id;
-    $result = $GLOBALS['xoopsDB']->query($query);
+    $sql  = 'SELECT    subject    FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' WHERE post_id = ' . $_cat_id;
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     $res    = $GLOBALS['xoopsDB']->fetchArray($result);
     $ret    = forum_seo_title($res['subject']);
 
@@ -285,11 +297,11 @@ function forum_seo_title($title = '', $withExt = true)
         $title = $myts->formatForML($title);
     }
 
-    // Transformation de la chaine en minuscule
-    // Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
+    // Convert string to lowercase
+    // Coding of the string to avoid 500 errors in case of unexpected characters
     $title = rawurlencode(mb_strtolower($title));
 
-    // Transformation des ponctuations
+    // Transformation of punctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
     $pattern = [
         '/%09/',
@@ -355,7 +367,7 @@ function forum_seo_title($title = '', $withExt = true)
     ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
-    // Transformation des caractères accentués
+    // Transformation of accented characters
     //                  è         é        ê         ë         ç         à         â         ä        î         ï        ù         ü         û         ô        ö
     $pattern = [
         '/%B0/',

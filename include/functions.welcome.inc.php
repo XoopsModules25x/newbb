@@ -1,20 +1,18 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\IPAddress;
-use XoopsModules\Newbb\{Helper
-};
+use XoopsModules\Newbb\Helper;
 
 /** @var Helper $helper */
-
 global $xoopsModule, $myts, $xoopsUser, $forumObject;
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($forumObject) || !is_object($GLOBALS['xoopsUser'])
@@ -92,7 +90,7 @@ if ($mod) {
 
     // Add dynamic fields
     foreach (array_keys($fields) as $i) {
-        if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
+        if (in_array($fields[$i]->getVar('fieldid'), $fieldids, true)) {
             $catid = isset($fieldcats[$fields[$i]->getVar('fieldid')]) ? $fieldcats[$fields[$i]->getVar('fieldid')]['catid'] : 0;
             $value = $fields[$i]->getOutputValue($GLOBALS['xoopsUser']);
             if (is_array($value)) {
@@ -118,7 +116,7 @@ if ($mod) {
 $message = sprintf(_MD_NEWBB_WELCOME_MESSAGE, $GLOBALS['xoopsUser']->getVar('uname')) . "\n\n";
 //$message .= _PROFILE . ": <a href='" . XOOPS_URL . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'><strong>" . $GLOBALS['xoopsUser']->getVar('uname') . '</strong></a> ';
 //$message .= " | <a target='_blank' href='".XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $GLOBALS['xoopsUser']->getVar('uid') . "'>" . _MD_NEWBB_PM . "</a>\n";
-$message .= sprintf($GLOBALS['xoopsModuleConfig']['welcome_forum_message']);
+$message .= $GLOBALS['xoopsModuleConfig']['welcome_forum_message'];
 //foreach ($categories as $category) {
 //    if (isset($category['fields'])) {
 //        $message .= "\n\n" . $category['cat_title'] . ":\n\n";

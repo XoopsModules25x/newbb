@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 if (defined('NEWBB_MAIN_DEFINED')) {
     return;
@@ -505,9 +505,7 @@ define('_MD_NEWBB_SHARE_STUMBLEUPON', 'Stumbleupon');
 define('_MD_NEWBB_SHARE_FRIENDFEED', 'FriendFeed');
 define('_MD_NEWBB_SHARE_REDDIT', 'Reddit');
 define('_MD_NEWBB_SHARE_DELICIOUS', 'Del.icio.us');
-define('_MD_NEWBB_SHARE_DIGG', 'Digg');
 define('_MD_NEWBB_SHARE_TECHNORATI', 'Technorati');
-define('_MD_NEWBB_SHARE_MRWONG', 'Mr. Wong');
 //4.3
 define('_MD_NEWBB_GO', 'Go');
 define('_MD_NEWBB_SEEUSERDATA', 'See User information');
@@ -526,7 +524,7 @@ define('_MD_NEWBB_SEARCHTOPIC', 'Search Topic');
 define('_MD_NEWBB_SHOWSEARCH', 'Show results:');
 define('_MD_NEWBB_SEARCHPOSTTEXT', 'Posts text');
 define('_MD_NEWBB_SELECT_STARTLAG', 'Start lag of selected text');
-define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'Select text from X characters before the first keyword');
+define('_MD_NEWBB_SELECT_STARTLAG_DESC', 'SELECT text FROM X characters BEFORE the FIRST keyword');
 define('_MD_NEWBB_SELECT_LENGTH', 'Length of selected text');
 define('_MD_NEWBB_SELECT_HTML', 'Strip all html from result?');
 define('_MD_NEWBB_SELECT_EXCLUDE', 'Exclude these tags:');
@@ -556,7 +554,7 @@ define('_MD_NEWBB_PDF_META_DIR', 'ltr');
 
 //Facebook UI Style Rating
 define('THEME_LIKE', 'Like');
-if (!defined ('THEME_FORUM_REPLY')) {
+if (!defined('THEME_FORUM_REPLY')) {
     define('THEME_FORUM_REPLY', 'Reply');
 }
 define('_AM_NEWBB_NOTOPIC', 'No Posts'); //TODO delete in next XOOPS release

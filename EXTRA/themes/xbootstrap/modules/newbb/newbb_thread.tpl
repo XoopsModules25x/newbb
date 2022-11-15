@@ -21,7 +21,7 @@
                 </ul>
             <{/if}>
 
-                <{if $infobox.show}>
+                <{if $infobox.show|default:''}>
                     <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="glyphicon glyphicon-info-sign"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
@@ -55,7 +55,7 @@
                             </li>
                             <{/if}>
 
-                            <{if $topic_post.poster.level}>
+                            <{if $topic_post.poster.level|default:''}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
@@ -74,7 +74,7 @@
 
         <ul class="list-unstyled">
             <{if $topic_post.poster_ip}>
-                <li>IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
+                <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
             <{if $topic_post.poster.uid|default:'' gt 0}>
@@ -122,7 +122,7 @@
     <{if $topic_post.thread_action}>
         <{foreach item=btn from=$topic_post.thread_action}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
-                <{$btn.image}>
+                <{$btn.image|default:''}>
             </a>
         <{/foreach}>
     <{/if}>

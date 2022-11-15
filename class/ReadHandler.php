@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -22,9 +22,8 @@ namespace XoopsModules\Newbb;
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 
@@ -164,9 +163,13 @@ class ReadHandler extends \XoopsPersistableObjectHandler
             }
         }
         $sql = 'SELECT post_id ' . ' FROM ' . $this->table . ' WHERE read_item = ' . (int)$read_item . '     AND uid = ' . (int)$uid;
-        if (!$result = $this->db->queryF($sql, 1)) {
+
+        $result = $this->db->queryF($sql, 1);
+        if (!$this->db->isResultSet($result)) {
+            //                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             return null;
         }
+
         [$post_id] = $this->db->fetchRow($result);
 
         return $post_id;
@@ -195,7 +198,7 @@ class ReadHandler extends \XoopsPersistableObjectHandler
      * @param $read_item
      * @param $post_id
      */
-    public function setReadCookie($read_item, $post_id)
+    public function setReadCookie($read_item, $post_id): void
     {
         $cookie_name          = ('forum' === $this->type) ? 'LF' : 'LT';
         $lastview             = \newbbGetCookie($cookie_name, true);

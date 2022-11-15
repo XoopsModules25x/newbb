@@ -3,7 +3,7 @@
 
     <h4 class="odd">DISCLAIMER</h4>
     <br>
-        <p><b>Software downloaded from the XOOPS web site is provided 'as is' without warranty
+        <p><b>Software downloaded from the XOOPS website is provided 'as is' without warranty
             of any kind, either express or implied, including, but not limited to, the implied
             warranties of fitness for a purpose, or the warranty of non-infringement. Without
             limiting the foregoing, XOOPS Projects team makes no warranty that:</b></p>
@@ -15,21 +15,21 @@
                 accurate or reliable
             </li>
             <li>the quality of the software will meet your expectations any errors in the
-                software obtained from XOOPS web site will be corrected.
+                software obtained from XOOPS website will be corrected.
             </li>
         </ol>
         <br>
 
-        <p><b>Software and its documentation made available on the XOOPS web site:</b></p>
+        <p><b>Software and its documentation made available on the XOOPS website:</b></p>
         <br>
         <ol>
             <li>could include technical or other mistakes, inaccuracies or typographical
                 errors. XOOPS may make changes to the software or documentation made available
-                on its web site.
+                on its website.
             </li>
             <li>may be out of date, and XOOPS makes no commitment to update such materials.</li>
             <li>XOOPS assumes no responsibility for errors or omissions in the software
-                or documentation available from its web site.
+                or documentation available from its website.
             </li>
         </ol>
         <p><br><b>In no event shall XOOPS team be liable to you or any third parties for
@@ -43,6 +43,6 @@
             and risk and with agreement that you will be solely responsible for any damage to
             your computer system or loss of data that results from such activities. No advice
             or information, whether oral or written, obtained by you from XOOPS or from XOOPS
-            web site shall create any warranty for the software</p>
+            website shall create any warranty for the software</p>
     </b>
 </div>

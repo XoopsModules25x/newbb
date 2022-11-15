@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\IPAddress;
@@ -34,7 +33,7 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
      *
      * @param int $expire Expiration time in UNIX, 0 for time()
      */
-    public function clearGarbage($expire = 0)
+    public function clearGarbage($expire = 0): void
     {
         $expire = \time() - (int)$expire;
         $sql    = \sprintf('DELETE FROM `%s` WHERE mod_end < %u', $this->db->prefix('newbb_moderates'), $expire);
@@ -122,7 +121,8 @@ class ModerateHandler extends \XoopsPersistableObjectHandler
             $criteria = 'ip IN(' . \implode(',', $ips) . ')';
         }
         $sql = 'SELECT MAX(mod_end) AS expire FROM ' . $this->db->prefix('newbb_moderates') . ' WHERE ' . $criteria;
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return -1;
         }
         $row = $this->db->fetchArray($result);

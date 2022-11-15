@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,12 +6,10 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -142,7 +140,7 @@ class User
         $icq = $user->getVar('user_icq');
         if ($icq) {
             $userbar['icq'] = [
-                'link' => "javascript:void window.open('http://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
+                'link' => "javascript:void window.open('https://wwp.icq.com/scripts/search.dll?to=" . $icq . "', 'new');",
                 'name' => \_MD_NEWBB_ICQ,
             ];
         }
@@ -156,14 +154,14 @@ class User
         $yim = $user->getVar('user_yim');
         if ($yim) {
             $userbar['yim'] = [
-                'link' => "javascript:void window.open('http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
+                'link' => "javascript:void window.open('https://edit.yahoo.com/config/send_webmesg?.target=" . $yim . '&.src=pg' . "', 'new');",
                 'name' => \_MD_NEWBB_YIM,
             ];
         }
         $msn = $user->getVar('user_msnm');
         if ($msn) {
             $userbar['msnm'] = [
-                'link' => "javascript:void window.open('http://members.msn.com?mem=" . $msn . "', 'new');",
+                'link' => "javascript:void window.open('https://members.msn.com?mem=" . $msn . "', 'new');",
                 'name' => \_MD_NEWBB_MSNM,
             ];
         }
@@ -222,7 +220,7 @@ class User
 
         if (!\is_object($user) || !$user->isActive()) {
             if (null === $name_anonymous) {
-                $name_anonymous = \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
+                $name_anonymous = \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
             }
 
             return ['name' => $name_anonymous, 'link' => $name_anonymous];

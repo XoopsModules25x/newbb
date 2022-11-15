@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -12,11 +12,12 @@
 
 /**
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author      XOOPS Development Team
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb\{Helper,
+use XoopsModules\Newbb\{
+    Helper,
     TypeHandler
 };
 
@@ -126,11 +127,11 @@ function b_newbb_show($options)
              . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-
-    if (!$result) {
-        //xoops_error($GLOBALS['xoopsDB']->error());
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //\trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
         return false;
     }
+
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
@@ -166,10 +167,10 @@ function b_newbb_show($options)
         $topic['post_id']      = $arr['post_id'];
         $topic['topic_status'] = $arr['topic_status'];
         $topic['forum_id']     = $arr['forum_id'];
-        $topic['forum_name']   = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
+        $topic['forum_name']   = htmlspecialchars((string)$arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         $topic['id']           = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['topic_title'], ENT_QUOTES | ENT_HTML5);
+        $title = htmlspecialchars((string)$arr['topic_title'], ENT_QUOTES | ENT_HTML5);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -180,13 +181,13 @@ function b_newbb_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
+            $topic_poster = htmlspecialchars((string)$arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster']    = $topic_poster;
         $topic['topic_page_jump'] = $topic_page_jump;
         // START irmtfan remove hardcoded html in URLs - add $seo_topic_url
         //$seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?post_id=' . $topic['post_id'];
-         //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
+        //BigKev73 > Change to support jumping directly to that post, vs just the page that the topic is on
         $seo_url       = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'] . '&amp;post_id=' . $topic['post_id'] . '#forumpost' . $topic['post_id'];
         $seo_topic_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewtopic.php?topic_id=' . $topic['id'];
         $seo_forum_url = XOOPS_URL . '/' . SEO_MODULE_NAME . '/viewforum.php?forum=' . $topic['forum_id'];
@@ -299,8 +300,7 @@ function b_newbb_topic_show($options)
         ) . ' AS f ON f.forum_id=t.forum_id' . '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
@@ -331,10 +331,10 @@ function b_newbb_topic_show($options)
         $topic                  = [];
         $topic['topic_subject'] = empty($type_list[$arr['type_id']]) ? '' : '[' . $type_list[$arr['type_id']] . '] ';
         $topic['forum_id']      = $arr['forum_id'];
-        $topic['forum_name']    = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
+        $topic['forum_name']    = htmlspecialchars((string)$arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         $topic['id']            = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['topic_title'], ENT_QUOTES | ENT_HTML5);
+        $title = htmlspecialchars((string)$arr['topic_title'], ENT_QUOTES | ENT_HTML5);
         if (!empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -345,7 +345,7 @@ function b_newbb_topic_show($options)
         if (!empty($author_name[$arr['topic_poster']])) {
             $topic_poster = $author_name[$arr['topic_poster']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
+            $topic_poster = htmlspecialchars((string)$arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster'] = $topic_poster;
         // irmtfan remove $topic_page_jump because there is no last post
@@ -461,10 +461,11 @@ function b_newbb_post_show($options)
     $query .= '    WHERE 1=1 ' . $forumCriteria . $approveCriteria . $extraCriteria . ' ORDER BY ' . $order . ' DESC';
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
+
     $block['disp_mode'] = ('text' === $options[0]) ? 3 : $options[3]; // 0 - full view; 1 - compact view; 2 - lite view;
     $rows               = [];
     $author             = [];
@@ -481,17 +482,17 @@ function b_newbb_post_show($options)
     foreach ($rows as $arr) {
         //if ($arr['icon'] && is_file($GLOBALS['xoops']->path('images/subject/' . $arr['icon']))) {
         if (!empty($arr['icon'])) {
-            $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars($arr['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
+            $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/' . htmlspecialchars((string)$arr['icon'], ENT_QUOTES | ENT_HTML5) . '" alt="" >';
         } else {
             $last_post_icon = '<img src="' . XOOPS_URL . '/images/subject/icon1.gif" alt="" >';
         }
         //$topic['jump_post'] = "<a href='" . XOOPS_URL . "/modules/newbb/viewtopic.php?post_id=" . $arr['post_id'] ."#forumpost" . $arr['post_id'] . "'>" . $last_post_icon . '</a>';
         $topic               = [];
         $topic['forum_id']   = $arr['forum_id'];
-        $topic['forum_name'] = htmlspecialchars($arr['forum_name'], ENT_QUOTES | ENT_HTML5);
+        $topic['forum_name'] = htmlspecialchars((string)$arr['forum_name'], ENT_QUOTES | ENT_HTML5);
         //$topic['id'] = $arr['topic_id'];
 
-        $title = htmlspecialchars($arr['subject'], ENT_QUOTES | ENT_HTML5);
+        $title = htmlspecialchars((string)$arr['subject'], ENT_QUOTES | ENT_HTML5);
         if ('text' !== $options[0] && !empty($options[5])) {
             $title = xoops_substr($title, 0, $options[5]);
         }
@@ -501,7 +502,7 @@ function b_newbb_post_show($options)
         if (!empty($author_name[$arr['uid']])) {
             $topic_poster = $author_name[$arr['uid']];
         } else {
-            $topic_poster = htmlspecialchars($arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
+            $topic_poster = htmlspecialchars((string)$arr['poster_name'] ?: $GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $topic['topic_poster'] = $topic_poster;
 
@@ -625,7 +626,7 @@ function b_newbb_author_show($options)
     }
 
     $result = $GLOBALS['xoopsDB']->query($query, $options[1], 0);
-    if (!$result) {
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
         //xoops_error($GLOBALS['xoopsDB']->error());
         return $block;
     }
@@ -637,9 +638,9 @@ function b_newbb_author_show($options)
         return $block;
     }
     require_once \dirname(__DIR__) . '/include/functions.user.php';
-    $author_name = newbbGetUnameFromIds(array_keys($author), $newbbConfig['show_realname']);
+    $author_name = newbbGetUnameFromIds(array_keys($author), (int)(isset($newbbConfig['show_realname'])??0));
     foreach (array_keys($author) as $uid) {
-        $author[$uid]['name'] = htmlspecialchars($author_name[$uid], ENT_QUOTES | ENT_HTML5);
+        $author[$uid]['name'] = htmlspecialchars((string)$author_name[$uid], ENT_QUOTES | ENT_HTML5);
     }
     $block['authors']   = &$author;
     $block['disp_mode'] = $options[3]; // 0 - full view; 1 - lite view;

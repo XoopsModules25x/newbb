@@ -1,19 +1,19 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
 use XoopsModules\Newbb\{
     OnlineHandler,
-    StatsHandler,
-    Post
+    Post,
+    StatsHandler
 };
 /** @var StatsHandler $statsHandler */
 /** @var OnlineHandler $onlineHandler */
@@ -21,7 +21,6 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var TopicHandler $topicHandler */
 /** @var PostHandler $postHandler */
-
 require_once __DIR__ . '/header.php';
 
 $ok = Request::getInt('ok', 0, 'POST');
@@ -139,10 +138,10 @@ if ($ok) {
           <form method="post" action="' . XOOPS_URL . '/modules/newbb/delete.php">';
     echo _MD_NEWBB_DELEDEDMSG . '<br>';
     echo '<textarea name="post_text" cols="50" rows="5"></textarea><br>';
-    echo '<input type="hidden" name="post_id" value="' . htmlspecialchars($post_id, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="order" value="' . htmlspecialchars($order, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="forum" value="' . htmlspecialchars($forum, ENT_QUOTES | ENT_HTML5) . '" >';
-    echo '<input type="hidden" name="topic_id" value="' . htmlspecialchars($topic_id, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="post_id" value="' . htmlspecialchars((string)$post_id, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="order" value="' . htmlspecialchars((string)$order, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="forum" value="' . htmlspecialchars((string)$forum, ENT_QUOTES | ENT_HTML5) . '" >';
+    echo '<input type="hidden" name="topic_id" value="' . htmlspecialchars((string)$topic_id, ENT_QUOTES | ENT_HTML5) . '" >';
     echo '<input type="hidden" name="ok" value="1" >';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     echo '<input type="submit" name="confirm_submit" value="' . _SUBMIT . '" title="' . _SUBMIT . '">

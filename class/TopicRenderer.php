@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
@@ -20,7 +19,6 @@ use XoopsModules\Newbb;
  *
  * @author    D.J. (phppp)
  * @copyright copyright &copy; Xoops Project
- * @package   module::newbb
  */
 class TopicRenderer
 {
@@ -81,7 +79,7 @@ class TopicRenderer
         return $instance;
     }
 
-    public function init()
+    public function init(): void
     {
         $this->noperm = false;
         $this->query  = [];
@@ -134,12 +132,12 @@ class TopicRenderer
     /**
      * @param array $vars
      */
-    public function setVars(array $vars = [])
+    public function setVars(array $vars = []): void
     {
         $this->init();
 
         foreach ($vars as $var => $val) {
-            if (!\in_array($var, $this->args)) {
+            if (!\in_array($var, $this->args, true)) {
                 continue;
             }
         }
@@ -149,7 +147,7 @@ class TopicRenderer
     /**
      * @param string $hash request hash, i.e. get, post
      */
-    public function setVarsFromRequest($hash = 'get')
+    public function setVarsFromRequest($hash = 'get'): void
     {
         $this->init();
 
@@ -173,7 +171,7 @@ class TopicRenderer
     /**
      * @param null $status
      */
-    public function myParseStatus($status = null)
+    public function myParseStatus($status = null): void
     {
         switch ($status) {
             case 'digest':
@@ -325,14 +323,14 @@ class TopicRenderer
      * @param $var
      * @param $val
      */
-    public function parseVar($var, $val)
+    public function parseVar($var, $val): void
     {
         switch ($var) {
             case 'forum':
                 /** @var Newbb\ForumHandler $forumHandler */ $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
                 // START irmtfan - get forum Ids by values. parse positive values to forum IDs and negative values to category IDs. value=0 => all valid forums
                 // Get accessible forums
-                $accessForums = $forumHandler->getIdsByValues(\array_map('\intval', @\explode('|', $val)));
+                $accessForums = $forumHandler->getIdsByValues(\array_map('\intval', @\explode('|', (string)$val)));
                 // Filter specified forums if any
                 //if (!empty($val) && $_forums = @explode('|', $val)) {
                 //$accessForums = array_intersect($accessForums, array_map('intval', $_forums));
@@ -365,12 +363,12 @@ class TopicRenderer
                 if (!empty($val)) {
                     // START irmtfan if unread && read_mode = 1 and last_visit > startdate do not add where query | to accept multiple status
                     $startdate = \time() - \newbbGetSinceTime($val);
-                    if (\in_array('unread', \explode(',', $this->vars['status'])) && 1 == $this->config['read_mode']
+                    if (\in_array('unread', \explode(',', $this->vars['status']), true) && 1 == $this->config['read_mode']
                         && $GLOBALS['last_visit'] > $startdate) {
                         break;
                     }
                     // irmtfan digest_time | to accept multiple status
-                    if (\in_array('digest', \explode(',', $this->vars['status']))) {
+                    if (\in_array('digest', \explode(',', $this->vars['status']), true)) {
                         $this->query['where'][] = 't.digest_time > ' . $startdate;
                     }
                     // irmtfan - should be >= instead of =
@@ -617,7 +615,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildSelection(\Smarty $xoopsTpl)
+    public function buildSelection(\Smarty $xoopsTpl): void
     {
         $selection         = ['action' => $this->page];
         $selection['vars'] = $this->vars;
@@ -653,7 +651,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildSearch(\Smarty $xoopsTpl)
+    public function buildSearch(\Smarty $xoopsTpl): void
     {
         $search             = [];
         $search['forum']    = @$this->vars['forum'];
@@ -667,7 +665,7 @@ class TopicRenderer
      * @param \Smarty $xoopsTpl
      * @throws \RuntimeException
      */
-    public function buildHeaders(\Smarty $xoopsTpl)
+    public function buildHeaders(\Smarty $xoopsTpl): void
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -695,7 +693,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildFilters(\Smarty $xoopsTpl)
+    public function buildFilters(\Smarty $xoopsTpl): void
     {
         $args = [];
         foreach ($this->vars as $var => $val) {
@@ -727,7 +725,7 @@ class TopicRenderer
             /** @var Newbb\TypeHandler $typeHandler */
             $typeHandler = Helper::getInstance()->getHandler('Type');
 
-            $types = $typeHandler->getByForum(\explode('|', @$this->vars['forum']));
+            $types = $typeHandler->getByForum(\explode('|', (string)@$this->vars['forum']));
         }
 
         if (empty($type_id)) {
@@ -790,7 +788,7 @@ class TopicRenderer
     /**
      * @param \Smarty $xoopsTpl
      */
-    public function buildPagenav(\Smarty $xoopsTpl)
+    public function buildPagenav(\Smarty $xoopsTpl): void
     {
         $count_topic = $this->getCount();
         if ($count_topic > $this->config['topics_per_page']) {
@@ -843,7 +841,9 @@ class TopicRenderer
         $sql = '    SELECT ' . \implode(', ', $selects) . '     FROM ' . \implode(', ', $froms) . '        ' . \implode(' ', $joins) . (!empty($this->query['join']) ? '        ' . \implode(' ', $this->query['join']) : '') . // irmtfan bug fix: Undefined index: join when post_excerpt = 0
                '     WHERE ' . \implode(' AND ', $wheres) . '        AND ' . @\implode(' AND ', @$this->query['where']);
 
-        if (!$result = $this->handler->db->query($sql)) {
+        $result = $this->handler->db->query($sql);
+        if (!$this->handler->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
             return 0;
         }
         [$count] = $this->handler->db->fetchRow($result);
@@ -895,7 +895,8 @@ class TopicRenderer
         $sql = '    SELECT ' . \implode(', ', $selects) . '     FROM ' . \implode(', ', $froms) . '        ' . \implode(' ', $joins) . (!empty($this->query['join']) ? '        ' . \implode(' ', $this->query['join']) : '') . // irmtfan bug fix: Undefined index join when post_excerpt = 0
                '     WHERE ' . \implode(' AND ', $wheres) . '        AND ' . @\implode(' AND ', @$this->query['where']) . '     ORDER BY ' . \implode(', ', $this->query['sort']);
 
-        if (!$result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars['start'])) {
+        $result = $this->handler->db->query($sql, $this->config['topics_per_page'], @$this->vars['start']);
+        if (!$this->handler->db->isResultSet($result)) {
             if (\is_object($xoopsTpl)) {
                 $xoopsTpl->assign_by_ref('topics', $ret);
 
@@ -917,7 +918,7 @@ class TopicRenderer
         $reads     = [];
         $types     = [];
         $forums    = [];
-        $anonymous = \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
+        $anonymous = \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             if ($myrow['topic_sticky']) {
@@ -928,7 +929,7 @@ class TopicRenderer
             // START irmtfan remove topic_icon hardcode smarty
             // topic_icon: just regular topic_icon
             if (!empty($myrow['icon'])) {
-                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars($myrow['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
+                $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars((string)$myrow['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
             } else {
                 $topic_icon = '<img align="middle" src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" >';
             }
@@ -966,15 +967,15 @@ class TopicRenderer
                 }
             }
             // BigKev73 - Added to make jump ICON, jump and scroll to the correct "last post"
-             $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $myrow['topic_last_post_id'] . '#forumpost=' . $myrow['topic_last_post_id'] . "'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
-			
+            $topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $myrow['topic_id'] . '&amp;post_id=' . $myrow['topic_last_post_id'] . '#forumpost=' . $myrow['topic_last_post_id'] . "'>" . \newbbDisplayImage('lastposticon', \_MD_NEWBB_GOTOLASTPOST) . '</a>';
+
             // irmtfan - move here for both topics with and without pages - change topic_id to post_id
-           //$topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
+            //$topic_page_jump_icon = "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $myrow['topic_last_post_id'] . '' . "'>" . newbbDisplayImage('lastposticon', _MD_NEWBB_GOTOLASTPOST) . '</a>';
 
             // ------------------------------------------------------
             // => topic array
 
-            $topic_title = \htmlspecialchars($myrow['topic_title'], \ENT_QUOTES | \ENT_HTML5);
+            $topic_title = \htmlspecialchars((string)$myrow['topic_title'], \ENT_QUOTES | \ENT_HTML5);
             // irmtfan use topic_title_excerpt for block topic title length
             $topic_title_excerpt = $topic_title;
             if (!empty($this->config['topic_title_excerpt'])) {
@@ -991,7 +992,7 @@ class TopicRenderer
                 $topic_excerpt = '';
             } else {
                 $topic_excerpt = \xoops_substr(\newbbHtml2text($myts->displayTarea($myrow['post_text'])), 0, $this->config['post_excerpt']);
-                $topic_excerpt = \str_replace('[', '&#91;', \htmlspecialchars($topic_excerpt, \ENT_QUOTES | \ENT_HTML5));
+                $topic_excerpt = \str_replace('[', '&#91;', \htmlspecialchars((string)$topic_excerpt, \ENT_QUOTES | \ENT_HTML5));
             }
 
             $topics[$myrow['topic_id']] = [
@@ -1010,14 +1011,14 @@ class TopicRenderer
                 'topic_page_jump_icon'   => $topic_page_jump_icon,
                 'topic_replies'          => $myrow['topic_replies'],
                 'topic_poster_uid'       => $myrow['topic_poster'],
-                'topic_poster_name'      => !empty($myrow['poster_name']) ? \htmlspecialchars($myrow['poster_name'], \ENT_QUOTES | \ENT_HTML5) : $anonymous,
+                'topic_poster_name'      => !empty($myrow['poster_name']) ? \htmlspecialchars((string)$myrow['poster_name'], \ENT_QUOTES | \ENT_HTML5) : $anonymous,
                 'topic_views'            => $myrow['topic_views'],
                 'topic_time'             => \newbbFormatTimestamp($myrow['topic_time']),
                 'topic_last_post_id'     => $myrow['topic_last_post_id'],
                 //irmtfan added
                 'topic_last_posttime'    => \newbbFormatTimestamp($myrow['last_post_time']),
                 'topic_last_poster_uid'  => $myrow['uid'],
-                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? \htmlspecialchars($myrow['last_poster_name'], \ENT_QUOTES | \ENT_HTML5) : $anonymous,
+                'topic_last_poster_name' => !empty($myrow['last_poster_name']) ? \htmlspecialchars((string)$myrow['last_poster_name'], \ENT_QUOTES | \ENT_HTML5) : $anonymous,
                 'topic_forum'            => $myrow['forum_id'],
                 'topic_excerpt'          => $topic_excerpt,
                 'sticky'                 => $myrow['topic_sticky'] ? \newbbDisplayImage('topic_sticky', \_MD_NEWBB_TOPICSTICKY) : '',
@@ -1107,8 +1108,8 @@ class TopicRenderer
         if (\count($topics) > 0) {
             $sql    = ' SELECT DISTINCT topic_id FROM ' . $this->handler->db->prefix('newbb_posts') . " WHERE attachment != ''" . ' AND topic_id IN (' . \implode(',', \array_keys($topics)) . ')';
             $result = $this->handler->db->query($sql);
-            if ($result) {
-                while (list($topic_id) = $this->handler->db->fetchRow($result)) {
+            if ($this->handler->db->isResultSet($result)) {
+                while ([$topic_id] = $this->handler->db->fetchRow($result)) {
                     $topics[$topic_id]['attachment'] = '&nbsp;' . \newbbDisplayImage('attachment', \_MD_NEWBB_TOPICSHASATT);
                 }
             }

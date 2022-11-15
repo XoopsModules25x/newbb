@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 //
-// Thanks Tom (http://www.wf-projects.com), for correcting the Engligh language package
+// Thanks Tom (https://www.wf-projects.com), for correcting the Engligh language package
 if (defined('NEWBB_MODINFO_DEFINED')) {
     return;
 }
@@ -218,7 +218,7 @@ define('_MI_NEWBB_INSTALL_POST_SUBJECT', 'Congratulations! The forum is working.
 define(
     '_MI_NEWBB_INSTALL_POST_TEXT',
     '
-    Welcome to ' . htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
+    Welcome to ' . htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES) . ' forum.
     Feel free to register and login to start your topics.
 
     If you have any question concerning NewBB usage, please visit your local support site or [url=https://xoops.org/modules/newbb/]XOOPS Support Site[/url].
@@ -334,7 +334,7 @@ define('_MI_NEWBB_OVERVIEW', 'Overview');
 
 //define('_MI_NEWBB_HELP_DIR', __DIR__);
 
-//help multi-page
+//help multipage
 define('_MI_NEWBB_HELP_DISCLAIMER', 'Disclaimer');
 define('_MI_NEWBB_LICENSE', 'License');
 define('_MI_NEWBB_SUPPORT', 'Support');

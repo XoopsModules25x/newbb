@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -11,8 +11,8 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
  * @author       XOOPS Development Team
  */
@@ -110,21 +110,21 @@ switch ($op) {
         $reports = $reportHandler->getAllReports('report_id', 'ASC', $limit, $start, $process_result);
         foreach ($reports as $report) {
             $post_link = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $report['post_id'] . '&amp;topic_id=' . $report['topic_id'] . '&amp;forum=' . $report['forum_id'] . '&amp;viewmode=thread" target="checkreport">' . htmlspecialchars(
-                    $report['subject'],
+                    (string)$report['subject'],
                     ENT_QUOTES | ENT_HTML5
                 ) . '</a>';
             $checkbox  = '<input type="checkbox" name="report_id[' . $report['report_id'] . ']" value="1" checked >';
             if ('processed' !== $item) {
                 $memo = '<input type="text" name="report_memo[' . $report['report_id'] . ']" maxlength="255" size="80" >';
             } else {
-                $memo = htmlspecialchars($report['report_memo'], ENT_QUOTES | ENT_HTML5);
+                $memo = htmlspecialchars((string)$report['report_memo'], ENT_QUOTES | ENT_HTML5);
             }
             echo "<tr class='odd' align='left'>";
             echo '<td>' . _AM_NEWBB_REPORTPOST . ': ' . $post_link . '</td>';
             echo "<td align='center'>" . $report['report_id'] . '</td>';
             echo '</tr>';
             echo "<tr class='odd' align='left'>";
-            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . htmlspecialchars($report['report_text'], ENT_QUOTES | ENT_HTML5) . '</td>';
+            echo '<td>' . _AM_NEWBB_REPORTTEXT . ': ' . htmlspecialchars((string)$report['report_text'], ENT_QUOTES | ENT_HTML5) . '</td>';
             $uid           = (int)$report['reporter_uid'];
             $reporter_name = newbbGetUnameFromId($uid, $GLOBALS['xoopsModuleConfig']['show_realname']);
             $reporter      = !empty($uid) ? "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $uid . "'>" . $reporter_name . '</a><br>' : '';

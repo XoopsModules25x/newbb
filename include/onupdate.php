@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,14 +11,17 @@
 
 /**
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author      XOOPS Development Team
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
  */
 
-use XoopsModules\Newbb\{Common\Configurator, Common\Migrate, Helper, Utility};
+use XoopsModules\Newbb\{
+    Common\Configurator, 
+    Common\Migrate, 
+    Helper, 
+    Utility};
 
 /** @var Helper $helper */
-
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->isAdmin()) {
     exit('Restricted access' . PHP_EOL);
@@ -36,7 +39,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 {
     $moduleDirName = \basename(\dirname(__DIR__));
 
-    $utility = new Utility();
+    $utility      = new Utility();
     $configurator = new Configurator();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -58,7 +61,7 @@ function xoops_module_pre_update_newbb(\XoopsModule $module)
 function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName      = \basename(\dirname(__DIR__));
-    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+    $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
     /** @var \XoopsModules\Newbb\Helper $helper */ /** @var \XoopsModules\Newbb\Utility $utility */
     /** @var \XoopsModules\Newbb\Common\Configurator $configurator */
@@ -102,7 +105,7 @@ function xoops_module_update_newbb(\XoopsModule $module, $previousVersion = null
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->oldFolders) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFolders[$i]);
-                /* @var \XoopsObjectHandler $folderHandler */
+                /** @var \XoopsObjectHandler $folderHandler */
                 $folderHandler = \XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }

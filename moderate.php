@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\IPAddress;
@@ -22,7 +22,6 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
 /** @var Post $post */
-
 require_once __DIR__ . '/header.php';
 
 global $xoTheme, $xoopsTpl;
@@ -123,12 +122,12 @@ if (!empty($moderate_count)) {
     }
     $users = newbbGetUnameFromIds(array_keys($_users), $GLOBALS['xoopsModuleConfig']['show_realname'], true);
 
-    $columnHeaders ['uid']    = [
+    $columnHeaders['uid']     = [
         'url'    => 'moderate.php?forum=' . $forum_id . '&amp;start=' . $start . '&amp;sort=uid',
         'header' => _MD_NEWBB_SUSPEND_UID,
         'title'  => _MD_NEWBB_SUSPEND_UID,
     ];
-    $columnHeaders ['start']  = [
+    $columnHeaders['start']   = [
         'url'    => 'moderate.php?forum=' . $forum_id . '&amp;start=' . $start . '&amp;sort=start',
         'header' => _MD_NEWBB_SUSPEND_START,
         'title'  => _MD_NEWBB_SUSPEND_START,

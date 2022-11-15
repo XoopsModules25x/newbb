@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -29,8 +29,6 @@ use XoopsModules\Newbb\{
 /** @var PostHandler $postHandler */
 /** @var RateHandler $rateHandler */
 /** @var Post $post */
-
-
 require_once __DIR__ . '/header.php';
 
 $ratinguser   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -90,15 +88,18 @@ $ratingid = $rateHandler->insert($rateObject);
 
 $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_votedata') . ' WHERE topic_id = ' . $topic_id . ' ';
 $voteresult  = $GLOBALS['xoopsDB']->query($query);
+if (!$GLOBALS['xoopsDB']->isResultSet($voteresult)) {
+    \trigger_error("Query Failed! SQL: $query- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+}
 $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
 $totalrating = 0;
-while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
+while ([$rating] = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
     $totalrating += $rating;
 }
 $finalrating = $totalrating / $votesDB;
 $finalrating = number_format($finalrating, 4);
 //$sql         = sprintf('UPDATE "%s" SET rating = "%u", votes = "%u" WHERE topic_id = "%u"', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
-$sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
+$sql = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE topic_id = %u', $GLOBALS['xoopsDB']->prefix('newbb_topics'), $finalrating, $votesDB, $topic_id);
 $GLOBALS['xoopsDB']->queryF($sql);
 
 $ratemessage = _MD_NEWBB_VOTEAPPRE . '<br>' . sprintf(_MD_NEWBB_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);

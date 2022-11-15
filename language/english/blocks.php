@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 //
 // Blocks
 if (defined('NEWBB_BLOCKS_DEFINED')) {

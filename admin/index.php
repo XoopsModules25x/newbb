@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -10,23 +10,23 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
  * @author       XOOPS Development Team
  */
 
 use Xmf\Request;
-use  Xmf\Module\Admin;
+use Xmf\Module\Admin;
 use XoopsModules\Newbb\{
     Common\TestdataButtons,
     Helper,
     Utility
 };
+
 /** @var Admin $adminObject */
 /** @var Helper $helper */
 /** @var Utility $utility */
-
 require_once __DIR__ . '/admin_header.php';
 //require_once  \dirname(__DIR__) . '/class/Utility.php';
 require_once \dirname(__DIR__) . '/include/functions.stats.php';
@@ -46,7 +46,7 @@ function newbb_admin_mkdir($target, $mode = 0777)
 {
     $target = str_replace('..', '', $target);
 
-    // http://www.php.net/manual/en/function.mkdir.php
+    // https://www.php.net/manual/en/function.mkdir.php
     return is_dir($target) || (newbb_admin_mkdir(dirname($target), $mode) && (!mkdir($target, $mode) && !is_dir($target)));
 }
 
@@ -68,7 +68,7 @@ function newbb_admin_chmod($target, $mode = 0777)
 function newbb_getImageLibs()
 {
     $imageLibs = [];
-//    unset($output, $status);
+    //    unset($output, $status);
     if (1 == $GLOBALS['xoopsModuleConfig']['image_lib'] || 0 == $GLOBALS['xoopsModuleConfig']['image_lib']) {
         $path = empty($GLOBALS['xoopsModuleConfig']['path_magick']) ? '' : $GLOBALS['xoopsModuleConfig']['path_magick'] . '/';
         @exec($path . 'convert -version', $output, $status);
@@ -175,7 +175,7 @@ $adminObject->displayIndex();
 
 require_once __DIR__ . '/admin_footer.php';
 
-$cacheHelper = Utility::cleanCache();
+Utility::cleanCache();
 //$cacheHelper = new \Xmf\Module\Helper\Cache('newbb');
 //$cacheHelper->delete('config');
 //$cacheHelper->delete('permission');
@@ -192,19 +192,18 @@ function return_bytes($sizeAsString, $b = false)
         $suffix = ['', 'KB', 'MB', 'GB', 'TB'];
 
         return round(pow(1024, $base - floor($base))) . ' ' . $suffix[(int)floor($base)];
-    } else {
-        switch (mb_substr($sizeAsString, -1)) {
-            case 'M':
-            case 'm':
-                return (int)$sizeAsString * 1048576;
-            case 'K':
-            case 'k':
-                return (int)$sizeAsString * 1024;
-            case 'G':
-            case 'g':
-                return (int)$sizeAsString * 1073741824;
-            default:
-                return $sizeAsString;
-        }
+    }
+    switch (mb_substr($sizeAsString, -1)) {
+        case 'M':
+        case 'm':
+            return (int)$sizeAsString * 1048576;
+        case 'K':
+        case 'k':
+            return (int)$sizeAsString * 1024;
+        case 'G':
+        case 'g':
+            return (int)$sizeAsString * 1073741824;
+        default:
+            return $sizeAsString;
     }
 }

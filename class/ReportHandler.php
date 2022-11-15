@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,12 +6,10 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
-
 \defined('NEWBB_FUNCTIONS_INI') || require $GLOBALS['xoops']->path('modules/newbb/include/functions.ini.php');
 
 /**
@@ -84,11 +82,12 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         $tables_criteria = ' FROM ' . $this->db->prefix('newbb_report') . ' r, ' . $this->db->prefix('newbb_posts') . ' p WHERE r.post_id= p.post_id';
 
         if ($reportId) {
-            $result = $this->db->query('SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $reportId" . $order_criteria);
-            if ($result) {
+            $sql = 'SELECT COUNT(*) as report_count' . $tables_criteria . $forumCriteria . $result_criteria . " AND report_id $operator_for_position $reportId" . $order_criteria;
+            $result = $this->db->query($sql);
+            if ($this->db->isResultSet($result)) {
                 $row = $this->db->fetchArray($result);
             }
-            $position = $row['report_count'];
+            $position = isset($row['report_count']) ?? 0;
             $start    = (int)($position / $perpage) * $perpage;
         }
 
@@ -96,18 +95,19 @@ class ReportHandler extends \XoopsPersistableObjectHandler
         $result = $this->db->query($sql, $perpage, $start);
         $ret    = [];
         //$reportHandler =  Newbb\Helper::getInstance()->getHandler('Report');
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow; // return as array
             }
         }
+
         return $ret;
     }
 
     /**
      * @return void
      */
-    public function synchronization()
+    public function synchronization(): void
     {
         //        return;
     }

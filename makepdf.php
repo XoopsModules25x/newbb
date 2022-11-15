@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -13,12 +13,16 @@
  * oledrion
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
- * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
+ * @license     {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2.0 or later}
  * @author      phppp (D.J., infomax@gmail.com)
  */
 
 use Xmf\Request;
 use XoopsModules\Xlanguage\Utility as XlanguageUtility;
+use XoopsModules\Newbb\Helper;
+
+$moduleDirName      = basename(__DIR__);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 //use tecnickcom\TCPDF;
 
@@ -26,6 +30,7 @@ use XoopsModules\Xlanguage\Utility as XlanguageUtility;
 error_reporting(0);
 require_once __DIR__ . '/header.php';
 
+$helper = Helper::getInstance();
 $attach_id = Request::getString('attachid', '', 'GET');
 $forum     = Request::getInt('forum', 0, 'GET');
 $topic_id  = Request::getInt('topic_id', 0, 'GET');
@@ -34,7 +39,7 @@ $post_id   = Request::getInt('post_id', 0, 'GET');
 if (is_file(XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php')) {
     require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 } else {
-    redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id, 3, 'TCPDF for Xoops not installed');
+    redirect_header($helper->url('viewtopic.php?topic_id=' . $topic_id), 3, \constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_NO_PDF'));
 }
 
 if (empty($post_id)) {
@@ -81,13 +86,13 @@ if (!$topicHandler->getPermission($viewtopic_forum, $forumtopic->getVar('topic_s
 $cat                                 = $viewtopic_forum->getVar('cat_id');
 $viewtopic_cat                       = $categoryHandler->get($cat);
 $GLOBALS['xoopsOption']['pdf_cache'] = 0;
-$pdf_data['author']                  = $myts->undoHtmlSpecialChars($post_data['author']);
-$pdf_data['title']                   = $myts->undoHtmlSpecialChars($post_data['subject']);
+$pdf_data['author']                  = $myts->undohtmlspecialchars((string)$post_data['author']);
+$pdf_data['title']                   = $myts->undohtmlspecialchars((string)$post_data['subject']);
 $content                             = '';
 $content                             .= '<b>' . $pdf_data['title'] . '</b><br><br>';
 $content                             .= _MD_NEWBB_AUTHORC . ' ' . $pdf_data['author'] . '<br>';
 $content                             .= _MD_NEWBB_POSTEDON . ' ' . formatTimestamp($post_data['date']) . '<br><br><br>';
-$content                             .= $myts->undoHtmlSpecialChars($post_data['text']) . '<br>';
+$content                             .= $myts->undohtmlspecialchars((string)$post_data['text']) . '<br>';
 //$content .= $post_edit . '<br>'; //reserve for future versions to display edit records
 $pdf_data['content']        = str_replace('[pagebreak]', '<br>', $content);
 $pdf_data['topic_title']    = $forumtopic->getVar('topic_title');

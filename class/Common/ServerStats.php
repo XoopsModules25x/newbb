@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb\Common;
 
@@ -14,7 +14,7 @@ namespace XoopsModules\Newbb\Common;
 
 /**
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author      mamba <mambax7@gmail.com>
  */
 trait ServerStats
@@ -28,14 +28,17 @@ trait ServerStats
     {
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
         $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
         \xoops_loadLanguage('common', $moduleDirName);
         $html = '';
         //        $sql   = 'SELECT metavalue';
         //        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('wfdownloads_meta');
         //        $sql   .= " WHERE metakey='version' LIMIT 1";
-        //        $query = $GLOBALS['xoopsDB']->query($sql);
-        //        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+        //        $result = $GLOBALS['xoopsDB']->query($sql);
+        //        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+        //        }
+        //        list($meta) = $GLOBALS['xoopsDB']->fetchRow($result);
         $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . \constant('CO_' . $moduleDirNameUpper . '_IMAGEINFO') . "</legend>\n";
         $html .= "<div style='padding: 8px;'>\n";
         //        $html .= '<div>' . constant('CO_' . $moduleDirNameUpper . '_METAVERSION') . $meta . "</div>\n";
@@ -47,7 +50,7 @@ trait ServerStats
         $gdlib = \function_exists('gd_info') ? '<span style="color: #008000;">' . \constant('CO_' . $moduleDirNameUpper . '_GDON') . '</span>' : '<span style="color: #ff0000;">' . \constant('CO_' . $moduleDirNameUpper . '_GDOFF') . '</span>';
         $html  .= '<li>' . \constant('CO_' . $moduleDirNameUpper . '_GDLIBSTATUS') . $gdlib;
         if (\function_exists('gd_info')) {
-            if (true == ($gdlib = gd_info())) {
+            if (true === ($gdlib = gd_info())) {
                 $html .= '<li>' . \constant('CO_' . $moduleDirNameUpper . '_GDLIBVERSION') . '<b>' . $gdlib['GD Version'] . '</b>';
             }
         }

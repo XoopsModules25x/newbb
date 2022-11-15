@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -11,16 +11,16 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author       Dirk Herrmann (AKA alfred) http://www.mymyxoops.org/, http://simple-xoops.de/
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       Dirk Herrmann (AKA alfred) https://www.mymyxoops.org/, https://simple-xoops.de/
  * @author       XOOPS Development Team
  */
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-/** @var Admin $adminObject */
 
+/** @var Admin $adminObject */
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -39,7 +39,7 @@ if (Request::getString('submit', '', 'POST')) {
             foreach ($fgroups as $k) {
                 $gg = $memberHandler->getUsersByGroup($k, false);
                 foreach ($gg as $f) {
-                    if (!in_array($f, $fuser)) {
+                    if (!in_array($f, $fuser, true)) {
                         $fuser[] = $f;
                     }
                 }

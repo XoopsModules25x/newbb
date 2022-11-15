@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
  * @author       XOOPS Development Team
  */
@@ -29,14 +29,13 @@ use XoopsModules\Newbb\{
 /** @var PermissionHandler $permHandler */
 /** @var ForumHandler $forumHandler */
 /** @var CategoryHandler $categoryHandler */
-
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 require_once $GLOBALS['xoops']->path('class/pagenav.php');
 require_once \dirname(__DIR__) . '/include/functions.forum.php';
 require_once \dirname(__DIR__) . '/include/functions.render.php';
 
-$cacheHelper = new Cache('newbb');
+//$cacheHelper = new Cache('newbb');
 Utility::cleanCache();
 
 xoops_cp_header();
@@ -145,7 +144,6 @@ switch ($op) {
         }
         break;
     case 'save':
-
         if ($forum_id) {
             $forumObject = $forumHandler->get($forum_id);
             $message     = _AM_NEWBB_FORUMUPDATE;
@@ -181,7 +179,7 @@ switch ($op) {
                 foreach (array_keys($glist) as $group) {
                     foreach ($perms as $perm) {
                         $ids = $permHandler->getItemIds($perm, $group, $xoopsModule->getVar('mid'));
-                        if (!in_array($forumObject->getVar('forum_id'), $ids)) {
+                        if (!in_array($forumObject->getVar('forum_id'), $ids, true)) {
                             if (empty($perm_template[$group][$perm])) {
                                 $permHandler->deleteRight($perm, $forumObject->getVar('forum_id'), $group, $xoopsModule->getVar('mid'));
                             } else {
@@ -224,7 +222,6 @@ switch ($op) {
         require_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/include/form.forum.php');
         break;
     default:
-
         //        $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
         $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
         $criteriaCategory->setSort('cat_order');

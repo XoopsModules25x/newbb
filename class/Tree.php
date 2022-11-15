@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -13,15 +13,13 @@ namespace XoopsModules\Newbb;
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       phppp (D.J., infomax@gmail.com)
  * @author       XOOPS Development Team
  */
 
 use XoopsTree;
-
-
 
 require_once $GLOBALS['xoops']->path('class/xoopstree.php');
 
@@ -50,7 +48,7 @@ class Tree extends XoopsTree
     /**
      * @param string $val
      */
-    public function setPrefix($val = '')
+    public function setPrefix($val = ''): void
     {
         $this->prefix    = $val;
         $this->increment = $val;
@@ -60,7 +58,7 @@ class Tree extends XoopsTree
      * @param        $sel_id
      * @param string $order
      */
-    public function getAllPostArray($sel_id, $order = '')
+    public function getAllPostArray($sel_id, $order = ''): void
     {
         $this->postArray = $this->getAllChild($sel_id, $order);
     }
@@ -68,7 +66,7 @@ class Tree extends XoopsTree
     /**
      * @param $postArray
      */
-    public function setPostArray($postArray)
+    public function setPostArray($postArray): void
     {
         $this->postArray = $postArray;
     }
@@ -76,9 +74,9 @@ class Tree extends XoopsTree
     // returns an array of first child objects for a given id($sel_id)
 
     /**
-     * @param         $postTree_array
-     * @param int     $pid
-     * @param string  $prefix
+     * @param mixed  $postTree_array
+     * @param int    $pid
+     * @param string $prefix
      * @return bool
      */
     public function getPostTree(&$postTree_array, $pid = 0, $prefix = '&nbsp;&nbsp;')

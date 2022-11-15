@@ -1,7 +1,7 @@
 -
     forum_id: '1'
     forum_name: 'Forum Test'
-    forum_desc: 'Forum for test.'
+    forum_desc: 'Forum for testing.'
     parent_forum: '0'
     forum_moderator: 'a:0:{}'
     forum_topics: '2'
@@ -15,8 +15,8 @@
     allow_polls: '0'
 -
     forum_id: '2'
-    forum_name: zzzz
-    forum_desc: tnhsnthsnthnt
+    forum_name: 'Subforum'
+    forum_desc: 'This is a sub forum'
     parent_forum: '1'
     forum_moderator: 'a:0:{}'
     forum_topics: '1'
@@ -30,8 +30,8 @@
     allow_polls: '0'
 -
     forum_id: '3'
-    forum_name: sss
-    forum_desc: 'thdnthd nthdn'
+    forum_name: 'Another Subforum'
+    forum_desc: 'This is a sub forum one level down'
     parent_forum: '2'
     forum_moderator: 'a:0:{}'
     forum_topics: '1'

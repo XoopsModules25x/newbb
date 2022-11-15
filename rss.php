@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -11,8 +11,8 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       phppp (D.J., infomax@gmail.com)
  * @author       XOOPS Development Team
  */
@@ -24,8 +24,6 @@ use XoopsModules\Newbb\{
 };
 /** @var TypeHandler $typeHandler */
 /** @var XmlrssHandler $xmlrssHandler */
-
-
 require_once __DIR__ . '/header.php';
 require_once $GLOBALS['xoops']->path('class/template.php');
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.rpc.php');
@@ -117,7 +115,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
     unset($validForums);
     $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
 
-    $query = 'SELECT'
+    $sql = 'SELECT'
              . '    f.forum_id, f.forum_name,'
              . '    t.topic_id, t.topic_title, t.type_id,'
              . '    p.post_id, p.post_time, p.subject, p.uid, p.poster_name, p.post_karma, p.require_reply, '
@@ -140,7 +138,9 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
              . $approveCriteria
              . ' ORDER BY p.post_id DESC';
     $limit = (int)($GLOBALS['xoopsModuleConfig']['rss_maxitems'] * 1.5);
-    if (!$result = $GLOBALS['xoopsDB']->query($query, $limit)) {
+    $result = $GLOBALS['xoopsDB']->query($sql, $limit);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
         newbbTrackbackResponse(1, _MD_NEWBB_ERROR);
         //xoops_error($GLOBALS['xoopsDB']->error());
         //return $xmlrssHandler->get($rss);
@@ -175,7 +175,7 @@ if (!$tpl->is_cached('db:newbb_rss.tpl', $xoopsCachedTemplateId, $compile_id)) {
         if (!empty($users[$topic['uid']])) {
             $topic['uname'] = $users[$topic['uid']];
         } else {
-            $topic['uname'] = $topic['poster_name'] ? htmlspecialchars($topic['poster_name'], ENT_QUOTES | ENT_HTML5) : htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
+            $topic['uname'] = $topic['poster_name'] ? htmlspecialchars((string)$topic['poster_name'], ENT_QUOTES | ENT_HTML5) : htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5);
         }
         $description            = $topic['forum_name'] . '::';
         $topic['topic_subject'] = empty($type_list[$topic['type_id']]) ? '' : '[' . $type_list[$topic['type_id']] . '] ';

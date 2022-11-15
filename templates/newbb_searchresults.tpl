@@ -39,14 +39,14 @@
                 </table>
             </td>
         </tr>
-        <{if $search_next or $search_prev}>
+        <{if $search_next|default:'' or $search_prev|default:''}>
             <tr>
                 <td>
                     <table border="0" cellpadding="4" cellspacing="1" width="100%">
                         <tr class="head">
                             <{* irmtfan hardcode removed align="left" *}>
-                            <td class="align_left" width="50%"><{$search_prev}> </td>
-                            <td class="align_right" width="50%"> <{$search_next}></td>
+                            <td class="align_left" width="50%"><{$search_prev|default:''}> </td>
+                            <td class="align_right" width="50%"> <{$search_next|default:''}></td>
                         </tr>
                     </table>
                 </td>

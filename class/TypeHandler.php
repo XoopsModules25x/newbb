@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,15 +6,13 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 /**
  * Type object handler class.
- * @package   module::newbb
  *
  * @author    D.J. (phppp)
  * @copyright copyright &copy; 2006 XOOPS Project
@@ -52,16 +50,17 @@ class TypeHandler extends \XoopsPersistableObjectHandler
                . '         ORDER BY l.type_order ASC';
 
         $result = $this->db->query($sql);
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[$myrow[$this->keyName]] = [
                     'type_id'    => $myrow[$this->keyName],
                     'type_order' => $myrow['type_order'],
-                    'type_name'  => \htmlspecialchars($myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
-                    'type_color' => \htmlspecialchars($myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
+                    'type_name'  => \htmlspecialchars((string)$myrow['type_name'], \ENT_QUOTES | \ENT_HTML5),
+                    'type_color' => \htmlspecialchars((string)$myrow['type_color'], \ENT_QUOTES | \ENT_HTML5),
                 ];
             }
         }
+
         return $ret;
     }
 

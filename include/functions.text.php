@@ -1,14 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * NewBB 4.3x, the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
- * @package        module::newbb
  */
-
 define('NEWBB_FUNCTIONS_TEXT_LOADED', true);
 
 if (!defined('NEWBB_FUNCTIONS_TEXT')) {
@@ -24,9 +22,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      * @param string       $excludetags
      * @param string       $start_trimmarker
      * @param string       $end_trimmarker
-     * @return string $select_text
+     * @return string
      */
-
     function newbb_selectText(
         $text,
         $queryarray,
@@ -39,18 +36,18 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
     ) {
         $sanitized_text       = $striptags ? strip_tags($text, $excludetags) : $text;
         $queryarray           = newbb_str2array($queryarray);
-        $text_i               = strtolower($sanitized_text);
+        $text_i               = mb_strtolower($sanitized_text);
         $queryarray           = array_map('\strtolower', $queryarray);
         $lengtharray          = array_map('\strlen', $queryarray);
         $maxlengthquery       = max($lengtharray);
-        $lengthend_trimmarker = strlen($end_trimmarker);
+        $lengthend_trimmarker = mb_strlen($end_trimmarker);
         $select_text          = '';
         $startpos             = 0;
-        $endpos               = strlen($sanitized_text);
+        $endpos               = mb_strlen($sanitized_text);
         while ($startpos < $endpos) {
             $pos = $endpos;
             foreach ($queryarray as $query) {
-                if (false !== ($thispos = strpos($text_i, $query, $startpos))) {
+                if (false !== ($thispos = mb_strpos($text_i, $query, $startpos))) {
                     $pos = min($thispos, $pos);
                 }
             }
@@ -67,6 +64,7 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
         if (empty($select_text)) {
             return '';
         } // if no text return empty string
+
         return '<span class="newbb_select_text">' . $select_text . '</span>';
     }
 
@@ -75,9 +73,8 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      *
      * @param string       $text
      * @param array|string $queryarray
-     * @return string $highlight_text
+     * @return string
      */
-
     function newbb_highlightText($text, $queryarray)
     {
         if (empty($GLOBALS['xoopsModuleConfig']['highlight_search_enable'])) {
@@ -112,7 +109,6 @@ if (!defined('NEWBB_FUNCTIONS_TEXT')) {
      * @param string|array $str
      * @return array
      */
-
     function newbb_str2array($str)
     {
         if (is_array($str)) {

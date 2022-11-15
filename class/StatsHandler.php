@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,12 +6,10 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
-
 \defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 
 \define('NEWBB_STATS_TYPE_TOPIC', 1);
@@ -154,15 +152,15 @@ class StatsHandler
                     )
                 ) . ')') . '        ' . (empty($_types) ? '' : 'AND stats_type IN (' . \implode(', ', $_types) . ')') . '        ' . (empty($_periods) ? '' : 'AND stats_period IN (' . \implode(', ', $_periods) . ')');
         $result = $this->db->query($sql);
-
-        while (false !== ($row = $this->db->fetchArray($result))) {
-            $ret[(string)$row['stats_id']][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
+        if ($this->db->isResultSet($result)) {
+            while (false !== ($row = $this->db->fetchArray($result))) {
+                $ret[(string)$row['stats_id']][$this->param['type'][$row['stats_type']]][$this->param['period'][$row['stats_period']]] = $row['stats_value'];
+            }
         }
-
         return $ret;
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->db->queryF('TRUNCATE TABLE ' . $this->table);
         $now        = \time();
@@ -175,81 +173,100 @@ class StatsHandler
 
         $sql = '    SELECT forum_id' . '    FROM ' . $this->db->prefix('newbb_forums');
         $ret = $this->db->query($sql);
-        while (list($forum_id) = $this->db->fetchRow($ret)) {
+        if (!$this->db->isResultSet($ret)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
+        while ([$forum_id] = $this->db->fetchRow($ret)) {
             $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
             [$topics, $views] = $this->db->fetchRow($result);
             $this->update($forum_id, 'topic', $topics);
             $this->update($forum_id, 'view', $views);
 
             $sql    = '    SELECT COUNT(*)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND topic_digest >0 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
             [$digests] = $this->db->fetchRow($result);
             $this->update($forum_id, 'digest', $digests);
 
             $sql    = '    SELECT COUNT(*)' . '    FROM ' . $this->db->prefix('newbb_posts') . "    WHERE approved=1 AND forum_id = {$forum_id}";
             $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
             [$posts] = $this->db->fetchRow($result);
             $this->update($forum_id, 'post', $posts);
 
             foreach ($time_start as $period => $format) {
                 $sql    = '    SELECT COUNT(*), SUM(topic_views)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND forum_id = {$forum_id}" . "        AND FROM_UNIXTIME(topic_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
                 $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                }
                 [$topics, $views] = $this->db->fetchRow($result);
                 $views = empty($views) ? 0 : $views; // null check
-                $this->db->queryF(
-                    "    INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$topics}', '" . \array_search('topic', $this->param['type'], true) . "', '" . \array_search(
+
+                $sql    = " INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$topics}', '" . \array_search('topic', $this->param['type'], true) . "', '" . \array_search(
                         $period,
                         $this->param['period'],
                         true
-                    ) . "', NOW(), '{$format}')"
-                );
-                $this->db->queryF(
-                    "    INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$views}', '" . \array_search('view', $this->param['type'], true) . "', '" . \array_search(
+                    ) . "', NOW(), '{$format}')";
+                $result = $this->db->queryF($sql);
+
+                $sql    = " INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$views}', '" . \array_search('view', $this->param['type'], true) . "', '" . \array_search(
                         $period,
                         $this->param['period'],
                         true
-                    ) . "', NOW(), '{$format}')"
-                );
+                    ) . "', NOW(), '{$format}')";
+                $result = $this->db->queryF($sql);
                 @$counts['topic'][$period] += $topics;
                 @$counts['view'][$period] += $views;
 
                 $sql    = '    SELECT COUNT(*)' . '    FROM ' . $this->db->prefix('newbb_topics') . "    WHERE approved=1 AND topic_digest >0 AND forum_id = {$forum_id}" . "        AND FROM_UNIXTIME(digest_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
                 $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                }
                 [$digests] = $this->db->fetchRow($result);
-                $this->db->queryF(
-                    "    INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$digests}', '" . \array_search('digest', $this->param['type'], true) . "', '" . \array_search(
+                $sql    = " INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$digests}', '" . \array_search('digest', $this->param['type'], true) . "', '" . \array_search(
                         $period,
                         $this->param['period'],
                         true
-                    ) . "', NOW(), '{$format}')"
-                );
+                    ) . "', NOW(), '{$format}')";
+                $result = $this->db->queryF($sql);
                 @$counts['digest'][$period] += $digests;
 
-                $sql    = '    SELECT COUNT(*)' . '    FROM ' . $this->db->prefix('newbb_posts') . "    WHERE approved=1 AND forum_id = {$forum_id}" . "        AND FROM_UNIXTIME(post_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
+                $sql    = ' SELECT COUNT(*)' . '    FROM ' . $this->db->prefix('newbb_posts') . "    WHERE approved=1 AND forum_id = {$forum_id}" . "        AND FROM_UNIXTIME(post_time, '{$format}') >= FROM_UNIXTIME({$now}, '{$format}')";
                 $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                }
                 [$posts] = $this->db->fetchRow($result);
-                $this->db->queryF(
-                    "    INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$posts}', '" . \array_search('post', $this->param['type'], true) . "', '" . \array_search(
+                $sql    = " INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('{$forum_id}', '{$posts}', '" . \array_search('post', $this->param['type'], true) . "', '" . \array_search(
                         $period,
                         $this->param['period'],
                         true
-                    ) . "', NOW(), '{$format}')"
-                );
+                    ) . "', NOW(), '{$format}')";
+                $result = $this->db->queryF($sql);
                 @$counts['post'][$period] += $posts;
             }
         }
 
-        $this->db->queryF("    DELETE FROM {$this->table}" . "    WHERE stats_id = '0' AND stats_period <> " . \array_search('total', $this->param['period'], true));
+        $sql    = "    DELETE FROM {$this->table}" . "    WHERE stats_id = '0' AND stats_period <> " . \array_search('total', $this->param['period'], true);
+        $result = $this->db->queryF($sql);
         foreach ($time_start as $period => $format) {
             foreach (\array_keys($counts) as $type) {
-                $this->db->queryF(
-                    "    INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('0', '{$counts[$type][$period]}', '" . \array_search($type, $this->param['type'], true) . "', '" . \array_search(
+                $sql    = " INSERT INTO {$this->table}" . '        (`stats_id`, `stats_value`, `stats_type`, `stats_period`, `time_update`, `time_format`) ' . '    VALUES ' . "        ('0', '{$counts[$type][$period]}', '" . \array_search($type, $this->param['type'], true) . "', '" . \array_search(
                         $period,
                         $this->param['period'],
                         true
-                    ) . "', NOW(), '{$format}')"
-                );
+                    ) . "', NOW(), '{$format}')";
+                $result = $this->db->queryF($sql);
             }
         }
     }

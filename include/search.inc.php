@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>, irmtfan <irmtfan@users.sourceforge.net>
  * @since          4.3
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb\{
@@ -142,7 +142,7 @@ function newbb_search(
         $ret[$i]['link']       = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post->getVar('post_id') . $highlightKey; // add highlight key
         $ret[$i]['title']      = $post_data['subject'];
         $ret[$i]['time']       = $post_data['date'];
-        $ret[$i]['forum_name'] = htmlspecialchars($forum_list[$post->getVar('forum_id')]['forum_name'], ENT_QUOTES | ENT_HTML5);
+        $ret[$i]['forum_name'] = htmlspecialchars((string)$forum_list[$post->getVar('forum_id')]['forum_name'], ENT_QUOTES | ENT_HTML5);
         $ret[$i]['forum_link'] = XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $post->getVar('forum_id');
         $ret[$i]['post_text']  = $post_data['text'];
         $ret[$i]['uid']        = $post->getVar('uid');

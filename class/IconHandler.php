@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 /**
@@ -31,7 +30,6 @@ namespace XoopsModules\Newbb;
  *
  * @author    D.J. (phppp)
  * @copyright copyright &copy; Xoops Project
- * @package   module::newbb
  */
 class IconHandler
 {
@@ -99,8 +97,11 @@ class IconHandler
         if (empty($default)) {
             $path = \is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (\is_dir(\XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? \XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}" : $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}"));
         } else {
-            $path = \is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (\is_dir($theme_path . "/{$rel_dir}/{$default}/") ? $theme_path . "/{$rel_dir}/{$default}" : (\is_dir(\XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? \XOOPS_THEME_PATH
-                                                                                                                                                                                                                                                                      . "/default/{$rel_dir}/{$type}" : (\is_dir(
+            $path = \is_dir($theme_path . "/{$rel_dir}/{$type}/") ? $theme_path . "/{$rel_dir}/{$type}" : (
+            \is_dir($theme_path . "/{$rel_dir}/{$default}/") ? $theme_path . "/{$rel_dir}/{$default}" : (
+            \is_dir(\XOOPS_THEME_PATH . "/default/{$rel_dir}/{$type}/") ? \XOOPS_THEME_PATH
+                                                                          . "/default/{$rel_dir}/{$type}" : (
+            \is_dir(
                 \XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}/"
             ) ? \XOOPS_THEME_PATH . "/default/{$rel_dir}/{$default}" : (\is_dir($GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}/")) ? $GLOBALS['xoops']->path("modules/{$dirname}/templates/{$endDir}/{$type}") : $GLOBALS['xoops']->path(
                 "modules/{$dirname}/templates/{$endDir}/{$default}"
@@ -121,9 +122,11 @@ class IconHandler
      * @param string $language
      * @param string $dirname
      */
-    public function init(/*$set = "default", */ $language = 'english',
+    public function init(
+        /*$set = "default", */
+        $language = 'english',
         $dirname = 'newbb'
-    ) {
+    ): void {
         $this->forumImage = require_once $GLOBALS['xoops']->path("modules/{$dirname}/include/images.php");
 
         $this->forumImage['icon']     = XOOPS_URL . $this->getPath('icon', $dirname) . '/';
@@ -135,7 +138,7 @@ class IconHandler
      * @param string $alt
      * @param string $extra
      */
-    public function setImage($image, $alt = '', $extra = '')
+    public function setImage($image, $alt = '', $extra = ''): void
     {
         if (!isset($this->images[$image])) {
             $imageSource = $this->getImageSource($image);
@@ -178,7 +181,7 @@ class IconHandler
         $this->setImage($image, $alt, $extra);
         // START hacked by irmtfan - improve function to CSS3 buttons - add alt and title attributes - use span instead of button to support IE7&8
         $tag = 'span';
-        if ("class='forum_icon'" === $extra && \in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'])) {
+        if ("class='forum_icon'" === $extra && \in_array(mb_substr($image, 0, 2), ['t_', 'p_', 'up'], true)) {
             $extra = "class='forum_icon forum_button'";
         }
 
@@ -189,7 +192,7 @@ class IconHandler
     /**
      * @param $images
      */
-    public function assignImages($images)
+    public function assignImages($images): void
     {
         foreach ($images as $myImage) {
             [$image, $alt, $extra] = $myImage;

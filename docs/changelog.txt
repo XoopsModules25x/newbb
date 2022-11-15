@@ -1,11 +1,27 @@
-<h5>5.1.0 Beta 5 [2022-02-22]</h5>  Dev: XOOPS 2.5.11, Dev: XOOPS 2.5.11, PHP 7.4.27, PHP 8.0.16
+<h5>5.1.0 Beta 7 [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11-Beta2, PHP 7.4.32, PHP 8.2.0 RC5
+<hr>
+- string typecasting for htmlspecialchars() (mamba)
+
+<h5>5.1.0 Beta 6 [2022-10-27]</h5>  Dev: XOOPS 2.5.11-Beta2, PHP 7.4.32, PHP 8.2.0 RC5
+<hr>
+- PHP 8.2 updates (mamba)
+
+
+<h5>5.1.0 Beta 5 [2022-02-22]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.22, PHP 8.0.8
+<hr>
+- index.html in /preloads (mamba)
+- semantic versioning (mamba)
+
+<h5>5.01 Beta 5 [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.22, PHP 8.0.8
 <hr>
 - removed NEWBB_ADMIN_DEFINED from admin.php (JJDai)
 - fixed "Parameter must be an array or an object that implements Countable" (cesagonchu/mamba)
 - changed _MD_NEWBB_NEWBB_TYPE to _MD_NEWBB_TYPE (alain01/mamba)
 - remove Google Plus icon (cesagonchu/mamba)
 - fix Undefined variable: postParentObject in form.post.php #77 (cesagonchu/mamba)
-- index.html in /preloads (mamba)
+- changed font-weight to "initial" (heyula/mamba)
+- cosmetics and PHP 8 adjustments (mamba)
+
 
 <h5>5.01 Beta 4 [2021-03-21]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.16, PHP 8.0.3
 <hr>

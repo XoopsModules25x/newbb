@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb;
@@ -56,7 +55,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $object
-     * @param bool         $force
+     * @param bool $force
      * @return mixed
      */
     public function insert(\XoopsObject $object, $force = true)
@@ -69,9 +68,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         }
 
         $newbbConfig = \newbbLoadConfig();
-        if (!empty($newbbConfig['do_tag']) && \class_exists('TagFormTag')
-            && @require $GLOBALS['xoops']->path('modules/tag/include/functions.php')) {
-            $tagHandler = \tag_getTagHandler();
+        if (!empty($newbbConfig['do_tag']) && \class_exists('XoopsModules\Tag\FormTag')) {
+            $tagHandler = Tag\Helper::getInstance()->getHandler('Tag');
             if ($tagHandler) {
                 $tagHandler->updateByItem($object->getVar('topic_tags', 'n'), $object->getVar('topic_id'), 'newbb');
             }
@@ -125,7 +123,6 @@ class TopicHandler extends \XoopsPersistableObjectHandler
      *                          <li> >0 : inside the forum </li>
      *                          <li> <= 0: global </li>
      *                          </ul>
-     * @access public
      * @return mixed|null|\XoopsObject
      */
     public function &getByMove($topic_id, $action, $forum_id = 0)
@@ -134,7 +131,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         if (!empty($action)) {
             $sql    = 'SELECT * FROM ' . $this->table . ' WHERE 1=1' . (($forum_id > 0) ? ' AND forum_id=' . (int)$forum_id : '') . ' AND topic_id ' . (($action > 0) ? '>' : '<') . (int)$topic_id . ' ORDER BY topic_id ' . (($action > 0) ? 'ASC' : 'DESC') . ' LIMIT 1';
             $result = $this->db->query($sql);
-            if ($result) {
+            if ($this->db->isResultSet($result)) {
                 $row = $this->db->fetchArray($result);
                 if ($row) {
                     $topic = $this->create(false);
@@ -159,7 +156,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $sql    = 'SELECT t.* FROM ' . $this->db->prefix('newbb_topics') . ' t, ' . $this->db->prefix('newbb_posts') . ' p
                 WHERE t.topic_id = p.topic_id AND p.post_id = ' . (int)$post_id;
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $topic;
         }
@@ -211,7 +208,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             AND t.post_id = p.post_id';
 
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $post;
         }
@@ -233,7 +230,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND pid = 0';
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
+//            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             //xoops_error($this->db->error());
             return false;
         }
@@ -253,7 +251,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
     {
         $sql    = 'SELECT MIN(post_id) AS post_id FROM ' . $this->db->prefix('newbb_posts') . ' WHERE topic_id = ' . $topic_id . ' AND post_id > ' . $lastreadpost_id . ' ORDER BY post_id LIMIT 1';
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             //xoops_error($this->db->error());
             return false;
         }
@@ -261,9 +260,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         return $post_id;
     }
-    
-    
-    
+
     /**
      * @param         $topic
      * @param string  $order
@@ -300,7 +297,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             //$approveCriteria = ' AND approved = 1'; // any others?
             $sql    = 'SELECT COUNT(*) FROM ' . $this->db->prefix('newbb_posts') . ' AS p WHERE p.topic_id=' . (int)$topic->getVar('topic_id') . $approveCriteria . " AND p.post_id $operator_for_position $post_id";
             $result = $this->db->query($sql);
-            if (!$result) {
+            if (!$this->db->isResultSet($result)) {
+                //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
                 //xoops_error($this->db->error());
                 return $ret;
             }
@@ -310,7 +308,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
         $sql    = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p, ' . $this->db->prefix('newbb_posts_text') . ' t WHERE p.topic_id=' . $topic->getVar('topic_id') . ' AND p.post_id = t.post_id' . $approveCriteria . " ORDER BY p.post_id $order";
         $result = $this->db->query($sql, $perpage, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error());
             return $ret;
         }
@@ -353,7 +351,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
         $postArray['post_time'] = \newbbFormatTimestamp($postArray['post_time']);
 
         if (!empty($postArray['icon'])) {
-            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars($postArray['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
+            $postArray['icon'] = '<img src="' . XOOPS_URL . '/images/subject/' . \htmlspecialchars((string)$postArray['icon'], \ENT_QUOTES | \ENT_HTML5) . '" alt="" >';
         } else {
             $postArray['icon'] = '<a name="' . $postArray['post_id'] . '"><img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" ></a>';
         }
@@ -367,7 +365,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
                 $postArray['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $postArray['uid'] . '">' . $viewtopic_users[$postArray['uid']]['name'] . '</a>';
             }
         } else {
-            $postArray['poster'] = empty($postArray['poster_name']) ? \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5) : $postArray['poster_name'];
+            $postArray['poster'] = empty($postArray['poster_name']) ? \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5) : $postArray['poster_name'];
         }
 
         return $postArray;
@@ -386,11 +384,12 @@ class TopicHandler extends \XoopsPersistableObjectHandler
             $sql .= ' AND approved = 1';
         }
         $result = $this->db->query($sql);
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['uid'];
             }
         }
+
         return $ret;
     }
 
@@ -497,7 +496,7 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject|int|string|null $object
-     * @param bool $force
+     * @param bool                         $force
      * @return bool
      */
     public function synchronization($object = null, $force = true)
@@ -543,7 +542,6 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * get all active poll modules in the current xoops installtion.
-     * @access public
      * @return array $pollDirs = array($dirname1=>$dirname1, $dirname2=>$dirname2, ...) dirnames of all active poll modules
      */
     public function getActivePolls()
@@ -566,9 +564,8 @@ class TopicHandler extends \XoopsPersistableObjectHandler
 
     /**
      * find poll module that is in used in the current newbb installtion.
-     * @access public
      * @param array $pollDirs  dirnames of all active poll modules
-     * @return bool|string $dir_def | true | false
+     * @return bool|string | true | false
      *                         $dir_def: dirname of poll module that is in used in the current newbb installtion.
      *                         true: no poll module is installed | newbb has no topic with poll | newbb has no topic
      *                         false: errors (see below xoops_errors)

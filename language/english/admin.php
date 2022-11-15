@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 //if (defined('NEWBB_ADMIN_DEFINED')) {
 //    return;

@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
 use Xmf\Module\Helper\Cache;
 
 /** @var Helper $helper */
-
 
 /**
  * Class Utility
@@ -14,7 +13,7 @@ class Utility extends Common\SysUtility
 {
     //--------------- Custom module methods -----------------------------
 
-    public static function cleanCache()
+    public static function cleanCache(): void
     {
         $cacheHelper = new Cache('newbb');
         if (\method_exists($cacheHelper, 'clear')) {

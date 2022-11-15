@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -29,6 +29,29 @@ use XoopsModules\Newbb;
  */
 class Post extends \XoopsObject
 {
+    public $post_id;
+    public $topic_id;
+    public $forum_id;
+    public $post_time;
+    //        public $poster_ip ;
+    public $poster_ip;
+    public $poster_name;
+    public $subject;
+    public $pid;
+    public $dohtml;
+    public $dosmiley;
+    public $doxcode;
+    public $doimage;
+    public $dobr;
+    public $uid;
+    public $icon;
+    public $attachsig;
+    public $approved;
+    public $post_karma;
+    public $require_reply;
+    public $attachment;
+    public $post_text;
+    public $post_edit;
     //class Post extends \XoopsObject {
     private $attachmentArray = [];
 
@@ -135,7 +158,7 @@ class Post extends \XoopsObject
         }
 
         foreach ($attachOld as $key => $attach) {
-            if (\in_array($key, $attachArray)) {
+            if (\in_array($key, $attachArray, true)) {
                 $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $attach['name_saved']);
                 @\unlink($file);
                 $file = $GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/thumbs/' . $attach['name_saved']); // delete thumbnails
@@ -168,14 +191,13 @@ class Post extends \XoopsObject
             $key                         = (string)(\time() + $counter++);
             $this->attachmentArray[$key] = [
                 'name_saved'  => $name_saved,
-                 // BigKev73 >  without this change the nameDisplay will always get set to the $name_Saved, so in the forum it will show the on-disk filename instead of the name of the orginal file
+                // BigKev73 >  without this change the nameDisplay will always get set to the $name_Saved, so in the forum it will show the on-disk filename instead of the name of the orginal file
                 //'nameDisplay' => empty($nameDisplay) ? $nameDisplay : $name_saved,
                 'nameDisplay' => !empty($nameDisplay) ? $nameDisplay : $name_saved,
                 'mimetype'    => $mimetype,
                 // BigKev73 >  without this change the numDownload will always be set to 0
                 //'numDownload' => empty($numDownload) ? (int)$numDownload : 0,
                 'numDownload' => !empty($numDownload) ? (int)$numDownload : 0,
-                 
             ];
         }
         $attachmentSave = null;
@@ -215,8 +237,9 @@ class Post extends \XoopsObject
                 }
                 $file_size = @\filesize($GLOBALS['xoops']->path($GLOBALS['xoopsModuleConfig']['dir_attachments'] . '/' . $att['name_saved']));
                 $file_size = \number_format($file_size / 1024, 2) . ' KB';
+                $att['nameDisplay'] = $att['nameDisplay']??'';
                 if ($GLOBALS['xoopsModuleConfig']['media_allowed']
-                    && \in_array(mb_strtolower($file_extension), $image_extensions)) {
+                    && \in_array(mb_strtolower($file_extension), $image_extensions, true)) {
                     $post_attachment .= '<br><img src="' . $icon_filetype . '" alt="' . $filetype . '" ><strong>&nbsp; ' . $att['nameDisplay'] . '</strong> <small>(' . $file_size . ')</small>';
                     $post_attachment .= '<br>' . \newbbAttachmentImage($att['name_saved']);
                     $isDisplayed     = true;
@@ -291,7 +314,7 @@ class Post extends \XoopsObject
         if (empty($GLOBALS['xoopsModuleConfig']['recordedit_timelimit'])
             || $this->getVar('approved') < 1
             || (\time() - $this->getVar('post_time')) < $GLOBALS['xoopsModuleConfig']['recordedit_timelimit'] * 60
-            ) {
+        ) {
             return true;
         }
         if (\is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
@@ -407,7 +430,7 @@ class Post extends \XoopsObject
             $post['author'] = $this->getVar('poster_name') ?: $GLOBALS['xoopsConfig']['anonymous'];
         }
 
-        $post['subject'] = \newbbHtmlspecialchars($this->vars['subject']['value']);
+        $post['subject'] = \newbbhtmlspecialchars($this->vars['subject']['value']);
 
         $post['date'] = $this->getVar('post_time');
 
@@ -473,7 +496,7 @@ class Post extends \XoopsObject
         /** @var TopicHandler $topicHandler */
         $topicHandler = Helper::getInstance()->getHandler('Topic');
         if (null === $name_anonymous) {
-            $name_anonymous = \htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
+            $name_anonymous = \htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], \ENT_QUOTES | \ENT_HTML5);
         }
 
         require_once \dirname(__DIR__) . '/include/functions.time.php';
@@ -496,7 +519,7 @@ class Post extends \XoopsObject
         $uid = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
         ++$post_NO;
-        if ('desc' === mb_strtolower($order)) {
+        if ('desc' === \mb_strtolower($order)) {
             $post_no = $total_posts - ($start + $post_NO) + 1;
         } else {
             $post_no = $start + $post_NO;
@@ -509,7 +532,7 @@ class Post extends \XoopsObject
             $post_text       = "<div class='karma'>" . \sprintf(\_MD_NEWBB_KARMA_REQUIREMENT, $user_karma, $this->getVar('post_karma')) . '</div>';
             $post_attachment = '';
         } elseif ($GLOBALS['xoopsModuleConfig']['allow_require_reply'] && $this->getVar('require_reply')
-                  && (!$uid || !\in_array($uid, $viewtopic_posters))) {
+                  && (!$uid || !\in_array($uid, $viewtopic_posters, true))) {
             $post_text       = "<div class='karma'>" . \_MD_NEWBB_REPLY_REQUIREMENT . '</div>';
             $post_attachment = '';
         } else {
@@ -557,7 +580,7 @@ class Post extends \XoopsObject
         }
 
         if ($GLOBALS['xoopsModuleConfig']['enable_permcheck']) {
-            //            /** @var TopicHandler $topicHandler */
+            // /** @var TopicHandler $topicHandler */
             //            $topicHandler =  Newbb\Helper::getInstance()->getHandler('Topic');
             $topic_status = $topicObject->getVar('topic_status');
             if ($topicHandler->getPermission($forum_id, $topic_status, 'edit')) {
@@ -635,16 +658,16 @@ class Post extends \XoopsObject
             $full_title  = $this->getVar('subject');
             $clean_title = \preg_replace('/[^A-Za-z0-9-]+/', '+', $this->getVar('subject'));
             // BigKev73 - added to make page scroll to the last post
-			  $full_link   = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id . '#forumpost='. $post_id;
+            $full_link = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id . '#forumpost=' . $post_id;
             //$full_link   = XOOPS_URL . '/modules/newbb/viewtopic.php?post_id=' . $post_id;
 
             $thread_action['social_twitter']['image']  = \newbbDisplayImage('twitter', \_MD_NEWBB_SHARE_TWITTER);
-            $thread_action['social_twitter']['link']   = 'http://twitter.com/share?text=' . $clean_title . '&amp;url=' . $full_link;
+            $thread_action['social_twitter']['link']   = 'https://twitter.com/share?text=' . $clean_title . '&amp;url=' . $full_link;
             $thread_action['social_twitter']['name']   = \_MD_NEWBB_SHARE_TWITTER;
             $thread_action['social_twitter']['target'] = '_blank';
 
             $thread_action['social_facebook']['image']  = \newbbDisplayImage('facebook', \_MD_NEWBB_SHARE_FACEBOOK);
-            $thread_action['social_facebook']['link']   = 'http://www.facebook.com/sharer.php?u=' . $full_link;
+            $thread_action['social_facebook']['link']   = 'https://www.facebook.com/sharer.php?u=' . $full_link;
             $thread_action['social_facebook']['name']   = \_MD_NEWBB_SHARE_FACEBOOK;
             $thread_action['social_facebook']['target'] = '_blank';
 
@@ -653,29 +676,19 @@ class Post extends \XoopsObject
             $thread_action['social_gplus']['target'] = '_blank';
 
             $thread_action['social_linkedin']['image']  = \newbbDisplayImage('linkedin', \_MD_NEWBB_SHARE_LINKEDIN);
-            $thread_action['social_linkedin']['link']   = 'http://www.linkedin.com/shareArticle?mini=true&amp;title=' . $full_title . '&amp;url=' . $full_link;
+            $thread_action['social_linkedin']['link']   = 'https://www.linkedin.com/shareArticle?mini=true&amp;title=' . $full_title . '&amp;url=' . $full_link;
             $thread_action['social_linkedin']['name']   = \_MD_NEWBB_SHARE_LINKEDIN;
             $thread_action['social_linkedin']['target'] = '_blank';
 
             $thread_action['social_delicious']['image']  = \newbbDisplayImage('delicious', \_MD_NEWBB_SHARE_DELICIOUS);
-            $thread_action['social_delicious']['link']   = 'http://del.icio.us/post?title=' . $full_title . '&amp;url=' . $full_link;
+            $thread_action['social_delicious']['link']   = 'https://del.icio.us/post?title=' . $full_title . '&amp;url=' . $full_link;
             $thread_action['social_delicious']['name']   = \_MD_NEWBB_SHARE_DELICIOUS;
             $thread_action['social_delicious']['target'] = '_blank';
 
-            $thread_action['social_digg']['image']  = \newbbDisplayImage('digg', \_MD_NEWBB_SHARE_DIGG);
-            $thread_action['social_digg']['link']   = 'http://digg.com/submit?phase=2&amp;title=' . $full_title . '&amp;url=' . $full_link;
-            $thread_action['social_digg']['name']   = \_MD_NEWBB_SHARE_DIGG;
-            $thread_action['social_digg']['target'] = '_blank';
-
             $thread_action['social_reddit']['image']  = \newbbDisplayImage('reddit', \_MD_NEWBB_SHARE_REDDIT);
-            $thread_action['social_reddit']['link']   = 'http://reddit.com/submit?title=' . $full_title . '&amp;url=' . $full_link;
+            $thread_action['social_reddit']['link']   = 'https://reddit.com/submit?title=' . $full_title . '&amp;url=' . $full_link;
             $thread_action['social_reddit']['name']   = \_MD_NEWBB_SHARE_REDDIT;
             $thread_action['social_reddit']['target'] = '_blank';
-
-            $thread_action['social_wong']['image']  = \newbbDisplayImage('wong', \_MD_NEWBB_SHARE_MRWONG);
-            $thread_action['social_wong']['link']   = 'http://www.mister-wong.de/index.php?action=addurl&bm_url=' . $full_link;
-            $thread_action['social_wong']['name']   = \_MD_NEWBB_SHARE_MRWONG;
-            $thread_action['social_wong']['target'] = '_blank';
         }
 
         $post = [
@@ -698,9 +711,8 @@ class Post extends \XoopsObject
             'mod_buttons'     => $mod_buttons,
             'poster'          => $poster,
             //Modified by BigKev73
-				'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id. '&amp;post_id=' . $post_id . '#forumpost='. $post_id .'"></a>',
+            'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?topic_id=' . $topic_id . '&amp;post_id=' . $post_id . '#forumpost=' . $post_id . '"></a>',
 
-          
             //'post_permalink'  => '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewtopic.php?post_id=' . $post_id . '"></a>',
         ];
 

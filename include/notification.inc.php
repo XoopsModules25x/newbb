@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -40,7 +40,9 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         if ('forum' === $category) {
             // Assume we have a valid forum id
             $sql = 'SELECT forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' WHERE forum_id = ' . $item_id;
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+//                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . 'index.php', 2, _MD_NEWBB_ERRORFORUM);
             }
@@ -54,7 +56,9 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         if ('thread' === $category) {
             // Assume we have a valid topid id
             $sql = 'SELECT t.topic_title,f.forum_id,f.forum_name FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' t, ' . $GLOBALS['xoopsDB']->prefix('newbb_forums') . ' f WHERE t.forum_id = f.forum_id AND t.topic_id = ' . $item_id . ' LIMIT 1';
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+                //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . 'index.php', 2, _MD_NEWBB_ERROROCCURED);
             }
@@ -68,7 +72,9 @@ if (!defined('NEWBB_NOTIFY_ITEMINFO')) {
         if ('post' === $category) {
             // Assume we have a valid post id
             $sql = 'SELECT subject,topic_id,forum_id FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' WHERE post_id = ' . $item_id . ' LIMIT 1';
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+                //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
                 // irmtfan full URL
                 redirect_header(XOOPS_URL . '/modules/' . $module->getVar('dirname') . 'index.php', 2, _MD_NEWBB_ERROROCCURED);
             }

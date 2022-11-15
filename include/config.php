@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -13,9 +13,7 @@
  * animal module for xoops
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GPL 2.0 or later
- * @package         Publisher
- * @subpackage      Config
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           1.03
  * @author          XOOPS Development Team - ( https://xoops.org )
  */
@@ -24,12 +22,9 @@ use Xmf\Module\Admin;
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
-/**
- * @return object
- */
-
+/** @return object */
 $moduleDirName      = \basename(\dirname(__DIR__));
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 return (object)[
     'name'           => $moduleDirNameUpper . ' Module Configurator',

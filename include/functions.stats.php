@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb\{Helper,
@@ -18,7 +18,6 @@ use XoopsModules\Newbb\{Helper,
 /** @var Helper $helper */
 /** @var TopicHandler $topicHandler */
 /** @var PostHandler $postHandler */
-
 defined('NEWBB_FUNCTIONS_INI') || require __DIR__ . '/functions.ini.php';
 define('NEWBB_FUNCTIONS_STATS_LOADED', true);
 
@@ -107,9 +106,12 @@ if (!defined('NEWBB_FUNCTIONS_STATS')) {
     function getTotalViews()
     {
         $sql = 'SELECT sum(topic_views) FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' ';
-        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
             return null;
         }
+        
         [$total] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         return $total;

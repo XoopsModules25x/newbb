@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -23,10 +23,10 @@ use XoopsModules\Newbb\{Common\Configurator,
     Helper,
     PostHandler
 };
+
 /** @var PostHandler $postHandler */
 /** @var ForumHandler $forumHandler */
 /** @var CategoryHandler $categoryHandler */
-
 if (defined('XOOPS_MODULE_NEWBB_FUCTIONS')) {
     exit();
 }

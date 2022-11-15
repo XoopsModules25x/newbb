@@ -105,7 +105,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title" id="myModalLabel"><{$category.cat_title}></h4>
                                     </div>
                                     <div class="modal-body">
@@ -169,7 +169,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                     <h4 class="modal-title" id="ForumDescription"><{$smarty.const.THEME_FORUM_DESC}>: <{$category.cat_title}>
                                                         - <{$forum.forum_name}></h4>
                                                 </div>
@@ -274,17 +274,17 @@
 
                         <li><{$smarty.const._MD_NEWBB_TOTALTOPICSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_NEWBB_ALL}>">
-                                <{$stats[0].topic.total}>
+                                <{$stats[0].topic.total|default:''}>
                             </a></li>
 
                         <li><{$smarty.const._MD_NEWBB_TOTALPOSTSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
-                                <{$stats[0].post.total}>
+                                <{$stats[0].post.total|default:''}>
                             </a></li>
                         <{if $stats[0].digest.total|default:''}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
-                                    <{$stats[0].digest.total}>
+                                    <{$stats[0].digest.total|default:''}>
                                 </a></li>
                         <{/if}>
 
@@ -322,7 +322,7 @@
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version}></a>
         <{if $rss_button}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">

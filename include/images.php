@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 /**
@@ -45,7 +44,7 @@ $forumImage['document'] =
 
 $forumImage['previous'] = $forumImage['next'] = $forumImage['right'] = $forumImage['down'] = $forumImage['up'] = $forumImage['printer'] = $forumImage['new_forum'] =
 
-$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['digg'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['wong'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
+$forumImage['facebook'] = $forumImage['twitter'] = $forumImage['linkedin'] = $forumImage['stumbleupon'] = $forumImage['friendfeed'] = $forumImage['reddit'] = $forumImage['delicious'] = $forumImage['technorati'] = $forumImage['anonym'] = $forumImage['more'] = $forumImage['less'] = 'icon';
 
 for ($i = 1; $i <= 5; ++$i) {
     $forumImage['rate' . $i] = 'icon';

@@ -22,7 +22,7 @@
 <div class="clear"></div>
 <br>
 
-<{if $disclaimer}>
+<{if $disclaimer|default:''}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
     <br>

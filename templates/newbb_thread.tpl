@@ -31,7 +31,7 @@
         </th>
     </tr>
     <tr>
-        <{if $topic_post.poster.uid gt -1}>
+        <{if $topic_post.poster.uid|default:'' gt -1}>
         <td width="20%" class="odd" rowspan="2" valign="top">
             <{if $topic_post.poster.uid|default:0 != 0}>
                 <{* START hacked by irmtfan rank_title -> rank.title *}>
@@ -73,7 +73,7 @@
                             <{else}>
                                 0
                             <{/if}>
-                            <{if $topic_post.poster.digests|default:0 gt 0}>
+                            <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
                                 |
                                 <span class="comUserStatCaption"><{$smarty.const._MD_NEWBB_DIGESTS}>:</span>
                                 <{$topic_post.poster.digests}>
@@ -106,10 +106,10 @@
             <div class="post_ip">
                 <{if $topic_post.poster_ip}>
                     IP:
-                    <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
+                    <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
                     |
                 <{/if}>
-                <{if $topic_post.poster.uid gt 0}>
+                <{if $topic_post.poster.uid|default:'' gt 0}>
                 <{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></div>
             <{/if}>
             <{if $topic_post.post_edit}>
@@ -149,7 +149,7 @@
                         <{if $topic_post.thread_action}>
                             <{foreach item=btn from=$topic_post.thread_action}>
                             <{* irmtfan add alt key *}>
-                            <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>> <{$btn.image}></a>&nbsp;
+                            <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" alt="<{$btn.name}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>> <{$btn.image|default:''}></a>&nbsp;
                         <{/foreach}>
                         <{/if}>
                     </td>

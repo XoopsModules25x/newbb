@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -11,8 +11,8 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/
  * @author       XOOPS Development Team
  */
@@ -23,11 +23,11 @@ use XoopsModules\Newbb\{Helper,
     CategoryHandler,
     ForumHandler
 };
+
 /** @var Admin $adminObject */
 /** @var Helper $helper */
 /** @var CategoryHandler $categoryHandler */
 /** @var ForumHandler $forumHandler */
-
 require_once __DIR__ . '/admin_header.php';
 
 $cat_orders = Request::getArray('cat_orders', null, 'POST');
@@ -73,7 +73,7 @@ if (Request::getString('submit', '', 'POST')) {
     echo '</tr>';
 
     //    $forumHandler     = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
-    //    /** @var Newbb\CategoryHandler $categoryHandler */
+    // /** @var Newbb\CategoryHandler $categoryHandler */
     //    $categoryHandler  = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
     $criteriaCategory = new \CriteriaCompo(new \Criteria('cat_id'));
     $criteriaCategory->setSort('cat_order');

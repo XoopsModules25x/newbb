@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb\Plugin;
 
@@ -13,8 +13,7 @@ namespace XoopsModules\Newbb\Plugin;
 */
 
 use Xmf\Request;
-use XoopsModules\Newbb\{Helper
-};
+use XoopsModules\Newbb\Helper;
 use XoopsModules\Userlog;
 
 /** @var Helper $helper */
@@ -24,12 +23,11 @@ use XoopsModules\Userlog;
  *
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         newbb class plugin
  * @since           4.31
  * @author          irmtfan (irmtfan@yahoo.com)
  * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
  */
-class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\PluginInterface
+class userlog extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\PluginInterface
 {
     /**
      * @param string $subscribe_from Name of the script
@@ -50,12 +48,12 @@ class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\Plu
      * 'allow_bookmark' = 1;
      *
      * empty($subscribe_from):
-     * @return bool|array $script_arr["item_name"] name of the item = array("subscribe_from1", "subscribe_from2") Name of the script
+     * @return bool|array["item_name"] name of the item = array("subscribe_from1", "subscribe_from2") Name of the script
      *
      * !empty($subscribe_from):
      * @return bool|array $item["item_name"] name of the item, $item["item_id"] id of the item
      */
-    public function item($subscribe_from)
+    public function item(string $subscribe_from)
     {
         if (empty($subscribe_from)) {
             $script_arr             = [];
@@ -69,7 +67,7 @@ class Plugin extends Userlog\Plugin\PluginAbstract implements Userlog\Plugin\Plu
             case 'viewtopic.php':
                 /** @var Newbb\TopicHandler $topicHandler */ $topicHandler = Helper::getInstance()->getHandler('Topic');
                 $post_id                                                   = Request::getInt('post_id', 0); // !empty($_REQUEST["post_id"]) ? (int)($_REQUEST["post_id"]) : 0;
-                $move                                                      = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
+                $move                                                      = \mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move'])? strtolower($_GET['move']) : '';
                 $topic_id                                                  = Request::getInt('topic_id', 0); // !empty($_REQUEST["topic_id"]) ? (int)($_REQUEST["topic_id"]) : 0;
                 if (!empty($post_id)) {
                     $topicObject = $topicHandler->getByPost($post_id);

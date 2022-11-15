@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use XoopsModules\Newbb;
@@ -22,6 +21,27 @@ use XoopsModules\Xoopspoll;
  */
 class Topic extends \XoopsObject
 {
+    public $topic_id;
+    public $topic_title;
+    public $topic_poster;
+    public $topic_time;
+    public $topic_views;
+    public $topic_replies;
+    public $topic_last_post_id;
+    public $forum_id;
+    public $topic_status;
+    public $type_id;
+    public $topic_sticky;
+    public $topic_digest;
+    public $digest_time;
+    public $approved;
+    public $poster_name;
+    public $rating;
+    public $votes;
+    public $topic_haspoll;
+    public $poll_id;
+    public $topic_tags;
+
     public function __construct()
     {
         parent::__construct();
@@ -48,7 +68,7 @@ class Topic extends \XoopsObject
     }
 
     // irmtfan add LAST_INSERT_ID to enhance the mysql performances
-    public function incrementCounter()
+    public function incrementCounter(): void
     {
         $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . ' SET topic_views = LAST_INSERT_ID(topic_views + 1) WHERE topic_id =' . $this->getVar('topic_id');
         $GLOBALS['xoopsDB']->queryF($sql);
@@ -80,9 +100,8 @@ class Topic extends \XoopsObject
     /**
      * Load functions needed for old xoopspoll (older than version 1.4 by zyspec) and umfrage modules
      *
-     * @access public
      * @param string $pollModule dirname of the poll module
-     * @return string|false $classPoll = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
+     * @return string|false = the name of the old poll class eg: "XoopsPoll" | "Umfrage"
      */
     public function loadOldPoll($pollModule = null)
     {
@@ -117,7 +136,6 @@ class Topic extends \XoopsObject
     /**
      * delete a poll in database
      *
-     * @access public
      * @param int $poll_id
      * @return bool
      */
@@ -170,7 +188,6 @@ class Topic extends \XoopsObject
     /**
      * get a poll object from a poll module.
      * note: can be used to find if a poll exist in a module
-     * @access public
      * @param int    $poll_id
      * @param string $pollModule dirname of the poll module
      * @return bool|\XoopsObject poll

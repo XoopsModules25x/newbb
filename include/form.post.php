@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Newbb module
  *
@@ -10,8 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
@@ -37,10 +37,9 @@ use XoopsModules\Tag\FormTag;
 /** @var TypeHandler $typeHandler */
 /** @var Post $postObject */
 /** @var PostHandler $postHandler */
-
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = Helper::getInstance()->getHandler('Category');
 $categoryObject  = $categoryHandler->get($forumObject->getVar('cat_id'), ['cat_title']);
@@ -123,7 +122,7 @@ $topic_status = $topicHandler->get(@$topic_id, 'topic_status');
 
 //$filname = XOOPS_URL.$_SERVER['REQUEST_URI'];
 
-$forum_form = new \XoopsThemeForm(htmlspecialchars(@$form_title, ENT_QUOTES | ENT_HTML5), 'form_post', XOOPS_URL . '/modules/newbb/post.php', 'post', true);
+$forum_form = new \XoopsThemeForm(htmlspecialchars((string)@$form_title, ENT_QUOTES | ENT_HTML5), 'form_post', XOOPS_URL . '/modules/newbb/post.php', 'post', true);
 $forum_form->setExtra('enctype="multipart/form-data"');
 
 if ($editby) {
@@ -135,7 +134,7 @@ if (newbbIsAdmin($forumObject)
     || ($topicHandler->getPermission($forumObject, $topic_status, 'type')
         && (0 == $topic_id
             || $uid == $topicHandler->get(@$topic_id, 'topic_poster')))) {
-    $type_id = $topicHandler->get(@$topic_id, 'type_id');
+    $type_id     = $topicHandler->get(@$topic_id, 'type_id');
     $typeHandler = Helper::getInstance()->getHandler('Type');
     $types       = $typeHandler->getByForum($forumObject->getVar('forum_id'));
     if (!empty($types)) {
@@ -179,7 +178,7 @@ if (Request::getString('editor', '', 'POST')) {
     }
 }
 if (count(@$GLOBALS['xoopsModuleConfig']['editor_allowed']) > 0) {
-    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'])) {
+    if (!in_array($editor, $GLOBALS['xoopsModuleConfig']['editor_allowed'], true)) {
         $editor = $GLOBALS['xoopsModuleConfig']['editor_allowed'][0];
         newbbSetCookie('editor', $editor);
     }
@@ -205,8 +204,8 @@ if (!empty($GLOBALS['xoopsModuleConfig']['do_tag']) && (empty($postObject) || $p
     } elseif (!empty($topic_id)) {
         $topic_tags = $topicHandler->get($topic_id, 'topic_tags');
     }
-    if (!empty($newbbConfig['do_tag']) && class_exists('TagFormTag')) {
-        $forum_form->addElement(new FormTag('topic_tags', 60, 255, $topic_tags));
+    if (!empty($newbbConfig['do_tag']) && \class_exists(\XoopsModules\Tag\FormTag::class)) {
+        $forum_form->addElement(new \XoopsModules\Tag\FormTag('topic_tags', 60, 255, $topic_tags));
     }
 }
 

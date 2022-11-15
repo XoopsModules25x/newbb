@@ -31,7 +31,7 @@
 <{if $online}>
     <div class="left" style="padding: 5px;">
         <{$smarty.const._MD_NEWBB_BROWSING}>&nbsp;
-        <{foreach item=user from=$online.users}>
+        <{foreach item=user from=$online.users|default:null}>
             <a href="<{$user.link}>">
                 <{if $user.level eq 2}>
                     <span class="online_admin"><{$user.uname}></span>
@@ -53,6 +53,7 @@
 <{if $viewer_level gt 0}>
 
     <{* modal for rate // *}>
+    <{if $rating_enable}>
     <div class="modal fade bs-example-modal-sm container" id="replyrate" tabindex="-1" role="dialog" aria-labelledby="replyrate">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content btn-group" role="group">
@@ -64,8 +65,10 @@
             </div>
         </div>
     </div>
+    <{/if}>
 
     <{* modal for quickreply // *}>
+    <{if $quickreply.show}>
     <div class="modal fade bs-example-modal-sm container" id="replyquick" tabindex="-1" role="dialog" aria-labelledby="replyquick">
         <div class="modal-dialog btn-bottom" role="document">
             <div class="modal-content modal-body"><button type="button btn-default" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&amp;times;</span></button>
@@ -73,6 +76,7 @@
             </div>
         </div>
     </div>
+    <{/if}>
 
     <{* fix bottom navbar // *}>
     <div class="navbar-fixed-bottom container" id="postnav" style="bottom:12px;">
@@ -137,7 +141,7 @@
 </span>
     <{* irmtfan hardcode removed style="float: right; text-align:right;"" *}>
     <span class="icon_right">
-<{$forum_reply}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
+<{$forum_reply|default:''}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
 </span>
 </div>
 <div class="clear"></div>
@@ -161,7 +165,7 @@
             <{/if}>
         </select>
         <{* irmtfan user should not see rating if he dont have permission *}>
-        <{if $rating_enable && $forum_post && $forum_reply}>
+        <{if $rating_enable|default:'' && $forum_post|default:'' && $forum_reply|default:''}>
             <select
                     name="rate" id="rate"
                     onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
@@ -265,7 +269,7 @@
 <br>
 
 <div class="left" style="padding: 5px;">
-    <{$forum_reply}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
+    <{$forum_reply|default:''}>&nbsp;<{$forum_addpoll|default:''}>&nbsp;<{$forum_post_or_register}>
 </div>
 <div class="clear"></div>
 <br>
@@ -330,3 +334,4 @@ xoopsGetElementById('aktuell').scrollIntoView(true);
     }
 </script>
 <{* END irmtfan add scroll js function to scroll down to current post or top of the topic *}>
+

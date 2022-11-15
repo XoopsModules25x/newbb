@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -6,10 +6,9 @@ namespace XoopsModules\Newbb;
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 class Digest extends \XoopsObject
 {
@@ -29,12 +28,12 @@ class Digest extends \XoopsObject
         $this->items = [];
     }
 
-    public function setHtml()
+    public function setHtml(): void
     {
         $this->isHtml = true;
     }
 
-    public function setSummary()
+    public function setSummary(): void
     {
         $this->isSummary = true;
     }
@@ -45,7 +44,7 @@ class Digest extends \XoopsObject
      * @param        $author
      * @param string $summary
      */
-    public function addItem($title, $link, $author, $summary = '')
+    public function addItem($title, $link, $author, $summary = ''): void
     {
         $title  = $this->cleanup($title);
         $author = $this->cleanup($author);
@@ -66,7 +65,7 @@ class Digest extends \XoopsObject
         $clean = \stripslashes($text);
         $clean = &$myts->displayTarea($clean, 1, 0, 1);
         $clean = \strip_tags($clean);
-        $clean = \htmlspecialchars($clean, \ENT_QUOTES);
+        $clean = \htmlspecialchars((string)$clean, \ENT_QUOTES);
 
         return $clean;
     }

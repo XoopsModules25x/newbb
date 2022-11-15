@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -24,9 +24,8 @@ require_once __DIR__ . '/Read.php';
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 
@@ -124,8 +123,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
                     unset($cookie_vars[$var]);
                 }
             } else {
-                $cookie_vars[$var] = \time() /*$items[$var]*/
-                ;
+                $cookie_vars[$var] = \time(); /*$items[$var]*/
             }
         }
         \newbbSetCookie($cookie_name, $cookie_vars);
@@ -188,7 +186,7 @@ class ReadtopicHandler extends Newbb\ReadHandler
     /**
      * @return void
      */
-    public function synchronization()
+    public function synchronization(): void
     {
         //        return;
     }

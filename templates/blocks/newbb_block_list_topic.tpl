@@ -9,7 +9,7 @@
     <{assign var=topicwidth value=$topicwidth-20}>
     <{assign var=block_forum value="width20"}>
 <{/if}>
-<{if $block.headers.views}>
+<{if $block.headers.views|default:''}>
     <{assign var=minwidth value=$minwidth+25}>
     <{assign var=topicwidth value=$topicwidth-10}>
     <{assign var=block_view value="width10"}>
@@ -33,7 +33,7 @@
         <{if $block.headers.replies}>
             <div class="<{$block_reply}> floatleft center"><{$block.headers.replies}></div>
         <{/if}>
-        <{if $block.headers.views}>
+        <{if $block.headers.views|default:''}>
             <div class="<{$block_view}> floatleft center"><{$block.headers.views}></div>
         <{/if}>
         <div style="overflow: hidden;" class="center"><{$block.headers.lastpost}></div>
@@ -43,26 +43,26 @@
     <{foreach name=loop item=topic from=$block.topics}>
     <div class="<{cycle values="even,odd"}> border">
         <div class="<{$block_topic}> floatleft left">
-            <{if $block.headers.approve}>
+            <{if $block.headers.approve|default:''}>
                 <{if $topic.approve eq 1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=active#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a><{/if}>
                 <{if $topic.approve eq 0}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=pending#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a><{/if}>
                 <{if $topic.approve eq -1}><a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>&status=deleted#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a><{/if}>
                 <br>
             <{/if}>
-            <{if $block.headers.read}><{$topic.topic_folder}><{/if}>
+            <{if $block.headers.read|default:''}><{$topic.topic_folder}><{/if}>
             <{if $block.headers.topic}>
                 <a href="<{$xoops_url}>/modules/newbb/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-                    <{if $block.headers.type}><{$topic.topic_title}><{else}><{$topic.topic_title_excerpt}><{/if}>
+                    <{if $block.headers.type|default:''}><{$topic.topic_title}><{else}><{$topic.topic_title_excerpt}><{/if}>
                 </a>
-                <{if $block.headers.pagenav}><{$topic.topic_page_jump}><{/if}>
+                <{if $block.headers.pagenav|default:''}><{$topic.topic_page_jump}><{/if}>
                 <br>
             <{/if}>
-            <{if $block.headers.attachment}><{$topic.attachment}><{/if}>
-            <{if $block.headers.lock}><{$topic.lock}><{/if}>
-            <{if $block.headers.sticky}><{$topic.sticky}><{/if}>
-            <{if $block.headers.digest}><{$topic.digest}><{/if}>
-            <{if $block.headers.poll}><{$topic.poll}><{/if}>
-            <{if $block.headers.publish }>
+            <{if $block.headers.attachment|default:''}><{$topic.attachment}><{/if}>
+            <{if $block.headers.lock|default:''}><{$topic.lock}><{/if}>
+            <{if $block.headers.sticky|default:''}><{$topic.sticky}><{/if}>
+            <{if $block.headers.digest|default:''}><{$topic.digest}><{/if}>
+            <{if $block.headers.poll|default:''}><{$topic.poll}><{/if}>
+            <{if $block.headers.publish|default:'' }>
                 <br>
                 <span class="xx-small">
 <{$block.headers.publish}>: <{$topic.topic_time}>
@@ -75,7 +75,7 @@
                     <{if $block.headers.ratings}>&nbsp;<{$topic.rating_img}><{/if}>
 </span>
             <{/if}>
-            <{if $block.headers.poster}>
+            <{if $block.headers.poster|default:''}>
                 <br>
                 <span class="xx-small">
 <{$block.headers.poster}>: <{$topic.topic_poster}>
@@ -88,7 +88,7 @@
         <{if $block.headers.replies}>
             <div class="<{$block_reply}> floatleft center"><{$topic.topic_replies}></div>
         <{/if}>
-        <{if $block.headers.views}>
+        <{if $block.headers.views|default:''}>
             <div class="<{$block_view}> floatleft center"><{$topic.topic_views}></div>
         <{/if}>
         <div style="overflow: hidden;" class="right">
@@ -115,11 +115,11 @@
             <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=unreplied"><{$smarty.const._MD_NEWBB_UNREPLIED}></a>
             |
         <{/if}>
-        <{if $block.headers.votes}>
+        <{if $block.headers.votes|default:''}>
             <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=voted"><{$smarty.const._MD_NEWBB_VOTED}></a>
             |
         <{/if}>
-        <{if $block.headers.poll}>
+        <{if $block.headers.poll|default:''}>
             <a href="<{$xoops_url}>/modules/newbb/list.topic.php?status=poll"><{$smarty.const._MD_NEWBB_POLL_POLL}></a>
             |
         <{/if}>

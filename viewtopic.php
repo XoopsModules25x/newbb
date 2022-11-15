@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -35,14 +35,14 @@ use XoopsModules\Newbb\{
 /** @var ForumHandler $forumHandler */
 /** @var PostHandler $postHandler */
 /** @var CategoryHandler $categoryHandler */
+
 /** @var Post $eachpost */
 
 use XoopsModules\Xoopspoll;
 use XoopsModules\Xoopspoll\Helper as PollHelper;
+
 /** @var Xoopspoll\Poll $pollObject */
 /** @var Xoopspoll\LogHandler $logHandler */
-
-
 require_once __DIR__ . '/header.php';
 $xoopsLogger->startTime('newBB_viewtopic');
 require_once __DIR__ . '/include/functions.read.php';
@@ -65,13 +65,13 @@ $read     = (Request::getString('read', '', 'GET')
              && 'new' === Request::getString('read', '', 'GET')) ? Request::getString('read', '', 'GET') : '';
 $topic_id = Request::getInt('topic_id', 0, 'GET'); // isset($_GET['topic_id']) ? (int)($_GET['topic_id']) : 0;
 $post_id  = Request::getInt('post_id', 0, 'GET'); // !empty($_GET['post_id']) ? (int)($_GET['post_id']) : 0;
-$move     = mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
+$move     = \mb_strtolower(Request::getString('move', '', 'GET')); // isset($_GET['move']) ? strtolower($_GET['move']) : '';
 $start    = Request::getInt('start', 0, 'GET'); // !empty($_GET['start']) ? (int)($_GET['start']) : 0;
 $status   = (Request::getString('status', '', 'GET')
-             && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted'])) ? Request::getString('status', '', 'GET') : '';
+             && in_array(Request::getString('status', '', 'GET'), ['active', 'pending', 'deleted'], true)) ? Request::getString('status', '', 'GET') : '';
 $mode     = Request::getInt('mode', (!empty($status) ? 2 : 0), 'GET'); // !empty($_GET['mode']) ? (int)($_GET['mode']) : (!empty($status) ? 2 : 0);
 $order    = (Request::getString('order', '', 'GET')
-             && in_array(Request::getString('order', '', 'GET'), ['ASC', 'DESC'])) ? Request::getString('order', '', 'GET') : '';
+             && in_array(Request::getString('order', '', 'GET'), ['ASC', 'DESC'], true)) ? Request::getString('order', '', 'GET') : '';
 
 if ('' === $order) {
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isActive()) {
@@ -247,7 +247,7 @@ if ($topicHandler->getPermission($forumObject, $topicObject->getVar('topic_statu
         $xoopsTpl->assign('topic_lock', _MD_NEWBB_TOPICLOCKED);
     }
     if (!is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsModuleConfig']['show_reg'])) {
-        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars($xoopsRequestUri, ENT_QUOTES | ENT_HTML5) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
+        $xoopsTpl->assign('forum_register', '<a href="' . XOOPS_URL . '/user.php?xoops_redirect=' . htmlspecialchars((string)$xoopsRequestUri, ENT_QUOTES | ENT_HTML5) . '">' . _MD_NEWBB_REGTOPOST . '</a>');
     }
 }
 // irmtfan for backward compatibility assign forum_post_or_register smarty again.
@@ -524,7 +524,7 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
         // new xoopspoll module
         if ($pollModuleHandler->getVar('version') >= 201) {
             $xpollHandler = PollHelper::getInstance()->getHandler('Poll');
-            $pollObject = $xpollHandler->get($poll_id);
+            $pollObject   = $xpollHandler->get($poll_id);
             if (is_object($pollObject)) {
                 /* check to see if user has rights to view the results */
                 $vis_return = $pollObject->isResultVisible();
@@ -541,13 +541,13 @@ if (is_object($pollModuleHandler) && $pollModuleHandler->getVar('isactive')) {
                         'is_visible'      => $isVisible,
                         'visible_message' => $visibleMsg,
                         'disp_votes'      => $xp_config['disp_vote_nums'],
-                        'lang_vote'       => constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE'),
-                        'lang_results'    => constant('_MD_' . mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_RESULTS'),
+                        'lang_vote'       => constant('_MD_' . \mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_VOTE'),
+                        'lang_results'    => constant('_MD_' . \mb_strtoupper($GLOBALS['xoopsModuleConfig']['poll_module']) . '_RESULTS'),
                         'back_link'       => '',
                     ]
                 );
                 $classRenderer = ucfirst($GLOBALS['xoopsModuleConfig']['poll_module']) . 'Renderer';
-                $renderer = new Xoopspoll\Renderer($pollObject);
+                $renderer      = new Xoopspoll\Renderer($pollObject);
                 // check to see if user has voted, show form if not, otherwise get results for form
 
                 $logHandler = PollHelper::getInstance()->getHandler('Log');
@@ -696,7 +696,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['show_jump'])) {
 
 $xoopsTpl->assign(
     [
-        'lang_forum_index' => sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
+        'lang_forum_index' => sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)),
         'lang_from'        => _MD_NEWBB_FROM,
         'lang_joined'      => _MD_NEWBB_JOINED,
         'lang_posts'       => _MD_NEWBB_POSTS,
@@ -772,15 +772,15 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     }
 
     //$quickform = ( !empty($GLOBALS['xoopsModuleConfig']["editor_default"]) ) ? $GLOBALS['xoopsModuleConfig']["editor_default"] : "textarea";
-    $quickform               = !empty($GLOBALS['xoopsModuleConfig']['editor_quick_default']) ? $GLOBALS['xoopsModuleConfig']['editor_quick_default'] : 'textarea';
-    $editor_configs          = [];
-    $editor_configs ['name'] = 'message';
+    $quickform              = !empty($GLOBALS['xoopsModuleConfig']['editor_quick_default']) ? $GLOBALS['xoopsModuleConfig']['editor_quick_default'] : 'textarea';
+    $editor_configs         = [];
+    $editor_configs['name'] = 'message';
     //$editor_configs [ "value" ]     = $message ;
-    $editor_configs ['rows']   = empty($GLOBALS['xoopsModuleConfig'] ['editor_rows']) ? 10 : $GLOBALS['xoopsModuleConfig'] ['editor_rows'];
-    $editor_configs ['cols']   = empty($GLOBALS['xoopsModuleConfig'] ['editor_cols']) ? 30 : $GLOBALS['xoopsModuleConfig'] ['editor_cols'];
-    $editor_configs ['width']  = empty($GLOBALS['xoopsModuleConfig'] ['editor_width']) ? '100%' : $GLOBALS['xoopsModuleConfig'] ['editor_width'];
-    $editor_configs ['height'] = empty($GLOBALS['xoopsModuleConfig'] ['editor_height']) ? '400px' : $GLOBALS['xoopsModuleConfig'] ['editor_height'];
-    $_editor                   = new \XoopsFormEditor(_MD_NEWBB_MESSAGEC, $quickform, $editor_configs, true);
+    $editor_configs['rows']   = empty($GLOBALS['xoopsModuleConfig']['editor_rows']) ? 10 : $GLOBALS['xoopsModuleConfig']['editor_rows'];
+    $editor_configs['cols']   = empty($GLOBALS['xoopsModuleConfig']['editor_cols']) ? 30 : $GLOBALS['xoopsModuleConfig']['editor_cols'];
+    $editor_configs['width']  = empty($GLOBALS['xoopsModuleConfig']['editor_width']) ? '100%' : $GLOBALS['xoopsModuleConfig']['editor_width'];
+    $editor_configs['height'] = empty($GLOBALS['xoopsModuleConfig']['editor_height']) ? '400px' : $GLOBALS['xoopsModuleConfig']['editor_height'];
+    $_editor                  = new \XoopsFormEditor(_MD_NEWBB_MESSAGEC, $quickform, $editor_configs, true);
     $forum_form->addElement($_editor, true);
 
     $forum_form->addElement(new \XoopsFormHidden('dohtml', 0));
@@ -816,7 +816,7 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
         'collapse' => $iconHandler->getImageSource($qr_collapse),
     ];
     $quickreply['show']   = 1; // = !empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled']
-    $quickreply['expand'] = (count($toggles) > 0) ? (!in_array('qr', $toggles)) : true;
+    $quickreply['expand'] = (count($toggles) > 0) ? (!in_array('qr', $toggles, true)) : true;
     if ($quickreply['expand']) {
         $quickreply['style']     = 'block';        //irmtfan move semicolon
         $quickreply_icon_display = $qr_expand;
@@ -835,10 +835,11 @@ if (!empty($GLOBALS['xoopsModuleConfig']['quickreply_enabled'])
     $xoopsTpl->assign('quickreply', ['show' => 0]);
 }
 
-if ($GLOBALS['xoopsModuleConfig']['do_tag'] && class_exists('TagFormTag')
-    && @require $GLOBALS['xoops']->path('modules/tag/include/tagbar.php')) {
-    $xoopsTpl->assign('tagbar', tagBar($topicObject->getVar('topic_tags', 'n')));
+if (1 == $helper->getConfig('do_tag') && \class_exists(\XoopsModules\Tag\Tagbar::class) && \xoops_isActiveModule('tag')) {
+    $tagbarObj = new \XoopsModules\Tag\Tagbar();
+    $xoopsTpl->assign('tagbar', $tagbarObj->getTagbar($topicObject->getVar('topic_tags', 'n')));
 }
+
 // irmtfan move to footer.php
 require_once __DIR__ . '/footer.php';
 require_once $GLOBALS['xoops']->path('footer.php');

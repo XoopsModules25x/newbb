@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Xmf\Request;
 
@@ -6,7 +6,7 @@ require_once __DIR__ . '/header.php';
 /*
  *
  * Module: newbbss
- * Author: Sudhaker Raj <http://xoops.biz>
+ * Author: Sudhaker Raj <https://xoops.biz>
  * Licence: GNU
  */
 $seoOp    = Request::getString('seoOp', '', 'GET');
@@ -26,7 +26,7 @@ $seoMap = [
     'pdf' => 'makepdf.php',
 ];
 
-if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos)) {
+if (!empty($seoOp) && !empty($seoMap[$seoOp]) && in_array($seoOp, $seos, true)) {
     // module specific dispatching logic, other module must implement as
     // per their requirements.
     $ori_self               = Request::getString('SCRIPT_NAME', '', 'SERVER');
@@ -83,7 +83,7 @@ function checker(&$value)
     $value = strip_tags($value);
 
     // HTML-Tags maskieren
-    $value = htmlspecialchars($value, ENT_QUOTES);
+    $value = htmlspecialchars((string)$value, ENT_QUOTES);
 
     // Leerzeichen am Anfang und Ende beseitigen
     $value = trim($value);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -44,23 +44,25 @@ class PostHandler extends \XoopsPersistableObjectHandler
         $id    = (int)$id;
         $post  = null;
         $sql   = 'SELECT p.*, t.* FROM ' . $this->db->prefix('newbb_posts') . ' p LEFT JOIN ' . $this->db->prefix('newbb_posts_text') . ' t ON p.post_id=t.post_id WHERE p.post_id=' . $id;
-        $array = $this->db->fetchArray($this->db->query($sql));
-        if ($array) {
-            $post = $this->create(false);
-            $post->assignVars($array);
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
+            $array = $this->db->fetchArray($result);
+            if ($array) {
+                $post = $this->create(false);
+                $post->assignVars($array);
+            }
         }
-
         return $post;
     }
 
     /**
-     * @param int                   $limit
-     * @param int                   $start
+     * @param int  $limit
+     * @param int  $start
      * @param \CriteriaElement|null $criteria
-     * @param null                  $fields
-     * @param bool                  $asObject
-     * @param int                   $topic_id
-     * @param int                   $approved
+     * @param null $fields
+     * @param bool $asObject
+     * @param int  $topic_id
+     * @param int  $approved
      * @return array
      */
     //    public function getByLimit($topic_id, $limit, $approved = 1)
@@ -86,7 +88,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                   . ' ORDER BY p.post_time DESC';
         $result = $this->db->query($sql, $limit, 0);
         $ret    = [];
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);
@@ -95,6 +97,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                 unset($post);
             }
         }
+
         return $ret;
     }
 
@@ -118,7 +121,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param int|Post $post
-     * @param bool                  $force
+     * @param bool     $force
      * @return bool
      */
     public function approve(&$post, $force = false)
@@ -188,7 +191,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \XoopsObject $post
-     * @param bool         $force
+     * @param bool $force
      * @return bool
      */
     public function insert(\XoopsObject $post, $force = true) //insert(&$post, $force = true)
@@ -455,7 +458,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \CriteriaElement|\CriteriaCompo|null $criteria
-     * @param null $join
+     * @param null                                 $join
      * @return int|null
      */
     public function getPostCount($criteria = null, $join = null)
@@ -469,10 +472,11 @@ class PostHandler extends \XoopsPersistableObjectHandler
         // LEFT JOIN
         $sql .= $join;
         // WHERE
-        if (\is_object($criteria) && \is_subclass_of($criteria, \CriteriaElement::class)) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             //xoops_error($this->db->error().'<br>'.$sql);
             return null;
         }
@@ -489,9 +493,9 @@ class PostHandler extends \XoopsPersistableObjectHandler
 
     /**
      * @param \CriteriaElement|\CriteriaCompo|null $criteria
-     * @param int  $limit
-     * @param int  $start
-     * @param null $join
+     * @param int                                  $limit
+     * @param int                                  $start
+     * @param null                                 $join
      * @return array
      */
     public function getPostsByLimit($criteria = null, $limit = 1, $start = 0, $join = null)
@@ -501,14 +505,14 @@ class PostHandler extends \XoopsPersistableObjectHandler
         if (!empty($join)) {
             $sql .= $join;
         }
-        if (\is_object($criteria) && \is_subclass_of($criteria, \CriteriaElement::class)) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' !== $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
         }
         $result = $this->db->query($sql, (int)$limit, (int)$start);
-        if ($result instanceof \mysqli_result) {
+        if ($this->db->isResultSet($result)) {
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $post = $this->create(false);
                 $post->assignVars($myrow);
@@ -516,6 +520,7 @@ class PostHandler extends \XoopsPersistableObjectHandler
                 unset($post);
             }
         }
+
         return $ret;
     }
 

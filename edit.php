@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * NewBB 5.0x,  the forum module for XOOPS project
  *
  * @copyright      XOOPS Project (https://xoops.org)
- * @license        GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license        GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author         Taiwen Jiang (phppp or D.J.) <phppp@users.sourceforge.net>
  * @since          4.00
- * @package        module::newbb
  */
 
 use Xmf\Request;
@@ -21,8 +21,7 @@ use XoopsModules\Newbb\{
     PostHandler,
     StatsHandler,
     Topic,
-    TopicHandler,
-    Tree
+    TopicHandler
 };
 /** @var Category $categories */
 /** @var CategoryHandler $categoryHandler */
@@ -36,7 +35,6 @@ use XoopsModules\Newbb\{
 /** @var StatsHandler $statsHandler */
 /** @var Topic $topicObject */
 /** @var TopicHandler $topicHandler */
-
 require_once __DIR__ . '/header.php';
 
 foreach (['forum', 'topic_id', 'post_id', 'order'] as $getint) {
@@ -50,7 +48,7 @@ if (!$topic_id || !$post_id) {
 
 $forumHandler = Helper::getInstance()->getHandler('Forum');
 $topicHandler = Helper::getInstance()->getHandler('Topic');
-$postHandler = Helper::getInstance()->getHandler('Post');
+$postHandler  = Helper::getInstance()->getHandler('Post');
 
 $postObject  = $postHandler->get($post_id);
 $topicObject = $topicHandler->get($postObject->getVar('topic_id'));
@@ -103,7 +101,7 @@ $GLOBALS['xoopsConfig']['module_cache'][$xoopsModule->getVar('mid')] = 0;
 require_once $GLOBALS['xoops']->path('header.php');
 
 /*
-$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('lang_forum_index', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 
 $categoryHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Category');
 $categoryObject = $categoryHandler->get($forumObject->getVar('cat_id'), array("cat_title"));
@@ -157,7 +155,7 @@ foreach ($posts_contextObject as $post_contextObject) {
         $p_name = newbbGetUnameFromId($post_contextObject->getVar('uid'), $GLOBALS['xoopsModuleConfig']['show_realname']);
     } else {
         $poster_name = $post_contextObject->getVar('poster_name');
-        $p_name      = empty($poster_name) ? htmlspecialchars($GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
+        $p_name      = empty($poster_name) ? htmlspecialchars((string)$GLOBALS['xoopsConfig']['anonymous'], ENT_QUOTES | ENT_HTML5) : $poster_name;
     }
     $p_date    = formatTimestamp($post_contextObject->getVar('post_time'));
     $p_subject = $post_contextObject->getVar('subject');

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Newbb module
  *
@@ -10,23 +11,23 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-use XoopsModules\Newbb\{Helper,
-    Forum
+use XoopsModules\Newbb\{
+    Forum,
+    Helper
 };
 
 /** @var Helper $helper */
 
 /**
  * Function to a list of user names associated with their user IDs
- * @param int       $uid
- * @param int    $usereal
- * @param bool   $linked
+ * @param int  $uid
+ * @param int  $usereal
+ * @param bool $linked
  * @return array
  */
 function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
@@ -38,9 +39,9 @@ function newbbGetUnameFromIds($uid, $usereal = 0, $linked = false)
 }
 
 /**
- * @param int     $uid
- * @param int     $usereal
- * @param bool    $linked
+ * @param int  $uid
+ * @param int  $usereal
+ * @param bool $linked
  * @return string
  */
 function newbbGetUnameFromId($uid, $usereal = 0, $linked = false)
@@ -99,8 +100,8 @@ function newbbIsAdministrator($user = -1, $mid = 0)
 /**
  * Function to check if a user is a moderator of a forum
  *
- * @param                               $forum
- * @param int|array |string|\XoopsUser  $user
+ * @param mixed                        $forum
+ * @param int|array |string|\XoopsUser $user
  * @return bool
  */
 function newbbIsModerator(&$forum, $user = -1)
@@ -122,7 +123,7 @@ function newbbIsModerator(&$forum, $user = -1)
     }
     $uid = is_object($user) ? $user->getVar('uid', 'n') : (int)$user;
 
-    return in_array($uid, $forum->getVar('forum_moderator'));
+    return in_array($uid, $forum->getVar('forum_moderator'), true);
 }
 
 /**
@@ -157,7 +158,7 @@ function newbbIsAdmin($forum = 0)
         $_cachedModerators[$cache_id] = $forum->getVar('forum_moderator');
     }
 
-    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id]);
+    return in_array($GLOBALS['xoopsUser']->getVar('uid'), $_cachedModerators[$cache_id], true);
 }
 
 /* use hardcoded DB query to save queries */
@@ -200,7 +201,7 @@ function newbbIsModuleAdministrators(array $uid = [])
            . ' GROUP BY l.uid';
 
     $result = $GLOBALS['xoopsDB']->query($sql);
-    if ($result) {
+    if ($GLOBALS['xoopsDB']->isResultSet($result)) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (!empty($myrow['count'])) {
                 $module_administrators[] = $myrow['uid'];
@@ -214,28 +215,28 @@ function newbbIsModuleAdministrators(array $uid = [])
 /* use hardcoded DB query to save queries */
 /**
  * @param array $uid
- * @param int   $mid
+ * @param int $mid
  * @return array
  */
 function newbbIsForumModerators(array $uid = [], $mid = 0)
 {
     $forum_moderators = [];
 
-    if (!(bool)$uid) {
+    if (empty($uid)) {
         return $forum_moderators;
     }
 
     $sql    = 'SELECT forum_moderator FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_forums');
     $result = $GLOBALS['xoopsDB']->query($sql);
-    if ($result) {
+    if ($GLOBALS['xoopsDB']->isResultSet($result)) {
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if (empty($myrow['forum_moderator'])) {
                 continue;
             }
-            $forum_moderators = array_merge($forum_moderators, unserialize($myrow['forum_moderator']));
+            $forum_moderators = array_merge($forum_moderators, (array)unserialize($myrow['forum_moderator']));
         }
     }
 
-    return array_unique($forum_moderators);
+    return array_unique($forum_moderators??[]);
 }
 //ENDIF;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb\Common;
 
@@ -16,16 +16,12 @@ namespace XoopsModules\Newbb\Common;
  */
 
 /**
- *
- * @license      https://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @copyright    https://xoops.org 2000-2020 &copy; XOOPS Project
  * @author       ZySpec <zyspec@yahoo.com>
  * @author       Mamba <mambax7@gmail.com>
  */
 
-use MyTextSanitizer;
-use XoopsFormDhtmlTextArea;
-use XoopsFormTextArea;
 use XoopsModules\Newbb\Helper;
 
 /**
@@ -86,7 +82,7 @@ class SysUtility
                         // if tag is an opening tag
                     } elseif (\preg_match('/^<\s*([^\s>!]+).*?' . '>$/s', $line_matchings[1], $tag_matchings)) {
                         // add tag to the beginning of $open_tags list
-                        \array_unshift($open_tags, mb_strtolower($tag_matchings[1]));
+                        \array_unshift($open_tags, \mb_strtolower($tag_matchings[1]));
                     }
                     // add html-tag to $truncate'd text
                     $truncate .= $line_matchings[1];
@@ -194,29 +190,43 @@ class SysUtility
      *
      * @return bool
      */
-    public static function fieldExists($fieldname, $table)
+    public static function fieldExists(string $fieldname, string $table): bool
     {
         global $xoopsDB;
-        $result = $xoopsDB->queryF("SHOW COLUMNS FROM   $table LIKE '$fieldname'");
-
+        $sql = "SHOW COLUMNS FROM   $table LIKE '$fieldname'";
+        $result = $xoopsDB->queryF($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         return ($xoopsDB->getRowsNum($result) > 0);
     }
 
     /**
-     * @param string $tablename
+     * Check if dB table exists
      *
-     * @return bool
+     * @param string $tablename dB tablename with prefix
+     * @return bool true if table exists
      */
-    public static function tableExists($tablename)
+    public static function tableExists(string $tablename): bool
     {
+        $ret    = false;
+        $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        \trigger_error(__FUNCTION__ . " is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+        $GLOBALS['xoopsLogger']->addDeprecated(
+            \basename(\dirname(__DIR__, 2)) . ' Module: ' . __FUNCTION__ . ' function is deprecated, please use Xmf\Database\Tables method(s) instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}"
+        );
         $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
-        return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
+        if ($GLOBALS['xoopsDB']->isResultSet($result)) {
+            $ret = $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
+        }
+
+        return $ret;
     }
 
     /**
      * @param array|string $tableName
-     * @param int          $id_field
+     * @param string       $id_field
      * @param int          $id
      *
      * @return false
@@ -226,15 +236,22 @@ class SysUtility
         $new_id = false;
         $table  = $GLOBALS['xoopsDB']->prefix($tableName);
         // copy content of the record you wish to clone
-        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query("SELECT * FROM $table WHERE $id_field='$id' "), \MYSQLI_ASSOC) or exit('Could not select record');
+        $sql = "SELECT * FROM $table WHERE $id_field='$id' ";
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            \trigger_error("Could not select record! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+        }
+        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql), \MYSQLI_ASSOC);
         // set the auto-incremented id's value to blank.
         unset($tempTable[$id_field]);
         // insert cloned copy of the original  record
-        $result = $GLOBALS['xoopsDB']->queryF("INSERT INTO $table (" . \implode(', ', \array_keys($tempTable)) . ") VALUES ('" . \implode("', '", \array_values($tempTable)) . "')") or exit ($GLOBALS['xoopsDB']->error());
-
+        $sql = "INSERT INTO $table (" . \implode(', ', \array_keys($tempTable)) . ") VALUES ('" . \implode("', '", \array_values($tempTable)) . "')";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
         if ($result) {
             // Return the new id
             $new_id = $GLOBALS['xoopsDB']->getInsertId();
+        } else {
+            exit($GLOBALS['xoopsDB']->error());
         }
         return $new_id;
     }
@@ -245,8 +262,7 @@ class SysUtility
      * @param $field
      * @param $table
      * @return bool|\mysqli_result
-     * @package       News
-     * @author        Hervé Thouzard (http://www.herve-thouzard.com)
+     * @author        Hervé Thouzard (https://www.herve-thouzard.com)
      * @copyright (c) Hervé Thouzard
      */
     public function addField($field, $table)
@@ -262,14 +278,14 @@ class SysUtility
      *
      * @param string $folder Le chemin complet du répertoire à vérifier
      */
-    public static function prepareFolder($folder)
+    public static function prepareFolder($folder): void
     {
         try {
             if (!@\mkdir($folder) && !\is_dir($folder)) {
                 throw new \RuntimeException(\sprintf('Unable to create the %s directory', $folder));
             }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }

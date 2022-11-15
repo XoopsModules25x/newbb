@@ -9,7 +9,7 @@ Follow this link to view the post:
 
 You are receiving this message because you selected to be notified when new posts are added to this forum.
 
-If this is an error or you wish not to receive further such notifications, pleas
+If this is an error, or if you wish not to receive further such notifications, pleas
 e update your subscriptions by visiting the link below:
 {X_UNSUBSCRIBE_URL}
 

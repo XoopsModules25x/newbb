@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,14 +10,12 @@
  */
 
 /**
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         NEWBB
+ * @copyright       XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.3
  * @author          irmtfan <irmtfan@yahoo.com>
  * @author          The Persian Xoops Support Site<www.xoops.ir>
  */
-
 global $xoTheme;
 
 require_once $GLOBALS['xoops']->path('modules/newbb/include/functions.render.php');
@@ -34,12 +32,12 @@ $js_rel_path = $iconHandler->getPath('language/' . $GLOBALS['xoopsConfig']['lang
 xoops_load('XoopsLists');
 $allfiles = \XoopsLists::getFileListAsArray($GLOBALS['xoops']->path($js_rel_path));
 foreach ($allfiles as $jsfile) {
-    if ('js' === mb_strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
+    if ('js' === \mb_strtolower(pathinfo($jsfile, PATHINFO_EXTENSION))) {
         $xoTheme->addScript($js_rel_path . '/' . $jsfile);
     }
 }
 global $forumCookie;  // for $forumCookie["prefix"] revert last change - use global instead of include
 // add toggle script
 //$toggle_script = "var toggle_cookie=\"" . $forumCookie['prefix'] . 'G' . '\';';
-$toggle_script = 'var toggle_cookie="' . $forumCookie['prefix'] . 'G";';
+$toggle_script = 'var toggle_cookie="' . (isset($forumCookie['prefix'])?:'') . 'G";';
 $xoTheme->addScript(null, ['type' => 'text/javascript'], $toggle_script);

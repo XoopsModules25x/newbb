@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -20,7 +20,7 @@ class IpCheck
     /**
      * @param $ipValue
      */
-    public function addressType($ipValue)
+    public function addressType($ipValue): void
     {
         $this->ipin  = $ipValue;
         $this->ipver = 0;

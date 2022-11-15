@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 use Xmf\Highlighter;
 use Xmf\Metagen;
 use Xmf\Request;
-use XoopsModules\Newbb\{
-    OnlineHandler
-};
+use XoopsModules\Newbb\OnlineHandler;
+
 /** @var OnlineHandler $onlineHandler */
 
 /*
@@ -68,7 +67,7 @@ if ($GLOBALS['xoopsModuleConfig']['wol_enabled']) {
     $onlineHandler->init(0);
 }
 
-$xoopsTpl->assign('forumindex', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
+$xoopsTpl->assign('forumindex', sprintf(_MD_NEWBB_FORUMINDEX, htmlspecialchars((string)$GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES)));
 //$xoopsTpl->assign("img_folder", newbbDisplayImage($forumImage['topic']));
 
 if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
@@ -79,7 +78,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $start = Request::getInt('start', 0);
     $forum = Request::getInt('forum', null);
-    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum))) {
+    if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum, true))) {
         $forum = [];
     } elseif (!is_array($forum)) {
         $forum = array_map('\intval', explode('|', $forum));
@@ -96,8 +95,8 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 
     $addterms             = Request::getString('andor', 'AND');
     $next_search['andor'] = $addterms;
-    $andor                = mb_strtoupper($addterms);
-    if (!in_array($addterms, ['OR', 'AND'])) {
+    $andor                = \mb_strtoupper($addterms);
+    if (!in_array($addterms, ['OR', 'AND'], true)) {
         $andor = 'AND';
     }
 
@@ -106,7 +105,11 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     if (!empty($search_username)) {
         $uname_required  = true;
         $search_username = $GLOBALS['xoopsDB']->escape($search_username);
-        if (!$result = $GLOBALS['xoopsDB']->query('SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'")) {
+        $sql = 'SELECT uid FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " WHERE uname LIKE '%$search_username%'";
+
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             redirect_header(XOOPS_URL . '/search.php', 1, _MD_NEWBB_ERROROCCURED);
         }
         $uid = [];
@@ -117,7 +120,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $uid = 0;
     }
 
-    $next_search['term'] = htmlspecialchars($term, ENT_QUOTES);
+    $next_search['term'] = htmlspecialchars((string)$term, ENT_QUOTES);
     $query               = trim($term);
 
     if ('EXACT' !== $andor) {
@@ -148,7 +151,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $sortby                = Request::getString('sortby', 'p.post_time');
     $next_search['sortby'] = $sortby;
     //$sortby = (in_array(strtolower($sortby), $allowed)) ? $sortby :  't.topic_last_post_id';
-    $sortby                  = in_array(mb_strtolower($sortby), $allowed) ? $sortby : 'p.post_time';
+    $sortby                  = in_array(mb_strtolower($sortby), $allowed, true) ? $sortby : 'p.post_time';
     $searchin                = Request::getString('searchin', 'both');
     $next_search['searchin'] = $searchin;
     // START irmtfan use criteria - add since and topic search
@@ -167,7 +170,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         $results = newbb_search($queries, $andor, $limit, $start, $uid, $forum, $sortby, $searchin, $criteriaExtra);
     } // irmtfan $criteriaExtra
 
-    $search_info_keywords = Highlighter::apply(htmlspecialchars($term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
+    $search_info_keywords = Highlighter::apply(htmlspecialchars((string)$term, ENT_QUOTES), implode(' ', $queries), '<mark>', '</mark>');
     $num_results          = count($results);
     if ($num_results < 1) {
         $xoopsTpl->assign('lang_nomatch', _SR_NOMATCH);
@@ -222,14 +225,14 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($num_results == $limit) {
             $next            = $start + $limit;
             $queries         = implode(',', $queries);
-            $search_url_next = htmlspecialchars($search_url . "&direction=next&start={$next}", ENT_QUOTES | ENT_HTML5);
+            $search_url_next = htmlspecialchars((string)$search_url . "&direction=next&start={$next}", ENT_QUOTES | ENT_HTML5);
             $search_next     = '<a href="' . $search_url_next . '">' . _SR_NEXT . '</a>';
             $xoopsTpl->assign('search_next', $search_next);
             $xoopsTpl->assign('search_next_url', $search_url_next);
         }
         if ($start > 0) {
             $prev            = $start - $limit;
-            $search_url_prev = htmlspecialchars($search_url . "&direction=previous&start={$prev}", ENT_QUOTES | ENT_HTML5);
+            $search_url_prev = htmlspecialchars((string)$search_url . "&direction=previous&start={$prev}", ENT_QUOTES | ENT_HTML5);
             $search_prev     = '<a href="' . $search_url_prev . '">' . _SR_PREVIOUS . '</a>';
             $xoopsTpl->assign('search_prev', $search_prev);
             $xoopsTpl->assign('search_prev_url', $search_url_prev);
@@ -237,7 +240,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         // irmtfan if all results skipped then redirect to the next/previous page
         if ($num_results == $skipresults) {
             $direction           = Request::getString('direction', 'next');
-            $search_url_redirect = ('next' === mb_strtolower($direction)) ? $search_url_next : $search_url_prev;
+            $search_url_redirect = ('next' === \mb_strtolower($direction)) ? $search_url_next : $search_url_prev;
             redirect_header($search_url_redirect, 1, constant(mb_strtoupper("_SR_{$direction}")));
         }
     }
@@ -246,7 +249,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
         if ($search_info) {
             $search_info .= '<br>';
         }
-        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars($search_username, ENT_QUOTES | ENT_HTML5);
+        $search_info .= _MD_NEWBB_USERNAME . ': ' . htmlspecialchars((string)$search_username, ENT_QUOTES | ENT_HTML5);
     }
     // add num_results
     $search_info .= '<br>' . sprintf(_SR_SHOWING, $start + 1, $start + $num_results);
@@ -258,7 +261,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
 }
 // assign template vars for search
 /* term */
-$xoopsTpl->assign('search_term', htmlspecialchars($term, ENT_QUOTES));
+$xoopsTpl->assign('search_term', htmlspecialchars((string)$term, ENT_QUOTES));
 
 /* andor */
 $andor_select = '<select name="andor" id="andor" class="form-control">';

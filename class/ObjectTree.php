@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -13,13 +13,11 @@ namespace XoopsModules\Newbb;
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project (https://xoops.org)/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       phppp (D.J., infomax@gmail.com)
  * @author       XOOPS Development Team
  */
-
-
 require_once $GLOBALS['xoops']->path('class/tree.php');
 
 if (!\class_exists('ObjectTree')) {
@@ -50,7 +48,7 @@ if (!\class_exists('ObjectTree')) {
          * @internal  param string $selected Value to display as selected
          * @access    private
          */
-        protected function makeTreeItems($key, &$ret, $prefix_orig, $prefix_curr = '', $tags = null)
+        protected function makeTreeItems($key, &$ret, $prefix_orig, $prefix_curr = '', $tags = null): void
         {
             if ($key > 0) {
                 if (\count($tags) > 0) {
@@ -103,7 +101,7 @@ if (!\class_exists('ObjectTree')) {
          * @param string $prefix_curr   String to indent the current item
          * @access    private
          */
-        public function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
+        public function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = ''): void
         {
             if ($key > 0) {
                 $value = $this->tree[$key]['obj']->getVar($this->myId);
@@ -144,8 +142,7 @@ if (!\class_exists('ObjectTree')) {
             $addEmptyOption = false,
             $key = 0,
             $extra = ''
-        ) //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
-        {
+        ) { //makeSelBox($name, $prefix = '-', $selected = '', $EmptyOption = false, $key = 0)
             $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             \trigger_error("makeSelBox() is deprecated since 2.5.9, please use makeSelectElement(), accessed from {$trace[0]['file']} line {$trace[0]['line']},");
 
@@ -167,7 +164,7 @@ if (!\class_exists('ObjectTree')) {
          * @param int    $depth level of subcategories
          * @internal param array $tags fields to be used
          */
-        public function getAllChildObject($key, &$ret, $depth = 0)
+        public function getAllChildObject($key, &$ret, $depth = 0): void
         {
             if (0 == --$depth) {
                 return;
@@ -210,7 +207,7 @@ if (!\class_exists('ObjectTree')) {
          * @param array  $tags  fields to be used
          * @param int    $depth level of subcategories
          */
-        public function getAllChildArray($key, &$ret, array $tags = [], $depth = 0)
+        public function getAllChildArray($key, &$ret, array $tags = [], $depth = 0): void
         {
             if (0 == --$depth) {
                 return;

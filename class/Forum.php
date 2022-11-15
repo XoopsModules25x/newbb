@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -13,13 +13,27 @@ namespace XoopsModules\Newbb;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package         newbb
+ * @license         GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           4.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
 class Forum extends \XoopsObject
 {
+    public $forum_id;
+    public $forum_name;
+    public $forum_desc;
+    public $forum_moderator;
+    public $forum_topics;
+    public $forum_posts;
+    public $forum_last_post_id;
+    public $cat_id;
+    public $parent_forum;
+    public $hot_threshold;
+    public $attach_maxkb;
+    public $attach_ext;
+    public $forum_order;
+    public $dohtml;
+
     public function __construct()
     {
         parent::__construct();

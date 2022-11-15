@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace XoopsModules\Newbb;
 
@@ -22,13 +22,18 @@ namespace XoopsModules\Newbb;
 /**
  * A handler for read/unread handling
  *
- * @package       newbb
  *
- * @author        D.J. (phppp, http://xoopsforge.com)
+ * @author        D.J. (phppp, https://xoopsforge.com)
  * @copyright     copyright (c) 2005 XOOPS.org
  */
 class Read extends \XoopsObject
 {
+    public $read_id;
+    public $uid;
+    public $read_item;
+    public $post_id;
+    public $read_time;
+
     /**
      * @internal param $type
      */

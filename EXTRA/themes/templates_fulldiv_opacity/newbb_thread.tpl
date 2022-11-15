@@ -85,7 +85,7 @@
             <div class="thread_poster_ip floatright">
                 <{if $topic_post.poster_ip}>
                     IP:
-                    <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
+                    <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a>
                 <{/if}>
             </div>
             <div class="clear"></div>

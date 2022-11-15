@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 //
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
@@ -25,10 +25,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 
-use Xmf\Request;
 use Xmf\Module\Admin;
-/** @var Admin $adminObject */
+use Xmf\Request;
 
+/** @var Admin $adminObject */
 require_once __DIR__ . '/admin_header.php';
 require_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -85,8 +85,10 @@ if (Request::hasVar('submit', 'POST')) {
     $sql .= ' AND p.post_time<= ' . $prune_ddays . ' ';
     // Ok now we have the sql query completed, go for topic_id's and posts_id's
     $topics = [];
-    if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-        return _MD_NEWBB_ERROR;
+    $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        //        return _MD_NEWBB_ERROR;
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
     }
     // Dave_L code
     while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -98,11 +100,13 @@ if (Request::hasVar('submit', 'POST')) {
 
     if ('' !== $topic_list) {
         $sql = 'SELECT post_id FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' WHERE topic_id IN (' . $topic_list . ')';
-
         $posts = [];
-        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            return _MD_NEWBB_ERROR;
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //        return _MD_NEWBB_ERROR;
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
         }
+
         // Dave_L code
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $posts[] = $row['post_id'];
@@ -126,28 +130,34 @@ if (Request::hasVar('submit', 'POST')) {
         } else {
             // ARCHIVING POSTS
             if (1 == $archive) {
-                $result = $GLOBALS['xoopsDB']->query('SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id");
-                while (list($topic_id, $post_id, $post_text) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-                    $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
+                $sql = 'SELECT p.topic_id, p.post_id, t.post_text FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . ' p, ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " t WHERE p.post_id IN ($post_list) AND p.post_id=t.post_id";
+                $result = $GLOBALS['xoopsDB']->query($sql);
+                if ($GLOBALS['xoopsDB']->isResultSet($result)) {
+                    while ([$topic_id, $post_id, $post_text] = $GLOBALS['xoopsDB']->fetchRow($result)) {
+                        $sql = $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('newbb_archive') . " (topic_id, post_id, post_text) VALUES ($topic_id, $post_id, $post_text)");
+                    }
                 }
             }
             // DELETE POSTS
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts') . " WHERE topic_id IN ($topic_list)";
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$result) {
                 return _MD_NEWBB_ERROR;
             }
             // DELETE TOPICS
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_topics') . " WHERE topic_id IN ($topic_list)";
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$result) {
                 return _MD_NEWBB_ERROR;
             }
             // DELETE POSTS_TEXT
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newbb_posts_text') . " WHERE post_id IN ($post_list)";
-            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
+            $result = $GLOBALS['xoopsDB']->query($sql);
+            if (!$result) {
                 return _MD_NEWBB_ERROR;
             }
             // SYNC FORUMS AFTER DELETE
-            //            /** @var Newbb\ForumHandler $forumHandler */
+            // /** @var Newbb\ForumHandler $forumHandler */
             //            $forumHandler = \XoopsModules\Newbb\Helper::getInstance()->getHandler('Forum');
             $forumHandler->synchronization();
             // I THINK POSTS AND TOPICS HAVE BEEN DESTROYED :LOL:
