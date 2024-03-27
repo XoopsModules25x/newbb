@@ -77,7 +77,7 @@ if (!empty($uname) || Request::getString('submit', '') || !empty($term)) {
     $next_search['selectlength'] = $selectlength;
 
     $start = Request::getInt('start', 0);
-    $forum = Request::getInt('forum', null);
+    $forum = Request::getVar('forum', null);
     if (empty($forum) || 'all' === $forum || (is_array($forum) && in_array('all', $forum, true))) {
         $forum = [];
     } elseif (!is_array($forum)) {
